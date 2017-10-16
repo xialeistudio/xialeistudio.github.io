@@ -2,8 +2,8 @@
 title: Servlet中print-writer和outputstream编码问题
 date: 2017-10-16 14:11:40
 tags:
--java
--servlet
+- java
+- servlet
 ---
 有个项目需要使用java开发一个简单的web接口用来请求加密数据，但是servlet之前只随便用了一下，平时工作也是以**node**为主。
 # 问题
