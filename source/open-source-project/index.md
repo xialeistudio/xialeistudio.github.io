@@ -131,6 +131,19 @@ NodeJs操作imap协议的工具包。
 ### 项目地址
 [https://github.com/xialeistudio/go-baidu-push](https://github.com/xialeistudio/go-baidu-push)
 
+## go-rtmp-http-publisher
+### 项目简介
+HTTP开发的RTMP推流代理
+### 项目地址
+[https://github.com/xialeistudio/go-rtmp-http-publisher](https://github.com/xialeistudio/go-rtmp-http-publisher)
+
+# Docker
+## docker-nginx-rtmp
+### 项目简介
+nginx rtmp直播服务器镜像
+### 项目地址
+[https://github.com/xialeistudio/docker-nginx-rtmp](https://github.com/xialeistudio/docker-nginx-rtmp)
+
 
 # 前端
 ## angular-audio-player
