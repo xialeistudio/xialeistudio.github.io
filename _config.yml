@@ -78,7 +78,7 @@ theme: next
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repository: git@github.com:xialeistudio/xialeistudio.github.io.git
+  repository: git@code.aliyun.com:xialeistudio/blog.git
 search:
   path: search.xml
   field: post
