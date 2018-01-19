@@ -355,7 +355,7 @@ disqus:
 
 # changyan
 changyan:
-  enable: true
+  enable: false
   appid: cytgy7FPP
   appkey: 530072dad90e4b88351d911464166599
 
@@ -460,7 +460,7 @@ vkontakte_api:
 # Star rating support to each article.
 # To get your ID visit https://widgetpack.com
 rating:
-  enable: true
+  enable: false
   id:     7480
   color:  fc6423
 # ---------------------------------------------------------------

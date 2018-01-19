@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https//www.ddhigh.com/"/>
-  <updated>2017-11-29T13:06:40.000Z</updated>
+  <updated>2018-01-19T16:12:41.000Z</updated>
   <id>https//www.ddhigh.com/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>PHP实现“异步”</title>
+    <link href="https//www.ddhigh.com/2018/01/20/php-async.html"/>
+    <id>https//www.ddhigh.com/2018/01/20/php-async.html</id>
+    <published>2018-01-19T16:07:04.000Z</published>
+    <updated>2018-01-19T16:12:41.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>众所周知，PHP不使用多线程扩展的情况下是不支持异步的(不算curl之类)。今天无意中看到一个函数<code>fastcgi_finish_request</code>;<br>这个方法是PHP5.3+开始提供。<br>注释写的很清楚，有耗时操作的时候使用该函数可以尽早结束fastcgi处理过程，提高页面响应速度。</p><h2 id="代码说明"><a href="#代码说明" class="headerlink" title="代码说明"></a>代码说明</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="keyword">echo</span> <span class="number">1</span>;</div><div class="line">fastcgi_finish_request();</div><div class="line">sleep(<span class="number">3</span>);</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure><p>此时打开浏览器发现响应速度并没有受到<code>sleep</code>函数的影响，基于此点，可以在适当的时候使用该函数以提升用户体验!</p><h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p>PHP需要运行在fpm模式下才可以使用本函数。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;众所周知，PHP不使用多线程扩展的情况下是不支持异步的(不算curl之类)。今天无意中看到一个函数&lt;code&gt;fastcgi_finish_request&lt;/code&gt;;&lt;br&gt;这个方法是PHP5.3+开始提供。&lt;br&gt;注释写的很清楚，有耗时操作的时候使用该函数可以尽早结束
+      
+    
+    </summary>
+    
+      <category term="php" scheme="https//www.ddhigh.com/categories/php/"/>
+    
+    
+      <category term="async" scheme="https//www.ddhigh.com/tags/async/"/>
+    
+  </entry>
   
   <entry>
     <title>微信H5点击跳转到关注页</title>
@@ -498,34 +523,6 @@
     
     
       <category term="pm2" scheme="https//www.ddhigh.com/tags/pm2/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>移动端rem和PSD单位换算问题</title>
-    <link href="https//www.ddhigh.com/2017/07/28/mobile-rem.html"/>
-    <id>https//www.ddhigh.com/2017/07/28/mobile-rem.html</id>
-    <published>2017-07-27T16:00:00.000Z</published>
-    <updated>2017-10-14T21:22:42.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>设计图尺寸一般750宽度，而需要兼容640宽度手机的话，需要调整缩放比率，之前使用<code>写死viewport</code>的做法来实现，不过这个方法有点取巧，而且有些场景并不适用。<br>本文用<code>标准的@media</code>来实现</p><h2 id="rem定义"><a href="#rem定义" class="headerlink" title="rem定义"></a>rem定义</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">@<span class="keyword">media</span> screen and (max-width: <span class="number">750px</span>) &#123;</div><div class="line">  <span class="selector-tag">html</span> &#123;</div><div class="line">    <span class="attribute">font-size</span>: <span class="number">30px</span>;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">@<span class="keyword">media</span> screen and (min-width: <span class="number">640px</span>) and (max-width: <span class="number">749px</span>) &#123;</div><div class="line">  <span class="selector-tag">html</span> &#123;</div><div class="line">    <span class="attribute">font-size</span>: <span class="number">25px</span>;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">@<span class="keyword">media</span> screen and (min-width: <span class="number">480px</span>) and (max-width: <span class="number">639px</span>) &#123;</div><div class="line">  <span class="selector-tag">html</span> &#123;</div><div class="line">    <span class="attribute">font-size</span>: <span class="number">20px</span>;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">@<span class="keyword">media</span> screen and (min-width: <span class="number">320px</span>) and (max-width: <span class="number">479px</span>) &#123;</div><div class="line">  <span class="selector-tag">html</span> &#123;</div><div class="line">    <span class="attribute">font-size</span>: <span class="number">15px</span>;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><h2 id="如何使用"><a href="#如何使用" class="headerlink" title="如何使用"></a>如何使用</h2><p>假设PSD中有个button的大小为<code>100px*40px</code>，那使用rem时CSS如下<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">button</span> &#123;</div><div class="line">    <span class="attribute">width</span>: <span class="number">3.333rem</span>;</div><div class="line">    <span class="attribute">height</span>: <span class="number">1.333rem</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;设计图尺寸一般750宽度，而需要兼容640宽度手机的话，需要调整缩放比率，之前使用&lt;code&gt;写死viewport&lt;/code&gt;的做法来实现，不过这个方法有点取巧，而且有些场景并不适用。&lt;br&gt;本文用&lt;code&gt;标准的@media&lt;/code&gt;来实现&lt;/p&gt;
-&lt;h2 id=
-      
-    
-    </summary>
-    
-      <category term="css3" scheme="https//www.ddhigh.com/categories/css3/"/>
-    
-    
-      <category term="css3" scheme="https//www.ddhigh.com/tags/css3/"/>
-    
-      <category term="rem" scheme="https//www.ddhigh.com/tags/rem/"/>
     
   </entry>
   

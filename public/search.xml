@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[PHP实现“异步”]]></title>
+    <url>%2F2018%2F01%2F20%2Fphp-async.html</url>
+    <content type="text"><![CDATA[众所周知，PHP不使用多线程扩展的情况下是不支持异步的(不算curl之类)。今天无意中看到一个函数fastcgi_finish_request;这个方法是PHP5.3+开始提供。注释写的很清楚，有耗时操作的时候使用该函数可以尽早结束fastcgi处理过程，提高页面响应速度。 代码说明12345&lt;?phpecho 1;fastcgi_finish_request();sleep(3);?&gt; 此时打开浏览器发现响应速度并没有受到sleep函数的影响，基于此点，可以在适当的时候使用该函数以提升用户体验! 注意事项PHP需要运行在fpm模式下才可以使用本函数。]]></content>
+      <categories>
+        <category>php</category>
+      </categories>
+      <tags>
+        <tag>async</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[微信H5点击跳转到关注页]]></title>
     <url>%2F2017%2F11%2F25%2Fwechat-web-subscribe.html</url>
     <content type="text"><![CDATA[背景微信诱导关注接口在早两年已经被微信关停，但是一般的H5目的都是要关注公众号。目前用的多的方法是用公众号发表一篇文章，文章里面一般是一个GIF的箭头图片指向公众号关注。这种方法有点取巧。 今天要介绍的是另一种方法，感觉应该不会被微信封号。 起因有个朋友在segmentfault上发了一个链接出来，微信打开可以直接到关注页1https://mp.weixin.qq.com/mp/profile_ext?action=home&amp;__biz=MzUzMDM3MjMyNQ==#wechat_redirect 条件反射发现MzUzMDM3MjMyNQ==是Base64编码后的参数，解码后是一段数字，然后我改了下数字，重新编码，再发送到微信，发现可以打开另外一个公众号的关注页1https://mp.weixin.qq.com/mp/profile_ext?action=home&amp;__biz=MzUzMDM3MjMyNA==#wechat_redirect 所以只要知道那个公众号数字就可以构造链接进行关注，想着这种ID一般在公众平台有，果然被我找到了。 步骤 登录公众平台后台 点击右上角的公众号，来到公众号信息页面 查看公众号信息页面的源代码，在顶上找到以下代码 123window.wx=&#123;uin:"xxxx"||"0"&#125;; xxxx 就是你的公众号数字ID 将第4步找到的ID进行base64编码 构造如下链接 1https://mp.weixin.qq.com/mp/profile_ext?action=home&amp;__biz=第5步的结果#wechat_redirect 发送到微信之后即可。 反思从打开的链接看页面还是蛮正式的，可能不是私有接口，但是微信文档中没说过这种方式，故使用本方式带来的后果请自行负责！]]></content>
