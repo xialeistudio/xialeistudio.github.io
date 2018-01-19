@@ -107,6 +107,11 @@ NodeJs操作imap协议的工具包。
 
 
 # golang
+## go-wechat-reply
+### 项目简介
+golang开发的微信公众平台自动回复系统
+### 项目地址
+[https://github.com/goctx/wechat](https://github.com/goctx/wechat)
 ## go-tencent-defend-tlv
 ### 项目简介
 腾讯云天御业务安全系统TLV编码go实现
