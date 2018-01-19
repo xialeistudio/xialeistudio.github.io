@@ -87,7 +87,7 @@ menu:
   #schedule: /schedule/ || calendar
   about: /about/ || user
   sitemap: /sitemap.xml || sitemap
-  open-source-project: /open-source-project || github
+  open-source-project: /open-source-project/ || github
   # commonweal: /404/
 
 # Enable/Disable menu icons.
