@@ -146,7 +146,7 @@
 <meta property="og:site_name" content="每天进步一点点">
 <meta property="og:description" content="之前部署在阿里云时一直memcache没有问题，部署到腾讯云发现缓存永不过期。查看yii2的MemCache类源码后，发现在设置缓存时，Yii2添加了$expire = $duration &amp;gt; 0 ? $duration + time() :0;这样的代码，会导致强制使用时间戳来标记过期时间，而阿里云是过期时间和时间戳都支持的，腾讯云只支持前者。 解决方案重写组件即可在app\compone">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-20T05:42:52.401Z">
+<meta property="og:updated_time" content="2017-10-14T21:22:42.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Yii2框架MemCache在腾讯云部署时不过期问题">
 <meta name="twitter:description" content="之前部署在阿里云时一直memcache没有问题，部署到腾讯云发现缓存永不过期。查看yii2的MemCache类源码后，发现在设置缓存时，Yii2添加了$expire = $duration &amp;gt; 0 ? $duration + time() :0;这样的代码，会导致强制使用时间戳来标记过期时间，而阿里云是过期时间和时间戳都支持的，腾讯云只支持前者。 解决方案重写组件即可在app\compone">
