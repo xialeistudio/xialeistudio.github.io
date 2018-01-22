@@ -86,8 +86,9 @@ menu:
   archives: /archives/ || archive
   #schedule: /schedule/ || calendar
   about: /about/ || user
-  sitemap: /sitemap.xml || sitemap
   open-source-project: /open-source-project/ || github
+  book: /book/ || book
+  sitemap: /sitemap.xml || sitemap
   # commonweal: /404/
 
 # Enable/Disable menu icons.

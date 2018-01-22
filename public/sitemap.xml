@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https//www.ddhigh.com/book/index.html</loc>
+    
+    <lastmod>2018-01-22T16:18:10.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https//www.ddhigh.com/2018/01/20/golang-memory-leak.html</loc>
     
     <lastmod>2018-01-21T08:18:53.000Z</lastmod>
@@ -26,13 +33,6 @@
     <loc>https//www.ddhigh.com/2018/01/20/php-async.html</loc>
     
     <lastmod>2018-01-19T16:12:41.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https//www.ddhigh.com/2017/10/16/servlet-print-writer-outputstream-encoding.html</loc>
-    
-    <lastmod>2017-11-29T13:06:40.000Z</lastmod>
     
   </url>
   
@@ -121,6 +121,13 @@
   </url>
   
   <url>
+    <loc>https//www.ddhigh.com/2017/10/16/servlet-print-writer-outputstream-encoding.html</loc>
+    
+    <lastmod>2017-11-29T13:06:40.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https//www.ddhigh.com/2017/10/15/excel-stream-unknown-encoding.html</loc>
     
     <lastmod>2017-10-15T13:41:52.000Z</lastmod>
@@ -145,13 +152,6 @@
     <loc>https//www.ddhigh.com/tags/index.html</loc>
     
     <lastmod>2017-10-14T21:38:53.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https//www.ddhigh.com/2014/09/18/bootstrap3-disable-responsive-layout.html</loc>
-    
-    <lastmod>2017-10-14T21:22:42.000Z</lastmod>
     
   </url>
   
@@ -653,14 +653,14 @@
   </url>
   
   <url>
-    <loc>https//www.ddhigh.com/2014/09/06/angularjs-lazy-load.html</loc>
+    <loc>https//www.ddhigh.com/2015/11/23/css3-triangle.html</loc>
     
     <lastmod>2017-10-14T21:22:42.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https//www.ddhigh.com/2015/11/23/exmail-501.html</loc>
+    <loc>https//www.ddhigh.com/2014/09/06/angularjs-lazy-load.html</loc>
     
     <lastmod>2017-10-14T21:22:42.000Z</lastmod>
     
@@ -1304,7 +1304,14 @@
   </url>
   
   <url>
-    <loc>https//www.ddhigh.com/2015/11/23/css3-triangle.html</loc>
+    <loc>https//www.ddhigh.com/2014/09/18/bootstrap3-disable-responsive-layout.html</loc>
+    
+    <lastmod>2017-10-14T21:22:42.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https//www.ddhigh.com/2015/11/23/exmail-501.html</loc>
     
     <lastmod>2017-10-14T21:22:42.000Z</lastmod>
     
