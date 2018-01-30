@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https//www.ddhigh.com/"/>
-  <updated>2018-01-20T05:54:24.202Z</updated>
+  <updated>2018-01-30T08:50:14.944Z</updated>
   <id>https//www.ddhigh.com/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>头脑王者辅助</title>
+    <link href="https//www.ddhigh.com/2018/01/30/tnwz.html"/>
+    <id>https//www.ddhigh.com/2018/01/30/tnwz.html</id>
+    <published>2018-01-30T08:44:23.000Z</published>
+    <updated>2018-01-30T08:50:14.944Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="头脑王者"><a href="#头脑王者" class="headerlink" title="头脑王者"></a>头脑王者</h1><p>本项目仅作为学习<code>anyproxy</code>之用，请勿用于非法用途，否则后果自负</p><h2 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h2><ul><li>[x] 题目爬取</li><li>[x] 答题匹配(如果题库不存在，请自行答题，系统会在答题后把正确答案自动录入数据库)</li></ul><h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><ol><li><p>安装mysql，新建数据库<code>tnwz</code>，建表语句</p> <figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> tnwz.question</div><div class="line">(</div><div class="line">    <span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) PRIMARY <span class="keyword">KEY</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</div><div class="line">    question <span class="built_in">varchar</span>(<span class="number">100</span>),</div><div class="line">    a <span class="built_in">varchar</span>(<span class="number">20</span>),</div><div class="line">    b <span class="built_in">varchar</span>(<span class="number">20</span>),</div><div class="line">    c <span class="built_in">varchar</span>(<span class="number">20</span>),</div><div class="line">    d <span class="built_in">varchar</span>(<span class="number">20</span>),</div><div class="line">    answer <span class="built_in">int</span>(<span class="number">11</span>),</div><div class="line">    createdAt datetime <span class="keyword">NOT</span> <span class="literal">NULL</span>,</div><div class="line">    updatedAt datetime <span class="keyword">NOT</span> <span class="literal">NULL</span></div><div class="line">);</div></pre></td></tr></table></figure></li><li><p>config.json为数据库配置 </p></li><li>安装<code>anyproxy</code> =&gt; <code>npm install anyproxy -g</code></li><li>生成证书<code>anyproxy -i</code></li><li>手机接入代理，代理地址<code>电脑IP:8001</code></li></ol><h2 id="题库获取"><a href="#题库获取" class="headerlink" title="题库获取"></a>题库获取</h2><ol><li>登录两个微信号获取到uid和token之后填入auth.json</li><li><code>node question-fetcher.js</code>,如果出现401，请重新登录</li></ol><h2 id="排位系统"><a href="#排位系统" class="headerlink" title="排位系统"></a>排位系统</h2><ol><li><code>npm run fight</code>开启代理</li><li>手机接入代理</li><li>开始排位，终端会提示<code>开始匹配</code>，系统会将正确答案添加上<code>###</code></li></ol><h2 id="适用系统"><a href="#适用系统" class="headerlink" title="适用系统"></a>适用系统</h2><ul><li>Android &amp;&amp; iOS</li><li>iOS11.3 已通过测试</li></ul><h2 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h2><p><a href="https://github.com/xialeistudio/tnwz" target="_blank" rel="external">https://github.com/xialeistudio/tnwz</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;头脑王者&quot;&gt;&lt;a href=&quot;#头脑王者&quot; class=&quot;headerlink&quot; title=&quot;头脑王者&quot;&gt;&lt;/a&gt;头脑王者&lt;/h1&gt;&lt;p&gt;本项目仅作为学习&lt;code&gt;anyproxy&lt;/code&gt;之用，请勿用于非法用途，否则后果自负&lt;/p&gt;
+&lt;h2 id=&quot;功能
+      
+    
+    </summary>
+    
+    
+      <category term="nodejs" scheme="https//www.ddhigh.com/tags/nodejs/"/>
+    
+      <category term="anyproxy" scheme="https//www.ddhigh.com/tags/anyproxy/"/>
+    
+  </entry>
   
   <entry>
     <title>golang可能导致内存泄漏的地方</title>
@@ -495,35 +521,6 @@
     
       <category term="nginx" scheme="https//www.ddhigh.com/categories/nginx/"/>
     
-    
-  </entry>
-  
-  <entry>
-    <title>Spring Boot JPA 返回json时排除Null字段</title>
-    <link href="https//www.ddhigh.com/2017/07/31/spring-boot-exclude-null.html"/>
-    <id>https//www.ddhigh.com/2017/07/31/spring-boot-exclude-null.html</id>
-    <published>2017-07-30T16:00:00.000Z</published>
-    <updated>2018-01-20T05:42:52.402Z</updated>
-    
-    <content type="html"><![CDATA[<p>Spring Boot在返回JSON的时候默认会返回null字段，这个对客户端一般没什么作用，还会增加服务器带宽压力。使用如下配置可以屏蔽。</p><p>在pojo对象上添加注解</p><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@JsonInclude</span>(JsonInclude.Include.NON_NULL)</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>再使用<code>@ResponseBody</code>的时候就不会返回Null字段了。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;Spring Boot在返回JSON的时候默认会返回null字段，这个对客户端一般没什么作用，还会增加服务器带宽压力。使用如下配置可以屏蔽。&lt;/p&gt;
-&lt;p&gt;在pojo对象上添加注解&lt;/p&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;
-      
-    
-    </summary>
-    
-      <category term="spring boot" scheme="https//www.ddhigh.com/categories/spring-boot/"/>
-    
-    
-      <category term="json" scheme="https//www.ddhigh.com/tags/json/"/>
-    
-      <category term="jpa" scheme="https//www.ddhigh.com/tags/jpa/"/>
     
   </entry>
   
