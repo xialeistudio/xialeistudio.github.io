@@ -146,7 +146,7 @@
 <meta property="og:site_name" content="每天进步一点点">
 <meta property="og:description" content="众所周知，PHP不使用多线程扩展的情况下是不支持异步的(不算curl之类)。今天无意中看到一个函数fastcgi_finish_request;这个方法是PHP5.3+开始提供。注释写的很清楚，有耗时操作的时候使用该函数可以尽早结束fastcgi处理过程，提高页面响应速度。 代码说明12345&amp;lt;?phpecho 1;fastcgi_finish_request();sleep(3);?&amp;gt">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-20T05:42:52.405Z">
+<meta property="og:updated_time" content="2018-01-19T16:12:41.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PHP实现“异步”">
 <meta name="twitter:description" content="众所周知，PHP不使用多线程扩展的情况下是不支持异步的(不算curl之类)。今天无意中看到一个函数fastcgi_finish_request;这个方法是PHP5.3+开始提供。注释写的很清楚，有耗时操作的时候使用该函数可以尽早结束fastcgi处理过程，提高页面响应速度。 代码说明12345&amp;lt;?phpecho 1;fastcgi_finish_request();sleep(3);?&amp;gt">
@@ -300,22 +300,32 @@
         </li>
       
         
-        <li class="menu-item menu-item-sitemap">
-          <a href="/sitemap.xml" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
-            
-            站点地图
-          </a>
-        </li>
-      
-        
         <li class="menu-item menu-item-open-source-project">
           <a href="/open-source-project/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-github"></i> <br />
             
             开源项目
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-book">
+          <a href="/book/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-book"></i> <br />
+            
+            书籍
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
           </a>
         </li>
       
