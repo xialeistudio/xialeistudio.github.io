@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[golang限制协程数量]]></title>
+    <url>%2F2018%2F01%2F31%2Fgoroutine-limit-demo.html</url>
+    <content type="text"><![CDATA[为什么要限制协程数量golang的go关键字并发实在是太简单，但是带来的问题是由于硬件和网络状况的限制，不受控制的增加协程是非常危险的做法，甚至有可能搞垮数据库之类的应用! 而并发控制在go中是非常常用的技巧，以此文来记录一下学习历程。 原理由于channel的阻塞机制，通过设置缓冲channel的缓冲大小来控制同时执行的协程数量。 demo代码1234567891011121314151617181920212223package mainimport ( "log" "time")func main() &#123; start := time.Now() ch := make(chan int, 2) for i := 0; i &lt;= 10; i++ &#123; ch &lt;- 1 go worker(i, ch) &#125; close(ch) log.Println("complete", time.Since(start).Seconds())&#125;// 模拟耗时操作func worker(i int, ch chan int) &#123; log.Println("worker", i) time.Sleep(time.Second) &lt;-ch 运行1go run demo.ho 输出1234567891011122018/01/31 22:24:49 worker 12018/01/31 22:24:49 worker 02018/01/31 22:24:50 worker 22018/01/31 22:24:50 worker 32018/01/31 22:24:51 worker 42018/01/31 22:24:51 worker 52018/01/31 22:24:52 worker 62018/01/31 22:24:52 worker 72018/01/31 22:24:53 worker 82018/01/31 22:24:53 worker 92018/01/31 22:24:54 worker 102018/01/31 22:24:54 complete 5.01140112 结论可以看到日志的输出时间，每秒出现两个，正好等于我们make函数的大小，而总时间也是为10/2左右，证明限制起到了作用。 虽然本文写起来很简单，但是包含的技巧可以说大型程序仍然会用到。正所谓“万丈高楼平地起”。]]></content>
+      <tags>
+        <tag>golang</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[头脑王者辅助]]></title>
     <url>%2F2018%2F01%2F30%2Ftnwz.html</url>
     <content type="text"><![CDATA[头脑王者本项目仅作为学习anyproxy之用，请勿用于非法用途，否则后果自负 功能 [x] 题目爬取 [x] 答题匹配(如果题库不存在，请自行答题，系统会在答题后把正确答案自动录入数据库) 开始 安装mysql，新建数据库tnwz，建表语句 123456789101112CREATE TABLE tnwz.question( id int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT, question varchar(100), a varchar(20), b varchar(20), c varchar(20), d varchar(20), answer int(11), createdAt datetime NOT NULL, updatedAt datetime NOT NULL); config.json为数据库配置 安装anyproxy =&gt; npm install anyproxy -g 生成证书anyproxy -i 手机接入代理，代理地址电脑IP:8001 题库获取 登录两个微信号获取到uid和token之后填入auth.json node question-fetcher.js,如果出现401，请重新登录 排位系统 npm run fight开启代理 手机接入代理 开始排位，终端会提示开始匹配，系统会将正确答案添加上### 适用系统 Android &amp;&amp; iOS iOS11.3 已通过测试 项目地址https://github.com/xialeistudio/tnwz]]></content>
@@ -180,6 +188,17 @@
       </categories>
   </entry>
   <entry>
+    <title><![CDATA[使用pm2来保证Spring Boot应用稳定运行]]></title>
+    <url>%2F2017%2F07%2F31%2Fspring-boot-pm2.html</url>
+    <content type="text"><![CDATA[Spring Boot开发web应用就像开发普通的java程序一般简洁，因为其内嵌了web容易，启动的时候只需要一条命令java -jar server.jar即可，非常方便。但是由此而来的问题是万一应用挂了怎么办？ 别担心，有pm2进程管理工具可以帮到你。 PM2简介pm2原先是nodejs应用的进程管理工具，不过其良好的设计以及扩展性可以手动执行执行进程。 PM2安装 安装NodeJs npm install pm2 -g PM2基本命令 pm2 list 查看所有被PM2管理的进程列表 pm2 start xxx 启动一个应用 pm2 stop xxx 停止一个应用 pm2 restart xxx 重启一个应用 pm2 describe xxx 查看应用详情 pm2 startup, pm2 save 两条命令，用来保证服务器启动时,pm2管理的程序自动运行 Java程序处理在jar的同级目录新建应用启动配置文件，如pm2.json，内容如下： 12345678910&#123; "name": "my-server", "script": "/usr/bin/java", "args": [ "-jar", "server.jar" ], "exec_interpreter": "", "exec_mode": "fork"&#125; 说明如下： name 进程名称（显示在pm2 list命令中） script 执行进程名称，如果需要执行PHP脚本则填写php解释器的路径，本文为java args 传给执行进程的参数，多个参数以数组单元分割 exec_interpreter NodeJs解析器，本文不适用 exec_mode 执行模式[cluster|fork]这个针对NodeJs应用的配置，非NodeJs应用统一fork 配置文件完成后，使用1pm2 start pm2.json 即可看到应用被启动 日志管理日志路径在~/.pm2/logs，stdout和stderr被分开存放，程序中的所有stdout和stderr都被收集方便查错。]]></content>
+      <categories>
+        <category>spring book</category>
+      </categories>
+      <tags>
+        <tag>pm2</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Spring Boot JPA 返回json时排除Null字段]]></title>
     <url>%2F2017%2F07%2F31%2Fspring-boot-exclude-null.html</url>
     <content type="text"><![CDATA[Spring Boot在返回JSON的时候默认会返回null字段，这个对客户端一般没什么作用，还会增加服务器带宽压力。使用如下配置可以屏蔽。 在pojo对象上添加注解 123@JsonInclude(JsonInclude.Include.NON_NULL)class User &#123;&#125; 再使用@ResponseBody的时候就不会返回Null字段了。]]></content>
@@ -189,17 +208,6 @@
       <tags>
         <tag>json</tag>
         <tag>jpa</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[使用pm2来保证Spring Boot应用稳定运行]]></title>
-    <url>%2F2017%2F07%2F31%2Fspring-boot-pm2.html</url>
-    <content type="text"><![CDATA[Spring Boot开发web应用就像开发普通的java程序一般简洁，因为其内嵌了web容易，启动的时候只需要一条命令java -jar server.jar即可，非常方便。但是由此而来的问题是万一应用挂了怎么办？ 别担心，有pm2进程管理工具可以帮到你。 PM2简介pm2原先是nodejs应用的进程管理工具，不过其良好的设计以及扩展性可以手动执行执行进程。 PM2安装 安装NodeJs npm install pm2 -g PM2基本命令 pm2 list 查看所有被PM2管理的进程列表 pm2 start xxx 启动一个应用 pm2 stop xxx 停止一个应用 pm2 restart xxx 重启一个应用 pm2 describe xxx 查看应用详情 pm2 startup, pm2 save 两条命令，用来保证服务器启动时,pm2管理的程序自动运行 Java程序处理在jar的同级目录新建应用启动配置文件，如pm2.json，内容如下： 12345678910&#123; "name": "my-server", "script": "/usr/bin/java", "args": [ "-jar", "server.jar" ], "exec_interpreter": "", "exec_mode": "fork"&#125; 说明如下： name 进程名称（显示在pm2 list命令中） script 执行进程名称，如果需要执行PHP脚本则填写php解释器的路径，本文为java args 传给执行进程的参数，多个参数以数组单元分割 exec_interpreter NodeJs解析器，本文不适用 exec_mode 执行模式[cluster|fork]这个针对NodeJs应用的配置，非NodeJs应用统一fork 配置文件完成后，使用1pm2 start pm2.json 即可看到应用被启动 日志管理日志路径在~/.pm2/logs，stdout和stderr被分开存放，程序中的所有stdout和stderr都被收集方便查错。]]></content>
-      <categories>
-        <category>spring book</category>
-      </categories>
-      <tags>
-        <tag>pm2</tag>
       </tags>
   </entry>
   <entry>
@@ -352,17 +360,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[在windows上安装jekyll]]></title>
-    <url>%2F2017%2F01%2F20%2Finstall-jekyll-on-windows.html</url>
-    <content type="text"><![CDATA[早些时候用的ubuntu，安装jekyll确实挺简单，可能是终端强大吧。最近工作环境切换到windows，无奈想写博文的时候却发现需要切换到ubuntu，不是那么方便。打算在windows上部署一下jekyll。 软件环境 Windows 10 企业版 Ruby 2.3.2-x64 部署过程 安装 Ruby2.3.2-x64，安装目录请不要带空格，建议使用默认的”C:\Ruby23-x64”，安装的时候勾上”Add To Path”选项 确认ruby安装成功，打开控制台，执行 1ruby -v 安装 Devkit，安装目录请不要带空格，建议解压到”C:\DevKit” 在C:\DevKit打开控制台CMD，执行12ruby dk.rb initnotepad config.yml 执行完毕后会打开记事本，请确认内容如下：123456789101112131415# This configuration file contains the absolute path locations of all# installed Rubies to be enhanced to work with the DevKit. This config# file is generated by the 'ruby dk.rb init' step and may be modified# before running the 'ruby dk.rb install' step. To include any installed# Rubies that were not automagically discovered, simply add a line below# the triple hyphens with the absolute path to the Ruby root directory.## Example:## ---# - C:/ruby19trunk# - C:/ruby192dev#---- C:/Ruby23-x64 注意最后一行即可，如果你的Ruby安装目录不是默认的，请手动替换。 更改GEM默认镜像地址，由于众所周知的原因，gem安装包的时候十分慢，所以需要对镜像做下替换 打开控制台，执行1gem sources --add https://gems.ruby-china.org/ --remove https://rubygems.org/ 如果执行出错，类似于“SSL”错误的话，使用下面的命令1gem sources --add http://gems.ruby-china.org/ --remove https://rubygems.org/ 就可以了。 安装jekyll1gem install jekyll 由于更换了镜像地址，安装起来会非常快。 控制台执行123jekyll new blogcd blogjekyll serve 引用信息 jekyll文档]]></content>
-      <categories>
-        <category>other</category>
-      </categories>
-      <tags>
-        <tag>jekyll</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Yii2 migrate使用]]></title>
     <url>%2F2017%2F01%2F20%2Fyii2-migrate.html</url>
     <content type="text"><![CDATA[试想一个很简单的场景，在使用Yii2开发时，如果对已经有数据的数据表结构进行编辑的话，需要同步数据结构需要在本地导出一份SQL，放到线上去执行SQL，非常的不方便。而有了Yii2 migrate工具之后，这个问题简直不是问题。以下对常用的表结构操作进行演示。 关键命令 创建migrate 1yii migrate/create [名称] 执行migrate升级 1yii migrate 执行migrate降级 1yii migrate/down 创建新表执行创建migrate命令后，项目文件夹下migrations中会多出m170119093917[名称].php的文件，文件名称可能不同，但是结构是相同的，打开该php文件，内容如下 123456789101112131415161718192021222324252627282930313233&lt;?phpuse yii\db\Migration;class m170119_093917_name_20 extends Migration&#123; public function up() &#123; $tableName = 't_category'; $this-&gt;createTable($tableName, [ 'id' =&gt; $this-&gt;primaryKey(), 'name' =&gt; $this-&gt;string(10)-&gt;notNull()-&gt;unique()-&gt;comment('标识'), 'title' =&gt; $this-&gt;string(6)-&gt;notNull()-&gt;comment('名称'), 'count' =&gt; $this-&gt;integer()-&gt;defaultValue(0)-&gt;notNull()-&gt;comment('入驻数量') ]); &#125; public function down() &#123; echo "m170119_093917_name_20 cannot be reverted.\n"; return false; &#125; /* // Use safeUp/safeDown to run migration code within a transaction public function safeUp() &#123; &#125; public function safeDown() &#123; &#125; */&#125; 如果需要支持降级的话在down方法中写逻辑返回true即可。 以下代码演示Migration操作，不再新建migrate，执行使用本php文件即可 添加字段12&lt;?php$this-&gt;addColumn('t_category','sort',$this-&gt;integer()-&gt;defaultValue(0)-&gt;notNull()-&gt;comment('排序')); 添加索引12&lt;?php$this-&gt;createIndex('sort','t_category',['sort']); 添加唯一索引12&lt;?php$this-&gt;createIndex('sort','t_category',['sort'],true); 更新字段12&lt;?php$this-&gt;alterColumn('t_category','sort',$this-&gt;smallInteger()-&gt;defaultValue(0)-&gt;notNull()-&gt;comment('排序')); 删除字段12&lt;?php$this-&gt;dropColumn('t_category','sort'); 删除表12&lt;?php$this-&gt;dropTable('t_category');]]></content>
@@ -372,6 +369,17 @@
       <tags>
         <tag>yii2</tag>
         <tag>migrate</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[在windows上安装jekyll]]></title>
+    <url>%2F2017%2F01%2F20%2Finstall-jekyll-on-windows.html</url>
+    <content type="text"><![CDATA[早些时候用的ubuntu，安装jekyll确实挺简单，可能是终端强大吧。最近工作环境切换到windows，无奈想写博文的时候却发现需要切换到ubuntu，不是那么方便。打算在windows上部署一下jekyll。 软件环境 Windows 10 企业版 Ruby 2.3.2-x64 部署过程 安装 Ruby2.3.2-x64，安装目录请不要带空格，建议使用默认的”C:\Ruby23-x64”，安装的时候勾上”Add To Path”选项 确认ruby安装成功，打开控制台，执行 1ruby -v 安装 Devkit，安装目录请不要带空格，建议解压到”C:\DevKit” 在C:\DevKit打开控制台CMD，执行12ruby dk.rb initnotepad config.yml 执行完毕后会打开记事本，请确认内容如下：123456789101112131415# This configuration file contains the absolute path locations of all# installed Rubies to be enhanced to work with the DevKit. This config# file is generated by the 'ruby dk.rb init' step and may be modified# before running the 'ruby dk.rb install' step. To include any installed# Rubies that were not automagically discovered, simply add a line below# the triple hyphens with the absolute path to the Ruby root directory.## Example:## ---# - C:/ruby19trunk# - C:/ruby192dev#---- C:/Ruby23-x64 注意最后一行即可，如果你的Ruby安装目录不是默认的，请手动替换。 更改GEM默认镜像地址，由于众所周知的原因，gem安装包的时候十分慢，所以需要对镜像做下替换 打开控制台，执行1gem sources --add https://gems.ruby-china.org/ --remove https://rubygems.org/ 如果执行出错，类似于“SSL”错误的话，使用下面的命令1gem sources --add http://gems.ruby-china.org/ --remove https://rubygems.org/ 就可以了。 安装jekyll1gem install jekyll 由于更换了镜像地址，安装起来会非常快。 控制台执行123jekyll new blogcd blogjekyll serve 引用信息 jekyll文档]]></content>
+      <categories>
+        <category>other</category>
+      </categories>
+      <tags>
+        <tag>jekyll</tag>
       </tags>
   </entry>
   <entry>
@@ -587,8 +595,8 @@
         <category>open-source-projects</category>
       </categories>
       <tags>
-        <tag>nodejs</tag>
         <tag>wechat</tag>
+        <tag>nodejs</tag>
         <tag>微信公众平台</tag>
         <tag>wechat-platform</tag>
       </tags>
@@ -777,9 +785,9 @@
         <category>react</category>
       </categories>
       <tags>
-        <tag>react</tag>
         <tag>es6</tag>
         <tag>flux</tag>
+        <tag>react</tag>
         <tag>webpack</tag>
       </tags>
   </entry>
