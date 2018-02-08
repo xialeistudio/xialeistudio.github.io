@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[nodejs thrift多路复用客户端]]></title>
+    <url>%2F2018%2F02%2F08%2Fnodejs-thrift-multiple-client.html</url>
+    <content type="text"><![CDATA[http://thrift.apache.org/tutorial/nodejs中只实现了服务端是单一service的情形，而对于服务端属于多个服务复用一个连接地址的例子却未实现。 查看thrift的nodejs库源码发现实际上还是支持的。以下来展示调用单一服务和多个服务的区别。 单一服务1234567891011121314var thrift = require('thrift');var Calculator = require('./gen-nodejs/Calculator');var ttypes = require('./gen-nodejs/tutorial_types');const assert = require('assert');var transport = thrift.TBufferedTransport;var protocol = thrift.TBinaryProtocol;var connection = thrift.createConnection("localhost", 9090, &#123; transport : transport, protocol : protocol&#125;);var client = thrift.createClient(Calculator, connection);// 已经可以调用client方法 复用服务123456789101112131415var thrift = require('thrift');var Calculator = require('./gen-nodejs/Calculator');var ttypes = require('./gen-nodejs/tutorial_types');const assert = require('assert');var transport = thrift.TBufferedTransport;var protocol = thrift.TBinaryProtocol;var connection = thrift.createConnection("localhost", 9090, &#123; transport : transport, protocol : protocol&#125;);const m = new thrift.Multiplexer(); // 关键const client = m.createClient('calculator', Calculator, connection); // calculator为服务端声明的服务名称// 已经可以调用client方法 经过测试，以上代码能与golang实现的服务端正常通信。]]></content>
+      <categories>
+        <category>nodejs</category>
+      </categories>
+      <tags>
+        <tag>thrift</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[golang通用连接池的实现]]></title>
     <url>%2F2018%2F02%2F01%2Fgolang-generic-pool.html</url>
     <content type="text"><![CDATA[golang的channel除了goroutine通信之外还有很多其他的功能，本文将实现一种基于channel的通用连接池。 何为通用？连接池的实现不依赖具体的实例，而依赖某个接口，本文的连接池选用的是io.Closer接口，只要是实现了该接口的对象都可以被池管理。当然，你可以实现基于interface{}的连接池，这样任何对象都可以被管理。 实现原理将连接句柄存入channel中，由于缓存channel的特性，获取连接时如果池中有连接，将直接返回，如果池中没有连接，将阻塞或者新建连接（没超过最大限制的情况下）。由于面向接口编程，所有创建连接的逻辑是不清楚的，这里需要传入一个函数，该函数返回一个io.Closer对象。 实现由于并发问题，在需要操作池中互斥数据的时候需要加锁。 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126127128129package poolimport ( "errors" "io" "sync" "time")var ( ErrInvalidConfig = errors.New("invalid pool config") ErrPoolClosed = errors.New("pool closed"))type factory func() (io.Closer, error)type Pool interface &#123; Acquire() (io.Closer, error) // 获取资源 Release(io.Closer) error // 释放资源 Close(io.Closer) error // 关闭资源 Shutdown() error // 关闭池&#125;type GenericPool struct &#123; sync.Mutex pool chan io.Closer maxOpen int // 池中最大资源数 numOpen int // 当前池中资源数 minOpen int // 池中最少资源数 closed bool // 池是否已关闭 maxLifetime time.Duration factory factory // 创建连接的方法&#125;func NewGenericPool(minOpen, maxOpen int, maxLifetime time.Duration, factory factory) (*GenericPool, error) &#123; if maxOpen &lt;= 0 || minOpen &gt; maxOpen &#123; return nil, ErrInvalidConfig &#125; p := &amp;GenericPool&#123; maxOpen: maxOpen, minOpen: minOpen, maxLifetime: maxLifetime, factory: factory, pool: make(chan io.Closer, maxOpen), &#125; for i := 0; i &lt; minOpen; i++ &#123; closer, err := factory() if err != nil &#123; continue &#125; p.numOpen++ p.pool &lt;- closer &#125; return p, nil&#125;func (p *GenericPool) Acquire() (io.Closer, error) &#123; if p.closed &#123; return nil, ErrPoolClosed &#125; for &#123; closer, err := p.getOrCreate() if err != nil &#123; return nil, err &#125; // todo maxLifttime处理 return closer, nil &#125;&#125;func (p *GenericPool) getOrCreate() (io.Closer, error) &#123; select &#123; case closer := &lt;-p.pool: return closer, nil default: &#125; p.Lock() if p.numOpen &gt;= p.maxOpen &#123; closer := &lt;-p.pool p.Unlock() return closer, nil &#125; // 新建连接 closer, err := p.factory() if err != nil &#123; p.Unlock() return nil, err &#125; p.numOpen++ p.Unlock() return closer, nil&#125;// 释放单个资源到连接池func (p *GenericPool) Release(closer io.Closer) error &#123; if p.closed &#123; return ErrPoolClosed &#125; p.Lock() p.pool &lt;- closer p.Unlock() return nil&#125;// 关闭单个资源func (p *GenericPool) Close(closer io.Closer) error &#123; p.Lock() closer.Close() p.numOpen-- p.Unlock() return nil&#125;// 关闭连接池，释放所有资源func (p *GenericPool) Shutdown() error &#123; if p.closed &#123; return ErrPoolClosed &#125; p.Lock() close(p.pool) for closer := range p.pool &#123; closer.Close() p.numOpen-- &#125; p.closed = true p.Unlock() return nil&#125; 结论基于该连接池，可以管理所有io.Closer对象。比如memcached,redis等等，非常方便！]]></content>
@@ -1322,8 +1333,8 @@
         <category>angularjs</category>
       </categories>
       <tags>
-        <tag>directive</tag>
         <tag>angularjs</tag>
+        <tag>directive</tag>
         <tag>ueditor</tag>
         <tag>rich text editor</tag>
       </tags>
