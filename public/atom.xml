@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https//www.ddhigh.com/"/>
-  <updated>2018-02-08T07:40:52.838Z</updated>
+  <updated>2018-02-28T08:52:08.203Z</updated>
   <id>https//www.ddhigh.com/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>golang使用CSV导出大量数据</title>
+    <link href="https//www.ddhigh.com/2018/02/28/golang-export-csv.html"/>
+    <id>https//www.ddhigh.com/2018/02/28/golang-export-csv.html</id>
+    <published>2018-02-28T08:43:13.000Z</published>
+    <updated>2018-02-28T08:52:08.203Z</updated>
+    
+    <content type="html"><![CDATA[<p>最近在做一个导出功能，最初是使用<a href="https://github.com/tealeg/xlsx" target="_blank" rel="external">https://github.com/tealeg/xlsx</a>做的，但是发现导出有个30W行的excel时，这玩意内存彪到700M+，后来发现只是导出数据为表格，并没有其他东西，于是打算使用CSV导出。</p><h2 id="CSV格式简介"><a href="#CSV格式简介" class="headerlink" title="CSV格式简介"></a>CSV格式简介</h2><p>CSV本质上是个文本文件，该文件有以下要求：</p><ol><li>列之间用逗号分隔，行之间用换行分隔</li><li>单元格如果有逗号，引号之类的字符，该单元格需要使用双引号括起来</li><li>如果包含中文，需要使用GBK编码，否则会乱码</li></ol><h2 id="golang实现"><a href="#golang实现" class="headerlink" title="golang实现"></a>golang实现</h2><ol><li><p>UTF8转GBK函数(需要 <code>go get golang.org/x/text/</code>)</p> <figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">UTF82GBK</span><span class="params">(src <span class="keyword">string</span>)</span> <span class="params">(<span class="keyword">string</span>, error)</span></span> &#123;</div><div class="line"> reader := transform.NewReader(strings.NewReader(src), simplifiedchinese.GBK.NewEncoder())</div><div class="line"> <span class="keyword">if</span> buf, err := ioutil.ReadAll(reader); err != <span class="literal">nil</span> &#123;</div><div class="line">  <span class="keyword">return</span> <span class="string">""</span>, err</div><div class="line"> &#125; <span class="keyword">else</span> &#123;</div><div class="line">  <span class="keyword">return</span> <span class="keyword">string</span>(buf), <span class="literal">nil</span></div><div class="line"> &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></li><li><p>导出代码</p> <figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">filename := <span class="string">"test.csv"</span></div><div class="line">fp, err := os.Create(filename) <span class="comment">// 创建文件句柄</span></div><div class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</div><div class="line">    <span class="keyword">return</span> <span class="literal">nil</span>, err</div><div class="line">&#125;</div><div class="line"><span class="keyword">defer</span> fp.Close()</div><div class="line">columns := []<span class="keyword">string</span>&#123;<span class="string">"姓名"</span>, <span class="string">"电话"</span>, <span class="string">"公司"</span>, <span class="string">"职位"</span>, <span class="string">"加入时间"</span>&#125;</div><div class="line"><span class="keyword">if</span> line, err := util.UTF82GBK(strings.Join(columns, <span class="string">","</span>)); err == <span class="literal">nil</span> &#123; <span class="comment">// 写入一行</span></div><div class="line">    fp.WriteString(line + <span class="string">"\n"</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure></li></ol><p>其他语言也可以使用类似方法导出数据，只要满足CSV的几个条件即可。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;最近在做一个导出功能，最初是使用&lt;a href=&quot;https://github.com/tealeg/xlsx&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/tealeg/xlsx&lt;/a&gt;做的，但是发现导出有个30W行
+      
+    
+    </summary>
+    
+      <category term="golang" scheme="https//www.ddhigh.com/categories/golang/"/>
+    
+    
+      <category term="excel" scheme="https//www.ddhigh.com/tags/excel/"/>
+    
+      <category term="golang" scheme="https//www.ddhigh.com/tags/golang/"/>
+    
+      <category term="csv" scheme="https//www.ddhigh.com/tags/csv/"/>
+    
+  </entry>
   
   <entry>
     <title>nodejs thrift多路复用客户端</title>
@@ -504,28 +533,6 @@
       <category term="java" scheme="https//www.ddhigh.com/tags/java/"/>
     
       <category term="servlet" scheme="https//www.ddhigh.com/tags/servlet/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>excel-stream Unknown Encoding错误问题</title>
-    <link href="https//www.ddhigh.com/2017/10/15/excel-stream-unknown-encoding.html"/>
-    <id>https//www.ddhigh.com/2017/10/15/excel-stream-unknown-encoding.html</id>
-    <published>2017-10-15T13:28:45.000Z</published>
-    <updated>2018-01-20T05:42:52.403Z</updated>
-    
-    <content type="html"><![CDATA[<p>项目上线有半年多了，一直没有出过问题，但是前几天升级过一次NodeJs到8.x的时候就出现过这个问题了。因为采用了消息队列，但是一到这里就挂，导致进程重复启动几百次。</p><h1 id="报错信息"><a href="#报错信息" class="headerlink" title="报错信息"></a>报错信息</h1><figure class="highlight glsl"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">excel-<span class="keyword">stream</span>/csv-<span class="keyword">stream</span>/<span class="keyword">index</span>.js <span class="number">59</span> Buffer unknow encoding</div></pre></td></tr></table></figure><h1 id="问题排查"><a href="#问题排查" class="headerlink" title="问题排查"></a>问题排查</h1><p>google了一下无果，后面发现反正源码反正自己有，倒不如自己改改，直接定位到相关代码即可。</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">CSVStream.prototype.write = <span class="function"><span class="keyword">function</span>(<span class="params">buffer,encoding</span>)</span>&#123;</div><div class="line"><span class="keyword">this</span>._encoding = encoding || <span class="keyword">this</span>._encoding;</div><div class="line"><span class="keyword">if</span>(<span class="keyword">this</span>._ended) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Cannot write after end has been called.'</span>);</div><div class="line"><span class="keyword">if</span>(buffer) <span class="keyword">this</span>._buffer = Buffer.concat([<span class="keyword">this</span>._buffer, buffer], <span class="keyword">this</span>._buffer.length + buffer.length);</div><div class="line"><span class="keyword">if</span>(<span class="keyword">this</span>._paused) <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line"><span class="keyword">this</span>._parser.parse(<span class="keyword">this</span>._buffer.toString(<span class="keyword">this</span>._encoding));</div><div class="line"><span class="keyword">this</span>._buffer = <span class="keyword">new</span> Buffer(<span class="number">0</span>);</div><div class="line"><span class="keyword">return</span> !<span class="keyword">this</span>._paused;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>报错具体行数是<strong>this._parser.parse(this._buffer.toString(this._encoding));</strong>，错误很明显了，提示encoding错误。</p><p>那直接往上面找，发现<strong>this._encoding = encoding || this._encoding</strong>，这里就有可能传入的encoding导致了错误。</p><h1 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h1><p>这个项目已经3年没维护了，所以要修正问题的话，只能手动改了。</p><p>修改办法如下</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">this</span>._parser.parse(<span class="keyword">this</span>._buffer.toString(<span class="keyword">this</span>._encoding));</div></pre></td></tr></table></figure><p>改为</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">this</span>._parser.parse(<span class="keyword">this</span>._buffer.toString());</div></pre></td></tr></table></figure><p>重新运行之后没有发现问题。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;项目上线有半年多了，一直没有出过问题，但是前几天升级过一次NodeJs到8.x的时候就出现过这个问题了。因为采用了消息队列，但是一到这里就挂，导致进程重复启动几百次。&lt;/p&gt;
-&lt;h1 id=&quot;报错信息&quot;&gt;&lt;a href=&quot;#报错信息&quot; class=&quot;headerlink&quot; 
-      
-    
-    </summary>
-    
     
   </entry>
   
