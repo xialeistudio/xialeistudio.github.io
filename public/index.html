@@ -392,7 +392,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https//www.ddhigh.com/2018/03/01/golang-multipart-upload.html">
+    <link itemprop="mainEntityOfPage" href="https//www.ddhigh.com/2018/03/01/golang-upload.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="xialeistudio">
@@ -411,7 +411,7 @@
         
           <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/03/01/golang-multipart-upload.html" itemprop="url">golang-multipart-upload</a></h2>
+                <a class="post-title-link" href="/2018/03/01/golang-upload.html" itemprop="url">golang multipart上传文件到远端（如上传微信临时素材）</a></h2>
         
 
         <div class="post-meta">
@@ -434,6 +434,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/golang/" itemprop="url" rel="index">
+                    <span itemprop="name">golang</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -441,7 +463,7 @@
 
           
           
-             <span id="/2018/03/01/golang-multipart-upload.html" class="leancloud_visitors" data-flag-title="golang-multipart-upload">
+             <span id="/2018/03/01/golang-upload.html" class="leancloud_visitors" data-flag-title="golang multipart上传文件到远端（如上传微信临时素材）">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -474,11 +496,12 @@
       
         
           
-          
-          
+          最近在开发一个关注之后通过客服消息推送一张海报给用户的功能，海报图片是本地生成好的，需要上传到微信临时素材之后通过客服消息推送给用户。上传文件需要multipart/form-data格式的表单，所以golang默认的http.POST方法是实现不了的。需要自行实现body参数逻辑。
+上传请求初始化
+          ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/03/01/golang-multipart-upload.html#more" rel="contents">
+            <a class="btn" href="/2018/03/01/golang-upload.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1996,7 +2019,7 @@ http请求时resp.Body，刚开始写golang的时候，如果会用ioutil.readAl
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">216</span>
+                  <span class="site-state-item-count">217</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

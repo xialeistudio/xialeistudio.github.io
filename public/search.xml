@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[golang-multipart-upload]]></title>
-    <url>%2F2018%2F03%2F01%2Fgolang-multipart-upload.html</url>
-    <content type="text"></content>
+    <title><![CDATA[golang multipart上传文件到远端（如上传微信临时素材）]]></title>
+    <url>%2F2018%2F03%2F01%2Fgolang-upload.html</url>
+    <content type="text"><![CDATA[最近在开发一个关注之后通过客服消息推送一张海报给用户的功能，海报图片是本地生成好的，需要上传到微信临时素材之后通过客服消息推送给用户。上传文件需要multipart/form-data格式的表单，所以golang默认的http.POST方法是实现不了的。需要自行实现body参数逻辑。 上传请求初始化12345678910111213141516171819202122232425262728// 新建上传请求func NewUploadRequest(link string, params map[string]string, name, path string) (*http.Request, error) &#123; fp, err := os.Open(path) // 打开文件句柄 if err != nil &#123; return nil, err &#125; defer fp.Close() body := &amp;bytes.Buffer&#123;&#125; // 初始化body参数 writer := multipart.NewWriter(body) // 实例化multipart part, err := writer.CreateFormFile(name, filepath.Base(path)) // 创建multipart 文件字段 if err != nil &#123; return nil, err &#125; _, err = io.Copy(part, fp) // 写入文件数据到multipart for key, val := range params &#123; _ = writer.WriteField(key, val) // 写入body中额外参数，比如七牛上传时需要提供token &#125; err = writer.Close() if err != nil &#123; return nil, err &#125; req, err := http.NewRequest("POST", link, body) // 新建请求 if err != nil &#123; return nil, err &#125; req.Header.Set("Content-Type", "multipart/form-data") // 设置请求头,!!!非常重要，否则远端无法识别请求 return req, nil&#125; 上传流程1234567891011121314151617181920212223242526272829303132333435func (m *Task) upload(appid string) (string, error) &#123; filename, err := m.download() // 下载远端海报文件到本地路径 if err != nil &#123; return "", err &#125; // 获取accessToken accessToken, err := m.passport.GetAccessToken(appid) if err != nil &#123; return "", err &#125; params := &amp;url.Values&#123; "access_token": []string&#123;accessToken&#125;, "type": []string&#123;"image"&#125;, &#125; req, err := util.NewUploadRequest("https://api.weixin.qq.com/cgi-bin/media/upload?"+params.Encode(), nil, "media", filename) // 上传到微信 if err != nil &#123; return "", err &#125; resp, err := http.DefaultClient.Do(req) if err != nil &#123; return "", err &#125; defer resp.Body.Close() ret := make(map[string]interface&#123;&#125;) if err := json.NewDecoder(resp.Body).Decode(&amp;ret); err != nil &#123; return "", err &#125; if mediaId, ok := ret["media_id"]; ok &#123; return mediaId.(string), nil &#125; else if errmsg, ok := ret["errmsg"]; ok &#123; return "", errors.New(errmsg.(string)) &#125; else &#123; return "", errors.New("上传失败") &#125;&#125;]]></content>
+      <categories>
+        <category>golang</category>
+      </categories>
+      <tags>
+        <tag>multipart</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[Docker部署golang应用时时区问题]]></title>
@@ -342,19 +348,19 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[使用NodeJs提供syslogd服务端]]></title>
-    <url>%2F2017%2F04%2F27%2Fnode-syslogd.html</url>
-    <content type="text"><![CDATA[syslog作为Linux发行版一个重要组件，相信大家都不陌生，而如果每台服务器都独立使用一份的话，不能做到日志统一管理，对于以后的日志查询不太方便。syslog有标准的协议格式，这里不做讨论，有兴趣的可以基于协议的报文结构使用socket编程实现。 部署服务端本文使用Nodejs来部署一台syslog服务端。 终端执行 12npm init -ynpm install syslogd --save index.js 1234567891011const syslogd = require('syslogd');const server = syslogd(data =&gt; &#123; console.log(data);&#125;);server.listen(514,e =&gt; &#123; if(e!==null) &#123; console.error(e); return; &#125; console.log('listen on 514');&#125;); 终端执行 1node index.js 好了，我们的syslog服务器已经部署完毕了。是不是很简单呢~ nginx日志接入syslog打开nginx配置文件 12345server &#123; ... access_log syslog:server=127.0.0.1; ...&#125; 重启nginx就可以发现nodejs服务端已经成功接收日志信息了。注意：是重启不是reload]]></content>
-      <categories>
-        <category>nodejs</category>
-      </categories>
-  </entry>
-  <entry>
     <title><![CDATA[log4php使用syslog记录日志]]></title>
     <url>%2F2017%2F04%2F27%2Flog4php-syslog.html</url>
     <content type="text"><![CDATA[log4php是apache基金会下的一个开源项目，灵活、强大，已经有几个项目使用了log4php处理日志，目前遇到的问题是服务器太多的时候日志如何统一管理，本来想使用数据库存储。但是日志格式成了一个问题，而且不利于扩展，如果临时需要保存到文件，又要更改log4php的配置。好在log4php提供了syslog的一个appender，可以将日志写入syslog; log4php配置12345678910111213log4php.rootLogger=INFO, stdout, stderrlog4php.appender.stdout=LoggerAppenderConsolelog4php.appender.stdout.layout=LoggerLayoutPatternlog4php.appender.stdout.layout.ConversionPattern=%date&#123;Y-m-d H:i:s&#125; [%-5p] %m%nlog4php.appender.stdout.threshold=INFOlog4php.appender.stderr=LoggerAppenderSysloglog4php.appender.stderr.ident=qun.hk-tasklog4php.appender.stderr.priority=ERRlog4php.appender.stderr.facility=LOCAL0log4php.appender.stderr.layout=LoggerLayoutPatternlog4php.appender.stderr.layout.ConversionPattern=%date&#123;Y-m-d H:i:s&#125; %m%nlog4php.appender.stderr.threshold=WARN 这里使用两个输出目的地,stdout输出到终端，stderr输出到syslod，log4php配置对应rsyslog的配置关系为： ident -&gt; syslog中的tag priority -&gt; syslog中的priority facility -&gt; syslog中的facility，请注意全部为大写 rsyslog配置rsyslog配置文件一般在 /etc/rsyslog.conf 以及 /etc/rsyslog.d目录下我们不更改主配置文件，在/etc/rsyslog.d/目录下新建文件 local0.conf```1234内容为```local0.* /var/log/local0.log rsyslog输出可以写成服务器，本文为了测试直接写入文件，有需要的可以根据实际情况进行转发。重启rsyslog rsyslog restart```12345678## PHP加载配置```php&lt;?php\Logger::configure(__DIR__ . &apos;/log4php.properties&apos;);$logger = \Logger::getLogger(&apos;default&apos;);$logger-&gt;info(&apos;info&apos;);$logger-&gt;error(&apos;error&apos;); 可以看到/var/log/local0.log中多出一行error的日志]]></content>
       <categories>
         <category>php</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[使用NodeJs提供syslogd服务端]]></title>
+    <url>%2F2017%2F04%2F27%2Fnode-syslogd.html</url>
+    <content type="text"><![CDATA[syslog作为Linux发行版一个重要组件，相信大家都不陌生，而如果每台服务器都独立使用一份的话，不能做到日志统一管理，对于以后的日志查询不太方便。syslog有标准的协议格式，这里不做讨论，有兴趣的可以基于协议的报文结构使用socket编程实现。 部署服务端本文使用Nodejs来部署一台syslog服务端。 终端执行 12npm init -ynpm install syslogd --save index.js 1234567891011const syslogd = require('syslogd');const server = syslogd(data =&gt; &#123; console.log(data);&#125;);server.listen(514,e =&gt; &#123; if(e!==null) &#123; console.error(e); return; &#125; console.log('listen on 514');&#125;); 终端执行 1node index.js 好了，我们的syslog服务器已经部署完毕了。是不是很简单呢~ nginx日志接入syslog打开nginx配置文件 12345server &#123; ... access_log syslog:server=127.0.0.1; ...&#125; 重启nginx就可以发现nodejs服务端已经成功接收日志信息了。注意：是重启不是reload]]></content>
+      <categories>
+        <category>nodejs</category>
       </categories>
   </entry>
   <entry>
@@ -1074,8 +1080,8 @@
         <category>open-source-projects</category>
       </categories>
       <tags>
-        <tag>angularjs</tag>
         <tag>bower</tag>
+        <tag>angularjs</tag>
       </tags>
   </entry>
   <entry>
@@ -1374,8 +1380,8 @@
         <category>angularjs</category>
       </categories>
       <tags>
-        <tag>angularjs</tag>
         <tag>directive</tag>
+        <tag>angularjs</tag>
         <tag>ueditor</tag>
         <tag>rich text editor</tag>
       </tags>
@@ -1449,8 +1455,8 @@
         <category>css</category>
       </categories>
       <tags>
-        <tag>css3</tag>
         <tag>loading</tag>
+        <tag>css3</tag>
       </tags>
   </entry>
   <entry>
