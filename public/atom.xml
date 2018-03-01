@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https//www.ddhigh.com/"/>
-  <updated>2018-03-01T03:54:37.007Z</updated>
+  <updated>2018-03-01T07:51:02.984Z</updated>
   <id>https//www.ddhigh.com/</id>
   
   <author>
@@ -15,6 +15,20 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>golang-multipart-upload</title>
+    <link href="https//www.ddhigh.com/2018/03/01/golang-multipart-upload.html"/>
+    <id>https//www.ddhigh.com/2018/03/01/golang-multipart-upload.html</id>
+    <published>2018-03-01T07:51:02.000Z</published>
+    <updated>2018-03-01T07:51:02.984Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>Docker部署golang应用时时区问题</title>
@@ -506,36 +520,6 @@
       <category term="yii2" scheme="https//www.ddhigh.com/tags/yii2/"/>
     
       <category term="csrf" scheme="https//www.ddhigh.com/tags/csrf/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>koa-cooke使用maxAge代替expires来设置过期时间</title>
-    <link href="https//www.ddhigh.com/2017/10/17/koa-cookie-use-maxage.html"/>
-    <id>https//www.ddhigh.com/2017/10/17/koa-cookie-use-maxage.html</id>
-    <published>2017-10-17T09:13:44.000Z</published>
-    <updated>2018-01-20T05:42:52.403Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="expires"><a href="#expires" class="headerlink" title="expires"></a>expires</h1><p>原来设置cookie使用的以下代码</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> cookieOptions = &#123;</div><div class="line">  expires: moment().add(<span class="number">6</span>,<span class="string">'day'</span>).toDate(),</div><div class="line">&#125;;</div></pre></td></tr></table></figure><p>但是查看network的时候，cookie虽然设置了，但是过期时间比现在还早，导致一设置就过期，所以expires貌似没作用。</p><h1 id="maxage"><a href="#maxage" class="headerlink" title="maxage"></a>maxage</h1><p>查看对应的typescript定义文件<strong>index.d.ts</strong>发现还有一个<strong>maxAge</strong>选项也可以用来控制cookie过期时间<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * a number representing the milliseconds from Date.now() for expiry</span></div><div class="line"><span class="comment"> */</span></div><div class="line">maxAge?: number;</div></pre></td></tr></table></figure></p><p>这个参数更简单，<strong>基于当前时间的毫秒数</strong>，使用以下代码测试之后，发现过期时间跟预期一致<strong>一个星期</strong>：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> cookieOptions = &#123;</div><div class="line">  maxAge: <span class="number">3600</span> * <span class="number">24</span> * <span class="number">7</span> * <span class="number">1000</span>,</div><div class="line">&#125;;</div></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;expires&quot;&gt;&lt;a href=&quot;#expires&quot; class=&quot;headerlink&quot; title=&quot;expires&quot;&gt;&lt;/a&gt;expires&lt;/h1&gt;&lt;p&gt;原来设置cookie使用的以下代码&lt;/p&gt;
-&lt;figure class=&quot;highlight jav
-      
-    
-    </summary>
-    
-    
-      <category term="koa" scheme="https//www.ddhigh.com/tags/koa/"/>
-    
-      <category term="koa2" scheme="https//www.ddhigh.com/tags/koa2/"/>
-    
-      <category term="cookie" scheme="https//www.ddhigh.com/tags/cookie/"/>
-    
-      <category term="koa-cookie" scheme="https//www.ddhigh.com/tags/koa-cookie/"/>
     
   </entry>
   

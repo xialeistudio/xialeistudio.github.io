@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[golang-multipart-upload]]></title>
+    <url>%2F2018%2F03%2F01%2Fgolang-multipart-upload.html</url>
+    <content type="text"></content>
+  </entry>
+  <entry>
     <title><![CDATA[Docker部署golang应用时时区问题]]></title>
     <url>%2F2018%2F03%2F01%2Fgolang-docker-timezone.html</url>
     <content type="text"><![CDATA[目前golang用的基础镜像是busybox，由于golang交叉编译之后只有一个二进制文件，可以直接部署到容器中运行，容器镜像大小几乎等于二进制文件大小。 带来的问题由于基础镜像太过精简，目前遇到的问题是将时间戳格式化为时间字符串时发现差了8个小时。 尝试过的解决办法刚开始使用了Location时区相关API，但是部署到容器中发现直接报错了，因为容器中缺少相关的系统调用函数。代码如下： 12loc, _ := time.LoadLocation("Asia/Shanghai")time.Now().In(loc).Format("2006-01-02 15:04:05") 目前应用会部署到docker容器中，故处理办法比较原始，直接在Time对象上添加8个小时来解决时差问题。代码如下: 1time.Now().Add(time.Hour * 8).Format("2006年01月02日 15:04"), 暂时解决了这个问题。]]></content>
@@ -246,17 +251,6 @@
       </categories>
   </entry>
   <entry>
-    <title><![CDATA[使用pm2来保证Spring Boot应用稳定运行]]></title>
-    <url>%2F2017%2F07%2F31%2Fspring-boot-pm2.html</url>
-    <content type="text"><![CDATA[Spring Boot开发web应用就像开发普通的java程序一般简洁，因为其内嵌了web容易，启动的时候只需要一条命令java -jar server.jar即可，非常方便。但是由此而来的问题是万一应用挂了怎么办？ 别担心，有pm2进程管理工具可以帮到你。 PM2简介pm2原先是nodejs应用的进程管理工具，不过其良好的设计以及扩展性可以手动执行执行进程。 PM2安装 安装NodeJs npm install pm2 -g PM2基本命令 pm2 list 查看所有被PM2管理的进程列表 pm2 start xxx 启动一个应用 pm2 stop xxx 停止一个应用 pm2 restart xxx 重启一个应用 pm2 describe xxx 查看应用详情 pm2 startup, pm2 save 两条命令，用来保证服务器启动时,pm2管理的程序自动运行 Java程序处理在jar的同级目录新建应用启动配置文件，如pm2.json，内容如下： 12345678910&#123; "name": "my-server", "script": "/usr/bin/java", "args": [ "-jar", "server.jar" ], "exec_interpreter": "", "exec_mode": "fork"&#125; 说明如下： name 进程名称（显示在pm2 list命令中） script 执行进程名称，如果需要执行PHP脚本则填写php解释器的路径，本文为java args 传给执行进程的参数，多个参数以数组单元分割 exec_interpreter NodeJs解析器，本文不适用 exec_mode 执行模式[cluster|fork]这个针对NodeJs应用的配置，非NodeJs应用统一fork 配置文件完成后，使用1pm2 start pm2.json 即可看到应用被启动 日志管理日志路径在~/.pm2/logs，stdout和stderr被分开存放，程序中的所有stdout和stderr都被收集方便查错。]]></content>
-      <categories>
-        <category>spring book</category>
-      </categories>
-      <tags>
-        <tag>pm2</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Spring Boot JPA 返回json时排除Null字段]]></title>
     <url>%2F2017%2F07%2F31%2Fspring-boot-exclude-null.html</url>
     <content type="text"><![CDATA[Spring Boot在返回JSON的时候默认会返回null字段，这个对客户端一般没什么作用，还会增加服务器带宽压力。使用如下配置可以屏蔽。 在pojo对象上添加注解 123@JsonInclude(JsonInclude.Include.NON_NULL)class User &#123;&#125; 再使用@ResponseBody的时候就不会返回Null字段了。]]></content>
@@ -266,6 +260,17 @@
       <tags>
         <tag>json</tag>
         <tag>jpa</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[使用pm2来保证Spring Boot应用稳定运行]]></title>
+    <url>%2F2017%2F07%2F31%2Fspring-boot-pm2.html</url>
+    <content type="text"><![CDATA[Spring Boot开发web应用就像开发普通的java程序一般简洁，因为其内嵌了web容易，启动的时候只需要一条命令java -jar server.jar即可，非常方便。但是由此而来的问题是万一应用挂了怎么办？ 别担心，有pm2进程管理工具可以帮到你。 PM2简介pm2原先是nodejs应用的进程管理工具，不过其良好的设计以及扩展性可以手动执行执行进程。 PM2安装 安装NodeJs npm install pm2 -g PM2基本命令 pm2 list 查看所有被PM2管理的进程列表 pm2 start xxx 启动一个应用 pm2 stop xxx 停止一个应用 pm2 restart xxx 重启一个应用 pm2 describe xxx 查看应用详情 pm2 startup, pm2 save 两条命令，用来保证服务器启动时,pm2管理的程序自动运行 Java程序处理在jar的同级目录新建应用启动配置文件，如pm2.json，内容如下： 12345678910&#123; "name": "my-server", "script": "/usr/bin/java", "args": [ "-jar", "server.jar" ], "exec_interpreter": "", "exec_mode": "fork"&#125; 说明如下： name 进程名称（显示在pm2 list命令中） script 执行进程名称，如果需要执行PHP脚本则填写php解释器的路径，本文为java args 传给执行进程的参数，多个参数以数组单元分割 exec_interpreter NodeJs解析器，本文不适用 exec_mode 执行模式[cluster|fork]这个针对NodeJs应用的配置，非NodeJs应用统一fork 配置文件完成后，使用1pm2 start pm2.json 即可看到应用被启动 日志管理日志路径在~/.pm2/logs，stdout和stderr被分开存放，程序中的所有stdout和stderr都被收集方便查错。]]></content>
+      <categories>
+        <category>spring book</category>
+      </categories>
+      <tags>
+        <tag>pm2</tag>
       </tags>
   </entry>
   <entry>
@@ -441,14 +446,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[微信开放平台公众号第三方平台网页开发域名问题]]></title>
-    <url>%2F2016%2F12%2F28%2Fwechat-component-domain.html</url>
-    <content type="text"><![CDATA[先来看一下微信官方定义: 第三方平台在代公众号做网页授权、调用JS SDK等网页开发工作时所用的域名，可填写3个，以;隔开。为了满足开发者管理需要，符合以下要求的下级域名也将生效：$APPID$.wx.abc.com（$APPID$为公众号的AppID的替换符） 只能说微信文档这个 wx.abc.com误导了我好久，试过的域名是APPID.wx.abc.com，死活不行，后来发现公司域名整个就是用wx.abc.com替换，不是abc.com，所以最终进行授权的域名域名是(假设appid为testappid，填写的网页开发域名为example.com):testappid.example.com，可以根据这个做泛域名解析。]]></content>
-      <categories>
-        <category>wechat</category>
-      </categories>
-  </entry>
-  <entry>
     <title><![CDATA[nginx泛域名解析配置]]></title>
     <url>%2F2016%2F12%2F28%2Fnginx-wildcard-domain-config.html</url>
     <content type="text"><![CDATA[最近一个项目需要承载高并发请求，所以在后端语言上选择了NodeJs，但是nodejs有时候读取不到请求的主机名，所以想到使用nginx+nodejs的方式进行处理。 Nginx 配置1234567891011121314151617upstream io_nodes &#123; server 127.0.0.1:8081;&#125;server &#123; listen 80; listen [::]:80; root /var/www/html; server_name ~^(?&lt;subdomain&gt;.+).example.com; location / &#123; proxy_set_header Host $host; proxy_set_header X-AppId $subdomain; proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; proxy_pass http://io_nodes; &#125;&#125; 重启nginx服务器即可。nginx会将所有的 .example.com 格式的域名反向代理到本机的8081端口，该端口为nodejs监听端口。 NodeJs 读取请求域名以及子域名名称使用express 12var host = req.headers.host;var appid = req.headers['x-appid'];]]></content>
@@ -459,6 +456,14 @@
         <tag>nginx</tag>
         <tag>wildcard domain</tag>
       </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[微信开放平台公众号第三方平台网页开发域名问题]]></title>
+    <url>%2F2016%2F12%2F28%2Fwechat-component-domain.html</url>
+    <content type="text"><![CDATA[先来看一下微信官方定义: 第三方平台在代公众号做网页授权、调用JS SDK等网页开发工作时所用的域名，可填写3个，以;隔开。为了满足开发者管理需要，符合以下要求的下级域名也将生效：$APPID$.wx.abc.com（$APPID$为公众号的AppID的替换符） 只能说微信文档这个 wx.abc.com误导了我好久，试过的域名是APPID.wx.abc.com，死活不行，后来发现公司域名整个就是用wx.abc.com替换，不是abc.com，所以最终进行授权的域名域名是(假设appid为testappid，填写的网页开发域名为example.com):testappid.example.com，可以根据这个做泛域名解析。]]></content>
+      <categories>
+        <category>wechat</category>
+      </categories>
   </entry>
   <entry>
     <title><![CDATA[使用PM2守护PHP命令行程序]]></title>
@@ -843,9 +848,9 @@
         <category>react</category>
       </categories>
       <tags>
-        <tag>react</tag>
         <tag>es6</tag>
         <tag>flux</tag>
+        <tag>react</tag>
         <tag>webpack</tag>
       </tags>
   </entry>
@@ -1444,8 +1449,8 @@
         <category>css</category>
       </categories>
       <tags>
-        <tag>loading</tag>
         <tag>css3</tag>
+        <tag>loading</tag>
       </tags>
   </entry>
   <entry>
