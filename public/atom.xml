@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https//www.ddhigh.com/"/>
-  <updated>2018-02-28T08:52:08.203Z</updated>
+  <updated>2018-03-01T03:54:37.007Z</updated>
   <id>https//www.ddhigh.com/</id>
   
   <author>
@@ -15,6 +15,60 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Docker部署golang应用时时区问题</title>
+    <link href="https//www.ddhigh.com/2018/03/01/golang-docker-timezone.html"/>
+    <id>https//www.ddhigh.com/2018/03/01/golang-docker-timezone.html</id>
+    <published>2018-03-01T03:49:24.000Z</published>
+    <updated>2018-03-01T03:54:37.007Z</updated>
+    
+    <content type="html"><![CDATA[<p>目前golang用的基础镜像是<code>busybox</code>，由于golang交叉编译之后只有一个二进制文件，可以直接部署到容器中运行，容器镜像大小几乎等于二进制文件大小。</p><h2 id="带来的问题"><a href="#带来的问题" class="headerlink" title="带来的问题"></a>带来的问题</h2><p>由于基础镜像太过精简，目前遇到的问题是将时间戳格式化为时间字符串时发现差了8个小时。</p><h2 id="尝试过的解决办法"><a href="#尝试过的解决办法" class="headerlink" title="尝试过的解决办法"></a>尝试过的解决办法</h2><p>刚开始使用了Location时区相关API，但是部署到容器中发现直接报错了，因为容器中缺少相关的系统调用函数。代码如下：</p><figure class="highlight golang"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">loc, _ := time.LoadLocation(<span class="string">"Asia/Shanghai"</span>)</div><div class="line">time.Now().In(loc).Format(<span class="string">"2006-01-02 15:04:05"</span>)</div></pre></td></tr></table></figure><p>目前应用会部署到docker容器中，故处理办法比较原始，直接在Time对象上添加8个小时来解决时差问题。代码如下:</p><figure class="highlight golang"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">time.Now().Add(time.Hour * <span class="number">8</span>).Format(<span class="string">"2006年01月02日 15:04"</span>),</div></pre></td></tr></table></figure><p>暂时解决了这个问题。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;目前golang用的基础镜像是&lt;code&gt;busybox&lt;/code&gt;，由于golang交叉编译之后只有一个二进制文件，可以直接部署到容器中运行，容器镜像大小几乎等于二进制文件大小。&lt;/p&gt;
+&lt;h2 id=&quot;带来的问题&quot;&gt;&lt;a href=&quot;#带来的问题&quot; class=&quot;he
+      
+    
+    </summary>
+    
+      <category term="golang" scheme="https//www.ddhigh.com/categories/golang/"/>
+    
+    
+      <category term="docker" scheme="https//www.ddhigh.com/tags/docker/"/>
+    
+      <category term="timezone" scheme="https//www.ddhigh.com/tags/timezone/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>golang JSON编码时保留HTML标签</title>
+    <link href="https//www.ddhigh.com/2018/03/01/golang-json-no-escape-html.html"/>
+    <id>https//www.ddhigh.com/2018/03/01/golang-json-no-escape-html.html</id>
+    <published>2018-03-01T03:40:51.000Z</published>
+    <updated>2018-03-01T03:49:12.318Z</updated>
+    
+    <content type="html"><![CDATA[<p>golang默认编码JSON时会将HTML标签中的尖括号编码为<code>\u003c</code>这种unicode字符。而最近在开发的微信客服消息推送就会出现以下结果</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">\u003ca href=&apos;https://www.example.com&apos;\u003e点击进入\u003c/a\u003e</div></pre></td></tr></table></figure><p>查看golang的json包发现json编码器有个方法<code>SetEscapeHTML</code>方法，接收一个bool值来设置是否保留HTML标签。</p><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>json的Encoder只能编码到实现了<code>io.Writer</code>接口的对象中去，而本例中需要编码到一个<code>[]byte</code>切片中。</p><h2 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h2><p>查找资料发现<code>bytes.Buffer</code>对象实现了<code>io.Writer</code>接口。所以最终代码如下：</p><figure class="highlight golang"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">BuildJson</span><span class="params">(data <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">interface</span>&#123;&#125;)</span> <span class="params">([]<span class="keyword">byte</span>, error)</span></span> &#123;</div><div class="line">    buf := bytes.NewBufferString(<span class="string">""</span>)</div><div class="line">    encoder := json.NewEncoder(buf)</div><div class="line">encoder.SetEscapeHTML(<span class="literal">false</span>)</div><div class="line"><span class="keyword">if</span> err := encoder.Encode(&amp;data); err != <span class="literal">nil</span> &#123;</div><div class="line"><span class="keyword">return</span> <span class="literal">nil</span>, err</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line"><span class="keyword">return</span> buf.Bytes(), <span class="literal">nil</span></div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>经过测试，输出接口符合要求。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;golang默认编码JSON时会将HTML标签中的尖括号编码为&lt;code&gt;\u003c&lt;/code&gt;这种unicode字符。而最近在开发的微信客服消息推送就会出现以下结果&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td 
+      
+    
+    </summary>
+    
+      <category term="golang" scheme="https//www.ddhigh.com/categories/golang/"/>
+    
+    
+      <category term="json" scheme="https//www.ddhigh.com/tags/json/"/>
+    
+  </entry>
   
   <entry>
     <title>golang使用CSV导出大量数据</title>
@@ -482,57 +536,6 @@
       <category term="cookie" scheme="https//www.ddhigh.com/tags/cookie/"/>
     
       <category term="koa-cookie" scheme="https//www.ddhigh.com/tags/koa-cookie/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>ios新版本代理设置问题</title>
-    <link href="https//www.ddhigh.com/2017/10/16/ios-proxy-certificate-setting.html"/>
-    <id>https//www.ddhigh.com/2017/10/16/ios-proxy-certificate-setting.html</id>
-    <published>2017-10-16T06:23:55.000Z</published>
-    <updated>2018-01-20T05:42:52.403Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>系统是iOS11，电脑端用的charles代理，目前需要查看一些https网站返回的数据，还是使用老方法把charles的根证书设为信任，手机也打开<strong>chls.pro/ssl</strong>把证书添加到系统了。<br>但是抓包的时候依旧无法访问，safari直接提示“该网站提供的证书不可信任”，查看详情发现charles证书虽然安装，但是没生效。</p><h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><p>可能是iOS加强了安全性以及用户体验，往常的时候一旦我们加入证书，除非卸载，该证书是一直生效的（排除掉被吊销或者过期情况），而iOS11在<strong>设置-通用-关于手机-证书信任设置</strong>中可以方便开关证书。<br>之前在iOS10.3也出现过问题，解决方法应该也是一致的。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;背景&quot;&gt;&lt;a href=&quot;#背景&quot; class=&quot;headerlink&quot; title=&quot;背景&quot;&gt;&lt;/a&gt;背景&lt;/h1&gt;&lt;p&gt;系统是iOS11，电脑端用的charles代理，目前需要查看一些https网站返回的数据，还是使用老方法把charles的根证书设为信任，手
-      
-    
-    </summary>
-    
-    
-      <category term="ios" scheme="https//www.ddhigh.com/tags/ios/"/>
-    
-      <category term="proxy" scheme="https//www.ddhigh.com/tags/proxy/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Servlet中print-writer和outputstream编码问题</title>
-    <link href="https//www.ddhigh.com/2017/10/16/servlet-print-writer-outputstream-encoding.html"/>
-    <id>https//www.ddhigh.com/2017/10/16/servlet-print-writer-outputstream-encoding.html</id>
-    <published>2017-10-16T06:11:40.000Z</published>
-    <updated>2018-01-20T05:42:52.403Z</updated>
-    
-    <content type="html"><![CDATA[<p>有个项目需要使用java开发一个简单的web接口用来请求加密数据，但是servlet之前只随便用了一下，平时工作也是以<strong>node</strong>为主。</p><h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>问题大致是”iso 88591 encoding之类的问题，稍微去google搜了一下，可能是搜的关键词不准确导致搜到的答案不理想，无意中看到有人讲writer和outputstream的问题。</p><h1 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h1><p>google到PrintWriter和OutputStream的区别</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">PrintWriter是以字符为单位，对所有的信息进行处理，而ServletOutputStream仅对二进制的资料进行处理。</div></pre></td></tr></table></figure><p>而我输出的是UTF8格式的字符串，所以OutputStream并不认识。</p><h1 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h1><p>使用<strong>PrintWriter</strong>输出即可。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;有个项目需要使用java开发一个简单的web接口用来请求加密数据，但是servlet之前只随便用了一下，平时工作也是以&lt;strong&gt;node&lt;/strong&gt;为主。&lt;/p&gt;
-&lt;h1 id=&quot;问题&quot;&gt;&lt;a href=&quot;#问题&quot; class=&quot;headerlink&quot; titl
-      
-    
-    </summary>
-    
-    
-      <category term="java" scheme="https//www.ddhigh.com/tags/java/"/>
-    
-      <category term="servlet" scheme="https//www.ddhigh.com/tags/servlet/"/>
     
   </entry>
   

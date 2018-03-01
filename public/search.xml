@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Docker部署golang应用时时区问题]]></title>
+    <url>%2F2018%2F03%2F01%2Fgolang-docker-timezone.html</url>
+    <content type="text"><![CDATA[目前golang用的基础镜像是busybox，由于golang交叉编译之后只有一个二进制文件，可以直接部署到容器中运行，容器镜像大小几乎等于二进制文件大小。 带来的问题由于基础镜像太过精简，目前遇到的问题是将时间戳格式化为时间字符串时发现差了8个小时。 尝试过的解决办法刚开始使用了Location时区相关API，但是部署到容器中发现直接报错了，因为容器中缺少相关的系统调用函数。代码如下： 12loc, _ := time.LoadLocation("Asia/Shanghai")time.Now().In(loc).Format("2006-01-02 15:04:05") 目前应用会部署到docker容器中，故处理办法比较原始，直接在Time对象上添加8个小时来解决时差问题。代码如下: 1time.Now().Add(time.Hour * 8).Format("2006年01月02日 15:04"), 暂时解决了这个问题。]]></content>
+      <categories>
+        <category>golang</category>
+      </categories>
+      <tags>
+        <tag>docker</tag>
+        <tag>timezone</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[golang JSON编码时保留HTML标签]]></title>
+    <url>%2F2018%2F03%2F01%2Fgolang-json-no-escape-html.html</url>
+    <content type="text"><![CDATA[golang默认编码JSON时会将HTML标签中的尖括号编码为\u003c这种unicode字符。而最近在开发的微信客服消息推送就会出现以下结果 1\u003ca href=&apos;https://www.example.com&apos;\u003e点击进入\u003c/a\u003e 查看golang的json包发现json编码器有个方法SetEscapeHTML方法，接收一个bool值来设置是否保留HTML标签。 问题json的Encoder只能编码到实现了io.Writer接口的对象中去，而本例中需要编码到一个[]byte切片中。 解决查找资料发现bytes.Buffer对象实现了io.Writer接口。所以最终代码如下： 12345678910func BuildJson(data map[string]interface&#123;&#125;) ([]byte, error) &#123; buf := bytes.NewBufferString("") encoder := json.NewEncoder(buf) encoder.SetEscapeHTML(false) if err := encoder.Encode(&amp;data); err != nil &#123; return nil, err &#125; else &#123; return buf.Bytes(), nil &#125;&#125; 经过测试，输出接口符合要求。]]></content>
+      <categories>
+        <category>golang</category>
+      </categories>
+      <tags>
+        <tag>json</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[golang使用CSV导出大量数据]]></title>
     <url>%2F2018%2F02%2F28%2Fgolang-export-csv.html</url>
     <content type="text"><![CDATA[最近在做一个导出功能，最初是使用https://github.com/tealeg/xlsx做的，但是发现导出有个30W行的excel时，这玩意内存彪到700M+，后来发现只是导出数据为表格，并没有其他东西，于是打算使用CSV导出。 CSV格式简介CSV本质上是个文本文件，该文件有以下要求： 列之间用逗号分隔，行之间用换行分隔 单元格如果有逗号，引号之类的字符，该单元格需要使用双引号括起来 如果包含中文，需要使用GBK编码，否则会乱码 golang实现 UTF8转GBK函数(需要 go get golang.org/x/text/) 12345678func UTF82GBK(src string) (string, error) &#123; reader := transform.NewReader(strings.NewReader(src), simplifiedchinese.GBK.NewEncoder()) if buf, err := ioutil.ReadAll(reader); err != nil &#123; return "", err &#125; else &#123; return string(buf), nil &#125;&#125; 导出代码 12345678910filename := "test.csv"fp, err := os.Create(filename) // 创建文件句柄if err != nil &#123; return nil, err&#125;defer fp.Close()columns := []string&#123;"姓名", "电话", "公司", "职位", "加入时间"&#125;if line, err := util.UTF82GBK(strings.Join(columns, ",")); err == nil &#123; // 写入一行 fp.WriteString(line + "\n")&#125; 其他语言也可以使用类似方法导出数据，只要满足CSV的几个条件即可。]]></content>
@@ -314,19 +337,19 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[log4php使用syslog记录日志]]></title>
-    <url>%2F2017%2F04%2F27%2Flog4php-syslog.html</url>
-    <content type="text"><![CDATA[log4php是apache基金会下的一个开源项目，灵活、强大，已经有几个项目使用了log4php处理日志，目前遇到的问题是服务器太多的时候日志如何统一管理，本来想使用数据库存储。但是日志格式成了一个问题，而且不利于扩展，如果临时需要保存到文件，又要更改log4php的配置。好在log4php提供了syslog的一个appender，可以将日志写入syslog; log4php配置12345678910111213log4php.rootLogger=INFO, stdout, stderrlog4php.appender.stdout=LoggerAppenderConsolelog4php.appender.stdout.layout=LoggerLayoutPatternlog4php.appender.stdout.layout.ConversionPattern=%date&#123;Y-m-d H:i:s&#125; [%-5p] %m%nlog4php.appender.stdout.threshold=INFOlog4php.appender.stderr=LoggerAppenderSysloglog4php.appender.stderr.ident=qun.hk-tasklog4php.appender.stderr.priority=ERRlog4php.appender.stderr.facility=LOCAL0log4php.appender.stderr.layout=LoggerLayoutPatternlog4php.appender.stderr.layout.ConversionPattern=%date&#123;Y-m-d H:i:s&#125; %m%nlog4php.appender.stderr.threshold=WARN 这里使用两个输出目的地,stdout输出到终端，stderr输出到syslod，log4php配置对应rsyslog的配置关系为： ident -&gt; syslog中的tag priority -&gt; syslog中的priority facility -&gt; syslog中的facility，请注意全部为大写 rsyslog配置rsyslog配置文件一般在 /etc/rsyslog.conf 以及 /etc/rsyslog.d目录下我们不更改主配置文件，在/etc/rsyslog.d/目录下新建文件 local0.conf```1234内容为```local0.* /var/log/local0.log rsyslog输出可以写成服务器，本文为了测试直接写入文件，有需要的可以根据实际情况进行转发。重启rsyslog rsyslog restart```12345678## PHP加载配置```php&lt;?php\Logger::configure(__DIR__ . &apos;/log4php.properties&apos;);$logger = \Logger::getLogger(&apos;default&apos;);$logger-&gt;info(&apos;info&apos;);$logger-&gt;error(&apos;error&apos;); 可以看到/var/log/local0.log中多出一行error的日志]]></content>
-      <categories>
-        <category>php</category>
-      </categories>
-  </entry>
-  <entry>
     <title><![CDATA[使用NodeJs提供syslogd服务端]]></title>
     <url>%2F2017%2F04%2F27%2Fnode-syslogd.html</url>
     <content type="text"><![CDATA[syslog作为Linux发行版一个重要组件，相信大家都不陌生，而如果每台服务器都独立使用一份的话，不能做到日志统一管理，对于以后的日志查询不太方便。syslog有标准的协议格式，这里不做讨论，有兴趣的可以基于协议的报文结构使用socket编程实现。 部署服务端本文使用Nodejs来部署一台syslog服务端。 终端执行 12npm init -ynpm install syslogd --save index.js 1234567891011const syslogd = require('syslogd');const server = syslogd(data =&gt; &#123; console.log(data);&#125;);server.listen(514,e =&gt; &#123; if(e!==null) &#123; console.error(e); return; &#125; console.log('listen on 514');&#125;); 终端执行 1node index.js 好了，我们的syslog服务器已经部署完毕了。是不是很简单呢~ nginx日志接入syslog打开nginx配置文件 12345server &#123; ... access_log syslog:server=127.0.0.1; ...&#125; 重启nginx就可以发现nodejs服务端已经成功接收日志信息了。注意：是重启不是reload]]></content>
       <categories>
         <category>nodejs</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[log4php使用syslog记录日志]]></title>
+    <url>%2F2017%2F04%2F27%2Flog4php-syslog.html</url>
+    <content type="text"><![CDATA[log4php是apache基金会下的一个开源项目，灵活、强大，已经有几个项目使用了log4php处理日志，目前遇到的问题是服务器太多的时候日志如何统一管理，本来想使用数据库存储。但是日志格式成了一个问题，而且不利于扩展，如果临时需要保存到文件，又要更改log4php的配置。好在log4php提供了syslog的一个appender，可以将日志写入syslog; log4php配置12345678910111213log4php.rootLogger=INFO, stdout, stderrlog4php.appender.stdout=LoggerAppenderConsolelog4php.appender.stdout.layout=LoggerLayoutPatternlog4php.appender.stdout.layout.ConversionPattern=%date&#123;Y-m-d H:i:s&#125; [%-5p] %m%nlog4php.appender.stdout.threshold=INFOlog4php.appender.stderr=LoggerAppenderSysloglog4php.appender.stderr.ident=qun.hk-tasklog4php.appender.stderr.priority=ERRlog4php.appender.stderr.facility=LOCAL0log4php.appender.stderr.layout=LoggerLayoutPatternlog4php.appender.stderr.layout.ConversionPattern=%date&#123;Y-m-d H:i:s&#125; %m%nlog4php.appender.stderr.threshold=WARN 这里使用两个输出目的地,stdout输出到终端，stderr输出到syslod，log4php配置对应rsyslog的配置关系为： ident -&gt; syslog中的tag priority -&gt; syslog中的priority facility -&gt; syslog中的facility，请注意全部为大写 rsyslog配置rsyslog配置文件一般在 /etc/rsyslog.conf 以及 /etc/rsyslog.d目录下我们不更改主配置文件，在/etc/rsyslog.d/目录下新建文件 local0.conf```1234内容为```local0.* /var/log/local0.log rsyslog输出可以写成服务器，本文为了测试直接写入文件，有需要的可以根据实际情况进行转发。重启rsyslog rsyslog restart```12345678## PHP加载配置```php&lt;?php\Logger::configure(__DIR__ . &apos;/log4php.properties&apos;);$logger = \Logger::getLogger(&apos;default&apos;);$logger-&gt;info(&apos;info&apos;);$logger-&gt;error(&apos;error&apos;); 可以看到/var/log/local0.log中多出一行error的日志]]></content>
+      <categories>
+        <category>php</category>
       </categories>
   </entry>
   <entry>
@@ -395,17 +418,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[在windows上安装jekyll]]></title>
-    <url>%2F2017%2F01%2F20%2Finstall-jekyll-on-windows.html</url>
-    <content type="text"><![CDATA[早些时候用的ubuntu，安装jekyll确实挺简单，可能是终端强大吧。最近工作环境切换到windows，无奈想写博文的时候却发现需要切换到ubuntu，不是那么方便。打算在windows上部署一下jekyll。 软件环境 Windows 10 企业版 Ruby 2.3.2-x64 部署过程 安装 Ruby2.3.2-x64，安装目录请不要带空格，建议使用默认的”C:\Ruby23-x64”，安装的时候勾上”Add To Path”选项 确认ruby安装成功，打开控制台，执行 1ruby -v 安装 Devkit，安装目录请不要带空格，建议解压到”C:\DevKit” 在C:\DevKit打开控制台CMD，执行12ruby dk.rb initnotepad config.yml 执行完毕后会打开记事本，请确认内容如下：123456789101112131415# This configuration file contains the absolute path locations of all# installed Rubies to be enhanced to work with the DevKit. This config# file is generated by the 'ruby dk.rb init' step and may be modified# before running the 'ruby dk.rb install' step. To include any installed# Rubies that were not automagically discovered, simply add a line below# the triple hyphens with the absolute path to the Ruby root directory.## Example:## ---# - C:/ruby19trunk# - C:/ruby192dev#---- C:/Ruby23-x64 注意最后一行即可，如果你的Ruby安装目录不是默认的，请手动替换。 更改GEM默认镜像地址，由于众所周知的原因，gem安装包的时候十分慢，所以需要对镜像做下替换 打开控制台，执行1gem sources --add https://gems.ruby-china.org/ --remove https://rubygems.org/ 如果执行出错，类似于“SSL”错误的话，使用下面的命令1gem sources --add http://gems.ruby-china.org/ --remove https://rubygems.org/ 就可以了。 安装jekyll1gem install jekyll 由于更换了镜像地址，安装起来会非常快。 控制台执行123jekyll new blogcd blogjekyll serve 引用信息 jekyll文档]]></content>
-      <categories>
-        <category>other</category>
-      </categories>
-      <tags>
-        <tag>jekyll</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Yii2 migrate使用]]></title>
     <url>%2F2017%2F01%2F20%2Fyii2-migrate.html</url>
     <content type="text"><![CDATA[试想一个很简单的场景，在使用Yii2开发时，如果对已经有数据的数据表结构进行编辑的话，需要同步数据结构需要在本地导出一份SQL，放到线上去执行SQL，非常的不方便。而有了Yii2 migrate工具之后，这个问题简直不是问题。以下对常用的表结构操作进行演示。 关键命令 创建migrate 1yii migrate/create [名称] 执行migrate升级 1yii migrate 执行migrate降级 1yii migrate/down 创建新表执行创建migrate命令后，项目文件夹下migrations中会多出m170119093917[名称].php的文件，文件名称可能不同，但是结构是相同的，打开该php文件，内容如下 123456789101112131415161718192021222324252627282930313233&lt;?phpuse yii\db\Migration;class m170119_093917_name_20 extends Migration&#123; public function up() &#123; $tableName = 't_category'; $this-&gt;createTable($tableName, [ 'id' =&gt; $this-&gt;primaryKey(), 'name' =&gt; $this-&gt;string(10)-&gt;notNull()-&gt;unique()-&gt;comment('标识'), 'title' =&gt; $this-&gt;string(6)-&gt;notNull()-&gt;comment('名称'), 'count' =&gt; $this-&gt;integer()-&gt;defaultValue(0)-&gt;notNull()-&gt;comment('入驻数量') ]); &#125; public function down() &#123; echo "m170119_093917_name_20 cannot be reverted.\n"; return false; &#125; /* // Use safeUp/safeDown to run migration code within a transaction public function safeUp() &#123; &#125; public function safeDown() &#123; &#125; */&#125; 如果需要支持降级的话在down方法中写逻辑返回true即可。 以下代码演示Migration操作，不再新建migrate，执行使用本php文件即可 添加字段12&lt;?php$this-&gt;addColumn('t_category','sort',$this-&gt;integer()-&gt;defaultValue(0)-&gt;notNull()-&gt;comment('排序')); 添加索引12&lt;?php$this-&gt;createIndex('sort','t_category',['sort']); 添加唯一索引12&lt;?php$this-&gt;createIndex('sort','t_category',['sort'],true); 更新字段12&lt;?php$this-&gt;alterColumn('t_category','sort',$this-&gt;smallInteger()-&gt;defaultValue(0)-&gt;notNull()-&gt;comment('排序')); 删除字段12&lt;?php$this-&gt;dropColumn('t_category','sort'); 删除表12&lt;?php$this-&gt;dropTable('t_category');]]></content>
@@ -415,6 +427,17 @@
       <tags>
         <tag>yii2</tag>
         <tag>migrate</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[在windows上安装jekyll]]></title>
+    <url>%2F2017%2F01%2F20%2Finstall-jekyll-on-windows.html</url>
+    <content type="text"><![CDATA[早些时候用的ubuntu，安装jekyll确实挺简单，可能是终端强大吧。最近工作环境切换到windows，无奈想写博文的时候却发现需要切换到ubuntu，不是那么方便。打算在windows上部署一下jekyll。 软件环境 Windows 10 企业版 Ruby 2.3.2-x64 部署过程 安装 Ruby2.3.2-x64，安装目录请不要带空格，建议使用默认的”C:\Ruby23-x64”，安装的时候勾上”Add To Path”选项 确认ruby安装成功，打开控制台，执行 1ruby -v 安装 Devkit，安装目录请不要带空格，建议解压到”C:\DevKit” 在C:\DevKit打开控制台CMD，执行12ruby dk.rb initnotepad config.yml 执行完毕后会打开记事本，请确认内容如下：123456789101112131415# This configuration file contains the absolute path locations of all# installed Rubies to be enhanced to work with the DevKit. This config# file is generated by the 'ruby dk.rb init' step and may be modified# before running the 'ruby dk.rb install' step. To include any installed# Rubies that were not automagically discovered, simply add a line below# the triple hyphens with the absolute path to the Ruby root directory.## Example:## ---# - C:/ruby19trunk# - C:/ruby192dev#---- C:/Ruby23-x64 注意最后一行即可，如果你的Ruby安装目录不是默认的，请手动替换。 更改GEM默认镜像地址，由于众所周知的原因，gem安装包的时候十分慢，所以需要对镜像做下替换 打开控制台，执行1gem sources --add https://gems.ruby-china.org/ --remove https://rubygems.org/ 如果执行出错，类似于“SSL”错误的话，使用下面的命令1gem sources --add http://gems.ruby-china.org/ --remove https://rubygems.org/ 就可以了。 安装jekyll1gem install jekyll 由于更换了镜像地址，安装起来会非常快。 控制台执行123jekyll new blogcd blogjekyll serve 引用信息 jekyll文档]]></content>
+      <categories>
+        <category>other</category>
+      </categories>
+      <tags>
+        <tag>jekyll</tag>
       </tags>
   </entry>
   <entry>
@@ -820,9 +843,9 @@
         <category>react</category>
       </categories>
       <tags>
+        <tag>react</tag>
         <tag>es6</tag>
         <tag>flux</tag>
-        <tag>react</tag>
         <tag>webpack</tag>
       </tags>
   </entry>
@@ -1046,8 +1069,8 @@
         <category>open-source-projects</category>
       </categories>
       <tags>
-        <tag>bower</tag>
         <tag>angularjs</tag>
+        <tag>bower</tag>
       </tags>
   </entry>
   <entry>
@@ -1759,8 +1782,8 @@
         <category>front-end</category>
       </categories>
       <tags>
-        <tag>html5</tag>
         <tag>data-api</tag>
+        <tag>html5</tag>
       </tags>
   </entry>
   <entry>
