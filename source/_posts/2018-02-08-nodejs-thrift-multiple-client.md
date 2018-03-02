@@ -7,7 +7,7 @@ tags:
 - thrift
 ---
 
-[http://thrift.apache.org/tutorial/nodejs](官网nodejs示例)中只实现了服务端是单一service的情形，而对于服务端属于`多个服务复用一个连接地址`的例子却未实现。
+[官网nodejs示例](http://thrift.apache.org/tutorial/nodejs)中只实现了服务端是单一service的情形，而对于服务端属于`多个服务复用一个连接地址`的例子却未实现。
 
 查看thrift的nodejs库源码发现实际上还是支持的。以下来展示调用单一服务和多个服务的区别。
 
