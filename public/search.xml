@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[golang for遍历channel时需要注意的问题]]></title>
+    <url>%2F2018%2F04%2F05%2Fgolang-for-over-channels.html</url>
+    <content type="text"><![CDATA[最近在做一个基于RabbitMQ的应用，由于官方的qos没有golang的版本，所以出了一点问题。问题代码如下： 1234567891011121314151617_, ch, err := component.NewRabbitMQ()if err != nil &#123; panic(err)&#125;if err := ch.Qos(10, 0, true); err != nil &#123; panic(err)&#125;msgs, err := ch.Consume("push", "", false, false, false, false, nil)if err != nil &#123; panic(err)&#125;for m := range msgs &#123; go func(d *amqp.Delivery) &#123; defer func() &#123; d.Ack(false) &#125; // 处理消息 &#125;(&amp;m) &#125; 发现消费到10条消息，进程就退出了，但是exit code为0，表示系统是正常退出，由于做了日志记录可以确定消费了10条，所以初步确定是qos相关问题。 排查过程 首先是把d的tag打印出来，发现全部是一样的，可以确定是重复的一条消息 一开始想到可能是经典的go协程执行在for循环结束以后导致的，但是看我的代码不属于这种情况，有使用&amp;m保证每一条消息都是不同循环传入的。所以判断可能是for循环的传递问题。 确定方向之后开始写了一个测试项目用来验证我的想法是否正确。 测试代码1234567891011121314package mainimport "fmt"func main() &#123; ch := make(chan int, 10) for i := 0; i &lt; 10; i++ &#123; ch &lt;- i &#125; close(ch) for v := range ch &#123; fmt.Println(&amp;v) &#125;&#125; 执行输出 123456789100xc4200860080xc4200860080xc4200860080xc4200860080xc4200860080xc4200860080xc4200860080xc4200860080xc4200860080xc420086008 到这里才焕然大悟，for循环中，如果循环变量不是指针，那么每次的变量是同一个，不过值变了。，所以上例中的RabbitMQ go协程消费消息那里，需要直接传递值而不是指针，经过测试之后发现，问题确实解决了。 题外话测试代码那里，如果不close掉channel是会发生死锁的，原因是 当for循环读完channel的10个值之后会继续尝试读取下一个，而由于channel为空又没关闭，会一直阻塞形成死锁 TOOD研究RabbitMQ Consumer部分的源码来看看消费channel被关闭的问题。]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[golang解决TCP粘包问题]]></title>
     <url>%2F2018%2F03%2F02%2Fgolang-tcp-stick-package.html</url>
     <content type="text"><![CDATA[什么是TCP粘包问题以及为什么会产生TCP粘包，本文不加讨论。本文使用golang的bufio.Scanner来实现自定义协议解包。 协议数据包定义本文模拟一个日志服务器，该服务器接收客户端传到的数据包并显示出来 12345678910type Package struct &#123; Version [2]byte // 协议版本，暂定V1 Length int16 // 数据部分长度 Timestamp int64 // 时间戳 HostnameLength int16 // 主机名长度 Hostname []byte // 主机名 TagLength int16 // 标签长度 Tag []byte // 标签 Msg []byte // 日志数据&#125; 协议定义部分没有什么好讲的，根据具体的业务逻辑定义即可。 数据打包由于TCP协议是语言无关的协议，所以直接把协议数据包结构体发送到TCP连接中也是不可能的，只能发送字节流数据，所以需要自己实现数据编码。所幸golang提供了binary来帮助我们实现网络字节编码。 123456789101112func (p *Package) Pack(writer io.Writer) error &#123; var err error err = binary.Write(writer, binary.BigEndian, &amp;p.Version) err = binary.Write(writer, binary.BigEndian, &amp;p.Length) err = binary.Write(writer, binary.BigEndian, &amp;p.Timestamp) err = binary.Write(writer, binary.BigEndian, &amp;p.HostnameLength) err = binary.Write(writer, binary.BigEndian, &amp;p.Hostname) err = binary.Write(writer, binary.BigEndian, &amp;p.TagLength) err = binary.Write(writer, binary.BigEndian, &amp;p.Tag) err = binary.Write(writer, binary.BigEndian, &amp;p.Msg) return err&#125; Pack方法的输出目标为io.Writer，有利于接口扩展，只要实现了该接口即可编码数据写入。binary.BigEndian是字节序，本文暂时不讨论，有需要的读者可以自行查找资料研究。 数据解包解包需要将TCP数据包解析到结构体中，接下来会讲为什么需要添加几个数据无关的长度字段。 123456789101112131415func (p *Package) Unpack(reader io.Reader) error &#123; var err error err = binary.Read(reader, binary.BigEndian, &amp;p.Version) err = binary.Read(reader, binary.BigEndian, &amp;p.Length) err = binary.Read(reader, binary.BigEndian, &amp;p.Timestamp) err = binary.Read(reader, binary.BigEndian, &amp;p.HostnameLength) p.Hostname = make([]byte, p.HostnameLength) err = binary.Read(reader, binary.BigEndian, &amp;p.Hostname) err = binary.Read(reader, binary.BigEndian, &amp;p.TagLength) p.Tag = make([]byte, p.TagLength) err = binary.Read(reader, binary.BigEndian, &amp;p.Tag) p.Msg = make([]byte, p.Length-8-2-p.HostnameLength-2-p.TagLength) err = binary.Read(reader, binary.BigEndian, &amp;p.Msg) return err&#125; 由于主机名、标签这种数据是不固定长度的，所以需要两个字节来标识数据长度，否则读取的时候只知道一个总的数据长度是无法区分主机名、标签名、日志数据的。 数据包的粘包问题解决上文只是解决了编码/解码问题，前提是收到的数据包没有产生粘包问题，解决粘包就是要正确分割字节流中的数据。一般有以下做法： 定长分隔(每个数据包最大为该长度) 缺点是数据不足时会浪费传输资源 特定字符分隔(如\r\n) 缺点是如果正文中有\r\n就会导致问题 在数据包中添加长度字段(本文采用的) golang提供了bufio.Scanner来解决粘包问题。 12345678910111213141516171819scanner := bufio.NewScanner(reader) // reader为实现了io.Reader接口的对象，如net.Connscanner.Split(func(data []byte, atEOF bool) (advance int, token []byte, err error) &#123; if !atEOF &amp;&amp; data[0] == 'V' &#123; // 由于我们定义的数据包头最开始为两个字节的版本号，所以只有以V开头的数据包才处理 if len(data) &gt; 4 &#123; // 如果收到的数据&gt;4个字节(2字节版本号+2字节数据包长度) length := int16(0) binary.Read(bytes.NewReader(data[2:4]), binary.BigEndian, &amp;length) // 读取数据包第3-4字节(int16)=&gt;数据部分长度 if int(length)+4 &lt;= len(data) &#123; // 如果读取到的数据正文长度+2字节版本号+2字节数据长度不超过读到的数据(实际上就是成功完整的解析出了一个包) return int(length) + 4, data[:int(length)+4], nil &#125; &#125; &#125; return&#125;)// 打印接收到的数据包for scanner.Scan() &#123; scannedPack := new(Package) scannedPack.Unpack(bytes.NewReader(scanner.Bytes())) log.Println(scannedPack)&#125; 本文的核心就在于scanner.Split方法，该方法用来解析TCP数据包 完整源码123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109package mainimport ( "bufio" "bytes" "encoding/binary" "fmt" "io" "log" "os" "time")type Package struct &#123; Version [2]byte // 协议版本 Length int16 // 数据部分长度 Timestamp int64 // 时间戳 HostnameLength int16 // 主机名长度 Hostname []byte // 主机名 TagLength int16 // Tag长度 Tag []byte // Tag Msg []byte // 数据部分长度&#125;func (p *Package) Pack(writer io.Writer) error &#123; var err error err = binary.Write(writer, binary.BigEndian, &amp;p.Version) err = binary.Write(writer, binary.BigEndian, &amp;p.Length) err = binary.Write(writer, binary.BigEndian, &amp;p.Timestamp) err = binary.Write(writer, binary.BigEndian, &amp;p.HostnameLength) err = binary.Write(writer, binary.BigEndian, &amp;p.Hostname) err = binary.Write(writer, binary.BigEndian, &amp;p.TagLength) err = binary.Write(writer, binary.BigEndian, &amp;p.Tag) err = binary.Write(writer, binary.BigEndian, &amp;p.Msg) return err&#125;func (p *Package) Unpack(reader io.Reader) error &#123; var err error err = binary.Read(reader, binary.BigEndian, &amp;p.Version) err = binary.Read(reader, binary.BigEndian, &amp;p.Length) err = binary.Read(reader, binary.BigEndian, &amp;p.Timestamp) err = binary.Read(reader, binary.BigEndian, &amp;p.HostnameLength) p.Hostname = make([]byte, p.HostnameLength) err = binary.Read(reader, binary.BigEndian, &amp;p.Hostname) err = binary.Read(reader, binary.BigEndian, &amp;p.TagLength) p.Tag = make([]byte, p.TagLength) err = binary.Read(reader, binary.BigEndian, &amp;p.Tag) p.Msg = make([]byte, p.Length-8-2-p.HostnameLength-2-p.TagLength) err = binary.Read(reader, binary.BigEndian, &amp;p.Msg) return err&#125;func (p *Package) String() string &#123; return fmt.Sprintf("version:%s length:%d timestamp:%d hostname:%s tag:%s msg:%s", p.Version, p.Length, p.Timestamp, p.Hostname, p.Tag, p.Msg, )&#125;func main() &#123; hostname, err := os.Hostname() if err != nil &#123; log.Fatal(err) &#125; pack := &amp;Package&#123; Version: [2]byte&#123;'V', '1'&#125;, Timestamp: time.Now().Unix(), HostnameLength: int16(len(hostname)), Hostname: []byte(hostname), TagLength: 4, Tag: []byte("demo"), Msg: []byte(("现在时间是:" + time.Now().Format("2006-01-02 15:04:05"))), &#125; pack.Length = 8 + 2 + pack.HostnameLength + 2 + pack.TagLength + int16(len(pack.Msg)) buf := new(bytes.Buffer) // 写入四次，模拟TCP粘包效果 pack.Pack(buf) pack.Pack(buf) pack.Pack(buf) pack.Pack(buf) // scanner scanner := bufio.NewScanner(buf) scanner.Split(func(data []byte, atEOF bool) (advance int, token []byte, err error) &#123; if !atEOF &amp;&amp; data[0] == 'V' &#123; if len(data) &gt; 4 &#123; length := int16(0) binary.Read(bytes.NewReader(data[2:4]), binary.BigEndian, &amp;length) if int(length)+4 &lt;= len(data) &#123; return int(length) + 4, data[:int(length)+4], nil &#125; &#125; &#125; return &#125;) for scanner.Scan() &#123; scannedPack := new(Package) scannedPack.Unpack(bytes.NewReader(scanner.Bytes())) log.Println(scannedPack) &#125; if err := scanner.Err(); err != nil &#123; log.Fatal("无效数据包") &#125;&#125; 写在最后golang作为一门强大的网络编程语言，实现自定义协议是非常重要的，实际上实现自定义协议也不是很难，以下几个步骤： 数据包编码 数据包解码 处理TCP粘包问题 断线重连(可以使用心跳实现)(非必须)]]></content>
@@ -269,17 +274,6 @@
       </categories>
   </entry>
   <entry>
-    <title><![CDATA[使用pm2来保证Spring Boot应用稳定运行]]></title>
-    <url>%2F2017%2F07%2F31%2Fspring-boot-pm2.html</url>
-    <content type="text"><![CDATA[Spring Boot开发web应用就像开发普通的java程序一般简洁，因为其内嵌了web容易，启动的时候只需要一条命令java -jar server.jar即可，非常方便。但是由此而来的问题是万一应用挂了怎么办？ 别担心，有pm2进程管理工具可以帮到你。 PM2简介pm2原先是nodejs应用的进程管理工具，不过其良好的设计以及扩展性可以手动执行执行进程。 PM2安装 安装NodeJs npm install pm2 -g PM2基本命令 pm2 list 查看所有被PM2管理的进程列表 pm2 start xxx 启动一个应用 pm2 stop xxx 停止一个应用 pm2 restart xxx 重启一个应用 pm2 describe xxx 查看应用详情 pm2 startup, pm2 save 两条命令，用来保证服务器启动时,pm2管理的程序自动运行 Java程序处理在jar的同级目录新建应用启动配置文件，如pm2.json，内容如下： 12345678910&#123; "name": "my-server", "script": "/usr/bin/java", "args": [ "-jar", "server.jar" ], "exec_interpreter": "", "exec_mode": "fork"&#125; 说明如下： name 进程名称（显示在pm2 list命令中） script 执行进程名称，如果需要执行PHP脚本则填写php解释器的路径，本文为java args 传给执行进程的参数，多个参数以数组单元分割 exec_interpreter NodeJs解析器，本文不适用 exec_mode 执行模式[cluster|fork]这个针对NodeJs应用的配置，非NodeJs应用统一fork 配置文件完成后，使用1pm2 start pm2.json 即可看到应用被启动 日志管理日志路径在~/.pm2/logs，stdout和stderr被分开存放，程序中的所有stdout和stderr都被收集方便查错。]]></content>
-      <categories>
-        <category>spring book</category>
-      </categories>
-      <tags>
-        <tag>pm2</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Spring Boot JPA 返回json时排除Null字段]]></title>
     <url>%2F2017%2F07%2F31%2Fspring-boot-exclude-null.html</url>
     <content type="text"><![CDATA[Spring Boot在返回JSON的时候默认会返回null字段，这个对客户端一般没什么作用，还会增加服务器带宽压力。使用如下配置可以屏蔽。 在pojo对象上添加注解 123@JsonInclude(JsonInclude.Include.NON_NULL)class User &#123;&#125; 再使用@ResponseBody的时候就不会返回Null字段了。]]></content>
@@ -289,6 +283,17 @@
       <tags>
         <tag>json</tag>
         <tag>jpa</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[使用pm2来保证Spring Boot应用稳定运行]]></title>
+    <url>%2F2017%2F07%2F31%2Fspring-boot-pm2.html</url>
+    <content type="text"><![CDATA[Spring Boot开发web应用就像开发普通的java程序一般简洁，因为其内嵌了web容易，启动的时候只需要一条命令java -jar server.jar即可，非常方便。但是由此而来的问题是万一应用挂了怎么办？ 别担心，有pm2进程管理工具可以帮到你。 PM2简介pm2原先是nodejs应用的进程管理工具，不过其良好的设计以及扩展性可以手动执行执行进程。 PM2安装 安装NodeJs npm install pm2 -g PM2基本命令 pm2 list 查看所有被PM2管理的进程列表 pm2 start xxx 启动一个应用 pm2 stop xxx 停止一个应用 pm2 restart xxx 重启一个应用 pm2 describe xxx 查看应用详情 pm2 startup, pm2 save 两条命令，用来保证服务器启动时,pm2管理的程序自动运行 Java程序处理在jar的同级目录新建应用启动配置文件，如pm2.json，内容如下： 12345678910&#123; "name": "my-server", "script": "/usr/bin/java", "args": [ "-jar", "server.jar" ], "exec_interpreter": "", "exec_mode": "fork"&#125; 说明如下： name 进程名称（显示在pm2 list命令中） script 执行进程名称，如果需要执行PHP脚本则填写php解释器的路径，本文为java args 传给执行进程的参数，多个参数以数组单元分割 exec_interpreter NodeJs解析器，本文不适用 exec_mode 执行模式[cluster|fork]这个针对NodeJs应用的配置，非NodeJs应用统一fork 配置文件完成后，使用1pm2 start pm2.json 即可看到应用被启动 日志管理日志路径在~/.pm2/logs，stdout和stderr被分开存放，程序中的所有stdout和stderr都被收集方便查错。]]></content>
+      <categories>
+        <category>spring book</category>
+      </categories>
+      <tags>
+        <tag>pm2</tag>
       </tags>
   </entry>
   <entry>
@@ -441,17 +446,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[在windows上安装jekyll]]></title>
-    <url>%2F2017%2F01%2F20%2Finstall-jekyll-on-windows.html</url>
-    <content type="text"><![CDATA[早些时候用的ubuntu，安装jekyll确实挺简单，可能是终端强大吧。最近工作环境切换到windows，无奈想写博文的时候却发现需要切换到ubuntu，不是那么方便。打算在windows上部署一下jekyll。 软件环境 Windows 10 企业版 Ruby 2.3.2-x64 部署过程 安装 Ruby2.3.2-x64，安装目录请不要带空格，建议使用默认的”C:\Ruby23-x64”，安装的时候勾上”Add To Path”选项 确认ruby安装成功，打开控制台，执行 1ruby -v 安装 Devkit，安装目录请不要带空格，建议解压到”C:\DevKit” 在C:\DevKit打开控制台CMD，执行12ruby dk.rb initnotepad config.yml 执行完毕后会打开记事本，请确认内容如下：123456789101112131415# This configuration file contains the absolute path locations of all# installed Rubies to be enhanced to work with the DevKit. This config# file is generated by the 'ruby dk.rb init' step and may be modified# before running the 'ruby dk.rb install' step. To include any installed# Rubies that were not automagically discovered, simply add a line below# the triple hyphens with the absolute path to the Ruby root directory.## Example:## ---# - C:/ruby19trunk# - C:/ruby192dev#---- C:/Ruby23-x64 注意最后一行即可，如果你的Ruby安装目录不是默认的，请手动替换。 更改GEM默认镜像地址，由于众所周知的原因，gem安装包的时候十分慢，所以需要对镜像做下替换 打开控制台，执行1gem sources --add https://gems.ruby-china.org/ --remove https://rubygems.org/ 如果执行出错，类似于“SSL”错误的话，使用下面的命令1gem sources --add http://gems.ruby-china.org/ --remove https://rubygems.org/ 就可以了。 安装jekyll1gem install jekyll 由于更换了镜像地址，安装起来会非常快。 控制台执行123jekyll new blogcd blogjekyll serve 引用信息 jekyll文档]]></content>
-      <categories>
-        <category>other</category>
-      </categories>
-      <tags>
-        <tag>jekyll</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Yii2 migrate使用]]></title>
     <url>%2F2017%2F01%2F20%2Fyii2-migrate.html</url>
     <content type="text"><![CDATA[试想一个很简单的场景，在使用Yii2开发时，如果对已经有数据的数据表结构进行编辑的话，需要同步数据结构需要在本地导出一份SQL，放到线上去执行SQL，非常的不方便。而有了Yii2 migrate工具之后，这个问题简直不是问题。以下对常用的表结构操作进行演示。 关键命令 创建migrate 1yii migrate/create [名称] 执行migrate升级 1yii migrate 执行migrate降级 1yii migrate/down 创建新表执行创建migrate命令后，项目文件夹下migrations中会多出m170119093917[名称].php的文件，文件名称可能不同，但是结构是相同的，打开该php文件，内容如下 123456789101112131415161718192021222324252627282930313233&lt;?phpuse yii\db\Migration;class m170119_093917_name_20 extends Migration&#123; public function up() &#123; $tableName = 't_category'; $this-&gt;createTable($tableName, [ 'id' =&gt; $this-&gt;primaryKey(), 'name' =&gt; $this-&gt;string(10)-&gt;notNull()-&gt;unique()-&gt;comment('标识'), 'title' =&gt; $this-&gt;string(6)-&gt;notNull()-&gt;comment('名称'), 'count' =&gt; $this-&gt;integer()-&gt;defaultValue(0)-&gt;notNull()-&gt;comment('入驻数量') ]); &#125; public function down() &#123; echo "m170119_093917_name_20 cannot be reverted.\n"; return false; &#125; /* // Use safeUp/safeDown to run migration code within a transaction public function safeUp() &#123; &#125; public function safeDown() &#123; &#125; */&#125; 如果需要支持降级的话在down方法中写逻辑返回true即可。 以下代码演示Migration操作，不再新建migrate，执行使用本php文件即可 添加字段12&lt;?php$this-&gt;addColumn('t_category','sort',$this-&gt;integer()-&gt;defaultValue(0)-&gt;notNull()-&gt;comment('排序')); 添加索引12&lt;?php$this-&gt;createIndex('sort','t_category',['sort']); 添加唯一索引12&lt;?php$this-&gt;createIndex('sort','t_category',['sort'],true); 更新字段12&lt;?php$this-&gt;alterColumn('t_category','sort',$this-&gt;smallInteger()-&gt;defaultValue(0)-&gt;notNull()-&gt;comment('排序')); 删除字段12&lt;?php$this-&gt;dropColumn('t_category','sort'); 删除表12&lt;?php$this-&gt;dropTable('t_category');]]></content>
@@ -461,6 +455,17 @@
       <tags>
         <tag>yii2</tag>
         <tag>migrate</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[在windows上安装jekyll]]></title>
+    <url>%2F2017%2F01%2F20%2Finstall-jekyll-on-windows.html</url>
+    <content type="text"><![CDATA[早些时候用的ubuntu，安装jekyll确实挺简单，可能是终端强大吧。最近工作环境切换到windows，无奈想写博文的时候却发现需要切换到ubuntu，不是那么方便。打算在windows上部署一下jekyll。 软件环境 Windows 10 企业版 Ruby 2.3.2-x64 部署过程 安装 Ruby2.3.2-x64，安装目录请不要带空格，建议使用默认的”C:\Ruby23-x64”，安装的时候勾上”Add To Path”选项 确认ruby安装成功，打开控制台，执行 1ruby -v 安装 Devkit，安装目录请不要带空格，建议解压到”C:\DevKit” 在C:\DevKit打开控制台CMD，执行12ruby dk.rb initnotepad config.yml 执行完毕后会打开记事本，请确认内容如下：123456789101112131415# This configuration file contains the absolute path locations of all# installed Rubies to be enhanced to work with the DevKit. This config# file is generated by the 'ruby dk.rb init' step and may be modified# before running the 'ruby dk.rb install' step. To include any installed# Rubies that were not automagically discovered, simply add a line below# the triple hyphens with the absolute path to the Ruby root directory.## Example:## ---# - C:/ruby19trunk# - C:/ruby192dev#---- C:/Ruby23-x64 注意最后一行即可，如果你的Ruby安装目录不是默认的，请手动替换。 更改GEM默认镜像地址，由于众所周知的原因，gem安装包的时候十分慢，所以需要对镜像做下替换 打开控制台，执行1gem sources --add https://gems.ruby-china.org/ --remove https://rubygems.org/ 如果执行出错，类似于“SSL”错误的话，使用下面的命令1gem sources --add http://gems.ruby-china.org/ --remove https://rubygems.org/ 就可以了。 安装jekyll1gem install jekyll 由于更换了镜像地址，安装起来会非常快。 控制台执行123jekyll new blogcd blogjekyll serve 引用信息 jekyll文档]]></content>
+      <categories>
+        <category>other</category>
+      </categories>
+      <tags>
+        <tag>jekyll</tag>
       </tags>
   </entry>
   <entry>
@@ -1392,8 +1397,8 @@
         <category>angularjs</category>
       </categories>
       <tags>
-        <tag>directive</tag>
         <tag>angularjs</tag>
+        <tag>directive</tag>
         <tag>ueditor</tag>
         <tag>rich text editor</tag>
       </tags>
@@ -1467,8 +1472,8 @@
         <category>css</category>
       </categories>
       <tags>
-        <tag>css3</tag>
         <tag>loading</tag>
+        <tag>css3</tag>
       </tags>
   </entry>
   <entry>
