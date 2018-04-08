@@ -1,6 +1,8 @@
 ---
 title: golang for遍历channel时需要注意的问题
 date: 2018-04-05 18:45:31
+categories:
+- golang
 tags:
 ---
 

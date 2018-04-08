@@ -1,9 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[golang使用travis进行持续集成]]></title>
+    <url>%2F2018%2F04%2F08%2Fgolang-travis-ci.html</url>
+    <content type="text"><![CDATA[虽然golang的工程工具已经非常完善了，比如测试、代码格式化等等。但是如果开发library开源到github的话，这些东西是可以使用自动化工具完成的，那就是 travis 使用步骤 开发好需要集成的library以及测试用例 在项目根目录新建.travis.yml文件 12345678language: gogo:- 1.x- '1.8'- '1.9'- 1.10.xscript:- go test -v ./... 提交到github 打开https://www.travis-ci.org/并使用github账号登录 登录之后点击左边 “My Repositories” 旁边的 “+” 号添加项目（点击项目前面的滑块即可） 更改项目文件，push一次到github，此时travis会自动运行测试脚本 敏感数据加密如果你的测试用例需要使用到敏感数据（如一些密钥等等），那需要用travis将你的敏感数据加密(以Mac为例) 终端执行sudo gem install travis 在项目根目录打开终端执行travis encrypt AMAP_KEY=&quot;xxxx&quot; --add AMAP_KEY是环境变量名称，程序读取环境变量可以得到真实的key，xxxx是敏感数据 执行完毕后，.travis.yml 会发生更改, 会添加如下内容(secure可能不一致) 123env:global: secure: kr5JHNTYsh/jezvk88qP91arb+UD/op/5CyOFY7uNYpJ6ZSsJY5fDKyZHjf0VSFmaYqJFMPl6uCASE9baiepeGvBFcy8aI9CNsbLzj2uBNjqqYPmvYGnBjpzp8yknVJKRTitF/kkWtzZcWImHnpvNGHuzXxp/EIBeJtNwjcCRoP/qfGhlZKbLsYFvlWkmRYb0dr8RM5mlmGXPZi8q7m+soVRO8Zjr4QQccybgmhonxlcUrHr6ro+yjjQefoJXRufqoRX0sGyecGYucC4nUpWl5hkDPkQE+Mekhz+rF657SwNsn8nXOFnnUuwsPXE26ak5xF1roEcFk2CpwGZuT7smJZPtw1inXFdIaW+4qllbyxMJkylvFZa5IcvLT3+/eKaQc8Fg6PoxJH0PF3RdtoQVB31cQiPWNm1SecQ6wC64WA/5qN4T5OoRfpt60BFDAITdS62dQGu5LSepcXMWXhxCdQPeDm5Qce6wjJXURubJMpBm0mPWwCNZhJyRw1G5TTyO25NckXQRlObrjltvwAd+7OEUcsYXqhdPtUTIVy6w3XOwT2eC/hP0Yi7qqUMMlJTHUW7Lb9zsEc4UB5BVwgeZ5Y9bVbknJfpt3ygcXAJeeDYxwV9g16KoS7HMFPzwrqlHbiBytIahqarBd4enwqR5RYQPEyetiIDLaJA4SyQ0cE= 上传到github 接收测试结果通知如果你需要获取travis执行结果通知的话，可以添加邮箱配置，travis执行完毕后会通知到该邮箱。 打开 .travis.yml 添加以下内容： 123456notifications: email: recipients: - 邮箱地址 on_success: change on_failure: always 提交到github]]></content>
+      <categories>
+        <category>golang</category>
+      </categories>
+      <tags>
+        <tag>travis</tag>
+        <tag>ci</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[golang for遍历channel时需要注意的问题]]></title>
     <url>%2F2018%2F04%2F05%2Fgolang-for-over-channels.html</url>
     <content type="text"><![CDATA[最近在做一个基于RabbitMQ的应用，由于官方的qos没有golang的版本，所以出了一点问题。问题代码如下： 1234567891011121314151617_, ch, err := component.NewRabbitMQ()if err != nil &#123; panic(err)&#125;if err := ch.Qos(10, 0, true); err != nil &#123; panic(err)&#125;msgs, err := ch.Consume("push", "", false, false, false, false, nil)if err != nil &#123; panic(err)&#125;for m := range msgs &#123; go func(d *amqp.Delivery) &#123; defer func() &#123; d.Ack(false) &#125; // 处理消息 &#125;(&amp;m) &#125; 发现消费到10条消息，进程就退出了，但是exit code为0，表示系统是正常退出，由于做了日志记录可以确定消费了10条，所以初步确定是qos相关问题。 排查过程 首先是把d的tag打印出来，发现全部是一样的，可以确定是重复的一条消息 一开始想到可能是经典的go协程执行在for循环结束以后导致的，但是看我的代码不属于这种情况，有使用&amp;m保证每一条消息都是不同循环传入的。所以判断可能是for循环的传递问题。 确定方向之后开始写了一个测试项目用来验证我的想法是否正确。 测试代码1234567891011121314package mainimport "fmt"func main() &#123; ch := make(chan int, 10) for i := 0; i &lt; 10; i++ &#123; ch &lt;- i &#125; close(ch) for v := range ch &#123; fmt.Println(&amp;v) &#125;&#125; 执行输出 123456789100xc4200860080xc4200860080xc4200860080xc4200860080xc4200860080xc4200860080xc4200860080xc4200860080xc4200860080xc420086008 到这里才焕然大悟，for循环中，如果循环变量不是指针，那么每次的变量是同一个，不过值变了。，所以上例中的RabbitMQ go协程消费消息那里，需要直接传递值而不是指针，经过测试之后发现，问题确实解决了。 题外话测试代码那里，如果不close掉channel是会发生死锁的，原因是 当for循环读完channel的10个值之后会继续尝试读取下一个，而由于channel为空又没关闭，会一直阻塞形成死锁 TOOD研究RabbitMQ Consumer部分的源码来看看消费channel被关闭的问题。]]></content>
+      <categories>
+        <category>golang</category>
+      </categories>
   </entry>
   <entry>
     <title><![CDATA[golang解决TCP粘包问题]]></title>
@@ -365,19 +380,19 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[使用NodeJs提供syslogd服务端]]></title>
-    <url>%2F2017%2F04%2F27%2Fnode-syslogd.html</url>
-    <content type="text"><![CDATA[syslog作为Linux发行版一个重要组件，相信大家都不陌生，而如果每台服务器都独立使用一份的话，不能做到日志统一管理，对于以后的日志查询不太方便。syslog有标准的协议格式，这里不做讨论，有兴趣的可以基于协议的报文结构使用socket编程实现。 部署服务端本文使用Nodejs来部署一台syslog服务端。 终端执行 12npm init -ynpm install syslogd --save index.js 1234567891011const syslogd = require('syslogd');const server = syslogd(data =&gt; &#123; console.log(data);&#125;);server.listen(514,e =&gt; &#123; if(e!==null) &#123; console.error(e); return; &#125; console.log('listen on 514');&#125;); 终端执行 1node index.js 好了，我们的syslog服务器已经部署完毕了。是不是很简单呢~ nginx日志接入syslog打开nginx配置文件 12345server &#123; ... access_log syslog:server=127.0.0.1; ...&#125; 重启nginx就可以发现nodejs服务端已经成功接收日志信息了。注意：是重启不是reload]]></content>
-      <categories>
-        <category>nodejs</category>
-      </categories>
-  </entry>
-  <entry>
     <title><![CDATA[log4php使用syslog记录日志]]></title>
     <url>%2F2017%2F04%2F27%2Flog4php-syslog.html</url>
     <content type="text"><![CDATA[log4php是apache基金会下的一个开源项目，灵活、强大，已经有几个项目使用了log4php处理日志，目前遇到的问题是服务器太多的时候日志如何统一管理，本来想使用数据库存储。但是日志格式成了一个问题，而且不利于扩展，如果临时需要保存到文件，又要更改log4php的配置。好在log4php提供了syslog的一个appender，可以将日志写入syslog; log4php配置12345678910111213log4php.rootLogger=INFO, stdout, stderrlog4php.appender.stdout=LoggerAppenderConsolelog4php.appender.stdout.layout=LoggerLayoutPatternlog4php.appender.stdout.layout.ConversionPattern=%date&#123;Y-m-d H:i:s&#125; [%-5p] %m%nlog4php.appender.stdout.threshold=INFOlog4php.appender.stderr=LoggerAppenderSysloglog4php.appender.stderr.ident=qun.hk-tasklog4php.appender.stderr.priority=ERRlog4php.appender.stderr.facility=LOCAL0log4php.appender.stderr.layout=LoggerLayoutPatternlog4php.appender.stderr.layout.ConversionPattern=%date&#123;Y-m-d H:i:s&#125; %m%nlog4php.appender.stderr.threshold=WARN 这里使用两个输出目的地,stdout输出到终端，stderr输出到syslod，log4php配置对应rsyslog的配置关系为： ident -&gt; syslog中的tag priority -&gt; syslog中的priority facility -&gt; syslog中的facility，请注意全部为大写 rsyslog配置rsyslog配置文件一般在 /etc/rsyslog.conf 以及 /etc/rsyslog.d目录下我们不更改主配置文件，在/etc/rsyslog.d/目录下新建文件 local0.conf```1234内容为```local0.* /var/log/local0.log rsyslog输出可以写成服务器，本文为了测试直接写入文件，有需要的可以根据实际情况进行转发。重启rsyslog rsyslog restart```12345678## PHP加载配置```php&lt;?php\Logger::configure(__DIR__ . &apos;/log4php.properties&apos;);$logger = \Logger::getLogger(&apos;default&apos;);$logger-&gt;info(&apos;info&apos;);$logger-&gt;error(&apos;error&apos;); 可以看到/var/log/local0.log中多出一行error的日志]]></content>
       <categories>
         <category>php</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[使用NodeJs提供syslogd服务端]]></title>
+    <url>%2F2017%2F04%2F27%2Fnode-syslogd.html</url>
+    <content type="text"><![CDATA[syslog作为Linux发行版一个重要组件，相信大家都不陌生，而如果每台服务器都独立使用一份的话，不能做到日志统一管理，对于以后的日志查询不太方便。syslog有标准的协议格式，这里不做讨论，有兴趣的可以基于协议的报文结构使用socket编程实现。 部署服务端本文使用Nodejs来部署一台syslog服务端。 终端执行 12npm init -ynpm install syslogd --save index.js 1234567891011const syslogd = require('syslogd');const server = syslogd(data =&gt; &#123; console.log(data);&#125;);server.listen(514,e =&gt; &#123; if(e!==null) &#123; console.error(e); return; &#125; console.log('listen on 514');&#125;); 终端执行 1node index.js 好了，我们的syslog服务器已经部署完毕了。是不是很简单呢~ nginx日志接入syslog打开nginx配置文件 12345server &#123; ... access_log syslog:server=127.0.0.1; ...&#125; 重启nginx就可以发现nodejs服务端已经成功接收日志信息了。注意：是重启不是reload]]></content>
+      <categories>
+        <category>nodejs</category>
       </categories>
   </entry>
   <entry>
@@ -469,6 +484,14 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[微信开放平台公众号第三方平台网页开发域名问题]]></title>
+    <url>%2F2016%2F12%2F28%2Fwechat-component-domain.html</url>
+    <content type="text"><![CDATA[先来看一下微信官方定义: 第三方平台在代公众号做网页授权、调用JS SDK等网页开发工作时所用的域名，可填写3个，以;隔开。为了满足开发者管理需要，符合以下要求的下级域名也将生效：$APPID$.wx.abc.com（$APPID$为公众号的AppID的替换符） 只能说微信文档这个 wx.abc.com误导了我好久，试过的域名是APPID.wx.abc.com，死活不行，后来发现公司域名整个就是用wx.abc.com替换，不是abc.com，所以最终进行授权的域名域名是(假设appid为testappid，填写的网页开发域名为example.com):testappid.example.com，可以根据这个做泛域名解析。]]></content>
+      <categories>
+        <category>wechat</category>
+      </categories>
+  </entry>
+  <entry>
     <title><![CDATA[nginx泛域名解析配置]]></title>
     <url>%2F2016%2F12%2F28%2Fnginx-wildcard-domain-config.html</url>
     <content type="text"><![CDATA[最近一个项目需要承载高并发请求，所以在后端语言上选择了NodeJs，但是nodejs有时候读取不到请求的主机名，所以想到使用nginx+nodejs的方式进行处理。 Nginx 配置1234567891011121314151617upstream io_nodes &#123; server 127.0.0.1:8081;&#125;server &#123; listen 80; listen [::]:80; root /var/www/html; server_name ~^(?&lt;subdomain&gt;.+).example.com; location / &#123; proxy_set_header Host $host; proxy_set_header X-AppId $subdomain; proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; proxy_pass http://io_nodes; &#125;&#125; 重启nginx服务器即可。nginx会将所有的 .example.com 格式的域名反向代理到本机的8081端口，该端口为nodejs监听端口。 NodeJs 读取请求域名以及子域名名称使用express 12var host = req.headers.host;var appid = req.headers['x-appid'];]]></content>
@@ -479,14 +502,6 @@
         <tag>nginx</tag>
         <tag>wildcard domain</tag>
       </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[微信开放平台公众号第三方平台网页开发域名问题]]></title>
-    <url>%2F2016%2F12%2F28%2Fwechat-component-domain.html</url>
-    <content type="text"><![CDATA[先来看一下微信官方定义: 第三方平台在代公众号做网页授权、调用JS SDK等网页开发工作时所用的域名，可填写3个，以;隔开。为了满足开发者管理需要，符合以下要求的下级域名也将生效：$APPID$.wx.abc.com（$APPID$为公众号的AppID的替换符） 只能说微信文档这个 wx.abc.com误导了我好久，试过的域名是APPID.wx.abc.com，死活不行，后来发现公司域名整个就是用wx.abc.com替换，不是abc.com，所以最终进行授权的域名域名是(假设appid为testappid，填写的网页开发域名为example.com):testappid.example.com，可以根据这个做泛域名解析。]]></content>
-      <categories>
-        <category>wechat</category>
-      </categories>
   </entry>
   <entry>
     <title><![CDATA[使用PM2守护PHP命令行程序]]></title>
@@ -1472,8 +1487,8 @@
         <category>css</category>
       </categories>
       <tags>
-        <tag>loading</tag>
         <tag>css3</tag>
+        <tag>loading</tag>
       </tags>
   </entry>
   <entry>
