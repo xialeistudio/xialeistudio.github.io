@@ -264,7 +264,7 @@ custom_logo:
 # Available value:
 #    normal | night | night eighties | night blue | night bright
 # https://github.com/chriskempson/tomorrow-theme
-highlight_theme: night eighties
+highlight_theme: normal
 
 
 # ---------------------------------------------------------------
@@ -283,7 +283,7 @@ font:
   enable: true
 
   # Uri of fonts host. E.g. //fonts.googleapis.com (Default).
-  host:
+  host: //fonts.css.network
 
   # Font options:
   # `external: true` will load this font family from `host` above.
@@ -293,14 +293,14 @@ font:
   # Global font settings used on <body> element.
   global:
     external: true
-    family: Monda
+    family: Lato
     size:
 
   # Font settings for Headlines (h1, h2, h3, h4, h5, h6).
   # Fallback to `global` font settings.
   headings:
     external: true
-    family: Roboto Slab
+    family:
     size:
 
   # Font settings for posts.
@@ -313,14 +313,13 @@ font:
   # Fallback to `global` font settings.
   logo:
     external: true
-    family: Lobster Two
     size:
 
   # Font settings for <code> and code blocks.
   codes:
     external: true
-    family: inconsolata
-    size: 16
+    family: Iosevka
+    size: 12
 
 
 # ---------------------------------------------------------------
