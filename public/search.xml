@@ -1,6 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[redis常用实践]]></title>
+    <url>%2F2018%2F06%2F14%2Fredis-common-practice.html</url>
+    <content type="text"><![CDATA[Redis相信大家都不陌生，而如果只是用来取代memcached做缓存的话，实在是大材小用了。一起来看看生产环境下的常用用法。 分布式锁1234$canLock = $redis-&gt;set('k', 1, 'NX', 'EX', 2);if($canLock) &#123; // 获得锁成功&#125; 锁定键名为k的数据两秒钟，两秒后该方法才能重新获取锁 1$redis-&gt;del('k'); 删除键名为k的数据，其他方法可以重新获取锁 Hash这是redis特有的数据结构，memcached没有。使用场景很多，列举一种常用的，假设有一个需求 加密后的用户id和真实用户id的映射关系保存 这种情况我们可以使用hash，而不是使用多个kv缓存, 需要清空所有的时候比较难处理。代码如下： 123456$realId = $redis-&gt;hget('user_id_map', 'userId1');if(!empty($realId)) &#123; return $realId;&#125;$realId = getFromDatabase('userId1'); // 从数据库读取$redis-&gt;hset('user_id_map','userId1',$realId); 如果需要清空，则直接删除hash即可。 setset就是数据项不重复的集合，使用场景也很多。例子要说的是使用set存储一个聊天室中的所有用户id: 123$redis-&gt;sadd('chat_room', 'user1', 'user2'); // 添加成员到集合$redis-&gt;srem('chat_room', 'user1'); // 删除指定成员$redis-&gt;smembers('chat_room'); // 获取集合所有元素 结论 大致就是这样了，基于这些简单数据结构可以根据业务需求构造更合理的数据结构。]]></content>
+      <categories>
+        <category>php</category>
+      </categories>
+      <tags>
+        <tag>redis</tag>
+        <tag>php</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[PermissionScope Swift4 兼容问题]]></title>
+    <url>%2F2018%2F06%2F14%2FPermissionScope-With-Swift-4.html</url>
+    <content type="text"><![CDATA[PermissionScope是iOS非常好用的权限处理库，界面效果也非常精美。不幸的是作者已经停止维护。 PermissionScope is no longer supported. Please use an alternative if you need updates for newer iOS 10 and 11 APIs! 问题的来源因为作者是基于Swift3开发的，而4.0的@selector语法有一点调整，所以是不能通过编译的，处理办法是根据Xcode的提示一个个修正。 可是事情真的这么简单吗？Xcode处理过后虽然编译通过了，但是会触发运行时错误。错误内容大致是调用了不存在的方法。 解决方案由于我们根据Xcode的提示给相关代码加了@objc，但是有些方法是没有加的，而这些方法类似下面的代码： 123func requestCamera() &#123;&#125; 由于没有@objc修饰，@selector指令找不到方法，所以就报错了。解决方案如下： 1234@objcfunc requestCamera() &#123;&#125;]]></content>
+      <categories>
+        <category>ios</category>
+      </categories>
+      <tags>
+        <tag>ios</tag>
+        <tag>permission</tag>
+        <tag>swift</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[使用yii2依赖注入规范业务开发]]></title>
     <url>%2F2018%2F04%2F24%2Fyii2-dependency-inject.html</url>
     <content type="text"><![CDATA[本文代码https://github.com/xialeistudio/yii2-di-demo 什么是依赖注入(DI)?对象由框架来创建而不是程序员通过 new 创建。跟IoC差不多一个意思。 为什么要有依赖注入? 解耦。调用方不再通过 new 运算符实例化被调用对象，而通过框架(IoC容器)创建之后注入进来。解除了调用者与被调用者之间的依赖。 有利于面向接口编程。个人认为OOP程序设计最重要的就是面向接口(面向抽象)编程。因为有了第1步的关系，调用者只需要依赖接口类型而不用依赖实现类型，提高了程序的扩展性。 Yii2的依赖注入Yii2通过 yii\di\Container 提供DI容器特性。目前支持一下4种方式注入： 构造方法注入 方法注入 Setter和属性注入 PHP回调注入 注册依赖关系 通过容器的 set 方法注入 通过配置文件注入(推荐) 依赖注入实战 打开终端，执行以下命令初始化项目： 1composer create-project --prefer-dist yiisoft/yii2-app-basic basic 声明接口业务类 app\services\UserService 123456789101112131415161718192021222324252627282930&lt;?php/*** Created by PhpStorm.* User: xialei* Date: 2018/4/24* Time: 下午10:55*/namespace app\services;/*** 用户业务类* Interface UserService* @package app\services*/interface UserService&#123; /** * 根据ID查询用户 * @param integer $id * @return array|null */ public function show($id); /** * 查看所有用户 * @return array */ public function all();&#125; 接口实现文件 app\services\impl\UserServiceImpl 1234567891011121314151617181920212223242526272829303132333435363738394041424344&lt;?php/*** Created by PhpStorm.* User: xialei* Date: 2018/4/24* Time: 下午10:56*/namespace app\services\impl;use app\services\UserService;class UserServiceImpl implements UserService&#123; private $users = [ ['id' =&gt; 1, 'name' =&gt; 'xialei'], ['id' =&gt; 2, 'name' =&gt; 'zhangsan'], ]; /** * 根据ID查询用户 * @param integer $id * @return array */ public function show($id) &#123; foreach ($this-&gt;users as $user) &#123; if ($user['id'] == $id) &#123; return $user; &#125; &#125; return null; &#125; /** * 查看所有用户 * @return array */ public function all() &#123; return $this-&gt;users; &#125;&#125; 注册依赖关系 config/web.php 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859&lt;?phpuse app\services\UserService;use app\services\impl\UserServiceImpl;$params = require __DIR__ . '/params.php';$db = require __DIR__ . '/db.php';$config = [ 'id' =&gt; 'basic', 'basePath' =&gt; dirname(__DIR__), 'bootstrap' =&gt; ['log'], 'aliases' =&gt; [ '@bower' =&gt; '@vendor/bower-asset', '@npm' =&gt; '@vendor/npm-asset', ], 'container' =&gt; [ 'definitions' =&gt; [ UserService::class =&gt; UserServiceImpl::class ] ], 'components' =&gt; [ 'request' =&gt; [ // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation 'cookieValidationKey' =&gt; '0xGrStOOZE2oXxNNiu-o2eYovJ_Ia1Dk', ], 'response' =&gt; [ 'format' =&gt; 'json' ], 'errorHandler' =&gt; [ 'errorAction' =&gt; 'site/error', ], 'urlManager' =&gt; [ 'enablePrettyUrl' =&gt; true, 'showScriptName' =&gt; false, 'rules' =&gt; [ ], ], ],];if (YII_ENV_DEV) &#123; // configuration adjustments for 'dev' environment $config['bootstrap'][] = 'debug'; $config['modules']['debug'] = [ 'class' =&gt; 'yii\debug\Module', // uncomment the following to add your IP if you are not connecting from localhost. //'allowedIPs' =&gt; ['127.0.0.1', '::1'], ]; $config['bootstrap'][] = 'gii'; $config['modules']['gii'] = [ 'class' =&gt; 'yii\gii\Module', // uncomment the following to add your IP if you are not connecting from localhost. //'allowedIPs' =&gt; ['127.0.0.1', '::1'], ];&#125;return $config; 添加控制器 app\controllers\UserController 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950&lt;?php/*** Created by PhpStorm.* User: xialei* Date: 2018/4/24* Time: 下午10:57*/namespace app\controllers;use app\services\UserService;use yii\base\Module;use yii\web\Controller;use yii\web\NotFoundHttpException;class UserController extends Controller&#123; private $userService; public function __construct(string $id, Module $module, UserService $userService, array $config = []) &#123; $this-&gt;userService = $userService; parent::__construct($id, $module, $config); &#125; /** * 查看用户 * @param $id * @return array|null * @throws NotFoundHttpException */ public function actionShow($id) &#123; $user = $this-&gt;userService-&gt;show($id); if (empty($user)) &#123; throw new NotFoundHttpException('用户不存在'); &#125; return $user; &#125; /** * 查看所有用户 * @return array */ public function actionAll() &#123; return $this-&gt;userService-&gt;all(); &#125;&#125; 运行测试服务器 1./yii serve/index 访问用户列表接口 http://localhost:8080/user/all 1234567[&#123; "id": 1, "name": "xialei"&#125;, &#123; "id": 2, "name": "zhangsan"&#125;] 访问查看用户接口 http://localhost:8080/user/show?id=1 1234&#123; "id": 1, "name": "xialei"&#125; 写在最后如你所见，Yii2自带的IoC容器使用起来还是挺方便的，观测了Yii 配置优于编码 的思想，Yii的组件基本上都可以在配置文件中进行配置而不需要手动编码。 灵活使用DI可以使我们从依赖关系中解脱出来，专注于业务逻辑。 当然，业务逻辑的组织也是一个很大的研究课题，有兴趣的可以去看看 DDD(领域驱动设计)]]></content>
@@ -301,17 +326,6 @@
       </categories>
   </entry>
   <entry>
-    <title><![CDATA[使用pm2来保证Spring Boot应用稳定运行]]></title>
-    <url>%2F2017%2F07%2F31%2Fspring-boot-pm2.html</url>
-    <content type="text"><![CDATA[Spring Boot开发web应用就像开发普通的java程序一般简洁，因为其内嵌了web容易，启动的时候只需要一条命令java -jar server.jar即可，非常方便。但是由此而来的问题是万一应用挂了怎么办？ 别担心，有pm2进程管理工具可以帮到你。 PM2简介pm2原先是nodejs应用的进程管理工具，不过其良好的设计以及扩展性可以手动执行执行进程。 PM2安装 安装NodeJs npm install pm2 -g PM2基本命令 pm2 list 查看所有被PM2管理的进程列表 pm2 start xxx 启动一个应用 pm2 stop xxx 停止一个应用 pm2 restart xxx 重启一个应用 pm2 describe xxx 查看应用详情 pm2 startup, pm2 save 两条命令，用来保证服务器启动时,pm2管理的程序自动运行 Java程序处理在jar的同级目录新建应用启动配置文件，如pm2.json，内容如下： 12345678910&#123; "name": "my-server", "script": "/usr/bin/java", "args": [ "-jar", "server.jar" ], "exec_interpreter": "", "exec_mode": "fork"&#125; 说明如下： name 进程名称（显示在pm2 list命令中） script 执行进程名称，如果需要执行PHP脚本则填写php解释器的路径，本文为java args 传给执行进程的参数，多个参数以数组单元分割 exec_interpreter NodeJs解析器，本文不适用 exec_mode 执行模式[cluster|fork]这个针对NodeJs应用的配置，非NodeJs应用统一fork 配置文件完成后，使用1pm2 start pm2.json 即可看到应用被启动 日志管理日志路径在~/.pm2/logs，stdout和stderr被分开存放，程序中的所有stdout和stderr都被收集方便查错。]]></content>
-      <categories>
-        <category>spring book</category>
-      </categories>
-      <tags>
-        <tag>pm2</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Spring Boot JPA 返回json时排除Null字段]]></title>
     <url>%2F2017%2F07%2F31%2Fspring-boot-exclude-null.html</url>
     <content type="text"><![CDATA[Spring Boot在返回JSON的时候默认会返回null字段，这个对客户端一般没什么作用，还会增加服务器带宽压力。使用如下配置可以屏蔽。 在pojo对象上添加注解 123@JsonInclude(JsonInclude.Include.NON_NULL)class User &#123;&#125; 再使用@ResponseBody的时候就不会返回Null字段了。]]></content>
@@ -321,6 +335,17 @@
       <tags>
         <tag>json</tag>
         <tag>jpa</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[使用pm2来保证Spring Boot应用稳定运行]]></title>
+    <url>%2F2017%2F07%2F31%2Fspring-boot-pm2.html</url>
+    <content type="text"><![CDATA[Spring Boot开发web应用就像开发普通的java程序一般简洁，因为其内嵌了web容易，启动的时候只需要一条命令java -jar server.jar即可，非常方便。但是由此而来的问题是万一应用挂了怎么办？ 别担心，有pm2进程管理工具可以帮到你。 PM2简介pm2原先是nodejs应用的进程管理工具，不过其良好的设计以及扩展性可以手动执行执行进程。 PM2安装 安装NodeJs npm install pm2 -g PM2基本命令 pm2 list 查看所有被PM2管理的进程列表 pm2 start xxx 启动一个应用 pm2 stop xxx 停止一个应用 pm2 restart xxx 重启一个应用 pm2 describe xxx 查看应用详情 pm2 startup, pm2 save 两条命令，用来保证服务器启动时,pm2管理的程序自动运行 Java程序处理在jar的同级目录新建应用启动配置文件，如pm2.json，内容如下： 12345678910&#123; "name": "my-server", "script": "/usr/bin/java", "args": [ "-jar", "server.jar" ], "exec_interpreter": "", "exec_mode": "fork"&#125; 说明如下： name 进程名称（显示在pm2 list命令中） script 执行进程名称，如果需要执行PHP脚本则填写php解释器的路径，本文为java args 传给执行进程的参数，多个参数以数组单元分割 exec_interpreter NodeJs解析器，本文不适用 exec_mode 执行模式[cluster|fork]这个针对NodeJs应用的配置，非NodeJs应用统一fork 配置文件完成后，使用1pm2 start pm2.json 即可看到应用被启动 日志管理日志路径在~/.pm2/logs，stdout和stderr被分开存放，程序中的所有stdout和stderr都被收集方便查错。]]></content>
+      <categories>
+        <category>spring book</category>
+      </categories>
+      <tags>
+        <tag>pm2</tag>
       </tags>
   </entry>
   <entry>
@@ -392,19 +417,19 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[log4php使用syslog记录日志]]></title>
-    <url>%2F2017%2F04%2F27%2Flog4php-syslog.html</url>
-    <content type="text"><![CDATA[log4php是apache基金会下的一个开源项目，灵活、强大，已经有几个项目使用了log4php处理日志，目前遇到的问题是服务器太多的时候日志如何统一管理，本来想使用数据库存储。但是日志格式成了一个问题，而且不利于扩展，如果临时需要保存到文件，又要更改log4php的配置。好在log4php提供了syslog的一个appender，可以将日志写入syslog; log4php配置12345678910111213log4php.rootLogger=INFO, stdout, stderrlog4php.appender.stdout=LoggerAppenderConsolelog4php.appender.stdout.layout=LoggerLayoutPatternlog4php.appender.stdout.layout.ConversionPattern=%date&#123;Y-m-d H:i:s&#125; [%-5p] %m%nlog4php.appender.stdout.threshold=INFOlog4php.appender.stderr=LoggerAppenderSysloglog4php.appender.stderr.ident=qun.hk-tasklog4php.appender.stderr.priority=ERRlog4php.appender.stderr.facility=LOCAL0log4php.appender.stderr.layout=LoggerLayoutPatternlog4php.appender.stderr.layout.ConversionPattern=%date&#123;Y-m-d H:i:s&#125; %m%nlog4php.appender.stderr.threshold=WARN 这里使用两个输出目的地,stdout输出到终端，stderr输出到syslod，log4php配置对应rsyslog的配置关系为： ident -&gt; syslog中的tag priority -&gt; syslog中的priority facility -&gt; syslog中的facility，请注意全部为大写 rsyslog配置rsyslog配置文件一般在 /etc/rsyslog.conf 以及 /etc/rsyslog.d目录下我们不更改主配置文件，在/etc/rsyslog.d/目录下新建文件 local0.conf```1234内容为```local0.* /var/log/local0.log rsyslog输出可以写成服务器，本文为了测试直接写入文件，有需要的可以根据实际情况进行转发。重启rsyslog rsyslog restart```12345678## PHP加载配置```php&lt;?php\Logger::configure(__DIR__ . &apos;/log4php.properties&apos;);$logger = \Logger::getLogger(&apos;default&apos;);$logger-&gt;info(&apos;info&apos;);$logger-&gt;error(&apos;error&apos;); 可以看到/var/log/local0.log中多出一行error的日志]]></content>
-      <categories>
-        <category>php</category>
-      </categories>
-  </entry>
-  <entry>
     <title><![CDATA[使用NodeJs提供syslogd服务端]]></title>
     <url>%2F2017%2F04%2F27%2Fnode-syslogd.html</url>
     <content type="text"><![CDATA[syslog作为Linux发行版一个重要组件，相信大家都不陌生，而如果每台服务器都独立使用一份的话，不能做到日志统一管理，对于以后的日志查询不太方便。syslog有标准的协议格式，这里不做讨论，有兴趣的可以基于协议的报文结构使用socket编程实现。 部署服务端本文使用Nodejs来部署一台syslog服务端。 终端执行 12npm init -ynpm install syslogd --save index.js 1234567891011const syslogd = require('syslogd');const server = syslogd(data =&gt; &#123; console.log(data);&#125;);server.listen(514,e =&gt; &#123; if(e!==null) &#123; console.error(e); return; &#125; console.log('listen on 514');&#125;); 终端执行 1node index.js 好了，我们的syslog服务器已经部署完毕了。是不是很简单呢~ nginx日志接入syslog打开nginx配置文件 12345server &#123; ... access_log syslog:server=127.0.0.1; ...&#125; 重启nginx就可以发现nodejs服务端已经成功接收日志信息了。注意：是重启不是reload]]></content>
       <categories>
         <category>nodejs</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[log4php使用syslog记录日志]]></title>
+    <url>%2F2017%2F04%2F27%2Flog4php-syslog.html</url>
+    <content type="text"><![CDATA[log4php是apache基金会下的一个开源项目，灵活、强大，已经有几个项目使用了log4php处理日志，目前遇到的问题是服务器太多的时候日志如何统一管理，本来想使用数据库存储。但是日志格式成了一个问题，而且不利于扩展，如果临时需要保存到文件，又要更改log4php的配置。好在log4php提供了syslog的一个appender，可以将日志写入syslog; log4php配置12345678910111213log4php.rootLogger=INFO, stdout, stderrlog4php.appender.stdout=LoggerAppenderConsolelog4php.appender.stdout.layout=LoggerLayoutPatternlog4php.appender.stdout.layout.ConversionPattern=%date&#123;Y-m-d H:i:s&#125; [%-5p] %m%nlog4php.appender.stdout.threshold=INFOlog4php.appender.stderr=LoggerAppenderSysloglog4php.appender.stderr.ident=qun.hk-tasklog4php.appender.stderr.priority=ERRlog4php.appender.stderr.facility=LOCAL0log4php.appender.stderr.layout=LoggerLayoutPatternlog4php.appender.stderr.layout.ConversionPattern=%date&#123;Y-m-d H:i:s&#125; %m%nlog4php.appender.stderr.threshold=WARN 这里使用两个输出目的地,stdout输出到终端，stderr输出到syslod，log4php配置对应rsyslog的配置关系为： ident -&gt; syslog中的tag priority -&gt; syslog中的priority facility -&gt; syslog中的facility，请注意全部为大写 rsyslog配置rsyslog配置文件一般在 /etc/rsyslog.conf 以及 /etc/rsyslog.d目录下我们不更改主配置文件，在/etc/rsyslog.d/目录下新建文件 local0.conf```1234内容为```local0.* /var/log/local0.log rsyslog输出可以写成服务器，本文为了测试直接写入文件，有需要的可以根据实际情况进行转发。重启rsyslog rsyslog restart```12345678## PHP加载配置```php&lt;?php\Logger::configure(__DIR__ . &apos;/log4php.properties&apos;);$logger = \Logger::getLogger(&apos;default&apos;);$logger-&gt;info(&apos;info&apos;);$logger-&gt;error(&apos;error&apos;); 可以看到/var/log/local0.log中多出一行error的日志]]></content>
+      <categories>
+        <category>php</category>
       </categories>
   </entry>
   <entry>
@@ -473,17 +498,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[在windows上安装jekyll]]></title>
-    <url>%2F2017%2F01%2F20%2Finstall-jekyll-on-windows.html</url>
-    <content type="text"><![CDATA[早些时候用的ubuntu，安装jekyll确实挺简单，可能是终端强大吧。最近工作环境切换到windows，无奈想写博文的时候却发现需要切换到ubuntu，不是那么方便。打算在windows上部署一下jekyll。 软件环境 Windows 10 企业版 Ruby 2.3.2-x64 部署过程 安装 Ruby2.3.2-x64，安装目录请不要带空格，建议使用默认的”C:\Ruby23-x64”，安装的时候勾上”Add To Path”选项 确认ruby安装成功，打开控制台，执行 1ruby -v 安装 Devkit，安装目录请不要带空格，建议解压到”C:\DevKit” 在C:\DevKit打开控制台CMD，执行12ruby dk.rb initnotepad config.yml 执行完毕后会打开记事本，请确认内容如下：123456789101112131415# This configuration file contains the absolute path locations of all# installed Rubies to be enhanced to work with the DevKit. This config# file is generated by the 'ruby dk.rb init' step and may be modified# before running the 'ruby dk.rb install' step. To include any installed# Rubies that were not automagically discovered, simply add a line below# the triple hyphens with the absolute path to the Ruby root directory.## Example:## ---# - C:/ruby19trunk# - C:/ruby192dev#---- C:/Ruby23-x64 注意最后一行即可，如果你的Ruby安装目录不是默认的，请手动替换。 更改GEM默认镜像地址，由于众所周知的原因，gem安装包的时候十分慢，所以需要对镜像做下替换 打开控制台，执行1gem sources --add https://gems.ruby-china.org/ --remove https://rubygems.org/ 如果执行出错，类似于“SSL”错误的话，使用下面的命令1gem sources --add http://gems.ruby-china.org/ --remove https://rubygems.org/ 就可以了。 安装jekyll1gem install jekyll 由于更换了镜像地址，安装起来会非常快。 控制台执行123jekyll new blogcd blogjekyll serve 引用信息 jekyll文档]]></content>
-      <categories>
-        <category>other</category>
-      </categories>
-      <tags>
-        <tag>jekyll</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Yii2 migrate使用]]></title>
     <url>%2F2017%2F01%2F20%2Fyii2-migrate.html</url>
     <content type="text"><![CDATA[试想一个很简单的场景，在使用Yii2开发时，如果对已经有数据的数据表结构进行编辑的话，需要同步数据结构需要在本地导出一份SQL，放到线上去执行SQL，非常的不方便。而有了Yii2 migrate工具之后，这个问题简直不是问题。以下对常用的表结构操作进行演示。 关键命令 创建migrate 1yii migrate/create [名称] 执行migrate升级 1yii migrate 执行migrate降级 1yii migrate/down 创建新表执行创建migrate命令后，项目文件夹下migrations中会多出m170119093917[名称].php的文件，文件名称可能不同，但是结构是相同的，打开该php文件，内容如下 123456789101112131415161718192021222324252627282930313233&lt;?phpuse yii\db\Migration;class m170119_093917_name_20 extends Migration&#123; public function up() &#123; $tableName = 't_category'; $this-&gt;createTable($tableName, [ 'id' =&gt; $this-&gt;primaryKey(), 'name' =&gt; $this-&gt;string(10)-&gt;notNull()-&gt;unique()-&gt;comment('标识'), 'title' =&gt; $this-&gt;string(6)-&gt;notNull()-&gt;comment('名称'), 'count' =&gt; $this-&gt;integer()-&gt;defaultValue(0)-&gt;notNull()-&gt;comment('入驻数量') ]); &#125; public function down() &#123; echo "m170119_093917_name_20 cannot be reverted.\n"; return false; &#125; /* // Use safeUp/safeDown to run migration code within a transaction public function safeUp() &#123; &#125; public function safeDown() &#123; &#125; */&#125; 如果需要支持降级的话在down方法中写逻辑返回true即可。 以下代码演示Migration操作，不再新建migrate，执行使用本php文件即可 添加字段12&lt;?php$this-&gt;addColumn('t_category','sort',$this-&gt;integer()-&gt;defaultValue(0)-&gt;notNull()-&gt;comment('排序')); 添加索引12&lt;?php$this-&gt;createIndex('sort','t_category',['sort']); 添加唯一索引12&lt;?php$this-&gt;createIndex('sort','t_category',['sort'],true); 更新字段12&lt;?php$this-&gt;alterColumn('t_category','sort',$this-&gt;smallInteger()-&gt;defaultValue(0)-&gt;notNull()-&gt;comment('排序')); 删除字段12&lt;?php$this-&gt;dropColumn('t_category','sort'); 删除表12&lt;?php$this-&gt;dropTable('t_category');]]></content>
@@ -493,6 +507,17 @@
       <tags>
         <tag>yii2</tag>
         <tag>migrate</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[在windows上安装jekyll]]></title>
+    <url>%2F2017%2F01%2F20%2Finstall-jekyll-on-windows.html</url>
+    <content type="text"><![CDATA[早些时候用的ubuntu，安装jekyll确实挺简单，可能是终端强大吧。最近工作环境切换到windows，无奈想写博文的时候却发现需要切换到ubuntu，不是那么方便。打算在windows上部署一下jekyll。 软件环境 Windows 10 企业版 Ruby 2.3.2-x64 部署过程 安装 Ruby2.3.2-x64，安装目录请不要带空格，建议使用默认的”C:\Ruby23-x64”，安装的时候勾上”Add To Path”选项 确认ruby安装成功，打开控制台，执行 1ruby -v 安装 Devkit，安装目录请不要带空格，建议解压到”C:\DevKit” 在C:\DevKit打开控制台CMD，执行12ruby dk.rb initnotepad config.yml 执行完毕后会打开记事本，请确认内容如下：123456789101112131415# This configuration file contains the absolute path locations of all# installed Rubies to be enhanced to work with the DevKit. This config# file is generated by the 'ruby dk.rb init' step and may be modified# before running the 'ruby dk.rb install' step. To include any installed# Rubies that were not automagically discovered, simply add a line below# the triple hyphens with the absolute path to the Ruby root directory.## Example:## ---# - C:/ruby19trunk# - C:/ruby192dev#---- C:/Ruby23-x64 注意最后一行即可，如果你的Ruby安装目录不是默认的，请手动替换。 更改GEM默认镜像地址，由于众所周知的原因，gem安装包的时候十分慢，所以需要对镜像做下替换 打开控制台，执行1gem sources --add https://gems.ruby-china.org/ --remove https://rubygems.org/ 如果执行出错，类似于“SSL”错误的话，使用下面的命令1gem sources --add http://gems.ruby-china.org/ --remove https://rubygems.org/ 就可以了。 安装jekyll1gem install jekyll 由于更换了镜像地址，安装起来会非常快。 控制台执行123jekyll new blogcd blogjekyll serve 引用信息 jekyll文档]]></content>
+      <categories>
+        <category>other</category>
+      </categories>
+      <tags>
+        <tag>jekyll</tag>
       </tags>
   </entry>
   <entry>
@@ -1124,8 +1149,8 @@
         <category>open-source-projects</category>
       </categories>
       <tags>
-        <tag>bower</tag>
         <tag>angularjs</tag>
+        <tag>bower</tag>
       </tags>
   </entry>
   <entry>
