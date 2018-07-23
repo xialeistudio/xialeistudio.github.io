@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[不到20行代码实现golang路由调度]]></title>
+    <url>%2F2018%2F07%2F23%2Fgolang-route-dispatcher.html</url>
+    <content type="text"><![CDATA[本项目依赖使用标准库实现，无额外依赖 为什么需要路由调度层 golang http标准库只能精确匹配请求的URI，然后执行handler。现在一般web项目都至少有个Controller层，以struct实现，根据不同的请求路径派发到不同的方法中去。 路由调度器定义由于golang暂时还不可以动态创建对象(比如java的Class.forName(&quot;xxx&quot;).newInstance(),xxx是任意存在的class名称)。所以需要手动注册一下controller关系。 定义routes保存controller指针 解析请求过来的URL查询参数，暂定a为action名称,c为controller名称，本文偷了下懒，没对PATH_INFO做处理，也没有对actionName的首字母自动大写，这个不影响本文要传达的核心内容，有兴趣的读者可以自行实现。 根据URL中的controllerName找到对应的controller 使用反射将当前请求对象的*http.Request和http.ResponseWriter设置到该Controller 使用反射以及actionName对应该controller的方法 由于golang的继承不是一般的OOP，所以也没有父子类这种说法，路由注册那里只能使用interface{} 代码实现app/app.go该文件为核心调度文件 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152package appimport ( "net/http" "reflect" "fmt")type application struct &#123; routes map[string]interface&#123;&#125;&#125;func New() *application &#123; return &amp;application&#123; routes: make(map[string]interface&#123;&#125;), &#125;&#125;func (p *application) ServeHTTP(w http.ResponseWriter, r *http.Request) &#123; controllerName := r.URL.Query().Get("c") actionName := r.URL.Query().Get("a") if controllerName == "" || actionName == "" &#123; http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest) return &#125; route, ok := p.routes[controllerName] if !ok &#123; http.Error(w, "Controller Not Found", http.StatusNotFound) return &#125; ele := reflect.ValueOf(route).Elem() ele.FieldByName("Request").Set(reflect.ValueOf(r)) ele.FieldByName("Response").Set(reflect.ValueOf(w)) ele.MethodByName(actionName).Call([]reflect.Value&#123;&#125;)&#125;func (p *application) printRoutes() &#123; for route, controller := range p.routes &#123; ele := reflect.ValueOf(controller).Type().String() fmt.Printf("%s %s\n", route, ele) &#125;&#125;func (p *application) Get(route string, controller interface&#123;&#125;) &#123; p.routes[route] = controller&#125;func (p *application) Run(addr string) error &#123; p.printRoutes() fmt.Printf("listen on %s\n", addr) return http.ListenAndServe(addr, p)&#125; app/controller.go控制器”基类” 12345678package appimport "net/http"type Controller struct &#123; Response http.ResponseWriter Request *http.Request&#125; controller/site.go具体业务逻辑类 1234567891011121314package controllersimport ( "fmt" "app")type SiteController struct &#123; app.Controller&#125;func (p SiteController) Index() &#123; fmt.Fprint(p.Response, p.Request.RequestURI)&#125; main.go入口文件 12345678910111213package mainimport ( _ "github.com/go-sql-driver/mysql" "app" "controllers")func main() &#123; application := app.New() application.Get("site", &amp;controllers.SiteController&#123;&#125;) application.Run(":8080")&#125; 运行项目 启动进程 访问http://localhost:8080?c=site&amp;a=Index会输出/?c=site&amp;a=Index 写在最后希望这个小小的项目能启发到各位读者，早日开发出适合自己的Web框架!]]></content>
+      <categories>
+        <category>golang</category>
+      </categories>
+      <tags>
+        <tag>http</tag>
+        <tag>router</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[redis常用实践]]></title>
     <url>%2F2018%2F06%2F14%2Fredis-common-practice.html</url>
     <content type="text"><![CDATA[Redis相信大家都不陌生，而如果只是用来取代memcached做缓存的话，实在是大材小用了。一起来看看生产环境下的常用用法。 分布式锁1234$canLock = $redis-&gt;set('k', 1, 'NX', 'EX', 2);if($canLock) &#123; // 获得锁成功&#125; 锁定键名为k的数据两秒钟，两秒后该方法才能重新获取锁 1$redis-&gt;del('k'); 删除键名为k的数据，其他方法可以重新获取锁 Hash这是redis特有的数据结构，memcached没有。使用场景很多，列举一种常用的，假设有一个需求 加密后的用户id和真实用户id的映射关系保存 这种情况我们可以使用hash，而不是使用多个kv缓存, 需要清空所有的时候比较难处理。代码如下： 123456$realId = $redis-&gt;hget('user_id_map', 'userId1');if(!empty($realId)) &#123; return $realId;&#125;$realId = getFromDatabase('userId1'); // 从数据库读取$redis-&gt;hset('user_id_map','userId1',$realId); 如果需要清空，则直接删除hash即可。 setset就是数据项不重复的集合，使用场景也很多。例子要说的是使用set存储一个聊天室中的所有用户id: 123$redis-&gt;sadd('chat_room', 'user1', 'user2'); // 添加成员到集合$redis-&gt;srem('chat_room', 'user1'); // 删除指定成员$redis-&gt;smembers('chat_room'); // 获取集合所有元素 结论 大致就是这样了，基于这些简单数据结构可以根据业务需求构造更合理的数据结构。]]></content>
@@ -326,6 +338,17 @@
       </categories>
   </entry>
   <entry>
+    <title><![CDATA[使用pm2来保证Spring Boot应用稳定运行]]></title>
+    <url>%2F2017%2F07%2F31%2Fspring-boot-pm2.html</url>
+    <content type="text"><![CDATA[Spring Boot开发web应用就像开发普通的java程序一般简洁，因为其内嵌了web容易，启动的时候只需要一条命令java -jar server.jar即可，非常方便。但是由此而来的问题是万一应用挂了怎么办？ 别担心，有pm2进程管理工具可以帮到你。 PM2简介pm2原先是nodejs应用的进程管理工具，不过其良好的设计以及扩展性可以手动执行执行进程。 PM2安装 安装NodeJs npm install pm2 -g PM2基本命令 pm2 list 查看所有被PM2管理的进程列表 pm2 start xxx 启动一个应用 pm2 stop xxx 停止一个应用 pm2 restart xxx 重启一个应用 pm2 describe xxx 查看应用详情 pm2 startup, pm2 save 两条命令，用来保证服务器启动时,pm2管理的程序自动运行 Java程序处理在jar的同级目录新建应用启动配置文件，如pm2.json，内容如下： 12345678910&#123; "name": "my-server", "script": "/usr/bin/java", "args": [ "-jar", "server.jar" ], "exec_interpreter": "", "exec_mode": "fork"&#125; 说明如下： name 进程名称（显示在pm2 list命令中） script 执行进程名称，如果需要执行PHP脚本则填写php解释器的路径，本文为java args 传给执行进程的参数，多个参数以数组单元分割 exec_interpreter NodeJs解析器，本文不适用 exec_mode 执行模式[cluster|fork]这个针对NodeJs应用的配置，非NodeJs应用统一fork 配置文件完成后，使用1pm2 start pm2.json 即可看到应用被启动 日志管理日志路径在~/.pm2/logs，stdout和stderr被分开存放，程序中的所有stdout和stderr都被收集方便查错。]]></content>
+      <categories>
+        <category>spring book</category>
+      </categories>
+      <tags>
+        <tag>pm2</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Spring Boot JPA 返回json时排除Null字段]]></title>
     <url>%2F2017%2F07%2F31%2Fspring-boot-exclude-null.html</url>
     <content type="text"><![CDATA[Spring Boot在返回JSON的时候默认会返回null字段，这个对客户端一般没什么作用，还会增加服务器带宽压力。使用如下配置可以屏蔽。 在pojo对象上添加注解 123@JsonInclude(JsonInclude.Include.NON_NULL)class User &#123;&#125; 再使用@ResponseBody的时候就不会返回Null字段了。]]></content>
@@ -335,17 +358,6 @@
       <tags>
         <tag>json</tag>
         <tag>jpa</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[使用pm2来保证Spring Boot应用稳定运行]]></title>
-    <url>%2F2017%2F07%2F31%2Fspring-boot-pm2.html</url>
-    <content type="text"><![CDATA[Spring Boot开发web应用就像开发普通的java程序一般简洁，因为其内嵌了web容易，启动的时候只需要一条命令java -jar server.jar即可，非常方便。但是由此而来的问题是万一应用挂了怎么办？ 别担心，有pm2进程管理工具可以帮到你。 PM2简介pm2原先是nodejs应用的进程管理工具，不过其良好的设计以及扩展性可以手动执行执行进程。 PM2安装 安装NodeJs npm install pm2 -g PM2基本命令 pm2 list 查看所有被PM2管理的进程列表 pm2 start xxx 启动一个应用 pm2 stop xxx 停止一个应用 pm2 restart xxx 重启一个应用 pm2 describe xxx 查看应用详情 pm2 startup, pm2 save 两条命令，用来保证服务器启动时,pm2管理的程序自动运行 Java程序处理在jar的同级目录新建应用启动配置文件，如pm2.json，内容如下： 12345678910&#123; "name": "my-server", "script": "/usr/bin/java", "args": [ "-jar", "server.jar" ], "exec_interpreter": "", "exec_mode": "fork"&#125; 说明如下： name 进程名称（显示在pm2 list命令中） script 执行进程名称，如果需要执行PHP脚本则填写php解释器的路径，本文为java args 传给执行进程的参数，多个参数以数组单元分割 exec_interpreter NodeJs解析器，本文不适用 exec_mode 执行模式[cluster|fork]这个针对NodeJs应用的配置，非NodeJs应用统一fork 配置文件完成后，使用1pm2 start pm2.json 即可看到应用被启动 日志管理日志路径在~/.pm2/logs，stdout和stderr被分开存放，程序中的所有stdout和stderr都被收集方便查错。]]></content>
-      <categories>
-        <category>spring book</category>
-      </categories>
-      <tags>
-        <tag>pm2</tag>
       </tags>
   </entry>
   <entry>
@@ -498,6 +510,17 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[在windows上安装jekyll]]></title>
+    <url>%2F2017%2F01%2F20%2Finstall-jekyll-on-windows.html</url>
+    <content type="text"><![CDATA[早些时候用的ubuntu，安装jekyll确实挺简单，可能是终端强大吧。最近工作环境切换到windows，无奈想写博文的时候却发现需要切换到ubuntu，不是那么方便。打算在windows上部署一下jekyll。 软件环境 Windows 10 企业版 Ruby 2.3.2-x64 部署过程 安装 Ruby2.3.2-x64，安装目录请不要带空格，建议使用默认的”C:\Ruby23-x64”，安装的时候勾上”Add To Path”选项 确认ruby安装成功，打开控制台，执行 1ruby -v 安装 Devkit，安装目录请不要带空格，建议解压到”C:\DevKit” 在C:\DevKit打开控制台CMD，执行12ruby dk.rb initnotepad config.yml 执行完毕后会打开记事本，请确认内容如下：123456789101112131415# This configuration file contains the absolute path locations of all# installed Rubies to be enhanced to work with the DevKit. This config# file is generated by the 'ruby dk.rb init' step and may be modified# before running the 'ruby dk.rb install' step. To include any installed# Rubies that were not automagically discovered, simply add a line below# the triple hyphens with the absolute path to the Ruby root directory.## Example:## ---# - C:/ruby19trunk# - C:/ruby192dev#---- C:/Ruby23-x64 注意最后一行即可，如果你的Ruby安装目录不是默认的，请手动替换。 更改GEM默认镜像地址，由于众所周知的原因，gem安装包的时候十分慢，所以需要对镜像做下替换 打开控制台，执行1gem sources --add https://gems.ruby-china.org/ --remove https://rubygems.org/ 如果执行出错，类似于“SSL”错误的话，使用下面的命令1gem sources --add http://gems.ruby-china.org/ --remove https://rubygems.org/ 就可以了。 安装jekyll1gem install jekyll 由于更换了镜像地址，安装起来会非常快。 控制台执行123jekyll new blogcd blogjekyll serve 引用信息 jekyll文档]]></content>
+      <categories>
+        <category>other</category>
+      </categories>
+      <tags>
+        <tag>jekyll</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Yii2 migrate使用]]></title>
     <url>%2F2017%2F01%2F20%2Fyii2-migrate.html</url>
     <content type="text"><![CDATA[试想一个很简单的场景，在使用Yii2开发时，如果对已经有数据的数据表结构进行编辑的话，需要同步数据结构需要在本地导出一份SQL，放到线上去执行SQL，非常的不方便。而有了Yii2 migrate工具之后，这个问题简直不是问题。以下对常用的表结构操作进行演示。 关键命令 创建migrate 1yii migrate/create [名称] 执行migrate升级 1yii migrate 执行migrate降级 1yii migrate/down 创建新表执行创建migrate命令后，项目文件夹下migrations中会多出m170119093917[名称].php的文件，文件名称可能不同，但是结构是相同的，打开该php文件，内容如下 123456789101112131415161718192021222324252627282930313233&lt;?phpuse yii\db\Migration;class m170119_093917_name_20 extends Migration&#123; public function up() &#123; $tableName = 't_category'; $this-&gt;createTable($tableName, [ 'id' =&gt; $this-&gt;primaryKey(), 'name' =&gt; $this-&gt;string(10)-&gt;notNull()-&gt;unique()-&gt;comment('标识'), 'title' =&gt; $this-&gt;string(6)-&gt;notNull()-&gt;comment('名称'), 'count' =&gt; $this-&gt;integer()-&gt;defaultValue(0)-&gt;notNull()-&gt;comment('入驻数量') ]); &#125; public function down() &#123; echo "m170119_093917_name_20 cannot be reverted.\n"; return false; &#125; /* // Use safeUp/safeDown to run migration code within a transaction public function safeUp() &#123; &#125; public function safeDown() &#123; &#125; */&#125; 如果需要支持降级的话在down方法中写逻辑返回true即可。 以下代码演示Migration操作，不再新建migrate，执行使用本php文件即可 添加字段12&lt;?php$this-&gt;addColumn('t_category','sort',$this-&gt;integer()-&gt;defaultValue(0)-&gt;notNull()-&gt;comment('排序')); 添加索引12&lt;?php$this-&gt;createIndex('sort','t_category',['sort']); 添加唯一索引12&lt;?php$this-&gt;createIndex('sort','t_category',['sort'],true); 更新字段12&lt;?php$this-&gt;alterColumn('t_category','sort',$this-&gt;smallInteger()-&gt;defaultValue(0)-&gt;notNull()-&gt;comment('排序')); 删除字段12&lt;?php$this-&gt;dropColumn('t_category','sort'); 删除表12&lt;?php$this-&gt;dropTable('t_category');]]></content>
@@ -507,17 +530,6 @@
       <tags>
         <tag>yii2</tag>
         <tag>migrate</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[在windows上安装jekyll]]></title>
-    <url>%2F2017%2F01%2F20%2Finstall-jekyll-on-windows.html</url>
-    <content type="text"><![CDATA[早些时候用的ubuntu，安装jekyll确实挺简单，可能是终端强大吧。最近工作环境切换到windows，无奈想写博文的时候却发现需要切换到ubuntu，不是那么方便。打算在windows上部署一下jekyll。 软件环境 Windows 10 企业版 Ruby 2.3.2-x64 部署过程 安装 Ruby2.3.2-x64，安装目录请不要带空格，建议使用默认的”C:\Ruby23-x64”，安装的时候勾上”Add To Path”选项 确认ruby安装成功，打开控制台，执行 1ruby -v 安装 Devkit，安装目录请不要带空格，建议解压到”C:\DevKit” 在C:\DevKit打开控制台CMD，执行12ruby dk.rb initnotepad config.yml 执行完毕后会打开记事本，请确认内容如下：123456789101112131415# This configuration file contains the absolute path locations of all# installed Rubies to be enhanced to work with the DevKit. This config# file is generated by the 'ruby dk.rb init' step and may be modified# before running the 'ruby dk.rb install' step. To include any installed# Rubies that were not automagically discovered, simply add a line below# the triple hyphens with the absolute path to the Ruby root directory.## Example:## ---# - C:/ruby19trunk# - C:/ruby192dev#---- C:/Ruby23-x64 注意最后一行即可，如果你的Ruby安装目录不是默认的，请手动替换。 更改GEM默认镜像地址，由于众所周知的原因，gem安装包的时候十分慢，所以需要对镜像做下替换 打开控制台，执行1gem sources --add https://gems.ruby-china.org/ --remove https://rubygems.org/ 如果执行出错，类似于“SSL”错误的话，使用下面的命令1gem sources --add http://gems.ruby-china.org/ --remove https://rubygems.org/ 就可以了。 安装jekyll1gem install jekyll 由于更换了镜像地址，安装起来会非常快。 控制台执行123jekyll new blogcd blogjekyll serve 引用信息 jekyll文档]]></content>
-      <categories>
-        <category>other</category>
-      </categories>
-      <tags>
-        <tag>jekyll</tag>
       </tags>
   </entry>
   <entry>
@@ -1524,8 +1536,8 @@
         <category>css</category>
       </categories>
       <tags>
-        <tag>loading</tag>
         <tag>css3</tag>
+        <tag>loading</tag>
       </tags>
   </entry>
   <entry>
