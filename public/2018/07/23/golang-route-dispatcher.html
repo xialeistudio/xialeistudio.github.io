@@ -126,18 +126,18 @@
 
 
 
-<meta name="description" content="本项目依赖使用标准库实现，无额外依赖 为什么需要路由调度层 golang http标准库只能精确匹配请求的URI，然后执行handler。现在一般web项目都至少有个Controller层，以struct实现，根据不同的请求路径派发到不同的方法中去。  路由调度器定义由于golang暂时还不可以动态创建对象(比如java的Class.forName(&amp;quot;xxx&amp;quot;).newInst">
+<meta name="description" content="项目地址go-dispatcher 本项目依赖使用标准库实现，无额外依赖 为什么需要路由调度层 golang http标准库只能精确匹配请求的URI，然后执行handler。现在一般web项目都至少有个Controller层，以struct实现，根据不同的请求路径派发到不同的方法中去。  路由调度器定义由于golang暂时还不可以动态创建对象(比如java的Class.forName(&amp;quot;">
 <meta name="keywords" content="http,router">
 <meta property="og:type" content="article">
 <meta property="og:title" content="不到20行代码实现golang路由调度">
 <meta property="og:url" content="https//www.ddhigh.com/2018/07/23/golang-route-dispatcher.html">
 <meta property="og:site_name" content="每天进步一点点">
-<meta property="og:description" content="本项目依赖使用标准库实现，无额外依赖 为什么需要路由调度层 golang http标准库只能精确匹配请求的URI，然后执行handler。现在一般web项目都至少有个Controller层，以struct实现，根据不同的请求路径派发到不同的方法中去。  路由调度器定义由于golang暂时还不可以动态创建对象(比如java的Class.forName(&amp;quot;xxx&amp;quot;).newInst">
+<meta property="og:description" content="项目地址go-dispatcher 本项目依赖使用标准库实现，无额外依赖 为什么需要路由调度层 golang http标准库只能精确匹配请求的URI，然后执行handler。现在一般web项目都至少有个Controller层，以struct实现，根据不同的请求路径派发到不同的方法中去。  路由调度器定义由于golang暂时还不可以动态创建对象(比如java的Class.forName(&amp;quot;">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-23T13:57:00.271Z">
+<meta property="og:updated_time" content="2018-07-24T10:34:03.478Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="不到20行代码实现golang路由调度">
-<meta name="twitter:description" content="本项目依赖使用标准库实现，无额外依赖 为什么需要路由调度层 golang http标准库只能精确匹配请求的URI，然后执行handler。现在一般web项目都至少有个Controller层，以struct实现，根据不同的请求路径派发到不同的方法中去。  路由调度器定义由于golang暂时还不可以动态创建对象(比如java的Class.forName(&amp;quot;xxx&amp;quot;).newInst">
+<meta name="twitter:description" content="项目地址go-dispatcher 本项目依赖使用标准库实现，无额外依赖 为什么需要路由调度层 golang http标准库只能精确匹配请求的URI，然后执行handler。现在一般web项目都至少有个Controller层，以struct实现，根据不同的请求路径派发到不同的方法中去。  路由调度器定义由于golang暂时还不可以动态创建对象(比如java的Class.forName(&amp;quot;">
 
 
 
@@ -489,7 +489,8 @@
       
 
       
-        <h2 id="本项目依赖"><a href="#本项目依赖" class="headerlink" title="本项目依赖"></a>本项目依赖</h2><p>使用标准库实现，无额外依赖</p>
+        <h2 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h2><p><a href="https://github.com/xialeistudio/go-dispatcher" target="_blank" rel="external">go-dispatcher</a></p>
+<h2 id="本项目依赖"><a href="#本项目依赖" class="headerlink" title="本项目依赖"></a>本项目依赖</h2><p>使用标准库实现，无额外依赖</p>
 <h2 id="为什么需要路由调度层"><a href="#为什么需要路由调度层" class="headerlink" title="为什么需要路由调度层"></a>为什么需要路由调度层</h2><blockquote>
 <p>golang http标准库只能精确匹配请求的URI，然后执行handler。现在一般web项目都至少有个Controller层，以struct实现，根据不同的请求路径派发到不同的方法中去。</p>
 </blockquote>
@@ -577,6 +578,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2018/07/24/golang-dependency-inject-container.html" rel="prev" title="golang不到30行代码实现依赖注入">
+                golang不到30行代码实现依赖注入 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -654,7 +659,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">198</span>
+                  <span class="site-state-item-count">199</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -760,7 +765,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#本项目依赖"><span class="nav-number">1.</span> <span class="nav-text">本项目依赖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么需要路由调度层"><span class="nav-number">2.</span> <span class="nav-text">为什么需要路由调度层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#路由调度器定义"><span class="nav-number">3.</span> <span class="nav-text">路由调度器定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码实现"><span class="nav-number">4.</span> <span class="nav-text">代码实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#app-app-go"><span class="nav-number">4.1.</span> <span class="nav-text">app/app.go</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#app-controller-go"><span class="nav-number">4.2.</span> <span class="nav-text">app/controller.go</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#controller-site-go"><span class="nav-number">4.3.</span> <span class="nav-text">controller/site.go</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#main-go"><span class="nav-number">4.4.</span> <span class="nav-text">main.go</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行项目"><span class="nav-number">5.</span> <span class="nav-text">运行项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#写在最后"><span class="nav-number">6.</span> <span class="nav-text">写在最后</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#项目地址"><span class="nav-number">1.</span> <span class="nav-text">项目地址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#本项目依赖"><span class="nav-number">2.</span> <span class="nav-text">本项目依赖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么需要路由调度层"><span class="nav-number">3.</span> <span class="nav-text">为什么需要路由调度层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#路由调度器定义"><span class="nav-number">4.</span> <span class="nav-text">路由调度器定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码实现"><span class="nav-number">5.</span> <span class="nav-text">代码实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#app-app-go"><span class="nav-number">5.1.</span> <span class="nav-text">app/app.go</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#app-controller-go"><span class="nav-number">5.2.</span> <span class="nav-text">app/controller.go</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#controller-site-go"><span class="nav-number">5.3.</span> <span class="nav-text">controller/site.go</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#main-go"><span class="nav-number">5.4.</span> <span class="nav-text">main.go</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行项目"><span class="nav-number">6.</span> <span class="nav-text">运行项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#写在最后"><span class="nav-number">7.</span> <span class="nav-text">写在最后</span></a></li></ol></div>
             
 
           </div>
@@ -954,7 +959,7 @@
     var isfetched = false;
     var isXml = true;
     // Search DB path;
-    var search_path = "search.xml";
+    var search_path = "search.json";
     if (search_path.length === 0) {
       search_path = "search.xml";
     } else if (/json$/i.test(search_path)) {
