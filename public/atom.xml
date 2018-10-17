@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https//www.ddhigh.com/"/>
-  <updated>2018-10-17T13:33:15.853Z</updated>
+  <updated>2018-10-17T14:00:48.341Z</updated>
   <id>https//www.ddhigh.com/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>一起学context（一）——上下文值传递</title>
+    <link href="https//www.ddhigh.com/2018/10/17/golang-context-with-value.html"/>
+    <id>https//www.ddhigh.com/2018/10/17/golang-context-with-value.html</id>
+    <published>2018-10-17T13:50:20.000Z</published>
+    <updated>2018-10-17T14:00:48.341Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="系列开篇"><a href="#系列开篇" class="headerlink" title="系列开篇"></a>系列开篇</h1><p>本文开始将针对context的用法进行系统化讨论，在这里你将能够在工作中合理使用context解决一些比较棘手的问题。</p><p>context处理超时处理之外还可以用来保存数据，当你需要在多个上下文传递时传递数据，那么本文提到的知识可以排上用场。</p><h1 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h1><p>示例代码为一个简单的http服务，流程是登录之后会跳转首页，首页通过guard中间件进行鉴权。当然，示例代码未做其他诸如连接数据库之类的处理，这不是本文的重点。<br>守卫函数读取cookie之后将cookie值写入context并向下传递，在整个请求中可以说是“透明”的。当访问到需要保护的接口时检测到没有提供cookie，则直接终端请求，否则通过r.WithContext将username的值存入cookie，避免的业务接口直接读取cookie的弊端。因为如果后期更改鉴权算法的话，业务代码可以不用更改，直接更改中间件即可。</p><figure class="highlight golang"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> main</div><div class="line"></div><div class="line"><span class="keyword">import</span> (</div><div class="line"><span class="string">"context"</span></div><div class="line"><span class="string">"fmt"</span></div><div class="line"><span class="string">"log"</span></div><div class="line"><span class="string">"net/http"</span></div><div class="line"><span class="string">"time"</span></div><div class="line">)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</div><div class="line">mux := http.NewServeMux()</div><div class="line">mux.HandleFunc(<span class="string">"/"</span>, guard(home))</div><div class="line">mux.HandleFunc(<span class="string">"/login"</span>, login)</div><div class="line">log.Fatal(http.ListenAndServe(<span class="string">":8080"</span>, mux))</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 登录</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">login</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</div><div class="line"><span class="keyword">if</span> r.URL.Query().Get(<span class="string">"username"</span>) != <span class="string">"root"</span> &#123;</div><div class="line">http.Error(w, http.StatusText(<span class="number">401</span>), <span class="number">401</span>)</div><div class="line"><span class="keyword">return</span></div><div class="line">&#125;</div><div class="line">cookie := &amp;http.Cookie&#123;Name: <span class="string">"username"</span>, Value: <span class="string">"root"</span>, Expires: time.Now().Add(time.Hour)&#125;</div><div class="line">http.SetCookie(w, cookie)</div><div class="line">http.Redirect(w, r, <span class="string">"/"</span>, <span class="number">302</span>)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">home</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</div><div class="line">username := r.Context().Value(<span class="string">"username"</span>)</div><div class="line">fmt.Fprintf(w, <span class="string">"welcome login: %s"</span>, username.(<span class="keyword">string</span>))</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 守卫</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">guard</span><span class="params">(handleFunc http.HandlerFunc)</span> <span class="title">http</span>.<span class="title">HandlerFunc</span></span> &#123;</div><div class="line"><span class="keyword">return</span> <span class="function"><span class="keyword">func</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</div><div class="line"><span class="comment">// check username</span></div><div class="line">log.Printf(<span class="string">"%s - %s\n"</span>, r.Method, r.RequestURI)</div><div class="line">cookie, err := r.Cookie(<span class="string">"username"</span>)</div><div class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> || cookie == <span class="literal">nil</span> &#123; <span class="comment">// 如果username为空直接拦截</span></div><div class="line">http.Error(w, http.StatusText(<span class="number">401</span>), <span class="number">401</span>)</div><div class="line"><span class="keyword">return</span></div><div class="line">&#125;</div><div class="line">handleFunc(w, r.WithContext(context.WithValue(r.Context(), <span class="string">"username"</span>, cookie.Value)))</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>本文的代码就这么多，内容也很少，希望大家能好好用上这个利器。<br>关于context与协程超时控制将在下一篇文章中讲到。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;系列开篇&quot;&gt;&lt;a href=&quot;#系列开篇&quot; class=&quot;headerlink&quot; title=&quot;系列开篇&quot;&gt;&lt;/a&gt;系列开篇&lt;/h1&gt;&lt;p&gt;本文开始将针对context的用法进行系统化讨论，在这里你将能够在工作中合理使用context解决一些比较棘手的问题。&lt;/p
+      
+    
+    </summary>
+    
+      <category term="golang" scheme="https//www.ddhigh.com/categories/golang/"/>
+    
+    
+      <category term="golang" scheme="https//www.ddhigh.com/tags/golang/"/>
+    
+      <category term="context" scheme="https//www.ddhigh.com/tags/context/"/>
+    
+  </entry>
   
   <entry>
     <title>io.Reader游标引发的血案</title>
@@ -517,31 +544,6 @@
       <category term="golang" scheme="https//www.ddhigh.com/tags/golang/"/>
     
       <category term="memory-leak" scheme="https//www.ddhigh.com/tags/memory-leak/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>PHP实现“异步”</title>
-    <link href="https//www.ddhigh.com/2018/01/20/php-async.html"/>
-    <id>https//www.ddhigh.com/2018/01/20/php-async.html</id>
-    <published>2018-01-19T16:07:04.000Z</published>
-    <updated>2018-01-31T14:18:04.093Z</updated>
-    
-    <content type="html"><![CDATA[<p>众所周知，PHP不使用多线程扩展的情况下是不支持异步的(不算curl之类)。今天无意中看到一个函数<code>fastcgi_finish_request</code>;<br>这个方法是PHP5.3+开始提供。<br>注释写的很清楚，有耗时操作的时候使用该函数可以尽早结束fastcgi处理过程，提高页面响应速度。</p><h2 id="代码说明"><a href="#代码说明" class="headerlink" title="代码说明"></a>代码说明</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="keyword">echo</span> <span class="number">1</span>;</div><div class="line">fastcgi_finish_request();</div><div class="line">sleep(<span class="number">3</span>);</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure><p>此时打开浏览器发现响应速度并没有受到<code>sleep</code>函数的影响，基于此点，可以在适当的时候使用该函数以提升用户体验!</p><h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p>PHP需要运行在fpm模式下才可以使用本函数。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;众所周知，PHP不使用多线程扩展的情况下是不支持异步的(不算curl之类)。今天无意中看到一个函数&lt;code&gt;fastcgi_finish_request&lt;/code&gt;;&lt;br&gt;这个方法是PHP5.3+开始提供。&lt;br&gt;注释写的很清楚，有耗时操作的时候使用该函数可以尽早结束
-      
-    
-    </summary>
-    
-      <category term="php" scheme="https//www.ddhigh.com/categories/php/"/>
-    
-    
-      <category term="async" scheme="https//www.ddhigh.com/tags/async/"/>
     
   </entry>
   
