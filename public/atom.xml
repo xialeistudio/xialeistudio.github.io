@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https//www.ddhigh.com/"/>
-  <updated>2019-01-02T10:38:23.031Z</updated>
+  <updated>2019-01-11T03:08:54.843Z</updated>
   <id>https//www.ddhigh.com/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>无需编程导出微信表情包</title>
+    <link href="https//www.ddhigh.com/2019/01/11/export-wechat-emotion.html"/>
+    <id>https//www.ddhigh.com/2019/01/11/export-wechat-emotion.html</id>
+    <published>2019-01-11T02:53:02.000Z</published>
+    <updated>2019-01-11T03:08:54.843Z</updated>
+    
+    <content type="html"><![CDATA[<p>微信前两天推送了年度报告，其中的表情统计很有意思，的确，表情包这两年是越来越火了。但是有个问题是微信不支持导出表情包，有的小伙伴又需要导出来保存到其他地方。</p><p>本文分享一个比较简单的方式导出表情包，条件只有一个：谷歌浏览器。</p><ol><li>打开 <a href="https://wx.qq.com" target="_blank" rel="external">https://wx.qq.com</a> 并登陆，这是网页版微信登录入口</li><li>手机选择表情发送给文件传输助手</li><li>打开网页版微信，可以查看到图片<br><a href="http://download.ddhigh.com/blog-img/WX20190111-105910.png" target="_blank" rel="external">1</a></li><li>接下来打开谷歌浏览器的开发者工具（不同电脑不太一样，但是都是右上角打开）<br><a href="http://download.ddhigh.com/blog-img/WX20190111-110041.png" target="_blank" rel="external">2</a></li><li>然后按照图片顺序点击如下图所示的图标<br><a href="http://download.ddhigh.com/blog-img/WX20190111-110109.png" target="_blank" rel="external">3</a></li><li>这时候鼠标处于选择元素的状态，直接悬浮在表情图片上即可<br><a href="http://download.ddhigh.com/blog-img/WX20190111-110127.png" target="_blank" rel="external">4</a></li><li>下方的窗口会出现图片链接，而且会有背景色（本图片的背景色是淡蓝色）<br><a href="http://download.ddhigh.com/blog-img/WX20190111-110127.png" target="_blank" rel="external">5</a></li><li>鼠标悬浮到刚才的淡蓝色窗口的链接上面，会出现表情的原图<br><a href="http://download.ddhigh.com/blog-img/WX20190111-110137.png" target="_blank" rel="external">6</a></li><li>在链接上面点击右键，选择如图名字的菜单（菜单顺序不同系统不同）<br><a href="http://download.ddhigh.com/blog-img/WX20190111-110148.png" target="_blank" rel="external">7</a></li><li>在新窗口打开的图片就是表情原始图片了，可以保存<br><a href="http://download.ddhigh.com/blog-img/WX20190111-110159.png" target="_blank" rel="external">8</a></li></ol>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;微信前两天推送了年度报告，其中的表情统计很有意思，的确，表情包这两年是越来越火了。但是有个问题是微信不支持导出表情包，有的小伙伴又需要导出来保存到其他地方。&lt;/p&gt;
+&lt;p&gt;本文分享一个比较简单的方式导出表情包，条件只有一个：谷歌浏览器。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;打开 &lt;a
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>一起学context（二）——超时控制</title>
@@ -519,32 +543,6 @@
     
     
       <category term="golang" scheme="https//www.ddhigh.com/tags/golang/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>头脑王者辅助</title>
-    <link href="https//www.ddhigh.com/2018/01/30/tnwz.html"/>
-    <id>https//www.ddhigh.com/2018/01/30/tnwz.html</id>
-    <published>2018-01-30T08:44:23.000Z</published>
-    <updated>2018-07-23T13:41:47.198Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="头脑王者"><a href="#头脑王者" class="headerlink" title="头脑王者"></a>头脑王者</h1><p>本项目仅作为学习<code>anyproxy</code>之用，请勿用于非法用途，否则后果自负</p><h2 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h2><ul><li>[x] 题目爬取</li><li>[x] 答题匹配(如果题库不存在，请自行答题，系统会在答题后把正确答案自动录入数据库)</li></ul><h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><ol><li><p>安装mysql，新建数据库<code>tnwz</code>，建表语句</p> <figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> tnwz.question</div><div class="line">(</div><div class="line">    <span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) PRIMARY <span class="keyword">KEY</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</div><div class="line">    question <span class="built_in">varchar</span>(<span class="number">100</span>),</div><div class="line">    a <span class="built_in">varchar</span>(<span class="number">20</span>),</div><div class="line">    b <span class="built_in">varchar</span>(<span class="number">20</span>),</div><div class="line">    c <span class="built_in">varchar</span>(<span class="number">20</span>),</div><div class="line">    d <span class="built_in">varchar</span>(<span class="number">20</span>),</div><div class="line">    answer <span class="built_in">int</span>(<span class="number">11</span>),</div><div class="line">    createdAt datetime <span class="keyword">NOT</span> <span class="literal">NULL</span>,</div><div class="line">    updatedAt datetime <span class="keyword">NOT</span> <span class="literal">NULL</span></div><div class="line">);</div></pre></td></tr></table></figure></li><li><p>config.json为数据库配置 </p></li><li>安装<code>anyproxy</code> =&gt; <code>npm install anyproxy -g</code></li><li>生成证书<code>anyproxy -i</code></li><li>手机接入代理，代理地址<code>电脑IP:8001</code></li></ol><h2 id="题库获取"><a href="#题库获取" class="headerlink" title="题库获取"></a>题库获取</h2><ol><li>登录两个微信号获取到uid和token之后填入auth.json</li><li><code>node question-fetcher.js</code>,如果出现401，请重新登录</li></ol><h2 id="排位系统"><a href="#排位系统" class="headerlink" title="排位系统"></a>排位系统</h2><ol><li><code>npm run fight</code>开启代理</li><li>手机接入代理</li><li>开始排位，终端会提示<code>开始匹配</code>，系统会将正确答案添加上<code>###</code></li></ol><h2 id="适用系统"><a href="#适用系统" class="headerlink" title="适用系统"></a>适用系统</h2><ul><li>Android &amp;&amp; iOS</li><li>iOS11.3 已通过测试</li></ul><h2 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h2><p><a href="https://github.com/xialeistudio/tnwz" target="_blank" rel="external">https://github.com/xialeistudio/tnwz</a></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;头脑王者&quot;&gt;&lt;a href=&quot;#头脑王者&quot; class=&quot;headerlink&quot; title=&quot;头脑王者&quot;&gt;&lt;/a&gt;头脑王者&lt;/h1&gt;&lt;p&gt;本项目仅作为学习&lt;code&gt;anyproxy&lt;/code&gt;之用，请勿用于非法用途，否则后果自负&lt;/p&gt;
-&lt;h2 id=&quot;功能
-      
-    
-    </summary>
-    
-    
-      <category term="nodejs" scheme="https//www.ddhigh.com/tags/nodejs/"/>
-    
-      <category term="anyproxy" scheme="https//www.ddhigh.com/tags/anyproxy/"/>
     
   </entry>
   
