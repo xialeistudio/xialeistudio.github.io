@@ -17,7 +17,7 @@ Systemd 服务是一种以 .service 结尾的单元（unit）配置文件，用�
 
 1. service文件编写简单易用
 2. 可以自动维持进程存活（强大的功能，可以取代PM2）
-3. 自动收集进程输出的stderr输出(stdout不收集，可以写入syslog)
+3. 自动收集进程输出的输出
    
 ## systemd主要命令
 
@@ -44,7 +44,6 @@ After=network.target
 [Service]
 Type=simple
 ExecStart=/root/src/git-hookd/git-hookd
-ExecStop=ps aux|grep git-hookd|grep -v grep|awk '{print $2}'|xargs kill -9
 Restart=always
 [Install]
 WantedBy=multi-user.target
@@ -141,7 +140,7 @@ service文件由 Unit, Service, Install 三部分组成
 服务本体定义：
 + Type 启动类型
 + ExecStart 启动服务的命令
-+ ExecStop 停止服务的命令（本例有点粗暴）
++ ExecStop 停止服务的命令（一般不写）
 + Restart 重启规则
 + RemainAfterExit 即使没有进程，也任务服务启动成功
 
