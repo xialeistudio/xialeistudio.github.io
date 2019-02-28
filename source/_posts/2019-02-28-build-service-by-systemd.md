@@ -62,7 +62,7 @@ WantedBy=multi-user.target
 # Short-Description: test service
 # Description:       test service
 ### END INIT INFO
-PROG="testdd"
+PROG="testd"
 PROG_PATH="/root/apps/testd"
 PROG_ARGS="-u xialei"
 PID_PATH="/var/run/"
@@ -73,7 +73,7 @@ start() {
                 exit 1
         else
                 $PROG_PATH/$PROG $PROG_ARGS 2>&1 > "/var/log/$PROG.log" &
-                pid=`ps ax|grep testdd|awk '{print $2}'|head -n 1`
+                pid=`ps ax|grep testd|awk '{print $2}'|head -n 1`
                 echo "$PROG started"
                 echo $pid > "$PID_PATH/$PROG.pid"
         fi      
@@ -81,7 +81,7 @@ start() {
 
 stop() {
         if [ -e "$PID_PATH/$PROG.pid" ]; then
-                pid=`ps ax|grep testdd|awk '{print $2}'|head -n 1`
+                pid=`ps ax|grep testd|awk '{print $2}'|head -n 1`
                 kill $pid
         
                 rm -rf "$PID_PATH/$PROG.pid"
