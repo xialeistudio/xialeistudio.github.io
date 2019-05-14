@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https//www.ddhigh.com/"/>
-  <updated>2019-05-14T03:15:48.242Z</updated>
+  <updated>2019-05-14T05:46:59.426Z</updated>
   <id>https//www.ddhigh.com/</id>
   
   <author>
@@ -17,13 +17,42 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>在缓存中使用闭包函数</title>
+    <link href="https//www.ddhigh.com/2019/05/14/use-closure-in-cache.html"/>
+    <id>https//www.ddhigh.com/2019/05/14/use-closure-in-cache.html</id>
+    <published>2019-05-14T03:48:58.000Z</published>
+    <updated>2019-05-14T05:46:59.426Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="闭包函数"><a href="#闭包函数" class="headerlink" title="闭包函数"></a>闭包函数</h2><p>PHP官方文档对于闭包函数的定义：</p><blockquote><p>匿名函数（Anonymous functions），也叫闭包函数（closures），允许 临时创建一个没有指定名称的函数。最经常用作回调函数（callback）参数的值。当然，也有其它应用的情况。</p></blockquote><p>简单来说，闭包函数也是一种数据类型，可以直接使用变量来存储、传参、调用等等。</p><h2 id="传统缓存操作"><a href="#传统缓存操作" class="headerlink" title="传统缓存操作"></a>传统缓存操作</h2><p>操作缓存的时候一般步骤如下：</p><ol><li>读取缓存</li><li>如果缓存不为空则返回缓存数据</li><li>读取数据库，然后设置到缓存</li><li>返回数据</li></ol><p>PHP示例代码如下：</p><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">loadUser</span><span class="params">($userId)</span> </span>&#123;</div><div class="line">    $data = $cache-&gt;get(<span class="string">'user-'</span>. $userId);</div><div class="line">    <span class="keyword">if</span>(!<span class="keyword">empty</span>($data)) &#123;</div><div class="line">        <span class="keyword">return</span> $data;</div><div class="line">    &#125;</div><div class="line">    $data = $db-&gt;findOne([<span class="string">'user_id'</span> =&gt; $userId]);</div><div class="line">    $cache-&gt;set(<span class="string">'user-'</span>. $userId, $data, <span class="number">7200</span>);</div><div class="line">    <span class="keyword">return</span> $data;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>其实<strong>查找缓存，如果不存在则查找数据库之后写入缓存</strong>这个操作也可以用闭包来实现：</p><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getOrSet</span><span class="params">($key, callable $callable, $expire = <span class="number">0</span>)</span> </span>&#123;</div><div class="line">    $data = $cache-&gt;get($key);</div><div class="line">    <span class="keyword">if</span>(!<span class="keyword">empty</span>($data)) &#123;</div><div class="line">        <span class="keyword">return</span> $data;</div><div class="line">    &#125;</div><div class="line">    $data = call_user_func($callable);</div><div class="line">    $cache-&gt;set($key, $data, $expire);</div><div class="line">    <span class="keyword">return</span> $data;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">loadUser</span><span class="params">($userId)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> $cache-&gt;getOrSet(<span class="string">'user-'</span>. $userId, <span class="function"><span class="keyword">function</span><span class="params">()</span> <span class="title">use</span><span class="params">($db, $userId)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> $db-&gt;findOne([<span class="string">'user_id'</span> =&gt; $userId]);</div><div class="line">    &#125;, <span class="number">7200</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>可以看到通过闭包省去了手动<strong>get</strong>和<strong>set</strong>的过程，而查询数据库那一步是只有在缓存读取不到才会执行。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;闭包函数&quot;&gt;&lt;a href=&quot;#闭包函数&quot; class=&quot;headerlink&quot; title=&quot;闭包函数&quot;&gt;&lt;/a&gt;闭包函数&lt;/h2&gt;&lt;p&gt;PHP官方文档对于闭包函数的定义：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;匿名函数（Anonymous functions
+      
+    
+    </summary>
+    
+      <category term="php" scheme="https//www.ddhigh.com/categories/php/"/>
+    
+    
+      <category term="php" scheme="https//www.ddhigh.com/tags/php/"/>
+    
+      <category term="closure" scheme="https//www.ddhigh.com/tags/closure/"/>
+    
+  </entry>
+  
+  <entry>
     <title>在事务中使用闭包函数简化开发</title>
     <link href="https//www.ddhigh.com/2019/05/14/use-closure-in-transaction.html"/>
     <id>https//www.ddhigh.com/2019/05/14/use-closure-in-transaction.html</id>
     <published>2019-05-14T02:25:43.000Z</published>
-    <updated>2019-05-14T03:15:48.242Z</updated>
+    <updated>2019-05-14T03:52:33.026Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="闭包函数"><a href="#闭包函数" class="headerlink" title="闭包函数"></a>闭包函数</h2><p>PHP官方文档对于闭包函数的定义：</p><blockquote><p>匿名函数（Anonymous functions），也叫闭包函数（closures），允许 临时创建一个没有指定名称的函数。最经常用作回调函数（callback）参数的值。当然，也有其它应用的情况。</p></blockquote><p>简单来说，闭包函数也是一种数据类型，可以直接使用变量来存储、传参、调用等等。</p><h2 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h2><p>事务简单来说就是一个核心:</p><blockquote><p>事务处理可以用来维护数据库的完整性，保证成批的 SQL 语句要么全部执行，要么全部不执行。</p></blockquote><p>一般情况下，每一条SQL的执行情况都需要进行判断，如果执行成功则继续，否则回滚事务。以下是PDO事务代码：</p><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">$pdo = <span class="keyword">new</span> PDO(<span class="string">'mysql:host=localhost;dbname=demo'</span>, <span class="string">'root'</span>, <span class="string">'root'</span>);</div><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">    $pdo-&gt;beginTransaction();</div><div class="line">    <span class="comment">//todo 业务代码</span></div><div class="line">    $pdo-&gt;commit();</div><div class="line">&#125; <span class="keyword">catch</span> (\<span class="keyword">Exception</span> $e) &#123;</div><div class="line">    $pdo-&gt;rollBack();</div><div class="line">    <span class="keyword">throw</span> $e;</div><div class="line">&#125;</div></pre></td></tr></table></figure><h2 id="PHP实现"><a href="#PHP实现" class="headerlink" title="PHP实现"></a>PHP实现</h2><p>几乎所有事务都需要如此处理，但是这样重复代码太多，实际上只需要关心的部分是 <strong>业务代码</strong> 部分，使用闭包函数可以很好的解决这个问题。</p><p>闭包函数可以理解为具体的业务逻辑，不带任何事务相关操作，如果出现异常，会自动回滚事务。</p><p>PHP的简单实现代码如下:</p><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">transaction</span><span class="params">(PDO $pdo, callable $callable)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        $pdo-&gt;beginTransaction();</div><div class="line">        $result = call_user_func($callable, $pdo);</div><div class="line">        $pdo-&gt;commit();</div><div class="line">        <span class="keyword">return</span> $result;</div><div class="line">    &#125; <span class="keyword">catch</span> (\<span class="keyword">Exception</span> $e) &#123;</div><div class="line">        $pdo-&gt;rollBack();</div><div class="line">        <span class="keyword">throw</span> $e;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>PHP调用方法代码如下：</p><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">transaction($pdo, <span class="function"><span class="keyword">function</span> <span class="params">(PDO $pdo)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> $pdo-&gt;query(<span class="string">'INSERT INTO `test` VALUES (1)'</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>]]></content>
+    <content type="html"><![CDATA[<h2 id="闭包函数"><a href="#闭包函数" class="headerlink" title="闭包函数"></a>闭包函数</h2><p>PHP官方文档对于闭包函数的定义：</p><blockquote><p>匿名函数（Anonymous functions），也叫闭包函数（closures），允许 临时创建一个没有指定名称的函数。最经常用作回调函数（callback）参数的值。当然，也有其它应用的情况。</p></blockquote><p>简单来说，闭包函数也是一种数据类型，可以直接使用变量来存储、传参、调用等等。</p><h2 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h2><p>事务简单来说就是一个核心:</p><blockquote><p>事务处理可以用来维护数据库的完整性，保证成批的 SQL 语句要么全部执行，要么全部不执行。</p></blockquote><p>一般情况下，每一条SQL的执行情况都需要进行判断，如果执行成功则继续，否则回滚事务。以下是PDO事务代码：</p><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">$pdo = <span class="keyword">new</span> PDO(<span class="string">'mysql:host=localhost;dbname=demo'</span>, <span class="string">'root'</span>, <span class="string">'root'</span>);</div><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">    $pdo-&gt;beginTransaction();</div><div class="line">    <span class="comment">//todo 业务代码</span></div><div class="line">    $pdo-&gt;commit();</div><div class="line">&#125; <span class="keyword">catch</span> (\<span class="keyword">Exception</span> $e) &#123;</div><div class="line">    $pdo-&gt;rollBack();</div><div class="line">    <span class="keyword">throw</span> $e;</div><div class="line">&#125;</div></pre></td></tr></table></figure><h2 id="PHP实现"><a href="#PHP实现" class="headerlink" title="PHP实现"></a>PHP实现</h2><p>几乎所有事务都需要如此处理，但是这样重复代码太多，实际上只需要关心的部分是 <strong>业务代码</strong> 部分，使用闭包函数可以很好的解决这个问题。</p><p>闭包函数可以理解为具体的业务逻辑，不带任何事务相关操作，如果出现异常，会自动回滚事务。</p><p>PHP的简单实现代码如下:</p><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">transaction</span><span class="params">(PDO $pdo, callable $callable)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        $pdo-&gt;beginTransaction();</div><div class="line">        $result = call_user_func($callable, $pdo);</div><div class="line">        $pdo-&gt;commit();</div><div class="line">        <span class="keyword">return</span> $result;</div><div class="line">    &#125; <span class="keyword">catch</span> (\<span class="keyword">Exception</span> $e) &#123;</div><div class="line">        $pdo-&gt;rollBack();</div><div class="line">        <span class="keyword">throw</span> $e;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>PHP调用方法代码如下：</p><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">transaction($pdo, <span class="function"><span class="keyword">function</span> <span class="params">(PDO $pdo)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> $pdo-&gt;query(<span class="string">'INSERT INTO `test` VALUES (1)'</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure><h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>使用闭包函数去简化样板代码在生产中是很常见的，具体的设计模式应该是类似“模板方法模式”。</p>]]></content>
     
     <summary type="html">
     
@@ -528,35 +557,6 @@
     
     
       <category term="json" scheme="https//www.ddhigh.com/tags/json/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>golang使用CSV导出大量数据</title>
-    <link href="https//www.ddhigh.com/2018/02/28/golang-export-csv.html"/>
-    <id>https//www.ddhigh.com/2018/02/28/golang-export-csv.html</id>
-    <published>2018-02-28T08:43:13.000Z</published>
-    <updated>2019-05-13T11:43:39.349Z</updated>
-    
-    <content type="html"><![CDATA[<p>最近在做一个导出功能，最初是使用<a href="https://github.com/tealeg/xlsx" target="_blank" rel="external">https://github.com/tealeg/xlsx</a>做的，但是发现导出有个30W行的excel时，这玩意内存彪到700M+，后来发现只是导出数据为表格，并没有其他东西，于是打算使用CSV导出。</p><h2 id="CSV格式简介"><a href="#CSV格式简介" class="headerlink" title="CSV格式简介"></a>CSV格式简介</h2><p>CSV本质上是个文本文件，该文件有以下要求：</p><ol><li>列之间用逗号分隔，行之间用换行分隔</li><li>单元格如果有逗号，引号之类的字符，该单元格需要使用双引号括起来</li><li>如果包含中文，需要使用GBK编码，否则会乱码</li></ol><h2 id="golang实现"><a href="#golang实现" class="headerlink" title="golang实现"></a>golang实现</h2><ol><li><p>UTF8转GBK函数(需要 <code>go get golang.org/x/text/</code>)</p> <figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">UTF82GBK</span><span class="params">(src <span class="keyword">string</span>)</span> <span class="params">(<span class="keyword">string</span>, error)</span></span> &#123;</div><div class="line"> reader := transform.NewReader(strings.NewReader(src), simplifiedchinese.GBK.NewEncoder())</div><div class="line"> <span class="keyword">if</span> buf, err := ioutil.ReadAll(reader); err != <span class="literal">nil</span> &#123;</div><div class="line">  <span class="keyword">return</span> <span class="string">""</span>, err</div><div class="line"> &#125; <span class="keyword">else</span> &#123;</div><div class="line">  <span class="keyword">return</span> <span class="keyword">string</span>(buf), <span class="literal">nil</span></div><div class="line"> &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></li><li><p>导出代码</p> <figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">filename := <span class="string">"test.csv"</span></div><div class="line">fp, err := os.Create(filename) <span class="comment">// 创建文件句柄</span></div><div class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</div><div class="line">    <span class="keyword">return</span> <span class="literal">nil</span>, err</div><div class="line">&#125;</div><div class="line"><span class="keyword">defer</span> fp.Close()</div><div class="line">columns := []<span class="keyword">string</span>&#123;<span class="string">"姓名"</span>, <span class="string">"电话"</span>, <span class="string">"公司"</span>, <span class="string">"职位"</span>, <span class="string">"加入时间"</span>&#125;</div><div class="line"><span class="keyword">if</span> line, err := util.UTF82GBK(strings.Join(columns, <span class="string">","</span>)); err == <span class="literal">nil</span> &#123; <span class="comment">// 写入一行</span></div><div class="line">    fp.WriteString(line + <span class="string">"\n"</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure></li></ol><p>其他语言也可以使用类似方法导出数据，只要满足CSV的几个条件即可。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;最近在做一个导出功能，最初是使用&lt;a href=&quot;https://github.com/tealeg/xlsx&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/tealeg/xlsx&lt;/a&gt;做的，但是发现导出有个30W行
-      
-    
-    </summary>
-    
-      <category term="golang" scheme="https//www.ddhigh.com/categories/golang/"/>
-    
-    
-      <category term="excel" scheme="https//www.ddhigh.com/tags/excel/"/>
-    
-      <category term="golang" scheme="https//www.ddhigh.com/tags/golang/"/>
-    
-      <category term="csv" scheme="https//www.ddhigh.com/tags/csv/"/>
     
   </entry>
   

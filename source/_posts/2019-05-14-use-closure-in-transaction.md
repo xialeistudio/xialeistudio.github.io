@@ -63,3 +63,7 @@ transaction($pdo, function (PDO $pdo) {
     return $pdo->query('INSERT INTO `test` VALUES (1)');
 });
 ```
+
+## 结语
+
+使用闭包函数去简化样板代码在生产中是很常见的，具体的设计模式应该是类似“模板方法模式”。

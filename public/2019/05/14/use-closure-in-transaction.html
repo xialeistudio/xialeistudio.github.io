@@ -121,7 +121,7 @@
 <meta property="og:site_name" content="每天进步一点点">
 <meta property="og:description" content="闭包函数PHP官方文档对于闭包函数的定义：  匿名函数（Anonymous functions），也叫闭包函数（closures），允许 临时创建一个没有指定名称的函数。最经常用作回调函数（callback）参数的值。当然，也有其它应用的情况。  简单来说，闭包函数也是一种数据类型，可以直接使用变量来存储、传参、调用等等。 事务事务简单来说就是一个核心:  事务处理可以用来维护数据库的完整性，保证">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-05-14T03:15:48.242Z">
+<meta property="og:updated_time" content="2019-05-14T03:52:33.026Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在事务中使用闭包函数简化开发">
 <meta name="twitter:description" content="闭包函数PHP官方文档对于闭包函数的定义：  匿名函数（Anonymous functions），也叫闭包函数（closures），允许 临时创建一个没有指定名称的函数。最经常用作回调函数（callback）参数的值。当然，也有其它应用的情况。  简单来说，闭包函数也是一种数据类型，可以直接使用变量来存储、传参、调用等等。 事务事务简单来说就是一个核心:  事务处理可以用来维护数据库的完整性，保证">
@@ -458,6 +458,8 @@
 <figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">transaction</span><span class="params">(PDO $pdo, callable $callable)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        $pdo-&gt;beginTransaction();</div><div class="line">        $result = call_user_func($callable, $pdo);</div><div class="line">        $pdo-&gt;commit();</div><div class="line">        <span class="keyword">return</span> $result;</div><div class="line">    &#125; <span class="keyword">catch</span> (\<span class="keyword">Exception</span> $e) &#123;</div><div class="line">        $pdo-&gt;rollBack();</div><div class="line">        <span class="keyword">throw</span> $e;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>PHP调用方法代码如下：</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">transaction($pdo, <span class="function"><span class="keyword">function</span> <span class="params">(PDO $pdo)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> $pdo-&gt;query(<span class="string">'INSERT INTO `test` VALUES (1)'</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>使用闭包函数去简化样板代码在生产中是很常见的，具体的设计模式应该是类似“模板方法模式”。</p>
+
       
     </div>
     
@@ -516,6 +518,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/14/use-closure-in-cache.html" rel="prev" title="在缓存中使用闭包函数">
+                在缓存中使用闭包函数 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -594,7 +600,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">207</span>
+                  <span class="site-state-item-count">208</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -700,7 +706,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#闭包函数"><span class="nav-number">1.</span> <span class="nav-text">闭包函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#事务"><span class="nav-number">2.</span> <span class="nav-text">事务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PHP实现"><span class="nav-number">3.</span> <span class="nav-text">PHP实现</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#闭包函数"><span class="nav-number">1.</span> <span class="nav-text">闭包函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#事务"><span class="nav-number">2.</span> <span class="nav-text">事务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PHP实现"><span class="nav-number">3.</span> <span class="nav-text">PHP实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结语"><span class="nav-number">4.</span> <span class="nav-text">结语</span></a></li></ol></div>
             
 
           </div>
