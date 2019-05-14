@@ -62,9 +62,6 @@
   
 
   
-    
-    
-  
 
   
 
@@ -73,17 +70,7 @@
   
 
   
-    
-      
-    
 
-    
-  
-
-  
-    
-    
-    <link href="//fonts.css.network/css?family=Lato:300,300italic,400,400italic,700,700italic|Iosevka:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
   
 
 
@@ -137,7 +124,7 @@
 <meta property="og:image" content="https://og5r5kasb.qnssl.com/wp-content/uploads/2014/11/blob3.png">
 <meta property="og:image" content="https://og5r5kasb.qnssl.com/wp-content/uploads/2014/11/blob4.png">
 <meta property="og:image" content="https://og5r5kasb.qnssl.com/wp-content/uploads/2014/11/blob5.png">
-<meta property="og:updated_time" content="2018-01-31T14:18:04.074Z">
+<meta property="og:updated_time" content="2019-05-13T11:43:39.306Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="解决wordpress d8主题使用七牛镜像插件后无法评论的问题">
 <meta name="twitter:description" content="上午有热心的网友给我反映说评论功能出bug了，初步查看是七牛出了问题，利用chrome的开发者工具可以查看请求。PS：这张图是今天截的，所以域名是正常的，昨天实际上请求的是 static.ddhigh.com (本站的CDN域名)。查看HTTP请求发现整站就请求了一个jquery文件，但是这个文件比较大有140K，查看源代码发现评论的代码已经合并在里面了。按照以上步骤可以查看到评论时执行的脚本，当">
@@ -262,26 +249,6 @@
         </li>
       
         
-        <li class="menu-item menu-item-tags">
-          <a href="/tags/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            标签
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            归档
-          </a>
-        </li>
-      
-        
         <li class="menu-item menu-item-about">
           <a href="/about/" rel="section">
             
@@ -308,16 +275,6 @@
               <i class="menu-item-icon fa fa-fw fa-book"></i> <br />
             
             书籍
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-sitemap">
-          <a href="/sitemap.xml" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
-            
-            站点地图
           </a>
         </li>
       
@@ -490,7 +447,7 @@
       
         <p>上午有热心的网友给我反映说评论功能出bug了，初步查看是七牛出了问题，利用chrome的开发者工具可以查看请求。<br><img src="https://og5r5kasb.qnssl.com/wp-content/uploads/2014/11/blob3.png" alt="示意图"><br>PS：这张图是今天截的，所以域名是正常的，昨天实际上请求的是 static.ddhigh.com (本站的CDN域名)。<br>查看HTTP请求发现整站就请求了一个jquery文件，但是这个文件比较大有140K，查看源代码发现评论的代码已经合并在里面了。<br><img src="https://og5r5kasb.qnssl.com/wp-content/uploads/2014/11/blob4.png" alt="示意图"><br>按照以上步骤可以查看到评论时执行的脚本，当然这里的域名已经修复了。</p>
 <p>278行，昨天的是 </p>
-<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">url:</span>window._deel.url+<span class="string">"/ajax/comment.php"</span></div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">url:<span class="built_in">window</span>._deel.url+<span class="string">"/ajax/comment.php"</span></div></pre></td></tr></table></figure>
 <p>在控制台输入</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">console</span>.log(_deel);</div></pre></td></tr></table></figure>
 <p><img src="https://og5r5kasb.qnssl.com/wp-content/uploads/2014/11/blob5.png" alt="示意图"></p>
@@ -635,9 +592,9 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/archives/">
+                <a href="/archives">
               
-                  <span class="site-state-item-count">206</span>
+                  <span class="site-state-item-count">207</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -659,7 +616,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">233</span>
+                  <span class="site-state-item-count">234</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

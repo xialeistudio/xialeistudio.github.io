@@ -82,13 +82,11 @@ index_with_subtitle: false
 menu:
   home: / || home
   categories: /categories/ || th
-  tags: /tags/ || tags
-  archives: /archives/ || archive
   #schedule: /schedule/ || calendar
   about: /about/ || user
   open-source-project: /open-source-project/ || github
   book: /book/ || book
-  sitemap: /sitemap.xml || sitemap
+  #sitemap: /sitemap.xml || sitemap
   # commonweal: /404/
 
 # Enable/Disable menu icons.
@@ -293,7 +291,7 @@ font:
   # Global font settings used on <body> element.
   global:
     external: true
-    family: Lato
+    family: 
     size:
 
   # Font settings for Headlines (h1, h2, h3, h4, h5, h6).
@@ -318,8 +316,8 @@ font:
   # Font settings for <code> and code blocks.
   codes:
     external: true
-    family: Iosevka
-    size: 12
+    family: 
+    size: 
 
 
 # ---------------------------------------------------------------
