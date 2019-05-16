@@ -5,6 +5,7 @@ tags:
 - github
 - project
 ---
+
 # NodeJs
 ## tnwz
 ### 项目简介
@@ -261,3 +262,9 @@ IOS风格的toggle，适用于angularjs。
 基于yii1和angularjs的新闻系统。
 ### 项目地址
 [https://github.com/xialeistudio/daydaynews](https://github.com/xialeistudio/daydaynews)
+
+## Swoole Thrift
+### 项目简介
+基于swoole协程的thrift服务端
+### 项目地址
+https://github.com/xialeistudio/swoole-thrift.git
