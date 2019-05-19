@@ -267,4 +267,22 @@ IOS风格的toggle，适用于angularjs。
 ### 项目简介
 基于swoole协程的thrift服务端
 ### 项目地址
-https://github.com/xialeistudio/swoole-thrift.git
+https://github.com/swoole-foundation/swoole-thrift.git
+
+## Yii2 Swoole Extension
+### 项目简介
+在Swoole环境下运行Yii2应用的扩展组件包
+### 项目地址
+https://github.com/swoole-foundation/yii2-swoole-extension.git
+
+## Yii2 Swoole app
+### 项目简介
+在Swoole环境下运行Yii2应用的项目脚手架
+### 项目地址
+https://github.com/swoole-foundation/yii2-swoole-app.git
+
+## Yii2 Swoole Thrift
+### 项目简介
+在Swoole环境下运行集成Yii2框架的thrift应用
+### 项目地址
+https://github.com/swoole-foundation/yii2-swoole-thrift.git
