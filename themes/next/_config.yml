@@ -83,9 +83,10 @@ menu:
   home: / || home
   categories: /categories/ || th
   #schedule: /schedule/ || calendar
-  about: /about/ || user
   open-source-project: /open-source-project/ || github
-  book: /book/ || book
+  # book: /book/ || book
+  qq: //shang.qq.com/wpa/qunwpa?idkey=812833aa5085cb07da95dbd747f6ff9fcd278731c940c85224d97dc5abf48e3d || qq || _blank
+  about: /about/ || user
   #sitemap: /sitemap.xml || sitemap
   # commonweal: /404/
 
