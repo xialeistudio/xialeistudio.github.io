@@ -10,12 +10,17 @@ tags:
 ## 需求
 数据表如下：
 
-+ department表
+department表
+  
   |id|name|
-  |-|-|
-+ user表
+  |--|--|
+  |1|测试部门|
+
+ user表
+ 
   |id|name|department_id|
-  |-|-|-|
+  |--|--|--|
+  |1|test|1|
 
 需求是得到以下结构的数据:
 
@@ -35,7 +40,8 @@ tags:
 
 ## 方法一:循环查询
 
-该方法是先查询学生列表，然后循环用户列表，查询部门，代码大致如下：
+1. 查询用户列表
+2. 循环用户列表查询对应的部门信息
 
 ```php
 $users = $db->query('SELECT * FROM `user`');
@@ -48,13 +54,15 @@ foreach($users as &$user) {
 
 ## 方法二：连表
 
-该方法查询次数为1次，代码大致如下：
+1. 通过连表查询用户和部门数据
+2. 处理返回数据
 
 ```php
 $users = $db->query('SELECT * FROM `user` INNER JOIN `department` ON `department`.`id` = `user`.`department_id`');
+// 手动处理返回结果为需求结构
 ```
 
-该方法其实也有局限性，如果 *user* 和 *department* 不在同一个服务器是不可以连表的。这时候需要第三种方法
+该方法其实也有局限性，如果 *user* 和 *department* 不在同一个服务器是不可以连表的。
 
 ## 方法三：1+1查询
 

@@ -113,18 +113,18 @@
 
 
 
-<meta name="description" content="需求数据表如下：  department表|id|name||-|-| user表|id|name|department_id||-|-|-|  需求是得到以下结构的数据: 1234567891011[    &amp;#123;        &quot;id&quot;:1,        &quot;name&quot;:&quot;test&quot;,        &quot;department_id&quot;:1,        &quot;department&quot;:&amp;#123">
+<meta name="description" content="需求数据表如下： department表    id name     1 测试部门     user表    id name department_id     1 test 1    需求是得到以下结构的数据: 1234567891011[    &amp;#123;        &quot;id&quot;:1,        &quot;name&quot;:&quot;test&quot;,        &quot;department_id&quot;:1,">
 <meta name="keywords" content="database">
 <meta property="og:type" content="article">
 <meta property="og:title" content="解决数据库N+1查询问题">
 <meta property="og:url" content="https//www.ddhigh.com/2019/06/18/database-n-1-solution.html">
 <meta property="og:site_name" content="每天进步一点点">
-<meta property="og:description" content="需求数据表如下：  department表|id|name||-|-| user表|id|name|department_id||-|-|-|  需求是得到以下结构的数据: 1234567891011[    &amp;#123;        &quot;id&quot;:1,        &quot;name&quot;:&quot;test&quot;,        &quot;department_id&quot;:1,        &quot;department&quot;:&amp;#123">
+<meta property="og:description" content="需求数据表如下： department表    id name     1 测试部门     user表    id name department_id     1 test 1    需求是得到以下结构的数据: 1234567891011[    &amp;#123;        &quot;id&quot;:1,        &quot;name&quot;:&quot;test&quot;,        &quot;department_id&quot;:1,">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-06-18T09:12:19.736Z">
+<meta property="og:updated_time" content="2019-06-18T09:17:55.272Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="解决数据库N+1查询问题">
-<meta name="twitter:description" content="需求数据表如下：  department表|id|name||-|-| user表|id|name|department_id||-|-|-|  需求是得到以下结构的数据: 1234567891011[    &amp;#123;        &quot;id&quot;:1,        &quot;name&quot;:&quot;test&quot;,        &quot;department_id&quot;:1,        &quot;department&quot;:&amp;#123">
+<meta name="twitter:description" content="需求数据表如下： department表    id name     1 测试部门     user表    id name department_id     1 test 1    需求是得到以下结构的数据: 1234567891011[    &amp;#123;        &quot;id&quot;:1,        &quot;name&quot;:&quot;test&quot;,        &quot;department_id&quot;:1,">
 
 
 
@@ -452,18 +452,52 @@
 
       
         <h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>数据表如下：</p>
-<ul>
-<li>department表<br>|id|name|<br>|-|-|</li>
-<li>user表<br>|id|name|department_id|<br>|-|-|-|</li>
-</ul>
+<p>department表</p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>测试部门</td>
+</tr>
+</tbody>
+</table>
+<p> user表</p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>name</th>
+<th>department_id</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>test</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
 <p>需求是得到以下结构的数据:</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line">    &#123;</div><div class="line">        <span class="attr">"id"</span>:<span class="number">1</span>,</div><div class="line">        <span class="attr">"name"</span>:<span class="string">"test"</span>,</div><div class="line">        <span class="attr">"department_id"</span>:<span class="number">1</span>,</div><div class="line">        <span class="attr">"department"</span>:&#123;</div><div class="line">            <span class="attr">"id"</span>:<span class="number">1</span>,</div><div class="line">            <span class="attr">"name"</span>:<span class="string">"测试部门"</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">]</div></pre></td></tr></table></figure>
-<h2 id="方法一-循环查询"><a href="#方法一-循环查询" class="headerlink" title="方法一:循环查询"></a>方法一:循环查询</h2><p>该方法是先查询学生列表，然后循环用户列表，查询部门，代码大致如下：</p>
+<h2 id="方法一-循环查询"><a href="#方法一-循环查询" class="headerlink" title="方法一:循环查询"></a>方法一:循环查询</h2><ol>
+<li>查询用户列表</li>
+<li>循环用户列表查询对应的部门信息</li>
+</ol>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$users = $db-&gt;query(<span class="string">'SELECT * FROM `user`'</span>);</div><div class="line"><span class="keyword">foreach</span>($users <span class="keyword">as</span> &amp;$user) &#123;</div><div class="line">    $users[<span class="string">'department'</span>] = $db-&gt;query(<span class="string">'SELECT * FROM `department` WHERE `id` = '</span>.$user[<span class="string">'department_id'</span>]);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>该方法查询次数为：1+N(1次查询列表，N次查询部门)，性能最低，不可取。</p>
-<h2 id="方法二：连表"><a href="#方法二：连表" class="headerlink" title="方法二：连表"></a>方法二：连表</h2><p>该方法查询次数为1次，代码大致如下：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$users = $db-&gt;query(<span class="string">'SELECT * FROM `user` INNER JOIN `department` ON `department`.`id` = `user`.`department_id`'</span>);</div></pre></td></tr></table></figure>
-<p>该方法其实也有局限性，如果 <em>user</em> 和 <em>department</em> 不在同一个服务器是不可以连表的。这时候需要第三种方法</p>
+<h2 id="方法二：连表"><a href="#方法二：连表" class="headerlink" title="方法二：连表"></a>方法二：连表</h2><ol>
+<li>通过连表查询用户和部门数据</li>
+<li>处理返回数据</li>
+</ol>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$users = $db-&gt;query(<span class="string">'SELECT * FROM `user` INNER JOIN `department` ON `department`.`id` = `user`.`department_id`'</span>);</div><div class="line"><span class="comment">// 手动处理返回结果为需求结构</span></div></pre></td></tr></table></figure>
+<p>该方法其实也有局限性，如果 <em>user</em> 和 <em>department</em> 不在同一个服务器是不可以连表的。</p>
 <h2 id="方法三：1-1查询"><a href="#方法三：1-1查询" class="headerlink" title="方法三：1+1查询"></a>方法三：1+1查询</h2><ol>
 <li>该方法先查询1次用户列表</li>
 <li>取出列表中的部门ID组成数组</li>
