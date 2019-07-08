@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https//www.ddhigh.com/"/>
-  <updated>2019-06-18T09:17:55.272Z</updated>
+  <updated>2019-07-08T09:22:08.538Z</updated>
   <id>https//www.ddhigh.com/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>druid SQL监控不显示问题</title>
+    <link href="https//www.ddhigh.com/2019/07/08/druid-sql-monitor.html"/>
+    <id>https//www.ddhigh.com/2019/07/08/druid-sql-monitor.html</id>
+    <published>2019-07-08T09:13:40.000Z</published>
+    <updated>2019-07-08T09:22:08.538Z</updated>
+    
+    <content type="html"><![CDATA[<p>新版druid数据源驱动的SQL监控如果用以前的老版本配置是无法监控到SQL的：</p><p>application.properties</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="attr">spring:</span></div><div class="line"><span class="attr">    datasource:</span></div><div class="line"><span class="attr">        druid:</span></div><div class="line"><span class="attr">            filters:</span></div><div class="line"><span class="bullet">                -</span> <span class="string">stat</span></div><div class="line"><span class="bullet">                -</span> <span class="string">wall</span></div><div class="line"><span class="bullet">                -</span> <span class="string">log4j</span></div></pre></td></tr></table></figure><p>启动应用之后访问druid监控页面，除了SQL相关的页面都正常工作，但是访问SQL监控页面时没有看到SQL记录。<br>查看监控页面 <strong>数据源</strong> 菜单发现 <strong>filter类名</strong> 显示的是空，估计是filter配置有问题导致。</p><p>查阅官方文档发现filter配置有变更，改成以下形式即可统计SQL，同时在数据源页面 <strong>filter类名</strong> 会显示正常。</p><p>application.properties</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="attr">spring:</span></div><div class="line"><span class="attr">    datasource:</span></div><div class="line"><span class="attr">        druid:</span></div><div class="line"><span class="attr">            initial-size:</span> <span class="number">5</span></div><div class="line"><span class="attr">            min-idle:</span> <span class="number">5</span></div><div class="line"><span class="attr">            max-active:</span> <span class="number">20</span></div><div class="line"><span class="attr">            max-wait:</span> <span class="number">5000</span></div><div class="line">            <span class="comment"># 状态监控</span></div><div class="line"><span class="attr">            filter:</span></div><div class="line"><span class="attr">                stat:</span></div><div class="line"><span class="attr">                enabled:</span> <span class="literal">true</span></div><div class="line"><span class="attr">                db-type:</span> <span class="string">mysql</span></div><div class="line"><span class="attr">                log-slow-sql:</span> <span class="literal">true</span></div><div class="line"><span class="attr">                slow-sql-millis:</span> <span class="number">2000</span></div><div class="line">            <span class="comment"># 监控过滤器</span></div><div class="line"><span class="attr">            web-stat-filter:</span></div><div class="line"><span class="attr">                enabled:</span> <span class="literal">true</span></div><div class="line"><span class="attr">                exclusions:</span></div><div class="line"><span class="bullet">                -</span> <span class="string">"*.js"</span></div><div class="line"><span class="bullet">                -</span> <span class="string">"*.gif"</span></div><div class="line"><span class="bullet">                -</span> <span class="string">"*.jpg"</span></div><div class="line"><span class="bullet">                -</span> <span class="string">"*.png"</span></div><div class="line"><span class="bullet">                -</span> <span class="string">"*.css"</span></div><div class="line"><span class="bullet">                -</span> <span class="string">"*.ico"</span></div><div class="line"><span class="bullet">                -</span> <span class="string">"/druid/*"</span></div><div class="line">            <span class="comment"># druid 监控页面</span></div><div class="line"><span class="attr">            stat-view-servlet:</span></div><div class="line"><span class="attr">                enabled:</span> <span class="literal">true</span></div><div class="line"><span class="attr">                url-pattern:</span> <span class="string">/druid/*</span></div><div class="line"><span class="attr">                reset-enable:</span> <span class="literal">false</span></div><div class="line"><span class="attr">                login-username:</span> <span class="string">root</span></div><div class="line"><span class="attr">                login-password:</span> <span class="string">root</span></div></pre></td></tr></table></figure><p>数据源filter类名：<strong>com.alibaba.druid.filter.stat.StatFilter</strong></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;新版druid数据源驱动的SQL监控如果用以前的老版本配置是无法监控到SQL的：&lt;/p&gt;
+&lt;p&gt;application.properties&lt;/p&gt;
+&lt;figure class=&quot;highlight yaml&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;
+      
+    
+    </summary>
+    
+      <category term="java" scheme="https//www.ddhigh.com/categories/java/"/>
+    
+    
+      <category term="druid" scheme="https//www.ddhigh.com/tags/druid/"/>
+    
+      <category term="springboot" scheme="https//www.ddhigh.com/tags/springboot/"/>
+    
+  </entry>
   
   <entry>
     <title>解决数据库N+1查询问题</title>
@@ -545,30 +574,6 @@
       <category term="travis" scheme="https//www.ddhigh.com/tags/travis/"/>
     
       <category term="ci" scheme="https//www.ddhigh.com/tags/ci/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>golang for遍历channel时需要注意的问题</title>
-    <link href="https//www.ddhigh.com/2018/04/05/golang-for-over-channels.html"/>
-    <id>https//www.ddhigh.com/2018/04/05/golang-for-over-channels.html</id>
-    <published>2018-04-05T10:45:31.000Z</published>
-    <updated>2019-05-13T11:43:39.350Z</updated>
-    
-    <content type="html"><![CDATA[<p>最近在做一个基于RabbitMQ的应用，由于官方的qos没有golang的版本，所以出了一点问题。问题代码如下：</p><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">_, ch, err := component.NewRabbitMQ()</div><div class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</div><div class="line"><span class="built_in">panic</span>(err)</div><div class="line">&#125;</div><div class="line"><span class="keyword">if</span> err := ch.Qos(<span class="number">10</span>, <span class="number">0</span>, <span class="literal">true</span>); err != <span class="literal">nil</span> &#123;</div><div class="line"><span class="built_in">panic</span>(err)</div><div class="line">&#125;</div><div class="line">msgs, err := ch.Consume(<span class="string">"push"</span>, <span class="string">""</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">nil</span>)</div><div class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</div><div class="line"><span class="built_in">panic</span>(err)</div><div class="line">&#125;</div><div class="line"><span class="keyword">for</span> m := <span class="keyword">range</span> msgs &#123;</div><div class="line"><span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">(d *amqp.Delivery)</span></span> &#123;</div><div class="line">           <span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123; d.Ack(<span class="literal">false</span>) &#125;</div><div class="line">           <span class="comment">// 处理消息</span></div><div class="line">       &#125;(&amp;m)</div><div class="line">   &#125;</div></pre></td></tr></table></figure><p>发现消费到10条消息，进程就退出了，但是exit code为0，表示系统是正常退出，由于做了日志记录可以确定消费了10条，所以初步确定是qos相关问题。</p><h2 id="排查过程"><a href="#排查过程" class="headerlink" title="排查过程"></a>排查过程</h2><ol><li>首先是把<code>d</code>的tag打印出来，发现全部是一样的，可以确定是重复的一条消息</li><li>一开始想到可能是经典的<code>go协程执行在for循环结束以后</code>导致的，但是看我的代码不属于这种情况，有使用<code>&amp;m</code>保证每一条消息都是不同循环传入的。所以判断可能是for循环的传递问题。</li><li>确定方向之后开始写了一个测试项目用来验证我的想法是否正确。</li></ol><h2 id="测试代码"><a href="#测试代码" class="headerlink" title="测试代码"></a>测试代码</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> main</div><div class="line"></div><div class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</div><div class="line">ch := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">int</span>, <span class="number">10</span>)</div><div class="line"><span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">10</span>; i++ &#123;</div><div class="line">ch &lt;- i</div><div class="line">&#125;</div><div class="line"><span class="built_in">close</span>(ch)</div><div class="line"><span class="keyword">for</span> v := <span class="keyword">range</span> ch &#123;</div><div class="line">fmt.Println(&amp;v)</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>执行输出</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">0xc420086008</div><div class="line">0xc420086008</div><div class="line">0xc420086008</div><div class="line">0xc420086008</div><div class="line">0xc420086008</div><div class="line">0xc420086008</div><div class="line">0xc420086008</div><div class="line">0xc420086008</div><div class="line">0xc420086008</div><div class="line">0xc420086008</div></pre></td></tr></table></figure><p><strong>到这里才焕然大悟，for循环中，如果循环变量不是指针，那么每次的变量是同一个，不过值变了。</strong>，所以上例中的RabbitMQ go协程消费消息那里，需要直接传递值而不是指针，经过测试之后发现，问题确实解决了。</p><h2 id="题外话"><a href="#题外话" class="headerlink" title="题外话"></a>题外话</h2><p>测试代码那里，如果不close掉channel是会发生死锁的，原因是 <strong>当for循环读完channel的10个值之后会继续尝试读取下一个，而由于channel为空又没关闭，会一直阻塞形成死锁</strong></p><h2 id="TOOD"><a href="#TOOD" class="headerlink" title="TOOD"></a>TOOD</h2><p>研究RabbitMQ Consumer部分的源码来看看消费channel被关闭的问题。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;最近在做一个基于RabbitMQ的应用，由于官方的qos没有golang的版本，所以出了一点问题。问题代码如下：&lt;/p&gt;
-&lt;figure class=&quot;highlight go&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;
-      
-    
-    </summary>
-    
-      <category term="golang" scheme="https//www.ddhigh.com/categories/golang/"/>
-    
     
   </entry>
   
