@@ -2,7 +2,7 @@
 title: 使用pm2来保证Spring Boot应用稳定运行
 layout: post
 categories:
-- spring book
+- spring boot
 tags:
 - pm2
 ---

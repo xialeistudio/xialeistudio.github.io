@@ -2,7 +2,7 @@
 title: druid SQL监控不显示问题
 date: 2019-07-08 17:13:40
 tags:
-- springboot
+- spring boot
 - druid
 categories:
 - java

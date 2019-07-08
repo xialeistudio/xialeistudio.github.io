@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https//www.ddhigh.com/"/>
-  <updated>2019-07-08T09:22:08.538Z</updated>
+  <updated>2019-07-08T09:32:19.774Z</updated>
   <id>https//www.ddhigh.com/</id>
   
   <author>
@@ -17,11 +17,41 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>vue webpack重写cookie路径</title>
+    <link href="https//www.ddhigh.com/2019/07/08/vue-webpack-rewrite-cookie-path.html"/>
+    <id>https//www.ddhigh.com/2019/07/08/vue-webpack-rewrite-cookie-path.html</id>
+    <published>2019-07-08T09:24:05.000Z</published>
+    <updated>2019-07-08T09:32:19.774Z</updated>
+    
+    <content type="html"><![CDATA[<p>webpack提供的反向代理服务器在开发阶段非常方便，几行简单的代码配置就可以使用反向代理功能，包括路径重写、cookie处理等。</p><p>项目开发阶段使用的API路径是 <code>/admin</code>，部署到线上是<code>/</code>，所以在开发过程中需要在<code>proxyTable</code>进行反向代理配置，将路径重写掉，路径重写代码如下(<code>config/index.js</code>):</p><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">proxyTable: &#123;</div><div class="line">      <span class="string">'/admin'</span>: &#123;</div><div class="line">        target: <span class="string">'http://127.0.0.1:8080'</span>,</div><div class="line">        changeOrigin: <span class="literal">true</span>,</div><div class="line">        pathRewrite: &#123;</div><div class="line">          <span class="string">'^/admin'</span>: <span class="string">'/admin2'</span></div><div class="line">        &#125;,</div><div class="line">      &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>启动项目之后进行登录，此时API请求成功，但是获取登录用户信息时发现cookie没有带过去。查看请求发现登录请求的<code>Set-Cookie</code>响应头中的<code>Path</code>是<code>/admin2</code>。但是咱们请求的路径是<code>/admin</code>，cookie当然不会生效。</p><p>查阅文档发现，proxyTable支持<code>onProxyRes</code>回调函数来自定义响应，流程是通过替换后端服务器设置的<code>cookie-path</code>来进行处理，代码如下：</p><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">proxyTable: &#123;</div><div class="line">      <span class="string">'/admin'</span>: &#123;</div><div class="line">        target: <span class="string">'http://127.0.0.1:8080'</span>,</div><div class="line">        changeOrigin: <span class="literal">true</span>,</div><div class="line">        pathRewrite: &#123;</div><div class="line">          <span class="string">'^/admin'</span>: <span class="string">'/lesson/admin'</span></div><div class="line">        &#125;,</div><div class="line">        onProxyRes: <span class="function"><span class="keyword">function</span> (<span class="params">proxyRes, req, res</span>) </span>&#123;</div><div class="line">          <span class="keyword">const</span> cookies = proxyRes.headers[<span class="string">'set-cookie'</span>]</div><div class="line">          <span class="keyword">if</span> (cookies) &#123;</div><div class="line">            <span class="keyword">const</span> newCookies = cookies.map(<span class="function"><span class="params">cookie</span> =&gt;</span> &#123;</div><div class="line">              <span class="keyword">return</span> cookie.replace(<span class="regexp">/Path=\/admin2/</span>, <span class="string">'Path=/'</span>)</div><div class="line">            &#125;)</div><div class="line">            <span class="keyword">delete</span> proxyRes.headers[<span class="string">'set-cookie'</span>]</div><div class="line">            proxyRes.headers[<span class="string">'set-cookie'</span>] = newCookies</div><div class="line">          &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;,</div><div class="line">&#125;,</div></pre></td></tr></table></figure><p>重启webpack之后重新登录，发现cookie的路径已经被重写到<code>/</code>了。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;webpack提供的反向代理服务器在开发阶段非常方便，几行简单的代码配置就可以使用反向代理功能，包括路径重写、cookie处理等。&lt;/p&gt;
+&lt;p&gt;项目开发阶段使用的API路径是 &lt;code&gt;/admin&lt;/code&gt;，部署到线上是&lt;code&gt;/&lt;/code&gt;，所以在开发过程
+      
+    
+    </summary>
+    
+      <category term="frontend" scheme="https//www.ddhigh.com/categories/frontend/"/>
+    
+    
+      <category term="javascript" scheme="https//www.ddhigh.com/tags/javascript/"/>
+    
+      <category term="vue" scheme="https//www.ddhigh.com/tags/vue/"/>
+    
+      <category term="webpack" scheme="https//www.ddhigh.com/tags/webpack/"/>
+    
+  </entry>
+  
+  <entry>
     <title>druid SQL监控不显示问题</title>
     <link href="https//www.ddhigh.com/2019/07/08/druid-sql-monitor.html"/>
     <id>https//www.ddhigh.com/2019/07/08/druid-sql-monitor.html</id>
     <published>2019-07-08T09:13:40.000Z</published>
-    <updated>2019-07-08T09:22:08.538Z</updated>
+    <updated>2019-07-08T09:25:44.930Z</updated>
     
     <content type="html"><![CDATA[<p>新版druid数据源驱动的SQL监控如果用以前的老版本配置是无法监控到SQL的：</p><p>application.properties</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="attr">spring:</span></div><div class="line"><span class="attr">    datasource:</span></div><div class="line"><span class="attr">        druid:</span></div><div class="line"><span class="attr">            filters:</span></div><div class="line"><span class="bullet">                -</span> <span class="string">stat</span></div><div class="line"><span class="bullet">                -</span> <span class="string">wall</span></div><div class="line"><span class="bullet">                -</span> <span class="string">log4j</span></div></pre></td></tr></table></figure><p>启动应用之后访问druid监控页面，除了SQL相关的页面都正常工作，但是访问SQL监控页面时没有看到SQL记录。<br>查看监控页面 <strong>数据源</strong> 菜单发现 <strong>filter类名</strong> 显示的是空，估计是filter配置有问题导致。</p><p>查阅官方文档发现filter配置有变更，改成以下形式即可统计SQL，同时在数据源页面 <strong>filter类名</strong> 会显示正常。</p><p>application.properties</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="attr">spring:</span></div><div class="line"><span class="attr">    datasource:</span></div><div class="line"><span class="attr">        druid:</span></div><div class="line"><span class="attr">            initial-size:</span> <span class="number">5</span></div><div class="line"><span class="attr">            min-idle:</span> <span class="number">5</span></div><div class="line"><span class="attr">            max-active:</span> <span class="number">20</span></div><div class="line"><span class="attr">            max-wait:</span> <span class="number">5000</span></div><div class="line">            <span class="comment"># 状态监控</span></div><div class="line"><span class="attr">            filter:</span></div><div class="line"><span class="attr">                stat:</span></div><div class="line"><span class="attr">                enabled:</span> <span class="literal">true</span></div><div class="line"><span class="attr">                db-type:</span> <span class="string">mysql</span></div><div class="line"><span class="attr">                log-slow-sql:</span> <span class="literal">true</span></div><div class="line"><span class="attr">                slow-sql-millis:</span> <span class="number">2000</span></div><div class="line">            <span class="comment"># 监控过滤器</span></div><div class="line"><span class="attr">            web-stat-filter:</span></div><div class="line"><span class="attr">                enabled:</span> <span class="literal">true</span></div><div class="line"><span class="attr">                exclusions:</span></div><div class="line"><span class="bullet">                -</span> <span class="string">"*.js"</span></div><div class="line"><span class="bullet">                -</span> <span class="string">"*.gif"</span></div><div class="line"><span class="bullet">                -</span> <span class="string">"*.jpg"</span></div><div class="line"><span class="bullet">                -</span> <span class="string">"*.png"</span></div><div class="line"><span class="bullet">                -</span> <span class="string">"*.css"</span></div><div class="line"><span class="bullet">                -</span> <span class="string">"*.ico"</span></div><div class="line"><span class="bullet">                -</span> <span class="string">"/druid/*"</span></div><div class="line">            <span class="comment"># druid 监控页面</span></div><div class="line"><span class="attr">            stat-view-servlet:</span></div><div class="line"><span class="attr">                enabled:</span> <span class="literal">true</span></div><div class="line"><span class="attr">                url-pattern:</span> <span class="string">/druid/*</span></div><div class="line"><span class="attr">                reset-enable:</span> <span class="literal">false</span></div><div class="line"><span class="attr">                login-username:</span> <span class="string">root</span></div><div class="line"><span class="attr">                login-password:</span> <span class="string">root</span></div></pre></td></tr></table></figure><p>数据源filter类名：<strong>com.alibaba.druid.filter.stat.StatFilter</strong></p>]]></content>
     
@@ -41,7 +71,7 @@
     
       <category term="druid" scheme="https//www.ddhigh.com/tags/druid/"/>
     
-      <category term="springboot" scheme="https//www.ddhigh.com/tags/springboot/"/>
+      <category term="spring boot" scheme="https//www.ddhigh.com/tags/spring-boot/"/>
     
   </entry>
   
@@ -547,33 +577,6 @@
       <category term="yii2" scheme="https//www.ddhigh.com/tags/yii2/"/>
     
       <category term="di" scheme="https//www.ddhigh.com/tags/di/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>golang使用travis进行持续集成</title>
-    <link href="https//www.ddhigh.com/2018/04/08/golang-travis-ci.html"/>
-    <id>https//www.ddhigh.com/2018/04/08/golang-travis-ci.html</id>
-    <published>2018-04-08T09:40:37.000Z</published>
-    <updated>2019-05-13T11:43:39.350Z</updated>
-    
-    <content type="html"><![CDATA[<p>虽然golang的工程工具已经非常完善了，比如测试、代码格式化等等。但是如果开发library开源到github的话，这些东西是可以使用自动化工具完成的，那就是 <a href="https://www.travis-ci.org/" target="_blank" rel="external">travis</a></p><h2 id="使用步骤"><a href="#使用步骤" class="headerlink" title="使用步骤"></a>使用步骤</h2><ol><li>开发好需要集成的library以及测试用例</li><li><p>在项目根目录新建<code>.travis.yml</code>文件</p> <figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="attr">language:</span> <span class="string">go</span></div><div class="line"><span class="attr">go:</span></div><div class="line"><span class="bullet">-</span> <span class="number">1.</span><span class="string">x</span></div><div class="line"><span class="bullet">-</span> <span class="string">'1.8'</span></div><div class="line"><span class="bullet">-</span> <span class="string">'1.9'</span></div><div class="line"><span class="bullet">-</span> <span class="number">1.10</span><span class="string">.x</span></div><div class="line"><span class="attr">script:</span></div><div class="line"><span class="bullet">-</span> <span class="string">go</span> <span class="string">test</span> <span class="bullet">-v</span> <span class="string">./...</span></div></pre></td></tr></table></figure></li><li><p>提交到github</p></li><li>打开<a href="https://www.travis-ci.org/" target="_blank" rel="external">https://www.travis-ci.org/</a>并使用github账号登录</li><li>登录之后点击左边 <strong>“My Repositories”</strong> 旁边的 <strong>“+”</strong> 号添加项目（点击项目前面的滑块即可）</li><li>更改项目文件，push一次到github，此时travis会自动运行测试脚本</li></ol><h2 id="敏感数据加密"><a href="#敏感数据加密" class="headerlink" title="敏感数据加密"></a>敏感数据加密</h2><p>如果你的测试用例需要使用到敏感数据（如一些密钥等等），那需要用travis将你的敏感数据加密(以Mac为例)</p><ol><li>终端执行<code>sudo gem install travis</code></li><li>在项目根目录打开终端执行<code>travis encrypt AMAP_KEY=&quot;xxxx&quot; --add</code> <strong>AMAP_KEY</strong>是环境变量名称，程序读取环境变量可以得到真实的key，<strong>xxxx</strong>是敏感数据</li><li><p>执行完毕后，<strong>.travis.yml</strong> 会发生更改, 会添加如下内容(secure可能不一致)</p> <figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="attr">env:</span></div><div class="line"><span class="attr">global:</span></div><div class="line"><span class="attr">    secure:</span> <span class="string">kr5JHNTYsh/jezvk88qP91arb+UD/op/5CyOFY7uNYpJ6ZSsJY5fDKyZHjf0VSFmaYqJFMPl6uCASE9baiepeGvBFcy8aI9CNsbLzj2uBNjqqYPmvYGnBjpzp8yknVJKRTitF/kkWtzZcWImHnpvNGHuzXxp/EIBeJtNwjcCRoP/qfGhlZKbLsYFvlWkmRYb0dr8RM5mlmGXPZi8q7m+soVRO8Zjr4QQccybgmhonxlcUrHr6ro+yjjQefoJXRufqoRX0sGyecGYucC4nUpWl5hkDPkQE+Mekhz+rF657SwNsn8nXOFnnUuwsPXE26ak5xF1roEcFk2CpwGZuT7smJZPtw1inXFdIaW+4qllbyxMJkylvFZa5IcvLT3+/eKaQc8Fg6PoxJH0PF3RdtoQVB31cQiPWNm1SecQ6wC64WA/5qN4T5OoRfpt60BFDAITdS62dQGu5LSepcXMWXhxCdQPeDm5Qce6wjJXURubJMpBm0mPWwCNZhJyRw1G5TTyO25NckXQRlObrjltvwAd+7OEUcsYXqhdPtUTIVy6w3XOwT2eC/hP0Yi7qqUMMlJTHUW7Lb9zsEc4UB5BVwgeZ5Y9bVbknJfpt3ygcXAJeeDYxwV9g16KoS7HMFPzwrqlHbiBytIahqarBd4enwqR5RYQPEyetiIDLaJA4SyQ0cE=</span></div></pre></td></tr></table></figure></li><li><p>上传到github</p></li></ol><h2 id="接收测试结果通知"><a href="#接收测试结果通知" class="headerlink" title="接收测试结果通知"></a>接收测试结果通知</h2><p>如果你需要获取travis执行结果通知的话，可以添加邮箱配置，travis执行完毕后会通知到该邮箱。</p><ol><li>打开 <strong>.travis.yml</strong></li><li><p>添加以下内容：</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="attr">notifications:</span></div><div class="line"><span class="attr">  email:</span></div><div class="line"><span class="attr">    recipients:</span></div><div class="line"><span class="bullet">        -</span> <span class="string">邮箱地址</span></div><div class="line"><span class="attr">    on_success:</span> <span class="string">change</span></div><div class="line"><span class="attr">    on_failure:</span> <span class="string">always</span></div></pre></td></tr></table></figure></li><li><p>提交到github</p></li></ol>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;虽然golang的工程工具已经非常完善了，比如测试、代码格式化等等。但是如果开发library开源到github的话，这些东西是可以使用自动化工具完成的，那就是 &lt;a href=&quot;https://www.travis-ci.org/&quot; target=&quot;_blank&quot; rel
-      
-    
-    </summary>
-    
-      <category term="golang" scheme="https//www.ddhigh.com/categories/golang/"/>
-    
-    
-      <category term="travis" scheme="https//www.ddhigh.com/tags/travis/"/>
-    
-      <category term="ci" scheme="https//www.ddhigh.com/tags/ci/"/>
     
   </entry>
   
