@@ -10,7 +10,7 @@ categories:
 
 新版druid数据源驱动的SQL监控如果用以前的老版本配置是无法监控到SQL的：
 
-application.properties
+application.yml
 
 ```yaml
 spring:
@@ -27,7 +27,7 @@ spring:
 
 查阅官方文档发现filter配置有变更，改成以下形式即可统计SQL，同时在数据源页面 **filter类名** 会显示正常。
 
-application.properties
+application.yml
 
 ```yaml
 spring:
