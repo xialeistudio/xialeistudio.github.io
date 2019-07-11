@@ -346,7 +346,7 @@ baidu_analytics: 78141f99bbb49f1564a7af89344f5add
 # Disqus
 disqus:
   enable: false
-  shortname:
+  shortname: aaa
   count: true
 
 # Hypercomments
@@ -376,14 +376,15 @@ valine:
 
 # Support for LiveRe comments system.
 # You can get your uid from https://livere.com/insight/myCode (General web site)
-#livere_uid: your uid
+livere_uid: MTAyMC80NTI0My8yMTc1OA==
 
 # Baidu Share
 # Available value:
 #    button | slide
 # Warning: Baidu Share does not support https.
-#baidushare:
-##  type: button
+baidushare: 
+  type: button
+
 
 # Share
 # This plugin is more useful in China, make sure you known how to use it.
