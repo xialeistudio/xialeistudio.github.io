@@ -382,8 +382,8 @@ livere_uid: MTAyMC80NTI0My8yMTc1OA==
 # Available value:
 #    button | slide
 # Warning: Baidu Share does not support https.
-# baidushare: 
-  # type: button
+baidushare: 
+  type: button
 
 
 # Share
