@@ -727,3 +727,9 @@ images: images
 
 # Theme version
 version: 5.1.3
+
+group:
+  enabled: true
+  qq: 346660435
+  wechat: https://static.ddhigh.com/paycode/20190712182221.jpg
+  text: 一群开发爱好者欢迎您的到来~
