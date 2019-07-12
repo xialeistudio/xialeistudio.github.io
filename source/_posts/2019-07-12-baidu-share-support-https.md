@@ -77,11 +77,6 @@ class DirectorySync
 
     /**
      * 同步目录
-     * ```php
-     * [
-     *  '目录名称' => '七牛keyPrefix'
-     * ]
-     * ```
      * @param array $list
      * @throws \Exception
      * @author xialeistudio
