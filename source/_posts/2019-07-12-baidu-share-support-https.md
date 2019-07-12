@@ -35,7 +35,7 @@ categories:
 ```
 |--static(百度分享资源目录)
 |--DirectorySync.php
-|--FileScanner.php
+|--FilterScanner.php
 |--index.php
 ```
 
@@ -101,7 +101,7 @@ class DirectorySync
 }
 ```
 
-FileScanner.php
+FilterScanner.php
 ```php
 /**
  * 文件扫描器
