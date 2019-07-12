@@ -133,9 +133,9 @@ links_title: 友情链接
 #links_layout: block
 #links_layout: inline
 links:
-  好一网: http://www.51hsw.com/
+  # 好一网: http://www.51hsw.com/
   小邓PHP博客: http://www.dengwz.com/
-  Licoril: http://www.leifuchen.com/
+  # Licoril: http://www.leifuchen.com/
 
 # Sidebar Avatar
 # in theme directory(source/images): /images/avatar.gif
