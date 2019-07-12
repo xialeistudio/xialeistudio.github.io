@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https//www.ddhigh.com/about/index.html</loc>
+    
+    <lastmod>2019-07-12T10:50:05.556Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https//www.ddhigh.com/2019/07/11/js-encrypt-php-decrypt.html</loc>
     
     <lastmod>2019-07-11T07:19:28.542Z</lastmod>
@@ -33,13 +40,6 @@
     <loc>https//www.ddhigh.com/2019/06/18/database-n-1-solution.html</loc>
     
     <lastmod>2019-06-18T09:17:55.272Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https//www.ddhigh.com/about/index.html</loc>
-    
-    <lastmod>2019-06-12T09:58:31.924Z</lastmod>
     
   </url>
   

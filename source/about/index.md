@@ -4,15 +4,18 @@ date: 2017-10-15 05:16:05
 ---
 
 ## 个人简介
+
 夏磊
 QQ群：346660435
 Email: xialeistudio@gmail.com
 喜欢学习，喜欢实践。
 
 ## 开发语言
+
 + Typescript
 + PHP
 + Golang
++ Java/kotlin
 
 ## 技术栈
 
@@ -21,6 +24,7 @@ Email: xialeistudio@gmail.com
 + PHP: ThinkPHP/Yii/Yii2
 + NodeJs: Express/Koa/socket.io/pomelo
 + Golang: Gin/Beego/http
++ Java: Spring Boot
 
 ### Front-End
 
@@ -32,14 +36,10 @@ Email: xialeistudio@gmail.com
 
 ### Database
 
-+ MySQL: Design
++ MySQL
 + MongoDB
-
-### OS
-
-+ Ubuntu
-+ Centos
 
 ### Other
 
 + Docker
++ K8S
