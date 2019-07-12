@@ -1,0 +1,1441 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next mist" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+      
+    
+    
+      
+    
+  <script src="https://cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+  <link href="https://cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-flash.min.css" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="https://cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+  
+
+<link href="https://cdn.bootcss.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Typescript, NodeJs, PHP, Yii2, ThinkPHP, Koa, Express, Socket.io" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="每天进步一点点" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="什么是DefinitelyTyped?讲到DefinitelyTyped，我想做typescript开的人应该不会陌生，DefinitelyTyped是一个由typescript的发明者Microsoft维护的一个项目。 为什么会有DefinitelyTyped?typescript是基于declation的一门语言，declation这个东西有点像C语言的头文件，就是变量、函数等等需要事先声明才">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从零开始向DefinitelyTyped贡献代码">
+<meta property="og:url" content="https//www.ddhigh.com/2017/10/15/contributing-to-DefinitelyTyped-step-by-step.html">
+<meta property="og:site_name" content="每天进步一点点">
+<meta property="og:description" content="什么是DefinitelyTyped?讲到DefinitelyTyped，我想做typescript开的人应该不会陌生，DefinitelyTyped是一个由typescript的发明者Microsoft维护的一个项目。 为什么会有DefinitelyTyped?typescript是基于declation的一门语言，declation这个东西有点像C语言的头文件，就是变量、函数等等需要事先声明才">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://og5r5kasb.qnssl.com/upload/QQ20171015-024655.png">
+<meta property="og:image" content="https://og5r5kasb.qnssl.com/upload/QQ20171015-030606.png">
+<meta property="og:image" content="https://og5r5kasb.qnssl.com/upload/QQ20171015-030911.png">
+<meta property="og:image" content="https://og5r5kasb.qnssl.com/upload/QQ20171015-031005.png">
+<meta property="og:image" content="https://og5r5kasb.qnssl.com/upload/QQ20171015-032934.png">
+<meta property="og:image" content="https://og5r5kasb.qnssl.com/upload/QQ20171015-033135.png">
+<meta property="og:image" content="https://og5r5kasb.qnssl.com/upload/QQ20171015-033252.png">
+<meta property="og:image" content="https://og5r5kasb.qnssl.com/upload/QQ20171015-033524.png">
+<meta property="og:image" content="https://og5r5kasb.qnssl.com/upload/QQ20171015-034009.png">
+<meta property="og:image" content="https://og5r5kasb.qnssl.com/upload/QQ20171015-034114.png">
+<meta property="og:updated_time" content="2019-05-13T11:43:39.337Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="从零开始向DefinitelyTyped贡献代码">
+<meta name="twitter:description" content="什么是DefinitelyTyped?讲到DefinitelyTyped，我想做typescript开的人应该不会陌生，DefinitelyTyped是一个由typescript的发明者Microsoft维护的一个项目。 为什么会有DefinitelyTyped?typescript是基于declation的一门语言，declation这个东西有点像C语言的头文件，就是变量、函数等等需要事先声明才">
+<meta name="twitter:image" content="https://og5r5kasb.qnssl.com/upload/QQ20171015-024655.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https//www.ddhigh.com/2017/10/15/contributing-to-DefinitelyTyped-step-by-step.html"/>
+
+
+
+
+
+  <title>从零开始向DefinitelyTyped贡献代码 | 每天进步一点点</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?78141f99bbb49f1564a7af89344f5add";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">每天进步一点点</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">Coding Change Anything</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+        
+      
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+        
+      
+        
+        
+        <li class="menu-item menu-item-open-source-project">
+          <a href="/open-source-project/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-github"></i> <br />
+            
+            开源项目
+          </a>
+        </li>
+        
+      
+        
+        
+        <li class="menu-item menu-item-qq">
+          <a href="//shang.qq.com/wpa/qunwpa?idkey=812833aa5085cb07da95dbd747f6ff9fcd278731c940c85224d97dc5abf48e3d" rel="section" target=" _blank">
+            
+              <i class="menu-item-icon fa fa-fw fa-qq"></i> <br />
+            
+            加群
+          </a>
+        </li>
+        
+      
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+        
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https//www.ddhigh.com/2017/10/15/contributing-to-DefinitelyTyped-step-by-step.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xialeistudio">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="每天进步一点点">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">从零开始向DefinitelyTyped贡献代码</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-15T00:00:00+08:00">
+                2017-10-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/typescript/" itemprop="url" rel="index">
+                    <span itemprop="name">typescript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/10/15/contributing-to-DefinitelyTyped-step-by-step.html" class="leancloud_visitors" data-flag-title="从零开始向DefinitelyTyped贡献代码">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="什么是DefinitelyTyped"><a href="#什么是DefinitelyTyped" class="headerlink" title="什么是DefinitelyTyped?"></a>什么是DefinitelyTyped?</h1><p>讲到DefinitelyTyped，我想做typescript开的人应该不会陌生，DefinitelyTyped是一个由typescript的发明者Microsoft维护的一个项目。</p>
+<h1 id="为什么会有DefinitelyTyped"><a href="#为什么会有DefinitelyTyped" class="headerlink" title="为什么会有DefinitelyTyped?"></a>为什么会有DefinitelyTyped?</h1><p>typescript是基于declation的一门语言，declation这个东西有点像C语言的头文件，就是变量、函数等等需要事先声明才能通过typescript编辑。为了方便开发者，也为了快速推广typescript，官方维护的这个项目给npm常用的一些包都定义了declations文件。<br>既然是托管在github的OpenSource Project，那么只要是github的会员就可以提交PR（当然Merge与否还得看项目组成员）,由于社区的活跃使得该仓库越来越丰富。<br>很荣幸，我也提交了几个npm包的declations在上面。</p>
+<h1 id="如何提交PR到DefinitelyTyped"><a href="#如何提交PR到DefinitelyTyped" class="headerlink" title="如何提交PR到DefinitelyTyped?"></a>如何提交PR到DefinitelyTyped?</h1><p>很多时候会遇到自己使用的npm包比较冷门，而DefinitelyTyped上面又没有，这时候虽然可以在本地定义，但是能够发布到DefinitelyTyped方便大家也是极好的，毕竟要拥抱开源嘛！<br>官方的ReadMe中有<code>How can I contribute?</code>来告知开发者如何提交PR，但是需要英语基础，哈哈。</p>
+<h1 id="Step-By-Step"><a href="#Step-By-Step" class="headerlink" title="Step By Step"></a>Step By Step</h1><h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><h3 id="fork-项目"><a href="#fork-项目" class="headerlink" title="fork 项目"></a>fork 项目</h3><p>要提交PR的第一步是必须fork到自己的仓库，别人不会随便给你直接改，万一改挂了他们还得背锅.<br>登录github,打开项目地址<a href="https://github.com/DefinitelyTyped/DefinitelyTyped" target="_blank" rel="external">DefinitelyTyped</a><br><img src="https://og5r5kasb.qnssl.com/upload/QQ20171015-024655.png" alt="fork"><br>fork完毕后，你会拥有一个自己的仓库地址，本文中我的地址是<a href="https://github.com/xialeistudio/DefinitelyTyped" target="_blank" rel="external">https://github.com/xialeistudio/DefinitelyTyped</a></p>
+<h3 id="clone-到本地"><a href="#clone-到本地" class="headerlink" title="clone 到本地"></a>clone 到本地</h3><p>我本地的项目地址是<strong>~/WebstormProjects/DefinitelyTyped</strong><br>终端执行 <code>git clone https://github.com/xialeistudio/DefinitelyTyped</code></p>
+<h3 id="安装npm依赖"><a href="#安装npm依赖" class="headerlink" title="安装npm依赖"></a>安装npm依赖</h3><p>终端执行 <code>cd ~/WebstormProjects/DefinitelyTyped &amp;&amp; yarn</code></p>
+<h2 id="SourceTree"><a href="#SourceTree" class="headerlink" title="SourceTree"></a>SourceTree</h2><p>本文使用SourceTree配合git flow来进行项目管理。</p>
+<ol>
+<li>下载soucetree <a href="https://www.sourcetreeapp.com" target="_blank" rel="external">下载地址</a></li>
+<li>安装sourcetree，期间需要登录。</li>
+<li>用sourcetree打开刚才克隆的项目。<br><img src="https://og5r5kasb.qnssl.com/upload/QQ20171015-030606.png" alt="p1"></li>
+<li>点击菜单栏【仓库】-&gt;【git-flow或hg flow】-&gt;【初始化仓库】</li>
+</ol>
+<h2 id="开始开发"><a href="#开始开发" class="headerlink" title="开始开发"></a>开始开发</h2><p>本文将以<a href="https://www.npmjs.com/package/types/koa2-cors" target="_blank" rel="external">koa2-cors</a>为例提交PR。</p>
+<ol>
+<li>使用sourcetree的git-flow创建feature<br><img src="https://og5r5kasb.qnssl.com/upload/QQ20171015-030911.png" alt="p2"></li>
+<li>分支名称填写<strong>koa2-cors</strong><br><img src="https://og5r5kasb.qnssl.com/upload/QQ20171015-031005.png" alt="p3"></li>
+<li>这时候已经可以编码了。我用的vscode，轻量，建议大家也用这个，webstorm打开这个项目就卡死了。</li>
+<li>安装定义文件生成工具，终端执行<strong>npm install -g dts-gen</strong></li>
+<li>生成项目文件，终端执行<strong>dts-gen –dt –name koa2-cors –template module</strong></li>
+<li>这个时候在<strong>types/koa2-cors</strong>目录下就是我们需要编辑的文件了。如果编写定义文件不在本文范畴，有需要的朋友可以去tslang官网看看手册。</li>
+<li><p>开始编辑<strong>index.d.ts</strong>，完整定义如下，记得改自己的个人信息:   </p>
+ <figure class="highlight typescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line">    <span class="comment">// Type definitions for koa2-cors 2.0</span></div><div class="line">    <span class="comment">// Project: https://github.com/zadzbw/koa2-cors#readme</span></div><div class="line">    <span class="comment">// Definitions by: xialeistudio &lt;https://github.com/xialeistudio&gt;</span></div><div class="line">    <span class="comment">// Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped</span></div><div class="line"></div><div class="line">    <span class="keyword">import</span> * <span class="keyword">as</span> Koa <span class="keyword">from</span> <span class="string">'koa'</span>;</div><div class="line"></div><div class="line">    <span class="keyword">declare</span> <span class="keyword">namespace</span> cors &#123;</div><div class="line">        <span class="keyword">interface</span> Options &#123;</div><div class="line">            origin?: <span class="built_in">any</span>;</div><div class="line">            exposeHeaders?: <span class="built_in">string</span>[];</div><div class="line">            maxAge?: <span class="built_in">number</span>;</div><div class="line">            credentials?: <span class="built_in">boolean</span>;</div><div class="line">            allowMethods?: <span class="built_in">string</span>[];</div><div class="line">            allowHeaders?: <span class="built_in">string</span>[];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">declare</span> <span class="function"><span class="keyword">function</span> <span class="title">cors</span>(<span class="params">options?: cors.Options</span>): <span class="title">Koa</span>.<span class="title">Middleware</span></span>;</div><div class="line"></div><div class="line">    <span class="keyword">export</span> = cors;</div><div class="line">    <span class="string">``</span><span class="string">`   </span></div><div class="line"><span class="string">8. 编写单元测试文件**koa2-cors-tests.ts**，测试就是写上样板代码即可，只要能通过编译就行。   </span></div><div class="line"><span class="string">    `</span><span class="string">``</span>typescript</div><div class="line">    <span class="keyword">import</span> * <span class="keyword">as</span> Koa <span class="keyword">from</span> <span class="string">'koa'</span>;</div><div class="line">    <span class="keyword">import</span> * <span class="keyword">as</span> cors <span class="keyword">from</span> <span class="string">'koa2-cors'</span>;</div><div class="line"></div><div class="line">    <span class="keyword">const</span> app = <span class="keyword">new</span> Koa();</div><div class="line">    app.use(cors(&#123;</div><div class="line">        origin: <span class="function"><span class="keyword">function</span> (<span class="params">ctx: Koa.Context</span>) </span>&#123;</div><div class="line">            <span class="keyword">if</span> (ctx.url === <span class="string">'/test'</span>) &#123;</div><div class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">return</span> <span class="string">'*'</span>;</div><div class="line">        &#125;,</div><div class="line">        exposeHeaders: [<span class="string">'WWW-Authenticate'</span>, <span class="string">'Server-Authorization'</span>],</div><div class="line">        maxAge: <span class="number">5</span>,</div><div class="line">        credentials: <span class="literal">true</span>,</div><div class="line">        allowMethods: [<span class="string">'GET'</span>, <span class="string">'POST'</span>, <span class="string">'DELETE'</span>],</div><div class="line">        allowHeaders: [<span class="string">'Content-Type'</span>, <span class="string">'Authorization'</span>, <span class="string">'Accept'</span>],</div><div class="line">    &#125;));</div><div class="line">    app.listen(<span class="number">3000</span>);</div></pre></td></tr></table></figure>
+</li>
+<li><p>启动单元测试，终端执行<strong>npm run test</strong>，如果没有报错，即可进行提交流程，否则要修好错误才能提交。很幸运，单元测试通过：<br><img src="https://og5r5kasb.qnssl.com/upload/QQ20171015-032934.png" alt="p4"></p>
+</li>
+<li>commit，终端执行<strong>git add . &amp;&amp; git commit -m “add koa2-cors definition”</strong></li>
+<li>使用sourcetree创建PR<br><img src="https://og5r5kasb.qnssl.com/upload/QQ20171015-033135.png" alt="p4"></li>
+<li>点击<strong>在网上创建拉取请求</strong><br><img src="https://og5r5kasb.qnssl.com/upload/QQ20171015-033252.png" alt="p5"></li>
+<li>此时会自动打开github网页进行PR操作   </li>
+<li>编辑PR提交模板，这个根据实际情况编写即可，注意下方的<strong>If xxx</strong>，这个是不同提交类型需要填写的。本文是新增，所以选择<strong>add</strong><br><img src="https://og5r5kasb.qnssl.com/upload/QQ20171015-033524.png" alt="p6"></li>
+<li>点击<strong>Create Pull Request</strong>，此时会进行<strong>travis</strong>自动化测试流程，如果有错误需要点进去看到错误信息之后修正，很不幸。我们的第一次提交失败：<br><img src="https://og5r5kasb.qnssl.com/upload/QQ20171015-034009.png" alt="p7"></li>
+<li>点击<strong>Details</strong>进行详细错误页面，找到<strong>=== Error ===</strong><br><img src="https://og5r5kasb.qnssl.com/upload/QQ20171015-034114.png" alt="p8"></li>
+<li><p>可以发现我们错误是<strong>“ Expected <code>&quot;strictFunctionTypes&quot;: true</code> or <code>&quot;strictFunctionTypes&quot;: false</code></strong>,这个是<strong>tsconfig.json</strong>导致的问题，感觉是个历史遗留问题，因为使用的是默认创建的模板，不过为了提交PR，还是要手动修复。<br>编辑<strong>types/koa2-cors/tsconfig.json</strong>，在<strong>compilerOptions</strong>下添加，代码如下：   </p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"compilerOptions"</span>: &#123;</div><div class="line">        <span class="attr">"module"</span>: <span class="string">"commonjs"</span>,</div><div class="line">        <span class="attr">"lib"</span>: [</div><div class="line">            <span class="string">"es6"</span></div><div class="line">        ],</div><div class="line">        <span class="attr">"noImplicitAny"</span>: <span class="literal">true</span>,</div><div class="line">        <span class="attr">"noImplicitThis"</span>: <span class="literal">true</span>,</div><div class="line">        <span class="attr">"strictNullChecks"</span>: <span class="literal">true</span>,</div><div class="line">        <span class="attr">"baseUrl"</span>: <span class="string">"../"</span>,</div><div class="line">        <span class="attr">"strictFunctionTypes"</span>: <span class="literal">false</span>,</div><div class="line">        <span class="attr">"typeRoots"</span>: [</div><div class="line">            <span class="string">"../"</span></div><div class="line">        ],</div><div class="line">        <span class="attr">"types"</span>: [],</div><div class="line">        <span class="attr">"noEmit"</span>: <span class="literal">true</span>,</div><div class="line">        <span class="attr">"forceConsistentCasingInFileNames"</span>: <span class="literal">true</span></div><div class="line">    &#125;,</div><div class="line">    <span class="attr">"files"</span>: [</div><div class="line">        <span class="string">"index.d.ts"</span>,</div><div class="line">        <span class="string">"koa2-cors-tests.ts"</span></div><div class="line">    ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>commit，终端执行<strong>git add . &amp;&amp; git commit -m “strictFunctionTypes” &amp;&amp; git push</strong>，不需要再创建PR了，当你在该分支PUSH的时候，远端会自动触发自动化测试任务。</p>
+</li>
+<li>成功通过测试后，就可以等待官方人员过来review了。一般来说都会通过并且合并到master中去。</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <div id="QR">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" width="150" src="https://static.ddhigh.com/paycode/wepay.jpg" alt="xialeistudio 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" width="150" src="https://static.ddhigh.com/paycode/alipay.jpg" alt="xialeistudio 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+    <div class="post-spread">
+      
+        
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "24",
+        "bdStyle": "1"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//static.ddhigh.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    xialeistudio
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https//www.ddhigh.com/2017/10/15/contributing-to-DefinitelyTyped-step-by-step.html" title="从零开始向DefinitelyTyped贡献代码">https//www.ddhigh.com/2017/10/15/contributing-to-DefinitelyTyped-step-by-step.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/10/docker-publish-nodejs.html" rel="next" title="使用Docker来部署NodeJs应用">
+                <i class="fa fa-chevron-left"></i> 使用Docker来部署NodeJs应用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/15/excel-stream-unknown-encoding.html" rel="prev" title="excel-stream Unknown Encoding错误问题">
+                excel-stream Unknown Encoding错误问题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+
+          
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80NTI0My8yMTc1OA=="></div>
+    </div>
+  
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">xialeistudio</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">216</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">240</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/xialeistudio" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:xialeistudio@gmail.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-globe"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://segmentfault.com/u/xialeistudio" target="_blank" title="SegmentFault">
+                    
+                      <i class="fa fa-fw fa-globe"></i>SegmentFault</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-globe"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.51hsw.com/" title="好一网" target="_blank">好一网</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.dengwz.com/" title="小邓PHP博客" target="_blank">小邓PHP博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.leifuchen.com/" title="Licoril" target="_blank">Licoril</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是DefinitelyTyped"><span class="nav-number">1.</span> <span class="nav-text">什么是DefinitelyTyped?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么会有DefinitelyTyped"><span class="nav-number">2.</span> <span class="nav-text">为什么会有DefinitelyTyped?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何提交PR到DefinitelyTyped"><span class="nav-number">3.</span> <span class="nav-text">如何提交PR到DefinitelyTyped?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Step-By-Step"><span class="nav-number">4.</span> <span class="nav-text">Step By Step</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#环境搭建"><span class="nav-number">4.1.</span> <span class="nav-text">环境搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#fork-项目"><span class="nav-number">4.1.1.</span> <span class="nav-text">fork 项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#clone-到本地"><span class="nav-number">4.1.2.</span> <span class="nav-text">clone 到本地</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装npm依赖"><span class="nav-number">4.1.3.</span> <span class="nav-text">安装npm依赖</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SourceTree"><span class="nav-number">4.2.</span> <span class="nav-text">SourceTree</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开始开发"><span class="nav-number">4.3.</span> <span class="nav-text">开始开发</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2014 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xialeistudio</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.3</div>
+
+
+
+  <div class="footer-custom"><a target="_blank" href="http://www.miitbeian.gov.cn/">粤ICP备14062481号-1</a></div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdn.bootcss.com/velocity/1.2.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdn.bootcss.com/velocity/1.2.1/velocity.ui.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.json";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("M7yiNvioSUGMNWrQh0GK74tl-gzGzoHsz", "aTVz57LNkHWzR4RC1y8ytug2");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
