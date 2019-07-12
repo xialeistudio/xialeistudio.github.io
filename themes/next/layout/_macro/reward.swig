@@ -16,6 +16,13 @@
       </div>
     {% endif %}
 
+    {% if theme.group %}
+      <div id="group" style="display: inline-block">
+        <img id="group_qr" src="{{ theme.group }}" alt="{{ theme.author }} {{ __('reward.group') }}"/>
+        <p>{{ __('reward.group') }}</p>
+      </div>
+    {% endif %}
+
     {% if theme.bitcoin %}
       <div id="bitcoin" style="display: inline-block">
         <img id="bitcoin_qr" src="{{ theme.bitcoin }}" alt="{{ theme.author }} {{ __('reward.bitcoin') }}"/>

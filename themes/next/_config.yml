@@ -82,10 +82,10 @@ index_with_subtitle: false
 menu:
   home: / || home
   categories: /categories/ || th
-  #schedule: /schedule/ || calendar
+  schedule: /schedule/ || calendar 
   open-source-project: /open-source-project/ || github
   # book: /book/ || book
-  qq: //shang.qq.com/wpa/qunwpa?idkey=812833aa5085cb07da95dbd747f6ff9fcd278731c940c85224d97dc5abf48e3d || qq || _blank
+  # qq: //shang.qq.com/wpa/qunwpa?idkey=812833aa5085cb07da95dbd747f6ff9fcd278731c940c85224d97dc5abf48e3d || qq || _blank
   about: /about/ || user
   #sitemap: /sitemap.xml || sitemap
   # commonweal: /404/
@@ -231,6 +231,7 @@ post_wordcount:
 reward_comment: 坚持原创技术分享，您的支持将鼓励我继续创作！
 wechatpay: https://static.ddhigh.com/paycode/wepay.jpg
 alipay: https://static.ddhigh.com/paycode/alipay.jpg
+group: https://static.ddhigh.com/paycode/20190712175720.jpg # 群聊
 #bitcoin: /images/bitcoin.png
 
 # Declare license on posts
