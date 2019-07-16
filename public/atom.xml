@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https//www.ddhigh.com/"/>
-  <updated>2019-07-12T11:34:45.033Z</updated>
+  <updated>2019-07-16T04:43:09.382Z</updated>
   <id>https//www.ddhigh.com/</id>
   
   <author>
@@ -15,6 +15,61 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>实现一个JS深拷贝函数</title>
+    <link href="https//www.ddhigh.com/2019/07/16/make-a-deep-copy-function.html"/>
+    <id>https//www.ddhigh.com/2019/07/16/make-a-deep-copy-function.html</id>
+    <published>2019-07-16T03:17:59.000Z</published>
+    <updated>2019-07-16T04:43:09.382Z</updated>
+    
+    <content type="html"><![CDATA[<p>JS深拷贝概念并不新鲜，但是真正要真正理解原理还是有点难度的。这也是JS语言精粹之一吧。</p><h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> a = &#123;</div><div class="line">    name: <span class="string">'demo'</span>,</div><div class="line">    age: <span class="number">18</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">let</span> b = a;</div><div class="line">b.name = <span class="string">'demo1'</span>;</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(a); <span class="comment">// 输出 &#123;name: "demo1", age: 18&#125;</span></div><div class="line"><span class="built_in">console</span>.log(b); <span class="comment">// 输出 &#123;name: "demo1", age: 18&#125;</span></div></pre></td></tr></table></figure><p>因为JS对于对象的赋值使用的是浅拷贝，其中<code>一个实例变量</code>的赋值会影响到<code>所有指向该对象</code>的<code>变量</code></p><h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><ol><li>粗暴好使的 <code>JSON.parse(JSON.stringify)</code>，缺点: <code>丢失成员函数</code></li><li><p><code>Object.assign</code>，缺点：<code>只有第一级深拷贝，子级对象依旧是浅拷贝</code>，例子如下：</p> <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">    <span class="keyword">let</span> a = &#123;<span class="attr">name</span>:&#123;<span class="attr">demo</span>:<span class="string">'1'</span>&#125;&#125;;</div><div class="line">    <span class="keyword">let</span> b = <span class="built_in">Object</span>.assign(&#123;&#125;, a);</div><div class="line">    <span class="built_in">console</span>.log(a); <span class="comment">// 输出 &#123;name:&#123;demo:'1'&#125;&#125;</span></div><div class="line">    <span class="built_in">console</span>.log(b); <span class="comment">// 输出 &#123;name:&#123;demo:'1'&#125;&#125;</span></div><div class="line">    b.name.demo = <span class="string">'2'</span>;</div><div class="line">    <span class="built_in">console</span>.log(a); <span class="comment">// 输出 &#123;name:&#123;demo:'2'&#125;&#125;</span></div><div class="line">    <span class="built_in">console</span>.log(b); <span class="comment">// 输出 &#123;name:&#123;demo:'2'&#125;&#125;</span></div><div class="line"></div><div class="line">##　手动实现原理</div><div class="line"></div><div class="line"><span class="number">1.</span> 遍历待拷贝对象</div><div class="line"><span class="number">2.</span> 判断当前值类型，如果是object类型且不是<span class="literal">null</span>(<span class="literal">null</span>也是object)，则递归调用拷贝函数</div><div class="line"><span class="number">3.</span> 如果当前值类型时<span class="literal">null</span>或者非object类型，直接<span class="keyword">return</span>，退出本次递归</div><div class="line"></div><div class="line">## 编码实现</div><div class="line"></div><div class="line"><span class="string">``</span><span class="string">`js</span></div><div class="line"><span class="string">function deepCopy(obj) &#123;</span></div><div class="line"><span class="string">    let result = obj;</span></div><div class="line"><span class="string">    if(typeof obj === 'object' &amp;&amp; obj !== null) &#123;</span></div><div class="line"><span class="string">        result = Object.prototype.toString.call(obj) === '[object Array]' ? []: &#123;&#125;;</span></div><div class="line"><span class="string">        for(let prop in obj) &#123;</span></div><div class="line"><span class="string">            result[prop] = deepCopy(obj[prop]);</span></div><div class="line"><span class="string">        &#125;</span></div><div class="line"><span class="string">    &#125;</span></div><div class="line"><span class="string">    return result;</span></div><div class="line"><span class="string">&#125;</span></div></pre></td></tr></table></figure></li></ol><p>验证一下：</p><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> a = &#123;<span class="attr">name</span>:&#123;<span class="attr">demo</span>:<span class="string">'1'</span>&#125;&#125;;</div><div class="line"><span class="keyword">let</span> b = deepCopy(a);</div><div class="line"><span class="built_in">console</span>.log(a); <span class="comment">// 输出 &#123;name:&#123;demo:'1'&#125;&#125;</span></div><div class="line"><span class="built_in">console</span>.log(b); <span class="comment">// 输出 &#123;name:&#123;demo:'1'&#125;&#125;</span></div><div class="line">b.name.demo = <span class="string">'2'</span>;</div><div class="line"><span class="built_in">console</span>.log(a); <span class="comment">// 输出 &#123;name:&#123;demo:'1'&#125;&#125;</span></div><div class="line"><span class="built_in">console</span>.log(b); <span class="comment">// 输出 &#123;name:&#123;demo:'2'&#125;&#125;</span></div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;JS深拷贝概念并不新鲜，但是真正要真正理解原理还是有点难度的。这也是JS语言精粹之一吧。&lt;/p&gt;
+&lt;h2 id=&quot;例子&quot;&gt;&lt;a href=&quot;#例子&quot; class=&quot;headerlink&quot; title=&quot;例子&quot;&gt;&lt;/a&gt;例子&lt;/h2&gt;&lt;figure class=&quot;highli
+      
+    
+    </summary>
+    
+      <category term="frontend" scheme="https//www.ddhigh.com/categories/frontend/"/>
+    
+    
+      <category term="javascript" scheme="https//www.ddhigh.com/tags/javascript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>微信小程序数据字段大小写问题</title>
+    <link href="https//www.ddhigh.com/2019/07/16/wechat-mini-program-data-column-case.html"/>
+    <id>https//www.ddhigh.com/2019/07/16/wechat-mini-program-data-column-case.html</id>
+    <published>2019-07-16T03:17:38.000Z</published>
+    <updated>2019-07-16T03:32:22.042Z</updated>
+    
+    <content type="html"><![CDATA[<p>这两天在开发微信小程序登录以及加解密的时候，因为数据大小写的问题被坑了一把。</p><h2 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h2><ol><li>小程序调用<code>wx.login</code>时会获得<code>code</code>，传输给服务端可以得到<code>openid</code>,<code>unionid(绑定了开放平台)</code>,<code>session_key</code></li><li>小程序调用<code>getUserInfo</code>会获得<code>encrypted_data</code>,<code>iv</code>,解密后得到<code>unionId</code>,<code>openId</code></li><li><code>unionid</code>和<code>openid</code>这两个场景<code>键名大小写是不同的</code></li></ol><h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><ol><li><p>服务端根据<code>code获取session_key</code>返回结果如下：</p> <figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"session_key"</span>: <span class="string">"我是session_key"</span>,</div><div class="line">    <span class="attr">"openid"</span>: <span class="string">"我是openid"</span>,</div><div class="line">    <span class="attr">"unionid"</span>: <span class="string">"我是unionid"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></li><li><p>服务端根据<code>session_key解密encrypted_data和iv</code>返回结果如下：</p> <figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"openId"</span>: <span class="string">"OPENID"</span>,</div><div class="line">    <span class="attr">"nickName"</span>: <span class="string">"NICKNAME"</span>,</div><div class="line">    <span class="attr">"gender"</span>: GENDER,</div><div class="line">    <span class="attr">"city"</span>: <span class="string">"CITY"</span>,</div><div class="line">    <span class="attr">"province"</span>: <span class="string">"PROVINCE"</span>,</div><div class="line">    <span class="attr">"country"</span>: <span class="string">"COUNTRY"</span>,</div><div class="line">    <span class="attr">"avatarUrl"</span>: <span class="string">"AVATARURL"</span>,</div><div class="line">    <span class="attr">"unionId"</span>: <span class="string">"UNIONID"</span>,</div><div class="line">    <span class="attr">"watermark"</span>:</div><div class="line">    &#123;</div><div class="line">        <span class="attr">"appid"</span>:<span class="string">"APPID"</span>,</div><div class="line">        <span class="attr">"timestamp"</span>:TIMESTAMP</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></li></ol><p>可以看到两次同样的字段<code>openid</code>和<code>unionid</code>大小写是不同的，此处容易踩坑。</p><h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><ol><li>服务端根据<code>code换session_key/openid/unionid</code>是<code>小写</code></li><li>服务端根据<code>encrypted_data和iv</code>解密得到的<code>openId/unionId</code>是<code>大写</code></li></ol><p>最后，祝大家在开发过程中少踩坑。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;这两天在开发微信小程序登录以及加解密的时候，因为数据大小写的问题被坑了一把。&lt;/p&gt;
+&lt;h2 id=&quot;场景&quot;&gt;&lt;a href=&quot;#场景&quot; class=&quot;headerlink&quot; title=&quot;场景&quot;&gt;&lt;/a&gt;场景&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;小程序调用&lt;code&gt;wx.logi
+      
+    
+    </summary>
+    
+      <category term="applet" scheme="https//www.ddhigh.com/categories/applet/"/>
+    
+    
+      <category term="mini program" scheme="https//www.ddhigh.com/tags/mini-program/"/>
+    
+      <category term="frontend" scheme="https//www.ddhigh.com/tags/frontend/"/>
+    
+  </entry>
   
   <entry>
     <title>百度分享不支持HTTPS解决办法</title>
@@ -93,9 +148,9 @@
     
       <category term="javascript" scheme="https//www.ddhigh.com/tags/javascript/"/>
     
-      <category term="webpack" scheme="https//www.ddhigh.com/tags/webpack/"/>
-    
       <category term="vue" scheme="https//www.ddhigh.com/tags/vue/"/>
+    
+      <category term="webpack" scheme="https//www.ddhigh.com/tags/webpack/"/>
     
   </entry>
   
@@ -519,61 +574,6 @@
     
     
       <category term="di" scheme="https//www.ddhigh.com/tags/di/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>不到20行代码实现golang路由调度</title>
-    <link href="https//www.ddhigh.com/2018/07/23/golang-route-dispatcher.html"/>
-    <id>https//www.ddhigh.com/2018/07/23/golang-route-dispatcher.html</id>
-    <published>2018-07-23T13:44:05.000Z</published>
-    <updated>2019-05-13T11:43:39.352Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h2><p><a href="https://github.com/xialeistudio/go-dispatcher" target="_blank" rel="external">go-dispatcher</a></p><h2 id="本项目依赖"><a href="#本项目依赖" class="headerlink" title="本项目依赖"></a>本项目依赖</h2><p>使用标准库实现，无额外依赖</p><h2 id="为什么需要路由调度层"><a href="#为什么需要路由调度层" class="headerlink" title="为什么需要路由调度层"></a>为什么需要路由调度层</h2><blockquote><p>golang http标准库只能精确匹配请求的URI，然后执行handler。现在一般web项目都至少有个Controller层，以struct实现，根据不同的请求路径派发到不同的方法中去。</p></blockquote><h2 id="路由调度器定义"><a href="#路由调度器定义" class="headerlink" title="路由调度器定义"></a>路由调度器定义</h2><p>由于golang暂时还不可以动态创建对象(比如java的<code>Class.forName(&quot;xxx&quot;).newInstance()</code>,xxx是任意存在的class名称)。所以需要手动注册一下controller关系。</p><ol><li>定义<code>routes</code>保存controller指针</li><li>解析请求过来的URL查询参数，暂定<code>a</code>为<code>action名称</code>,<code>c</code>为<code>controller名称</code>，本文偷了下懒，没对PATH_INFO做处理，也没有对actionName的首字母自动大写，这个不影响本文要传达的核心内容，有兴趣的读者可以自行实现。</li><li>根据URL中的<code>controllerName</code>找到对应的controller</li><li>使用反射将当前请求对象的<code>*http.Request</code>和<code>http.ResponseWriter</code>设置到该Controller</li><li>使用反射以及actionName对应该controller的方法</li></ol><blockquote><p>由于golang的继承不是一般的OOP，所以也没有父子类这种说法，路由注册那里只能使用interface{}</p></blockquote><h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><h3 id="app-app-go"><a href="#app-app-go" class="headerlink" title="app/app.go"></a>app/app.go</h3><p>该文件为核心调度文件</p><figure class="highlight golang"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> app</div><div class="line"></div><div class="line"><span class="keyword">import</span> (</div><div class="line"><span class="string">"net/http"</span></div><div class="line"><span class="string">"reflect"</span></div><div class="line"><span class="string">"fmt"</span></div><div class="line">)</div><div class="line"></div><div class="line"><span class="keyword">type</span> application <span class="keyword">struct</span> &#123;</div><div class="line">routes <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">interface</span>&#123;&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">New</span><span class="params">()</span> *<span class="title">application</span></span> &#123;</div><div class="line"><span class="keyword">return</span> &amp;application&#123;</div><div class="line">routes: <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">interface</span>&#123;&#125;),</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="params">(p *application)</span> <span class="title">ServeHTTP</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</div><div class="line">controllerName := r.URL.Query().Get(<span class="string">"c"</span>)</div><div class="line">actionName := r.URL.Query().Get(<span class="string">"a"</span>)</div><div class="line"><span class="keyword">if</span> controllerName == <span class="string">""</span> || actionName == <span class="string">""</span> &#123;</div><div class="line">http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)</div><div class="line"><span class="keyword">return</span></div><div class="line">&#125;</div><div class="line">route, ok := p.routes[controllerName]</div><div class="line"><span class="keyword">if</span> !ok &#123;</div><div class="line">http.Error(w, <span class="string">"Controller Not Found"</span>, http.StatusNotFound)</div><div class="line"><span class="keyword">return</span></div><div class="line">&#125;</div><div class="line">ele := reflect.ValueOf(route).Elem()</div><div class="line">ele.FieldByName(<span class="string">"Request"</span>).Set(reflect.ValueOf(r))</div><div class="line">ele.FieldByName(<span class="string">"Response"</span>).Set(reflect.ValueOf(w))</div><div class="line">ele.MethodByName(actionName).Call([]reflect.Value&#123;&#125;)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="params">(p *application)</span> <span class="title">printRoutes</span><span class="params">()</span></span> &#123;</div><div class="line"><span class="keyword">for</span> route, controller := <span class="keyword">range</span> p.routes &#123;</div><div class="line">ele := reflect.ValueOf(controller).Type().String()</div><div class="line">fmt.Printf(<span class="string">"%s %s\n"</span>, route, ele)</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="params">(p *application)</span> <span class="title">Get</span><span class="params">(route <span class="keyword">string</span>, controller <span class="keyword">interface</span>&#123;&#125;)</span></span> &#123;</div><div class="line">p.routes[route] = controller</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="params">(p *application)</span> <span class="title">Run</span><span class="params">(addr <span class="keyword">string</span>)</span> <span class="title">error</span></span> &#123;</div><div class="line">p.printRoutes()</div><div class="line">fmt.Printf(<span class="string">"listen on %s\n"</span>, addr)</div><div class="line"><span class="keyword">return</span> http.ListenAndServe(addr, p)</div><div class="line">&#125;</div></pre></td></tr></table></figure><h3 id="app-controller-go"><a href="#app-controller-go" class="headerlink" title="app/controller.go"></a>app/controller.go</h3><p>控制器”基类”</p><figure class="highlight golang"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> app</div><div class="line"></div><div class="line"><span class="keyword">import</span> <span class="string">"net/http"</span></div><div class="line"></div><div class="line"><span class="keyword">type</span> Controller <span class="keyword">struct</span> &#123;</div><div class="line">Response http.ResponseWriter</div><div class="line">Request  *http.Request</div><div class="line">&#125;</div></pre></td></tr></table></figure><h3 id="controller-site-go"><a href="#controller-site-go" class="headerlink" title="controller/site.go"></a>controller/site.go</h3><p>具体业务逻辑类</p><figure class="highlight golang"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> controllers</div><div class="line"></div><div class="line"><span class="keyword">import</span> (</div><div class="line"><span class="string">"fmt"</span></div><div class="line"><span class="string">"app"</span></div><div class="line">)</div><div class="line"></div><div class="line"><span class="keyword">type</span> SiteController <span class="keyword">struct</span> &#123;</div><div class="line">app.Controller</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="params">(p SiteController)</span> <span class="title">Index</span><span class="params">()</span></span> &#123;</div><div class="line">fmt.Fprint(p.Response, p.Request.RequestURI)</div><div class="line">&#125;</div></pre></td></tr></table></figure><h3 id="main-go"><a href="#main-go" class="headerlink" title="main.go"></a>main.go</h3><p>入口文件</p><figure class="highlight golang"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> main</div><div class="line"></div><div class="line"><span class="keyword">import</span> (</div><div class="line">_ <span class="string">"github.com/go-sql-driver/mysql"</span></div><div class="line"><span class="string">"app"</span></div><div class="line"><span class="string">"controllers"</span></div><div class="line">)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</div><div class="line">application := app.New()</div><div class="line">application.Get(<span class="string">"site"</span>, &amp;controllers.SiteController&#123;&#125;)</div><div class="line">application.Run(<span class="string">":8080"</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure><h2 id="运行项目"><a href="#运行项目" class="headerlink" title="运行项目"></a>运行项目</h2><ol><li>启动进程</li><li>访问<code>http://localhost:8080?c=site&amp;a=Index</code>会输出<code>/?c=site&amp;a=Index</code></li></ol><h2 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h2><p>希望这个小小的项目能启发到各位读者，早日开发出适合自己的Web框架!</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;项目地址&quot;&gt;&lt;a href=&quot;#项目地址&quot; class=&quot;headerlink&quot; title=&quot;项目地址&quot;&gt;&lt;/a&gt;项目地址&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/xialeistudio/go-dispatcher&quot; target
-      
-    
-    </summary>
-    
-      <category term="golang" scheme="https//www.ddhigh.com/categories/golang/"/>
-    
-    
-      <category term="http" scheme="https//www.ddhigh.com/tags/http/"/>
-    
-      <category term="router" scheme="https//www.ddhigh.com/tags/router/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>redis常用实践</title>
-    <link href="https//www.ddhigh.com/2018/06/14/redis-common-practice.html"/>
-    <id>https//www.ddhigh.com/2018/06/14/redis-common-practice.html</id>
-    <published>2018-06-14T13:49:52.000Z</published>
-    <updated>2019-05-13T11:43:39.351Z</updated>
-    
-    <content type="html"><![CDATA[<p>Redis相信大家都不陌生，而如果只是用来取代memcached做缓存的话，实在是大材小用了。一起来看看生产环境下的常用用法。</p><h2 id="分布式锁"><a href="#分布式锁" class="headerlink" title="分布式锁"></a>分布式锁</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$canLock = $redis-&gt;set(<span class="string">'k'</span>, <span class="number">1</span>, <span class="string">'NX'</span>, <span class="string">'EX'</span>, <span class="number">2</span>);</div><div class="line"><span class="keyword">if</span>($canLock) &#123;</div><div class="line">    <span class="comment">// 获得锁成功</span></div><div class="line">&#125;</div></pre></td></tr></table></figure><p>锁定键名为k的数据两秒钟，两秒后该方法才能重新获取锁</p><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$redis-&gt;del(<span class="string">'k'</span>);</div></pre></td></tr></table></figure><p>删除键名为k的数据，其他方法可以重新获取锁</p><h2 id="Hash"><a href="#Hash" class="headerlink" title="Hash"></a>Hash</h2><p>这是redis特有的数据结构，memcached没有。使用场景很多，列举一种常用的，假设有一个需求</p><blockquote><p>加密后的用户id和真实用户id的映射关系保存</p></blockquote><p>这种情况我们可以使用hash，而不是使用多个kv缓存, 需要清空所有的时候比较难处理。代码如下：</p><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">$realId = $redis-&gt;hget(<span class="string">'user_id_map'</span>, <span class="string">'userId1'</span>);</div><div class="line"><span class="keyword">if</span>(!<span class="keyword">empty</span>($realId)) &#123;</div><div class="line">    <span class="keyword">return</span> $realId;</div><div class="line">&#125;</div><div class="line">$realId = getFromDatabase(<span class="string">'userId1'</span>); <span class="comment">// 从数据库读取</span></div><div class="line">$redis-&gt;hset(<span class="string">'user_id_map'</span>,<span class="string">'userId1'</span>,$realId);</div></pre></td></tr></table></figure><p>如果需要清空，则直接删除hash即可。</p><h2 id="set"><a href="#set" class="headerlink" title="set"></a>set</h2><p>set就是数据项不重复的集合，使用场景也很多。例子要说的是使用set存储一个聊天室中的所有用户id:</p><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$redis-&gt;sadd(<span class="string">'chat_room'</span>, <span class="string">'user1'</span>, <span class="string">'user2'</span>); <span class="comment">// 添加成员到集合</span></div><div class="line">$redis-&gt;srem(<span class="string">'chat_room'</span>, <span class="string">'user1'</span>); <span class="comment">// 删除指定成员</span></div><div class="line">$redis-&gt;smembers(<span class="string">'chat_room'</span>); <span class="comment">// 获取集合所有元素</span></div></pre></td></tr></table></figure><h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p> 大致就是这样了，基于这些简单数据结构可以根据业务需求构造更合理的数据结构。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;Redis相信大家都不陌生，而如果只是用来取代memcached做缓存的话，实在是大材小用了。一起来看看生产环境下的常用用法。&lt;/p&gt;
-&lt;h2 id=&quot;分布式锁&quot;&gt;&lt;a href=&quot;#分布式锁&quot; class=&quot;headerlink&quot; title=&quot;分布式锁&quot;&gt;&lt;/a&gt;分布式
-      
-    
-    </summary>
-    
-      <category term="php" scheme="https//www.ddhigh.com/categories/php/"/>
-    
-    
-      <category term="redis" scheme="https//www.ddhigh.com/tags/redis/"/>
-    
-      <category term="php" scheme="https//www.ddhigh.com/tags/php/"/>
     
   </entry>
   
