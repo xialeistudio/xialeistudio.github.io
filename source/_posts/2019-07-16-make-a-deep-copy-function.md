@@ -39,6 +39,7 @@ console.log(b); // 输出 {name: "demo1", age: 18}
     b.name.demo = '2';
     console.log(a); // 输出 {name:{demo:'2'}}
     console.log(b); // 输出 {name:{demo:'2'}}
+    ```
 
 ##　手动实现原理
 
