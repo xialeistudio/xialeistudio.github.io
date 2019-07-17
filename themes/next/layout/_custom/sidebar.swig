@@ -15,11 +15,10 @@
     {% endif %}
 
     {%if theme.group.mp %}
-    <div style="margin-top:4px">
+    <div style="margin-top:16px">
         <i class="fa fa-wechat"></i> NodeJs之路
         <img width="100" height="100" src="{{theme.group.mp}}" class="qrcode" /> 
     </div>
     {% endif %}
-    <div>{{theme.group.text}}</div>
 </div> 
 {% endif %}
