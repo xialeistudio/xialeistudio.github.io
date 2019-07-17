@@ -41,7 +41,7 @@ console.log(b); // 输出 {name: "demo1", age: 18}
     console.log(b); // 输出 {name:{demo:'2'}}
     ```
 
-##　手动实现原理
+## 手动实现原理
 
 1. 遍历待拷贝对象
 2. 判断当前值类型，如果是object类型且不是null(null也是object)，则递归调用拷贝函数
