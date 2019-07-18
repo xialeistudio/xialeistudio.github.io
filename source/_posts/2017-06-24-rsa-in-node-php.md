@@ -3,10 +3,10 @@ title: 使用RSA在PHP和NodeJs中进行加密数据通信
 layout: post
 categories:
 - php
-- nodejs
 tags:
 - openssl
 - rsa
+- nodejs
 ---
 RSA算法是目前用的最多的非对称加密算法，文本将基于openssl在nodejs和php中进行加密数据通信。
 

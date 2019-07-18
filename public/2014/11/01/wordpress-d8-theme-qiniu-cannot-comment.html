@@ -457,7 +457,7 @@
       
         <p>上午有热心的网友给我反映说评论功能出bug了，初步查看是七牛出了问题，利用chrome的开发者工具可以查看请求。<br><img src="https://og5r5kasb.qnssl.com/wp-content/uploads/2014/11/blob3.png" alt="示意图"><br>PS：这张图是今天截的，所以域名是正常的，昨天实际上请求的是 static.ddhigh.com (本站的CDN域名)。<br>查看HTTP请求发现整站就请求了一个jquery文件，但是这个文件比较大有140K，查看源代码发现评论的代码已经合并在里面了。<br><img src="https://og5r5kasb.qnssl.com/wp-content/uploads/2014/11/blob4.png" alt="示意图"><br>按照以上步骤可以查看到评论时执行的脚本，当然这里的域名已经修复了。</p>
 <p>278行，昨天的是 </p>
-<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">url:</span>window._deel.url+<span class="string">"/ajax/comment.php"</span></div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">url:<span class="built_in">window</span>._deel.url+<span class="string">"/ajax/comment.php"</span></div></pre></td></tr></table></figure>
 <p>在控制台输入</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">console</span>.log(_deel);</div></pre></td></tr></table></figure>
 <p><img src="https://og5r5kasb.qnssl.com/wp-content/uploads/2014/11/blob5.png" alt="示意图"></p>
@@ -655,7 +655,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">217</span>
+                  <span class="site-state-item-count">218</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -677,7 +677,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">242</span>
+                  <span class="site-state-item-count">243</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
