@@ -5,6 +5,7 @@ categories:
 - nodejs
 tags:
 - javascript
+- nodejs guide
 ---
 
 > NodeJs简明教程将从零开始学习NodeJs相关知识，助力JS开发者构建全栈开发技术栈！
@@ -102,7 +103,7 @@ NodeJs由C++语言基于libuv开发，分层设计，Javascript只是其基于V8
 
 ## 参考文献
 
-[1]: About NodeJs. https://nodejs.org/en/about/
-[2]: 异步IO. https://zh.wikipedia.org/zh-hans/%E5%BC%82%E6%AD%A5IO
-[3]: 事件驱动. https://zh.wikipedia.org/wiki/%E4%BA%8B%E4%BB%B6%E9%A9%85%E5%8B%95%E7%A8%8B%E5%BC%8F%E8%A8%AD%E8%A8%88
-[4]: Javascript引擎. https://zh.wikipedia.org/wiki/JavaScript%E5%BC%95%E6%93%8E
+1. [About NodeJs](https://nodejs.org/en/about/)
+2. [异步IO](https://zh.wikipedia.org/zh-hans/%E5%BC%82%E6%AD%A5IO)
+3. [事件驱动]( https://zh.wikipedia.org/wiki/%E4%BA%8B%E4%BB%B6%E9%A9%85%E5%8B%95%E7%A8%8B%E5%BC%8F%E8%A8%AD%E8%A8%88)
+4. [Javascript引擎](https://zh.wikipedia.org/wiki/JavaScript%E5%BC%95%E6%93%8E)
