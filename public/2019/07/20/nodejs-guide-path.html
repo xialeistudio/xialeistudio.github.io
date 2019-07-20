@@ -121,7 +121,7 @@
 <meta property="og:site_name" content="每天进步一点点">
 <meta property="og:description" content="NodeJs简明教程将从零开始学习NodeJs相关知识，助力JS开发者构建全栈开发技术栈！  本文是NodeJs简明教程的第五篇，将介绍NodeJs path模块相关的基本操作。  path 模块提供用于处理文件路径和目录路径的实用工具。   注意：path模块只是处理文件路径，说白了就是字符串处理，跟文件系统无关 读取路径的文件名 path.basename() 方法返回 path 的最后一部">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-20T05:22:43.344Z">
+<meta property="og:updated_time" content="2019-07-20T05:32:14.803Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NodeJs简明教程(5)">
 <meta name="twitter:description" content="NodeJs简明教程将从零开始学习NodeJs相关知识，助力JS开发者构建全栈开发技术栈！  本文是NodeJs简明教程的第五篇，将介绍NodeJs path模块相关的基本操作。  path 模块提供用于处理文件路径和目录路径的实用工具。   注意：path模块只是处理文件路径，说白了就是字符串处理，跟文件系统无关 读取路径的文件名 path.basename() 方法返回 path 的最后一部">
@@ -474,7 +474,10 @@
 <p>path.dirname() 方法返回 path 的目录名，类似于 Unix 的 dirname 命令。 尾部的目录分隔符将被忽略。<br>path.extname() 方法返回 path 的扩展名，从最后一次出现 .（句点）字符到 path 最后一部分的字符串结束。 如果在 path 的最后一部分中没有 . ，或者如果 path 的基本名称（参阅 path.basename()）除了第一个字符以外没有 .，则返回空字符串。</p>
 </blockquote>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(path.dirname(<span class="string">'/usr/local/a.txt'</span>))</div><div class="line"></div><div class="line"><span class="comment">// 输出 /usr/local</span></div></pre></td></tr></table></figure>
-<h2 id="获取文件扩展名"><a href="#获取文件扩展名" class="headerlink" title="获取文件扩展名"></a>获取文件扩展名</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(path.extname(<span class="string">'/usr/local/a.txt'</span>));</div><div class="line"></div><div class="line"><span class="comment">// 输出 .txt</span></div></pre></td></tr></table></figure>
+<h2 id="获取文件扩展名"><a href="#获取文件扩展名" class="headerlink" title="获取文件扩展名"></a>获取文件扩展名</h2><blockquote>
+<p>path.extname() 方法返回 path 的扩展名，从最后一次出现 .（句点）字符到 path 最后一部分的字符串结束。</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(path.extname(<span class="string">'/usr/local/a.txt'</span>));</div><div class="line"></div><div class="line"><span class="comment">// 输出 .txt</span></div></pre></td></tr></table></figure>
 <h2 id="检测路径是否为绝对路径"><a href="#检测路径是否为绝对路径" class="headerlink" title="检测路径是否为绝对路径"></a>检测路径是否为绝对路径</h2><blockquote>
 <p>path.isAbsolute() 方法检测 path 是否为绝对路径。</p>
 </blockquote>

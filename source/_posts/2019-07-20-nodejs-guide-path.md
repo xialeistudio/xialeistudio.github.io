@@ -55,6 +55,8 @@ console.log(path.dirname('/usr/local/a.txt'))
 
 ## 获取文件扩展名
 
+> path.extname() 方法返回 path 的扩展名，从最后一次出现 .（句点）字符到 path 最后一部分的字符串结束。
+
 ```js
 const path = require('path');
 
