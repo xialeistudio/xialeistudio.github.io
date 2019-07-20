@@ -104,6 +104,18 @@ console.log(path.join('.','a','b','..','c')); // 输出 a/c
 > name 文件名(不带扩展名)或目录名
 > ext 文件扩展名(如果是目录则为空字符串)
 
+```js
+const path = require('path');
+
+path.parse('/home/user/dir/file.txt');
+// 返回:
+// { root: '/',
+//   dir: '/home/user/dir',
+//   base: 'file.txt',
+//   ext: '.txt',
+//   name: 'file' }
+```
+
 ## 获取两个路径的相对路径
 
 > path.relative() 方法根据当前工作目录返回 from 到 to 的相对路径。

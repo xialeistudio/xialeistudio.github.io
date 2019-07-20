@@ -121,7 +121,7 @@
 <meta property="og:site_name" content="每天进步一点点">
 <meta property="og:description" content="NodeJs简明教程将从零开始学习NodeJs相关知识，助力JS开发者构建全栈开发技术栈！  本文是NodeJs简明教程的第五篇，将介绍NodeJs path模块相关的基本操作。  path 模块提供用于处理文件路径和目录路径的实用工具。   注意：path模块只是处理文件路径，说白了就是字符串处理，跟文件系统无关 读取路径的文件名 path.basename() 方法返回 path 的最后一部">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-20T05:32:14.803Z">
+<meta property="og:updated_time" content="2019-07-20T05:43:42.769Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NodeJs简明教程(5)">
 <meta name="twitter:description" content="NodeJs简明教程将从零开始学习NodeJs相关知识，助力JS开发者构建全栈开发技术栈！  本文是NodeJs简明教程的第五篇，将介绍NodeJs path模块相关的基本操作。  path 模块提供用于处理文件路径和目录路径的实用工具。   注意：path模块只是处理文件路径，说白了就是字符串处理，跟文件系统无关 读取路径的文件名 path.basename() 方法返回 path 的最后一部">
@@ -489,6 +489,7 @@
 <h2 id="解析路径"><a href="#解析路径" class="headerlink" title="解析路径"></a>解析路径</h2><blockquote>
 <p>path.parse() 方法返回一个对象，其属性表示 path 的重要元素。 尾部的目录分隔符将被忽略。<br>返回对象属性如下：<br>dir 目录<br>root 根目录<br>base 带扩展名的文件名或者目录名(最后一级是目录的情况下)<br>name 文件名(不带扩展名)或目录名<br>ext 文件扩展名(如果是目录则为空字符串)</p>
 </blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line"></div><div class="line">path.parse(<span class="string">'/home/user/dir/file.txt'</span>);</div><div class="line"><span class="comment">// 返回:</span></div><div class="line"><span class="comment">// &#123; root: '/',</span></div><div class="line"><span class="comment">//   dir: '/home/user/dir',</span></div><div class="line"><span class="comment">//   base: 'file.txt',</span></div><div class="line"><span class="comment">//   ext: '.txt',</span></div><div class="line"><span class="comment">//   name: 'file' &#125;</span></div></pre></td></tr></table></figure>
 <h2 id="获取两个路径的相对路径"><a href="#获取两个路径的相对路径" class="headerlink" title="获取两个路径的相对路径"></a>获取两个路径的相对路径</h2><blockquote>
 <p>path.relative() 方法根据当前工作目录返回 from 到 to 的相对路径。</p>
 </blockquote>
@@ -767,7 +768,7 @@
     
     <div style="margin-top:4px">
         <i class="fa fa-wechat"></i> 微信交流群
-        <img width="100" height="100" src="https://more-happy.ddhigh.com/Fs2ZHgb2H7QoCX-0CMQa1fJPyUtu" class="qrcode" /> 
+        <img width="100" height="100" src="https://more-happy.ddhigh.com/FpffwgkBeSWPyHRUJJmi9J9SFX_l" class="qrcode" /> 
     </div>
     
 
