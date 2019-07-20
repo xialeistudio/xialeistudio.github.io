@@ -97,7 +97,7 @@ fs.writeFile('./a.txt', data, (error) => {
 ```
 
 1. 执行`node index.js`
-2. 输出`保存成功`，同时当前目录会多出`Hello World`的文本文件。
+2. 输出`保存成功`，同时当前目录会多出内容为`Hello World`的文本文件。
 
 ## 常用API
 

@@ -121,7 +121,7 @@
 <meta property="og:site_name" content="每天进步一点点">
 <meta property="og:description" content="NodeJs简明教程将从零开始学习NodeJs相关知识，助力JS开发者构建全栈开发技术栈！  本文是NodeJs简明教程的第四篇，将介绍NodeJs文件系统模块相关的基本操作。  fs 模块提供了一个 API，用于以模仿标准 POSIX 函数的方式与文件系统进行交互。  读取文件文件系统的大部分函数都存在 异步调用 和 同步调用 两种形式。 异步异步模式下，回调函数的第一个参数总为 Error">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-20T05:00:04.699Z">
+<meta property="og:updated_time" content="2019-07-20T05:27:25.354Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NodeJs简明教程(4)">
 <meta name="twitter:description" content="NodeJs简明教程将从零开始学习NodeJs相关知识，助力JS开发者构建全栈开发技术栈！  本文是NodeJs简明教程的第四篇，将介绍NodeJs文件系统模块相关的基本操作。  fs 模块提供了一个 API，用于以模仿标准 POSIX 函数的方式与文件系统进行交互。  读取文件文件系统的大部分函数都存在 异步调用 和 同步调用 两种形式。 异步异步模式下，回调函数的第一个参数总为 Error">
@@ -484,7 +484,7 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</div><div class="line"></div><div class="line"><span class="keyword">const</span> data = <span class="string">'Hello World'</span>;</div><div class="line"></div><div class="line">fs.writeFile(<span class="string">'./a.txt'</span>, data, (error) =&gt; &#123;</div><div class="line">    <span class="keyword">if</span> (error) &#123;</div><div class="line">        <span class="built_in">console</span>.error(<span class="string">'保存失败'</span>, error);</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'保存成功'</span>);</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
 <ol>
 <li>执行<code>node index.js</code></li>
-<li>输出<code>保存成功</code>，同时当前目录会多出<code>Hello World</code>的文本文件。</li>
+<li>输出<code>保存成功</code>，同时当前目录会多出内容为<code>Hello World</code>的文本文件。</li>
 </ol>
 <h2 id="常用API"><a href="#常用API" class="headerlink" title="常用API"></a>常用API</h2><ol>
 <li><code>fs.copyFile(src,dest[,flags],callback)</code> 复制文件</li>
