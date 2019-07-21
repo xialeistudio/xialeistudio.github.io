@@ -51,7 +51,7 @@ console.log(hash.digest('hex'));
 
 `Base64`并不是`crypto`模块的成员，但是跟本节内容比较相近，所以放过来了。Base64是一套编码算法，常用在二进制数据编码上。
 
-###　Base64编码
+### Base64编码
 
 ```js
 const data = '111111';
