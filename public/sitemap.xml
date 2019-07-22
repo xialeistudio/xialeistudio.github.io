@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https//www.ddhigh.com/2019/07/22/nodejs-guide-events.html</loc>
+    
+    <lastmod>2019-07-22T03:17:35.704Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https//www.ddhigh.com/2019/07/21/nodejs-guide-crypto.html</loc>
     
     <lastmod>2019-07-21T03:07:58.189Z</lastmod>
@@ -121,14 +128,14 @@
   </url>
   
   <url>
-    <loc>https//www.ddhigh.com/2018/02/01/golang-generic-pool.html</loc>
+    <loc>https//www.ddhigh.com/2018/02/28/golang-export-csv.html</loc>
     
     <lastmod>2019-07-17T11:28:35.096Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https//www.ddhigh.com/2018/02/28/golang-export-csv.html</loc>
+    <loc>https//www.ddhigh.com/2018/02/01/golang-generic-pool.html</loc>
     
     <lastmod>2019-07-17T11:28:35.096Z</lastmod>
     
@@ -149,6 +156,13 @@
   </url>
   
   <url>
+    <loc>https//www.ddhigh.com/2017/11/17/go-tlv.html</loc>
+    
+    <lastmod>2019-07-17T11:28:35.094Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https//www.ddhigh.com/2017/11/21/log4go-get-started.html</loc>
     
     <lastmod>2019-07-17T11:28:35.094Z</lastmod>
@@ -163,13 +177,6 @@
   </url>
   
   <url>
-    <loc>https//www.ddhigh.com/2017/11/17/go-tlv.html</loc>
-    
-    <lastmod>2019-07-17T11:28:35.094Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https//www.ddhigh.com/2017/07/31/spring-boot-pm2.html</loc>
     
     <lastmod>2019-07-17T11:28:35.093Z</lastmod>
@@ -177,14 +184,14 @@
   </url>
   
   <url>
-    <loc>https//www.ddhigh.com/2017/07/28/mobile-rem.html</loc>
+    <loc>https//www.ddhigh.com/2017/07/31/spring-boot-exclude-null.html</loc>
     
     <lastmod>2019-07-17T11:28:35.091Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https//www.ddhigh.com/2017/07/31/spring-boot-exclude-null.html</loc>
+    <loc>https//www.ddhigh.com/2017/07/28/mobile-rem.html</loc>
     
     <lastmod>2019-07-17T11:28:35.091Z</lastmod>
     
@@ -198,14 +205,14 @@
   </url>
   
   <url>
-    <loc>https//www.ddhigh.com/2016/12/17/pomelo-global-channel.html</loc>
+    <loc>https//www.ddhigh.com/2016/12/22/pm2-daemon-php-cli.html</loc>
     
     <lastmod>2019-07-17T11:28:35.089Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https//www.ddhigh.com/2016/12/22/pm2-daemon-php-cli.html</loc>
+    <loc>https//www.ddhigh.com/2016/12/17/pomelo-global-channel.html</loc>
     
     <lastmod>2019-07-17T11:28:35.089Z</lastmod>
     
@@ -520,14 +527,14 @@
   </url>
   
   <url>
-    <loc>https//www.ddhigh.com/2018/06/14/PermissionScope-With-Swift-4.html</loc>
+    <loc>https//www.ddhigh.com/2018/06/14/redis-common-practice.html</loc>
     
     <lastmod>2019-05-13T11:43:39.351Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https//www.ddhigh.com/2018/06/14/redis-common-practice.html</loc>
+    <loc>https//www.ddhigh.com/2018/06/14/PermissionScope-With-Swift-4.html</loc>
     
     <lastmod>2019-05-13T11:43:39.351Z</lastmod>
     
@@ -541,13 +548,6 @@
   </url>
   
   <url>
-    <loc>https//www.ddhigh.com/2018/01/20/php-async.html</loc>
-    
-    <lastmod>2019-05-13T11:43:39.345Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https//www.ddhigh.com/2018/01/30/tnwz.html</loc>
     
     <lastmod>2019-05-13T11:43:39.345Z</lastmod>
@@ -555,14 +555,21 @@
   </url>
   
   <url>
-    <loc>https//www.ddhigh.com/2017/11/23/nginx-rtmp-server.html</loc>
+    <loc>https//www.ddhigh.com/2018/01/20/php-async.html</loc>
+    
+    <lastmod>2019-05-13T11:43:39.345Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https//www.ddhigh.com/2017/11/25/wechat-web-subscribe.html</loc>
     
     <lastmod>2019-05-13T11:43:39.344Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https//www.ddhigh.com/2017/11/25/wechat-web-subscribe.html</loc>
+    <loc>https//www.ddhigh.com/2017/11/23/nginx-rtmp-server.html</loc>
     
     <lastmod>2019-05-13T11:43:39.344Z</lastmod>
     
@@ -590,14 +597,14 @@
   </url>
   
   <url>
-    <loc>https//www.ddhigh.com/2017/10/17/php-imagick-text-spacing.html</loc>
+    <loc>https//www.ddhigh.com/2017/10/17/yii2-close-csrf-validation-cookie-validatetion.html</loc>
     
     <lastmod>2019-05-13T11:43:39.341Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https//www.ddhigh.com/2017/10/17/yii2-close-csrf-validation-cookie-validatetion.html</loc>
+    <loc>https//www.ddhigh.com/2017/10/17/php-imagick-text-spacing.html</loc>
     
     <lastmod>2019-05-13T11:43:39.341Z</lastmod>
     
@@ -611,14 +618,14 @@
   </url>
   
   <url>
-    <loc>https//www.ddhigh.com/2017/10/15/contributing-to-DefinitelyTyped-step-by-step.html</loc>
+    <loc>https//www.ddhigh.com/2017/10/15/excel-stream-unknown-encoding.html</loc>
     
     <lastmod>2019-05-13T11:43:39.337Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https//www.ddhigh.com/2017/10/15/excel-stream-unknown-encoding.html</loc>
+    <loc>https//www.ddhigh.com/2017/10/15/contributing-to-DefinitelyTyped-step-by-step.html</loc>
     
     <lastmod>2019-05-13T11:43:39.337Z</lastmod>
     
@@ -723,14 +730,14 @@
   </url>
   
   <url>
-    <loc>https//www.ddhigh.com/2017/02/28/php7-compile-sphinx-extension.html</loc>
+    <loc>https//www.ddhigh.com/2017/03/20/nginx-proxy-websocket.html</loc>
     
     <lastmod>2019-05-13T11:43:39.330Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https//www.ddhigh.com/2017/03/20/nginx-proxy-websocket.html</loc>
+    <loc>https//www.ddhigh.com/2017/02/28/php7-compile-sphinx-extension.html</loc>
     
     <lastmod>2019-05-13T11:43:39.330Z</lastmod>
     
@@ -751,14 +758,14 @@
   </url>
   
   <url>
-    <loc>https//www.ddhigh.com/2016/12/28/wechat-component-domain.html</loc>
+    <loc>https//www.ddhigh.com/2017/01/20/install-jekyll-on-windows.html</loc>
     
     <lastmod>2019-05-13T11:43:39.329Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https//www.ddhigh.com/2017/01/20/install-jekyll-on-windows.html</loc>
+    <loc>https//www.ddhigh.com/2016/12/28/wechat-component-domain.html</loc>
     
     <lastmod>2019-05-13T11:43:39.329Z</lastmod>
     
@@ -768,6 +775,13 @@
     <loc>https//www.ddhigh.com/2016/12/13/apply-startssl-certificate.html</loc>
     
     <lastmod>2019-05-13T11:43:39.328Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https//www.ddhigh.com/2016/11/12/develop-nodejs-with-es6.html</loc>
+    
+    <lastmod>2019-05-13T11:43:39.327Z</lastmod>
     
   </url>
   
@@ -787,13 +801,6 @@
   
   <url>
     <loc>https//www.ddhigh.com/2016/11/13/nodejs-export-large-excel.html</loc>
-    
-    <lastmod>2019-05-13T11:43:39.327Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https//www.ddhigh.com/2016/11/12/develop-nodejs-with-es6.html</loc>
     
     <lastmod>2019-05-13T11:43:39.327Z</lastmod>
     
@@ -877,14 +884,14 @@
   </url>
   
   <url>
-    <loc>https//www.ddhigh.com/2016/03/02/android-pick-image-return-image-path.html</loc>
+    <loc>https//www.ddhigh.com/2016/03/29/angularjs-display-html.html</loc>
     
     <lastmod>2019-05-13T11:43:39.322Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https//www.ddhigh.com/2016/03/29/angularjs-display-html.html</loc>
+    <loc>https//www.ddhigh.com/2016/03/02/android-pick-image-return-image-path.html</loc>
     
     <lastmod>2019-05-13T11:43:39.322Z</lastmod>
     
@@ -919,14 +926,14 @@
   </url>
   
   <url>
-    <loc>https//www.ddhigh.com/2016/01/04/mongodb-findandmodify.html</loc>
+    <loc>https//www.ddhigh.com/2016/02/16/mac-php-env.html</loc>
     
     <lastmod>2019-05-13T11:43:39.320Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https//www.ddhigh.com/2016/02/16/mac-php-env.html</loc>
+    <loc>https//www.ddhigh.com/2016/01/04/mongodb-findandmodify.html</loc>
     
     <lastmod>2019-05-13T11:43:39.320Z</lastmod>
     
@@ -940,13 +947,6 @@
   </url>
   
   <url>
-    <loc>https//www.ddhigh.com/2015/12/12/ios9-navigation-bar-transparent.html</loc>
-    
-    <lastmod>2019-05-13T11:43:39.319Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https//www.ddhigh.com/2015/12/15/mac-10-11-install-php-mongo.html</loc>
     
     <lastmod>2019-05-13T11:43:39.319Z</lastmod>
@@ -954,14 +954,14 @@
   </url>
   
   <url>
-    <loc>https//www.ddhigh.com/2015/12/01/2011-christmas.html</loc>
+    <loc>https//www.ddhigh.com/2015/12/12/ios9-navigation-bar-transparent.html</loc>
     
-    <lastmod>2019-05-13T11:43:39.318Z</lastmod>
+    <lastmod>2019-05-13T11:43:39.319Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https//www.ddhigh.com/2015/12/01/2011-hunan-university-of-technology-school-of-computer-and-communications-welcome-party.html</loc>
+    <loc>https//www.ddhigh.com/2015/12/01/2011-christmas.html</loc>
     
     <lastmod>2019-05-13T11:43:39.318Z</lastmod>
     
@@ -976,6 +976,13 @@
   
   <url>
     <loc>https//www.ddhigh.com/2015/12/01/2012-computer-and-communication-college-debate.html</loc>
+    
+    <lastmod>2019-05-13T11:43:39.318Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https//www.ddhigh.com/2015/12/01/2011-hunan-university-of-technology-school-of-computer-and-communications-welcome-party.html</loc>
     
     <lastmod>2019-05-13T11:43:39.318Z</lastmod>
     
@@ -1003,7 +1010,7 @@
   </url>
   
   <url>
-    <loc>https//www.ddhigh.com/2015/11/23/exmail-501.html</loc>
+    <loc>https//www.ddhigh.com/2015/12/01/2011-ccjoy-2011.html</loc>
     
     <lastmod>2019-05-13T11:43:39.317Z</lastmod>
     
@@ -1017,23 +1024,9 @@
   </url>
   
   <url>
-    <loc>https//www.ddhigh.com/2015/12/01/2011-ccjoy-2011.html</loc>
+    <loc>https//www.ddhigh.com/2015/11/23/exmail-501.html</loc>
     
     <lastmod>2019-05-13T11:43:39.317Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https//www.ddhigh.com/2015/09/17/php-qrcode-login.html</loc>
-    
-    <lastmod>2019-05-13T11:43:39.316Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https//www.ddhigh.com/2015/10/23/mobile-scroll-load.html</loc>
-    
-    <lastmod>2019-05-13T11:43:39.316Z</lastmod>
     
   </url>
   
@@ -1046,6 +1039,13 @@
   
   <url>
     <loc>https//www.ddhigh.com/2015/11/14/svn-update-403.html</loc>
+    
+    <lastmod>2019-05-13T11:43:39.316Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https//www.ddhigh.com/2015/10/23/mobile-scroll-load.html</loc>
     
     <lastmod>2019-05-13T11:43:39.316Z</lastmod>
     
@@ -1066,7 +1066,14 @@
   </url>
   
   <url>
-    <loc>https//www.ddhigh.com/2015/07/22/development-angularjs-app-with-requirejs.html</loc>
+    <loc>https//www.ddhigh.com/2015/09/17/php-qrcode-login.html</loc>
+    
+    <lastmod>2019-05-13T11:43:39.316Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https//www.ddhigh.com/2015/08/20/js-function-this-scope.html</loc>
     
     <lastmod>2019-05-13T11:43:39.315Z</lastmod>
     
@@ -1080,14 +1087,14 @@
   </url>
   
   <url>
-    <loc>https//www.ddhigh.com/2015/08/14/php-fpm-permission-502-bad-gateway.html</loc>
+    <loc>https//www.ddhigh.com/2015/07/22/development-angularjs-app-with-requirejs.html</loc>
     
     <lastmod>2019-05-13T11:43:39.315Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https//www.ddhigh.com/2015/08/20/js-function-this-scope.html</loc>
+    <loc>https//www.ddhigh.com/2015/08/14/php-fpm-permission-502-bad-gateway.html</loc>
     
     <lastmod>2019-05-13T11:43:39.315Z</lastmod>
     
@@ -1171,13 +1178,6 @@
   </url>
   
   <url>
-    <loc>https//www.ddhigh.com/2015/03/06/wechat-reply-messy-code.html</loc>
-    
-    <lastmod>2019-05-13T11:43:39.311Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https//www.ddhigh.com/2015/03/07/phpexcel-a-lot-of-column.html</loc>
     
     <lastmod>2019-05-13T11:43:39.311Z</lastmod>
@@ -1185,14 +1185,21 @@
   </url>
   
   <url>
-    <loc>https//www.ddhigh.com/2015/01/26/online-js-console.html</loc>
+    <loc>https//www.ddhigh.com/2015/03/06/wechat-reply-messy-code.html</loc>
+    
+    <lastmod>2019-05-13T11:43:39.311Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https//www.ddhigh.com/2015/01/27/php-qiniu-invalid-mutilpart-format.html</loc>
     
     <lastmod>2019-05-13T11:43:39.310Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https//www.ddhigh.com/2015/01/27/php-qiniu-invalid-mutilpart-format.html</loc>
+    <loc>https//www.ddhigh.com/2015/01/26/online-js-console.html</loc>
     
     <lastmod>2019-05-13T11:43:39.310Z</lastmod>
     
@@ -1276,13 +1283,6 @@
   </url>
   
   <url>
-    <loc>https//www.ddhigh.com/2014/12/05/coding-yii1.html</loc>
-    
-    <lastmod>2019-05-13T11:43:39.307Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https//www.ddhigh.com/2014/12/06/android-circle-progressbar.html</loc>
     
     <lastmod>2019-05-13T11:43:39.307Z</lastmod>
@@ -1290,9 +1290,9 @@
   </url>
   
   <url>
-    <loc>https//www.ddhigh.com/2014/11/01/wordpress-d8-theme-qiniu-cannot-comment.html</loc>
+    <loc>https//www.ddhigh.com/2014/12/05/coding-yii1.html</loc>
     
-    <lastmod>2019-05-13T11:43:39.306Z</lastmod>
+    <lastmod>2019-05-13T11:43:39.307Z</lastmod>
     
   </url>
   
@@ -1305,6 +1305,13 @@
   
   <url>
     <loc>https//www.ddhigh.com/2014/11/10/async-http-client-socket-timeout.html</loc>
+    
+    <lastmod>2019-05-13T11:43:39.306Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https//www.ddhigh.com/2014/11/01/wordpress-d8-theme-qiniu-cannot-comment.html</loc>
     
     <lastmod>2019-05-13T11:43:39.306Z</lastmod>
     
@@ -1325,13 +1332,6 @@
   </url>
   
   <url>
-    <loc>https//www.ddhigh.com/2014/10/24/phpexcel-export-empty.html</loc>
-    
-    <lastmod>2019-05-13T11:43:39.305Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https//www.ddhigh.com/2014/10/30/angularjs-html5mode-404.html</loc>
     
     <lastmod>2019-05-13T11:43:39.305Z</lastmod>
@@ -1339,7 +1339,7 @@
   </url>
   
   <url>
-    <loc>https//www.ddhigh.com/2014/10/31/ucenter-empty.html</loc>
+    <loc>https//www.ddhigh.com/2014/10/24/phpexcel-export-empty.html</loc>
     
     <lastmod>2019-05-13T11:43:39.305Z</lastmod>
     
@@ -1347,6 +1347,13 @@
   
   <url>
     <loc>https//www.ddhigh.com/2014/11/01/mac-os-x-debug-android-with-eclipse.html</loc>
+    
+    <lastmod>2019-05-13T11:43:39.305Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https//www.ddhigh.com/2014/10/31/ucenter-empty.html</loc>
     
     <lastmod>2019-05-13T11:43:39.305Z</lastmod>
     
@@ -1430,14 +1437,14 @@
   </url>
   
   <url>
-    <loc>https//www.ddhigh.com/2014/09/24/highchats-not-display.html</loc>
+    <loc>https//www.ddhigh.com/2014/09/27/php-traverse-file.html</loc>
     
     <lastmod>2019-05-13T11:43:39.302Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https//www.ddhigh.com/2014/09/27/php-traverse-file.html</loc>
+    <loc>https//www.ddhigh.com/2014/09/24/highchats-not-display.html</loc>
     
     <lastmod>2019-05-13T11:43:39.302Z</lastmod>
     
@@ -1500,13 +1507,6 @@
   </url>
   
   <url>
-    <loc>https//www.ddhigh.com/2014/09/06/redis-get-started.html</loc>
-    
-    <lastmod>2019-05-13T11:43:39.294Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https//www.ddhigh.com/2014/09/06/yii-multi-user.html</loc>
     
     <lastmod>2019-05-13T11:43:39.294Z</lastmod>
@@ -1514,7 +1514,21 @@
   </url>
   
   <url>
+    <loc>https//www.ddhigh.com/2014/09/06/redis-get-started.html</loc>
+    
+    <lastmod>2019-05-13T11:43:39.294Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https//www.ddhigh.com/2014/09/06/nginx-virtual-host.html</loc>
+    
+    <lastmod>2019-05-13T11:43:39.293Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https//www.ddhigh.com/2014/09/06/php-convert-date-to-constellation.html</loc>
     
     <lastmod>2019-05-13T11:43:39.293Z</lastmod>
     
@@ -1535,13 +1549,6 @@
   </url>
   
   <url>
-    <loc>https//www.ddhigh.com/2014/09/06/php-convert-date-to-constellation.html</loc>
-    
-    <lastmod>2019-05-13T11:43:39.293Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https//www.ddhigh.com/2014/09/06/php-heredoc.html</loc>
     
     <lastmod>2019-05-13T11:43:39.293Z</lastmod>
@@ -1556,7 +1563,7 @@
   </url>
   
   <url>
-    <loc>https//www.ddhigh.com/2014/09/06/angularjs-autosave-directive.html</loc>
+    <loc>https//www.ddhigh.com/2014/09/06/angularjs-load-remote-data-on-directive.html</loc>
     
     <lastmod>2019-05-13T11:43:39.292Z</lastmod>
     
@@ -1570,14 +1577,7 @@
   </url>
   
   <url>
-    <loc>https//www.ddhigh.com/2014/09/06/angularjs-load-remote-data-on-directive.html</loc>
-    
-    <lastmod>2019-05-13T11:43:39.292Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https//www.ddhigh.com/2014/09/06/jquery-write-a-plugin.html</loc>
+    <loc>https//www.ddhigh.com/2014/09/06/angularjs-autosave-directive.html</loc>
     
     <lastmod>2019-05-13T11:43:39.292Z</lastmod>
     
@@ -1585,6 +1585,13 @@
   
   <url>
     <loc>https//www.ddhigh.com/2014/09/06/ng-resource-get-started.html</loc>
+    
+    <lastmod>2019-05-13T11:43:39.292Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https//www.ddhigh.com/2014/09/06/jquery-write-a-plugin.html</loc>
     
     <lastmod>2019-05-13T11:43:39.292Z</lastmod>
     
