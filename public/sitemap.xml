@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https//www.ddhigh.com/2019/07/23/nodejs-guide-child-process.html</loc>
+    
+    <lastmod>2019-07-23T06:27:52.552Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https//www.ddhigh.com/2019/07/18/nodejs-guide-about.html</loc>
     
     <lastmod>2019-07-23T06:14:56.229Z</lastmod>
@@ -33,13 +40,6 @@
     <loc>https//www.ddhigh.com/2019/07/21/nodejs-guide-crypto.html</loc>
     
     <lastmod>2019-07-23T06:14:56.221Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https//www.ddhigh.com/2019/07/23/nodejs-guide-child-process.html</loc>
-    
-    <lastmod>2019-07-23T06:14:56.220Z</lastmod>
     
   </url>
   

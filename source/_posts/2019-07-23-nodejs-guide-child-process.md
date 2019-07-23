@@ -98,15 +98,16 @@ exec('ls -lh /usr',function(err,stdout,stderr) {
 以上例程输出
 
 ```text
-const exec = require('child_process').exec;
+stdout: total 0
+drwxr-xr-x  970 root  wheel    30K  7 19 23:00 bin
+drwxr-xr-x  306 root  wheel   9.6K  7 12 22:35 lib
+drwxr-xr-x  249 root  wheel   7.8K  7 19 23:00 libexec
+drwxr-xr-x   15 root  wheel   480B  4  1 14:15 local
+drwxr-xr-x  239 root  wheel   7.5K  7 12 22:35 sbin
+drwxr-xr-x   46 root  wheel   1.4K  9 21  2018 share
+drwxr-xr-x    5 root  wheel   160B  9 21  2018 standalone
 
-exec('ls -lh /usr',function(err,stdout,stderr) {
-    if(err) {
-        console.log('执行错误', err);
-    }
-    console.log('stdout', stdout);
-    console.log('stderr', stderr);
-});
+子进程退出，使用退出码 0
 ```
 
 ## execFile
