@@ -10,6 +10,9 @@ tags:
 
 > NodeJs简明教程将从零开始学习NodeJs相关知识，助力JS开发者构建全栈开发技术栈！
 
+关注获取更多`NodeJs精品文章`
+![二维码](https://more-happy.ddhigh.com/FuFpZh9QTZVatcBtupR4MtOGPGTJ?imageView2/1/w/200)
+
 本文是NodeJs简明教程的第五篇，将介绍NodeJs path模块相关的基本操作。
 
 > path 模块提供用于处理文件路径和目录路径的实用工具。 

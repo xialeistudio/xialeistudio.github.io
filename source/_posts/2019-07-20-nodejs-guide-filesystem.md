@@ -10,6 +10,9 @@ tags:
 
 > NodeJs简明教程将从零开始学习NodeJs相关知识，助力JS开发者构建全栈开发技术栈！
 
+关注获取更多`NodeJs精品文章`
+![二维码](https://more-happy.ddhigh.com/FuFpZh9QTZVatcBtupR4MtOGPGTJ?imageView2/1/w/200)
+
 本文是NodeJs简明教程的第四篇，将介绍NodeJs文件系统模块相关的基本操作。
 
 > fs 模块提供了一个 API，用于以模仿标准 POSIX 函数的方式与文件系统进行交互。

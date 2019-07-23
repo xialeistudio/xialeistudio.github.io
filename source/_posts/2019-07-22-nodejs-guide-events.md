@@ -10,6 +10,9 @@ tags:
 
 > NodeJs简明教程将从零开始学习NodeJs相关知识，助力JS开发者构建全栈开发技术栈！
 
+关注获取更多`NodeJs精品文章`
+![二维码](https://more-happy.ddhigh.com/FuFpZh9QTZVatcBtupR4MtOGPGTJ?imageView2/1/w/200)
+
 本文是NodeJs简明教程的第七篇，将介绍NodeJs events模块相关的基本操作。
 
 > 大多数 Node.js 核心 API 构建于惯用的异步事件驱动架构，其中某些类型的对象（又称触发器，Emitter）会触发命名事件来调用函数（又称监听器，Listener）。
