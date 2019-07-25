@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https//www.ddhigh.com/"/>
-  <updated>2019-07-24T03:57:47.599Z</updated>
+  <updated>2019-07-25T03:45:21.755Z</updated>
   <id>https//www.ddhigh.com/</id>
   
   <author>
@@ -15,6 +15,66 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>NodeJs简明教程(11) - 完结篇</title>
+    <link href="https//www.ddhigh.com/2019/07/25/nodejs-guide-next-step.html"/>
+    <id>https//www.ddhigh.com/2019/07/25/nodejs-guide-next-step.html</id>
+    <published>2019-07-25T03:26:30.000Z</published>
+    <updated>2019-07-25T03:45:21.755Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>NodeJs简明教程将从零开始学习NodeJs相关知识，助力JS开发者构建全栈开发技术栈！</p></blockquote><p>关注获取更多<code>NodeJs精品文章</code><br><img src="https://more-happy.ddhigh.com/FuFpZh9QTZVatcBtupR4MtOGPGTJ?imageView2/1/w/200" alt="二维码"></p><p>本文是NodeJs简明教程的完结篇，将对以往文章进行归档。</p><h2 id="系列文章"><a href="#系列文章" class="headerlink" title="系列文章"></a>系列文章</h2><ol><li><a href="https://www.ddhigh.com/2019/07/18/nodejs-guide-about.html" target="_blank" rel="external">NodeJs简明教程(1)——简介</a></li><li><a href="https://www.ddhigh.com/2019/07/19/nodejs-guide-installation.html" target="_blank" rel="external">NodeJs简明教程(2)——安装</a></li><li><a href="https://www.ddhigh.com/2019/07/19/nodejs-guide-http-server.html" target="_blank" rel="external">NodeJs简明教程(3)——HTTP服务器</a></li><li><a href="https://www.ddhigh.com/2019/07/20/nodejs-guide-filesystem.html" target="_blank" rel="external">NodeJs简明教程(4)——文件系统</a></li><li><a href="https://www.ddhigh.com/2019/07/20/nodejs-guide-path.html" target="_blank" rel="external">NodeJs简明教程(5)——路径</a></li><li><a href="https://www.ddhigh.com/2019/07/21/nodejs-guide-crypto.html" target="_blank" rel="external">NodeJs简明教程(6)——加解密</a></li><li><a href="https://www.ddhigh.com/2019/07/22/nodejs-guide-events.html" target="_blank" rel="external">NodeJs简明教程(7)——事件</a></li><li><a href="https://www.ddhigh.com/2019/07/23/nodejs-guide-child-process.html" target="_blank" rel="external">NodeJs简明教程(8)——子进程</a></li><li><a href="https://www.ddhigh.com/2019/07/24/nodejs-guide-net.html" target="_blank" rel="external">NodeJs简明教程(9)——TCP开发</a></li><li><a href="https://www.ddhigh.com/2019/07/25/nodejs-guide-dgram.html" target="_blank" rel="external">NodeJs简明教程(10)——UDP开发</a></li></ol><h2 id="接下来的内容"><a href="#接下来的内容" class="headerlink" title="接下来的内容"></a>接下来的内容</h2><ol><li>Typescript语言基础</li><li>NodeJs常用第三方模块(缓存、数据库、通用连接池、消息队列等等)</li><li>koa 专题</li><li>express 专题</li><li>nestjs 专题</li></ol><p>欢迎持续关注~</p><p>欢迎加群交流NodeJs相关的开发~</p><p><img src="https://more-happy.ddhigh.com/FpffwgkBeSWPyHRUJJmi9J9SFX_l?imageView2/1/w/200" alt="微信群"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;NodeJs简明教程将从零开始学习NodeJs相关知识，助力JS开发者构建全栈开发技术栈！&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;关注获取更多&lt;code&gt;NodeJs精品文章&lt;/code&gt;&lt;br&gt;&lt;img src=&quot;https://more-h
+      
+    
+    </summary>
+    
+      <category term="nodejs" scheme="https//www.ddhigh.com/categories/nodejs/"/>
+    
+    
+      <category term="javascript" scheme="https//www.ddhigh.com/tags/javascript/"/>
+    
+      <category term="nodejs guide" scheme="https//www.ddhigh.com/tags/nodejs-guide/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>NodeJs简明教程(10)</title>
+    <link href="https//www.ddhigh.com/2019/07/25/nodejs-guide-dgram.html"/>
+    <id>https//www.ddhigh.com/2019/07/25/nodejs-guide-dgram.html</id>
+    <published>2019-07-25T03:00:00.000Z</published>
+    <updated>2019-07-25T03:25:56.103Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>NodeJs简明教程将从零开始学习NodeJs相关知识，助力JS开发者构建全栈开发技术栈！</p></blockquote><p>关注获取更多<code>NodeJs精品文章</code><br><img src="https://more-happy.ddhigh.com/FuFpZh9QTZVatcBtupR4MtOGPGTJ?imageView2/1/w/200" alt="二维码"></p><p>本文是NodeJs简明教程的第十篇，将介绍NodeJs <strong>dgram</strong> 模块(<code>UDP服务端/客户端</code>)相关的基本操作。</p><h2 id="啥是UDP"><a href="#啥是UDP" class="headerlink" title="啥是UDP"></a>啥是UDP</h2><blockquote><p>Internet 协议集支持一个无连接的传输协议，该协议称为用户数据报协议（UDP，User Datagram Protocol）。UDP 为应用程序提供了一种无需建立连接就可以发送封装的 IP 数据报的方法。RFC 768描述了 UDP。</p></blockquote><p>NodeJs使用<code>dgram模块</code>实现<code>UDP服务端/客户端</code>相关功能。</p><p><code>dgram.createSocket</code>用来创建一个Socket对象，可以基于该套接口<code>接收</code>或<code>发送</code>数据。该方法原型如下：</p><p><code>dgram.createSocket(type[, callback])</code></p><ul><li>type <code>&lt;string&gt;</code> socket类型。<code>udp4</code>或<code>udp6</code>，对应<code>ipv4</code>和<code>ipv6</code></li><li>callback <code>&lt;Function&gt;</code> 接收到消息时的回调函数</li></ul><h2 id="Echo服务端开发"><a href="#Echo服务端开发" class="headerlink" title="Echo服务端开发"></a>Echo服务端开发</h2><p>server.js</p><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> dgram = <span class="built_in">require</span>(<span class="string">'dgram'</span>);</div><div class="line"><span class="keyword">const</span> socket = dgram.createSocket(<span class="string">'udp4'</span>);</div><div class="line"></div><div class="line">socket.on(<span class="string">'error'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123; <span class="comment">// 监听socket错误</span></div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'服务器错误'</span>, err);</div><div class="line">    socket.close();</div><div class="line">&#125;);</div><div class="line"></div><div class="line">socket.on(<span class="string">'message'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">msg,sender</span>) </span>&#123; <span class="comment">// 监听收到数据</span></div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'%s:%d =&gt; %s'</span>, sender.address,sender.port,msg.toString()); <span class="comment">// 打印该数据包详情</span></div><div class="line">    socket.send(<span class="string">'socket: '</span>+msg.toString(),sender.port,sender.address,<span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123; <span class="comment">// 发送数据给来源地址</span></div><div class="line">        <span class="keyword">if</span>(err) &#123;</div><div class="line">            <span class="built_in">console</span>.log(<span class="string">'回复%s:%d失败: %s'</span>,sender.address,sender.port,err.message);</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">   &#125;);</div><div class="line">&#125;);</div><div class="line"></div><div class="line">socket.bind(<span class="number">10000</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="comment">// 监听UDP端口</span></div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'服务器正在监听 %s:%d'</span>, socket.address().address, socket.address().port);</div><div class="line">&#125;);</div></pre></td></tr></table></figure><h2 id="Echo客户端开发"><a href="#Echo客户端开发" class="headerlink" title="Echo客户端开发"></a>Echo客户端开发</h2><p>由于<code>telnet</code>连接服务器使用的是<code>TCP协议</code>，所以本文对应的客户端需要使用NodeJs开发。</p><p>client.js</p><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> dgram = <span class="built_in">require</span>(<span class="string">'dgram'</span>);</div><div class="line"></div><div class="line"><span class="keyword">const</span> socket = dgram.createSocket(<span class="string">'udp4'</span>); <span class="comment">// 创建socket实例</span></div><div class="line"></div><div class="line">socket.on(<span class="string">'message'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">msg,sender</span>) </span>&#123; <span class="comment">// 监听收到数据</span></div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'接收到%s:%d的消息:%s'</span>,sender.address,sender.port,msg.toString());</div><div class="line">    socket.close();</div><div class="line">&#125;);</div><div class="line"></div><div class="line">socket.send(<span class="string">'hello'</span>,<span class="number">10000</span>,<span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123; <span class="comment">// 向目标端口发送数据</span></div><div class="line">    <span class="keyword">if</span>(err) &#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">'发送错误'</span>, err);</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'发送成功'</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure><h2 id="执行"><a href="#执行" class="headerlink" title="执行"></a>执行</h2><ol><li><p>终端执行<code>node server.js</code>，输出</p> <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">服务器正在监听 0.0.0.0:10000</div></pre></td></tr></table></figure></li><li><p>终端执行<code>node client.js</code>，输出</p> <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">发送成功</div><div class="line">接收到127.0.0.1:10000的消息:server: hello</div></pre></td></tr></table></figure></li><li><p>服务端输出:</p> <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:50577 =&gt; hello</div></pre></td></tr></table></figure></li></ol><h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>NodeJs UDP服务端与客户端开发到此结束，但是使用UDP的情况下，数据包确认、流量控制等等操作都需要程序员手动完成，这一方面确实挺复杂的，没有什么特殊的要求的话使用TCP即可。</p><p><img src="https://more-happy.ddhigh.com/FpffwgkBeSWPyHRUJJmi9J9SFX_l?imageView2/1/w/200" alt="微信群"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;NodeJs简明教程将从零开始学习NodeJs相关知识，助力JS开发者构建全栈开发技术栈！&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;关注获取更多&lt;code&gt;NodeJs精品文章&lt;/code&gt;&lt;br&gt;&lt;img src=&quot;https://more-h
+      
+    
+    </summary>
+    
+      <category term="nodejs" scheme="https//www.ddhigh.com/categories/nodejs/"/>
+    
+    
+      <category term="javascript" scheme="https//www.ddhigh.com/tags/javascript/"/>
+    
+      <category term="nodejs guide" scheme="https//www.ddhigh.com/tags/nodejs-guide/"/>
+    
+  </entry>
   
   <entry>
     <title>NodeJs简明教程(9)</title>
@@ -537,65 +597,6 @@
       <category term="yii2" scheme="https//www.ddhigh.com/tags/yii2/"/>
     
       <category term="swoole" scheme="https//www.ddhigh.com/tags/swoole/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>使用swoole来运行thrift应用</title>
-    <link href="https//www.ddhigh.com/2019/05/16/running-thrift-on-swoole.html"/>
-    <id>https//www.ddhigh.com/2019/05/16/running-thrift-on-swoole.html</id>
-    <published>2019-05-16T06:32:41.000Z</published>
-    <updated>2019-05-16T06:42:27.976Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="Swoole扩展简介"><a href="#Swoole扩展简介" class="headerlink" title="Swoole扩展简介"></a>Swoole扩展简介</h2><blockquote><p><strong>Swoole：面向生产环境的 PHP 异步网络通信引擎</strong></p><p>使 PHP 开发人员可以编写高性能的异步并发 TCP、UDP、Unix Socket、HTTP，WebSocket 服务。Swoole 可以广泛应用于互联网、移动通信、企业软件、云计算、网络游戏、物联网（IOT）、车联网、智能家居等领域。 使用 PHP + Swoole 作为网络通信框架，可以使企业 IT 研发团队的效率大大提升，更加专注于开发创新产品。</p></blockquote><h2 id="thrift"><a href="#thrift" class="headerlink" title="thrift"></a>thrift</h2><blockquote><p>Thrift是一种接口描述语言和二进制通讯协议，它被用来定义和创建跨语言的服务。它被当作一个远程过程调用（RPC）框架来使用，是由Facebook为“大规模跨语言服务开发”而开发的。</p></blockquote><h2 id="swoole实现"><a href="#swoole实现" class="headerlink" title="swoole实现"></a>swoole实现</h2><p>thrift官方提供的PHP服务端是运行在php原生阻塞IO模式的，性能比较差。笔者使用Swoole的异步服务端+thrift提供的接口实现一个了异步协程化的thrift应用。</p><p>此项目已经在github上开源：</p><p><a href="https://github.com/xialeistudio/swoole-thrift.git" target="_blank" rel="external">https://github.com/xialeistudio/swoole-thrift.git</a></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;Swoole扩展简介&quot;&gt;&lt;a href=&quot;#Swoole扩展简介&quot; class=&quot;headerlink&quot; title=&quot;Swoole扩展简介&quot;&gt;&lt;/a&gt;Swoole扩展简介&lt;/h2&gt;&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;Swoole：面向生产环境的 PH
-      
-    
-    </summary>
-    
-      <category term="php" scheme="https//www.ddhigh.com/categories/php/"/>
-    
-    
-      <category term="php" scheme="https//www.ddhigh.com/tags/php/"/>
-    
-      <category term="thrift" scheme="https//www.ddhigh.com/tags/thrift/"/>
-    
-      <category term="swoole" scheme="https//www.ddhigh.com/tags/swoole/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>在缓存中使用闭包函数</title>
-    <link href="https//www.ddhigh.com/2019/05/14/use-closure-in-cache.html"/>
-    <id>https//www.ddhigh.com/2019/05/14/use-closure-in-cache.html</id>
-    <published>2019-05-14T03:48:58.000Z</published>
-    <updated>2019-05-14T05:46:59.426Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="闭包函数"><a href="#闭包函数" class="headerlink" title="闭包函数"></a>闭包函数</h2><p>PHP官方文档对于闭包函数的定义：</p><blockquote><p>匿名函数（Anonymous functions），也叫闭包函数（closures），允许 临时创建一个没有指定名称的函数。最经常用作回调函数（callback）参数的值。当然，也有其它应用的情况。</p></blockquote><p>简单来说，闭包函数也是一种数据类型，可以直接使用变量来存储、传参、调用等等。</p><h2 id="传统缓存操作"><a href="#传统缓存操作" class="headerlink" title="传统缓存操作"></a>传统缓存操作</h2><p>操作缓存的时候一般步骤如下：</p><ol><li>读取缓存</li><li>如果缓存不为空则返回缓存数据</li><li>读取数据库，然后设置到缓存</li><li>返回数据</li></ol><p>PHP示例代码如下：</p><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">loadUser</span><span class="params">($userId)</span> </span>&#123;</div><div class="line">    $data = $cache-&gt;get(<span class="string">'user-'</span>. $userId);</div><div class="line">    <span class="keyword">if</span>(!<span class="keyword">empty</span>($data)) &#123;</div><div class="line">        <span class="keyword">return</span> $data;</div><div class="line">    &#125;</div><div class="line">    $data = $db-&gt;findOne([<span class="string">'user_id'</span> =&gt; $userId]);</div><div class="line">    $cache-&gt;set(<span class="string">'user-'</span>. $userId, $data, <span class="number">7200</span>);</div><div class="line">    <span class="keyword">return</span> $data;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>其实<strong>查找缓存，如果不存在则查找数据库之后写入缓存</strong>这个操作也可以用闭包来实现：</p><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getOrSet</span><span class="params">($key, callable $callable, $expire = <span class="number">0</span>)</span> </span>&#123;</div><div class="line">    $data = $cache-&gt;get($key);</div><div class="line">    <span class="keyword">if</span>(!<span class="keyword">empty</span>($data)) &#123;</div><div class="line">        <span class="keyword">return</span> $data;</div><div class="line">    &#125;</div><div class="line">    $data = call_user_func($callable);</div><div class="line">    $cache-&gt;set($key, $data, $expire);</div><div class="line">    <span class="keyword">return</span> $data;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">loadUser</span><span class="params">($userId)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> $cache-&gt;getOrSet(<span class="string">'user-'</span>. $userId, <span class="function"><span class="keyword">function</span><span class="params">()</span> <span class="title">use</span><span class="params">($db, $userId)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> $db-&gt;findOne([<span class="string">'user_id'</span> =&gt; $userId]);</div><div class="line">    &#125;, <span class="number">7200</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>可以看到通过闭包省去了手动<strong>get</strong>和<strong>set</strong>的过程，而查询数据库那一步是只有在缓存读取不到才会执行。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;闭包函数&quot;&gt;&lt;a href=&quot;#闭包函数&quot; class=&quot;headerlink&quot; title=&quot;闭包函数&quot;&gt;&lt;/a&gt;闭包函数&lt;/h2&gt;&lt;p&gt;PHP官方文档对于闭包函数的定义：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;匿名函数（Anonymous functions
-      
-    
-    </summary>
-    
-      <category term="php" scheme="https//www.ddhigh.com/categories/php/"/>
-    
-    
-      <category term="php" scheme="https//www.ddhigh.com/tags/php/"/>
-    
-      <category term="closure" scheme="https//www.ddhigh.com/tags/closure/"/>
     
   </entry>
   
