@@ -500,7 +500,7 @@
 <h3 id="空类型"><a href="#空类型" class="headerlink" title="空类型"></a>空类型</h3><p>TS使用<code>void</code>声明空类型。与<code>any</code>相反，表示没有任何类型，常用在函数返回值中。<br><code>void</code>类型只能被赋值为<code>null</code>和<code>undefined</code>。</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params">name: <span class="built_in">string</span></span>): <span class="title">void</span> </span>&#123; <span class="comment">// 声明函数无返回值，编译成JS之后取返回值会取到undefined，与JS一致</span></div><div class="line">    <span class="built_in">console</span>.log(name);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">let</span> v: <span class="built_in">void</span> = <span class="literal">null</span>;</div></pre></td></tr></table></figure>
 <h3 id="null和undefined"><a href="#null和undefined" class="headerlink" title="null和undefined"></a>null和undefined</h3><p>TS中<code>默认情况</code>下，<code>null</code>和<code>undefined</code>是所有类型的子类型，换句话说，你可以把<code>null</code>和<code>undefined</code>直接赋值给<code>number</code>/<code>string</code>/<code>boolean</code>等类型。<br>但是不能反过来干，你不能把<code>number</code>/<code>string</code>/<code>boolean</code>类型赋值给<code>null</code>或者<code>undefined</code></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> u: <span class="literal">undefined</span> = <span class="literal">undefined</span>;</div><div class="line"><span class="keyword">let</span> n: <span class="literal">null</span> = <span class="literal">null</span>;</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> u: <span class="literal">undefined</span> = <span class="literal">undefined</span>;</div><div class="line"><span class="keyword">let</span> n: <span class="literal">null</span> = <span class="literal">null</span>;</div></pre></td></tr></table></figure>
 <h3 id="never"><a href="#never" class="headerlink" title="never"></a>never</h3><p><code>never</code>是<code>100%不存在的值</code>的类型。比如函数中直接抛出异常或者有死循环。</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">error</span>(<span class="params">message: <span class="built_in">string</span></span>): <span class="title">never</span> </span>&#123;</div><div class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(message);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">fail</span>(<span class="params"></span>) </span>&#123; <span class="comment">// TS自动类型推断返回值类型为never，类型推断在下文中会提到</span></div><div class="line">    <span class="keyword">return</span> error(<span class="string">'failed'</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">loop</span>(<span class="params"></span>): <span class="title">never</span> </span>&#123; <span class="comment">// 死循环，肯定不会返回</span></div><div class="line">    <span class="keyword">while</span>(<span class="literal">true</span>) &#123;&#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p><code>never</code>和<code>void</code>区别</p>
@@ -625,6 +625,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2019/07/26/react-decorator-example.html" rel="prev" title="使用Typescript装饰器来劫持React组件">
+                使用Typescript装饰器来劫持React组件 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -728,7 +732,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">229</span>
+                  <span class="site-state-item-count">230</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
