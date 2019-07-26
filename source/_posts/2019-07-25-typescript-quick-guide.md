@@ -279,4 +279,4 @@ TS中this指向和JS一致，这里不做赘述。
 
 未完待续~欢迎加群交流TS相关的知识~
 
-![微信群](https://more-happy.ddhigh.com/FpffwgkBeSWPyHRUJJmi9J9SFX_l?imageView2/1/w/200)
+![微信](https://more-happy.ddhigh.com/Fg5UE615NzZ0dXo6_gUe6qpCJILG?imageView2/1/w/200)
