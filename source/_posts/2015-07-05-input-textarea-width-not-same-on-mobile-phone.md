@@ -6,9 +6,9 @@ type: post
 published: true
 status: publish
 categories:
-- front-end
+- frontend
 tags:
-- front-end
+- frontend
 - mobile
 meta:
   _edit_last: '1'

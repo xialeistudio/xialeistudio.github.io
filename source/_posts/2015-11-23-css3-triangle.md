@@ -10,7 +10,7 @@ categories:
 tags:
 - css3
 - 三角形
-- front-end
+- frontend
 meta:
   _edit_last: '1'
   _thumbnail_id: '296'

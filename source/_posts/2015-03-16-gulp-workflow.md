@@ -6,7 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- front-end
+- frontend
 tags:
 - gulp
 - workflow

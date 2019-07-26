@@ -8,7 +8,7 @@ status: publish
 categories:
 - react
 tags:
-- front-end
+- frontend
 - react
 - react router
 meta:
