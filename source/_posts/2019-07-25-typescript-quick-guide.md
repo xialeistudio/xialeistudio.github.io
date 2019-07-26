@@ -277,6 +277,6 @@ TS中this指向和JS一致，这里不做赘述。
 
 ## 结语
 
-未完待续~欢迎加群交流TS相关的知识~
+未完待续~欢迎加我微信交流TS相关的知识~
 
 ![微信](https://more-happy.ddhigh.com/Fg5UE615NzZ0dXo6_gUe6qpCJILG?imageView2/1/w/200)
