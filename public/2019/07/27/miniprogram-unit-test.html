@@ -1,0 +1,1486 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next mist" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+      
+    
+    
+      
+    
+  <script src="https://cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+  <link href="https://cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-flash.min.css" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="https://cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+  
+
+<link href="https://cdn.bootcss.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="test,miniprogram," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="每天进步一点点" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="单元测试是一个老生常谈的话题，基于Web/NodeJs环境的测试框架、测试教程数不胜数，也趋于成熟了。但是对于微信小程序的单元测试，目前还是处于起步状态，这两天在研究微信小程序的测试，也遇到了一些坑，在这里记录一下，希望给看到本文的小伙伴带来一点帮助，少走一些弯路。 本文内容有点多，但是干货满满，不明白的小伙伴可以关注公众号给我留言 demo地址https://github.com/xialeis">
+<meta name="keywords" content="test,miniprogram">
+<meta property="og:type" content="article">
+<meta property="og:title" content="手把手从零开始小程序单元测试(附避坑指南以及源码跟踪)">
+<meta property="og:url" content="https//www.ddhigh.com/2019/07/27/miniprogram-unit-test.html">
+<meta property="og:site_name" content="每天进步一点点">
+<meta property="og:description" content="单元测试是一个老生常谈的话题，基于Web/NodeJs环境的测试框架、测试教程数不胜数，也趋于成熟了。但是对于微信小程序的单元测试，目前还是处于起步状态，这两天在研究微信小程序的测试，也遇到了一些坑，在这里记录一下，希望给看到本文的小伙伴带来一点帮助，少走一些弯路。 本文内容有点多，但是干货满满，不明白的小伙伴可以关注公众号给我留言 demo地址https://github.com/xialeis">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://more-happy.ddhigh.com/FuFpZh9QTZVatcBtupR4MtOGPGTJ?imageView2/1/w/200">
+<meta property="og:image" content="https://more-happy.ddhigh.com/Fg5UE615NzZ0dXo6_gUe6qpCJILG?imageView2/1/w/200">
+<meta property="og:updated_time" content="2019-07-27T11:46:20.011Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="手把手从零开始小程序单元测试(附避坑指南以及源码跟踪)">
+<meta name="twitter:description" content="单元测试是一个老生常谈的话题，基于Web/NodeJs环境的测试框架、测试教程数不胜数，也趋于成熟了。但是对于微信小程序的单元测试，目前还是处于起步状态，这两天在研究微信小程序的测试，也遇到了一些坑，在这里记录一下，希望给看到本文的小伙伴带来一点帮助，少走一些弯路。 本文内容有点多，但是干货满满，不明白的小伙伴可以关注公众号给我留言 demo地址https://github.com/xialeis">
+<meta name="twitter:image" content="https://more-happy.ddhigh.com/FuFpZh9QTZVatcBtupR4MtOGPGTJ?imageView2/1/w/200">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https//www.ddhigh.com/2019/07/27/miniprogram-unit-test.html"/>
+
+
+
+
+
+  <title>手把手从零开始小程序单元测试(附避坑指南以及源码跟踪) | 每天进步一点点</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?78141f99bbb49f1564a7af89344f5add";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">每天进步一点点</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">Coding Change Anything</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+        
+      
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+        
+      
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />
+            
+            归档
+          </a>
+        </li>
+        
+      
+        
+        
+        <li class="menu-item menu-item-open-source-project">
+          <a href="/open-source-project/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-github"></i> <br />
+            
+            开源项目
+          </a>
+        </li>
+        
+      
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+        
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https//www.ddhigh.com/2019/07/27/miniprogram-unit-test.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xialeistudio">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="每天进步一点点">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">手把手从零开始小程序单元测试(附避坑指南以及源码跟踪)</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-27T18:35:49+08:00">
+                2019-07-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/frontend/" itemprop="url" rel="index">
+                    <span itemprop="name">frontend</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/07/27/miniprogram-unit-test.html" class="leancloud_visitors" data-flag-title="手把手从零开始小程序单元测试(附避坑指南以及源码跟踪)">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>单元测试是一个老生常谈的话题，基于Web/NodeJs环境的测试框架、测试教程数不胜数，也趋于成熟了。但是对于微信小程序的单元测试，目前还是处于起步状态，这两天在研究微信小程序的测试，也遇到了一些坑，在这里记录一下，希望给看到本文的小伙伴带来一点帮助，少走一些弯路。</p>
+<p>本文内容有点多，但是干货满满，不明白的小伙伴可以关注公众号给我留言<br><img src="https://more-happy.ddhigh.com/FuFpZh9QTZVatcBtupR4MtOGPGTJ?imageView2/1/w/200" alt="二维码"></p>
+<h2 id="demo地址"><a href="#demo地址" class="headerlink" title="demo地址"></a>demo地址</h2><p><a href="https://github.com/xialeistudio/miniprogram-unit-test-demo" target="_blank" rel="external">https://github.com/xialeistudio/miniprogram-unit-test-demo</a></p>
+<h2 id="关键依赖版本"><a href="#关键依赖版本" class="headerlink" title="关键依赖版本"></a>关键依赖版本</h2><p>本文写作时相关依赖版本如下(版本不同，源码行数可能不同)：</p>
+<ol>
+<li>miniprogram-simulate: 1.0.7</li>
+<li>j-component: 1.1.6</li>
+<li>miniprogram-exparser: 0.0.6</li>
+</ol>
+<h2 id="测试流程"><a href="#测试流程" class="headerlink" title="测试流程"></a>测试流程</h2><ol>
+<li>初始化小程序项目，编写待测试组件</li>
+<li>安装jest,miniprogram-simulate测试环境</li>
+<li>编写测试用例</li>
+<li>执行测试</li>
+</ol>
+<h2 id="初始化小程序项目"><a href="#初始化小程序项目" class="headerlink" title="初始化小程序项目"></a>初始化小程序项目</h2><ol>
+<li>使用小程序开发者工具初始化新项目，APPID选择<code>测试号</code>即可，语言选择<code>Javascript</code>。</li>
+<li>使用小程序开发者工具新建<code>/components/user</code>组件</li>
+<li><p><code>components/user.js</code></p>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// components/user.js</span></div><div class="line">Component(&#123;</div><div class="line">    data: &#123;</div><div class="line">        nickname: <span class="string">''</span></div><div class="line">    &#125;,</div><div class="line">    methods: &#123;</div><div class="line">        handleUserInfo: <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</div><div class="line">            <span class="keyword">this</span>.setData(&#123; <span class="attr">nickname</span>: e.detail.userInfo.nickName &#125;)</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>components/user.wxml</code></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">text</span> <span class="attr">class</span>=<span class="string">"nickname"</span>&gt;</span>&#123;&#123;nickname&#125;&#125;<span class="tag">&lt;/<span class="name">text</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"button"</span> <span class="attr">open-type</span>=<span class="string">"getUserInfo"</span> <span class="attr">bindgetuserinfo</span>=<span class="string">"handleUserInfo"</span>&gt;</span>Oauth<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
+<li><p><code>pages/index/index.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Page(&#123;</div><div class="line">    data:&#123;&#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>pages/index/index.wxml</code></p>
+ <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">user</span>&gt;</span><span class="tag">&lt;/<span class="name">user</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">view</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>打开小程序开发者工具，可以看到有一个<code>Oauth</code>按钮，点击之后会在上面显示昵称。</p>
+</li>
+<li>由此可以得到测试用例<code>点击授权按钮时上方显示为授权用户的昵称</code></li>
+</ol>
+<h2 id="安装jest-miniprogram-simulate测试环境"><a href="#安装jest-miniprogram-simulate测试环境" class="headerlink" title="安装jest/miniprogram-simulate测试环境"></a>安装jest/miniprogram-simulate测试环境</h2><ol>
+<li>由于JS项目的小程序根目录没有<code>package.json</code>，需要手动生成一下</li>
+<li>打开终端，在项目根目录执行<code>npm init -y</code>生成<code>package.json</code></li>
+<li>安装测试工具集<code>npm install jest miniprogram-simulate --save-dev</code></li>
+<li>编辑<code>package.json</code>，在<code>scripts</code>新建<code>test</code>命令 <figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"name"</span>: <span class="string">"unit-test-demo"</span>,</div><div class="line">    <span class="attr">"version"</span>: <span class="string">"1.0.0"</span>,</div><div class="line">    <span class="attr">"description"</span>: <span class="string">""</span>,</div><div class="line">    <span class="attr">"main"</span>: <span class="string">"app.js"</span>,</div><div class="line">    <span class="attr">"scripts"</span>: &#123;</div><div class="line">        <span class="attr">"test"</span>: <span class="string">"jest"</span></div><div class="line">    &#125;,</div><div class="line">    <span class="attr">"keywords"</span>: [],</div><div class="line">    <span class="attr">"author"</span>: <span class="string">""</span>,</div><div class="line">    <span class="attr">"license"</span>: <span class="string">"ISC"</span>,</div><div class="line">    <span class="attr">"devDependencies"</span>: &#123;</div><div class="line">        <span class="attr">"jest"</span>: <span class="string">"^24.8.0"</span>,</div><div class="line">        <span class="attr">"miniprogram-simulate"</span>: <span class="string">"^1.0.7"</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="编写测试用例"><a href="#编写测试用例" class="headerlink" title="编写测试用例"></a>编写测试用例</h2><ol>
+<li>在项目根目录新建<code>tests/components/user.spec.js</code>文件(目录需要手动创建)</li>
+<li>代码如下(参考微信官方单元测试文档编写): <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> simulate = <span class="built_in">require</span>(<span class="string">'miniprogram-simulate'</span>);</div><div class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line"></div><div class="line">test(<span class="string">'components/user'</span>, (done) =&gt; &#123; <span class="comment">// 定义测试名称,传入done表示当前测试是异步测试，需要回调函数来告诉jest，我测试执行完毕</span></div><div class="line"><span class="keyword">const</span> id = simulate.load(path.join(__dirname, <span class="string">'../../components/user'</span>)); <span class="comment">// 加载组件</span></div><div class="line"><span class="keyword">const</span> component = simulate.render(id); <span class="comment">// 渲染组件</span></div><div class="line"></div><div class="line"><span class="keyword">const</span> text = component.querySelector(<span class="string">'.nickname'</span>); <span class="comment">// 获取nickname节点</span></div><div class="line"><span class="keyword">const</span> button = component.querySelector(<span class="string">'.button'</span>); <span class="comment">// 获取button节点</span></div><div class="line">button.dispatchEvent(<span class="string">'getuserinfo'</span>, &#123; <span class="comment">// 模拟触发事件</span></div><div class="line">    detail: &#123;   <span class="comment">// 传递事件参数</span></div><div class="line">        userInfo: &#123;</div><div class="line">            nickName: <span class="string">'hello'</span>,</div><div class="line">        &#125;,</div><div class="line">    &#125;,</div><div class="line">&#125;);</div><div class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123; <span class="comment">// 异步断言</span></div><div class="line">    expect(text.dom.innerHTML).toBe(<span class="string">'hello'</span>); <span class="comment">// 检测text节点的innerHTML等于模拟授权获取的昵称</span></div><div class="line">    done();</div><div class="line">&#125;, <span class="number">1000</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="执行测试"><a href="#执行测试" class="headerlink" title="执行测试"></a>执行测试</h2><ol>
+<li><code>npm run test</code>，等待一秒后发现，<code>不出意外的话，测试肯定过不去</code></li>
+<li><p>部分出错日志：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Expected: &quot;hello&quot;</div><div class="line">Received: &quot;&quot;</div><div class="line">     at toBe (/Users/xialeistudio/WeChatProjects/unit-test-demo/tests/components/user.spec.js:18:32)</div><div class="line">     at Timeout.callback [as _onTimeout] (/Users/xialeistudio/WeChatProjects/unit-test-demo/node_modules/jsdom/lib/jsdom/browser/Window.js:678:19)</div><div class="line">     at listOnTimeout (internal/timers.js:535:17)</div><div class="line">     at processTimers (internal/timers.js:479:7)</div></pre></td></tr></table></figure>
+</li>
+<li><p>可以推测一下原因：</p>
+<ol>
+<li>dispatchEvent的事件触发有问题，导致handleUserInfo未触发[1]</li>
+<li>dispatchEvent的事件触发成功，但是触发参数有问题[2]</li>
+</ol>
+</li>
+</ol>
+<h2 id="错误分析-源码跟踪过程"><a href="#错误分析-源码跟踪过程" class="headerlink" title="错误分析(源码跟踪过程)"></a>错误分析(源码跟踪过程)</h2><ol>
+<li><p>针对第1点原因，可以写一下测试代码(<code>components/user.js</code>)</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">Component(&#123;</div><div class="line">    data: &#123;</div><div class="line">        nickname: <span class="string">''</span></div><div class="line">    &#125;,</div><div class="line">    methods: &#123;</div><div class="line">        handleUserInfo: <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</div><div class="line">            <span class="built_in">console</span>.log(e);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>npm run test</code>，可以看到事件还是成功触发了，不过<code>detail</code>是<code>{}</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"> console.log components/user.js:21</div><div class="line">&#123; type: &apos;getuserinfo&apos;,</div><div class="line">  timeStamp: 948,</div><div class="line">  target: &#123; id: &apos;&apos;, offsetLeft: 0, offsetTop: 0, dataset: &#123;&#125; &#125;,</div><div class="line">  currentTarget: &#123; id: &apos;&apos;, offsetLeft: 0, offsetTop: 0, dataset: &#123;&#125; &#125;,</div><div class="line">  detail: &#123;&#125;,</div><div class="line">  touches: &#123;&#125;,</div><div class="line">  changedTouches: &#123;&#125; &#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>原因1排除，查原因2</p>
+</li>
+<li><code>dispatchEvent</code>方法是<code>被测试组件的子组件</code>，<code>被测试组件</code>由<code>simulate.render</code>函数返回</li>
+<li>浏览<code>node_modules/miniprogram-simulate/src/index.js</code>，看到<code>render函数(152行)</code>，可以看到返回的组件由<code>jComponent.create</code>提供</li>
+<li>浏览<code>node_modules/j-component/src/index.js</code>的<code>create</code>函数，可以看到其返回了<code>RootComponent</code>实例，而<code>RootComponent</code>是由<code>./render/component.js</code>提供</li>
+<li>浏览<code>node_modules/j-component/src/render/component.js</code>的<code>dispatchEvent</code>函数，在这里可以打下日志测试(本文就不打了，结果是这里的options就是<code>user.spec.js</code> <code>dispatchEvent</code>函数的<code>第二个参数</code>，<code>detail</code>是有值的)</li>
+<li><p>继续跟踪源码，由于咱们的是<code>自定义事件</code>，所以会走到<code>91行</code>的代码，该代码块如下：</p>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 自定义事件</span></div><div class="line">  <span class="keyword">const</span> customEvent = <span class="keyword">new</span> CustomEvent(eventName, options);</div><div class="line"></div><div class="line">  <span class="comment">// 模拟异步情况</span></div><div class="line">  setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">    dom.dispatchEvent(customEvent);</div><div class="line"></div><div class="line">    exparser.Event.dispatchEvent(customEvent.target, exparser.Event.create(eventName, &#123;&#125;, &#123;</div><div class="line">      originalEvent: customEvent,</div><div class="line">      bubbles: <span class="literal">true</span>,</div><div class="line">      capturePhase: <span class="literal">true</span>,</div><div class="line">      composed: <span class="literal">true</span>,</div><div class="line">      extraFields: &#123;</div><div class="line">        touches: options.touches || &#123;&#125;,</div><div class="line">        changedTouches: options.changedTouches || &#123;&#125;,</div><div class="line">      &#125;,</div><div class="line">    &#125;));</div><div class="line">  &#125;, <span class="number">0</span>);</div></pre></td></tr></table></figure>
+</li>
+<li><p>可以看到调用了<code>exparser.Event.dispatchEvent</code>函数，该函数的<code>第二个参数</code>调用了<code>exparser.Event.create</code>对自定义事件进行了包装，这里还没到最底层，需要继续跟踪</p>
+</li>
+<li><code>exparser</code>对象是<code>miniprogram-exparser模块</code>提供的，浏览<code>node_modules/miniprogram-exparser/exparser.min.js</code>，发现该文件被混淆了，不过没关系<code>混淆后的代码逻辑是不变的，只不过变量名变得无意义，可读性变差</code></li>
+<li>使用webstorm格式化该文件，这里我传了一份格式化好的到github <a href="https://github.com/xialeistudio/miniprogram-unit-test-demo/blob/master/extra/wxparser.js" target="_blank" rel="external">wxparser.js，可在线观看</a></li>
+<li><p>需要在源码中搜索<code>三个参数</code>的<code>create</code>函数(<code>Object.create不算</code>)，需要有耐心，经过排查后发现<a href="https://github.com/xialeistudio/miniprogram-unit-test-demo/blob/master/extra/wxparser.js#L168" target="_blank" rel="external">168行</a>代码应该是目标代码</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">i.create = <span class="function"><span class="keyword">function</span>(<span class="params">e, t, r</span>) </span>&#123;</div><div class="line">    r = r || &#123;&#125;;</div><div class="line">    <span class="keyword">var</span> n = r.originalEvent, o = r.extraFields || &#123;&#125;, a = <span class="built_in">Date</span>.now() - l, s = <span class="keyword">new</span> i;</div><div class="line">    s.currentTarget = <span class="literal">null</span>, s.type = e, s.timeStamp = a, s.mark = <span class="literal">null</span>, s.detail = t, s.bubbles = !!r.bubbles, s.composed = !!r.composed, s.__originalEvent = n, s.__hasCapture = !!r.capturePhase, s.__stopped = !<span class="number">1</span>, s.__dispatched = !<span class="number">1</span>;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> u <span class="keyword">in</span> o) s[u] = o[u];</div><div class="line">    <span class="keyword">return</span> s;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>可以看到<code>s.detail = t</code>这个赋值，<code>t</code>是<code>create</code>的<code>第二个参数</code>，由<code>node_modules/j-component/render/component.js</code>的<code>wxparser.Event.create</code>传入，但是传入的<code>第二个参数写死了{}</code>，所以咱们的组件获取<code>detail</code>的时候<code>永远为{}</code>，将其修改为<code>options.detail||{}</code>即可，修改后代码如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">exparser.Event.dispatchEvent(customEvent.target, exparser.Event.create(eventName, options.detail||&#123;&#125;, xxxxxx</div></pre></td></tr></table></figure>
+</li>
+<li><p>重新测试</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">   PASS  tests/components/user.spec.js</div><div class="line">✓ components/user (1099ms)</div><div class="line"></div><div class="line">  Test Suites: 1 passed, 1 total</div><div class="line">  Tests:       1 passed, 1 total</div><div class="line">  Snapshots:   0 total</div><div class="line">  Time:        3.622s</div><div class="line">  Ran all test suites.</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="避坑指南"><a href="#避坑指南" class="headerlink" title="避坑指南"></a>避坑指南</h2><ol>
+<li><code>querySelector</code>用法同HTML，但是需要在<code>组件</code>执行，而不是<code>组件.dom</code>，HTML中实在<code>DOMNode</code>执行的</li>
+<li><code>dispatchEvent</code>是触发事件，需要在<code>组件</code>执行，上述代码中是触发<code>button组件</code>的<code>自定义事件</code></li>
+<li><code>dispatchEvent</code>事件名规范: <code>去掉前导bind剩余的字符串为事件名</code>，示例代码中<code>bindgetuserinfo</code>，触发时就是<code>getuserinfo</code>，如果是<code>bindtap</code>，那触发时就是<code>tap</code></li>
+<li><p><code>dispatchEvent</code>底层是<code>j-component</code>这个<code>npm模块实现</code>的，跟踪源码发现执行是异步的(代码文件<code>node_modules/j-component/src/render/component.js</code>，函数名<code>dispatchEvent</code>)</p>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 自定义事件</span></div><div class="line">  <span class="keyword">const</span> customEvent = <span class="keyword">new</span> CustomEvent(eventName, options);</div><div class="line"></div><div class="line">  <span class="comment">// 模拟异步情况</span></div><div class="line">  setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">    dom.dispatchEvent(customEvent);</div><div class="line"></div><div class="line">    exparser.Event.dispatchEvent(customEvent.target, exparser.Event.create(eventName, &#123;&#125;, &#123;</div><div class="line">      originalEvent: customEvent,</div><div class="line">      bubbles: <span class="literal">true</span>,</div><div class="line">      capturePhase: <span class="literal">true</span>,</div><div class="line">      composed: <span class="literal">true</span>,</div><div class="line">      extraFields: &#123;</div><div class="line">        touches: options.touches || &#123;&#125;,</div><div class="line">        changedTouches: options.changedTouches || &#123;&#125;,</div><div class="line">      &#125;,</div><div class="line">    &#125;));</div><div class="line">  &#125;, <span class="number">0</span>);</div></pre></td></tr></table></figure>
+</li>
+<li><p>由于<code>setTimeout</code>的存在，触发事件为异步，所以写断言时需要加定时器</p>
+</li>
+</ol>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>小程序单元测试基本是没什么经验扩借鉴，但是基于官网提供的工具，以及<code>开源</code>，咱们遇到问题时细心排查然后修改一下，还是可以解决问题的。对单元测试有疑问的小伙伴可以扫码加我进行交流<br><img src="https://more-happy.ddhigh.com/Fg5UE615NzZ0dXo6_gUe6qpCJILG?imageView2/1/w/200" alt="微信"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>读后有收获可以请作者喝咖啡 ^.^</div>
+  <div id="QR">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" width="150" src="https://static.ddhigh.com/paycode/wepay.jpg" alt="xialeistudio 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" width="150" src="https://static.ddhigh.com/paycode/alipay.jpg" alt="xialeistudio 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    xialeistudio
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https//www.ddhigh.com/2019/07/27/miniprogram-unit-test.html" title="手把手从零开始小程序单元测试(附避坑指南以及源码跟踪)">https//www.ddhigh.com/2019/07/27/miniprogram-unit-test.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/test/" rel="tag"># test</a>
+          
+            <a href="/tags/miniprogram/" rel="tag"># miniprogram</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/26/react-decorator-example.html" rel="next" title="使用Typescript装饰器来劫持React组件">
+                <i class="fa fa-chevron-left"></i> 使用Typescript装饰器来劫持React组件
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    <div class="post-spread">
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//static.ddhigh.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80NTI0My8yMTc1OA=="></div>
+    </div>
+  
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">xialeistudio</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">231</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">246</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/xialeistudio" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:xialeistudio@gmail.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-globe"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://segmentfault.com/u/xialeistudio" target="_blank" title="SegmentFault">
+                    
+                      <i class="fa fa-fw fa-globe"></i>SegmentFault</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+<div style="margin-top:8px">
+    
+    <div>
+    <i class="fa fa-qq"></i> QQ交流群
+    <strong style="color:red;display:block">346660435</strong>
+    </div>
+    
+
+    
+    <div style="margin-top:4px">
+        <i class="fa fa-wechat"></i> 微信交流群
+        <img width="100" height="100" src="https://more-happy.ddhigh.com/FpffwgkBeSWPyHRUJJmi9J9SFX_l" class="qrcode" /> 
+    </div>
+    
+
+    
+    <div style="margin-top:16px">
+        <i class="fa fa-wechat"></i> NodeJs之路
+        <img width="100" height="100" src="https://more-happy.ddhigh.com/FuFpZh9QTZVatcBtupR4MtOGPGTJ" class="qrcode" /> 
+    </div>
+    
+</div> 
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#demo地址"><span class="nav-number">1.</span> <span class="nav-text">demo地址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关键依赖版本"><span class="nav-number">2.</span> <span class="nav-text">关键依赖版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试流程"><span class="nav-number">3.</span> <span class="nav-text">测试流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化小程序项目"><span class="nav-number">4.</span> <span class="nav-text">初始化小程序项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装jest-miniprogram-simulate测试环境"><span class="nav-number">5.</span> <span class="nav-text">安装jest/miniprogram-simulate测试环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编写测试用例"><span class="nav-number">6.</span> <span class="nav-text">编写测试用例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#执行测试"><span class="nav-number">7.</span> <span class="nav-text">执行测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#错误分析-源码跟踪过程"><span class="nav-number">8.</span> <span class="nav-text">错误分析(源码跟踪过程)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#避坑指南"><span class="nav-number">9.</span> <span class="nav-text">避坑指南</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结语"><span class="nav-number">10.</span> <span class="nav-text">结语</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2014 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xialeistudio</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.3</div>
+
+
+
+  <div class="footer-custom"><a target="_blank" href="http://www.miitbeian.gov.cn/">粤ICP备14062481号-1</a></div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdn.bootcss.com/velocity/1.2.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdn.bootcss.com/velocity/1.2.1/velocity.ui.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.json";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("M7yiNvioSUGMNWrQh0GK74tl-gzGzoHsz", "aTVz57LNkHWzR4RC1y8ytug2");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
