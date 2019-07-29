@@ -192,7 +192,7 @@ tags:
     ```
 9. 可以看到调用了`exparser.Event.dispatchEvent`函数，该函数的`第二个参数`调用了`exparser.Event.create`对自定义事件进行了包装，这里还没到最底层，需要继续跟踪
 10. `exparser`对象是`miniprogram-exparser模块`提供的，浏览`node_modules/miniprogram-exparser/exparser.min.js`，发现该文件被混淆了，不过没关系`混淆后的代码逻辑是不变的，只不过变量名变得无意义，可读性变差`
-11. 使用webstorm格式化该文件，这里我传了一份格式化好的到github [wxparser.js，可在线观看](https://github.com/xialeistudio/miniprogram-unit-test-demo/blob/master/extra/wxparser.js)
+11. 使用webstorm格式化该文件，这里我传了一份格式化好的到github [wxparser.js，可在线观看](https://github.com/xialeistudio/miniprogram-unit-test-demo/blob/master/extra/wxparser.jscc)
 12. 需要在源码中搜索`三个参数`的`create`函数(`Object.create不算`)，需要有耐心，经过排查后发现[168行](https://github.com/xialeistudio/miniprogram-unit-test-demo/blob/master/extra/wxparser.js#L168)代码应该是目标代码
     ```js
     i.create = function(e, t, r) {
