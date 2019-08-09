@@ -40,10 +40,10 @@ spring:
             # 状态监控
             filter:
                 stat:
-                enabled: true
-                db-type: mysql
-                log-slow-sql: true
-                slow-sql-millis: 2000
+                    enabled: true
+                    db-type: mysql
+                    log-slow-sql: true
+                    slow-sql-millis: 2000
             # 监控过滤器
             web-stat-filter:
                 enabled: true
