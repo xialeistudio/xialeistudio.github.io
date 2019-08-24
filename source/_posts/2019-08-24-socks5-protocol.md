@@ -8,7 +8,7 @@ tags:
 ---
 # Socks5代理协议
 
-或许你没听说过socks5，但你一定听说过ShadowSocks，ShadowSockS内部使用的正是socks5协议。
+或许你没听说过socks5，但你一定听说过SS，SS内部使用的正是socks5协议。
 
 socks5是一种网络传输协议，主要用于客户端与目标服务器之间通讯的透明传递。
 
