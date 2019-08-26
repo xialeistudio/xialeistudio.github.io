@@ -9,7 +9,7 @@
 
     {%if theme.group.wechat %}
     <div style="margin-top:4px">
-        <i class="fa fa-wechat"></i> 加群小组手(自动拉你入群)
+        <i class="fa fa-wechat"></i> 微信交流群
         <img width="100" height="100" src="{{theme.group.wechat}}" class="qrcode" /> 
     </div>
     {% endif %}
