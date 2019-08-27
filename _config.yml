@@ -79,6 +79,6 @@ theme: next
 search:
   path: search.json
   field: post
-  format: html
+  format: raw
   limit: 2000
   content: false
