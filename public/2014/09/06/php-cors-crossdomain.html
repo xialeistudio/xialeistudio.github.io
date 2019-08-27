@@ -457,7 +457,7 @@
 <li>Access-Control-Max-Age：表明在该时间段内不再“预检”允许的请求方法（相当于缓存），即不以OPTIONS方法进行请求</li>
 <li>Access-Control-Allow-Headers：允许哪些请求头可以跨域</li>
 </ul>
-<h2 id="php代码"><a href="#php代码" class="headerlink" title="php代码"></a>php代码</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">header(<span class="string">'Access-Control-Allow-Origin:*'</span>);</div><div class="line">header(<span class="string">'Access-Control-Allow-Methods:POST'</span>);</div><div class="line">header(<span class="string">'Access-Control-Max-Age:60'</span>);</div><div class="line">header(<span class="string">'Access-Control-Allow-Headers:x-requested-with,content-type'</span>);</div><div class="line">header(<span class="string">'Content-Type:application/json;charset=utf-8'</span>);</div><div class="line">print_r(file_get_contents(<span class="string">'php://input'</span>));</div></pre></td></tr></table></figure>
+<h2 id="php代码"><a href="#php代码" class="headerlink" title="php代码"></a>php代码</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">header(<span class="string">'Access-Control-Allow-Origin:*'</span>);</span><br><span class="line">header(<span class="string">'Access-Control-Allow-Methods:POST'</span>);</span><br><span class="line">header(<span class="string">'Access-Control-Max-Age:60'</span>);</span><br><span class="line">header(<span class="string">'Access-Control-Allow-Headers:x-requested-with,content-type'</span>);</span><br><span class="line">header(<span class="string">'Content-Type:application/json;charset=utf-8'</span>);</span><br><span class="line">print_r(file_get_contents(<span class="string">'php://input'</span>));</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -466,32 +466,6 @@
 
     
 
-    
-      <div>
-        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-  <div>读后有收获可以请作者喝咖啡 ^.^</div>
-  <div id="QR">
-
-    
-      <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" width="150" src="https://static.ddhigh.com/paycode/wepay.jpg" alt="xialeistudio 微信支付">
-        <p>微信支付</p>
-      </div>
-    
-
-    
-      <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" width="150" src="https://static.ddhigh.com/paycode/alipay.jpg" alt="xialeistudio 支付宝">
-        <p>支付宝</p>
-      </div>
-    
-
-    
-
-  </div>
-</div>
-
-      </div>
     
     
       <div>
@@ -649,7 +623,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">241</span>
+                  <span class="site-state-item-count">242</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

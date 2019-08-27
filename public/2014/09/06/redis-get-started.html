@@ -450,13 +450,13 @@
 
       
         <p>Redis是一个开源的使用ANSI C语言编写、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。从2010年3月15日起，Redis的开发工作由VMware主持。<br>我本地的PHP是 5.4.25 ts版本，这里是php_redis扩展（只限于5.4.x TS版本）。</p>
-<p><a href="https://og5r5kasb.qnssl.com/ext.zip" target="_blank" rel="external">ext.zip</a></p>
+<p><a href="https://og5r5kasb.qnssl.com/ext.zip" target="_blank" rel="noopener">ext.zip</a></p>
 <p>打开php.ini</p>
 <p>添加以下两行</p>
-<figure class="highlight ini"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="attr">extension</span>=php_igbinary.dll</div><div class="line"><span class="attr">extension</span>=php_redis.dll</div></pre></td></tr></table></figure>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">extension</span>=php_igbinary.dll</span><br><span class="line"><span class="attr">extension</span>=php_redis.dll</span><br></pre></td></tr></table></figure>
 <p>请注意顺序！</p>
 <p>重启web服务器就可以了。</p>
-<p>示例代码<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">$redis = <span class="keyword">new</span> Redis();</div><div class="line">$redis-&gt;connect(<span class="string">'127.0.0.1'</span>);</div><div class="line"><span class="comment">//存储一个值</span></div><div class="line">$redis-&gt;set(<span class="string">'name'</span>, <span class="string">'zhangsan'</span>, <span class="number">5</span>);</div><div class="line"><span class="comment">//存储多个值</span></div><div class="line">$array = <span class="keyword">array</span>(</div><div class="line">    <span class="string">'name'</span> =&gt; <span class="string">'张三'</span>,</div><div class="line">    <span class="string">'sex'</span> =&gt; <span class="string">'male'</span>,</div><div class="line">    <span class="string">'age'</span> =&gt; <span class="number">10</span></div><div class="line">);</div><div class="line">$array_get=<span class="keyword">array</span>(</div><div class="line">    <span class="string">'name'</span>,<span class="string">'sex'</span>,<span class="string">'age'</span></div><div class="line">);</div><div class="line">$redis-&gt;mset($array);</div><div class="line">print_r($redis-&gt;mget($array_get));</div></pre></td></tr></table></figure></p>
+<p>示例代码<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$redis = <span class="keyword">new</span> Redis();</span><br><span class="line">$redis-&gt;connect(<span class="string">'127.0.0.1'</span>);</span><br><span class="line"><span class="comment">//存储一个值</span></span><br><span class="line">$redis-&gt;set(<span class="string">'name'</span>, <span class="string">'zhangsan'</span>, <span class="number">5</span>);</span><br><span class="line"><span class="comment">//存储多个值</span></span><br><span class="line">$array = <span class="keyword">array</span>(</span><br><span class="line">    <span class="string">'name'</span> =&gt; <span class="string">'张三'</span>,</span><br><span class="line">    <span class="string">'sex'</span> =&gt; <span class="string">'male'</span>,</span><br><span class="line">    <span class="string">'age'</span> =&gt; <span class="number">10</span></span><br><span class="line">);</span><br><span class="line">$array_get=<span class="keyword">array</span>(</span><br><span class="line">    <span class="string">'name'</span>,<span class="string">'sex'</span>,<span class="string">'age'</span></span><br><span class="line">);</span><br><span class="line">$redis-&gt;mset($array);</span><br><span class="line">print_r($redis-&gt;mget($array_get));</span><br></pre></td></tr></table></figure></p>
 <p>本文只起到抛砖引玉的作用，详细的使用有待大家挖掘~</p>
 
       
@@ -467,32 +467,6 @@
 
     
 
-    
-      <div>
-        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-  <div>读后有收获可以请作者喝咖啡 ^.^</div>
-  <div id="QR">
-
-    
-      <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" width="150" src="https://static.ddhigh.com/paycode/wepay.jpg" alt="xialeistudio 微信支付">
-        <p>微信支付</p>
-      </div>
-    
-
-    
-      <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" width="150" src="https://static.ddhigh.com/paycode/alipay.jpg" alt="xialeistudio 支付宝">
-        <p>支付宝</p>
-      </div>
-    
-
-    
-
-  </div>
-</div>
-
-      </div>
     
     
       <div>
@@ -635,7 +609,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">241</span>
+                  <span class="site-state-item-count">242</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

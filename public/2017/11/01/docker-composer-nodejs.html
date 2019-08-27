@@ -427,12 +427,12 @@
       
 
       
-        <h2 id="新建Dockerfile"><a href="#新建Dockerfile" class="headerlink" title="新建Dockerfile"></a>新建Dockerfile</h2><p>在应用目录下新建<strong>Dockerfile</strong><br><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">FROM</span> node:<span class="number">8</span></div><div class="line"><span class="keyword">WORKDIR</span><span class="bash"> /usr/src/app</span></div><div class="line"><span class="bash">ADD . /usr/src/app</span></div><div class="line"><span class="bash">RUN npm install --registry=https://registry.npm.taobao.org</span></div><div class="line"><span class="bash">USER node</span></div><div class="line"><span class="bash">EXPOSE 8080</span></div></pre></td></tr></table></figure></p>
+        <h2 id="新建Dockerfile"><a href="#新建Dockerfile" class="headerlink" title="新建Dockerfile"></a>新建Dockerfile</h2><p>在应用目录下新建<strong>Dockerfile</strong><br><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> node:<span class="number">8</span></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="bash"> /usr/src/app</span></span><br><span class="line"><span class="keyword">ADD</span><span class="bash"> . /usr/src/app</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> npm install --registry=https://registry.npm.taobao.org</span></span><br><span class="line"><span class="keyword">USER</span> node</span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">8080</span></span><br></pre></td></tr></table></figure></p>
 <p>8080 端口请根据实际情况调整。建议大于1024，否则使用<strong>node</strong>用户启动应用时可能权限不足</p>
-<h2 id="新建docker-compose-yml"><a href="#新建docker-compose-yml" class="headerlink" title="新建docker-compose.yml"></a>新建docker-compose.yml</h2><p>在应用目录下新建<strong>docker-compose.yml</strong><br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="attr">version:</span> <span class="string">"2"</span></div><div class="line"><span class="attr">services:</span></div><div class="line"><span class="attr">  jsconsole:</span></div><div class="line"><span class="attr">    build:</span> <span class="string">.</span></div><div class="line"><span class="attr">    volumes:</span></div><div class="line"><span class="bullet">      -</span> <span class="string">.:/usr/src/app</span></div><div class="line"><span class="bullet">      -</span> <span class="string">/usr/src/app/node_modules</span></div><div class="line"><span class="attr">    ports:</span></div><div class="line"><span class="bullet">      -</span> <span class="string">"127.0.0.1:8081:8080"</span></div><div class="line"><span class="attr">    command:</span> <span class="string">"npm start"</span></div><div class="line"><span class="attr">    restart:</span> <span class="string">always</span></div></pre></td></tr></table></figure></p>
+<h2 id="新建docker-compose-yml"><a href="#新建docker-compose-yml" class="headerlink" title="新建docker-compose.yml"></a>新建docker-compose.yml</h2><p>在应用目录下新建<strong>docker-compose.yml</strong><br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">"2"</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">  jsconsole:</span></span><br><span class="line"><span class="attr">    build:</span> <span class="string">.</span></span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">.:/usr/src/app</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">/usr/src/app/node_modules</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"127.0.0.1:8081:8080"</span></span><br><span class="line"><span class="attr">    command:</span> <span class="string">"npm start"</span></span><br><span class="line"><span class="attr">    restart:</span> <span class="string">always</span></span><br></pre></td></tr></table></figure></p>
 <p><strong>127.0.0.1:8081</strong>是<strong>宿主机IP和端口</strong>，我前端采用了<strong>nginx</strong>做反向代理。如果是直接提供公网服务的话把<strong>127.0.0.1</strong>去掉</p>
-<h2 id="构建镜像"><a href="#构建镜像" class="headerlink" title="构建镜像"></a>构建镜像</h2><p>在应用根目录下执行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker-compose build</div></pre></td></tr></table></figure></p>
-<h2 id="构建并运行"><a href="#构建并运行" class="headerlink" title="构建并运行"></a>构建并运行</h2><p>在应用根目录下执行<strong>-d</strong>是后台执行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker-compose up -d</div></pre></td></tr></table></figure></p>
+<h2 id="构建镜像"><a href="#构建镜像" class="headerlink" title="构建镜像"></a>构建镜像</h2><p>在应用根目录下执行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose build</span><br></pre></td></tr></table></figure></p>
+<h2 id="构建并运行"><a href="#构建并运行" class="headerlink" title="构建并运行"></a>构建并运行</h2><p>在应用根目录下执行<strong>-d</strong>是后台执行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up -d</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -442,32 +442,6 @@
 
     
 
-    
-      <div>
-        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-  <div>读后有收获可以请作者喝咖啡 ^.^</div>
-  <div id="QR">
-
-    
-      <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" width="150" src="https://static.ddhigh.com/paycode/wepay.jpg" alt="xialeistudio 微信支付">
-        <p>微信支付</p>
-      </div>
-    
-
-    
-      <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" width="150" src="https://static.ddhigh.com/paycode/alipay.jpg" alt="xialeistudio 支付宝">
-        <p>支付宝</p>
-      </div>
-    
-
-    
-
-  </div>
-</div>
-
-      </div>
     
     
       <div>
@@ -627,7 +601,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">241</span>
+                  <span class="site-state-item-count">242</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

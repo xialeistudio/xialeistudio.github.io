@@ -449,11 +449,11 @@
       
 
       
-        <h2 id="文档内容"><a href="#文档内容" class="headerlink" title="文档内容"></a>文档内容</h2><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"_id"</span>: ObjectId(<span class="string">"5689db252d162c9881532986"</span>),</div><div class="line">    <span class="attr">"openid"</span>: <span class="string">"xialei"</span>,</div><div class="line">    <span class="attr">"channels"</span>: [</div><div class="line">        &#123;</div><div class="line">            <span class="attr">"channel_id"</span>: <span class="string">"c1"</span></div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">            <span class="attr">"channel_id"</span>: <span class="string">"c2"</span></div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">            <span class="attr">"channel_id"</span>: <span class="string">"c2"</span></div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">            <span class="attr">"channel_id"</span>: <span class="string">"c2"</span></div><div class="line">        &#125;</div><div class="line">    ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>把该文档的channels中channel_id为c2的删除，但是主记录要保留。<br>这时候就不能用remove方法了，该方法会删除整条文档，查询<a href="https://docs.mongodb.org/manual/reference/method/db.collection.findAndModify/#db.collection.findAndModify" target="_blank" rel="external">官方文档</a>发现有个findAndModify方法。</p>
-<h2 id="函数原型"><a href="#函数原型" class="headerlink" title="函数原型"></a>函数原型</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">db.collection.findAndModify(&#123;</div><div class="line">    query: <span class="xml"><span class="tag">&lt;<span class="name">document</span>&gt;</span>,</span></div><div class="line">    sort: &lt;document&gt;,</div><div class="line">    remove: &lt;boolean&gt;,</div><div class="line">    update: &lt;document&gt;,</div><div class="line">    new: &lt;boolean&gt;,</div><div class="line">    fields: &lt;document&gt;,</div><div class="line">    upsert: &lt;boolean&gt;</div><div class="line">    bypassDocumentValidation: &lt;boolean&gt;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
-<h2 id="调用代码"><a href="#调用代码" class="headerlink" title="调用代码"></a>调用代码</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">db.collection.findAndModify(&#123;</div><div class="line">    query: &#123;<span class="string">"openid"</span>:<span class="string">"xialei"</span>&#125;,</div><div class="line">    update: &#123;<span class="string">"<span class="variable">$pull</span>"</span>:&#123;<span class="string">"channels"</span>:&#123;<span class="string">"channel_id"</span>:<span class="string">"c2"</span>&#125;&#125;&#125;,</div><div class="line">    new: <span class="literal">true</span></div><div class="line">&#125;);</div></pre></td></tr></table></figure>
-<h2 id="执行结果"><a href="#执行结果" class="headerlink" title="执行结果"></a>执行结果</h2><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"_id"</span> : ObjectId(<span class="string">"5689db252d162c9881532986"</span>),</div><div class="line">    <span class="attr">"openid"</span> : <span class="string">"xialei"</span>,</div><div class="line">    <span class="attr">"channels"</span> : [ </div><div class="line">        &#123;</div><div class="line">            <span class="attr">"channel_id"</span> : <span class="string">"c1"</span></div><div class="line">        &#125;</div><div class="line">    ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+        <h2 id="文档内容"><a href="#文档内容" class="headerlink" title="文档内容"></a>文档内容</h2><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"_id"</span>: ObjectId(<span class="string">"5689db252d162c9881532986"</span>),</span><br><span class="line">    <span class="attr">"openid"</span>: <span class="string">"xialei"</span>,</span><br><span class="line">    <span class="attr">"channels"</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">"channel_id"</span>: <span class="string">"c1"</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">"channel_id"</span>: <span class="string">"c2"</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">"channel_id"</span>: <span class="string">"c2"</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">"channel_id"</span>: <span class="string">"c2"</span></span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>把该文档的channels中channel_id为c2的删除，但是主记录要保留。<br>这时候就不能用remove方法了，该方法会删除整条文档，查询<a href="https://docs.mongodb.org/manual/reference/method/db.collection.findAndModify/#db.collection.findAndModify" target="_blank" rel="noopener">官方文档</a>发现有个findAndModify方法。</p>
+<h2 id="函数原型"><a href="#函数原型" class="headerlink" title="函数原型"></a>函数原型</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">db.collection.findAndModify(&#123;</span><br><span class="line">    query: <span class="xml"><span class="tag">&lt;<span class="name">document</span>&gt;</span>,</span></span><br><span class="line">    sort: &lt;document&gt;,</span><br><span class="line">    remove: &lt;boolean&gt;,</span><br><span class="line">    update: &lt;document&gt;,</span><br><span class="line">    new: &lt;boolean&gt;,</span><br><span class="line">    fields: &lt;document&gt;,</span><br><span class="line">    upsert: &lt;boolean&gt;</span><br><span class="line">    bypassDocumentValidation: &lt;boolean&gt;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="调用代码"><a href="#调用代码" class="headerlink" title="调用代码"></a>调用代码</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">db.collection.findAndModify(&#123;</span><br><span class="line">    query: &#123;<span class="string">"openid"</span>:<span class="string">"xialei"</span>&#125;,</span><br><span class="line">    update: &#123;<span class="string">"<span class="variable">$pull</span>"</span>:&#123;<span class="string">"channels"</span>:&#123;<span class="string">"channel_id"</span>:<span class="string">"c2"</span>&#125;&#125;&#125;,</span><br><span class="line">    new: <span class="literal">true</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="执行结果"><a href="#执行结果" class="headerlink" title="执行结果"></a>执行结果</h2><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"_id"</span> : ObjectId(<span class="string">"5689db252d162c9881532986"</span>),</span><br><span class="line">    <span class="attr">"openid"</span> : <span class="string">"xialei"</span>,</span><br><span class="line">    <span class="attr">"channels"</span> : [ </span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">"channel_id"</span> : <span class="string">"c1"</span></span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><strong>$pull</strong>是数组操作符，明白update中的操作之后，相信大家可以举一反三，比如要插入一个文档就肯定会想到用<strong>$push</strong>了。</p>
 
       
@@ -464,32 +464,6 @@
 
     
 
-    
-      <div>
-        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-  <div>读后有收获可以请作者喝咖啡 ^.^</div>
-  <div id="QR">
-
-    
-      <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" width="150" src="https://static.ddhigh.com/paycode/wepay.jpg" alt="xialeistudio 微信支付">
-        <p>微信支付</p>
-      </div>
-    
-
-    
-      <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" width="150" src="https://static.ddhigh.com/paycode/alipay.jpg" alt="xialeistudio 支付宝">
-        <p>支付宝</p>
-      </div>
-    
-
-    
-
-  </div>
-</div>
-
-      </div>
     
     
       <div>
@@ -645,7 +619,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">241</span>
+                  <span class="site-state-item-count">242</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

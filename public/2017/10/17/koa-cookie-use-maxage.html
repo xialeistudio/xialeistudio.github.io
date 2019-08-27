@@ -428,11 +428,11 @@
 
       
         <h1 id="expires"><a href="#expires" class="headerlink" title="expires"></a>expires</h1><p>原来设置cookie使用的以下代码</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> cookieOptions = &#123;</div><div class="line">  expires: moment().add(<span class="number">6</span>,<span class="string">'day'</span>).toDate(),</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> cookieOptions = &#123;</span><br><span class="line">  expires: moment().add(<span class="number">6</span>,<span class="string">'day'</span>).toDate(),</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>但是查看network的时候，cookie虽然设置了，但是过期时间比现在还早，导致一设置就过期，所以expires貌似没作用。</p>
-<h1 id="maxage"><a href="#maxage" class="headerlink" title="maxage"></a>maxage</h1><p>查看对应的typescript定义文件<strong>index.d.ts</strong>发现还有一个<strong>maxAge</strong>选项也可以用来控制cookie过期时间<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * a number representing the milliseconds from Date.now() for expiry</span></div><div class="line"><span class="comment"> */</span></div><div class="line">maxAge?: number;</div></pre></td></tr></table></figure></p>
+<h1 id="maxage"><a href="#maxage" class="headerlink" title="maxage"></a>maxage</h1><p>查看对应的typescript定义文件<strong>index.d.ts</strong>发现还有一个<strong>maxAge</strong>选项也可以用来控制cookie过期时间<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * a number representing the milliseconds from Date.now() for expiry</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">maxAge?: number;</span><br></pre></td></tr></table></figure></p>
 <p>这个参数更简单，<strong>基于当前时间的毫秒数</strong>，使用以下代码测试之后，发现过期时间跟预期一致<strong>一个星期</strong>：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> cookieOptions = &#123;</div><div class="line">  maxAge: <span class="number">3600</span> * <span class="number">24</span> * <span class="number">7</span> * <span class="number">1000</span>,</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> cookieOptions = &#123;</span><br><span class="line">  maxAge: <span class="number">3600</span> * <span class="number">24</span> * <span class="number">7</span> * <span class="number">1000</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -441,32 +441,6 @@
 
     
 
-    
-      <div>
-        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-  <div>读后有收获可以请作者喝咖啡 ^.^</div>
-  <div id="QR">
-
-    
-      <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" width="150" src="https://static.ddhigh.com/paycode/wepay.jpg" alt="xialeistudio 微信支付">
-        <p>微信支付</p>
-      </div>
-    
-
-    
-      <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" width="150" src="https://static.ddhigh.com/paycode/alipay.jpg" alt="xialeistudio 支付宝">
-        <p>支付宝</p>
-      </div>
-    
-
-    
-
-  </div>
-</div>
-
-      </div>
     
     
       <div>
@@ -628,7 +602,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">241</span>
+                  <span class="site-state-item-count">242</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

@@ -450,7 +450,7 @@
 
       
         <p>去年写过一篇<a href="!--￼1--">摆脱jquery!angularjs利用指令简单实现滚动翻页</a>，但是用了一段时间之后发现很多浏览器有问题，移动端下滚动事件只有<strong>body</strong>才会触发，其他元素是不会触发的，经过改进后的指令代码如下（仅限移动端）:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">app.directive(<span class="string">'whenScrolled'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; </div><div class="line"><span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">scope, ele, attr</span>) </span>&#123;</div><div class="line">        angular.element(<span class="built_in">window</span>).on(<span class="string">'scroll'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</div><div class="line">            <span class="keyword">var</span> a = <span class="built_in">window</span>.screen.availHeight;</div><div class="line">            <span class="keyword">var</span> b = <span class="built_in">document</span>.documentElement.scrollTop == <span class="number">0</span> ? <span class="built_in">document</span>.body.scrollTop : <span class="built_in">document</span>.documentElement.scrollTop;</div><div class="line">            <span class="keyword">var</span> c = <span class="built_in">document</span>.documentElement.scrollTop == <span class="number">0</span> ? <span class="built_in">document</span>.body.scrollHeight : <span class="built_in">document</span>.documentElement.scrollHeight;</div><div class="line">            <span class="keyword">if</span> (a + b &gt;= c) &#123;</div><div class="line">                scope.$apply(attr.scrollLoad);</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">    &#125;;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">app.directive(<span class="string">'whenScrolled'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; </span><br><span class="line"><span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">scope, ele, attr</span>) </span>&#123;</span><br><span class="line">        angular.element(<span class="built_in">window</span>).on(<span class="string">'scroll'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">var</span> a = <span class="built_in">window</span>.screen.availHeight;</span><br><span class="line">            <span class="keyword">var</span> b = <span class="built_in">document</span>.documentElement.scrollTop == <span class="number">0</span> ? <span class="built_in">document</span>.body.scrollTop : <span class="built_in">document</span>.documentElement.scrollTop;</span><br><span class="line">            <span class="keyword">var</span> c = <span class="built_in">document</span>.documentElement.scrollTop == <span class="number">0</span> ? <span class="built_in">document</span>.body.scrollHeight : <span class="built_in">document</span>.documentElement.scrollHeight;</span><br><span class="line">            <span class="keyword">if</span> (a + b &gt;= c) &#123;</span><br><span class="line">                scope.$apply(attr.scrollLoad);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -459,32 +459,6 @@
 
     
 
-    
-      <div>
-        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-  <div>读后有收获可以请作者喝咖啡 ^.^</div>
-  <div id="QR">
-
-    
-      <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" width="150" src="https://static.ddhigh.com/paycode/wepay.jpg" alt="xialeistudio 微信支付">
-        <p>微信支付</p>
-      </div>
-    
-
-    
-      <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" width="150" src="https://static.ddhigh.com/paycode/alipay.jpg" alt="xialeistudio 支付宝">
-        <p>支付宝</p>
-      </div>
-    
-
-    
-
-  </div>
-</div>
-
-      </div>
     
     
       <div>
@@ -633,7 +607,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">241</span>
+                  <span class="site-state-item-count">242</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

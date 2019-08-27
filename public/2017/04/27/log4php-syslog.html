@@ -449,7 +449,7 @@
 
       
         <p>log4php是apache基金会下的一个开源项目，灵活、强大，已经有几个项目使用了log4php处理日志，目前遇到的问题是服务器太多的时候日志如何统一管理，本来想使用数据库存储。但是日志格式成了一个问题，而且不利于扩展，如果临时需要保存到文件，又要更改log4php的配置。<br>好在log4php提供了syslog的一个appender，可以将日志写入syslog;</p>
-<h2 id="log4php配置"><a href="#log4php配置" class="headerlink" title="log4php配置"></a>log4php配置</h2><figure class="highlight roboconf"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">log4php.rootLogger=INFO, stdout, stderr</div><div class="line">log4php.appender.stdout=LoggerAppenderConsole</div><div class="line">log4php.appender.stdout.layout=LoggerLayoutPattern</div><div class="line">log4php.appender.stdout.layout.ConversionPattern=%date&#123;<span class="attribute">Y-m-d H</span>:i:s&#125; [%-5p] %m%n</div><div class="line">log4php<span class="variable">.appender</span><span class="variable">.stdout</span><span class="variable">.threshold</span>=INFO</div><div class="line"></div><div class="line">log4php<span class="variable">.appender</span><span class="variable">.stderr</span>=LoggerAppenderSyslog</div><div class="line">log4php<span class="variable">.appender</span><span class="variable">.stderr</span><span class="variable">.ident</span>=qun<span class="variable">.hk-task</span></div><div class="line">log4php<span class="variable">.appender</span><span class="variable">.stderr</span><span class="variable">.priority</span>=ERR</div><div class="line">log4php<span class="variable">.appender</span><span class="variable">.stderr</span><span class="variable">.facility</span>=LOCAL0</div><div class="line">log4php<span class="variable">.appender</span><span class="variable">.stderr</span><span class="variable">.layout</span>=LoggerLayoutPattern</div><div class="line">log4php<span class="variable">.appender</span><span class="variable">.stderr</span><span class="variable">.layout</span><span class="variable">.ConversionPattern</span>=%date&#123;Y-m-d H:i:s&#125; %m%n</div><div class="line">log4php<span class="variable">.appender</span><span class="variable">.stderr</span><span class="variable">.threshold</span>=WARN</div></pre></td></tr></table></figure>
+<h2 id="log4php配置"><a href="#log4php配置" class="headerlink" title="log4php配置"></a>log4php配置</h2><figure class="highlight roboconf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">log4php.rootLogger=INFO, stdout, stderr</span><br><span class="line">log4php.appender.stdout=LoggerAppenderConsole</span><br><span class="line">log4php.appender.stdout.layout=LoggerLayoutPattern</span><br><span class="line">log4php.appender.stdout.layout.ConversionPattern=%date&#123;<span class="attribute">Y-m-d H</span>:i:s&#125; [%-5p] %m%n</span><br><span class="line">log4php<span class="variable">.appender</span><span class="variable">.stdout</span><span class="variable">.threshold</span>=INFO</span><br><span class="line"></span><br><span class="line">log4php<span class="variable">.appender</span><span class="variable">.stderr</span>=LoggerAppenderSyslog</span><br><span class="line">log4php<span class="variable">.appender</span><span class="variable">.stderr</span><span class="variable">.ident</span>=qun<span class="variable">.hk-task</span></span><br><span class="line">log4php<span class="variable">.appender</span><span class="variable">.stderr</span><span class="variable">.priority</span>=ERR</span><br><span class="line">log4php<span class="variable">.appender</span><span class="variable">.stderr</span><span class="variable">.facility</span>=LOCAL0</span><br><span class="line">log4php<span class="variable">.appender</span><span class="variable">.stderr</span><span class="variable">.layout</span>=LoggerLayoutPattern</span><br><span class="line">log4php<span class="variable">.appender</span><span class="variable">.stderr</span><span class="variable">.layout</span><span class="variable">.ConversionPattern</span>=%date&#123;Y-m-d H:i:s&#125; %m%n</span><br><span class="line">log4php<span class="variable">.appender</span><span class="variable">.stderr</span><span class="variable">.threshold</span>=WARN</span><br></pre></td></tr></table></figure>
 <p>这里使用两个输出目的地,stdout输出到终端，stderr输出到syslod，log4php配置对应rsyslog的配置关系为：</p>
 <ul>
 <li>ident -&gt; syslog中的tag</li>
@@ -457,9 +457,9 @@
 <li>facility -&gt; syslog中的facility，请注意全部为大写</li>
 </ul>
 <h2 id="rsyslog配置"><a href="#rsyslog配置" class="headerlink" title="rsyslog配置"></a>rsyslog配置</h2><p>rsyslog配置文件一般在 <em>/etc/rsyslog.conf</em> 以及 <em>/etc/rsyslog.d</em>目录下<br>我们不更改主配置文件，在<em>/etc/rsyslog.d/</em>目录下新建文件</p>
-<figure class="highlight vim"><figcaption><span>local0.conf```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">内容为</div><div class="line"></div><div class="line">```local0.* /var/<span class="built_in">log</span>/local0.<span class="built_in">log</span></div></pre></td></tr></table></figure>
+<figure class="highlight vim"><figcaption><span>local0.conf```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">内容为</span><br><span class="line"></span><br><span class="line">```local0.* /var/<span class="built_in">log</span>/local0.<span class="built_in">log</span></span><br></pre></td></tr></table></figure>
 <p>rsyslog输出可以写成服务器，本文为了测试直接写入文件，有需要的可以根据实际情况进行转发。重启rsyslog</p>
-<figure class="highlight plain"><figcaption><span>rsyslog restart```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">## PHP加载配置</div><div class="line">```php</div><div class="line">&lt;?php</div><div class="line">\Logger::configure(__DIR__ . &apos;/log4php.properties&apos;);</div><div class="line">$logger = \Logger::getLogger(&apos;default&apos;);</div><div class="line">$logger-&gt;info(&apos;info&apos;);</div><div class="line">$logger-&gt;error(&apos;error&apos;);</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><figcaption><span>rsyslog restart```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## PHP加载配置</span><br><span class="line">```php</span><br><span class="line">&lt;?php</span><br><span class="line">\Logger::configure(__DIR__ . &apos;/log4php.properties&apos;);</span><br><span class="line">$logger = \Logger::getLogger(&apos;default&apos;);</span><br><span class="line">$logger-&gt;info(&apos;info&apos;);</span><br><span class="line">$logger-&gt;error(&apos;error&apos;);</span><br></pre></td></tr></table></figure>
 <p>可以看到<em>/var/log/local0.log</em>中多出一行<em>error</em>的日志</p>
 
       
@@ -470,32 +470,6 @@
 
     
 
-    
-      <div>
-        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-  <div>读后有收获可以请作者喝咖啡 ^.^</div>
-  <div id="QR">
-
-    
-      <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" width="150" src="https://static.ddhigh.com/paycode/wepay.jpg" alt="xialeistudio 微信支付">
-        <p>微信支付</p>
-      </div>
-    
-
-    
-      <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" width="150" src="https://static.ddhigh.com/paycode/alipay.jpg" alt="xialeistudio 支付宝">
-        <p>支付宝</p>
-      </div>
-    
-
-    
-
-  </div>
-</div>
-
-      </div>
     
     
       <div>
@@ -645,7 +619,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">241</span>
+                  <span class="site-state-item-count">242</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

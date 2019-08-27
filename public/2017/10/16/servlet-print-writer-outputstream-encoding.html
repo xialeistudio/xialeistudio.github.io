@@ -430,7 +430,7 @@
         <p>有个项目需要使用java开发一个简单的web接口用来请求加密数据，但是servlet之前只随便用了一下，平时工作也是以<strong>node</strong>为主。</p>
 <h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>问题大致是”iso 88591 encoding之类的问题，稍微去google搜了一下，可能是搜的关键词不准确导致搜到的答案不理想，无意中看到有人讲writer和outputstream的问题。</p>
 <h1 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h1><p>google到PrintWriter和OutputStream的区别</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">PrintWriter是以字符为单位，对所有的信息进行处理，而ServletOutputStream仅对二进制的资料进行处理。</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PrintWriter是以字符为单位，对所有的信息进行处理，而ServletOutputStream仅对二进制的资料进行处理。</span><br></pre></td></tr></table></figure>
 <p>而我输出的是UTF8格式的字符串，所以OutputStream并不认识。</p>
 <h1 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h1><p>使用<strong>PrintWriter</strong>输出即可。</p>
 
@@ -442,32 +442,6 @@
 
     
 
-    
-      <div>
-        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-  <div>读后有收获可以请作者喝咖啡 ^.^</div>
-  <div id="QR">
-
-    
-      <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" width="150" src="https://static.ddhigh.com/paycode/wepay.jpg" alt="xialeistudio 微信支付">
-        <p>微信支付</p>
-      </div>
-    
-
-    
-      <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" width="150" src="https://static.ddhigh.com/paycode/alipay.jpg" alt="xialeistudio 支付宝">
-        <p>支付宝</p>
-      </div>
-    
-
-    
-
-  </div>
-</div>
-
-      </div>
     
     
       <div>
@@ -625,7 +599,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">241</span>
+                  <span class="site-state-item-count">242</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

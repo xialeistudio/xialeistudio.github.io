@@ -465,7 +465,7 @@
 <li>pm2 startup, pm2 save 两条命令，用来保证服务器启动时,pm2管理的程序自动运行</li>
 </ul>
 <h2 id="Java程序处理"><a href="#Java程序处理" class="headerlink" title="Java程序处理"></a>Java程序处理</h2><p>在jar的同级目录新建应用启动配置文件，如<code>pm2.json</code>，内容如下：</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"name"</span>: <span class="string">"my-server"</span>,</div><div class="line">    <span class="attr">"script"</span>: <span class="string">"/usr/bin/java"</span>,</div><div class="line">    <span class="attr">"args"</span>: [</div><div class="line">        <span class="string">"-jar"</span>,</div><div class="line">        <span class="string">"server.jar"</span></div><div class="line">    ],</div><div class="line">    <span class="attr">"exec_interpreter"</span>: <span class="string">""</span>,</div><div class="line">    <span class="attr">"exec_mode"</span>: <span class="string">"fork"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"name"</span>: <span class="string">"my-server"</span>,</span><br><span class="line">    <span class="attr">"script"</span>: <span class="string">"/usr/bin/java"</span>,</span><br><span class="line">    <span class="attr">"args"</span>: [</span><br><span class="line">        <span class="string">"-jar"</span>,</span><br><span class="line">        <span class="string">"server.jar"</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">"exec_interpreter"</span>: <span class="string">""</span>,</span><br><span class="line">    <span class="attr">"exec_mode"</span>: <span class="string">"fork"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>说明如下：</p>
 <ul>
 <li>name 进程名称（显示在<code>pm2 list</code>命令中）</li>
@@ -474,7 +474,7 @@
 <li>exec_interpreter NodeJs解析器，本文不适用</li>
 <li>exec_mode 执行模式[cluster|fork]这个针对NodeJs应用的配置，非NodeJs应用统一fork</li>
 </ul>
-<p>配置文件完成后，使用<br><figure class="highlight gcode"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">p<span class="name">m2</span> start p<span class="name">m2.</span>jso<span class="symbol">n</span></div></pre></td></tr></table></figure></p>
+<p>配置文件完成后，使用<br><figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">p<span class="name">m2</span> start p<span class="name">m2.</span>jso<span class="symbol">n</span></span><br></pre></td></tr></table></figure></p>
 <p>即可看到应用被启动</p>
 <h2 id="日志管理"><a href="#日志管理" class="headerlink" title="日志管理"></a>日志管理</h2><p>日志路径在<code>~/.pm2/logs</code>，<code>stdout</code>和<code>stderr</code>被分开存放，程序中的所有<code>stdout</code>和<code>stderr</code>都被收集方便查错。</p>
 
@@ -486,32 +486,6 @@
 
     
 
-    
-      <div>
-        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-  <div>读后有收获可以请作者喝咖啡 ^.^</div>
-  <div id="QR">
-
-    
-      <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" width="150" src="https://static.ddhigh.com/paycode/wepay.jpg" alt="xialeistudio 微信支付">
-        <p>微信支付</p>
-      </div>
-    
-
-    
-      <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" width="150" src="https://static.ddhigh.com/paycode/alipay.jpg" alt="xialeistudio 支付宝">
-        <p>支付宝</p>
-      </div>
-    
-
-    
-
-  </div>
-</div>
-
-      </div>
     
     
       <div>
@@ -667,7 +641,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">241</span>
+                  <span class="site-state-item-count">242</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

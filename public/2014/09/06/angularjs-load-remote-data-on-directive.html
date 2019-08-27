@@ -451,8 +451,8 @@
       
         <p>假设有一个指令用来根据IP地址进行地位，获取实际地址。</p>
 <p>首先，我们的IP地址是由后台PHP程序返回的，这里需要一个Http请求，使用了Http请求就会有类似回调的问题，之前想了各种办法，死活拿不到数据，后来去ng官网看了下，需要使用ngModel，这个是双向绑定。</p>
-<h2 id="指令代码"><a href="#指令代码" class="headerlink" title="指令代码"></a>指令代码</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">app.directive(<span class="string">'location'</span>, [<span class="string">'ApiService'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">ApiService</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> &#123;</div><div class="line">        restrict: <span class="string">'A'</span>,</div><div class="line">        <span class="built_in">require</span>:<span class="string">'ngModel'</span>,</div><div class="line">        link: <span class="function"><span class="keyword">function</span> (<span class="params">scope, ele, attrs,ngModel</span>) </span>&#123;</div><div class="line">            ele.addClass(<span class="string">'opt'</span>);</div><div class="line">            ele.bind(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">                ele.text(<span class="string">'定位中...'</span>);</div><div class="line">                ApiService.location(ngModel.$viewValue).success(<span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</div><div class="line">                    ele.text(data.country + <span class="string">' '</span> + data.region + <span class="string">' '</span> + data.city + <span class="string">' '</span> + data.isp);</div><div class="line">                &#125;);</div><div class="line">            &#125;);</div><div class="line">        &#125;</div><div class="line">    &#125;;</div><div class="line">&#125;]);</div></pre></td></tr></table></figure>
-<h2 id="HTML部分"><a href="#HTML部分" class="headerlink" title="HTML部分"></a>HTML部分</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">location</span> <span class="attr">ng-model</span>=<span class="string">"user.login_ip"</span>&gt;</span>定位<span class="tag">&lt;/<span class="name">span</span>&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="指令代码"><a href="#指令代码" class="headerlink" title="指令代码"></a>指令代码</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">app.directive(<span class="string">'location'</span>, [<span class="string">'ApiService'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">ApiService</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        restrict: <span class="string">'A'</span>,</span><br><span class="line">        <span class="built_in">require</span>:<span class="string">'ngModel'</span>,</span><br><span class="line">        link: <span class="function"><span class="keyword">function</span> (<span class="params">scope, ele, attrs,ngModel</span>) </span>&#123;</span><br><span class="line">            ele.addClass(<span class="string">'opt'</span>);</span><br><span class="line">            ele.bind(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">                ele.text(<span class="string">'定位中...'</span>);</span><br><span class="line">                ApiService.location(ngModel.$viewValue).success(<span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</span><br><span class="line">                    ele.text(data.country + <span class="string">' '</span> + data.region + <span class="string">' '</span> + data.city + <span class="string">' '</span> + data.isp);</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;]);</span><br></pre></td></tr></table></figure>
+<h2 id="HTML部分"><a href="#HTML部分" class="headerlink" title="HTML部分"></a>HTML部分</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">location</span> <span class="attr">ng-model</span>=<span class="string">"user.login_ip"</span>&gt;</span>定位<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>JS中的ngModel 会去搜索该指令的元素上的ng-model指令，这里会搜索到一个user.login_ip 的model,然后JS中使用ngModel.$viewValue 就可以拿到值了。</p>
 
       
@@ -463,32 +463,6 @@
 
     
 
-    
-      <div>
-        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-  <div>读后有收获可以请作者喝咖啡 ^.^</div>
-  <div id="QR">
-
-    
-      <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" width="150" src="https://static.ddhigh.com/paycode/wepay.jpg" alt="xialeistudio 微信支付">
-        <p>微信支付</p>
-      </div>
-    
-
-    
-      <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" width="150" src="https://static.ddhigh.com/paycode/alipay.jpg" alt="xialeistudio 支付宝">
-        <p>支付宝</p>
-      </div>
-    
-
-    
-
-  </div>
-</div>
-
-      </div>
     
     
       <div>
@@ -646,7 +620,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">241</span>
+                  <span class="site-state-item-count">242</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

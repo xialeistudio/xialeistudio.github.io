@@ -459,13 +459,13 @@
 <p>事务处理可以用来维护数据库的完整性，保证成批的 SQL 语句要么全部执行，要么全部不执行。</p>
 </blockquote>
 <p>一般情况下，每一条SQL的执行情况都需要进行判断，如果执行成功则继续，否则回滚事务。以下是PDO事务代码：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">$pdo = <span class="keyword">new</span> PDO(<span class="string">'mysql:host=localhost;dbname=demo'</span>, <span class="string">'root'</span>, <span class="string">'root'</span>);</div><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">    $pdo-&gt;beginTransaction();</div><div class="line">    <span class="comment">//todo 业务代码</span></div><div class="line">    $pdo-&gt;commit();</div><div class="line">&#125; <span class="keyword">catch</span> (\<span class="keyword">Exception</span> $e) &#123;</div><div class="line">    $pdo-&gt;rollBack();</div><div class="line">    <span class="keyword">throw</span> $e;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$pdo = <span class="keyword">new</span> PDO(<span class="string">'mysql:host=localhost;dbname=demo'</span>, <span class="string">'root'</span>, <span class="string">'root'</span>);</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    $pdo-&gt;beginTransaction();</span><br><span class="line">    <span class="comment">//todo 业务代码</span></span><br><span class="line">    $pdo-&gt;commit();</span><br><span class="line">&#125; <span class="keyword">catch</span> (\<span class="keyword">Exception</span> $e) &#123;</span><br><span class="line">    $pdo-&gt;rollBack();</span><br><span class="line">    <span class="keyword">throw</span> $e;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="PHP实现"><a href="#PHP实现" class="headerlink" title="PHP实现"></a>PHP实现</h2><p>几乎所有事务都需要如此处理，但是这样重复代码太多，实际上只需要关心的部分是 <strong>业务代码</strong> 部分，使用闭包函数可以很好的解决这个问题。</p>
 <p>闭包函数可以理解为具体的业务逻辑，不带任何事务相关操作，如果出现异常，会自动回滚事务。</p>
 <p>PHP的简单实现代码如下:</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">transaction</span><span class="params">(PDO $pdo, callable $callable)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        $pdo-&gt;beginTransaction();</div><div class="line">        $result = call_user_func($callable, $pdo);</div><div class="line">        $pdo-&gt;commit();</div><div class="line">        <span class="keyword">return</span> $result;</div><div class="line">    &#125; <span class="keyword">catch</span> (\<span class="keyword">Exception</span> $e) &#123;</div><div class="line">        $pdo-&gt;rollBack();</div><div class="line">        <span class="keyword">throw</span> $e;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">transaction</span><span class="params">(PDO $pdo, callable $callable)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        $pdo-&gt;beginTransaction();</span><br><span class="line">        $result = call_user_func($callable, $pdo);</span><br><span class="line">        $pdo-&gt;commit();</span><br><span class="line">        <span class="keyword">return</span> $result;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (\<span class="keyword">Exception</span> $e) &#123;</span><br><span class="line">        $pdo-&gt;rollBack();</span><br><span class="line">        <span class="keyword">throw</span> $e;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>PHP调用方法代码如下：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">transaction($pdo, <span class="function"><span class="keyword">function</span> <span class="params">(PDO $pdo)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> $pdo-&gt;query(<span class="string">'INSERT INTO `test` VALUES (1)'</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">transaction($pdo, <span class="function"><span class="keyword">function</span> <span class="params">(PDO $pdo)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> $pdo-&gt;query(<span class="string">'INSERT INTO `test` VALUES (1)'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>使用闭包函数去简化样板代码在生产中是很常见的，具体的设计模式应该是类似“模板方法模式”。</p>
 
       
@@ -476,32 +476,6 @@
 
     
 
-    
-      <div>
-        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-  <div>读后有收获可以请作者喝咖啡 ^.^</div>
-  <div id="QR">
-
-    
-      <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" width="150" src="https://static.ddhigh.com/paycode/wepay.jpg" alt="xialeistudio 微信支付">
-        <p>微信支付</p>
-      </div>
-    
-
-    
-      <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" width="150" src="https://static.ddhigh.com/paycode/alipay.jpg" alt="xialeistudio 支付宝">
-        <p>支付宝</p>
-      </div>
-    
-
-    
-
-  </div>
-</div>
-
-      </div>
     
     
       <div>
@@ -659,7 +633,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">241</span>
+                  <span class="site-state-item-count">242</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

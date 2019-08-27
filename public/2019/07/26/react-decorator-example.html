@@ -458,12 +458,12 @@
 </blockquote>
 <p>装饰器为我们提供了<code>运行时修改数据</code>的能力。</p>
 <h2 id="React例子"><a href="#React例子" class="headerlink" title="React例子"></a>React例子</h2><p>Parent.tsx</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Component</span></div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">class</span> App <span class="keyword">extends</span> PureComponent &#123;</div><div class="line">  handleClick() &#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'parent click'</span>);</div><div class="line">  &#125;</div><div class="line">  render() &#123;</div><div class="line">    <span class="keyword">return</span> (</div><div class="line">      &lt;div className=<span class="string">"App"</span> onClick=&#123;<span class="keyword">this</span>.handleClick&#125;&gt;parent&lt;<span class="regexp">/div&gt;</span></div><div class="line"><span class="regexp">    );</span></div><div class="line"><span class="regexp">  &#125;</span></div><div class="line"><span class="regexp">&#125;</span></div></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">class</span> App <span class="keyword">extends</span> PureComponent &#123;</span><br><span class="line">  handleClick() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'parent click'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div className=<span class="string">"App"</span> onClick=&#123;<span class="keyword">this</span>.handleClick&#125;&gt;parent&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    );</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
 <p>Component装饰器</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Component</span>&lt;<span class="title">T</span> <span class="title">extends</span> </span>&#123; <span class="keyword">new</span>(...args: <span class="built_in">any</span>[]): <span class="built_in">any</span> &#125;&gt;(component: T) &#123; <span class="comment">// 泛型限定</span></div><div class="line">  <span class="keyword">return</span> <span class="keyword">class</span> <span class="keyword">extends</span> component &#123;</div><div class="line">    handleClick() &#123; <span class="comment">// 劫持onClick</span></div><div class="line">      <span class="keyword">super</span>.handleClick()</div><div class="line">      <span class="built_in">console</span>.log(<span class="string">'child clicked'</span>);</div><div class="line">    &#125;</div><div class="line">    render() &#123;</div><div class="line">      <span class="keyword">const</span> parent = <span class="keyword">super</span>.render()</div><div class="line">      <span class="comment">// 劫持onClick</span></div><div class="line">      <span class="keyword">return</span> React.cloneElement(parent, &#123; onClick: <span class="keyword">this</span>.handleClick &#125;)</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Component</span>&lt;<span class="title">T</span> <span class="title">extends</span> </span>&#123; <span class="keyword">new</span>(...args: <span class="built_in">any</span>[]): <span class="built_in">any</span> &#125;&gt;(component: T) &#123; <span class="comment">// 泛型限定</span></span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">class</span> <span class="keyword">extends</span> component &#123;</span><br><span class="line">    handleClick() &#123; <span class="comment">// 劫持onClick</span></span><br><span class="line">      <span class="keyword">super</span>.handleClick()</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">'child clicked'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    render() &#123;</span><br><span class="line">      <span class="keyword">const</span> parent = <span class="keyword">super</span>.render()</span><br><span class="line">      <span class="comment">// 劫持onClick</span></span><br><span class="line">      <span class="keyword">return</span> React.cloneElement(parent, &#123; onClick: <span class="keyword">this</span>.handleClick &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>点击渲染之后的<code>parent</code>字符，可以看到劫持成功</p>
 <p><img src="https://user-gold-cdn.xitu.io/2019/7/26/16c2e0b64f0d48a7?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="clipboard.png"></p>
-<h2 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h2><p><a href="https://github.com/xialeistudio/react-decorator-example" target="_blank" rel="external">react-decorator-example</a></p>
+<h2 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h2><p><a href="https://github.com/xialeistudio/react-decorator-example" target="_blank" rel="noopener">react-decorator-example</a></p>
 <h2 id="文后"><a href="#文后" class="headerlink" title="文后"></a>文后</h2><p>本文写的只是比较简单的装饰器用法，但是可以基于此文的原来来开发如<code>登录后才能访问的组件</code>之类的装饰器，将业务逻辑更好的组织起来。</p>
 <p>对TS有兴趣的伙伴可以加我微信交流~</p>
 <p><img src="https://more-happy.ddhigh.com/Fg5UE615NzZ0dXo6_gUe6qpCJILG?imageView2/1/w/200" alt="微信"></p>
@@ -476,32 +476,6 @@
 
     
 
-    
-      <div>
-        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-  <div>读后有收获可以请作者喝咖啡 ^.^</div>
-  <div id="QR">
-
-    
-      <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" width="150" src="https://static.ddhigh.com/paycode/wepay.jpg" alt="xialeistudio 微信支付">
-        <p>微信支付</p>
-      </div>
-    
-
-    
-      <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" width="150" src="https://static.ddhigh.com/paycode/alipay.jpg" alt="xialeistudio 支付宝">
-        <p>支付宝</p>
-      </div>
-    
-
-    
-
-  </div>
-</div>
-
-      </div>
     
     
       <div>
@@ -659,7 +633,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">241</span>
+                  <span class="site-state-item-count">242</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

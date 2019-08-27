@@ -462,9 +462,9 @@
 <li>返回数据</li>
 </ol>
 <p>PHP示例代码如下：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">loadUser</span><span class="params">($userId)</span> </span>&#123;</div><div class="line">    $data = $cache-&gt;get(<span class="string">'user-'</span>. $userId);</div><div class="line">    <span class="keyword">if</span>(!<span class="keyword">empty</span>($data)) &#123;</div><div class="line">        <span class="keyword">return</span> $data;</div><div class="line">    &#125;</div><div class="line">    $data = $db-&gt;findOne([<span class="string">'user_id'</span> =&gt; $userId]);</div><div class="line">    $cache-&gt;set(<span class="string">'user-'</span>. $userId, $data, <span class="number">7200</span>);</div><div class="line">    <span class="keyword">return</span> $data;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">loadUser</span><span class="params">($userId)</span> </span>&#123;</span><br><span class="line">    $data = $cache-&gt;get(<span class="string">'user-'</span>. $userId);</span><br><span class="line">    <span class="keyword">if</span>(!<span class="keyword">empty</span>($data)) &#123;</span><br><span class="line">        <span class="keyword">return</span> $data;</span><br><span class="line">    &#125;</span><br><span class="line">    $data = $db-&gt;findOne([<span class="string">'user_id'</span> =&gt; $userId]);</span><br><span class="line">    $cache-&gt;set(<span class="string">'user-'</span>. $userId, $data, <span class="number">7200</span>);</span><br><span class="line">    <span class="keyword">return</span> $data;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>其实<strong>查找缓存，如果不存在则查找数据库之后写入缓存</strong>这个操作也可以用闭包来实现：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getOrSet</span><span class="params">($key, callable $callable, $expire = <span class="number">0</span>)</span> </span>&#123;</div><div class="line">    $data = $cache-&gt;get($key);</div><div class="line">    <span class="keyword">if</span>(!<span class="keyword">empty</span>($data)) &#123;</div><div class="line">        <span class="keyword">return</span> $data;</div><div class="line">    &#125;</div><div class="line">    $data = call_user_func($callable);</div><div class="line">    $cache-&gt;set($key, $data, $expire);</div><div class="line">    <span class="keyword">return</span> $data;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">loadUser</span><span class="params">($userId)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> $cache-&gt;getOrSet(<span class="string">'user-'</span>. $userId, <span class="function"><span class="keyword">function</span><span class="params">()</span> <span class="title">use</span><span class="params">($db, $userId)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> $db-&gt;findOne([<span class="string">'user_id'</span> =&gt; $userId]);</div><div class="line">    &#125;, <span class="number">7200</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getOrSet</span><span class="params">($key, callable $callable, $expire = <span class="number">0</span>)</span> </span>&#123;</span><br><span class="line">    $data = $cache-&gt;get($key);</span><br><span class="line">    <span class="keyword">if</span>(!<span class="keyword">empty</span>($data)) &#123;</span><br><span class="line">        <span class="keyword">return</span> $data;</span><br><span class="line">    &#125;</span><br><span class="line">    $data = call_user_func($callable);</span><br><span class="line">    $cache-&gt;set($key, $data, $expire);</span><br><span class="line">    <span class="keyword">return</span> $data;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">loadUser</span><span class="params">($userId)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> $cache-&gt;getOrSet(<span class="string">'user-'</span>. $userId, <span class="function"><span class="keyword">function</span><span class="params">()</span> <span class="title">use</span><span class="params">($db, $userId)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> $db-&gt;findOne([<span class="string">'user_id'</span> =&gt; $userId]);</span><br><span class="line">    &#125;, <span class="number">7200</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>可以看到通过闭包省去了手动<strong>get</strong>和<strong>set</strong>的过程，而查询数据库那一步是只有在缓存读取不到才会执行。</p>
 
       
@@ -475,32 +475,6 @@
 
     
 
-    
-      <div>
-        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-  <div>读后有收获可以请作者喝咖啡 ^.^</div>
-  <div id="QR">
-
-    
-      <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" width="150" src="https://static.ddhigh.com/paycode/wepay.jpg" alt="xialeistudio 微信支付">
-        <p>微信支付</p>
-      </div>
-    
-
-    
-      <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" width="150" src="https://static.ddhigh.com/paycode/alipay.jpg" alt="xialeistudio 支付宝">
-        <p>支付宝</p>
-      </div>
-    
-
-    
-
-  </div>
-</div>
-
-      </div>
     
     
       <div>
@@ -658,7 +632,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">241</span>
+                  <span class="site-state-item-count">242</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

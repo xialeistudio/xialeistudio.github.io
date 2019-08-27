@@ -454,17 +454,17 @@
 <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><ul>
 <li>基于composer</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">composer require apache/log4php</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer require apache/log4php</span><br></pre></td></tr></table></figure>
 <ul>
 <li>下载源码包</li>
 </ul>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http:<span class="regexp">//</span>www.apache.org<span class="regexp">/dyn/</span>closer.cgi<span class="regexp">/logging/</span>log4php<span class="regexp">/2.3.0/</span>apache-log4php-<span class="number">2.3</span>.<span class="number">0</span>-src.zip</div></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:<span class="regexp">//</span>www.apache.org<span class="regexp">/dyn/</span>closer.cgi<span class="regexp">/logging/</span>log4php<span class="regexp">/2.3.0/</span>apache-log4php-<span class="number">2.3</span>.<span class="number">0</span>-src.zip</span><br></pre></td></tr></table></figure>
 <h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p><em>基于composer的程序不用手动引用文件，composer会自动加载相应类文件。如果未使用composer，请手动引用Logger.php文件</em></p>
 <h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>log4php配置非常灵活，具体可以查看官方文档，贴一下笔者目前的常用配置:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">log4php.rootLogger=INFO, stderr, stdout</div><div class="line">log4php.appender.stdout=LoggerAppenderConsole</div><div class="line">log4php.appender.stdout.layout=LoggerLayoutPattern</div><div class="line">log4php.appender.stdout.layout.ConversionPattern=%date&#123;Y-m-d H:i:s&#125; [%p] %m%n</div><div class="line">log4php.appender.stdout.threshold=INFO</div><div class="line"></div><div class="line">log4php.appender.stderr=LoggerAppenderConsole</div><div class="line">log4php.appender.stderr.layout=LoggerLayoutPattern</div><div class="line">log4php.appender.stderr.target=stderr</div><div class="line">log4php.appender.stderr.threshold=ERROR</div><div class="line">log4php.appender.stderr.layout.ConversionPattern=%date&#123;Y-m-d H:i:s&#125; [%p] [%l] %m%n</div></pre></td></tr></table></figure>
-<h3 id="实例化"><a href="#实例化" class="headerlink" title="实例化"></a>实例化</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">\Logger::configure(<span class="keyword">__DIR__</span> . <span class="string">'/log4php.properties'</span>);</div><div class="line"><span class="keyword">$this</span>-&gt;logger = \Logger::getLogger(<span class="string">'default'</span>);</div><div class="line"><span class="keyword">$this</span>-&gt;logger-&gt;info(<span class="string">'hello world'</span>);</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">log4php.rootLogger=INFO, stderr, stdout</span><br><span class="line">log4php.appender.stdout=LoggerAppenderConsole</span><br><span class="line">log4php.appender.stdout.layout=LoggerLayoutPattern</span><br><span class="line">log4php.appender.stdout.layout.ConversionPattern=%date&#123;Y-m-d H:i:s&#125; [%p] %m%n</span><br><span class="line">log4php.appender.stdout.threshold=INFO</span><br><span class="line"></span><br><span class="line">log4php.appender.stderr=LoggerAppenderConsole</span><br><span class="line">log4php.appender.stderr.layout=LoggerLayoutPattern</span><br><span class="line">log4php.appender.stderr.target=stderr</span><br><span class="line">log4php.appender.stderr.threshold=ERROR</span><br><span class="line">log4php.appender.stderr.layout.ConversionPattern=%date&#123;Y-m-d H:i:s&#125; [%p] [%l] %m%n</span><br></pre></td></tr></table></figure>
+<h3 id="实例化"><a href="#实例化" class="headerlink" title="实例化"></a>实例化</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">\Logger::configure(<span class="keyword">__DIR__</span> . <span class="string">'/log4php.properties'</span>);</span><br><span class="line"><span class="keyword">$this</span>-&gt;logger = \Logger::getLogger(<span class="string">'default'</span>);</span><br><span class="line"><span class="keyword">$this</span>-&gt;logger-&gt;info(<span class="string">'hello world'</span>);</span><br></pre></td></tr></table></figure>
 <p>控制台会输出:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">2016-12-21UTC06:41:34 [INFO] hello world</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2016-12-21UTC06:41:34 [INFO] hello world</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -473,32 +473,6 @@
 
     
 
-    
-      <div>
-        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-  <div>读后有收获可以请作者喝咖啡 ^.^</div>
-  <div id="QR">
-
-    
-      <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" width="150" src="https://static.ddhigh.com/paycode/wepay.jpg" alt="xialeistudio 微信支付">
-        <p>微信支付</p>
-      </div>
-    
-
-    
-      <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" width="150" src="https://static.ddhigh.com/paycode/alipay.jpg" alt="xialeistudio 支付宝">
-        <p>支付宝</p>
-      </div>
-    
-
-    
-
-  </div>
-</div>
-
-      </div>
     
     
       <div>
@@ -656,7 +630,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">241</span>
+                  <span class="site-state-item-count">242</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

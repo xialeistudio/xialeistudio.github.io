@@ -452,7 +452,7 @@
         <p>项目使用了<strong>Flux+React Router</strong>架构，有一些需要操作路由的地方是放在Action层的，比如登录之类，但是Action层不是React组件，需要操作路由的话有点麻烦。   </p>
 <p>当然最终还是有一个办法的，利用<strong>window.location.href=</strong>，但是既然用了react，再用这种导航模式未免不妥。   </p>
 <p>查看react router源码发现,<strong>hashHistory,browseHistory</strong>中有<strong>push</strong>方法，经过测试之后可行。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> &#123;hashHistory&#125; <span class="keyword">from</span> <span class="string">'react-router'</span>;</div><div class="line">hashHistory.push(<span class="string">'/login'</span>);</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;hashHistory&#125; <span class="keyword">from</span> <span class="string">'react-router'</span>;</span><br><span class="line">hashHistory.push(<span class="string">'/login'</span>);</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -461,32 +461,6 @@
 
     
 
-    
-      <div>
-        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-  <div>读后有收获可以请作者喝咖啡 ^.^</div>
-  <div id="QR">
-
-    
-      <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" width="150" src="https://static.ddhigh.com/paycode/wepay.jpg" alt="xialeistudio 微信支付">
-        <p>微信支付</p>
-      </div>
-    
-
-    
-      <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" width="150" src="https://static.ddhigh.com/paycode/alipay.jpg" alt="xialeistudio 支付宝">
-        <p>支付宝</p>
-      </div>
-    
-
-    
-
-  </div>
-</div>
-
-      </div>
     
     
       <div>
@@ -637,7 +611,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">241</span>
+                  <span class="site-state-item-count">242</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

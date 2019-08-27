@@ -451,18 +451,18 @@
       
         <p>缓存和异步是两个极大提升用户体验的好东西，android加载图片时的开销还是挺大的，要是不做缓存同步加载，网速不给力的情况下，等个十几秒是有可能的。</p>
 <p>今天要说的是一个叫做ImageLoader的库</p>
-<p>GITHUB:<a href="https://github.com/nostra13/Android-Universal-Image-Loader" target="_blank" rel="external">https://github.com/nostra13/Android-Universal-Image-Loader</a></p>
+<p>GITHUB:<a href="https://github.com/nostra13/Android-Universal-Image-Loader" target="_blank" rel="noopener">https://github.com/nostra13/Android-Universal-Image-Loader</a></p>
 <p>使用这个库有以下几步：</p>
 <ul>
 <li>导入libs目录</li>
 <li>声明自己的MyApplication类（继承Application）</li>
 <li>在onCreate()方法中</li>
 </ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onCreate();</div><div class="line">        DisplayImageOptions options = <span class="keyword">new</span> DisplayImageOptions.Builder()  </div><div class="line">        .cacheInMemory()  <span class="comment">//缓存在内存中</span></div><div class="line">        .cacheOnDisc()  <span class="comment">//磁盘缓存</span></div><div class="line">        .build();  </div><div class="line">        ImageLoaderConfiguration config2 = <span class="keyword">new</span> ImageLoaderConfiguration.Builder(<span class="keyword">this</span>)</div><div class="line">        .defaultDisplayImageOptions(options)</div><div class="line">          .threadPriority(Thread.NORM_PRIORITY - <span class="number">2</span>)</div><div class="line">          .denyCacheImageMultipleSizesInMemory()</div><div class="line">          .discCacheFileNameGenerator(<span class="keyword">new</span> Md5FileNameGenerator())</div><div class="line">          .tasksProcessingOrder(QueueProcessingType.LIFO)</div><div class="line">          .build();</div><div class="line">        ImageLoader.getInstance().init(config2);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate();</span><br><span class="line">        DisplayImageOptions options = <span class="keyword">new</span> DisplayImageOptions.Builder()  </span><br><span class="line">        .cacheInMemory()  <span class="comment">//缓存在内存中</span></span><br><span class="line">        .cacheOnDisc()  <span class="comment">//磁盘缓存</span></span><br><span class="line">        .build();  </span><br><span class="line">        ImageLoaderConfiguration config2 = <span class="keyword">new</span> ImageLoaderConfiguration.Builder(<span class="keyword">this</span>)</span><br><span class="line">        .defaultDisplayImageOptions(options)</span><br><span class="line">          .threadPriority(Thread.NORM_PRIORITY - <span class="number">2</span>)</span><br><span class="line">          .denyCacheImageMultipleSizesInMemory()</span><br><span class="line">          .discCacheFileNameGenerator(<span class="keyword">new</span> Md5FileNameGenerator())</span><br><span class="line">          .tasksProcessingOrder(QueueProcessingType.LIFO)</span><br><span class="line">          .build();</span><br><span class="line">        ImageLoader.getInstance().init(config2);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
 <li>在要加载图片的地方使用</li>
 </ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">DisplayImageOptions options = <span class="keyword">new</span> DisplayImageOptions.Builder()</div><div class="line">				.cacheInMemory() <span class="comment">// 缓存用</span></div><div class="line">				.cacheOnDisc()</div><div class="line">				.bitmapConfig(Bitmap.Config.RGB_565)<span class="comment">//防止溢出</span></div><div class="line">				.displayer(<span class="keyword">new</span> RoundedBitmapDisplayer(<span class="number">139</span>)) <span class="comment">// 图片圆角显示，值为整数</span></div><div class="line">				.build();</div><div class="line">ImageLoader.getInstance().displayImage(url, avatar, options);</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">DisplayImageOptions options = <span class="keyword">new</span> DisplayImageOptions.Builder()</span><br><span class="line">				.cacheInMemory() <span class="comment">// 缓存用</span></span><br><span class="line">				.cacheOnDisc()</span><br><span class="line">				.bitmapConfig(Bitmap.Config.RGB_565)<span class="comment">//防止溢出</span></span><br><span class="line">				.displayer(<span class="keyword">new</span> RoundedBitmapDisplayer(<span class="number">139</span>)) <span class="comment">// 图片圆角显示，值为整数</span></span><br><span class="line">				.build();</span><br><span class="line">ImageLoader.getInstance().displayImage(url, avatar, options);</span><br></pre></td></tr></table></figure>
 <p>其中 url 是图片URL地址，avatar为ImageView,options为动态配置，这里加了一个防止溢出的参数。</p>
 <p>好了，使用起来是不是很简单呢~我们压根不用操心异步和缓存的问题了</p>
 
@@ -474,32 +474,6 @@
 
     
 
-    
-      <div>
-        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-  <div>读后有收获可以请作者喝咖啡 ^.^</div>
-  <div id="QR">
-
-    
-      <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" width="150" src="https://static.ddhigh.com/paycode/wepay.jpg" alt="xialeistudio 微信支付">
-        <p>微信支付</p>
-      </div>
-    
-
-    
-      <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" width="150" src="https://static.ddhigh.com/paycode/alipay.jpg" alt="xialeistudio 支付宝">
-        <p>支付宝</p>
-      </div>
-    
-
-    
-
-  </div>
-</div>
-
-      </div>
     
     
       <div>
@@ -648,7 +622,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">241</span>
+                  <span class="site-state-item-count">242</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

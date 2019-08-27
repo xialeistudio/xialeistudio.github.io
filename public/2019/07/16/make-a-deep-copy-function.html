@@ -450,12 +450,12 @@
 
       
         <p>JS深拷贝概念并不新鲜，但是真正要真正理解原理还是有点难度的。这也是JS语言精粹之一吧。</p>
-<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> a = &#123;</div><div class="line">    name: <span class="string">'demo'</span>,</div><div class="line">    age: <span class="number">18</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">let</span> b = a;</div><div class="line">b.name = <span class="string">'demo1'</span>;</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(a); <span class="comment">// 输出 &#123;name: "demo1", age: 18&#125;</span></div><div class="line"><span class="built_in">console</span>.log(b); <span class="comment">// 输出 &#123;name: "demo1", age: 18&#125;</span></div></pre></td></tr></table></figure>
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = &#123;</span><br><span class="line">    name: <span class="string">'demo'</span>,</span><br><span class="line">    age: <span class="number">18</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> b = a;</span><br><span class="line">b.name = <span class="string">'demo1'</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">// 输出 &#123;name: "demo1", age: 18&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(b); <span class="comment">// 输出 &#123;name: "demo1", age: 18&#125;</span></span><br></pre></td></tr></table></figure>
 <p>因为JS对于对象的赋值使用的是浅拷贝，其中<code>一个实例变量</code>的赋值会影响到<code>所有指向该对象</code>的<code>变量</code></p>
 <h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><ol>
 <li>粗暴好使的 <code>JSON.parse(JSON.stringify)</code>，缺点: <code>丢失成员函数</code></li>
 <li><p><code>Object.assign</code>，缺点：<code>只有第一级深拷贝，子级对象依旧是浅拷贝</code>，例子如下：</p>
- <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> a = &#123;<span class="attr">name</span>:&#123;<span class="attr">demo</span>:<span class="string">'1'</span>&#125;&#125;;</div><div class="line"><span class="keyword">let</span> b = <span class="built_in">Object</span>.assign(&#123;&#125;, a);</div><div class="line"><span class="built_in">console</span>.log(a); <span class="comment">// 输出 &#123;name:&#123;demo:'1'&#125;&#125;</span></div><div class="line"><span class="built_in">console</span>.log(b); <span class="comment">// 输出 &#123;name:&#123;demo:'1'&#125;&#125;</span></div><div class="line">b.name.demo = <span class="string">'2'</span>;</div><div class="line"><span class="built_in">console</span>.log(a); <span class="comment">// 输出 &#123;name:&#123;demo:'2'&#125;&#125;</span></div><div class="line"><span class="built_in">console</span>.log(b); <span class="comment">// 输出 &#123;name:&#123;demo:'2'&#125;&#125;</span></div></pre></td></tr></table></figure>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = &#123;<span class="attr">name</span>:&#123;<span class="attr">demo</span>:<span class="string">'1'</span>&#125;&#125;;</span><br><span class="line"><span class="keyword">let</span> b = <span class="built_in">Object</span>.assign(&#123;&#125;, a);</span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">// 输出 &#123;name:&#123;demo:'1'&#125;&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(b); <span class="comment">// 输出 &#123;name:&#123;demo:'1'&#125;&#125;</span></span><br><span class="line">b.name.demo = <span class="string">'2'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">// 输出 &#123;name:&#123;demo:'2'&#125;&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(b); <span class="comment">// 输出 &#123;name:&#123;demo:'2'&#125;&#125;</span></span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <h2 id="手动实现原理"><a href="#手动实现原理" class="headerlink" title="手动实现原理"></a>手动实现原理</h2><ol>
@@ -463,9 +463,9 @@
 <li>判断当前值类型，如果是object类型且不是null(null也是object)，则递归调用拷贝函数</li>
 <li>如果当前值类型时null或者非object类型，直接return，退出本次递归</li>
 </ol>
-<h2 id="编码实现"><a href="#编码实现" class="headerlink" title="编码实现"></a>编码实现</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">deepCopy</span>(<span class="params">obj</span>) </span>&#123;</div><div class="line">    <span class="keyword">let</span> result = obj;</div><div class="line">    <span class="keyword">if</span>(<span class="keyword">typeof</span> obj === <span class="string">'object'</span> &amp;&amp; obj !== <span class="literal">null</span>) &#123;</div><div class="line">        result = <span class="built_in">Object</span>.prototype.toString.call(obj) === <span class="string">'[object Array]'</span> ? []: &#123;&#125;;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> prop <span class="keyword">in</span> obj) &#123;</div><div class="line">            result[prop] = deepCopy(obj[prop]);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> result;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="编码实现"><a href="#编码实现" class="headerlink" title="编码实现"></a>编码实现</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">deepCopy</span>(<span class="params">obj</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> result = obj;</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">typeof</span> obj === <span class="string">'object'</span> &amp;&amp; obj !== <span class="literal">null</span>) &#123;</span><br><span class="line">        result = <span class="built_in">Object</span>.prototype.toString.call(obj) === <span class="string">'[object Array]'</span> ? []: &#123;&#125;;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> prop <span class="keyword">in</span> obj) &#123;</span><br><span class="line">            result[prop] = deepCopy(obj[prop]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>验证一下：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> a = &#123;<span class="attr">name</span>:&#123;<span class="attr">demo</span>:<span class="string">'1'</span>&#125;&#125;;</div><div class="line"><span class="keyword">let</span> b = deepCopy(a);</div><div class="line"><span class="built_in">console</span>.log(a); <span class="comment">// 输出 &#123;name:&#123;demo:'1'&#125;&#125;</span></div><div class="line"><span class="built_in">console</span>.log(b); <span class="comment">// 输出 &#123;name:&#123;demo:'1'&#125;&#125;</span></div><div class="line">b.name.demo = <span class="string">'2'</span>;</div><div class="line"><span class="built_in">console</span>.log(a); <span class="comment">// 输出 &#123;name:&#123;demo:'1'&#125;&#125;</span></div><div class="line"><span class="built_in">console</span>.log(b); <span class="comment">// 输出 &#123;name:&#123;demo:'2'&#125;&#125;</span></div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = &#123;<span class="attr">name</span>:&#123;<span class="attr">demo</span>:<span class="string">'1'</span>&#125;&#125;;</span><br><span class="line"><span class="keyword">let</span> b = deepCopy(a);</span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">// 输出 &#123;name:&#123;demo:'1'&#125;&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(b); <span class="comment">// 输出 &#123;name:&#123;demo:'1'&#125;&#125;</span></span><br><span class="line">b.name.demo = <span class="string">'2'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">// 输出 &#123;name:&#123;demo:'1'&#125;&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(b); <span class="comment">// 输出 &#123;name:&#123;demo:'2'&#125;&#125;</span></span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -475,32 +475,6 @@
 
     
 
-    
-      <div>
-        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-  <div>读后有收获可以请作者喝咖啡 ^.^</div>
-  <div id="QR">
-
-    
-      <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" width="150" src="https://static.ddhigh.com/paycode/wepay.jpg" alt="xialeistudio 微信支付">
-        <p>微信支付</p>
-      </div>
-    
-
-    
-      <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" width="150" src="https://static.ddhigh.com/paycode/alipay.jpg" alt="xialeistudio 支付宝">
-        <p>支付宝</p>
-      </div>
-    
-
-    
-
-  </div>
-</div>
-
-      </div>
     
     
       <div>
@@ -656,7 +630,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">241</span>
+                  <span class="site-state-item-count">242</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

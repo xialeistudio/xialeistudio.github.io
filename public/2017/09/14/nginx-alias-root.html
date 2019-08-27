@@ -448,9 +448,9 @@
       
 
       
-        <p>Nginx的root指令相信大家用的都挺多，用来指定document_root，但是如果是针对特定path的请求才启用的话，root指令显得不好用<br><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">location</span> <span class="title">/web</span> &#123;</div><div class="line">    root /home/wwwroot/site1;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>访问 <em><a href="http://demo.com/web/a.js" target="_blank" rel="external">http://demo.com/web/a.js</a></em>的时候,nginx会去查找<em>/home/wwwroot/site1/web/a.js</em>，一般就会404了。因为文件是放在site1目录下的。<br>这时候就需要alias指令了。<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">location <span class="regexp">/web/</span>&#123;</div><div class="line">    alias <span class="regexp">/home/</span>wwwroot<span class="regexp">/site1/</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>访问 <em><a href="http://demo.com/web/a.js" target="_blank" rel="external">http://demo.com/web/a.js</a></em>的时候,nginx会去查找<em>/home/wwwroot/site1/a.js</em>。</p>
+        <p>Nginx的root指令相信大家用的都挺多，用来指定document_root，但是如果是针对特定path的请求才启用的话，root指令显得不好用<br><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">location</span> <span class="title">/web</span> &#123;</span><br><span class="line">    root /home/wwwroot/site1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>访问 <em><a href="http://demo.com/web/a.js" target="_blank" rel="noopener">http://demo.com/web/a.js</a></em>的时候,nginx会去查找<em>/home/wwwroot/site1/web/a.js</em>，一般就会404了。因为文件是放在site1目录下的。<br>这时候就需要alias指令了。<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location <span class="regexp">/web/</span>&#123;</span><br><span class="line">    alias <span class="regexp">/home/</span>wwwroot<span class="regexp">/site1/</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>访问 <em><a href="http://demo.com/web/a.js" target="_blank" rel="noopener">http://demo.com/web/a.js</a></em>的时候,nginx会去查找<em>/home/wwwroot/site1/a.js</em>。</p>
 <p>注意 alias location末尾斜杠以及alias的末尾斜杠</p>
 
       
@@ -461,32 +461,6 @@
 
     
 
-    
-      <div>
-        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-  <div>读后有收获可以请作者喝咖啡 ^.^</div>
-  <div id="QR">
-
-    
-      <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" width="150" src="https://static.ddhigh.com/paycode/wepay.jpg" alt="xialeistudio 微信支付">
-        <p>微信支付</p>
-      </div>
-    
-
-    
-      <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" width="150" src="https://static.ddhigh.com/paycode/alipay.jpg" alt="xialeistudio 支付宝">
-        <p>支付宝</p>
-      </div>
-    
-
-    
-
-  </div>
-</div>
-
-      </div>
     
     
       <div>
@@ -627,7 +601,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">241</span>
+                  <span class="site-state-item-count">242</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

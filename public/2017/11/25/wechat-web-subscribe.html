@@ -429,20 +429,20 @@
       
         <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>微信诱导关注接口在早两年已经被微信关停，但是一般的H5目的都是要关注公众号。<br>目前用的多的方法是用公众号发表一篇文章，文章里面一般是一个GIF的箭头图片指向公众号关注。<br>这种方法有点取巧。</p>
 <p>今天要介绍的是另一种方法，感觉应该不会被微信封号。</p>
-<h1 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h1><p>有个朋友在segmentfault上发了一个链接出来，微信打开可以直接到关注页<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">https:<span class="regexp">//m</span>p.weixin.qq.com<span class="regexp">/mp/</span>profile_ext?action=home&amp;__biz=MzUzMDM3MjMyNQ==<span class="comment">#wechat_redirect</span></div></pre></td></tr></table></figure></p>
-<p>条件反射发现<code>MzUzMDM3MjMyNQ==</code>是Base64编码后的参数，解码后是一段数字，然后我改了下数字，重新编码，再发送到微信，发现可以打开另外一个公众号的关注页<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">https:<span class="regexp">//m</span>p.weixin.qq.com<span class="regexp">/mp/</span>profile_ext?action=home&amp;__biz=MzUzMDM3MjMyNA==<span class="comment">#wechat_redirect</span></div></pre></td></tr></table></figure></p>
+<h1 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h1><p>有个朋友在segmentfault上发了一个链接出来，微信打开可以直接到关注页<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:<span class="regexp">//m</span>p.weixin.qq.com<span class="regexp">/mp/</span>profile_ext?action=home&amp;__biz=MzUzMDM3MjMyNQ==<span class="comment">#wechat_redirect</span></span><br></pre></td></tr></table></figure></p>
+<p>条件反射发现<code>MzUzMDM3MjMyNQ==</code>是Base64编码后的参数，解码后是一段数字，然后我改了下数字，重新编码，再发送到微信，发现可以打开另外一个公众号的关注页<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:<span class="regexp">//m</span>p.weixin.qq.com<span class="regexp">/mp/</span>profile_ext?action=home&amp;__biz=MzUzMDM3MjMyNA==<span class="comment">#wechat_redirect</span></span><br></pre></td></tr></table></figure></p>
 <p>所以只要知道那个公众号数字就可以构造链接进行关注，想着这种ID一般在公众平台有，果然被我找到了。</p>
 <h1 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h1><ol>
 <li>登录公众平台后台</li>
 <li>点击右上角的公众号，来到公众号信息页面</li>
 <li><p>查看公众号信息页面的源代码，在顶上找到以下代码</p>
- <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">window</span>.wx=&#123;</div><div class="line">uin:<span class="string">"xxxx"</span>||<span class="string">"0"</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.wx=&#123;</span><br><span class="line">uin:<span class="string">"xxxx"</span>||<span class="string">"0"</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p><code>xxxx</code> 就是你的公众号数字ID</p>
 </li>
 <li>将第4步找到的ID进行base64编码</li>
 <li><p>构造如下链接</p>
- <figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">https:<span class="regexp">//m</span>p.weixin.qq.com<span class="regexp">/mp/</span>profile_ext?action=home&amp;__biz=第<span class="number">5</span>步的结果<span class="comment">#wechat_redirect</span></div></pre></td></tr></table></figure>
+ <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:<span class="regexp">//m</span>p.weixin.qq.com<span class="regexp">/mp/</span>profile_ext?action=home&amp;__biz=第<span class="number">5</span>步的结果<span class="comment">#wechat_redirect</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>发送到微信之后即可。</p>
 </li>
@@ -457,32 +457,6 @@
 
     
 
-    
-      <div>
-        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-  <div>读后有收获可以请作者喝咖啡 ^.^</div>
-  <div id="QR">
-
-    
-      <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" width="150" src="https://static.ddhigh.com/paycode/wepay.jpg" alt="xialeistudio 微信支付">
-        <p>微信支付</p>
-      </div>
-    
-
-    
-      <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" width="150" src="https://static.ddhigh.com/paycode/alipay.jpg" alt="xialeistudio 支付宝">
-        <p>支付宝</p>
-      </div>
-    
-
-    
-
-  </div>
-</div>
-
-      </div>
     
     
       <div>
@@ -638,7 +612,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">241</span>
+                  <span class="site-state-item-count">242</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

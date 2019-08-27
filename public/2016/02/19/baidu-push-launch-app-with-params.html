@@ -456,7 +456,7 @@
 <li>应用进程存在，在前台</li>
 </ul>
 <p>在BPushReceiver的onNotificationClicked或者onMessage方法中使用Intent来启动activity：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">Intent intent = <span class="keyword">new</span> Intent();</div><div class="line">intent.setClass(context.getApplicationContext(), MainActivity.class);</div><div class="line">intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);</div><div class="line"><span class="keyword">if</span> (url != <span class="keyword">null</span> &amp;&amp; !url.isEmpty()) &#123;</div><div class="line">    Bundle bundle = <span class="keyword">new</span> Bundle();</div><div class="line">    bundle.putString(<span class="string">"url"</span>, url);</div><div class="line">    intent.putExtras(bundle);</div><div class="line">&#125;</div><div class="line"></div><div class="line">Log.d(TAG, <span class="string">"start app"</span>);</div><div class="line">context.getApplicationContext().startActivity(intent);</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Intent intent = <span class="keyword">new</span> Intent();</span><br><span class="line">intent.setClass(context.getApplicationContext(), MainActivity.class);</span><br><span class="line">intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);</span><br><span class="line"><span class="keyword">if</span> (url != <span class="keyword">null</span> &amp;&amp; !url.isEmpty()) &#123;</span><br><span class="line">    Bundle bundle = <span class="keyword">new</span> Bundle();</span><br><span class="line">    bundle.putString(<span class="string">"url"</span>, url);</span><br><span class="line">    intent.putExtras(bundle);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Log.d(TAG, <span class="string">"start app"</span>);</span><br><span class="line">context.getApplicationContext().startActivity(intent);</span><br></pre></td></tr></table></figure>
 <p>需要注意的是，针对不同的应用状态，MainActivity中触发的方法也不同：</p>
 <ul>
 <li>应用进程不存在时,onCreate被调用</li>
@@ -472,32 +472,6 @@
 
     
 
-    
-      <div>
-        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-  <div>读后有收获可以请作者喝咖啡 ^.^</div>
-  <div id="QR">
-
-    
-      <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" width="150" src="https://static.ddhigh.com/paycode/wepay.jpg" alt="xialeistudio 微信支付">
-        <p>微信支付</p>
-      </div>
-    
-
-    
-      <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" width="150" src="https://static.ddhigh.com/paycode/alipay.jpg" alt="xialeistudio 支付宝">
-        <p>支付宝</p>
-      </div>
-    
-
-    
-
-  </div>
-</div>
-
-      </div>
     
     
       <div>
@@ -646,7 +620,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">241</span>
+                  <span class="site-state-item-count">242</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

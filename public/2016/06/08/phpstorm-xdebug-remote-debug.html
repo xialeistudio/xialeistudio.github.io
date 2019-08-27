@@ -458,15 +458,15 @@
 
       
         <p>phpstorm+xdebug如何调试本地代码应该都熟悉了。本文说的是如何调试线上服务器的代码。本文写作时服务器的PHP环境是lnmp1.2。</p>
-<h2 id="服务器配置"><a href="#服务器配置" class="headerlink" title="服务器配置"></a>服务器配置</h2><h3 id="安装debug"><a href="#安装debug" class="headerlink" title="安装debug"></a>安装debug</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pecl install xdebug</div></pre></td></tr></table></figure>
+<h2 id="服务器配置"><a href="#服务器配置" class="headerlink" title="服务器配置"></a>服务器配置</h2><h3 id="安装debug"><a href="#安装debug" class="headerlink" title="安装debug"></a>安装debug</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pecl install xdebug</span><br></pre></td></tr></table></figure>
 <h3 id="编辑php-ini"><a href="#编辑php-ini" class="headerlink" title="编辑php.ini"></a>编辑php.ini</h3><p>编辑 <strong>/usr/local/php/etc/php.ini</strong>，在末尾加上以下代码：</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">[Xdebug]</div><div class="line"><span class="attribute">zend_extension</span>=<span class="string">"xdebug.so"</span></div><div class="line">xdebug.<span class="attribute">remote_enable</span>=1</div><div class="line">xdebug.<span class="attribute">remote_handler</span>=dbgp</div><div class="line">xdebug.<span class="attribute">remote_host</span>=【调试终端所在的公网IP】</div><div class="line">xdebug.<span class="attribute">remote_port</span>=9000</div><div class="line">xdebug.<span class="attribute">remote_autostart</span>=1</div><div class="line">xdebug.<span class="attribute">idekey</span>=<span class="string">"PHPSTORM"</span></div></pre></td></tr></table></figure>
-<p>本文中调试终端为<strong>PHPSTORM</strong>，所以本地公网IP为<strong>remote_host</strong>的值<br><a href="http://www.ip138.com" target="_blank" rel="external">查看本地公网IP</a><br>更改配置完毕后终端执行:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">lnmp php-fpm reload</div></pre></td></tr></table></figure>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[Xdebug]</span></span><br><span class="line"><span class="attr">zend_extension</span>=<span class="string">"xdebug.so"</span></span><br><span class="line"><span class="attr">xdebug.remote_enable</span>=<span class="number">1</span></span><br><span class="line"><span class="attr">xdebug.remote_handler</span>=dbgp</span><br><span class="line"><span class="attr">xdebug.remote_host</span>=【调试终端所在的公网IP】</span><br><span class="line"><span class="attr">xdebug.remote_port</span>=<span class="number">9000</span></span><br><span class="line"><span class="attr">xdebug.remote_autostart</span>=<span class="number">1</span></span><br><span class="line"><span class="attr">xdebug.idekey</span>=<span class="string">"PHPSTORM"</span></span><br></pre></td></tr></table></figure>
+<p>本文中调试终端为<strong>PHPSTORM</strong>，所以本地公网IP为<strong>remote_host</strong>的值<br><a href="http://www.ip138.com" target="_blank" rel="noopener">查看本地公网IP</a><br>更改配置完毕后终端执行:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lnmp php-fpm reload</span><br></pre></td></tr></table></figure>
 <h2 id="IDE配置"><a href="#IDE配置" class="headerlink" title="IDE配置"></a>IDE配置</h2><h3 id="配置server"><a href="#配置server" class="headerlink" title="配置server"></a>配置server</h3><p>Setting =&gt; Languages &amp; Frameworks=&gt;PHP=&gt;Servers，<br><img src="https://og5r5kasb.qnssl.com/wp-content/uploads/2016/06/QQ%E5%9B%BE%E7%89%8720160608121441.png" alt="Server配置">   </p>
 <h3 id="配置DBGp-Proxy"><a href="#配置DBGp-Proxy" class="headerlink" title="配置DBGp Proxy"></a>配置DBGp Proxy</h3><p>Settings =&gt; Languages &amp; Frameworks =&gt; PHP =&gt; Debug =&gt; DBGp Proxy<br><img src="https://og5r5kasb.qnssl.com/wp-content/uploads/2016/06/QQ%E5%9B%BE%E7%89%8720160608121659.png" alt="DBGp Proxy"><br>其中红框处需要和服务器的xdebug配置文件一致。</p>
 <h2 id="路由端口映射"><a href="#路由端口映射" class="headerlink" title="路由端口映射"></a>路由端口映射</h2><p>由于大部分朋友公司都有路由器的，所以本机IP是局域网IP，这里需要将路由器的端口映射到本地。具体规则如下：</p>
-<figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">服务器Xdebug端口（路由器公网端口） =&gt; 本地端口，笔者这里把路由器的<span class="number">9000</span>端口映射到本地的<span class="number">9000</span>端口。</div></pre></td></tr></table></figure>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">服务器Xdebug端口（路由器公网端口） =&gt; 本地端口，笔者这里把路由器的<span class="number">9000</span>端口映射到本地的<span class="number">9000</span>端口。</span><br></pre></td></tr></table></figure>
 <h2 id="开始调试"><a href="#开始调试" class="headerlink" title="开始调试"></a>开始调试</h2><ul>
 <li>打开项目的运行配置，选择“PHP Web Application”<br><img src="https://og5r5kasb.qnssl.com/wp-content/uploads/2016/06/QQ%E5%9B%BE%E7%89%8720160608122018.png" alt="开始调试"><br>笔者服务器这里是https的，所以加了https，各位读者请根据实际情况填写网址。</li>
 <li>点击IDE的“电话”图标开启远程监听。<br><img src="https://og5r5kasb.qnssl.com/wp-content/uploads/2016/06/QQ%E6%88%AA%E5%9B%BE20160608122148.png" alt="监听">   </li>
@@ -483,32 +483,6 @@
 
     
 
-    
-      <div>
-        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-  <div>读后有收获可以请作者喝咖啡 ^.^</div>
-  <div id="QR">
-
-    
-      <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" width="150" src="https://static.ddhigh.com/paycode/wepay.jpg" alt="xialeistudio 微信支付">
-        <p>微信支付</p>
-      </div>
-    
-
-    
-      <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" width="150" src="https://static.ddhigh.com/paycode/alipay.jpg" alt="xialeistudio 支付宝">
-        <p>支付宝</p>
-      </div>
-    
-
-    
-
-  </div>
-</div>
-
-      </div>
     
     
       <div>
@@ -670,7 +644,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">241</span>
+                  <span class="site-state-item-count">242</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

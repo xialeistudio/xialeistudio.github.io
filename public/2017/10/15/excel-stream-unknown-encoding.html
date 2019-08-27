@@ -427,16 +427,16 @@
 
       
         <p>项目上线有半年多了，一直没有出过问题，但是前几天升级过一次NodeJs到8.x的时候就出现过这个问题了。因为采用了消息队列，但是一到这里就挂，导致进程重复启动几百次。</p>
-<h1 id="报错信息"><a href="#报错信息" class="headerlink" title="报错信息"></a>报错信息</h1><figure class="highlight glsl"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">excel-<span class="keyword">stream</span>/csv-<span class="keyword">stream</span>/<span class="keyword">index</span>.js <span class="number">59</span> Buffer unknow encoding</div></pre></td></tr></table></figure>
+<h1 id="报错信息"><a href="#报错信息" class="headerlink" title="报错信息"></a>报错信息</h1><figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">excel-<span class="keyword">stream</span>/csv-<span class="keyword">stream</span>/<span class="keyword">index</span>.js <span class="number">59</span> Buffer unknow encoding</span><br></pre></td></tr></table></figure>
 <h1 id="问题排查"><a href="#问题排查" class="headerlink" title="问题排查"></a>问题排查</h1><p>google了一下无果，后面发现反正源码反正自己有，倒不如自己改改，直接定位到相关代码即可。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">CSVStream.prototype.write = <span class="function"><span class="keyword">function</span>(<span class="params">buffer,encoding</span>)</span>&#123;</div><div class="line">	<span class="keyword">this</span>._encoding = encoding || <span class="keyword">this</span>._encoding;</div><div class="line">	<span class="keyword">if</span>(<span class="keyword">this</span>._ended) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Cannot write after end has been called.'</span>);</div><div class="line">	<span class="keyword">if</span>(buffer) <span class="keyword">this</span>._buffer = Buffer.concat([<span class="keyword">this</span>._buffer, buffer], <span class="keyword">this</span>._buffer.length + buffer.length);</div><div class="line">	<span class="keyword">if</span>(<span class="keyword">this</span>._paused) <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">	<span class="keyword">this</span>._parser.parse(<span class="keyword">this</span>._buffer.toString(<span class="keyword">this</span>._encoding));</div><div class="line">	<span class="keyword">this</span>._buffer = <span class="keyword">new</span> Buffer(<span class="number">0</span>);</div><div class="line">	<span class="keyword">return</span> !<span class="keyword">this</span>._paused;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">CSVStream.prototype.write = <span class="function"><span class="keyword">function</span>(<span class="params">buffer,encoding</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">this</span>._encoding = encoding || <span class="keyword">this</span>._encoding;</span><br><span class="line">	<span class="keyword">if</span>(<span class="keyword">this</span>._ended) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Cannot write after end has been called.'</span>);</span><br><span class="line">	<span class="keyword">if</span>(buffer) <span class="keyword">this</span>._buffer = Buffer.concat([<span class="keyword">this</span>._buffer, buffer], <span class="keyword">this</span>._buffer.length + buffer.length);</span><br><span class="line">	<span class="keyword">if</span>(<span class="keyword">this</span>._paused) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	<span class="keyword">this</span>._parser.parse(<span class="keyword">this</span>._buffer.toString(<span class="keyword">this</span>._encoding));</span><br><span class="line">	<span class="keyword">this</span>._buffer = <span class="keyword">new</span> Buffer(<span class="number">0</span>);</span><br><span class="line">	<span class="keyword">return</span> !<span class="keyword">this</span>._paused;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>报错具体行数是<strong>this._parser.parse(this._buffer.toString(this._encoding));</strong>，错误很明显了，提示encoding错误。</p>
 <p>那直接往上面找，发现<strong>this._encoding = encoding || this._encoding</strong>，这里就有可能传入的encoding导致了错误。</p>
 <h1 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h1><p>这个项目已经3年没维护了，所以要修正问题的话，只能手动改了。</p>
 <p>修改办法如下</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">this</span>._parser.parse(<span class="keyword">this</span>._buffer.toString(<span class="keyword">this</span>._encoding));</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>._parser.parse(<span class="keyword">this</span>._buffer.toString(<span class="keyword">this</span>._encoding));</span><br></pre></td></tr></table></figure>
 <p>改为</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">this</span>._parser.parse(<span class="keyword">this</span>._buffer.toString());</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>._parser.parse(<span class="keyword">this</span>._buffer.toString());</span><br></pre></td></tr></table></figure>
 <p>重新运行之后没有发现问题。</p>
 
       
@@ -447,32 +447,6 @@
 
     
 
-    
-      <div>
-        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-  <div>读后有收获可以请作者喝咖啡 ^.^</div>
-  <div id="QR">
-
-    
-      <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" width="150" src="https://static.ddhigh.com/paycode/wepay.jpg" alt="xialeistudio 微信支付">
-        <p>微信支付</p>
-      </div>
-    
-
-    
-      <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" width="150" src="https://static.ddhigh.com/paycode/alipay.jpg" alt="xialeistudio 支付宝">
-        <p>支付宝</p>
-      </div>
-    
-
-    
-
-  </div>
-</div>
-
-      </div>
     
     
       <div>
@@ -622,7 +596,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">241</span>
+                  <span class="site-state-item-count">242</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

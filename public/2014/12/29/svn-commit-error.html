@@ -450,15 +450,15 @@
 
       
         <p>今天phpstorm突然抽风，导致svn不能用，无奈只好用svn命令来提交。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">svn commit -m <span class="string">"init"</span></div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">svn commit -m <span class="string">"init"</span></span><br></pre></td></tr></table></figure>
 <p>结果报错</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">--This line, and those below, will be ignored--</div><div class="line"></div><div class="line">M webroot/thatyear/js/main.js</div><div class="line">~ </div><div class="line">~ </div><div class="line">~ </div><div class="line">~ </div><div class="line">~ </div><div class="line">~ </div><div class="line">~ </div><div class="line">~ </div><div class="line">~ </div><div class="line"><span class="string">"svn-commit.2.tmp"</span> 4L, 83C</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">--This line, and those below, will be ignored--</span><br><span class="line"></span><br><span class="line">M webroot/thatyear/js/main.js</span><br><span class="line">~ </span><br><span class="line">~ </span><br><span class="line">~ </span><br><span class="line">~ </span><br><span class="line">~ </span><br><span class="line">~ </span><br><span class="line">~ </span><br><span class="line">~ </span><br><span class="line">~ </span><br><span class="line"><span class="string">"svn-commit.2.tmp"</span> 4L, 83C</span><br></pre></td></tr></table></figure>
 <p>直接保存发现会出现以下结果</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Log message unchanged or not specified</div><div class="line">(a)bort, (c)ontinue, (e)dit:</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Log message unchanged or not specified</span><br><span class="line">(a)bort, (c)ontinue, (e)dit:</span><br></pre></td></tr></table></figure>
 <p>输入<strong>c</strong>提交<br><em>我这是设置了SVN提交默认编辑器的时候才会这样，默认是不会设置的。</em>按以下操作设置提交的编辑器   </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vi ~/.subversion/config</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi ~/.subversion/config</span><br></pre></td></tr></table></figure>
 <p>找到[helpers]下的 editor-cmd 节，更改为vi即可   </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[helpers]</div><div class="line">editor-cmd = /usr/bin/vi</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[helpers]</span><br><span class="line">editor-cmd = /usr/bin/vi</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -467,32 +467,6 @@
 
     
 
-    
-      <div>
-        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-  <div>读后有收获可以请作者喝咖啡 ^.^</div>
-  <div id="QR">
-
-    
-      <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" width="150" src="https://static.ddhigh.com/paycode/wepay.jpg" alt="xialeistudio 微信支付">
-        <p>微信支付</p>
-      </div>
-    
-
-    
-      <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" width="150" src="https://static.ddhigh.com/paycode/alipay.jpg" alt="xialeistudio 支付宝">
-        <p>支付宝</p>
-      </div>
-    
-
-    
-
-  </div>
-</div>
-
-      </div>
     
     
       <div>
@@ -639,7 +613,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">241</span>
+                  <span class="site-state-item-count">242</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

@@ -450,26 +450,26 @@
 
       
         <p>之前写过一篇在Mac下搭建PHP开发环境的文章，<a href="!--￼10--">Mac搭建PHP开发环境</a>，但是此种方式搭建的PHP有弊端，由于默认不带PHP源码，所以在使用pecl安装扩展时会报错。</p>
-<h2 id="测试安装扩展"><a href="#测试安装扩展" class="headerlink" title="测试安装扩展"></a>测试安装扩展</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo pecl install mongo</div></pre></td></tr></table></figure>
+<h2 id="测试安装扩展"><a href="#测试安装扩展" class="headerlink" title="测试安装扩展"></a>测试安装扩展</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pecl install mongo</span><br></pre></td></tr></table></figure>
 <p>运行起来后会报形如“php.h not found”的错误，因为MAMP默认是不带PHP源码包的。   </p>
 <h2 id="配置扩展安装环境"><a href="#配置扩展安装环境" class="headerlink" title="配置扩展安装环境"></a>配置扩展安装环境</h2><p>按照如下步骤将源码包集成以便于安装扩展：<br>1.在web目录下添加index.php文件，内容如下：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">phpinfo();</div></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">phpinfo();</span><br></pre></td></tr></table></figure>
 <p>2.打开浏览器访问该php文件，记录PHP版本，本文暂定<strong>PHP版本A</strong>。<br>3.打开终端，输入以下命令：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">php -v</div></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php -v</span><br></pre></td></tr></table></figure>
 <p>记录PHP版本，本文暂定<strong>PHP版本B</strong>。<br>4.如果PHP版本A不等于PHP版本B，在终端执行以下命令：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">sudo rm -rf /usr/bin/php</div><div class="line">sudo rm -rf /usr/bin/phpize</div><div class="line">sudo rm -rf /usr/bin/php-config</div><div class="line">sudo rm -rf /usr/bin/pecl</div><div class="line"> </div><div class="line">ln -s /Application/MAMP/bin/php/php[PHP版本A]/bin/php /usr/bin/php</div><div class="line">ln -s /Application/MAMP/bin/php/php[PHP版本A]/bin/php-config /usr/bin/php-config</div><div class="line">ln -s /Application/MAMP/bin/php/php[PHP版本A]/bin/phpize /usr/bin/phpize</div><div class="line">ln -s /Application/MAMP/bin/php/php[PHP版本A]/bin/pecl /usr/bin/pecl</div></pre></td></tr></table></figure>
-<p>请替换<strong>[PHP版本A]</strong>为步骤2中的版本，如<strong>5.5.18</strong><br>执行完以上命令之后，命令行模式和浏览器模式的PHP都是一致的了。<br>5.下载PHP源码包，打开浏览器访问如下网址 <a href="http://cn2.php.net/get/php-**[PHP版本A]**.tar.gz/from/this/mirror。" target="_blank" rel="external">http://cn2.php.net/get/php-**[PHP版本A]**.tar.gz/from/this/mirror。</a><br>6.将下载的压缩包解压到 /Application/MAMP/bin/php/php<strong>[PHP版本A]</strong>/include/php 中。<br>7.在终端执行以下命令：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> /Application/MAMP/bin/php/php[PHP版本A]/include/php</div><div class="line">./configure</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sudo rm -rf /usr/bin/php</span><br><span class="line">sudo rm -rf /usr/bin/phpize</span><br><span class="line">sudo rm -rf /usr/bin/php-config</span><br><span class="line">sudo rm -rf /usr/bin/pecl</span><br><span class="line"> </span><br><span class="line">ln -s /Application/MAMP/bin/php/php[PHP版本A]/bin/php /usr/bin/php</span><br><span class="line">ln -s /Application/MAMP/bin/php/php[PHP版本A]/bin/php-config /usr/bin/php-config</span><br><span class="line">ln -s /Application/MAMP/bin/php/php[PHP版本A]/bin/phpize /usr/bin/phpize</span><br><span class="line">ln -s /Application/MAMP/bin/php/php[PHP版本A]/bin/pecl /usr/bin/pecl</span><br></pre></td></tr></table></figure>
+<p>请替换<strong>[PHP版本A]</strong>为步骤2中的版本，如<strong>5.5.18</strong><br>执行完以上命令之后，命令行模式和浏览器模式的PHP都是一致的了。<br>5.下载PHP源码包，打开浏览器访问如下网址 <a href="http://cn2.php.net/get/php-**[PHP版本A]**.tar.gz/from/this/mirror。" target="_blank" rel="noopener">http://cn2.php.net/get/php-**[PHP版本A]**.tar.gz/from/this/mirror。</a><br>6.将下载的压缩包解压到 /Application/MAMP/bin/php/php<strong>[PHP版本A]</strong>/include/php 中。<br>7.在终端执行以下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /Application/MAMP/bin/php/php[PHP版本A]/include/php</span><br><span class="line">./configure</span><br></pre></td></tr></table></figure>
 <p>此时PHP源码包已经配置正常了，头文件也可以正常调用了。<br>8.在终端执行：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo pecl install mongo</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pecl install mongo</span><br></pre></td></tr></table></figure>
 <p>扩展安装成功后，编辑<em>/Application/MAMP/bin/php/php</em>[PHP版本A]<em>/conf/php.ini</em> 在最后添加：</p>
-<figure class="highlight ini"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attr">extension</span>=mongo.so</div></pre></td></tr></table></figure>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">extension</span>=mongo.so</span><br></pre></td></tr></table></figure>
 <p>9.由于命令行模式和浏览器模式中加载的php.ini并不是同一个文件，所以需要用软连接的方式处理下。终端执行：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">php -i|grep ini</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php -i|grep ini</span><br></pre></td></tr></table></figure>
 <p>查看<strong>Loaded ini file</strong>路径，本文假设为<strong>PHP配置文件A</strong>。<br>10.备份<strong>PHP配置文件A</strong>，终端执行：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ln -s /Application/MAMP/bin/php/php[PHP版本A]/conf/php.ini PHP配置文件A</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s /Application/MAMP/bin/php/php[PHP版本A]/conf/php.ini PHP配置文件A</span><br></pre></td></tr></table></figure>
 <p>11.终端执行：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">php -i|grep ini</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php -i|grep ini</span><br></pre></td></tr></table></figure>
 <p>此时该路径应该和浏览器中看到的是一致的了。</p>
 <h2 id="安装扩展"><a href="#安装扩展" class="headerlink" title="安装扩展"></a>安装扩展</h2><ol>
 <li>sudo pecl install <strong>[扩展名]</strong></li>
@@ -485,32 +485,6 @@
 
     
 
-    
-      <div>
-        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-  <div>读后有收获可以请作者喝咖啡 ^.^</div>
-  <div id="QR">
-
-    
-      <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" width="150" src="https://static.ddhigh.com/paycode/wepay.jpg" alt="xialeistudio 微信支付">
-        <p>微信支付</p>
-      </div>
-    
-
-    
-      <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" width="150" src="https://static.ddhigh.com/paycode/alipay.jpg" alt="xialeistudio 支付宝">
-        <p>支付宝</p>
-      </div>
-    
-
-    
-
-  </div>
-</div>
-
-      </div>
     
     
       <div>
@@ -668,7 +642,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">241</span>
+                  <span class="site-state-item-count">242</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

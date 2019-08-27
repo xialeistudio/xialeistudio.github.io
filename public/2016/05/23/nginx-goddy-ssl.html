@@ -453,16 +453,16 @@
       
         <p>随着人们对网络安全要求的提高，越来越多的http站点已经转换为了https站点，保证网站在传输过程中不被监听、恶意篡改，本文将使用goddy提供的ssl证书来升级HTTPS网站。</p>
 <h2 id="生成私钥和证书请求文件"><a href="#生成私钥和证书请求文件" class="headerlink" title="生成私钥和证书请求文件"></a>生成私钥和证书请求文件</h2><p>终端执行</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">openssl req -new -newkey rsa:2048 -nodes -keyout domain.key -out domain.csr</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl req -new -newkey rsa:2048 -nodes -keyout domain.key -out domain.csr</span><br></pre></td></tr></table></figure>
 <p>生成过程会询问几个常见问题，比如City、Country等等。<br>最后会询问challenge password，输入的时候记住就可以了。<br>执行完以上命令后，当前目录会多出<strong>domain.key</strong>和<strong>domain.csr</strong>文件，前者为服务器私钥，后者为证书请求文件</p>
 <h2 id="Goddy证书"><a href="#Goddy证书" class="headerlink" title="Goddy证书"></a>Goddy证书</h2><p>购买完SSL证书之后会有一个初始化过程，将第1步中的<strong>domain.csr</strong>文件所有内容填写到<strong>CSR</strong>输入框中，Goddy会检测配置等操作，操作完成之后会签发证书，点击下载即可，下载时服务器类型选择“其他”。</p>
 <h2 id="Nginx配置"><a href="#Nginx配置" class="headerlink" title="Nginx配置"></a>Nginx配置</h2><p>下载证书的时候压缩包内容类似如下图<br><img src="https://og5r5kasb.qnssl.com/wp-content/uploads/2016/05/QQ%E5%9B%BE%E7%89%8720160523195944.png" alt="压缩包">   </p>
 <p>正常情况下nginx配置SSL需要key和crt文件即可。<br>这里有两个crt所以需要进行证书合并操作。<br>打开终端，执行以下命令：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cat 53f58e3ac2172cd5.crt gd_bundle-g2-g1.crt &gt; domain.crt</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat 53f58e3ac2172cd5.crt gd_bundle-g2-g1.crt &gt; domain.crt</span><br></pre></td></tr></table></figure>
 <p>证书合并完成，接下来打开Nginx的配置文件，笔者这里<strong>证书目录</strong>位于<strong>/root/crt</strong></p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">server</div><div class="line">&#123;</div><div class="line">  <span class="attribute">listen</span> <span class="number">443</span>;</div><div class="line">  <span class="attribute">server_name</span> domain;</div><div class="line">  <span class="attribute">index</span> index.html index.htm default.html default.htm;</div><div class="line">  <span class="attribute">root</span> /home/wwwroot/domain;</div><div class="line">  </div><div class="line">  <span class="attribute">location</span> = /favicon.ico &#123;</div><div class="line">    <span class="attribute">log_not_found</span> <span class="literal">off</span>;</div><div class="line">    <span class="attribute">access_log</span> <span class="literal">off</span>;</div><div class="line">  &#125;</div><div class="line">  <span class="attribute">ssl</span> <span class="literal">on</span>;</div><div class="line">  <span class="attribute">ssl_certificate</span> /root/crt/domain.crt;</div><div class="line">  <span class="attribute">ssl_certificate_key</span> /root/crt/domain.key;</div><div class="line">  <span class="attribute">access_log</span> <span class="literal">off</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">server</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attribute">listen</span> <span class="number">443</span>;</span><br><span class="line">  <span class="attribute">server_name</span> domain;</span><br><span class="line">  <span class="attribute">index</span> index.html index.htm default.html default.htm;</span><br><span class="line">  <span class="attribute">root</span> /home/wwwroot/domain;</span><br><span class="line">  </span><br><span class="line">  <span class="attribute">location</span> = /favicon.ico &#123;</span><br><span class="line">    <span class="attribute">log_not_found</span> <span class="literal">off</span>;</span><br><span class="line">    <span class="attribute">access_log</span> <span class="literal">off</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="attribute">ssl</span> <span class="literal">on</span>;</span><br><span class="line">  <span class="attribute">ssl_certificate</span> /root/crt/domain.crt;</span><br><span class="line">  <span class="attribute">ssl_certificate_key</span> /root/crt/domain.key;</span><br><span class="line">  <span class="attribute">access_log</span> <span class="literal">off</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>保存之后，终端执行</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nginx -s reload</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nginx -s reload</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -472,32 +472,6 @@
 
     
 
-    
-      <div>
-        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-  <div>读后有收获可以请作者喝咖啡 ^.^</div>
-  <div id="QR">
-
-    
-      <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" width="150" src="https://static.ddhigh.com/paycode/wepay.jpg" alt="xialeistudio 微信支付">
-        <p>微信支付</p>
-      </div>
-    
-
-    
-      <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" width="150" src="https://static.ddhigh.com/paycode/alipay.jpg" alt="xialeistudio 支付宝">
-        <p>支付宝</p>
-      </div>
-    
-
-    
-
-  </div>
-</div>
-
-      </div>
     
     
       <div>
@@ -657,7 +631,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">241</span>
+                  <span class="site-state-item-count">242</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

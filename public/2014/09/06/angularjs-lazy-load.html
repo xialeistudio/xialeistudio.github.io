@@ -451,9 +451,9 @@
       
         <p>移动开发一个很重要的问题是翻页操作，而现在的主流都是滚动翻页，以往都是用jquery的插件进行实现。用了angularjs之后，要逐步减轻对jquery的依赖。   </p>
 <p><em>滚动翻页基本原理就是判断scrollTop和offsetHeight之和 大于等于 scrollHeight</em>   </p>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><h3 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">app.directive(<span class="string">'whenScrolled'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; </div><div class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">scope, elm, attr</span>) </span>&#123; </div><div class="line">    <span class="keyword">var</span> raw = elm[<span class="number">0</span>]; </div><div class="line">    elm.bind(<span class="string">'scroll'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; </div><div class="line">      <span class="keyword">if</span> (raw.scrollTop+raw.offsetHeight &amp;gt;= raw.scrollHeight) &#123; </div><div class="line">        scope.$apply(attr.whenScrolled); </div><div class="line">      &#125; </div><div class="line">    &#125;); </div><div class="line">  &#125;; </div><div class="line">&#125;);</div></pre></td></tr></table></figure>
-<h3 id="控制器"><a href="#控制器" class="headerlink" title="控制器"></a>控制器</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">$scope.loadMore = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; </div><div class="line">    <span class="keyword">if</span> ($scope.currentPage &amp;lt; $scope.pages) &#123; </div><div class="line">      $scope.currentPage++; </div><div class="line">      <span class="keyword">if</span> ($scope.busy) &#123; </div><div class="line">        <span class="keyword">return</span> <span class="literal">false</span>; </div><div class="line">      &#125; </div><div class="line">      $scope.busy = <span class="literal">true</span>; </div><div class="line">      $http.get(<span class="string">'/api.php?r=site/list/page/'</span>+$scope.currentPage+<span class="string">'/limit/'</span>+$scope.limit).success(<span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123; </div><div class="line">        $scope.busy = <span class="literal">false</span>; </div><div class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> data.data) &#123; </div><div class="line">          $scope.newses.push(data.data[i]); </div><div class="line">        &#125; </div><div class="line">        $scope.pages = <span class="built_in">Math</span>.ceil(data.total/$scope.limit); </div><div class="line">        $rootScope.title = <span class="string">'首页 - 微文章'</span>; </div><div class="line">      &#125;); </div><div class="line">    &#125; </div><div class="line">  &#125;;</div></pre></td></tr></table></figure>
-<h3 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">when-scrolled</span>=<span class="string">"loadMore()"</span>&gt;</span></div><div class="line">//内容处理逻辑</div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><h3 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">app.directive(<span class="string">'whenScrolled'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; </span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">scope, elm, attr</span>) </span>&#123; </span><br><span class="line">    <span class="keyword">var</span> raw = elm[<span class="number">0</span>]; </span><br><span class="line">    elm.bind(<span class="string">'scroll'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; </span><br><span class="line">      <span class="keyword">if</span> (raw.scrollTop+raw.offsetHeight &amp;gt;= raw.scrollHeight) &#123; </span><br><span class="line">        scope.$apply(attr.whenScrolled); </span><br><span class="line">      &#125; </span><br><span class="line">    &#125;); </span><br><span class="line">  &#125;; </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="控制器"><a href="#控制器" class="headerlink" title="控制器"></a>控制器</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$scope.loadMore = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; </span><br><span class="line">    <span class="keyword">if</span> ($scope.currentPage &amp;lt; $scope.pages) &#123; </span><br><span class="line">      $scope.currentPage++; </span><br><span class="line">      <span class="keyword">if</span> ($scope.busy) &#123; </span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>; </span><br><span class="line">      &#125; </span><br><span class="line">      $scope.busy = <span class="literal">true</span>; </span><br><span class="line">      $http.get(<span class="string">'/api.php?r=site/list/page/'</span>+$scope.currentPage+<span class="string">'/limit/'</span>+$scope.limit).success(<span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123; </span><br><span class="line">        $scope.busy = <span class="literal">false</span>; </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> data.data) &#123; </span><br><span class="line">          $scope.newses.push(data.data[i]); </span><br><span class="line">        &#125; </span><br><span class="line">        $scope.pages = <span class="built_in">Math</span>.ceil(data.total/$scope.limit); </span><br><span class="line">        $rootScope.title = <span class="string">'首页 - 微文章'</span>; </span><br><span class="line">      &#125;); </span><br><span class="line">    &#125; </span><br><span class="line">  &#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">when-scrolled</span>=<span class="string">"loadMore()"</span>&gt;</span></span><br><span class="line">//内容处理逻辑</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -462,32 +462,6 @@
 
     
 
-    
-      <div>
-        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-  <div>读后有收获可以请作者喝咖啡 ^.^</div>
-  <div id="QR">
-
-    
-      <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" width="150" src="https://static.ddhigh.com/paycode/wepay.jpg" alt="xialeistudio 微信支付">
-        <p>微信支付</p>
-      </div>
-    
-
-    
-      <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" width="150" src="https://static.ddhigh.com/paycode/alipay.jpg" alt="xialeistudio 支付宝">
-        <p>支付宝</p>
-      </div>
-    
-
-    
-
-  </div>
-</div>
-
-      </div>
     
     
       <div>
@@ -643,7 +617,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">241</span>
+                  <span class="site-state-item-count">242</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

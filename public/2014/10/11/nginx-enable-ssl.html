@@ -460,7 +460,7 @@
 <li>申请SSL证书过程就不多说了。挺简单的，本文主要是在nginx上配置ssl证书实现https访问。   </li>
 <li>将key和证书上传到服务器。</li>
 </ol>
-<h2 id="nginx配置"><a href="#nginx配置" class="headerlink" title="nginx配置"></a>nginx配置</h2><figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="section">server</span> &#123;</div><div class="line">                <span class="attribute">listen</span> <span class="number">443</span>;</div><div class="line">                <span class="comment">#listen [::]:80;</span></div><div class="line">                <span class="attribute">server_name</span> passport.ddhigh.com;</div><div class="line">                <span class="attribute">index</span> index.html index.htm index.php default.html default.htm default.php;</div><div class="line">                <span class="attribute">root</span>  /home/wwwroot/passport.ddhigh.com;</div><div class="line">                <span class="attribute">include</span> other.conf;</div><div class="line">                <span class="comment">#error_page   404   /404.html;</span></div><div class="line">                <span class="attribute">location</span> <span class="regexp">~ [^/]\.php(/|$)</span></div><div class="line"><span class="regexp"></span>                        &#123;</div><div class="line">                                <span class="comment"># comment try_files $uri =404; to enable pathinfo</span></div><div class="line">                                <span class="attribute">try_files</span> <span class="variable">$uri</span> =<span class="number">404</span>;</div><div class="line">                                <span class="attribute">fastcgi_pass</span>  unix:/tmp/php-cgi.sock;</div><div class="line">                                <span class="attribute">fastcgi_index</span> index.php;</div><div class="line">                                <span class="attribute">include</span> fastcgi.conf;</div><div class="line">                                <span class="comment">#include pathinfo.conf;</span></div><div class="line">                        &#125;</div><div class="line">                <span class="attribute">location</span> <span class="regexp">~ .*\.(gif|jpg|jpeg|png|bmp|swf)$</span></div><div class="line"><span class="regexp"></span>                        &#123;</div><div class="line">                                <span class="attribute">expires</span>      <span class="number">30d</span>;</div><div class="line">                        &#125;</div><div class="line">                <span class="attribute">location</span> <span class="regexp">~ .*\.(js|css)?$</span></div><div class="line"><span class="regexp"></span>                        &#123;</div><div class="line">                                <span class="attribute">expires</span>      <span class="number">12h</span>;</div><div class="line">                        &#125;</div><div class="line">                <span class="attribute">ssl</span> <span class="literal">on</span>;</div><div class="line">                <span class="attribute">ssl_certificate</span> /root/crt/server.crt;</div><div class="line">                <span class="attribute">ssl_certificate_key</span> /root/crt/server.key;</div><div class="line">                <span class="attribute">access_log</span>  /home/wwwlogs/passport.ddhigh.com.log  access;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="nginx配置"><a href="#nginx配置" class="headerlink" title="nginx配置"></a>nginx配置</h2><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">                <span class="attribute">listen</span> <span class="number">443</span>;</span><br><span class="line">                <span class="comment">#listen [::]:80;</span></span><br><span class="line">                <span class="attribute">server_name</span> passport.ddhigh.com;</span><br><span class="line">                <span class="attribute">index</span> index.html index.htm index.php default.html default.htm default.php;</span><br><span class="line">                <span class="attribute">root</span>  /home/wwwroot/passport.ddhigh.com;</span><br><span class="line">                <span class="attribute">include</span> other.conf;</span><br><span class="line">                <span class="comment">#error_page   404   /404.html;</span></span><br><span class="line">                <span class="attribute">location</span> <span class="regexp">~ [^/]\.php(/|$)</span></span><br><span class="line"><span class="regexp"></span>                        &#123;</span><br><span class="line">                                <span class="comment"># comment try_files $uri =404; to enable pathinfo</span></span><br><span class="line">                                <span class="attribute">try_files</span> <span class="variable">$uri</span> =<span class="number">404</span>;</span><br><span class="line">                                <span class="attribute">fastcgi_pass</span>  unix:/tmp/php-cgi.sock;</span><br><span class="line">                                <span class="attribute">fastcgi_index</span> index.php;</span><br><span class="line">                                <span class="attribute">include</span> fastcgi.conf;</span><br><span class="line">                                <span class="comment">#include pathinfo.conf;</span></span><br><span class="line">                        &#125;</span><br><span class="line">                <span class="attribute">location</span> <span class="regexp">~ .*\.(gif|jpg|jpeg|png|bmp|swf)$</span></span><br><span class="line"><span class="regexp"></span>                        &#123;</span><br><span class="line">                                <span class="attribute">expires</span>      <span class="number">30d</span>;</span><br><span class="line">                        &#125;</span><br><span class="line">                <span class="attribute">location</span> <span class="regexp">~ .*\.(js|css)?$</span></span><br><span class="line"><span class="regexp"></span>                        &#123;</span><br><span class="line">                                <span class="attribute">expires</span>      <span class="number">12h</span>;</span><br><span class="line">                        &#125;</span><br><span class="line">                <span class="attribute">ssl</span> <span class="literal">on</span>;</span><br><span class="line">                <span class="attribute">ssl_certificate</span> /root/crt/server.crt;</span><br><span class="line">                <span class="attribute">ssl_certificate_key</span> /root/crt/server.key;</span><br><span class="line">                <span class="attribute">access_log</span>  /home/wwwlogs/passport.ddhigh.com.log  access;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><strong>/root/crt</strong>是我的证书目录，各位读者可以根据实际情况更改。</p>
 
       
@@ -471,32 +471,6 @@
 
     
 
-    
-      <div>
-        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-  <div>读后有收获可以请作者喝咖啡 ^.^</div>
-  <div id="QR">
-
-    
-      <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" width="150" src="https://static.ddhigh.com/paycode/wepay.jpg" alt="xialeistudio 微信支付">
-        <p>微信支付</p>
-      </div>
-    
-
-    
-      <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" width="150" src="https://static.ddhigh.com/paycode/alipay.jpg" alt="xialeistudio 支付宝">
-        <p>支付宝</p>
-      </div>
-    
-
-    
-
-  </div>
-</div>
-
-      </div>
     
     
       <div>
@@ -654,7 +628,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">241</span>
+                  <span class="site-state-item-count">242</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

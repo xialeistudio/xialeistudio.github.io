@@ -450,10 +450,10 @@
 
       
         <p>有时候https的证书验证也是挺烦的，比如自签CA签发的证书，这时候是不受信任的，直接执行https请求会报错。</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">FetchError: request to https:<span class="comment">//dm-81.data.aliyun.com/rest/160601/ip/getIpInfo.json?ip=8.8.8.8 failed, reason: unable to verify the first certificate</span></div><div class="line">     at ClientRequest.&lt;anonymous&gt; (node_modules/node-fetch/index<span class="selector-class">.js</span>:<span class="number">133</span>:<span class="number">11</span>)</div><div class="line">     at TLSSocket<span class="selector-class">.socketErrorListener</span> (_http_client<span class="selector-class">.js</span>:<span class="number">258</span>:<span class="number">9</span>)</div><div class="line">     at emitErrorNT (net<span class="selector-class">.js</span>:<span class="number">1256</span>:<span class="number">8</span>)</div></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">FetchError: request to https:<span class="comment">//dm-81.data.aliyun.com/rest/160601/ip/getIpInfo.json?ip=8.8.8.8 failed, reason: unable to verify the first certificate</span></span><br><span class="line">     at ClientRequest.&lt;anonymous&gt; (node_modules/node-fetch/index<span class="selector-class">.js</span>:<span class="number">133</span>:<span class="number">11</span>)</span><br><span class="line">     at TLSSocket<span class="selector-class">.socketErrorListener</span> (_http_client<span class="selector-class">.js</span>:<span class="number">258</span>:<span class="number">9</span>)</span><br><span class="line">     at emitErrorNT (net<span class="selector-class">.js</span>:<span class="number">1256</span>:<span class="number">8</span>)</span><br></pre></td></tr></table></figure>
 <p>查阅nodejs官方文档发现有 <strong>agent</strong> 属性，<strong>agent</strong>有个可选属性<strong>rejectUnauthorized</strong>，设置为<strong>false</strong>即可取消证书有效性验证。</p>
 <p>本文使用的是<strong>node-fetch</strong>模块执行请求，代码如下</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">'use strict'</span>;</div><div class="line"><span class="keyword">const</span> fetch = <span class="built_in">require</span>(<span class="string">'node-fetch'</span>);</div><div class="line"><span class="keyword">const</span> https = <span class="built_in">require</span>(<span class="string">'https'</span>);</div><div class="line"><span class="keyword">const</span> options = &#123;</div><div class="line">  agent:<span class="keyword">new</span> https.Agent(&#123;<span class="attr">rejectUnauthorized</span>:<span class="literal">false</span>&#125;)</div><div class="line">&#125;;</div><div class="line">fetch(<span class="string">`https://dm-81.data.aliyun.com/rest/160601/ip/getIpInfo.json?ip=8.8.8.8`</span>, options)</div><div class="line">.then(<span class="built_in">console</span>.log)</div><div class="line">.catch(<span class="built_in">console</span>.error);</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">'use strict'</span>;</span><br><span class="line"><span class="keyword">const</span> fetch = <span class="built_in">require</span>(<span class="string">'node-fetch'</span>);</span><br><span class="line"><span class="keyword">const</span> https = <span class="built_in">require</span>(<span class="string">'https'</span>);</span><br><span class="line"><span class="keyword">const</span> options = &#123;</span><br><span class="line">  agent:<span class="keyword">new</span> https.Agent(&#123;<span class="attr">rejectUnauthorized</span>:<span class="literal">false</span>&#125;)</span><br><span class="line">&#125;;</span><br><span class="line">fetch(<span class="string">`https://dm-81.data.aliyun.com/rest/160601/ip/getIpInfo.json?ip=8.8.8.8`</span>, options)</span><br><span class="line">.then(<span class="built_in">console</span>.log)</span><br><span class="line">.catch(<span class="built_in">console</span>.error);</span><br></pre></td></tr></table></figure>
 <p>修改过后就可以成功请求了。</p>
 <p>其他http请求模块类似处理。</p>
 
@@ -465,32 +465,6 @@
 
     
 
-    
-      <div>
-        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-  <div>读后有收获可以请作者喝咖啡 ^.^</div>
-  <div id="QR">
-
-    
-      <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" width="150" src="https://static.ddhigh.com/paycode/wepay.jpg" alt="xialeistudio 微信支付">
-        <p>微信支付</p>
-      </div>
-    
-
-    
-      <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" width="150" src="https://static.ddhigh.com/paycode/alipay.jpg" alt="xialeistudio 支付宝">
-        <p>支付宝</p>
-      </div>
-    
-
-    
-
-  </div>
-</div>
-
-      </div>
     
     
       <div>
@@ -643,7 +617,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">241</span>
+                  <span class="site-state-item-count">242</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

@@ -450,19 +450,19 @@
 
       
         <p>Redis相信大家都不陌生，而如果只是用来取代memcached做缓存的话，实在是大材小用了。一起来看看生产环境下的常用用法。</p>
-<h2 id="分布式锁"><a href="#分布式锁" class="headerlink" title="分布式锁"></a>分布式锁</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$canLock = $redis-&gt;set(<span class="string">'k'</span>, <span class="number">1</span>, <span class="string">'NX'</span>, <span class="string">'EX'</span>, <span class="number">2</span>);</div><div class="line"><span class="keyword">if</span>($canLock) &#123;</div><div class="line">    <span class="comment">// 获得锁成功</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="分布式锁"><a href="#分布式锁" class="headerlink" title="分布式锁"></a>分布式锁</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$canLock = $redis-&gt;set(<span class="string">'k'</span>, <span class="number">1</span>, <span class="string">'NX'</span>, <span class="string">'EX'</span>, <span class="number">2</span>);</span><br><span class="line"><span class="keyword">if</span>($canLock) &#123;</span><br><span class="line">    <span class="comment">// 获得锁成功</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>锁定键名为k的数据两秒钟，两秒后该方法才能重新获取锁</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$redis-&gt;del(<span class="string">'k'</span>);</div></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$redis-&gt;del(<span class="string">'k'</span>);</span><br></pre></td></tr></table></figure>
 <p>删除键名为k的数据，其他方法可以重新获取锁</p>
 <h2 id="Hash"><a href="#Hash" class="headerlink" title="Hash"></a>Hash</h2><p>这是redis特有的数据结构，memcached没有。使用场景很多，列举一种常用的，假设有一个需求</p>
 <blockquote>
 <p>加密后的用户id和真实用户id的映射关系保存</p>
 </blockquote>
 <p>这种情况我们可以使用hash，而不是使用多个kv缓存, 需要清空所有的时候比较难处理。代码如下：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">$realId = $redis-&gt;hget(<span class="string">'user_id_map'</span>, <span class="string">'userId1'</span>);</div><div class="line"><span class="keyword">if</span>(!<span class="keyword">empty</span>($realId)) &#123;</div><div class="line">    <span class="keyword">return</span> $realId;</div><div class="line">&#125;</div><div class="line">$realId = getFromDatabase(<span class="string">'userId1'</span>); <span class="comment">// 从数据库读取</span></div><div class="line">$redis-&gt;hset(<span class="string">'user_id_map'</span>,<span class="string">'userId1'</span>,$realId);</div></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$realId = $redis-&gt;hget(<span class="string">'user_id_map'</span>, <span class="string">'userId1'</span>);</span><br><span class="line"><span class="keyword">if</span>(!<span class="keyword">empty</span>($realId)) &#123;</span><br><span class="line">    <span class="keyword">return</span> $realId;</span><br><span class="line">&#125;</span><br><span class="line">$realId = getFromDatabase(<span class="string">'userId1'</span>); <span class="comment">// 从数据库读取</span></span><br><span class="line">$redis-&gt;hset(<span class="string">'user_id_map'</span>,<span class="string">'userId1'</span>,$realId);</span><br></pre></td></tr></table></figure>
 <p>如果需要清空，则直接删除hash即可。</p>
 <h2 id="set"><a href="#set" class="headerlink" title="set"></a>set</h2><p>set就是数据项不重复的集合，使用场景也很多。例子要说的是使用set存储一个聊天室中的所有用户id:</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$redis-&gt;sadd(<span class="string">'chat_room'</span>, <span class="string">'user1'</span>, <span class="string">'user2'</span>); <span class="comment">// 添加成员到集合</span></div><div class="line">$redis-&gt;srem(<span class="string">'chat_room'</span>, <span class="string">'user1'</span>); <span class="comment">// 删除指定成员</span></div><div class="line">$redis-&gt;smembers(<span class="string">'chat_room'</span>); <span class="comment">// 获取集合所有元素</span></div></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$redis-&gt;sadd(<span class="string">'chat_room'</span>, <span class="string">'user1'</span>, <span class="string">'user2'</span>); <span class="comment">// 添加成员到集合</span></span><br><span class="line">$redis-&gt;srem(<span class="string">'chat_room'</span>, <span class="string">'user1'</span>); <span class="comment">// 删除指定成员</span></span><br><span class="line">$redis-&gt;smembers(<span class="string">'chat_room'</span>); <span class="comment">// 获取集合所有元素</span></span><br></pre></td></tr></table></figure>
 <h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p> 大致就是这样了，基于这些简单数据结构可以根据业务需求构造更合理的数据结构。</p>
 
       
@@ -473,32 +473,6 @@
 
     
 
-    
-      <div>
-        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-  <div>读后有收获可以请作者喝咖啡 ^.^</div>
-  <div id="QR">
-
-    
-      <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" width="150" src="https://static.ddhigh.com/paycode/wepay.jpg" alt="xialeistudio 微信支付">
-        <p>微信支付</p>
-      </div>
-    
-
-    
-      <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" width="150" src="https://static.ddhigh.com/paycode/alipay.jpg" alt="xialeistudio 支付宝">
-        <p>支付宝</p>
-      </div>
-    
-
-    
-
-  </div>
-</div>
-
-      </div>
     
     
       <div>
@@ -656,7 +630,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">241</span>
+                  <span class="site-state-item-count">242</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

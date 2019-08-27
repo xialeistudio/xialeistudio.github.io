@@ -451,7 +451,7 @@
       
         <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>Web迅速发展的今天，往往一个产品拥有很多个子站点，SSO技术显得很重要。Yii作为我常用的框架，发现Yii的SSO配置其实是非常简单的。</p>
 <h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p>在所有站点中直接打开 <strong>protected/config/main.php</strong> 在 components 中加入以下代码，并且把<strong>protected/runtime/state.bin</strong>文件复制到各个具体的子站点中就可以实现SSO了！</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="string">'user'</span> =&gt; <span class="keyword">array</span>(</div><div class="line">            <span class="string">'identityCookie'</span> =&gt; <span class="keyword">array</span>(</div><div class="line">                <span class="string">'domain'</span> =&gt; <span class="string">'.ddhigh.com'</span>,</div><div class="line">                <span class="string">'path'</span> =&gt; <span class="string">'/'</span></div><div class="line">            ),</div><div class="line">            <span class="comment">// enable cookie-based authentication</span></div><div class="line">            <span class="string">'allowAutoLogin'</span> =&gt; <span class="keyword">true</span>,</div><div class="line">            <span class="string">'stateKeyPrefix'</span> =&gt; <span class="string">'ddhigh'</span>,</div><div class="line">            <span class="string">'loginUrl'</span> =&gt; <span class="keyword">array</span>(<span class="string">'user/login'</span>)</div><div class="line">        ),</div><div class="line">        <span class="string">'session'</span> =&gt; <span class="keyword">array</span>(</div><div class="line">            <span class="string">'cookieParams'</span> =&gt; <span class="keyword">array</span>(</div><div class="line">                <span class="string">'domain'</span> =&gt; <span class="string">'.ddhigh.com'</span>,</div><div class="line">                <span class="string">'lifetime'</span> =&gt; <span class="number">0</span>,</div><div class="line">                <span class="string">'timeout'</span> =&gt; <span class="number">3600</span></div><div class="line">            ),</div><div class="line">        ),</div><div class="line">        <span class="string">'statePersister'</span> =&gt; <span class="keyword">array</span>(</div><div class="line">            <span class="string">'class'</span> =&gt; <span class="string">'CStatePersister'</span>,</div><div class="line">            <span class="string">'stateFile'</span> =&gt; <span class="string">'./protected/runtime/state.bin'</span></div><div class="line">        ),</div></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'user'</span> =&gt; <span class="keyword">array</span>(</span><br><span class="line">            <span class="string">'identityCookie'</span> =&gt; <span class="keyword">array</span>(</span><br><span class="line">                <span class="string">'domain'</span> =&gt; <span class="string">'.ddhigh.com'</span>,</span><br><span class="line">                <span class="string">'path'</span> =&gt; <span class="string">'/'</span></span><br><span class="line">            ),</span><br><span class="line">            <span class="comment">// enable cookie-based authentication</span></span><br><span class="line">            <span class="string">'allowAutoLogin'</span> =&gt; <span class="keyword">true</span>,</span><br><span class="line">            <span class="string">'stateKeyPrefix'</span> =&gt; <span class="string">'ddhigh'</span>,</span><br><span class="line">            <span class="string">'loginUrl'</span> =&gt; <span class="keyword">array</span>(<span class="string">'user/login'</span>)</span><br><span class="line">        ),</span><br><span class="line">        <span class="string">'session'</span> =&gt; <span class="keyword">array</span>(</span><br><span class="line">            <span class="string">'cookieParams'</span> =&gt; <span class="keyword">array</span>(</span><br><span class="line">                <span class="string">'domain'</span> =&gt; <span class="string">'.ddhigh.com'</span>,</span><br><span class="line">                <span class="string">'lifetime'</span> =&gt; <span class="number">0</span>,</span><br><span class="line">                <span class="string">'timeout'</span> =&gt; <span class="number">3600</span></span><br><span class="line">            ),</span><br><span class="line">        ),</span><br><span class="line">        <span class="string">'statePersister'</span> =&gt; <span class="keyword">array</span>(</span><br><span class="line">            <span class="string">'class'</span> =&gt; <span class="string">'CStatePersister'</span>,</span><br><span class="line">            <span class="string">'stateFile'</span> =&gt; <span class="string">'./protected/runtime/state.bin'</span></span><br><span class="line">        ),</span><br></pre></td></tr></table></figure>
 <p>推荐所有的站点全部放在一个域名中进行操作~</p>
 
       
@@ -462,32 +462,6 @@
 
     
 
-    
-      <div>
-        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-  <div>读后有收获可以请作者喝咖啡 ^.^</div>
-  <div id="QR">
-
-    
-      <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" width="150" src="https://static.ddhigh.com/paycode/wepay.jpg" alt="xialeistudio 微信支付">
-        <p>微信支付</p>
-      </div>
-    
-
-    
-      <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" width="150" src="https://static.ddhigh.com/paycode/alipay.jpg" alt="xialeistudio 支付宝">
-        <p>支付宝</p>
-      </div>
-    
-
-    
-
-  </div>
-</div>
-
-      </div>
     
     
       <div>
@@ -645,7 +619,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">241</span>
+                  <span class="site-state-item-count">242</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

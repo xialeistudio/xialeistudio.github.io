@@ -450,10 +450,10 @@
 
       
         <p>最近一个项目需要承载高并发请求，所以在后端语言上选择了<strong>NodeJs</strong>，但是nodejs有时候读取不到请求的主机名，所以想到使用<strong>nginx+nodejs</strong>的方式进行处理。</p>
-<h2 id="Nginx-配置"><a href="#Nginx-配置" class="headerlink" title="Nginx 配置"></a>Nginx 配置</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">upstream io_nodes &#123;</div><div class="line">        server 127.0.0.1:8081;</div><div class="line">&#125;</div><div class="line"></div><div class="line">server &#123;</div><div class="line">        listen 80;</div><div class="line">        listen [::]:80;</div><div class="line">        root /var/www/html;</div><div class="line">        server_name ~^(?&lt;subdomain&gt;.+).example.com;</div><div class="line"></div><div class="line">        location / &#123;</div><div class="line">	    proxy_set_header Host $host;</div><div class="line">            proxy_set_header X-AppId $subdomain;</div><div class="line">            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</div><div class="line">            proxy_pass http://io_nodes;</div><div class="line">        &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="Nginx-配置"><a href="#Nginx-配置" class="headerlink" title="Nginx 配置"></a>Nginx 配置</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">upstream io_nodes &#123;</span><br><span class="line">        server 127.0.0.1:8081;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">        listen 80;</span><br><span class="line">        listen [::]:80;</span><br><span class="line">        root /var/www/html;</span><br><span class="line">        server_name ~^(?&lt;subdomain&gt;.+).example.com;</span><br><span class="line"></span><br><span class="line">        location / &#123;</span><br><span class="line">	    proxy_set_header Host $host;</span><br><span class="line">            proxy_set_header X-AppId $subdomain;</span><br><span class="line">            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">            proxy_pass http://io_nodes;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>重启nginx服务器即可。nginx会将所有的 <strong><subdomain>.example.com</subdomain></strong> 格式的域名反向代理到本机的<strong>8081</strong>端口，该端口为<strong>nodejs</strong>监听端口。</p>
 <h2 id="NodeJs-读取请求域名以及子域名名称"><a href="#NodeJs-读取请求域名以及子域名名称" class="headerlink" title="NodeJs 读取请求域名以及子域名名称"></a>NodeJs 读取请求域名以及子域名名称</h2><p>使用express</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> host = req.headers.host;</div><div class="line"><span class="keyword">var</span> appid = req.headers[<span class="string">'x-appid'</span>];</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> host = req.headers.host;</span><br><span class="line"><span class="keyword">var</span> appid = req.headers[<span class="string">'x-appid'</span>];</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -463,32 +463,6 @@
 
     
 
-    
-      <div>
-        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-  <div>读后有收获可以请作者喝咖啡 ^.^</div>
-  <div id="QR">
-
-    
-      <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" width="150" src="https://static.ddhigh.com/paycode/wepay.jpg" alt="xialeistudio 微信支付">
-        <p>微信支付</p>
-      </div>
-    
-
-    
-      <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" width="150" src="https://static.ddhigh.com/paycode/alipay.jpg" alt="xialeistudio 支付宝">
-        <p>支付宝</p>
-      </div>
-    
-
-    
-
-  </div>
-</div>
-
-      </div>
     
     
       <div>
@@ -529,8 +503,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/12/28/wechat-component-domain.html" rel="next" title="微信开放平台公众号第三方平台网页开发域名问题">
-                <i class="fa fa-chevron-left"></i> 微信开放平台公众号第三方平台网页开发域名问题
+              <a href="/2016/12/22/pm2-daemon-php-cli.html" rel="next" title="使用PM2守护PHP命令行程序">
+                <i class="fa fa-chevron-left"></i> 使用PM2守护PHP命令行程序
               </a>
             
           </div>
@@ -539,8 +513,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/01/20/yii2-migrate.html" rel="prev" title="Yii2 migrate使用">
-                Yii2 migrate使用 <i class="fa fa-chevron-right"></i>
+              <a href="/2016/12/28/wechat-component-domain.html" rel="prev" title="微信开放平台公众号第三方平台网页开发域名问题">
+                微信开放平台公众号第三方平台网页开发域名问题 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -646,7 +620,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">241</span>
+                  <span class="site-state-item-count">242</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

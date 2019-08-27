@@ -450,11 +450,11 @@
 
       
         <p>golang默认编码JSON时会将HTML标签中的尖括号编码为<code>\u003c</code>这种unicode字符。而最近在开发的微信客服消息推送就会出现以下结果</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">\u003ca href=&apos;https://www.example.com&apos;\u003e点击进入\u003c/a\u003e</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\u003ca href=&apos;https://www.example.com&apos;\u003e点击进入\u003c/a\u003e</span><br></pre></td></tr></table></figure>
 <p>查看golang的json包发现json编码器有个方法<code>SetEscapeHTML</code>方法，接收一个bool值来设置是否保留HTML标签。</p>
 <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>json的Encoder只能编码到实现了<code>io.Writer</code>接口的对象中去，而本例中需要编码到一个<code>[]byte</code>切片中。</p>
 <h2 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h2><p>查找资料发现<code>bytes.Buffer</code>对象实现了<code>io.Writer</code>接口。所以最终代码如下：</p>
-<figure class="highlight golang"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">BuildJson</span><span class="params">(data <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">interface</span>&#123;&#125;)</span> <span class="params">([]<span class="keyword">byte</span>, error)</span></span> &#123;</div><div class="line">    buf := bytes.NewBufferString(<span class="string">""</span>)</div><div class="line">    encoder := json.NewEncoder(buf)</div><div class="line">	encoder.SetEscapeHTML(<span class="literal">false</span>)</div><div class="line">	<span class="keyword">if</span> err := encoder.Encode(&amp;data); err != <span class="literal">nil</span> &#123;</div><div class="line">		<span class="keyword">return</span> <span class="literal">nil</span>, err</div><div class="line">	&#125; <span class="keyword">else</span> &#123;</div><div class="line">		<span class="keyword">return</span> buf.Bytes(), <span class="literal">nil</span></div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">BuildJson</span><span class="params">(data <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">interface</span>&#123;&#125;)</span> <span class="params">([]<span class="keyword">byte</span>, error)</span></span> &#123;</span><br><span class="line">    buf := bytes.NewBufferString(<span class="string">""</span>)</span><br><span class="line">    encoder := json.NewEncoder(buf)</span><br><span class="line">	encoder.SetEscapeHTML(<span class="literal">false</span>)</span><br><span class="line">	<span class="keyword">if</span> err := encoder.Encode(&amp;data); err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span>, err</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> buf.Bytes(), <span class="literal">nil</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>经过测试，输出接口符合要求。</p>
 
       
@@ -465,32 +465,6 @@
 
     
 
-    
-      <div>
-        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-  <div>读后有收获可以请作者喝咖啡 ^.^</div>
-  <div id="QR">
-
-    
-      <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" width="150" src="https://static.ddhigh.com/paycode/wepay.jpg" alt="xialeistudio 微信支付">
-        <p>微信支付</p>
-      </div>
-    
-
-    
-      <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" width="150" src="https://static.ddhigh.com/paycode/alipay.jpg" alt="xialeistudio 支付宝">
-        <p>支付宝</p>
-      </div>
-    
-
-    
-
-  </div>
-</div>
-
-      </div>
     
     
       <div>
@@ -646,7 +620,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">241</span>
+                  <span class="site-state-item-count">242</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

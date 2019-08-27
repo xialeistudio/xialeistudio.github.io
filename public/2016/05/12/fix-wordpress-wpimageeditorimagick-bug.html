@@ -450,11 +450,11 @@
 
       
         <p>4.5.1存在该漏洞，但是更新到4.5.2发现漏洞依旧存在。<br>临时修复方案如下：<br>文件路径：</p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="regexp">/wp-includes/m</span>edia.php的_wp_image_editor_choose</div></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">/wp-includes/m</span>edia.php的_wp_image_editor_choose</span><br></pre></td></tr></table></figure>
 <p>将</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$implementations = apply_filters( <span class="string">'wp_image_editors'</span>, <span class="keyword">array</span>( <span class="string">'WP_Image_Editor_Imagick'</span> ,<span class="string">'WP_Image_Editor_GD'</span> ) );</div></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$implementations = apply_filters( <span class="string">'wp_image_editors'</span>, <span class="keyword">array</span>( <span class="string">'WP_Image_Editor_Imagick'</span> ,<span class="string">'WP_Image_Editor_GD'</span> ) );</span><br></pre></td></tr></table></figure>
 <p>改为</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$implementations = apply_filters( <span class="string">'wp_image_editors'</span>, <span class="keyword">array</span>(  <span class="string">'WP_Image_Editor_GD'</span>, <span class="string">'WP_Image_Editor_Imagick'</span> ) );</div></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$implementations = apply_filters( <span class="string">'wp_image_editors'</span>, <span class="keyword">array</span>(  <span class="string">'WP_Image_Editor_GD'</span>, <span class="string">'WP_Image_Editor_Imagick'</span> ) );</span><br></pre></td></tr></table></figure>
 <p><em>此方法为临时解决方案，请大家及时更新最新版本的wordpress</em></p>
 
       
@@ -465,32 +465,6 @@
 
     
 
-    
-      <div>
-        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-  <div>读后有收获可以请作者喝咖啡 ^.^</div>
-  <div id="QR">
-
-    
-      <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" width="150" src="https://static.ddhigh.com/paycode/wepay.jpg" alt="xialeistudio 微信支付">
-        <p>微信支付</p>
-      </div>
-    
-
-    
-      <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" width="150" src="https://static.ddhigh.com/paycode/alipay.jpg" alt="xialeistudio 支付宝">
-        <p>支付宝</p>
-      </div>
-    
-
-    
-
-  </div>
-</div>
-
-      </div>
     
     
       <div>
@@ -639,7 +613,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">241</span>
+                  <span class="site-state-item-count">242</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

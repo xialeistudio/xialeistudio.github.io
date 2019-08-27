@@ -451,10 +451,10 @@
       
         <p>Angularjs中输出变量使用<strong>花括号</strong>或者<strong>ng-bind</strong>，但是如果变量中有html代码的话，angularjs为了xss安全，默认是不解析html，直接原样显示html代码。<br>如果需要显示解析后的html代码，需要使用<strong>angular-sanitize</strong>模块。</p>
 <p>angular-sanitize一般会附带在angularjs中，如果没有附带，请前往官网下载对应版本的angular-sanitize模块。</p>
-<h2 id="模块代码"><a href="#模块代码" class="headerlink" title="模块代码"></a>模块代码</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> demo = angular.module(<span class="string">'demo'</span>,[<span class="string">'ng-sanitize'</span>]);</div></pre></td></tr></table></figure>
-<h2 id="控制器代码"><a href="#控制器代码" class="headerlink" title="控制器代码"></a>控制器代码</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">demo.controller(<span class="string">'Demo13Controller'</span>, [</div><div class="line">  <span class="string">'$scope'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$scope</span>) </span>&#123;</div><div class="line">    $scope.html = <span class="string">'&lt;span style="color: red"&gt;这是格式化的HTML文本&lt;/span&gt;'</span>;</div><div class="line">  &#125;</div><div class="line">]);</div></pre></td></tr></table></figure>
-<h2 id="视图代码"><a href="#视图代码" class="headerlink" title="视图代码"></a>视图代码</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">article</span> <span class="attr">class</span>=<span class="string">"demo13"</span> <span class="attr">ng-controller</span>=<span class="string">"Demo13Controller"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">h2</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">name</span>=<span class="string">"demo13"</span>&gt;</span>13.显示HTML文本<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">h2</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"demo13-content"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>需要显示的文本：<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>Html格式化文本： <span class="tag">&lt;<span class="name">span</span> <span class="attr">ng-bind-html</span>=<span class="string">"html|htmlContent"</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">article</span>&gt;</span></div></pre></td></tr></table></figure>
-<h2 id="过滤器代码"><a href="#过滤器代码" class="headerlink" title="过滤器代码"></a>过滤器代码</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">demo.filter(<span class="string">'htmlContent'</span>,[<span class="string">'$sce'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$sce</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">input</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> $sce.trustAsHtml(input);</div><div class="line">  &#125;</div><div class="line">&#125;]);</div></pre></td></tr></table></figure>
+<h2 id="模块代码"><a href="#模块代码" class="headerlink" title="模块代码"></a>模块代码</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> demo = angular.module(<span class="string">'demo'</span>,[<span class="string">'ng-sanitize'</span>]);</span><br></pre></td></tr></table></figure>
+<h2 id="控制器代码"><a href="#控制器代码" class="headerlink" title="控制器代码"></a>控制器代码</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">demo.controller(<span class="string">'Demo13Controller'</span>, [</span><br><span class="line">  <span class="string">'$scope'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$scope</span>) </span>&#123;</span><br><span class="line">    $scope.html = <span class="string">'&lt;span style="color: red"&gt;这是格式化的HTML文本&lt;/span&gt;'</span>;</span><br><span class="line">  &#125;</span><br><span class="line">]);</span><br></pre></td></tr></table></figure>
+<h2 id="视图代码"><a href="#视图代码" class="headerlink" title="视图代码"></a>视图代码</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">article</span> <span class="attr">class</span>=<span class="string">"demo13"</span> <span class="attr">ng-controller</span>=<span class="string">"Demo13Controller"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h2</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">name</span>=<span class="string">"demo13"</span>&gt;</span>13.显示HTML文本<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"demo13-content"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>需要显示的文本：<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>Html格式化文本： <span class="tag">&lt;<span class="name">span</span> <span class="attr">ng-bind-html</span>=<span class="string">"html|htmlContent"</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">article</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="过滤器代码"><a href="#过滤器代码" class="headerlink" title="过滤器代码"></a>过滤器代码</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">demo.filter(<span class="string">'htmlContent'</span>,[<span class="string">'$sce'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$sce</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">input</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> $sce.trustAsHtml(input);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;]);</span><br></pre></td></tr></table></figure>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>$sce过滤器+ng-bind-html就可以显示html文本了。</p>
 
       
@@ -465,32 +465,6 @@
 
     
 
-    
-      <div>
-        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-  <div>读后有收获可以请作者喝咖啡 ^.^</div>
-  <div id="QR">
-
-    
-      <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" width="150" src="https://static.ddhigh.com/paycode/wepay.jpg" alt="xialeistudio 微信支付">
-        <p>微信支付</p>
-      </div>
-    
-
-    
-      <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" width="150" src="https://static.ddhigh.com/paycode/alipay.jpg" alt="xialeistudio 支付宝">
-        <p>支付宝</p>
-      </div>
-    
-
-    
-
-  </div>
-</div>
-
-      </div>
     
     
       <div>
@@ -650,7 +624,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">241</span>
+                  <span class="site-state-item-count">242</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

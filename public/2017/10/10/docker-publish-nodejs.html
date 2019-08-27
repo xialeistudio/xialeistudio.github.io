@@ -449,9 +449,9 @@
 
       
         <p>Docker的环境无关性以及自动化特性实在是令人称赞，最近遇到的一个问题是，NodeJs使用8.x版本开发，但是线上服务器是7.x的，这时候又不能动线上的应用。<br>于是想到了使用Docker来部署NodeJs，服务器是Ubuntu的。</p>
-<h2 id="安装Docker"><a href="#安装Docker" class="headerlink" title="安装Docker"></a>安装Docker</h2><figure class="highlight cmake"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apt <span class="keyword">install</span> docker.io</div></pre></td></tr></table></figure>
-<h2 id="Dockerfile编写"><a href="#Dockerfile编写" class="headerlink" title="Dockerfile编写"></a>Dockerfile编写</h2><p>由于默认的dockhub速度非常慢导致下载镜像慢，而且镜像下来的Ubuntu apt源又是国外的，简直是慢上加慢，本文使用<a href="https://www.daocloud.io/" target="_blank" rel="external">daocloud.io的Ubuntu镜像</a>以及<a href="http://mirrors.aliyun.com/" target="_blank" rel="external">阿里云的Ubuntu源</a></p>
-<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">FROM</span> daocloud.io/library/ubuntu</div><div class="line"><span class="keyword">MAINTAINER</span> xialeistudio&lt;xialeistudio@gmail.com&gt;</div><div class="line"></div><div class="line"><span class="keyword">ENV</span> PATH $PATH:/opt/node/bin</div><div class="line"><span class="keyword">ENV</span> PORT <span class="number">80</span></div><div class="line"><span class="keyword">ENV</span> HOST <span class="number">0.0</span>.<span class="number">0.0</span></div><div class="line"><span class="comment"># prepare</span></div><div class="line"><span class="keyword">ADD</span><span class="bash"> sources.list /etc/apt/sources.list</span></div><div class="line"><span class="bash">RUN apt update</span></div><div class="line"><span class="bash">RUN apt install wget gcc python git -y</span></div><div class="line"><span class="bash"><span class="comment"># nodejs</span></span></div><div class="line"><span class="bash">RUN wget https://npm.taobao.org/mirrors/node/latest-v8.x/node-v8.6.0-linux-x64.tar.gz</span></div><div class="line"><span class="bash">RUN tar xf node-v8.6.0-linux-x64.tar.gz</span></div><div class="line"><span class="bash">RUN mv node-v8.6.0-linux-x64 /opt/node</span></div><div class="line"><span class="bash"><span class="comment"># app</span></span></div><div class="line"><span class="bash">RUN mkdir app</span></div><div class="line"><span class="bash">ADD . /root/app</span></div><div class="line"><span class="bash">WORKDIR /root/app</span></div><div class="line"><span class="bash">RUN /opt/node/bin/npm install --registry=https://registry.npm.taobao.org</span></div><div class="line"><span class="bash"><span class="comment"># start app</span></span></div><div class="line"><span class="bash">ENTRYPOINT [<span class="string">"npm"</span>,<span class="string">"start"</span>]</span></div></pre></td></tr></table></figure>
+<h2 id="安装Docker"><a href="#安装Docker" class="headerlink" title="安装Docker"></a>安装Docker</h2><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt <span class="keyword">install</span> docker.io</span><br></pre></td></tr></table></figure>
+<h2 id="Dockerfile编写"><a href="#Dockerfile编写" class="headerlink" title="Dockerfile编写"></a>Dockerfile编写</h2><p>由于默认的dockhub速度非常慢导致下载镜像慢，而且镜像下来的Ubuntu apt源又是国外的，简直是慢上加慢，本文使用<a href="https://www.daocloud.io/" target="_blank" rel="noopener">daocloud.io的Ubuntu镜像</a>以及<a href="http://mirrors.aliyun.com/" target="_blank" rel="noopener">阿里云的Ubuntu源</a></p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> daocloud.io/library/ubuntu</span><br><span class="line"><span class="keyword">MAINTAINER</span> xialeistudio&lt;xialeistudio@gmail.com&gt;</span><br><span class="line"></span><br><span class="line"><span class="keyword">ENV</span> PATH $PATH:/opt/node/bin</span><br><span class="line"><span class="keyword">ENV</span> PORT <span class="number">80</span></span><br><span class="line"><span class="keyword">ENV</span> HOST <span class="number">0.0</span>.<span class="number">0.0</span></span><br><span class="line"><span class="comment"># prepare</span></span><br><span class="line"><span class="keyword">ADD</span><span class="bash"> sources.list /etc/apt/sources.list</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> apt update</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> apt install wget gcc python git -y</span></span><br><span class="line"><span class="comment"># nodejs</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> wget https://npm.taobao.org/mirrors/node/latest-v8.x/node-v8.6.0-linux-x64.tar.gz</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> tar xf node-v8.6.0-linux-x64.tar.gz</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> mv node-v8.6.0-linux-x64 /opt/node</span></span><br><span class="line"><span class="comment"># app</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> mkdir app</span></span><br><span class="line"><span class="keyword">ADD</span><span class="bash"> . /root/app</span></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="bash"> /root/app</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> /opt/node/bin/npm install --registry=https://registry.npm.taobao.org</span></span><br><span class="line"><span class="comment"># start app</span></span><br><span class="line"><span class="keyword">ENTRYPOINT</span><span class="bash"> [<span class="string">"npm"</span>,<span class="string">"start"</span>]</span></span><br></pre></td></tr></table></figure>
 <p>指令解释一下</p>
 <ol>
 <li>指定模板镜像</li>
@@ -465,9 +465,9 @@
 <li>使用淘宝镜像安装npm包</li>
 <li>启动APP</li>
 </ol>
-<h2 id="build镜像"><a href="#build镜像" class="headerlink" title="build镜像"></a>build镜像</h2><figure class="highlight armasm"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">docker</span> <span class="keyword">build </span>-t demo .</div></pre></td></tr></table></figure>
+<h2 id="build镜像"><a href="#build镜像" class="headerlink" title="build镜像"></a>build镜像</h2><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">docker</span> <span class="keyword">build </span>-t demo .</span><br></pre></td></tr></table></figure>
 <p>运行完毕后就可以使用<em>docker images</em>查看镜像了</p>
-<h2 id="启动容器"><a href="#启动容器" class="headerlink" title="启动容器"></a>启动容器</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">docker</span> <span class="selector-tag">run</span> <span class="selector-tag">-d</span> <span class="selector-tag">-p</span> 127<span class="selector-class">.0</span><span class="selector-class">.0</span><span class="selector-class">.1</span><span class="selector-pseudo">:7001</span><span class="selector-pseudo">:80</span> <span class="selector-tag">demo</span></div></pre></td></tr></table></figure>
+<h2 id="启动容器"><a href="#启动容器" class="headerlink" title="启动容器"></a>启动容器</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">docker</span> <span class="selector-tag">run</span> <span class="selector-tag">-d</span> <span class="selector-tag">-p</span> 127<span class="selector-class">.0</span><span class="selector-class">.0</span><span class="selector-class">.1</span><span class="selector-pseudo">:7001</span><span class="selector-pseudo">:80</span> <span class="selector-tag">demo</span></span><br></pre></td></tr></table></figure>
 <p>这时候容器已经启动，并通过端口转发监听在宿主机的7001端口上，配合nginx做反向代理就可以部署一个公网应用了。<br>不管你容器中部署何种版本的NodeJs都不会对宿主机造成影响，这点很重要。</p>
 
       
@@ -478,32 +478,6 @@
 
     
 
-    
-      <div>
-        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-  <div>读后有收获可以请作者喝咖啡 ^.^</div>
-  <div id="QR">
-
-    
-      <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" width="150" src="https://static.ddhigh.com/paycode/wepay.jpg" alt="xialeistudio 微信支付">
-        <p>微信支付</p>
-      </div>
-    
-
-    
-      <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" width="150" src="https://static.ddhigh.com/paycode/alipay.jpg" alt="xialeistudio 支付宝">
-        <p>支付宝</p>
-      </div>
-    
-
-    
-
-  </div>
-</div>
-
-      </div>
     
     
       <div>
@@ -653,7 +627,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">241</span>
+                  <span class="site-state-item-count">242</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

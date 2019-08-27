@@ -429,9 +429,9 @@
       
         <h2 id="为什么要限制协程数量"><a href="#为什么要限制协程数量" class="headerlink" title="为什么要限制协程数量"></a>为什么要限制协程数量</h2><p>golang的go关键字并发实在是太简单，但是带来的问题是由于硬件和网络状况的限制，不受控制的增加协程是非常危险的做法，甚至有可能搞垮数据库之类的应用! 而并发控制在go中是非常常用的技巧，以此文来记录一下学习历程。</p>
 <h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>由于channel的阻塞机制，通过设置缓冲channel的缓冲大小来控制同时执行的协程数量。</p>
-<h2 id="demo代码"><a href="#demo代码" class="headerlink" title="demo代码"></a>demo代码</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> main</div><div class="line"></div><div class="line"><span class="keyword">import</span> (</div><div class="line">	<span class="string">"log"</span></div><div class="line">	<span class="string">"time"</span></div><div class="line">)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</div><div class="line">	start := time.Now()</div><div class="line">	ch := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">int</span>, <span class="number">2</span>)</div><div class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt;= <span class="number">10</span>; i++ &#123;</div><div class="line">		ch &lt;- <span class="number">1</span></div><div class="line">		<span class="keyword">go</span> worker(i, ch)</div><div class="line">	&#125;</div><div class="line">	<span class="built_in">close</span>(ch)</div><div class="line">	log.Println(<span class="string">"complete"</span>, time.Since(start).Seconds())</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 模拟耗时操作</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">worker</span><span class="params">(i <span class="keyword">int</span>, ch <span class="keyword">chan</span> <span class="keyword">int</span>)</span></span> &#123;</div><div class="line">	log.Println(<span class="string">"worker"</span>, i)</div><div class="line">	time.Sleep(time.Second)</div><div class="line">	&lt;-ch</div></pre></td></tr></table></figure>
-<h2 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">go run demo.ho</div></pre></td></tr></table></figure>
-<h2 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">2018/01/31 22:24:49 worker 1</div><div class="line">2018/01/31 22:24:49 worker 0</div><div class="line">2018/01/31 22:24:50 worker 2</div><div class="line">2018/01/31 22:24:50 worker 3</div><div class="line">2018/01/31 22:24:51 worker 4</div><div class="line">2018/01/31 22:24:51 worker 5</div><div class="line">2018/01/31 22:24:52 worker 6</div><div class="line">2018/01/31 22:24:52 worker 7</div><div class="line">2018/01/31 22:24:53 worker 8</div><div class="line">2018/01/31 22:24:53 worker 9</div><div class="line">2018/01/31 22:24:54 worker 10</div><div class="line">2018/01/31 22:24:54 complete 5.01140112</div></pre></td></tr></table></figure>
+<h2 id="demo代码"><a href="#demo代码" class="headerlink" title="demo代码"></a>demo代码</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"log"</span></span><br><span class="line">	<span class="string">"time"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	start := time.Now()</span><br><span class="line">	ch := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">int</span>, <span class="number">2</span>)</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt;= <span class="number">10</span>; i++ &#123;</span><br><span class="line">		ch &lt;- <span class="number">1</span></span><br><span class="line">		<span class="keyword">go</span> worker(i, ch)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">close</span>(ch)</span><br><span class="line">	log.Println(<span class="string">"complete"</span>, time.Since(start).Seconds())</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 模拟耗时操作</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">worker</span><span class="params">(i <span class="keyword">int</span>, ch <span class="keyword">chan</span> <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">	log.Println(<span class="string">"worker"</span>, i)</span><br><span class="line">	time.Sleep(time.Second)</span><br><span class="line">	&lt;-ch</span><br></pre></td></tr></table></figure>
+<h2 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go run demo.ho</span><br></pre></td></tr></table></figure>
+<h2 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">2018/01/31 22:24:49 worker 1</span><br><span class="line">2018/01/31 22:24:49 worker 0</span><br><span class="line">2018/01/31 22:24:50 worker 2</span><br><span class="line">2018/01/31 22:24:50 worker 3</span><br><span class="line">2018/01/31 22:24:51 worker 4</span><br><span class="line">2018/01/31 22:24:51 worker 5</span><br><span class="line">2018/01/31 22:24:52 worker 6</span><br><span class="line">2018/01/31 22:24:52 worker 7</span><br><span class="line">2018/01/31 22:24:53 worker 8</span><br><span class="line">2018/01/31 22:24:53 worker 9</span><br><span class="line">2018/01/31 22:24:54 worker 10</span><br><span class="line">2018/01/31 22:24:54 complete 5.01140112</span><br></pre></td></tr></table></figure>
 <h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>可以看到日志的输出时间，每秒出现两个，正好等于我们<code>make</code>函数的大小，而总时间也是为<code>10/2</code>左右，证明限制起到了作用。</p>
 <p>虽然本文写起来很简单，但是包含的技巧可以说大型程序仍然会用到。正所谓“万丈高楼平地起”。</p>
 
@@ -443,32 +443,6 @@
 
     
 
-    
-      <div>
-        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-  <div>读后有收获可以请作者喝咖啡 ^.^</div>
-  <div id="QR">
-
-    
-      <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" width="150" src="https://static.ddhigh.com/paycode/wepay.jpg" alt="xialeistudio 微信支付">
-        <p>微信支付</p>
-      </div>
-    
-
-    
-      <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" width="150" src="https://static.ddhigh.com/paycode/alipay.jpg" alt="xialeistudio 支付宝">
-        <p>支付宝</p>
-      </div>
-    
-
-    
-
-  </div>
-</div>
-
-      </div>
     
     
       <div>
@@ -624,7 +598,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">241</span>
+                  <span class="site-state-item-count">242</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
