@@ -2331,7 +2331,7 @@ heredoc定界符
                 var searchTextCount = 0;
                 var title = data.title.trim();
                 var titleInLowerCase = title.toLowerCase();
-                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var content = data.content? data.content.trim().replace(/<[^>]+>/g,"") : '';
                 var contentInLowerCase = content.toLowerCase();
                 var articleUrl = decodeURIComponent(data.url);
                 var indexOfTitle = [];

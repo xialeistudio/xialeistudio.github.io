@@ -2345,7 +2345,7 @@ MVC模式（Model–view–controller）是软件工程中的一种软件架构�
                 var searchTextCount = 0;
                 var title = data.title.trim();
                 var titleInLowerCase = title.toLowerCase();
-                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var content = data.content? data.content.trim().replace(/<[^>]+>/g,"") : '';
                 var contentInLowerCase = content.toLowerCase();
                 var articleUrl = decodeURIComponent(data.url);
                 var indexOfTitle = [];
