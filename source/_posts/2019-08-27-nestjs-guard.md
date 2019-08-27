@@ -6,10 +6,9 @@ categories:
 tags:
 - nestjs
 ---
-
 欢迎持续关注**NestJs学习之旅**系列文章
 
-![img](/Users/xialeistudio/Documents/2019-08-26-060638.png)
+![img](https://user-gold-cdn.xitu.io/2019/8/26/16cccdae690451fd?w=400&h=177&f=jpeg&s=15199)
 
 传统的Web应用中去检测用户登录、权限判断等等都是在控制器层或者中间件层做的，而在目前比较推荐的模块化与组件化架构中，不同职责的功能建议拆分到不同的类文件中去。
 
@@ -21,7 +20,7 @@ tags:
 
 NestJs中路由守卫也是如此，通过继承**CanActive**接口即可定义一个路由守卫。
 
-![img](/Users/xialeistudio/Documents/2019-08-27-055230.png)
+![img](https://user-gold-cdn.xitu.io/2019/8/27/16cd1e6e5d556fed?w=906&h=269&f=png&s=22586)
 
 ```typescript
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
@@ -311,4 +310,4 @@ export class RolesGuard implements CanActivate {
 
 如果您想交流关于NestJs更多的知识，欢迎加群讨论！
 
-![20190827145318](/Users/xialeistudio/Documents/200.png)
+![20190827145318](https://user-gold-cdn.xitu.io/2019/8/27/16cd1e76aeb81fb7?w=204&h=200&f=jpeg&s=16875)
