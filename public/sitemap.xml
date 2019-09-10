@@ -2,16 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https//www.ddhigh.com/2019/08/28/nestjs-pipe.html</loc>
+    <loc>https//www.ddhigh.com/2019/08/27/nestjs-guard.html</loc>
     
-    <lastmod>2019-08-28T06:59:27.214Z</lastmod>
+    <lastmod>2019-09-10T06:25:23.232Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https//www.ddhigh.com/2019/08/27/nestjs-guard.html</loc>
+    <loc>https//www.ddhigh.com/2019/09/09/golang-compiler.html</loc>
     
-    <lastmod>2019-08-27T07:08:42.003Z</lastmod>
+    <lastmod>2019-09-09T08:57:18.528Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https//www.ddhigh.com/2019/08/28/nestjs-pipe.html</loc>
+    
+    <lastmod>2019-08-28T06:59:27.214Z</lastmod>
     
   </url>
   

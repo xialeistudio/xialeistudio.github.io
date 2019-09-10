@@ -121,14 +121,14 @@
 <meta property="og:site_name" content="每天进步一点点">
 <meta property="og:description" content="欢迎持续关注NestJs学习之旅系列文章  传统的Web应用中去检测用户登录、权限判断等等都是在控制器层或者中间件层做的，而在目前比较推荐的模块化与组件化架构中，不同职责的功能建议拆分到不同的类文件中去。 通过前几篇的学习可以发现NestJs在这方面做的很好，传统的express/koa应用中，需要开发者去思考项目结构以及代码组织，而NestJs不需要你这样做，降低了开发成本，另外也统一了开发风格">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/8/26/16cccdae690451fd?w=400&h=177&f=jpeg&s=15199">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/8/27/16cd1e6e5d556fed?w=906&h=269&f=png&s=22586">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/8/27/16cd1e76aeb81fb7?w=204&h=200&f=jpeg&s=16875">
-<meta property="og:updated_time" content="2019-08-27T07:08:42.003Z">
+<meta property="og:image" content="https://static.ddhigh.com/blog/2019-08-26-060638.jpg">
+<meta property="og:image" content="https://static.ddhigh.com/blog/2019-08-27-055230.png">
+<meta property="og:image" content="https://static.ddhigh.com/blog/2019-08-27-065355.jpg?imageView2/2/h/200">
+<meta property="og:updated_time" content="2019-09-10T06:25:23.232Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NestJs学习之旅(7)——路由守卫">
 <meta name="twitter:description" content="欢迎持续关注NestJs学习之旅系列文章  传统的Web应用中去检测用户登录、权限判断等等都是在控制器层或者中间件层做的，而在目前比较推荐的模块化与组件化架构中，不同职责的功能建议拆分到不同的类文件中去。 通过前几篇的学习可以发现NestJs在这方面做的很好，传统的express/koa应用中，需要开发者去思考项目结构以及代码组织，而NestJs不需要你这样做，降低了开发成本，另外也统一了开发风格">
-<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2019/8/26/16cccdae690451fd?w=400&h=177&f=jpeg&s=15199">
+<meta name="twitter:image" content="https://static.ddhigh.com/blog/2019-08-26-060638.jpg">
 
 
 
@@ -454,19 +454,19 @@
 
       
         <p>欢迎持续关注<strong>NestJs学习之旅</strong>系列文章</p>
-<p><img src="https://user-gold-cdn.xitu.io/2019/8/26/16cccdae690451fd?w=400&amp;h=177&amp;f=jpeg&amp;s=15199" alt="img"></p>
+<p><img src="https://static.ddhigh.com/blog/2019-08-26-060638.jpg" alt="img"></p>
 <p>传统的Web应用中去检测用户登录、权限判断等等都是在控制器层或者中间件层做的，而在目前比较推荐的模块化与组件化架构中，不同职责的功能建议拆分到不同的类文件中去。</p>
 <p>通过前几篇的学习可以发现NestJs在这方面做的很好，传统的express/koa应用中，需要开发者去思考项目结构以及代码组织，而NestJs不需要你这样做，降低了开发成本，另外也统一了开发风格。</p>
 <h2 id="路由守卫"><a href="#路由守卫" class="headerlink" title="路由守卫"></a>路由守卫</h2><p>熟悉Vue,React的伙伴应该比较熟悉这个概念，通俗的说就是在访问指定的路由之前回调一个处理函数，如果该函数<strong>返回true</strong>或者<strong>调用了next()</strong>就会放行当前访问，否则阻断当前访问。</p>
 <p>NestJs中路由守卫也是如此，通过继承<strong>CanActive</strong>接口即可定义一个路由守卫。</p>
-<p><img src="https://user-gold-cdn.xitu.io/2019/8/27/16cd1e6e5d556fed?w=906&amp;h=269&amp;f=png&amp;s=22586" alt="img"></p>
+<p><img src="https://static.ddhigh.com/blog/2019-08-27-055230.png" alt="img"></p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; CanActivate, ExecutionContext, Injectable &#125; <span class="keyword">from</span> <span class="string">'@nestjs/common'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Observable &#125; <span class="keyword">from</span> <span class="string">'rxjs'</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Injectable</span>()</span><br><span class="line"><span class="keyword">class</span> AppGuard <span class="keyword">implements</span> CanActivate &#123;</span><br><span class="line">  canActivate(context: ExecutionContext): <span class="built_in">boolean</span> | <span class="built_in">Promise</span>&lt;<span class="built_in">boolean</span>&gt; | Observable&lt;<span class="built_in">boolean</span>&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="路由守卫与中间件"><a href="#路由守卫与中间件" class="headerlink" title="路由守卫与中间件"></a>路由守卫与中间件</h2><h3 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h3><p>路由守卫本质上也是中间件的一种，koa或者express开发中接口鉴权就是基于中间件开发的，如果当前请求是不被允许的，当前中间件将不会调用后续中间件，达到阻断请求的目的。</p>
 <p>但是中间件的职责是不明确的，中间件可以干任何事（数据校验，格式转化，响应体压缩等等），这导致只能通过名称来识别中间件，项目迭代比较久以后，有比较高的维护成本。</p>
 <h3 id="联系"><a href="#联系" class="headerlink" title="联系"></a>联系</h3><p>由于单一职责的关系，路由守卫只能返回true和false来决定放行/阻断当前请求，不可以修改request/response对象，因为一旦破坏单一职责的原则，排查问题比较麻烦。</p>
 <p>如果需要修改request对象，可以结合中间件一起使用。</p>
 <blockquote>
-<p> 路由守卫在所有中间件执行完毕之后开始执行。</p>
+<p>路由守卫在所有中间件执行完毕之后开始执行。</p>
 </blockquote>
 <p>以下是一个结合路由守卫和中间件的例子。</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// auth.middleware.ts</span></span><br><span class="line"><span class="comment">// 中间件职责：读取请求头Authorization，如果存在且有效的话，设置user对象到request中</span></span><br><span class="line"><span class="keyword">import</span> &#123; Injectable, NestMiddleware &#125; <span class="keyword">from</span> <span class="string">'@nestjs/common'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Request, Response &#125; <span class="keyword">from</span> <span class="string">'express'</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Injectable</span>()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AuthMiddleware <span class="keyword">implements</span> NestMiddleware&lt;Request|<span class="built_in">any</span>, Response&gt; &#123;</span><br><span class="line">  <span class="keyword">constructor</span>(<span class="params"><span class="keyword">private</span> readonly userService: UserService</span>) &#123;&#125;</span><br><span class="line">  <span class="keyword">async</span> use(req: Request|<span class="built_in">any</span>, res: Response, next: <span class="built_in">Function</span>) &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">const</span> token = req.header(<span class="string">'authorization'</span>);</span><br><span class="line">    <span class="keyword">if</span>(!token) &#123;</span><br><span class="line">      next();</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">const</span> user = <span class="keyword">await</span> <span class="keyword">this</span>.userService.getUserByToken(token);</span><br><span class="line">    <span class="keyword">if</span>(!user) &#123;</span><br><span class="line">      next();</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    request.user = user;</span><br><span class="line">    next();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -514,7 +514,7 @@
 <h2 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h2><p>本文除了路由守卫之外另一个重要的知识是【自定义元数据装饰器】的使用，基于该装饰器可以开发很多令人惊艳的功能，这个就看各位看官的实现了。</p>
 <p>如果您觉得有所收获，分享给更多需要的朋友，谢谢！</p>
 <p>如果您想交流关于NestJs更多的知识，欢迎加群讨论！</p>
-<p><img src="https://user-gold-cdn.xitu.io/2019/8/27/16cd1e76aeb81fb7?w=204&amp;h=200&amp;f=jpeg&amp;s=16875" alt="20190827145318"></p>
+<p><img src="https://static.ddhigh.com/blog/2019-08-27-065355.jpg?imageView2/2/h/200" alt="20190827145318"></p>
 
       
     </div>
@@ -679,7 +679,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">243</span>
+                  <span class="site-state-item-count">244</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -701,7 +701,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">249</span>
+                  <span class="site-state-item-count">251</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
