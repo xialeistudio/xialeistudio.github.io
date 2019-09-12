@@ -82,3 +82,6 @@ search:
   format: raw
   limit: 2000
   content: false
+
+toc:
+  maxDepth: 3
