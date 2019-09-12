@@ -429,14 +429,14 @@
       
 
       
-        <h1 id="重要提示"><a href="#重要提示" class="headerlink" title="重要提示"></a>重要提示</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">关闭该选项会导致应用安全性收到影响！</span><br></pre></td></tr></table></figure>
-<h1 id="问题出现"><a href="#问题出现" class="headerlink" title="问题出现"></a>问题出现</h1><ol>
+        <h1><span id="重要提示">重要提示</span></h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">关闭该选项会导致应用安全性收到影响！</div></pre></td></tr></table></figure>
+<h1><span id="问题出现">问题出现</span></h1><ol>
 <li>开发API的时候发现POST请求老是不能通过验证，直接把报错文案放到项目中去搜索发现<strong>yii\web\Request</strong>中有<strong>enableCsrfValidation</strong>。</li>
 <li>其他应用设置的cookie，抓包的时候可以看到请求中有cookie，但是yii2读取不到。</li>
 </ol>
-<h1 id="源码解析"><a href="#源码解析" class="headerlink" title="源码解析"></a>源码解析</h1><p>找到<strong>yii\web\Request</strong>文件，看到<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@var</span> bool whether to enable CSRF (Cross-Site Request Forgery) validation. Defaults to true.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> $enableCsrfValidation = <span class="keyword">true</span>;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@var</span> bool whether cookies should be validated to ensure they are not tampered. Defaults to true.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> $enableCookieValidation = <span class="keyword">true</span>;</span><br></pre></td></tr></table></figure></p>
+<h1><span id="源码解析">源码解析</span></h1><p>找到<strong>yii\web\Request</strong>文件，看到<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * <span class="doctag">@var</span> bool whether to enable CSRF (Cross-Site Request Forgery) validation. Defaults to true.</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="keyword">public</span> $enableCsrfValidation = <span class="keyword">true</span>;</div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * <span class="doctag">@var</span> bool whether cookies should be validated to ensure they are not tampered. Defaults to true.</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="keyword">public</span> $enableCookieValidation = <span class="keyword">true</span>;</div></pre></td></tr></table></figure></p>
 <p>发现是这里有问题，基于<strong>yii2一切都是组件的思想</strong>，去修改组件配置即可。</p>
-<h1 id="修正"><a href="#修正" class="headerlink" title="修正"></a>修正</h1><p>编辑<strong>config/web.php的components节</strong><br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'request'</span>      =&gt; [</span><br><span class="line">    <span class="string">'cookieValidationKey'</span>    =&gt; <span class="string">'xxxx'</span>,</span><br><span class="line">    <span class="string">'enableCookieValidation'</span> =&gt; <span class="keyword">false</span>,</span><br><span class="line">    <span class="string">'enableCsrfValidation'</span>   =&gt; <span class="keyword">false</span>,</span><br><span class="line">    ],</span><br><span class="line">],</span><br></pre></td></tr></table></figure></p>
+<h1><span id="修正">修正</span></h1><p>编辑<strong>config/web.php的components节</strong><br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="string">'request'</span>      =&gt; [</div><div class="line">    <span class="string">'cookieValidationKey'</span>    =&gt; <span class="string">'xxxx'</span>,</div><div class="line">    <span class="string">'enableCookieValidation'</span> =&gt; <span class="keyword">false</span>,</div><div class="line">    <span class="string">'enableCsrfValidation'</span>   =&gt; <span class="keyword">false</span>,</div><div class="line">    ],</div><div class="line">],</div></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -603,7 +603,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">245</span>
+                  <span class="site-state-item-count">246</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -709,7 +709,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#重要提示"><span class="nav-number">1.</span> <span class="nav-text">重要提示</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题出现"><span class="nav-number">2.</span> <span class="nav-text">问题出现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#源码解析"><span class="nav-number">3.</span> <span class="nav-text">源码解析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#修正"><span class="nav-number">4.</span> <span class="nav-text">修正</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">重要提示</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">问题出现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">3.</span> <span class="nav-text">源码解析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">4.</span> <span class="nav-text">修正</span></a></li></ol></div>
             
 
           </div>

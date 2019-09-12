@@ -452,21 +452,21 @@
 
       
         <p>这两天在开发微信小程序登录以及加解密的时候，因为数据大小写的问题被坑了一把。</p>
-<h2 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h2><ol>
+<h2><span id="场景">场景</span></h2><ol>
 <li>小程序调用<code>wx.login</code>时会获得<code>code</code>，传输给服务端可以得到<code>openid</code>,<code>unionid(绑定了开放平台)</code>,<code>session_key</code></li>
 <li>小程序调用<code>getUserInfo</code>会获得<code>encrypted_data</code>,<code>iv</code>,解密后得到<code>unionId</code>,<code>openId</code></li>
 <li><code>unionid</code>和<code>openid</code>这两个场景<code>键名大小写是不同的</code></li>
 </ol>
-<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><ol>
+<h2><span id="例子">例子</span></h2><ol>
 <li><p>服务端根据<code>code获取session_key</code>返回结果如下：</p>
- <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"session_key"</span>: <span class="string">"我是session_key"</span>,</span><br><span class="line">    <span class="attr">"openid"</span>: <span class="string">"我是openid"</span>,</span><br><span class="line">    <span class="attr">"unionid"</span>: <span class="string">"我是unionid"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+ <figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"session_key"</span>: <span class="string">"我是session_key"</span>,</div><div class="line">    <span class="attr">"openid"</span>: <span class="string">"我是openid"</span>,</div><div class="line">    <span class="attr">"unionid"</span>: <span class="string">"我是unionid"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </li>
 <li><p>服务端根据<code>session_key解密encrypted_data和iv</code>返回结果如下：</p>
- <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"openId"</span>: <span class="string">"OPENID"</span>,</span><br><span class="line">    <span class="attr">"nickName"</span>: <span class="string">"NICKNAME"</span>,</span><br><span class="line">    <span class="attr">"gender"</span>: GENDER,</span><br><span class="line">    <span class="attr">"city"</span>: <span class="string">"CITY"</span>,</span><br><span class="line">    <span class="attr">"province"</span>: <span class="string">"PROVINCE"</span>,</span><br><span class="line">    <span class="attr">"country"</span>: <span class="string">"COUNTRY"</span>,</span><br><span class="line">    <span class="attr">"avatarUrl"</span>: <span class="string">"AVATARURL"</span>,</span><br><span class="line">    <span class="attr">"unionId"</span>: <span class="string">"UNIONID"</span>,</span><br><span class="line">    <span class="attr">"watermark"</span>:</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">"appid"</span>:<span class="string">"APPID"</span>,</span><br><span class="line">        <span class="attr">"timestamp"</span>:TIMESTAMP</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+ <figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"openId"</span>: <span class="string">"OPENID"</span>,</div><div class="line">    <span class="attr">"nickName"</span>: <span class="string">"NICKNAME"</span>,</div><div class="line">    <span class="attr">"gender"</span>: GENDER,</div><div class="line">    <span class="attr">"city"</span>: <span class="string">"CITY"</span>,</div><div class="line">    <span class="attr">"province"</span>: <span class="string">"PROVINCE"</span>,</div><div class="line">    <span class="attr">"country"</span>: <span class="string">"COUNTRY"</span>,</div><div class="line">    <span class="attr">"avatarUrl"</span>: <span class="string">"AVATARURL"</span>,</div><div class="line">    <span class="attr">"unionId"</span>: <span class="string">"UNIONID"</span>,</div><div class="line">    <span class="attr">"watermark"</span>:</div><div class="line">    &#123;</div><div class="line">        <span class="attr">"appid"</span>:<span class="string">"APPID"</span>,</div><div class="line">        <span class="attr">"timestamp"</span>:TIMESTAMP</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </li>
 </ol>
 <p>可以看到两次同样的字段<code>openid</code>和<code>unionid</code>大小写是不同的，此处容易踩坑。</p>
-<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><ol>
+<h2><span id="结论">结论</span></h2><ol>
 <li>服务端根据<code>code换session_key/openid/unionid</code>是<code>小写</code></li>
 <li>服务端根据<code>encrypted_data和iv</code>解密得到的<code>openId/unionId</code>是<code>大写</code></li>
 </ol>
@@ -635,7 +635,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">245</span>
+                  <span class="site-state-item-count">246</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -741,7 +741,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#场景"><span class="nav-number">1.</span> <span class="nav-text">场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#例子"><span class="nav-number">2.</span> <span class="nav-text">例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结论"><span class="nav-number">3.</span> <span class="nav-text">结论</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">3.</span> <span class="nav-text">结论</span></a></li></ol></div>
             
 
           </div>

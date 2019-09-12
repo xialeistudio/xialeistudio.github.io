@@ -453,10 +453,10 @@
       
         <p>shell终端中有时候中文文件名会出现乱码，导致很多操作都不能进行，一个最简单的就是删除了。</p>
 <p>linux中每个文件有类似于ID的东西，使用以下命令查看</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ll -i</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ll -i</div></pre></td></tr></table></figure>
 <p>显示出来的第一个数字就是文件的inum</p>
 <p>可以利用以下命令进行删除操作,假设inum为111111</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find . -inum 11111 -<span class="built_in">exec</span> rm -f &#123;&#125; \</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">find . -inum 11111 -<span class="built_in">exec</span> rm -f &#123;&#125; \</div></pre></td></tr></table></figure>
 <p>rm -f {}可以自行替换为自己需要操作的命令。<br>这样的话，不管什么文件都可以操作，只要有inum!</p>
 
       
@@ -613,7 +613,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">245</span>
+                  <span class="site-state-item-count">246</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

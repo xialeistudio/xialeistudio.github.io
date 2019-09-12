@@ -451,33 +451,33 @@
       
 
       
-        <p>虽然golang的工程工具已经非常完善了，比如测试、代码格式化等等。但是如果开发library开源到github的话，这些东西是可以使用自动化工具完成的，那就是 <a href="https://www.travis-ci.org/" target="_blank" rel="noopener">travis</a></p>
-<h2 id="使用步骤"><a href="#使用步骤" class="headerlink" title="使用步骤"></a>使用步骤</h2><ol>
+        <p>虽然golang的工程工具已经非常完善了，比如测试、代码格式化等等。但是如果开发library开源到github的话，这些东西是可以使用自动化工具完成的，那就是 <a href="https://www.travis-ci.org/" target="_blank" rel="external">travis</a></p>
+<h2><span id="使用步骤">使用步骤</span></h2><ol>
 <li>开发好需要集成的library以及测试用例</li>
 <li><p>在项目根目录新建<code>.travis.yml</code>文件</p>
- <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">language:</span> <span class="string">go</span></span><br><span class="line"><span class="attr">go:</span></span><br><span class="line"><span class="bullet">-</span> <span class="number">1.</span><span class="string">x</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">'1.8'</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">'1.9'</span></span><br><span class="line"><span class="bullet">-</span> <span class="number">1.10</span><span class="string">.x</span></span><br><span class="line"><span class="attr">script:</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">go</span> <span class="string">test</span> <span class="bullet">-v</span> <span class="string">./...</span></span><br></pre></td></tr></table></figure>
+ <figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="attr">language:</span> <span class="string">go</span></div><div class="line"><span class="attr">go:</span></div><div class="line"><span class="bullet">-</span> <span class="number">1.</span><span class="string">x</span></div><div class="line"><span class="bullet">-</span> <span class="string">'1.8'</span></div><div class="line"><span class="bullet">-</span> <span class="string">'1.9'</span></div><div class="line"><span class="bullet">-</span> <span class="number">1.10</span><span class="string">.x</span></div><div class="line"><span class="attr">script:</span></div><div class="line"><span class="bullet">-</span> <span class="string">go</span> <span class="string">test</span> <span class="bullet">-v</span> <span class="string">./...</span></div></pre></td></tr></table></figure>
 </li>
 <li><p>提交到github</p>
 </li>
-<li>打开<a href="https://www.travis-ci.org/" target="_blank" rel="noopener">https://www.travis-ci.org/</a>并使用github账号登录</li>
+<li>打开<a href="https://www.travis-ci.org/" target="_blank" rel="external">https://www.travis-ci.org/</a>并使用github账号登录</li>
 <li>登录之后点击左边 <strong>“My Repositories”</strong> 旁边的 <strong>“+”</strong> 号添加项目（点击项目前面的滑块即可）</li>
 <li>更改项目文件，push一次到github，此时travis会自动运行测试脚本</li>
 </ol>
-<h2 id="敏感数据加密"><a href="#敏感数据加密" class="headerlink" title="敏感数据加密"></a>敏感数据加密</h2><p>如果你的测试用例需要使用到敏感数据（如一些密钥等等），那需要用travis将你的敏感数据加密(以Mac为例)</p>
+<h2><span id="敏感数据加密">敏感数据加密</span></h2><p>如果你的测试用例需要使用到敏感数据（如一些密钥等等），那需要用travis将你的敏感数据加密(以Mac为例)</p>
 <ol>
 <li>终端执行<code>sudo gem install travis</code></li>
 <li>在项目根目录打开终端执行<code>travis encrypt AMAP_KEY=&quot;xxxx&quot; --add</code> <strong>AMAP_KEY</strong>是环境变量名称，程序读取环境变量可以得到真实的key，<strong>xxxx</strong>是敏感数据</li>
 <li><p>执行完毕后，<strong>.travis.yml</strong> 会发生更改, 会添加如下内容(secure可能不一致)</p>
- <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">env:</span></span><br><span class="line"><span class="attr">global:</span></span><br><span class="line"><span class="attr">    secure:</span> <span class="string">kr5JHNTYsh/jezvk88qP91arb+UD/op/5CyOFY7uNYpJ6ZSsJY5fDKyZHjf0VSFmaYqJFMPl6uCASE9baiepeGvBFcy8aI9CNsbLzj2uBNjqqYPmvYGnBjpzp8yknVJKRTitF/kkWtzZcWImHnpvNGHuzXxp/EIBeJtNwjcCRoP/qfGhlZKbLsYFvlWkmRYb0dr8RM5mlmGXPZi8q7m+soVRO8Zjr4QQccybgmhonxlcUrHr6ro+yjjQefoJXRufqoRX0sGyecGYucC4nUpWl5hkDPkQE+Mekhz+rF657SwNsn8nXOFnnUuwsPXE26ak5xF1roEcFk2CpwGZuT7smJZPtw1inXFdIaW+4qllbyxMJkylvFZa5IcvLT3+/eKaQc8Fg6PoxJH0PF3RdtoQVB31cQiPWNm1SecQ6wC64WA/5qN4T5OoRfpt60BFDAITdS62dQGu5LSepcXMWXhxCdQPeDm5Qce6wjJXURubJMpBm0mPWwCNZhJyRw1G5TTyO25NckXQRlObrjltvwAd+7OEUcsYXqhdPtUTIVy6w3XOwT2eC/hP0Yi7qqUMMlJTHUW7Lb9zsEc4UB5BVwgeZ5Y9bVbknJfpt3ygcXAJeeDYxwV9g16KoS7HMFPzwrqlHbiBytIahqarBd4enwqR5RYQPEyetiIDLaJA4SyQ0cE=</span></span><br></pre></td></tr></table></figure>
+ <figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="attr">env:</span></div><div class="line"><span class="attr">global:</span></div><div class="line"><span class="attr">    secure:</span> <span class="string">kr5JHNTYsh/jezvk88qP91arb+UD/op/5CyOFY7uNYpJ6ZSsJY5fDKyZHjf0VSFmaYqJFMPl6uCASE9baiepeGvBFcy8aI9CNsbLzj2uBNjqqYPmvYGnBjpzp8yknVJKRTitF/kkWtzZcWImHnpvNGHuzXxp/EIBeJtNwjcCRoP/qfGhlZKbLsYFvlWkmRYb0dr8RM5mlmGXPZi8q7m+soVRO8Zjr4QQccybgmhonxlcUrHr6ro+yjjQefoJXRufqoRX0sGyecGYucC4nUpWl5hkDPkQE+Mekhz+rF657SwNsn8nXOFnnUuwsPXE26ak5xF1roEcFk2CpwGZuT7smJZPtw1inXFdIaW+4qllbyxMJkylvFZa5IcvLT3+/eKaQc8Fg6PoxJH0PF3RdtoQVB31cQiPWNm1SecQ6wC64WA/5qN4T5OoRfpt60BFDAITdS62dQGu5LSepcXMWXhxCdQPeDm5Qce6wjJXURubJMpBm0mPWwCNZhJyRw1G5TTyO25NckXQRlObrjltvwAd+7OEUcsYXqhdPtUTIVy6w3XOwT2eC/hP0Yi7qqUMMlJTHUW7Lb9zsEc4UB5BVwgeZ5Y9bVbknJfpt3ygcXAJeeDYxwV9g16KoS7HMFPzwrqlHbiBytIahqarBd4enwqR5RYQPEyetiIDLaJA4SyQ0cE=</span></div></pre></td></tr></table></figure>
 </li>
 <li><p>上传到github</p>
 </li>
 </ol>
-<h2 id="接收测试结果通知"><a href="#接收测试结果通知" class="headerlink" title="接收测试结果通知"></a>接收测试结果通知</h2><p>如果你需要获取travis执行结果通知的话，可以添加邮箱配置，travis执行完毕后会通知到该邮箱。</p>
+<h2><span id="接收测试结果通知">接收测试结果通知</span></h2><p>如果你需要获取travis执行结果通知的话，可以添加邮箱配置，travis执行完毕后会通知到该邮箱。</p>
 <ol>
 <li>打开 <strong>.travis.yml</strong></li>
 <li><p>添加以下内容：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">notifications:</span></span><br><span class="line"><span class="attr">  email:</span></span><br><span class="line"><span class="attr">    recipients:</span></span><br><span class="line"><span class="bullet">        -</span> <span class="string">邮箱地址</span></span><br><span class="line"><span class="attr">    on_success:</span> <span class="string">change</span></span><br><span class="line"><span class="attr">    on_failure:</span> <span class="string">always</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="attr">notifications:</span></div><div class="line"><span class="attr">  email:</span></div><div class="line"><span class="attr">    recipients:</span></div><div class="line"><span class="bullet">        -</span> <span class="string">邮箱地址</span></div><div class="line"><span class="attr">    on_success:</span> <span class="string">change</span></div><div class="line"><span class="attr">    on_failure:</span> <span class="string">always</span></div></pre></td></tr></table></figure>
 </li>
 <li><p>提交到github</p>
 </li>
@@ -648,7 +648,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">245</span>
+                  <span class="site-state-item-count">246</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -754,7 +754,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用步骤"><span class="nav-number">1.</span> <span class="nav-text">使用步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#敏感数据加密"><span class="nav-number">2.</span> <span class="nav-text">敏感数据加密</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#接收测试结果通知"><span class="nav-number">3.</span> <span class="nav-text">接收测试结果通知</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">使用步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">敏感数据加密</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">3.</span> <span class="nav-text">接收测试结果通知</span></a></li></ol></div>
             
 
           </div>

@@ -451,12 +451,12 @@
       
 
       
-        <h2 id="闭包函数"><a href="#闭包函数" class="headerlink" title="闭包函数"></a>闭包函数</h2><p>PHP官方文档对于闭包函数的定义：</p>
+        <h2><span id="闭包函数">闭包函数</span></h2><p>PHP官方文档对于闭包函数的定义：</p>
 <blockquote>
 <p>匿名函数（Anonymous functions），也叫闭包函数（closures），允许 临时创建一个没有指定名称的函数。最经常用作回调函数（callback）参数的值。当然，也有其它应用的情况。</p>
 </blockquote>
 <p>简单来说，闭包函数也是一种数据类型，可以直接使用变量来存储、传参、调用等等。</p>
-<h2 id="传统缓存操作"><a href="#传统缓存操作" class="headerlink" title="传统缓存操作"></a>传统缓存操作</h2><p>操作缓存的时候一般步骤如下：</p>
+<h2><span id="传统缓存操作">传统缓存操作</span></h2><p>操作缓存的时候一般步骤如下：</p>
 <ol>
 <li>读取缓存</li>
 <li>如果缓存不为空则返回缓存数据</li>
@@ -464,9 +464,9 @@
 <li>返回数据</li>
 </ol>
 <p>PHP示例代码如下：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">loadUser</span><span class="params">($userId)</span> </span>&#123;</span><br><span class="line">    $data = $cache-&gt;get(<span class="string">'user-'</span>. $userId);</span><br><span class="line">    <span class="keyword">if</span>(!<span class="keyword">empty</span>($data)) &#123;</span><br><span class="line">        <span class="keyword">return</span> $data;</span><br><span class="line">    &#125;</span><br><span class="line">    $data = $db-&gt;findOne([<span class="string">'user_id'</span> =&gt; $userId]);</span><br><span class="line">    $cache-&gt;set(<span class="string">'user-'</span>. $userId, $data, <span class="number">7200</span>);</span><br><span class="line">    <span class="keyword">return</span> $data;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">loadUser</span><span class="params">($userId)</span> </span>&#123;</div><div class="line">    $data = $cache-&gt;get(<span class="string">'user-'</span>. $userId);</div><div class="line">    <span class="keyword">if</span>(!<span class="keyword">empty</span>($data)) &#123;</div><div class="line">        <span class="keyword">return</span> $data;</div><div class="line">    &#125;</div><div class="line">    $data = $db-&gt;findOne([<span class="string">'user_id'</span> =&gt; $userId]);</div><div class="line">    $cache-&gt;set(<span class="string">'user-'</span>. $userId, $data, <span class="number">7200</span>);</div><div class="line">    <span class="keyword">return</span> $data;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>其实<strong>查找缓存，如果不存在则查找数据库之后写入缓存</strong>这个操作也可以用闭包来实现：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getOrSet</span><span class="params">($key, callable $callable, $expire = <span class="number">0</span>)</span> </span>&#123;</span><br><span class="line">    $data = $cache-&gt;get($key);</span><br><span class="line">    <span class="keyword">if</span>(!<span class="keyword">empty</span>($data)) &#123;</span><br><span class="line">        <span class="keyword">return</span> $data;</span><br><span class="line">    &#125;</span><br><span class="line">    $data = call_user_func($callable);</span><br><span class="line">    $cache-&gt;set($key, $data, $expire);</span><br><span class="line">    <span class="keyword">return</span> $data;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">loadUser</span><span class="params">($userId)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> $cache-&gt;getOrSet(<span class="string">'user-'</span>. $userId, <span class="function"><span class="keyword">function</span><span class="params">()</span> <span class="title">use</span><span class="params">($db, $userId)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> $db-&gt;findOne([<span class="string">'user_id'</span> =&gt; $userId]);</span><br><span class="line">    &#125;, <span class="number">7200</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getOrSet</span><span class="params">($key, callable $callable, $expire = <span class="number">0</span>)</span> </span>&#123;</div><div class="line">    $data = $cache-&gt;get($key);</div><div class="line">    <span class="keyword">if</span>(!<span class="keyword">empty</span>($data)) &#123;</div><div class="line">        <span class="keyword">return</span> $data;</div><div class="line">    &#125;</div><div class="line">    $data = call_user_func($callable);</div><div class="line">    $cache-&gt;set($key, $data, $expire);</div><div class="line">    <span class="keyword">return</span> $data;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">loadUser</span><span class="params">($userId)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> $cache-&gt;getOrSet(<span class="string">'user-'</span>. $userId, <span class="function"><span class="keyword">function</span><span class="params">()</span> <span class="title">use</span><span class="params">($db, $userId)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> $db-&gt;findOne([<span class="string">'user_id'</span> =&gt; $userId]);</div><div class="line">    &#125;, <span class="number">7200</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>可以看到通过闭包省去了手动<strong>get</strong>和<strong>set</strong>的过程，而查询数据库那一步是只有在缓存读取不到才会执行。</p>
 
       
@@ -634,7 +634,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">245</span>
+                  <span class="site-state-item-count">246</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -740,7 +740,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#闭包函数"><span class="nav-number">1.</span> <span class="nav-text">闭包函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#传统缓存操作"><span class="nav-number">2.</span> <span class="nav-text">传统缓存操作</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">闭包函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">传统缓存操作</span></a></li></ol></div>
             
 
           </div>

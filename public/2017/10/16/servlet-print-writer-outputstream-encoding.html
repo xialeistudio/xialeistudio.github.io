@@ -430,11 +430,11 @@
 
       
         <p>有个项目需要使用java开发一个简单的web接口用来请求加密数据，但是servlet之前只随便用了一下，平时工作也是以<strong>node</strong>为主。</p>
-<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>问题大致是”iso 88591 encoding之类的问题，稍微去google搜了一下，可能是搜的关键词不准确导致搜到的答案不理想，无意中看到有人讲writer和outputstream的问题。</p>
-<h1 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h1><p>google到PrintWriter和OutputStream的区别</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PrintWriter是以字符为单位，对所有的信息进行处理，而ServletOutputStream仅对二进制的资料进行处理。</span><br></pre></td></tr></table></figure>
+<h1><span id="问题">问题</span></h1><p>问题大致是”iso 88591 encoding之类的问题，稍微去google搜了一下，可能是搜的关键词不准确导致搜到的答案不理想，无意中看到有人讲writer和outputstream的问题。</p>
+<h1><span id="原因">原因</span></h1><p>google到PrintWriter和OutputStream的区别</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">PrintWriter是以字符为单位，对所有的信息进行处理，而ServletOutputStream仅对二进制的资料进行处理。</div></pre></td></tr></table></figure>
 <p>而我输出的是UTF8格式的字符串，所以OutputStream并不认识。</p>
-<h1 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h1><p>使用<strong>PrintWriter</strong>输出即可。</p>
+<h1><span id="解决">解决</span></h1><p>使用<strong>PrintWriter</strong>输出即可。</p>
 
       
     </div>
@@ -601,7 +601,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">245</span>
+                  <span class="site-state-item-count">246</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -707,7 +707,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#问题"><span class="nav-number">1.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#原因"><span class="nav-number">2.</span> <span class="nav-text">原因</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解决"><span class="nav-number">3.</span> <span class="nav-text">解决</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">原因</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">3.</span> <span class="nav-text">解决</span></a></li></ol></div>
             
 
           </div>

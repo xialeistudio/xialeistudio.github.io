@@ -454,11 +454,11 @@
         <p>Yii是基于组件的PHP MVC框架，yii的用户组件调用很方便，但是如果有遇到一个站点有多种用户的时候，如前台用户，后台用户，就需要增加User组件了。</p>
 <p>简单来说，就是新建一个用户类去继承 CWebUser类，比如</p>
 <p>WebUser继承CWebUser，配置文件在components中增加</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'user'</span>=&gt;<span class="keyword">array</span>(</span><br><span class="line">    <span class="string">'class'</span>=&gt;<span class="string">'WebUser'</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="string">'user'</span>=&gt;<span class="keyword">array</span>(</div><div class="line">    <span class="string">'class'</span>=&gt;<span class="string">'WebUser'</span></div><div class="line">)</div></pre></td></tr></table></figure>
 <p>以上就创建了一个前台用户,调用方式 Yii::app()-&gt;user</p>
 <p>后台用户可以这么写</p>
 <p>AdminUser继承CWebUser,配置文件在components中增加</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'admin'</span>=&gt;<span class="keyword">array</span>(</span><br><span class="line">    <span class="string">'class'</span>=&gt;<span class="string">'AdminUser'</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="string">'admin'</span>=&gt;<span class="keyword">array</span>(</div><div class="line">    <span class="string">'class'</span>=&gt;<span class="string">'AdminUser'</span></div><div class="line">)</div></pre></td></tr></table></figure>
 <p>这样就创建了一个后台用户，调用方式 Yii::app()-&gt;admin</p>
 <p>这种方法是本人所知最科学的，比用session来区分好多了。毕竟很多时候，能用框架现有的方法就用框架的方法。</p>
 
@@ -618,7 +618,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">245</span>
+                  <span class="site-state-item-count">246</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

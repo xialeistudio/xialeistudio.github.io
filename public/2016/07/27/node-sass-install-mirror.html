@@ -451,18 +451,18 @@
       
 
       
-        <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>npm安装node-sass模块的时候，会卡在 node scripts/install.js这里，因为要去github.com上下载源码，众所周知的原因，国内的网络上github.com速度太不稳定了，所以安装很慢。</p>
+        <h2><span id="安装">安装</span></h2><p>npm安装node-sass模块的时候，会卡在 node scripts/install.js这里，因为要去github.com上下载源码，众所周知的原因，国内的网络上github.com速度太不稳定了，所以安装很慢。</p>
 <p>这里推荐一种极速安装的方法，当然还是使用万能的淘宝镜像源。</p>
 <p>打开~/.npmrc（windows用户打开 c:\Users\当前用户名.npmrc）增加一行</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SASS_BINARY_SITE=https://npm.taobao.org/mirrors/node-sass/</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">SASS_BINARY_SITE=https://npm.taobao.org/mirrors/node-sass/</div></pre></td></tr></table></figure>
 <p>终端执行:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install node-sass</span><br></pre></td></tr></table></figure>
-<h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><p>如果使用了较高版本的nodejs或者node-sass，此时镜像可能还未同步完成，所以请大家前往此链接查看受支持的node-sass:</p>
-<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://npm.taobao.org/mirrors/<span class="keyword">node</span><span class="title">-sass</span>/</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install node-sass</div></pre></td></tr></table></figure>
+<h2><span id="注意">注意</span></h2><p>如果使用了较高版本的nodejs或者node-sass，此时镜像可能还未同步完成，所以请大家前往此链接查看受支持的node-sass:</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">https://npm.taobao.org/mirrors/<span class="keyword">node</span><span class="title">-sass</span>/</div></pre></td></tr></table></figure>
 <p>该网页列出来的即为当前受支持的node-sass版本，开发的时候一般使用最新版本，本文写作时<strong>node-sass</strong>最新版本为<strong>v4.0.0</strong>，点击<strong>v4.0.0</strong>链接：</p>
-<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://npm.taobao.org/mirrors/<span class="keyword">node</span><span class="title">-sass</span>/v4.<span class="number">0.0</span>/</span><br></pre></td></tr></table></figure>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">https://npm.taobao.org/mirrors/<span class="keyword">node</span><span class="title">-sass</span>/v4.<span class="number">0.0</span>/</div></pre></td></tr></table></figure>
 <p>可以看到新网页中有一个文件列表，后缀为<strong>.node</strong>的文件即位编译好的，文件名格式如下:</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-attr">[platform]</span><span class="selector-tag">-</span><span class="selector-attr">[architecture]</span><span class="selector-tag">-</span><span class="selector-attr">[nodejs version]</span>_<span class="selector-tag">binding</span><span class="selector-class">.node</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="selector-attr">[platform]</span><span class="selector-tag">-</span><span class="selector-attr">[architecture]</span><span class="selector-tag">-</span><span class="selector-attr">[nodejs version]</span>_<span class="selector-tag">binding</span><span class="selector-class">.node</span></div></pre></td></tr></table></figure>
 <ul>
 <li>platform 操作系统平台 <strong>darwin</strong>为<strong>Mac OS X</strong>，<strong>linux</strong>为<strong>linux</strong>，<strong>win32</strong>为<strong>windows</strong></li>
 <li>architecture 系统架构 目前有<strong>x64</strong>,<strong>ia32</strong></li>
@@ -635,7 +635,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">245</span>
+                  <span class="site-state-item-count">246</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -741,7 +741,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意"><span class="nav-number">2.</span> <span class="nav-text">注意</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">注意</span></a></li></ol></div>
             
 
           </div>

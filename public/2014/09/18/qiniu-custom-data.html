@@ -451,15 +451,15 @@
       
 
       
-        <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>七牛云存储也使用了这么久了。一直一来都只用了它的图片上传和处理功能。用的是客户端直传API，七牛给我返回一个key（一串随机的hash值，对人类无可读性）。</p>
+        <h2><span id="背景">背景</span></h2><p>七牛云存储也使用了这么久了。一直一来都只用了它的图片上传和处理功能。用的是客户端直传API，七牛给我返回一个key（一串随机的hash值，对人类无可读性）。</p>
 <p>最近做的一个文件共享的项目，因为文件是客户端直传七牛的，那么我在后台PHP这边是拿不到原始文件名的，但是文件列表必须显示原始文件名，不能显示那个hash值。后来查找文件发现，七牛可以自定义返回的变量。</p>
-<h2 id="关键代码"><a href="#关键代码" class="headerlink" title="关键代码"></a>关键代码</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">Qiniu_SetKeys(<span class="keyword">$this</span>-&gt;accessKey, <span class="keyword">$this</span>-&gt;secretKey);</span><br><span class="line">$putPolicy = <span class="keyword">new</span> Qiniu_RS_PutPolicy(<span class="keyword">$this</span>-&gt;bucket);</span><br><span class="line">$putPolicy-&gt;Expires = $expires;</span><br><span class="line">$putPolicy-&gt;SaveKey = $filename;</span><br><span class="line">$putPolicy-&gt;FsizeLimit = <span class="number">20</span>*<span class="number">1024</span>*<span class="number">1024</span>;</span><br><span class="line"><span class="keyword">if</span>($returnUrl != <span class="string">''</span>)</span><br><span class="line">	putPolicy-&gt;ReturnUrl = $returnUrl;</span><br><span class="line">$upToken = $putPolicy-&gt;Token(<span class="keyword">null</span>);</span><br><span class="line"><span class="keyword">return</span> $upToken;</span><br></pre></td></tr></table></figure>
+<h2><span id="关键代码">关键代码</span></h2><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">Qiniu_SetKeys(<span class="keyword">$this</span>-&gt;accessKey, <span class="keyword">$this</span>-&gt;secretKey);</div><div class="line">$putPolicy = <span class="keyword">new</span> Qiniu_RS_PutPolicy(<span class="keyword">$this</span>-&gt;bucket);</div><div class="line">$putPolicy-&gt;Expires = $expires;</div><div class="line">$putPolicy-&gt;SaveKey = $filename;</div><div class="line">$putPolicy-&gt;FsizeLimit = <span class="number">20</span>*<span class="number">1024</span>*<span class="number">1024</span>;</div><div class="line"><span class="keyword">if</span>($returnUrl != <span class="string">''</span>)</div><div class="line">	putPolicy-&gt;ReturnUrl = $returnUrl;</div><div class="line">$upToken = $putPolicy-&gt;Token(<span class="keyword">null</span>);</div><div class="line"><span class="keyword">return</span> $upToken;</div></pre></td></tr></table></figure>
 <p>通过对 $filename参数进行定制</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$filename = <span class="string">'$(fsize)/$(fname)'</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$filename = <span class="string">'$(fsize)/$(fname)'</span></div></pre></td></tr></table></figure>
 <p>这样子七牛返回的hash应该是</p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a3466b7fa159ab4f671bdc4ae45dae08<span class="regexp">/103/</span>稿件共享.txt</span><br></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">a3466b7fa159ab4f671bdc4ae45dae08<span class="regexp">/103/</span>稿件共享.txt</div></pre></td></tr></table></figure>
 <p>通过 explode 函数就可以拿到文件名了。</p>
-<h2 id="题外话"><a href="#题外话" class="headerlink" title="题外话"></a>题外话</h2><p>七牛还有很多自定义参数有待各位挖掘，这里只做个抛砖引玉的作用。</p>
+<h2><span id="题外话">题外话</span></h2><p>七牛还有很多自定义参数有待各位挖掘，这里只做个抛砖引玉的作用。</p>
 
       
     </div>
@@ -624,7 +624,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">245</span>
+                  <span class="site-state-item-count">246</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -730,7 +730,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关键代码"><span class="nav-number">2.</span> <span class="nav-text">关键代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#题外话"><span class="nav-number">3.</span> <span class="nav-text">题外话</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">关键代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">3.</span> <span class="nav-text">题外话</span></a></li></ol></div>
             
 
           </div>

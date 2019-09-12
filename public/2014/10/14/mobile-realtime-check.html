@@ -452,9 +452,9 @@
 
       
         <p>PC浏览器的话由于有blur和focus事件，可以在失去焦点时进行一次验证，但是移动端有点麻烦，点击其他地方才可以，这种的话体验不是很好。<br>利用input事件可以解决这个问题。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="built_in">document</span>).on(<span class="string">'input'</span>,<span class="string">'#username'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">//验证逻辑</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$(<span class="built_in">document</span>).on(<span class="string">'input'</span>,<span class="string">'#username'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="comment">//验证逻辑</span></div><div class="line">&#125;);</div></pre></td></tr></table></figure>
 <p>测试之后问题确实来了，每输入一个字符就会触发，浪费很多网络请求，接下来使用一个定时器的技术来进行处理。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> timer;</span><br><span class="line">$(<span class="built_in">document</span>).on(<span class="string">'input'</span>,<span class="string">'#username'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    timer &amp;&amp; clearTimeout(timer);</span><br><span class="line">    timer = setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">   </span><br><span class="line">    <span class="comment">//验证逻辑</span></span><br><span class="line">    &#125;,<span class="number">500</span>);<span class="comment">//延时0.5s触发</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> timer;</div><div class="line">$(<span class="built_in">document</span>).on(<span class="string">'input'</span>,<span class="string">'#username'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    timer &amp;&amp; clearTimeout(timer);</div><div class="line">    timer = setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">   </div><div class="line">    <span class="comment">//验证逻辑</span></div><div class="line">    &#125;,<span class="number">500</span>);<span class="comment">//延时0.5s触发</span></div><div class="line">&#125;);</div></pre></td></tr></table></figure>
 <p>采用这种定时器技术可以在请求次数和用户体验之间取得平衡，很多地方都可以使用这种技术来实现。</p>
 
       
@@ -611,7 +611,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">245</span>
+                  <span class="site-state-item-count">246</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

@@ -454,9 +454,9 @@
         <p>大家可能都有这样一种感觉，Web程序在本地调试的时候一切正常，放到线上也基本是正常，但是偶尔会有数据错误的情况，这种情况在订单系统中特别常见，因为大部分的订单状态更新都是有两个路径（浏览器跳转和支付服务器的异步推送消息），当然，最终数据要以异步结果为准，但是问题是，浏览器跳转也需要更新订单状态，当这两种方式在很短的时间内同时到达数据库时（一般在一秒内），如果数据库没有加锁，那这个订单会被处理两次。</p>
 <p>说到建立数据表时，涉及到支付的，都要用InnoDB引擎，该引擎支持行锁，支持事务，外键。</p>
 <p>文章开始的解决办法就是采用InnoDB对要操作的数据行进行锁定。</p>
-<h2 id="数据表结构"><a href="#数据表结构" class="headerlink" title="数据表结构"></a>数据表结构</h2><figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">订单ID<span class="comment">(主键)</span>  订单金额  订单状态</span><br></pre></td></tr></table></figure>
-<h2 id="事务SQL"><a href="#事务SQL" class="headerlink" title="事务SQL"></a>事务SQL</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">BEGIN</span>;</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> <span class="string">`orders`</span> <span class="keyword">WHERE</span> <span class="string">`order_id`</span>=<span class="number">100</span> <span class="keyword">FOR</span> <span class="keyword">UPDATE</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">COMMIT</span>;</span><br></pre></td></tr></table></figure>
-<h2 id="释义"><a href="#释义" class="headerlink" title="释义"></a>释义</h2><ol>
+<h2><span id="数据表结构">数据表结构</span></h2><figure class="highlight gcode"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">订单ID<span class="comment">(主键)</span>  订单金额  订单状态</div></pre></td></tr></table></figure>
+<h2><span id="事务sql">事务SQL</span></h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">BEGIN</span>;</div><div class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> <span class="string">`orders`</span> <span class="keyword">WHERE</span> <span class="string">`order_id`</span>=<span class="number">100</span> <span class="keyword">FOR</span> <span class="keyword">UPDATE</span>;</div><div class="line"></div><div class="line"><span class="keyword">COMMIT</span>;</div></pre></td></tr></table></figure>
+<h2><span id="释义">释义</span></h2><ol>
 <li>BEGIN 手动开启事务（行锁只对开启事务的查询起作用）</li>
 <li>FOR UPDATE 独占写（成功获得锁后，只有当前进程能够更新该纪录，其他进程如果需要更新该记录，则需进行“锁等待”）</li>
 <li>COMMIT 提交处理</li>
@@ -625,7 +625,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">245</span>
+                  <span class="site-state-item-count">246</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -731,7 +731,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据表结构"><span class="nav-number">1.</span> <span class="nav-text">数据表结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#事务SQL"><span class="nav-number">2.</span> <span class="nav-text">事务SQL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#释义"><span class="nav-number">3.</span> <span class="nav-text">释义</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">数据表结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">事务SQL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">3.</span> <span class="nav-text">释义</span></a></li></ol></div>
             
 
           </div>

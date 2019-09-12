@@ -451,27 +451,27 @@
       
 
       
-        <h2 id="pecl的安装"><a href="#pecl的安装" class="headerlink" title="pecl的安装"></a>pecl的安装</h2><p>本文采用的是 pecl 的方式安装。<br>如果系统执行 pecl 命令报错的话，请打开终端，执行以下命令</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -o go-pear.phar http://pear.php.net/go-pear.phar</span><br><span class="line">php go-pear.phar</span><br></pre></td></tr></table></figure>
+        <h2><span id="pecl的安装">pecl的安装</span></h2><p>本文采用的是 pecl 的方式安装。<br>如果系统执行 pecl 命令报错的话，请打开终端，执行以下命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">curl -o go-pear.phar http://pear.php.net/go-pear.phar</div><div class="line">php go-pear.phar</div></pre></td></tr></table></figure>
 <p>接下来的询问过程直接回车即可，成功之后执行以下命令</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo ln -s /Users/[用户名]/pear/bin/pear /usr/bin/pear</span><br><span class="line">sudo ln -s /Users/[用户名]/pear/bin/pecl /usr/bin/pecl</span><br></pre></td></tr></table></figure>
-<h2 id="mongo扩展的安装"><a href="#mongo扩展的安装" class="headerlink" title="mongo扩展的安装"></a>mongo扩展的安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pecl install mongo</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo ln -s /Users/[用户名]/pear/bin/pear /usr/bin/pear</div><div class="line">sudo ln -s /Users/[用户名]/pear/bin/pecl /usr/bin/pecl</div></pre></td></tr></table></figure>
+<h2><span id="mongo扩展的安装">mongo扩展的安装</span></h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo pecl install mongo</div></pre></td></tr></table></figure>
 <p>接下来会询问是不是启用 sasl 认证，输入<strong>[no]</strong>回车，接下来是编译了，不出意外的话会编译出错，大致错误是</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;openssl/evp.h&gt; file not found</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;openssl/evp.h&gt; file not found</div></pre></td></tr></table></figure>
 <p>简而言之就是 openssl/evp.h 头文件查找失败，由于用 尖括号括起来的头文件，编译器会去系统路径查找，而 mac 下默认的路径是 /usr/include，使用终端ls查看之后发现确实没有openssl文件夹。</p>
-<h2 id="openssl的安装"><a href="#openssl的安装" class="headerlink" title="openssl的安装"></a>openssl的安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo brew install openssl</span><br></pre></td></tr></table></figure>
+<h2><span id="openssl的安装">openssl的安装</span></h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo brew install openssl</div></pre></td></tr></table></figure>
 <p>如果提示<strong>brew</strong>命令不存在，可以通过以下代码安装<strong>Homebrew</strong>，终端执行</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ruby -e <span class="string">"<span class="variable">$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)</span>"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ruby -e <span class="string">"<span class="variable">$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)</span>"</span></div></pre></td></tr></table></figure>
 <p>安装完成后重新安装<strong>openssl</strong>即可。</p>
-<h2 id="link头文件"><a href="#link头文件" class="headerlink" title="link头文件"></a>link头文件</h2><p>通过brew命令安装完openssl之后会自动link一次，但是重新执行mongo的安装命令时依旧出错。猜想应该是头文件没有复制过去，这时候需要手动ln一下，终端执行</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s /usr/<span class="built_in">local</span>/Cellar/openssl/1.0.2d_1/include/openssl /usr/include/openssl</span><br></pre></td></tr></table></figure>
+<h2><span id="link头文件">link头文件</span></h2><p>通过brew命令安装完openssl之后会自动link一次，但是重新执行mongo的安装命令时依旧出错。猜想应该是头文件没有复制过去，这时候需要手动ln一下，终端执行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ln -s /usr/<span class="built_in">local</span>/Cellar/openssl/1.0.2d_1/include/openssl /usr/include/openssl</div></pre></td></tr></table></figure>
 <p>如果你的openssl版本不一致，请自行替换，执行完该命令之后再安装mongo就不会有问题了。</p>
-<h2 id="启用扩展"><a href="#启用扩展" class="headerlink" title="启用扩展"></a>启用扩展</h2><p>MAMP的php很有意思，web版本的配置文件在</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/Library/Application Support/appsolute/MAMP PRO/conf/php.ini</span><br></pre></td></tr></table></figure>
+<h2><span id="启用扩展">启用扩展</span></h2><p>MAMP的php很有意思，web版本的配置文件在</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/Library/Application Support/appsolute/MAMP PRO/conf/php.ini</div></pre></td></tr></table></figure>
 <p>cli版本的配置文件在（请通过终端执行 php -v 获取PHP版本）</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/Applications/MAMP/bin/php/php5.5.10/conf/php.ini</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/Applications/MAMP/bin/php/php5.5.10/conf/php.ini</div></pre></td></tr></table></figure>
 <p>在这两个文件都加上</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">extesion=mongo.so</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">extesion=mongo.so</div></pre></td></tr></table></figure>
 <p>重启MAMP即可</p>
 
       
@@ -641,7 +641,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">245</span>
+                  <span class="site-state-item-count">246</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -747,7 +747,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#pecl的安装"><span class="nav-number">1.</span> <span class="nav-text">pecl的安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mongo扩展的安装"><span class="nav-number">2.</span> <span class="nav-text">mongo扩展的安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#openssl的安装"><span class="nav-number">3.</span> <span class="nav-text">openssl的安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#link头文件"><span class="nav-number">4.</span> <span class="nav-text">link头文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启用扩展"><span class="nav-number">5.</span> <span class="nav-text">启用扩展</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">pecl的安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">mongo扩展的安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">3.</span> <span class="nav-text">openssl的安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">4.</span> <span class="nav-text">link头文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">5.</span> <span class="nav-text">启用扩展</span></a></li></ol></div>
             
 
           </div>

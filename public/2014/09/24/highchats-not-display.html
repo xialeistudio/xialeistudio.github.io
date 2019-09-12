@@ -454,9 +454,9 @@
         <p>highchats是什么就不介绍了。一个JS绘图工具库，基于JQ，使用简单方便，但是不注意的话会坑人。</p>
 <p>今天兴致满满的去绘图，后端数据也返回了。可是一个纠结的问题困扰了我一下午！</p>
 <p>后端数据返回的JSON是</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">"0"</span>,<span class="string">"0"</span>,<span class="string">"0"</span>]</span><br></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[<span class="string">"0"</span>,<span class="string">"0"</span>,<span class="string">"0"</span>]</div></pre></td></tr></table></figure>
 <p>这种形式，JSON.parse解析之后返回的是一个字符数组，而不是数字数组，解决方案是利用JS做一次类型转换</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i <span class="keyword">in</span> data)&#123;</span><br><span class="line">    data[i]=<span class="built_in">parseInt</span>(data[i]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i <span class="keyword">in</span> data)&#123;</div><div class="line">    data[i]=<span class="built_in">parseInt</span>(data[i]);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>for(var i in data){<br>    data[i]=parseInt(data[i]);<br>}<br>图形就可以正常显示了。</p>
 
       
@@ -613,7 +613,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">245</span>
+                  <span class="site-state-item-count">246</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

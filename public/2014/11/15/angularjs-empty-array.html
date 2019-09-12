@@ -451,20 +451,20 @@
 
       
         <p>Yii1.x DAO中的queryAll方法查询，如果有结果，会返回一个数组，如果没有结果，会返回null。现在分两种情况：</p>
-<h2 id="返回空数组"><a href="#返回空数组" class="headerlink" title="返回空数组"></a>返回空数组</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$array = <span class="keyword">array</span>(</span><br><span class="line">);</span><br><span class="line"><span class="keyword">echo</span> json_encode($array);</span><br></pre></td></tr></table></figure>
+<h2><span id="返回空数组">返回空数组</span></h2><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$array = <span class="keyword">array</span>(</div><div class="line">);</div><div class="line"><span class="keyword">echo</span> json_encode($array);</div></pre></td></tr></table></figure>
 <p>输出为</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[]</span><br></pre></td></tr></table></figure>
-<h2 id="返回null"><a href="#返回null" class="headerlink" title="返回null"></a>返回null</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$array = <span class="keyword">null</span>;</span><br><span class="line"><span class="keyword">echo</span> json_encode($array);</span><br></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[]</div></pre></td></tr></table></figure>
+<h2><span id="返回null">返回null</span></h2><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$array = <span class="keyword">null</span>;</div><div class="line"><span class="keyword">echo</span> json_encode($array);</div></pre></td></tr></table></figure>
 <p>输出为</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">null</span><br></pre></td></tr></table></figure>
-<p>那么问题来了，JS接收这两个的结果是不同的。<br>如果使用以下代码判断数据:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(data.length == <span class="number">0</span>)&#123;</span><br><span class="line">    <span class="comment">//当前评论为空</span></span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="comment">//当前评论不为空</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">null</div></pre></td></tr></table></figure>
+<p>那么问题来了，JS接收这两个的结果是不同的。<br>如果使用以下代码判断数据:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(data.length == <span class="number">0</span>)&#123;</div><div class="line">    <span class="comment">//当前评论为空</span></div><div class="line">&#125;<span class="keyword">else</span>&#123;</div><div class="line">    <span class="comment">//当前评论不为空</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>如果返回   []  ，这段代码是生效的。但是如果返回 null ,这个就有问题了。</p>
 <p>后来，使用</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(data == <span class="literal">null</span>)&#123;</span><br><span class="line">    <span class="comment">//评论为空</span></span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="comment">//评论不为空</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(data == <span class="literal">null</span>)&#123;</div><div class="line">    <span class="comment">//评论为空</span></div><div class="line">&#125;<span class="keyword">else</span>&#123;</div><div class="line">    <span class="comment">//评论不为空</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>这个判断老是出问题，后端明明返回null了，判断还是错误的，这时候想到JS也是若类型语言，会不会是类型的问题。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> data)</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> data)</div></pre></td></tr></table></figure>
 <p>返回的是<strong>“string”</strong><br>那么问题就解决了，用以下代码就可以了</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(data.length == <span class="number">0</span> || data == <span class="string">"null"</span>)&#123;</span><br><span class="line">    <span class="comment">//评论为空</span></span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="comment">//评论不为空</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(data.length == <span class="number">0</span> || data == <span class="string">"null"</span>)&#123;</div><div class="line">    <span class="comment">//评论为空</span></div><div class="line">&#125;<span class="keyword">else</span>&#123;</div><div class="line">    <span class="comment">//评论不为空</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
       
     </div>
     
@@ -622,7 +622,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">245</span>
+                  <span class="site-state-item-count">246</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -728,7 +728,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#返回空数组"><span class="nav-number">1.</span> <span class="nav-text">返回空数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#返回null"><span class="nav-number">2.</span> <span class="nav-text">返回null</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">返回空数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">返回null</span></a></li></ol></div>
             
 
           </div>

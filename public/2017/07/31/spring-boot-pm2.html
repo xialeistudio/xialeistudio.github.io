@@ -453,12 +453,12 @@
       
         <p>Spring Boot开发web应用就像开发普通的java程序一般简洁，因为其内嵌了web容易，启动的时候只需要一条命令<code>java -jar server.jar</code>即可，非常方便。<br>但是由此而来的问题是万一应用挂了怎么办？</p>
 <p>别担心，有pm2进程管理工具可以帮到你。</p>
-<h2 id="PM2简介"><a href="#PM2简介" class="headerlink" title="PM2简介"></a>PM2简介</h2><p>pm2原先是nodejs应用的进程管理工具，不过其良好的设计以及扩展性可以手动执行执行进程。</p>
-<h2 id="PM2安装"><a href="#PM2安装" class="headerlink" title="PM2安装"></a>PM2安装</h2><ol>
+<h2><span id="pm2简介">PM2简介</span></h2><p>pm2原先是nodejs应用的进程管理工具，不过其良好的设计以及扩展性可以手动执行执行进程。</p>
+<h2><span id="pm2安装">PM2安装</span></h2><ol>
 <li>安装NodeJs</li>
 <li><code>npm install pm2 -g</code></li>
 </ol>
-<h2 id="PM2基本命令"><a href="#PM2基本命令" class="headerlink" title="PM2基本命令"></a>PM2基本命令</h2><ul>
+<h2><span id="pm2基本命令">PM2基本命令</span></h2><ul>
 <li>pm2 list 查看所有被PM2管理的进程列表</li>
 <li>pm2 start xxx 启动一个应用</li>
 <li>pm2 stop xxx 停止一个应用</li>
@@ -466,8 +466,8 @@
 <li>pm2 describe xxx 查看应用详情</li>
 <li>pm2 startup, pm2 save 两条命令，用来保证服务器启动时,pm2管理的程序自动运行</li>
 </ul>
-<h2 id="Java程序处理"><a href="#Java程序处理" class="headerlink" title="Java程序处理"></a>Java程序处理</h2><p>在jar的同级目录新建应用启动配置文件，如<code>pm2.json</code>，内容如下：</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"name"</span>: <span class="string">"my-server"</span>,</span><br><span class="line">    <span class="attr">"script"</span>: <span class="string">"/usr/bin/java"</span>,</span><br><span class="line">    <span class="attr">"args"</span>: [</span><br><span class="line">        <span class="string">"-jar"</span>,</span><br><span class="line">        <span class="string">"server.jar"</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">"exec_interpreter"</span>: <span class="string">""</span>,</span><br><span class="line">    <span class="attr">"exec_mode"</span>: <span class="string">"fork"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2><span id="java程序处理">Java程序处理</span></h2><p>在jar的同级目录新建应用启动配置文件，如<code>pm2.json</code>，内容如下：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"name"</span>: <span class="string">"my-server"</span>,</div><div class="line">    <span class="attr">"script"</span>: <span class="string">"/usr/bin/java"</span>,</div><div class="line">    <span class="attr">"args"</span>: [</div><div class="line">        <span class="string">"-jar"</span>,</div><div class="line">        <span class="string">"server.jar"</span></div><div class="line">    ],</div><div class="line">    <span class="attr">"exec_interpreter"</span>: <span class="string">""</span>,</div><div class="line">    <span class="attr">"exec_mode"</span>: <span class="string">"fork"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>说明如下：</p>
 <ul>
 <li>name 进程名称（显示在<code>pm2 list</code>命令中）</li>
@@ -476,9 +476,9 @@
 <li>exec_interpreter NodeJs解析器，本文不适用</li>
 <li>exec_mode 执行模式[cluster|fork]这个针对NodeJs应用的配置，非NodeJs应用统一fork</li>
 </ul>
-<p>配置文件完成后，使用<br><figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">p<span class="name">m2</span> start p<span class="name">m2.</span>jso<span class="symbol">n</span></span><br></pre></td></tr></table></figure></p>
+<p>配置文件完成后，使用<br><figure class="highlight gcode"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">p<span class="name">m2</span> start p<span class="name">m2.</span>jso<span class="symbol">n</span></div></pre></td></tr></table></figure></p>
 <p>即可看到应用被启动</p>
-<h2 id="日志管理"><a href="#日志管理" class="headerlink" title="日志管理"></a>日志管理</h2><p>日志路径在<code>~/.pm2/logs</code>，<code>stdout</code>和<code>stderr</code>被分开存放，程序中的所有<code>stdout</code>和<code>stderr</code>都被收集方便查错。</p>
+<h2><span id="日志管理">日志管理</span></h2><p>日志路径在<code>~/.pm2/logs</code>，<code>stdout</code>和<code>stderr</code>被分开存放，程序中的所有<code>stdout</code>和<code>stderr</code>都被收集方便查错。</p>
 
       
     </div>
@@ -643,7 +643,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">245</span>
+                  <span class="site-state-item-count">246</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -749,7 +749,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#PM2简介"><span class="nav-number">1.</span> <span class="nav-text">PM2简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PM2安装"><span class="nav-number">2.</span> <span class="nav-text">PM2安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PM2基本命令"><span class="nav-number">3.</span> <span class="nav-text">PM2基本命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java程序处理"><span class="nav-number">4.</span> <span class="nav-text">Java程序处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#日志管理"><span class="nav-number">5.</span> <span class="nav-text">日志管理</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">PM2简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">PM2安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">3.</span> <span class="nav-text">PM2基本命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">4.</span> <span class="nav-text">Java程序处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">5.</span> <span class="nav-text">日志管理</span></a></li></ol></div>
             
 
           </div>

@@ -451,19 +451,19 @@
       
 
       
-        <p>最近在做一个导出功能，最初是使用<a href="https://github.com/tealeg/xlsx" target="_blank" rel="noopener">https://github.com/tealeg/xlsx</a>做的，但是发现导出有个30W行的excel时，这玩意内存彪到700M+，后来发现只是导出数据为表格，并没有其他东西，于是打算使用CSV导出。</p>
-<h2 id="CSV格式简介"><a href="#CSV格式简介" class="headerlink" title="CSV格式简介"></a>CSV格式简介</h2><p>CSV本质上是个文本文件，该文件有以下要求：</p>
+        <p>最近在做一个导出功能，最初是使用<a href="https://github.com/tealeg/xlsx" target="_blank" rel="external">https://github.com/tealeg/xlsx</a>做的，但是发现导出有个30W行的excel时，这玩意内存彪到700M+，后来发现只是导出数据为表格，并没有其他东西，于是打算使用CSV导出。</p>
+<h2><span id="csv格式简介">CSV格式简介</span></h2><p>CSV本质上是个文本文件，该文件有以下要求：</p>
 <ol>
 <li>列之间用逗号分隔，行之间用换行分隔</li>
 <li>单元格如果有逗号，引号之类的字符，该单元格需要使用双引号括起来</li>
 <li>如果包含中文，需要使用GBK编码，否则会乱码</li>
 </ol>
-<h2 id="golang实现"><a href="#golang实现" class="headerlink" title="golang实现"></a>golang实现</h2><ol>
+<h2><span id="golang实现">golang实现</span></h2><ol>
 <li><p>UTF8转GBK函数(需要 <code>go get golang.org/x/text/</code>)</p>
- <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">UTF82GBK</span><span class="params">(src <span class="keyword">string</span>)</span> <span class="params">(<span class="keyword">string</span>, error)</span></span> &#123;</span><br><span class="line"> reader := transform.NewReader(strings.NewReader(src), simplifiedchinese.GBK.NewEncoder())</span><br><span class="line"> <span class="keyword">if</span> buf, err := ioutil.ReadAll(reader); err != <span class="literal">nil</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">""</span>, err</span><br><span class="line"> &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">string</span>(buf), <span class="literal">nil</span></span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+ <figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">UTF82GBK</span><span class="params">(src <span class="keyword">string</span>)</span> <span class="params">(<span class="keyword">string</span>, error)</span></span> &#123;</div><div class="line"> reader := transform.NewReader(strings.NewReader(src), simplifiedchinese.GBK.NewEncoder())</div><div class="line"> <span class="keyword">if</span> buf, err := ioutil.ReadAll(reader); err != <span class="literal">nil</span> &#123;</div><div class="line">  <span class="keyword">return</span> <span class="string">""</span>, err</div><div class="line"> &#125; <span class="keyword">else</span> &#123;</div><div class="line">  <span class="keyword">return</span> <span class="keyword">string</span>(buf), <span class="literal">nil</span></div><div class="line"> &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </li>
 <li><p>导出代码</p>
- <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">filename := <span class="string">"test.csv"</span></span><br><span class="line">fp, err := os.Create(filename) <span class="comment">// 创建文件句柄</span></span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span>, err</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">defer</span> fp.Close()</span><br><span class="line">columns := []<span class="keyword">string</span>&#123;<span class="string">"姓名"</span>, <span class="string">"电话"</span>, <span class="string">"公司"</span>, <span class="string">"职位"</span>, <span class="string">"加入时间"</span>&#125;</span><br><span class="line"><span class="keyword">if</span> line, err := util.UTF82GBK(strings.Join(columns, <span class="string">","</span>)); err == <span class="literal">nil</span> &#123; <span class="comment">// 写入一行</span></span><br><span class="line">    fp.WriteString(line + <span class="string">"\n"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+ <figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">filename := <span class="string">"test.csv"</span></div><div class="line">fp, err := os.Create(filename) <span class="comment">// 创建文件句柄</span></div><div class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</div><div class="line">    <span class="keyword">return</span> <span class="literal">nil</span>, err</div><div class="line">&#125;</div><div class="line"><span class="keyword">defer</span> fp.Close()</div><div class="line">columns := []<span class="keyword">string</span>&#123;<span class="string">"姓名"</span>, <span class="string">"电话"</span>, <span class="string">"公司"</span>, <span class="string">"职位"</span>, <span class="string">"加入时间"</span>&#125;</div><div class="line"><span class="keyword">if</span> line, err := util.UTF82GBK(strings.Join(columns, <span class="string">","</span>)); err == <span class="literal">nil</span> &#123; <span class="comment">// 写入一行</span></div><div class="line">    fp.WriteString(line + <span class="string">"\n"</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </li>
 </ol>
 <p>其他语言也可以使用类似方法导出数据，只要满足CSV的几个条件即可。</p>
@@ -635,7 +635,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">245</span>
+                  <span class="site-state-item-count">246</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -741,7 +741,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#CSV格式简介"><span class="nav-number">1.</span> <span class="nav-text">CSV格式简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#golang实现"><span class="nav-number">2.</span> <span class="nav-text">golang实现</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">CSV格式简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">golang实现</span></a></li></ol></div>
             
 
           </div>

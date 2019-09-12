@@ -452,23 +452,23 @@
 
       
         <p>最近遇到的几个网站在提交密码时提交的已经是密文，也就是说在网络上传输的密码是密文，这样提升了密码在网络传输中的安全性。</p>
-<p>后端语言加解密已经有很成熟的方案了，前端的话Google之前出过一个<a href="https://www.npmjs.com/package/crypto-js" target="_blank" rel="noopener">crypto-js</a>，为浏览器的js提供了加解密方案。今天一起来了解一下基于AES的前后端加解密流程。</p>
-<h2 id="Javascript"><a href="#Javascript" class="headerlink" title="Javascript"></a>Javascript</h2><ol>
+<p>后端语言加解密已经有很成熟的方案了，前端的话Google之前出过一个<a href="https://www.npmjs.com/package/crypto-js" target="_blank" rel="external">crypto-js</a>，为浏览器的js提供了加解密方案。今天一起来了解一下基于AES的前后端加解密流程。</p>
+<h2><span id="javascript">Javascript</span></h2><ol>
 <li>安装npm包 <code>npm install crypto-js</code></li>
 <li><p>加密代码</p>
- <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> CryptoJS = <span class="built_in">require</span>(<span class="string">"crypto-js"</span>);</span><br><span class="line"><span class="keyword">const</span> key = CryptoJS.enc.Latin1.parse(<span class="string">'1234567812345678'</span>);</span><br><span class="line"><span class="keyword">const</span> iv = CryptoJS.enc.Latin1.parse(<span class="string">'1234567812345678'</span>);</span><br><span class="line"><span class="keyword">const</span> encoded = CryptoJS.AES.encrypt(<span class="string">'hahaha'</span>, key, &#123;</span><br><span class="line">    iv: iv,</span><br><span class="line">    mode: CryptoJS.mode.CBC,</span><br><span class="line">    adding: CryptoJS.pad.ZeroPadding</span><br><span class="line">&#125;).toString()</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'encoded'</span>, encoded)</span><br></pre></td></tr></table></figure>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> CryptoJS = <span class="built_in">require</span>(<span class="string">"crypto-js"</span>);</div><div class="line"><span class="keyword">const</span> key = CryptoJS.enc.Latin1.parse(<span class="string">'1234567812345678'</span>);</div><div class="line"><span class="keyword">const</span> iv = CryptoJS.enc.Latin1.parse(<span class="string">'1234567812345678'</span>);</div><div class="line"><span class="keyword">const</span> encoded = CryptoJS.AES.encrypt(<span class="string">'hahaha'</span>, key, &#123;</div><div class="line">    iv: iv,</div><div class="line">    mode: CryptoJS.mode.CBC,</div><div class="line">    adding: CryptoJS.pad.ZeroPadding</div><div class="line">&#125;).toString()</div><div class="line"><span class="built_in">console</span>.log(<span class="string">'encoded'</span>, encoded)</div></pre></td></tr></table></figure>
 </li>
 <li><p>解密代码</p>
- <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> key = CryptoJS.enc.Latin1.parse(<span class="string">'123456781234567812345678'</span>);</span><br><span class="line"><span class="keyword">const</span> iv = CryptoJS.enc.Latin1.parse(<span class="string">'1234567812345678'</span>);</span><br><span class="line"><span class="keyword">const</span> decoded = CryptoJS.AES.decrypt(encoded, key, &#123;</span><br><span class="line">    iv: iv,</span><br><span class="line">    mode: CryptoJS.mode.CBC,</span><br><span class="line">    adding: CryptoJS.pad.ZeroPadding</span><br><span class="line">&#125;).toString(CryptoJS.enc.Utf8)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'decoded'</span>, decoded);</span><br></pre></td></tr></table></figure>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> key = CryptoJS.enc.Latin1.parse(<span class="string">'123456781234567812345678'</span>);</div><div class="line"><span class="keyword">const</span> iv = CryptoJS.enc.Latin1.parse(<span class="string">'1234567812345678'</span>);</div><div class="line"><span class="keyword">const</span> decoded = CryptoJS.AES.decrypt(encoded, key, &#123;</div><div class="line">    iv: iv,</div><div class="line">    mode: CryptoJS.mode.CBC,</div><div class="line">    adding: CryptoJS.pad.ZeroPadding</div><div class="line">&#125;).toString(CryptoJS.enc.Utf8)</div><div class="line"><span class="built_in">console</span>.log(<span class="string">'decoded'</span>, decoded);</div></pre></td></tr></table></figure>
 </li>
 <li><p>输出如下</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">encoded 6bcgYd4f4ZgNOQH/3tqMpg==</span><br><span class="line">decoded hahaha</span><br></pre></td></tr></table></figure>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">encoded 6bcgYd4f4ZgNOQH/3tqMpg==</div><div class="line">decoded hahaha</div></pre></td></tr></table></figure>
 </li>
 </ol>
-<h2 id="PHP"><a href="#PHP" class="headerlink" title="PHP"></a>PHP</h2><p>直接使用openssl解密即可，代码如下：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$encoded = <span class="string">'6bcgYd4f4ZgNOQH/3tqMpg=='</span>;</span><br><span class="line">$key  = <span class="string">'123456781234567812345678'</span>;</span><br><span class="line">$iv = <span class="string">'1234567812345678'</span>;</span><br><span class="line">var_dump(openssl_decrypt($encoded, <span class="string">'AES-192-CBC'</span>, $key, <span class="number">0</span>,$iv));</span><br></pre></td></tr></table></figure>
+<h2><span id="php">PHP</span></h2><p>直接使用openssl解密即可，代码如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$encoded = <span class="string">'6bcgYd4f4ZgNOQH/3tqMpg=='</span>;</div><div class="line">$key  = <span class="string">'123456781234567812345678'</span>;</div><div class="line">$iv = <span class="string">'1234567812345678'</span>;</div><div class="line">var_dump(openssl_decrypt($encoded, <span class="string">'AES-192-CBC'</span>, $key, <span class="number">0</span>,$iv));</div></pre></td></tr></table></figure>
 <p>输出结果：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">string(6) &quot;hahaha&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">string(6) &quot;hahaha&quot;</div></pre></td></tr></table></figure>
 <p>注意事项</p>
 <ol>
 <li>AES加密位数跟密钥<code>key</code>有关, 以下是密钥位数和加密对应关系<ol>
@@ -648,7 +648,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">245</span>
+                  <span class="site-state-item-count">246</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -754,7 +754,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Javascript"><span class="nav-number">1.</span> <span class="nav-text">Javascript</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PHP"><span class="nav-number">2.</span> <span class="nav-text">PHP</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">Javascript</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">PHP</span></a></li></ol></div>
             
 
           </div>

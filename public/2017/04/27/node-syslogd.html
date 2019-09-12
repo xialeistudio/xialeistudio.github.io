@@ -451,21 +451,21 @@
 
       
         <p>syslog作为Linux发行版一个重要组件，相信大家都不陌生，而如果每台服务器都独立使用一份的话，不能做到日志统一管理，对于以后的日志查询不太方便。<br>syslog有标准的协议格式，这里不做讨论，有兴趣的可以基于协议的报文结构使用socket编程实现。</p>
-<h2 id="部署服务端"><a href="#部署服务端" class="headerlink" title="部署服务端"></a>部署服务端</h2><p>本文使用Nodejs来部署一台syslog服务端。</p>
+<h2><span id="部署服务端">部署服务端</span></h2><p>本文使用Nodejs来部署一台syslog服务端。</p>
 <ol>
 <li><p>终端执行</p>
- <figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">npm</span> init -y</span><br><span class="line"><span class="built_in">npm</span> install syslogd --save</span><br></pre></td></tr></table></figure>
+ <figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">npm</span> init -y</div><div class="line"><span class="built_in">npm</span> install syslogd --save</div></pre></td></tr></table></figure>
 </li>
 <li><p>index.js</p>
- <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> syslogd = <span class="built_in">require</span>(<span class="string">'syslogd'</span>);</span><br><span class="line"><span class="keyword">const</span> server = syslogd(<span class="function"><span class="params">data</span> =&gt;</span> &#123;</span><br><span class="line">   <span class="built_in">console</span>.log(data);</span><br><span class="line">&#125;);</span><br><span class="line">server.listen(<span class="number">514</span>,e =&gt; &#123;</span><br><span class="line"> <span class="keyword">if</span>(e!==<span class="literal">null</span>) &#123;</span><br><span class="line">   <span class="built_in">console</span>.error(e);</span><br><span class="line">   <span class="keyword">return</span>;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="built_in">console</span>.log(<span class="string">'listen on 514'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> syslogd = <span class="built_in">require</span>(<span class="string">'syslogd'</span>);</div><div class="line"><span class="keyword">const</span> server = syslogd(<span class="function"><span class="params">data</span> =&gt;</span> &#123;</div><div class="line">   <span class="built_in">console</span>.log(data);</div><div class="line">&#125;);</div><div class="line">server.listen(<span class="number">514</span>,e =&gt; &#123;</div><div class="line"> <span class="keyword">if</span>(e!==<span class="literal">null</span>) &#123;</div><div class="line">   <span class="built_in">console</span>.error(e);</div><div class="line">   <span class="keyword">return</span>;</div><div class="line"> &#125;</div><div class="line"> <span class="built_in">console</span>.log(<span class="string">'listen on 514'</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
 </li>
 <li><p>终端执行</p>
- <figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">node</span> <span class="title">index</span>.js</span><br></pre></td></tr></table></figure>
+ <figure class="highlight crmsh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">node</span> <span class="title">index</span>.js</div></pre></td></tr></table></figure>
 </li>
 </ol>
 <p>好了，我们的syslog服务器已经部署完毕了。是不是很简单呢~</p>
-<h2 id="nginx日志接入syslog"><a href="#nginx日志接入syslog" class="headerlink" title="nginx日志接入syslog"></a>nginx日志接入syslog</h2><p>打开nginx配置文件</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    <span class="built_in">..</span>.</span><br><span class="line">    access_log syslog:<span class="attribute">server</span>=127.0.0.1;</span><br><span class="line">    <span class="built_in">..</span>.</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2><span id="nginx日志接入syslog">nginx日志接入syslog</span></h2><p>打开nginx配置文件</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">    <span class="built_in">..</span>.</div><div class="line">    access_log syslog:<span class="attribute">server</span>=127.0.0.1;</div><div class="line">    <span class="built_in">..</span>.</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>重启nginx就可以发现nodejs服务端已经成功接收日志信息了。<br><em>注意：是重启不是reload</em></p>
 
       
@@ -508,8 +508,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/03/31/ios10.3-message-crash.html" rel="next" title="IOS10.3信息APP闪退解决方案">
-                <i class="fa fa-chevron-left"></i> IOS10.3信息APP闪退解决方案
+              <a href="/2017/04/27/log4php-syslog.html" rel="next" title="log4php使用syslog记录日志">
+                <i class="fa fa-chevron-left"></i> log4php使用syslog记录日志
               </a>
             
           </div>
@@ -518,8 +518,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/04/27/log4php-syslog.html" rel="prev" title="log4php使用syslog记录日志">
-                log4php使用syslog记录日志 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/05/12/yii2-memcached-qcloud-not-expires.html" rel="prev" title="Yii2框架MemCache在腾讯云部署时不过期问题">
+                Yii2框架MemCache在腾讯云部署时不过期问题 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -625,7 +625,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">245</span>
+                  <span class="site-state-item-count">246</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -731,7 +731,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#部署服务端"><span class="nav-number">1.</span> <span class="nav-text">部署服务端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nginx日志接入syslog"><span class="nav-number">2.</span> <span class="nav-text">nginx日志接入syslog</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">部署服务端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">nginx日志接入syslog</span></a></li></ol></div>
             
 
           </div>

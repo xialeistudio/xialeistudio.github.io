@@ -451,17 +451,17 @@
       
 
       
-        <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>最近写安卓的时候服务端返回的数据会带上“\n”，但是在android这边不能换行，初次想到的解决方法是利用</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String.replace(<span class="string">"\n"</span>,<span class="string">"\n"</span>)</span><br></pre></td></tr></table></figure>
+        <h2><span id="问题">问题</span></h2><p>最近写安卓的时候服务端返回的数据会带上“\n”，但是在android这边不能换行，初次想到的解决方法是利用</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">String.replace(<span class="string">"\n"</span>,<span class="string">"\n"</span>)</div></pre></td></tr></table></figure>
 <p>给替换掉，结果是不行的。之前记得java的反斜杠是需要转义的，就用</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String.replaceAll(<span class="string">"\n"</span>,<span class="string">"\\n"</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">String.replaceAll(<span class="string">"\n"</span>,<span class="string">"\\n"</span>)</div></pre></td></tr></table></figure>
 <p>试了一下，结果依旧不行。后来去查了谷歌–，发现要 \\n 才可以 匹配到 \n,这么多斜杠，头都晕了，一个个来解释：</p>
 <ul>
 <li>第一个和第二个反斜杠是一组，由于java的转义，实际为 “\”</li>
 <li>第三个和第四个同理，</li>
 </ul>
 <p>经过以上两步之后，\\n 实际上是 \n ，由于是正则的关系，\n 可以匹配到字符串的\n了。</p>
-<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String.replaceAll(<span class="string">"\\n"</span>,<span class="string">"\\n"</span>)</span><br></pre></td></tr></table></figure>
+<h2><span id="解决方法">解决方法</span></h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">String.replaceAll(<span class="string">"\\n"</span>,<span class="string">"\\n"</span>)</div></pre></td></tr></table></figure>
 <p>第一个参数是正则，第二个是普通字符串。不得不吐槽下Java的正则表达式。。</p>
 
       
@@ -629,7 +629,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">245</span>
+                  <span class="site-state-item-count">246</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -735,7 +735,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题"><span class="nav-number">1.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决方法"><span class="nav-number">2.</span> <span class="nav-text">解决方法</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">解决方法</span></a></li></ol></div>
             
 
           </div>

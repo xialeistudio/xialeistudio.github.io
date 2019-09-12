@@ -450,8 +450,8 @@
       
 
       
-        <p>今天在使用promise的时候没有catch掉错误，导致报错，类似于<br><figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">unhandledRejection</span></span> promise ....</span><br></pre></td></tr></table></figure></p>
-<p>而且不会显示trace信息，导致无从查错，经过google发现，需要监听进程的<code>unhandledRejection</code>事件，才能显示trace信息<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">process.on(<span class="string">'unhandledRejection'</span>, (...params) =&gt; &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(params);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+        <p>今天在使用promise的时候没有catch掉错误，导致报错，类似于<br><figure class="highlight clean"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">unhandledRejection promise ....</div></pre></td></tr></table></figure></p>
+<p>而且不会显示trace信息，导致无从查错，经过google发现，需要监听进程的<code>unhandledRejection</code>事件，才能显示trace信息<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">process.on(<span class="string">'unhandledRejection'</span>, (...params) =&gt; &#123;</div><div class="line">  <span class="built_in">console</span>.log(params);</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -601,7 +601,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">245</span>
+                  <span class="site-state-item-count">246</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
