@@ -11,8 +11,6 @@ categories:
 
 ![img](https://static.ddhigh.com/blog/2019-08-26-060638.jpg)
 
-[TOC]
-
 ## Question
 
 > 给定一个字符串，请你找出其中不含有重复字符的 **最长子串** 的长度。
