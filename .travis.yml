@@ -6,7 +6,7 @@ cache:
     - node_modules
 
 install:
-  - yarn add
+  - yarn
 
 script:
   - hexo g
