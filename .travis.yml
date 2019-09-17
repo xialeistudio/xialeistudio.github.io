@@ -6,10 +6,10 @@ cache:
     - node_modules
 
 install:
-  - yarn
+  - yarn --prod
 
 script:
-  - hexo g
+  - hexo g --silent
 
 after_script:
   - cd ./public
