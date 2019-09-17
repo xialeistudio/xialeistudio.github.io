@@ -64,7 +64,7 @@ tags:
     
 ### 代码说明
 
-1. NodeJs采用 **CMD模块系统**，**require** 用来加载模块，本例中加载了**NodeJs自带的http模块**以使用其中的功能
+1. NodeJs采用 **CommonJs模块系统**，**require** 用来加载模块，本例中加载了**NodeJs自带的http模块**以使用其中的功能
 2. `http.createServer`函数创建了一个 **HTTP服务器**，并配置了请求回调函数，在本系列的第一篇文章中说到事件驱动是需要回调函数进行监听的。
 3. `server.listen`是监听系统端口，第二个参数是**监听成功的回调函数**
 
