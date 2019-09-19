@@ -25,6 +25,6 @@
   },
   "scripts": {
     "serve": "hexo serve",
-    "deploy": "hexo d -g && git add . && git commit -m \"posts\" && git push"
+    "publish": "node --inspect-brk=5858 ./node_modules/.bin/hexo g"
   }
 }
