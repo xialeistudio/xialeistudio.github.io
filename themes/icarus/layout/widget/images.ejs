@@ -1,0 +1,16 @@
+<% const images = get_config_from_obj(widget, 'images'); %>
+<% if (images !== null) { %>
+<% for (let image of images) {%>
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                <%= image.title %>
+            </h3>
+            <p><%- image.slogan %></p>
+            <img src="<%= image.src %>" width="200" height="200" alt="">
+        </div>
+    </div>
+</div>
+<% }%>
+<% }%>

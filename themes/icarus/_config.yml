@@ -156,7 +156,8 @@ widgets:
           RSS:
               icon: fas fa-rss
               url: /atom.xml
-    - type: books
+    - 
+      type: books
       position: left
       books:
           - title: ThinkPHP5实战
@@ -165,6 +166,14 @@ widgets:
           - title: ThinkPHP实战
             thumbnail: https://static.ddhigh.com/blog/2019-09-18-095415.jpg?imageView2/2/w/200
             link: http://www.tup.tsinghua.edu.cn/booksCenter/book_06867701.html
+    -
+      type: images
+      position: left
+      images:    
+        - 
+          title: 微信公众号
+          slogan: 欢迎关注我的公众号<br>学习最新、最热的JS/TS知识！
+          src: https://static.ddhigh.com/blog/2019-09-19-115314.jpg
     - # Widget name
       type: toc
       # Where should the widget be placed, left or right
