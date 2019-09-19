@@ -5,8 +5,7 @@ date: 2017-10-15 05:16:05
 
 ## Profile
 
-Name: 夏磊
-Location: Beijing
+来自北京的一名全栈工程师。
 
 ## Language
 
@@ -25,7 +24,7 @@ Location: Beijing
 + React Native/Cordova
 + Docker
 + MySQL
-csa
+
 ## Lessons
 
 + [Restful API实战 | imooc](https://www.imooc.com/learn/811)

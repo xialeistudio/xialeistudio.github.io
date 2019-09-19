@@ -29,6 +29,7 @@ navbar:
         归档: /archives
         分类: /categories
         标签: /tags
+        '建议 && 反馈': /suggestion
         关于: /about
     # Navigation bar links to be shown on the right
     links:
