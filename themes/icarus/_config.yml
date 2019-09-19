@@ -39,7 +39,7 @@ navbar:
         SegmentFault:
             icon: ""
             image: https://static.ddhigh.com/blog/2019-09-18-115828.png?imageView2/1/w/40/h/40
-            url: "https://segmentfault.com/xialeistudio"
+            url: "https://segmentfault.com/u/xialeistudio"
 # Footer section link settings
 footer:
     # Links to be shown on the right of the footer section
