@@ -16,7 +16,7 @@ categories:
 var name = "world";
 
 (function(){
-  if(type name === "undefined") {
+  if(typeof name === "undefined") {
     var name = "Jack";
   	console.log("Hello " + name);
   } else {
@@ -70,7 +70,7 @@ var name = "world";
 
 (function(){
   var name; // 变量提升，仅提升声明，不提升初始化
-  if(type name === "undefined") {
+  if(typeof name === "undefined") {
     name = "Jack";
     console.log("Hello " + name);
   } else {
@@ -89,3 +89,4 @@ var name = "world";
 ## 技术参考
 
 + [变量提升 - 术语表 | MDN](https://developer.mozilla.org/zh-CN/docs/Glossary/Hoisting)
+
