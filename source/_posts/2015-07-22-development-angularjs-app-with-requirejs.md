@@ -6,16 +6,8 @@ type: post
 published: true
 status: publish
 categories:
+- frontend
 - angularjs
-tags:
-- angularjs
-- requirejs
-meta:
-  _edit_last: '1'
-  _oembed_be4150fd1e85f91f8a58ae33f4b7bc1f: "{{unknown}}"
-  _wp_old_slug: angularjs%e9%9b%86%e6%88%90requirejs
-  views: '2737'
-  _thumbnail_id: '175'
 ---
 angularjs自带的模块话机制对于业务逻辑的组织确实起到了规范化的作用，但是对于大型web项目，弊端也出来了，一次性加载所有的资源会导致进入应用的时间变长，而实际上，首页需要加载的并不多，所以，本文将介绍如何使用requireJs与angularJs集成。
 ## 依赖

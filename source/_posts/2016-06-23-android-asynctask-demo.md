@@ -7,12 +7,6 @@ published: true
 status: publish
 categories:
 - android
-tags:
-- AsyncTask
-meta:
-  _edit_last: '1'
-  _oembed_e2ccff8d4d137521cc58993f562af39e: "{{unknown}}"
-  views: '494'
 ---
 
 android实现异步的方法有很多种，本文只介绍用的比较多的AsyncTask。从类名就可以看出来该类是专为异步而生，API也很简单。

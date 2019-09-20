@@ -1,10 +1,11 @@
 ---
 title: 使用yii2依赖注入规范业务开发
 date: 2018-04-24 22:18:04
-categories: php
+categories: 
+- backend
+- php
 tags:
-- yii2
-- di
+- yii
 ---
 
 ## 本文代码

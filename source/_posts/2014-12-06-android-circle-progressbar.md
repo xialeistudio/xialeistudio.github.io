@@ -7,13 +7,6 @@ published: true
 status: publish
 categories:
 - android
-tags:
-- progressbar
-meta:
-  _edit_last: '1'
-  views: '4997'
-  _wp_old_slug: "%e5%9c%86%e5%bd%a2%e5%b8%a6%e8%bf%9b%e5%ba%a6%e6%9d%a1%e7%9a%84progressbar"
-  _thumbnail_id: '241'
 ---
 android加载图片免不了使用加载进度显示，而android自带的progressBar有局限.
 1. 圆型的progressBar不能显示进度条，只能无限制转圈圈

@@ -6,15 +6,8 @@ type: post
 published: true
 status: publish
 categories:
+- frontend
 - angularjs
-tags:
-- parent index
-- ng-repeat
-meta:
-  _edit_last: '1'
-  views: '10242'
-  _thumbnail_id: '175'
-  _wp_old_slug: angularjs-ng-repeat%e8%8e%b7%e5%8f%96%e7%88%b6%e7%ba%a7index
 ---
 angularjs的循环嵌套我就不多说了，无非是ng-repeat的嵌套而已，如果需要获取索引请使用$index。
 

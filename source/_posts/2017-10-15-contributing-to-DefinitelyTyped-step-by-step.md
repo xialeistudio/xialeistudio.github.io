@@ -2,6 +2,7 @@
 title: 从零开始向DefinitelyTyped贡献代码
 layout: post
 categories:
+- frontend
 - typescript
 ---
 
@@ -68,7 +69,7 @@ fork完毕后，你会拥有一个自己的仓库地址，本文中我的地址�
     declare function cors(options?: cors.Options): Koa.Middleware;
 
     export = cors;
-    ```   
+    ```
 8. 编写单元测试文件**koa2-cors-tests.ts**，测试就是写上样板代码即可，只要能通过编译就行。   
     ```typescript
     import * as Koa from 'koa';

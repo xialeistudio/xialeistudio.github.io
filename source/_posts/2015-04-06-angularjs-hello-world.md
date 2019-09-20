@@ -6,16 +6,8 @@ type: post
 published: true
 status: publish
 categories:
+- frontend
 - angularjs
-tags:
-- angularjs
-- hello world
-meta:
-  _edit_last: '1'
-  _oembed_a4c608b46689a6b6c21d36342bef6eb6: "{{unknown}}"
-  views: '1221'
-  _thumbnail_id: '175'
-  _wp_old_slug: 1-angularjs-hello-world
 ---
 几乎所有的编程入门都是以"Hello World"开始的，这里也不例外。
 ## HTML代码

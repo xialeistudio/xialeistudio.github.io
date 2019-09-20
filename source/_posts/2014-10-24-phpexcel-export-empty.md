@@ -6,14 +6,8 @@ type: post
 published: true
 status: publish
 categories:
+- backend
 - php
-tags:
-- phpexcel
-meta:
-  _edit_last: '1'
-  views: '2587'
-  _thumbnail_id: '172'
-  _wp_old_slug: phpexcel%e5%af%bc%e5%87%ba%e6%97%b6%e4%b8%ba%e7%a9%ba%e7%9a%84%e8%a7%a3%e5%86%b3%e6%96%b9%e6%b3%95
 ---
 今天在做数据导出的时候遇到个麻烦事情，SQL查询是有数据的，但是写入excel的时候为空的。
 

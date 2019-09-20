@@ -7,13 +7,6 @@ published: true
 status: publish
 categories:
 - android
-tags:
-- android
-- INSTALL_FAILED_UID_CHANGED
-meta:
-  _edit_last: '1'
-  _wp_old_slug: "%e4%b8%80%e6%ac%a1android%e5%ba%94%e7%94%a8%e5%8d%87%e7%ba%a7%e5%ae%89%e8%a3%85%e5%a4%b1%e8%b4%a5%e7%9a%84%e8%a7%a3%e5%86%b3%e8%bf%87%e7%a8%8b"
-  views: '174'
 ---
 老版本app版本号是2.0.13，Build是20160719。新版本app版本号是2.0.14，Build是2016101301。   
 初略看来应该是可以覆盖升级的，但是安装新版本的时候提示“应用未安装”。   

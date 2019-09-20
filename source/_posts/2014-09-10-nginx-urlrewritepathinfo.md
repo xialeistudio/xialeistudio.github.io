@@ -6,14 +6,8 @@ type: post
 published: true
 status: publish
 categories:
+- backend
 - nginx
-tags:
-- pathinfo
-- rewrite
-meta:
-  _edit_last: '1'
-  views: '3530'
-  _wp_old_slug: nginx-url%e9%87%8d%e5%86%99%e5%92%8cpathinfo%e9%85%8d%e7%bd%ae
 ---
 nginx近年来的上涨趋势确实挺快的，但是apache作为老牌HTTP服务器，拥有的生态圈是nginx比不上的。一个最简单的例子，URL重写，apache的话利用无所不能的.htaccess文件就可以了。nginx还要改主配置文件。
 

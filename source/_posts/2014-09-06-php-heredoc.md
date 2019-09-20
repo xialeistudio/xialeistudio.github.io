@@ -6,13 +6,8 @@ type: post
 published: true
 status: publish
 categories:
+- backend
 - php
-tags:
-- heredoc
-meta:
-  _edit_last: '1'
-  views: '1280'
-  _wp_old_slug: php-heredoc-%e5%ad%97%e7%ac%a6%e4%b8%b2%e5%ae%9a%e7%95%8c%e7%ac%a6%e4%bd%bf%e7%94%a8
 ---
 PHP定义字符串有三种形式
 + 双引号

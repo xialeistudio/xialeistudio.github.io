@@ -6,16 +6,8 @@ type: post
 published: true
 status: publish
 categories:
+- backend
 - php
-tags:
-- php
-- location
-- baidu map
-meta:
-  _edit_last: '1'
-  _thumbnail_id: '341'
-  views: '10552'
-  _wp_old_slug: php%e5%88%a9%e7%94%a8%e7%99%be%e5%ba%a6%e5%9c%b0%e5%9b%beapi%e8%bf%9b%e8%a1%8cip%e5%ae%9a%e4%bd%8d%e5%92%8cgps%e5%ae%9a%e4%bd%8d
 ---
 最近在做一个手机端的webapp地图应用，而核心内容当然是定位了，但是定位的话有几种方式，IP定位,GPS定位，基站定位（这个貌似webapp用不了），
 

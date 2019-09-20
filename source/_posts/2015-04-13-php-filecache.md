@@ -6,14 +6,8 @@ type: post
 published: true
 status: publish
 categories:
+- backend
 - php
-tags:
-- cache
-meta:
-  _edit_last: '1'
-  views: '1709'
-  _thumbnail_id: '494'
-  _wp_old_slug: php%e7%ae%80%e5%8d%95%e6%96%87%e4%bb%b6%e7%bc%93%e5%ad%98%e7%b1%bb
 ---
 缓存有很多方法，memcache,databse,file,redis等等，原理都差不多，简要介绍一下，写入缓存就不多说了，主要是读取缓存。
 1. 检测指定key是否存在，如不存在则返回false。

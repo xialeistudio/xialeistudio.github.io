@@ -1,7 +1,8 @@
 ---
 title: NestJs学习之旅(8)——管道
 date: 2019-08-28 14:47:48
-categories: 
+categories:
+- backend
 - nodejs
 tags:
 - nestjs

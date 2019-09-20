@@ -6,15 +6,8 @@ type: post
 published: true
 status: publish
 categories:
+- backend
 - nodejs
-tags:
-- node-gyp
-- nodejs
-- NODEJS_ORG_MIRROR
-meta:
-  _edit_last: '1'
-  _wp_old_slug: node-gy
-  views: '10'
 ---
 在使用*node-gyp*的时候，由于国内网络环境不太给力，导致下载NodeJs头文件时很慢。   
 利用NODEJS_ORG_MIRROR环境变量可以解决这个问题。   

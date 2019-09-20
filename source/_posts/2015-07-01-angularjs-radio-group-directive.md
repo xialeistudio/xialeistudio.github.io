@@ -6,15 +6,8 @@ type: post
 published: true
 status: publish
 categories:
+- frontend
 - angularjs
-tags:
-- angularjs
-- radio-group
-meta:
-  _edit_last: '1'
-  views: '1246'
-  _wp_old_slug: angularjs%e6%8c%87%e4%bb%a4%e5%ae%9e%e7%8e%b0radiogroup
-  _thumbnail_id: '435'
 ---
 angularjs的指令系统其实也是很强大的东西，扩展了HTML的表现力。本文讲的是如何用angularjs指令实现radioGroup，自带的radio只能控制ngModel的两种状态: true/false。
 ## 指令代码

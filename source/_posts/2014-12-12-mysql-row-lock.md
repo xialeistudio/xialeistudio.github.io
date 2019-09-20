@@ -6,14 +6,8 @@ type: post
 published: true
 status: publish
 categories:
+- backend
 - mysql
-tags:
-- row lock
-meta:
-  _edit_last: '1'
-  _thumbnail_id: '289'
-  views: '7800'
-  _wp_old_slug: mysql%e4%bd%bf%e7%94%a8%e8%a1%8c%e9%94%81%e6%9d%a5%e8%a7%a3%e5%86%b3%e5%b9%b6%e5%8f%91%e6%9b%b4%e6%96%b0%e9%97%ae%e9%a2%98
 ---
 大家可能都有这样一种感觉，Web程序在本地调试的时候一切正常，放到线上也基本是正常，但是偶尔会有数据错误的情况，这种情况在订单系统中特别常见，因为大部分的订单状态更新都是有两个路径（浏览器跳转和支付服务器的异步推送消息），当然，最终数据要以异步结果为准，但是问题是，浏览器跳转也需要更新订单状态，当这两种方式在很短的时间内同时到达数据库时（一般在一秒内），如果数据库没有加锁，那这个订单会被处理两次。
 

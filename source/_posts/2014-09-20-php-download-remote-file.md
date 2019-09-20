@@ -6,13 +6,10 @@ type: post
 published: true
 status: publish
 categories:
+- backend
 - php
-meta:
-  _edit_last: '1'
-  views: '1847'
-  _wp_old_slug: php%e4%b8%8b%e8%bd%bd%e8%bf%9c%e7%a8%8b%e6%96%87%e4%bb%b6%e5%88%b0%e6%9c%ac%e5%9c%b0
 ---
-在做小偷程序的时候，文章的图片往往是有防盗链措施的，一个比较好的解决办法是通过PHP下载图片到本地并且替换URL实现。
+在开发爬虫的时候，文章的图片往往是有防盗链措施的，一个比较好的解决办法是通过PHP下载图片到本地并且替换URL实现。
 
 由于图片这种东西不能直接像下载HTML那样直接下载，所以需要指定fopen的打开模式为b(二进制模式)。
 

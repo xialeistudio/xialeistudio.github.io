@@ -6,18 +6,12 @@ type: post
 published: true
 status: publish
 categories:
+- backend
 - linux
-tags:
-- linux
-- shell
-meta:
-  _edit_last: '1'
-  views: '1168'
-  _thumbnail_id: '174'
-  _wp_old_slug: usrlocalphpbinphpm-bad-interpreter-no-such-file-or-directory
 ---
 
 ## 问题
+
 在使用php作为linux上shell脚本运行时出现了以下错误：
 
 ```php

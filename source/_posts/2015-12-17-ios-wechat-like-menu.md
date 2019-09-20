@@ -7,14 +7,6 @@ published: true
 status: publish
 categories:
 - ios
-tags:
-- ios
-- 微信菜单
-- modal
-meta:
-  _edit_last: '1'
-  views: '2688'
-  _thumbnail_id: '625'
 ---
 
 ## 项目地址

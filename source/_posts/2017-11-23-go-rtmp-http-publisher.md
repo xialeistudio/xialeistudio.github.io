@@ -1,10 +1,11 @@
 ---
 title: 从零开始打造自己的直播服务器-golang开发HTTP推流服务
 date: 2017-11-23 15:19:58
+categories:
+- backend
+- go
 tags:
 - rtmp
-- go
-- 直播
 ---
 目前笔者只知道ffmpeg命令行推流到RTMP服务器，是没有HTTP接口的，像iOS和Android这种Native应用应该有RTMP SDK封装推流逻辑。但是像微信小程序这种录制音频只有原始**ArrayBuffer**的数据，则必须在服务端提供接口来进行推流。
 

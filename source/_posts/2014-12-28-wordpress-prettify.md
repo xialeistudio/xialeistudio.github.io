@@ -6,14 +6,9 @@ type: post
 published: true
 status: publish
 categories:
-- wordpress
+- backend
 tags:
-- highlight
-meta:
-  _edit_last: '1'
-  views: '1712'
-  _thumbnail_id: '334'
-  _wp_old_slug: wordpress%e4%bd%bf%e7%94%a8google-prettify%e6%8f%92%e4%bb%b6%e5%ae%9e%e7%8e%b0%e4%bb%a3%e7%a0%81%e9%ab%98%e4%ba%ae
+- wordpress
 ---
 最近百度感冒的太严重了，统计代码严重拖慢网页打开速度，不得已，只得暂时关闭JS统计代码。而另一个重灾区--ueditor也是太大了。我着实受不了。也关掉了。那么问题来了。之前用ueditor有配套的代码高亮插件，取消ueditor之后，代码不亮了。
 别急，wordpress的插件多着呢!

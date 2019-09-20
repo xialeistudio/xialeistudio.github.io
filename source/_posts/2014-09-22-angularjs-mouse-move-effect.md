@@ -6,14 +6,8 @@ type: post
 published: true
 status: publish
 categories:
+- frontend
 - angularjs
-tags:
-- hover
-meta:
-  _edit_last: '1'
-  views: '3044'
-  _thumbnail_id: '175'
-  _wp_old_slug: angularjs%e5%ae%9e%e7%8e%b0%e9%bc%a0%e6%a0%87%e7%bb%8f%e8%bf%87%e5%85%83%e7%b4%a0%e7%9a%84%e6%95%88%e6%9e%9c
 ---
 用JQ来做的话很简单的，(通过toggleClass函数就可以了),但是既然提到了angularjs，当然要用angularjs的解决方案来做啦!
 

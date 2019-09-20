@@ -3,9 +3,7 @@ title: TS简明教程(2)
 date: 2019-07-29 10:11:30
 categories:
 - frontend
-tags:
 - typescript
-- ts
 ---
 为了后续内容(如`nestjs`等框架)的开展，本文更新TS相关的基础知识。
 

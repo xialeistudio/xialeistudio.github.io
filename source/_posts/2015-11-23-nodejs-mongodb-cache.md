@@ -6,18 +6,11 @@ type: post
 published: true
 status: publish
 categories:
-- open-source-projects
-tags:
+- backend
 - nodejs
-- npm
-meta:
-  _edit_last: '1'
-  _oembed_7eef88cc50cad73e0b3bc29ff9f96853: "{{unknown}}"
-  _thumbnail_id: '561'
-  _wp_old_slug: npmnodejs-mongodb-%e7%bc%93%e5%ad%98%e6%a8%a1%e5%9d%97
-  views: '511'
 ---
 ## 项目地址
+
 [https://github.com/xialeistudio/mongodb-cache](https://github.com/xialeistudio/mongodb-cache)
 ## 项目说明
 基于mongodb的nodejs缓存模块

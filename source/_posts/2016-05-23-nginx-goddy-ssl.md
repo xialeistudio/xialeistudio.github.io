@@ -6,16 +6,8 @@ type: post
 published: true
 status: publish
 categories:
+- backend
 - nginx
-tags:
-- nginx
-- ssl
-- goddy
-meta:
-  _edit_last: '1'
-  _thumbnail_id: '176'
-  _wp_old_slug: nginx%e4%bd%bf%e7%94%a8goddy-ssl%e8%af%81%e4%b9%a6
-  views: '633'
 ---
 随着人们对网络安全要求的提高，越来越多的http站点已经转换为了https站点，保证网站在传输过程中不被监听、恶意篡改，本文将使用goddy提供的ssl证书来升级HTTPS网站。
 

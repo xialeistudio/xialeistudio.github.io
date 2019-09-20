@@ -7,15 +7,6 @@ published: true
 status: publish
 categories:
 - android
-tags:
-- debug
-- eclipse
-- mac
-meta:
-  _edit_last: '1'
-  _thumbnail_id: '221'
-  views: '1734'
-  _wp_old_slug: mac-os-x-10-10-adb-%e5%8f%af%e4%bb%a5%e5%8f%91%e7%8e%b0%e8%ae%be%e5%a4%87%e4%bd%86%e6%98%afeclispe%e4%b8%8d%e8%83%bd%e8%b0%83%e8%af%95%e7%9a%84%e8%a7%a3%e5%86%b3%e6%96%b9%e6%b3%95
 ---
 这两天心血来潮装了个mac os x 10.10系统，折腾的过程就不说了。   
 Mac OS X 10.10的环境下，Eclipse+ADT，进行真机调试时，会出现一个问题。   

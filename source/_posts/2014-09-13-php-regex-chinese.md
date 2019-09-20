@@ -6,14 +6,10 @@ type: post
 published: true
 status: publish
 categories:
+- backend
 - php
 tags:
 - regex
-- chinese
-meta:
-  _edit_last: '1'
-  views: '2146'
-  _wp_old_slug: php%e6%ad%a3%e5%88%99%e8%a1%a8%e8%be%be%e5%bc%8f%e5%8c%b9%e9%85%8d%e4%b8%ad%e6%96%87
 ---
 正常的正则表达式匹配英文和数字以及一些常用字符还是很简单的，如
 

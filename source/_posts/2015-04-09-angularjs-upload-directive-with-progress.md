@@ -6,19 +6,8 @@ type: post
 published: true
 status: publish
 categories:
+- frontend
 - angularjs
-tags:
-- angularjs
-- upload
-- progress
-meta:
-  _edit_last: '1'
-  _oembed_0556deabb2578b8f8b60b17a3c74bc6b: "{{unknown}}"
-  _oembed_1d8e1548327af3102a006cbac801d9fa: "{{unknown}}"
-  views: '10277'
-  _thumbnail_id: '175'
-  _wp_old_slug: angular%e5%a4%9a%e6%96%87%e4%bb%b6%e4%b8%8a%e4%bc%a0%e6%8c%87%e4%bb%a4
-  _oembed_3dbea22524f3bf33afae547737312713: "{{unknown}}"
 ---
 ## 项目地址
 [https://git.coding.net/xialei/xl-angular-upload.git](https://git.coding.net/xialei/xl-angular-upload.git)

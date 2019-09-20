@@ -1,12 +1,9 @@
 ---
-title: Js使用AES加密PHP使用Openssl解密
+title: PHP和JS加解密
 date: 2019-07-11 15:00:43
 categories:
+- backend
 - php
-tags:
-- javascript
-- aes
-- encrypt
 ---
 
 最近遇到的几个网站在提交密码时提交的已经是密文，也就是说在网络上传输的密码是密文，这样提升了密码在网络传输中的安全性。

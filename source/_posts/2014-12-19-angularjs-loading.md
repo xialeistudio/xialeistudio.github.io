@@ -6,15 +6,8 @@ type: post
 published: true
 status: publish
 categories:
+- frontend
 - angularjs
-tags:
-- loading
-- interceptor
-meta:
-  _thumbnail_id: '216'
-  _edit_last: '1'
-  views: '16643'
-  _wp_old_slug: angularjs%e6%b3%a8%e5%85%a5%e6%8b%a6%e6%88%aa%e5%99%a8%e5%ae%9e%e7%8e%b0loading%e6%95%88%e6%9e%9c
 ---
 angularjs作为一个全ajax的框架，对于请求，如果页面上不做任何操作的话，在结果烦回来之前，页面是没有任何响应的，不像普通的HTTP请求，会有进度条之类。
 

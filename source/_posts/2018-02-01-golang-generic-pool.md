@@ -2,8 +2,7 @@
 title: golang通用连接池的实现
 date: 2018-02-01 20:04:00
 categories:
-- go
-tags:
+- backend
 - go
 ---
 

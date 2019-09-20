@@ -2,12 +2,10 @@
 layout: post
 title: pomelo Hello World
 categories:
-- pomelo
+- backend
+- nodejs
 tags:
 - pomelo
-- socket
-- websocket
-- chat
 ---
 pomelo是一个游戏服务器框架，与以往单进程的游戏框架不同, 它是**高性能**、**高可伸缩**、**分布式多进程**的**游戏服务器框架**，并且使用很简单。
 

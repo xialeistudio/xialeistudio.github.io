@@ -7,13 +7,6 @@ published: true
 status: publish
 categories:
 - android
-tags:
-- android
-meta:
-  _edit_last: '1'
-  _thumbnail_id: '241'
-  views: '1700'
-  _wp_old_slug: async-http-client-socket%e8%b6%85%e6%97%b6%e9%97%ae%e9%a2%98
 ---
 最近做的一个项目的HTTP模块使用了loopj的asynchttpclient ([https://github.com/loopj/android-async-http](https://github.com/loopj/android-async-http)）。
 

@@ -1,12 +1,12 @@
 ---
 title: 在swoole上运行Yii2应用
 date: 2019-05-19 16:02:07
-tags:
-- yii2
-- swoole
-- php
 categories:
+- backend
 - php
+tags:
+- yii
+- swoole
 ---
 
 [Yii2](https://www.yiiframework.com)：业界著名的开发框架，完美的OOP设计以及组件化开发思想保证了框架的扩展性。

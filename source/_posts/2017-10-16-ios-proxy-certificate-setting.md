@@ -1,9 +1,8 @@
 ---
 title: ios新版本代理设置问题
 date: 2017-10-16 14:23:55
-tags:
+categories:
 - ios
-- proxy
 ---
 # 背景
 系统是iOS11，电脑端用的charles代理，目前需要查看一些https网站返回的数据，还是使用老方法把charles的根证书设为信任，手机也打开**chls.pro/ssl**把证书添加到系统了。

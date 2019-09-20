@@ -2,9 +2,10 @@
 title: NestJs学习之旅(1)——快速开始
 date: 2019-08-19 10:10:13
 categories:
+- backend
 - nodejs
 tags:
-- nest
+- nestjs
 ---
 
 经过[NodeJs系列课程](https://www.ddhigh.com/2019/07/18/nodejs-guide-about.html)和[Typescript系列课程](https://www.ddhigh.com/2019/07/25/typescript-quick-guide.html)，终于开始了激动人心的NestJs学习之旅。

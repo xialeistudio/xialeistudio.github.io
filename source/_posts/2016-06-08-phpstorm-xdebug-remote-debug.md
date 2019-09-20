@@ -6,16 +6,10 @@ type: post
 published: true
 status: publish
 categories:
+- backend
 - php
 tags:
-- php
 - xdebug
-- debug
-- remote debug
-meta:
-  _edit_last: '1'
-  _thumbnail_id: '494'
-  views: '1248'
 ---
 phpstorm+xdebug如何调试本地代码应该都熟悉了。本文说的是如何调试线上服务器的代码。本文写作时服务器的PHP环境是lnmp1.2。
 

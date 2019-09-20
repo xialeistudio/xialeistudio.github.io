@@ -1,7 +1,8 @@
 ---
-title: 一道JS经典面试题——var变量提升
+title: 搞懂JS变量提升
 date: 2019-09-17 12:30:00
 categories:
+- frontend
 - javascript
 ---
 

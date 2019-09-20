@@ -8,13 +8,7 @@ status: publish
 categories:
 - android
 tags:
-- java
 - regex
-meta:
-  _edit_last: '1'
-  _thumbnail_id: '178'
-  views: '2687'
-  _wp_old_slug: android-%e6%96%9c%e6%9d%a0%e6%9b%bf%e6%8d%a2%e7%9a%84%e9%97%ae%e9%a2%98
 ---
 ## 问题
 最近写安卓的时候服务端返回的数据会带上“\n”，但是在android这边不能换行，初次想到的解决方法是利用

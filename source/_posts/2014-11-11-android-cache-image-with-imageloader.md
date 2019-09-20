@@ -7,14 +7,6 @@ published: true
 status: publish
 categories:
 - android
-tags:
-- image cache
-- Android-Universal-Image-Loader
-meta:
-  _edit_last: '1'
-  _thumbnail_id: '244'
-  views: '7099'
-  _wp_old_slug: imageloader%e4%bd%bf%e7%94%a8%e7%bc%93%e5%ad%98%e5%8a%a0%e8%bd%bd%e5%9b%be%e7%89%87
 ---
 缓存和异步是两个极大提升用户体验的好东西，android加载图片时的开销还是挺大的，要是不做缓存同步加载，网速不给力的情况下，等个十几秒是有可能的。
 

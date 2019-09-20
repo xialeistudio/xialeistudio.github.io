@@ -7,12 +7,6 @@ published: true
 status: publish
 categories:
 - frontend
-tags:
-- bootstrap
-meta:
-  _edit_last: '1'
-  views: '2826'
-  _wp_old_slug: bootstrap3%e7%a6%81%e7%94%a8%e5%93%8d%e5%ba%94%e5%bc%8f%e5%b8%83%e5%b1%80
 ---
 IE8及以下版本的浏览器确实是心中的痛,不支持媒体查询和CSS3，导致bootstrap样式怪怪的。没办法，只能采取折中的办法--禁用响应式布局
 1. 移除 viewport 标签

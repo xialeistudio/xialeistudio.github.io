@@ -2,10 +2,10 @@
 layout: post
 title: pomelo-global-channel-plugin的使用
 categories:
-- pomelo
+- backend
+- nodejs
 tags:
-- socket
-- pomelo-global-channel-plugin
+- pomelo
 ---
 pomelo应用中channel默认是**不可以跨进程**的，来看一下现在服务器的配置：
 

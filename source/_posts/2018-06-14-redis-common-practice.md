@@ -1,10 +1,8 @@
 ---
 title: redis常用实践
 date: 2018-06-14 21:49:52
-tags: 
-- php
-- redis
-categories:
+categories: 
+- backend
 - php
 ---
 

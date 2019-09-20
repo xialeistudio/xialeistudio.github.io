@@ -7,14 +7,7 @@ published: true
 status: publish
 categories:
 - frontend
-tags:
-- frontend
-- mobile
-meta:
-  _edit_last: '1'
-  views: '1135'
-  _thumbnail_id: '221'
-  _wp_old_slug: "%e6%89%8b%e6%9c%ba%e7%ab%afinput%e5%92%8ctextarea%e5%ae%bd%e5%ba%a6%e4%b8%8d%e4%b8%80%e8%87%b4%e9%97%ae%e9%a2%98%e8%a7%a3%e5%86%b3%e6%96%b9%e6%a1%88"
+- css
 ---
 今天在做写一个IOS端的表单时，尽管input,textarea设置了宽度，结果发现真机浏览的时候发现宽度不一致，有图为证   
 ![图片](https://og5r5kasb.qnssl.com/wp-content/uploads/2015/07/IMG_0839.png)

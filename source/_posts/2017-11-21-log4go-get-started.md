@@ -1,8 +1,8 @@
 ---
 title: log4go尝鲜
 date: 2017-11-21 17:06:16
-tags:
-- log
+categories:
+- backend
 - go
 ---
 # 序言

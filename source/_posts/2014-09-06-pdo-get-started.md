@@ -6,13 +6,8 @@ type: post
 published: true
 status: publish
 categories:
+- backend
 - php
-tags:
-- pdo
-meta:
-  _edit_last: '1'
-  views: '1735'
-  _wp_old_slug: pdo%e7%ae%80%e6%98%8e%e6%95%99%e7%a8%8b%ef%bc%8c%e6%98%af%e6%97%b6%e5%80%99%e6%8a%9b%e5%bc%83mysql_%e5%87%bd%e6%95%b0%e4%ba%86
 ---
 mysql_*系列函数我一之前一直在用，基于性能、安全性等原因，再加上PHP面向对象的增强，是时候使用PDO来处理数据了。PDO一个很重要的特点是该类与数据库无关，不同的数据库只是在实例化时传入的参数不同，但是操作方法是一样的。
 

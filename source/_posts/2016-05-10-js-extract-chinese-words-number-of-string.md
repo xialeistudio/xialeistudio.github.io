@@ -6,13 +6,10 @@ type: post
 published: true
 status: publish
 categories:
+- frontend
 - javascript
 tags:
-- js
 - regex
-meta:
-  _edit_last: '1'
-  views: '630'
 ---
 最近在做导出excel的时候，发现导出成功，文件大小也正常，但是Office 2013打不开，检查数据库发现，导出数据中有非中文字符导致Excel异常。   
 

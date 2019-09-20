@@ -6,12 +6,8 @@ type: post
 published: true
 status: publish
 categories:
+- frontend
 - angularjs
-meta:
-  _edit_last: '1'
-  _thumbnail_id: '177'
-  views: '4498'
-  _wp_old_slug: "%e5%90%8e%e7%ab%af%e8%bf%94%e5%9b%9e%e6%95%b0%e6%8d%ae%e4%b8%ba%e7%a9%ba%e7%9a%84%e5%a4%84%e7%90%86"
 ---
 Yii1.x DAO中的queryAll方法查询，如果有结果，会返回一个数组，如果没有结果，会返回null。现在分两种情况：
 ## 返回空数组

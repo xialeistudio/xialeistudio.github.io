@@ -7,14 +7,6 @@ published: true
 status: publish
 categories:
 - frontend
-tags:
-- baidu map
-- overlay
-meta:
-  _edit_last: '1'
-  _thumbnail_id: '355'
-  views: '1433'
-  _wp_old_slug: "%e7%99%be%e5%ba%a6%e5%9c%b0%e5%9b%be%e6%b7%bb%e5%8a%a0%e8%87%aa%e5%ae%9a%e4%b9%89%e6%a0%87%e6%b3%a8"
 ---
 百度地图的默认标注是一个 红色 的地标，如果要做互动性强的地图应用，几乎没提供什么额外信息，本文教大家怎么添加自定义标注，如添加头像。
 ## JS代码

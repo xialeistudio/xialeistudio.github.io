@@ -6,17 +6,8 @@ type: post
 published: true
 status: publish
 categories:
+- frontend
 - angularjs
-tags:
-- angularjs
-- directive
-- ueditor
-- rich text editor
-meta:
-  _edit_last: '1'
-  _thumbnail_id: '374'
-  views: '7336'
-  _wp_old_slug: angularjs%e5%88%a9%e7%94%a8%e6%8c%87%e4%bb%a4%e8%b0%83%e7%94%a8ueditor-2
 ---
 一直以来，angularjs的富文本编辑器都比较难做，主要是第三方的编辑器很难集成进来，今天花时间研究了一下，发现ueditor主要加载两个js文件
 + ueditor.config.js

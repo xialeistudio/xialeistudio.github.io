@@ -1,10 +1,11 @@
 ---
 title: 从零开始打造自己的直播服务器-Nginx安装
 date: 2017-11-23 14:54:08
+categories:
+- backend
+- nginx
 tags:
 - rtmp
-- nginx
-- 直播
 ---
 直播行业火了很长一段时间了，抛开那些复杂的实现，本系列将从零开始实现一个直播服务器。
 

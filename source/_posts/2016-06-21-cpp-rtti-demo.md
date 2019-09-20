@@ -6,16 +6,10 @@ type: post
 published: true
 status: publish
 categories:
+- backend
 - cpp
-tags:
-- rtti
-- cpp
-- dynamic_cast
-meta:
-  _edit_last: '1'
-  views: '430'
-  _wp_old_slug: c-rtti-%e7%a4%ba%e4%be%8b
 ---
+
 ```cpp
 #include <iostream>
 #include <stdlib.h>

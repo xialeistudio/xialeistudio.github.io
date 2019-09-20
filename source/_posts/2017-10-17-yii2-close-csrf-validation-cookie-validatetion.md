@@ -1,9 +1,11 @@
 ---
 title: yii2关闭csrf校验和cookie校验
 date: 2017-10-17 17:19:19
+categories:
+- backend
+- php
 tags:
-- csrf
-- yii2
+- yii
 ---
 # 重要提示
 ```

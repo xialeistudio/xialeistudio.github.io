@@ -6,14 +6,8 @@ type: post
 published: true
 status: publish
 categories:
-- bash
-tags:
+- backend
 - linux
-- nodejs
-- bash
-meta:
-  _edit_last: '1'
-  views: '492'
 ---
 ## 脚本定义
 

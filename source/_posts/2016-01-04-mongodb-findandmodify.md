@@ -6,14 +6,8 @@ type: post
 published: true
 status: publish
 categories:
+- backend
 - mongodb
-tags:
-- mongodb
-meta:
-  _edit_last: '1'
-  _oembed_0a6dfab2c56982654ea962ac530bfd83: "{{unknown}}"
-  _thumbnail_id: '617'
-  views: '1895'
 ---
 ## 文档内容
 

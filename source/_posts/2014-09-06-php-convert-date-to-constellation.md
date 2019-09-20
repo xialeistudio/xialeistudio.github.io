@@ -6,13 +6,8 @@ type: post
 published: true
 status: publish
 categories:
+- backend
 - php
-tags:
-- constellation
-meta:
-  _edit_last: '1'
-  views: '2425'
-  _wp_old_slug: php%e5%b0%86%e6%97%a5%e6%9c%9f%e8%bd%ac%e6%8d%a2%e4%b8%ba%e6%98%9f%e5%ba%a7
 ---
 这几日在做的一个项目发现一个很有意思的东西，就是PHP将指定日期输出为星座
 

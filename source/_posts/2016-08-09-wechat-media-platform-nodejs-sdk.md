@@ -6,15 +6,8 @@ type: post
 published: true
 status: publish
 categories:
-- open-source-projects
-tags:
+- backend
 - nodejs
-- wechat
-- 微信公众平台
-- wechat-platform
-meta:
-  _edit_last: '1'
-  views: '507'
 ---
 *本SDK要求NodeJs >= 4.x，欢迎大家在issues提问。*
 

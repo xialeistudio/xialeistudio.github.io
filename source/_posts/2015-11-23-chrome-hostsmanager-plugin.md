@@ -6,15 +6,8 @@ type: post
 published: true
 status: publish
 categories:
-- open-source-projects
-tags:
+- frontend
 - angularjs
-- chrome plugin
-meta:
-  _edit_last: '1'
-  _oembed_b7d43d03d13aa2c6013e966d799f5a7d: "{{unknown}}"
-  _thumbnail_id: '175'
-  views: '465'
 ---
 ## 项目地址
 [https://github.com/xialeistudio/hostManager](https://github.com/xialeistudio/hostManager)

@@ -6,14 +6,8 @@ type: post
 published: true
 status: publish
 categories:
+- backend
 - nodejs
-tags:
-- node-sass
-- mirror
-meta:
-  _edit_last: '1'
-  _wp_old_slug: nodejs%e4%bd%bf%e7%94%a8%e9%95%9c%e5%83%8f%e5%ae%89%e8%a3%85node-sass
-  views: '1536'
 ---
 ## 安装
 npm安装node-sass模块的时候，会卡在 node scripts/install.js这里，因为要去github.com上下载源码，众所周知的原因，国内的网络上github.com速度太不稳定了，所以安装很慢。

@@ -6,16 +6,9 @@ type: post
 published: true
 status: publish
 categories:
-- javascript
-tags:
-- grunt
-- workflow
-meta:
-  _edit_last: '1'
-  views: '1220'
-  _thumbnail_id: '196'
-  _wp_old_slug: grunt%e5%bf%ab%e9%80%9f%e4%b8%8a%e6%89%8b
+- frontend
 ---
+
 ## 为什么要使用Grunt?
 一句话：自动化。对于需要反复重复的任务，例如压缩（minification）、编译、单元测试、linting等，自动化工具可以减轻你的劳动，简化你的工作。当你正确配置好了任务，任务运行器就会自动帮你或你的小组完成大部分无聊的工作。
 ## 怎么使用Grunt?

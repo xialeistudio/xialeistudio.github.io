@@ -6,14 +6,8 @@ type: post
 published: true
 status: publish
 categories:
+- frontend
 - angularjs
-tags:
-- ng-resource
-- restful
-meta:
-  _edit_last: '1'
-  views: '8575'
-  _wp_old_slug: ngresource%e5%bf%ab%e9%80%9f%e4%b8%8a%e6%89%8b
 ---
 废话不多说，本文的目的就是看过之后就会使用ngResource了。
 1. 引入angular-resource.min.js

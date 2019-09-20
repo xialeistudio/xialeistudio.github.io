@@ -1,12 +1,13 @@
 ---
 title: 在Swoole环境下运行注入Yii2框架的thrift应用
 date: 2019-05-19 16:10:47
+categories:
+- backend
+- php
 tags:
 - swoole
 - thrift
-- php
-categories:
-- php
+- yii
 ---
 
 前两天发布了[使用swoole来运行thrift应用](/2019/05/16/running-thrift-on-swoole.html)，项目虽然可以运行起来，但是周边的生态（如缓存，ORM，日志等等）并没有跟上，实际上开发体验比较差。周末研究了一下，把Yii2框架集成到了thrift应用上。

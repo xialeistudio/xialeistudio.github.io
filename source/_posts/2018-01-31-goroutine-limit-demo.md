@@ -1,8 +1,9 @@
 ---
 title: golang限制协程数量
 date: 2018-01-31 22:23:09
-tags:
-- golang
+categories:
+- backend
+- go
 ---
 
 ## 为什么要限制协程数量

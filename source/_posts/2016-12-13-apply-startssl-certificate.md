@@ -2,10 +2,10 @@
 layout: post
 title: 免费SSL证书申请
 categories: 
-- linux
-tags:
+- backend
 - nginx
-- ssl
+tags:
+- openssl
 ---
 收费SSL证书对于个人来说还是略贵，本文将交大家申请免费的SSL证书。
 ## 打开申请网站

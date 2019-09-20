@@ -6,13 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- javascript
-tags:
-- jquery plugin
-meta:
-  _edit_last: '1'
-  views: '1533'
-  _wp_old_slug: jquery%e6%8f%92%e4%bb%b6%e5%86%99%e6%b3%95
+- frontend
 ---
 ## 项目地址
 [http://xialeistudio.github.io/search/](http://xialeistudio.github.io/search/)

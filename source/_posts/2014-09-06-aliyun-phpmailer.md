@@ -6,10 +6,10 @@ type: post
 published: true
 status: publish
 categories:
+- backend
 - php
 tags:
-- phpmailer
-- aliyun
+- openssl
 ---
 phpmailer之前一直在用，一般都是采用smtp登录服务器的方式进行发信，今天在本地windows主机测试也能发信成功，但是到线上去就不行了，提示“连接smtp服务器失败”。
 首先可以排除的是代码方面的错误，那么剩下就知道服务器的问题了。

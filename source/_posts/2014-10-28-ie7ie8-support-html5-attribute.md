@@ -7,15 +7,7 @@ published: true
 status: publish
 categories:
 - frontend
-tags:
 - html5
-- ie7
-- ie8
-meta:
-  _edit_last: '1'
-  _thumbnail_id: '184'
-  views: '1691'
-  _wp_old_slug: "%e8%ae%a9ie7ie8%e6%94%af%e6%8c%81html5%e5%b1%9e%e6%80%a7"
 ---
 HTML5确实很好用，但是国内IE7和IE8的用户还是挺多的（或许是XP的缘故）。这些浏览器不识别HTML5的新属性以及<!doctype html>，导致页面渲染进入“怪异”模式，简直就是“不堪入目”。   
 不过，还好，开源的力量是强大的，有热心的开发者写了一套JS库来兼容IE7,IE8。本文就简单教大家用下这款JS库。

@@ -6,14 +6,8 @@ type: post
 published: true
 status: publish
 categories:
+- frontend
 - css
-tags:
-- css3
-- loading
-meta:
-  _edit_last: '1'
-  views: '1772'
-  _wp_old_slug: css3%e6%89%93%e9%80%a0%e7%82%ab%e9%85%b7loading
 ---
 css3的优点就不多说了，一个很重要的，节约了带宽，以往需要使用图片的地方很多时候都可以使用CSS3来实现。 本文将带来一个利用CSS3制作loading的教程，这里直接上代码了。
 
@@ -127,5 +121,5 @@ body {
 + css3 keyframes
 + css position
 + css border
- 
+
 基本就以上问题，代码可以直接新建一个页面，复制打开即可运行

@@ -6,16 +6,19 @@ type: post
 published: true
 status: publish
 categories:
+- backend
 - linux
-tags:
-- shell
-- netstat
-meta:
-  _edit_last: '1'
-  views: '3127'
-  _thumbnail_id: '174'
-  _wp_old_slug: linux%e6%a3%80%e6%9f%a5%e5%93%aa%e4%b8%aa%e7%ab%af%e5%8f%a3%e8%a2%ab%e5%8d%a0%e7%94%a8%ef%bc%8c%e5%b9%b6%e6%9d%80%e6%ad%bb%e8%af%a5%e8%bf%9b%e7%a8%8b
 ---
+
+Linux启动服务时如果遇到端口占用问题时，一般有以下两种解决方案：
+
+1. 新启动的服务更改端口号启动
+2. 杀掉老的进程
+
+## Linux检查端口占用命令
+
 ```bash
-netstat -lnp | grep 80
+    netstat -lnp | grep 80
 ```
+
+80为端口号，查找到占用端口的进程ID后用kill杀掉即可。

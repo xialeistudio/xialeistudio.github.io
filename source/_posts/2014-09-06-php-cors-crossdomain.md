@@ -6,14 +6,8 @@ type: post
 published: true
 status: publish
 categories:
+- backend
 - php
-tags:
-- cors
-- crossdomain
-meta:
-  _edit_last: '1'
-  views: '5893'
-  _wp_old_slug: angularjs%e5%88%a9%e7%94%a8cors%e5%ae%9e%e7%8e%b0%e8%b7%a8%e5%9f%9fpost%e8%af%b7%e6%b1%82
 ---
 js跨域的解决方法，一百度一大堆，不过都是jsonp为主，这种解决方法只适用于GET请求。POST跨域的话需要在HTTP协议上下功夫。
 ## 基础知识

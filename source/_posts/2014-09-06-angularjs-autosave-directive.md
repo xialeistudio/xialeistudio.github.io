@@ -6,14 +6,8 @@ type: post
 published: true
 status: publish
 categories:
+- frontend
 - angularjs
-tags:
-- auto save
-- timer
-meta:
-  _edit_last: '1'
-  views: '1622'
-  _wp_old_slug: angularjs%e5%88%a9%e7%94%a8%e6%8c%87%e4%bb%a4%e5%ae%9e%e7%8e%b0%e7%bc%96%e8%be%91%e8%87%aa%e5%8a%a8%e4%bf%9d%e5%ad%98
 ---
 angularjs的指令真是好东西，也是精髓。刚才群里面有朋友在问如何在用户离开编辑区域时提醒保存，其实用指令实现很简单的。
 

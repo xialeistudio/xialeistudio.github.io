@@ -6,16 +6,8 @@ type: post
 published: true
 status: publish
 categories:
+- backend
 - php
-tags:
-- php
-- qrcode
-- login
-meta:
-  _edit_last: '1'
-  views: '2898'
-  _thumbnail_id: '494'
-  _wp_old_slug: php%e5%ae%9e%e7%8e%b0%e6%89%8b%e6%9c%ba%e5%be%ae%e4%bf%a1%e6%89%ab%e6%8f%8f%e4%ba%8c%e7%bb%b4%e7%a0%81%e7%99%bb%e5%bd%95%e7%bd%91%e7%ab%99
 ---
 扫描二维码登录对于现在的web应用来说，确实是个很炫酷的功能，安全性也可以保障，不少朋友可能觉得这是个很复杂的工作，其实不然，真正说来只有几个步骤而已。
 ## 原理

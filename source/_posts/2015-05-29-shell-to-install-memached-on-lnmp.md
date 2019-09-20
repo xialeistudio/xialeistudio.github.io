@@ -6,17 +6,8 @@ type: post
 published: true
 status: publish
 categories:
+- backend
 - linux
-tags:
-- lnmp
-- memcached
-- php
-- shell
-meta:
-  _edit_last: '1'
-  views: '1157'
-  _thumbnail_id: '494'
-  _wp_old_slug: php%e9%80%9a%e8%bf%87ssh%e7%bc%96%e8%af%91%e5%ae%89%e8%a3%85php-memcached%e6%89%a9%e5%b1%95
 ---
 通过LNMP安装脚本安装的PHP环境默认是不带Memcached支持的（是memcached不是memcache），百度一下memcached的安装方法，发现基本都是memcache的，其实这是两个不同的东西。
 

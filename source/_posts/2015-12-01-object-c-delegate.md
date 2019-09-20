@@ -7,15 +7,9 @@ published: true
 status: publish
 categories:
 - ios
-tags:
-- delegate
-- object-c
-meta:
-  _edit_last: '1'
-  _thumbnail_id: '590'
-  views: '810'
 ---
 ## 定义
+
 + delegate是一种设计模式，不是object-c特有
 + object-c通过protocol实现delegat
 

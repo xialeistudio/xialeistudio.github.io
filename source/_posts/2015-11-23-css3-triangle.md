@@ -6,15 +6,8 @@ type: post
 published: true
 status: publish
 categories:
-- css
-tags:
-- css3
-- 三角形
 - frontend
-meta:
-  _edit_last: '1'
-  _thumbnail_id: '296'
-  views: '648'
+- css
 ---
 
 ```css

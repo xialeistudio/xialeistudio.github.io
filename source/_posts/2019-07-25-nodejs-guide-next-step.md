@@ -2,10 +2,8 @@
 title: NodeJs简明教程(11) - 完结篇
 date: 2019-07-25 11:26:30
 categories:
+- backend
 - nodejs
-tags:
-- javascript
-- nodejs guide
 ---
 
 > NodeJs简明教程将从零开始学习NodeJs相关知识，助力JS开发者构建全栈开发技术栈！

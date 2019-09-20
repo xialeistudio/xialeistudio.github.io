@@ -6,15 +6,8 @@ type: post
 published: true
 status: publish
 categories:
-- mamp
-tags:
-- mac
-- mongo
+- backend
 - php
-meta:
-  _edit_last: '1'
-  _thumbnail_id: '617'
-  views: '1758'
 ---
 ## pecl的安装
 本文采用的是 pecl 的方式安装。   

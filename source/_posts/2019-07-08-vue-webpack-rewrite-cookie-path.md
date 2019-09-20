@@ -1,12 +1,11 @@
 ---
 title: vue webpack重写cookie路径
 date: 2019-07-08 17:24:05
-tags:
-- vue
-- webpack
-- javascript
 categories:
 - frontend
+- vue
+tags:
+- webpack
 ---
 
 webpack提供的反向代理服务器在开发阶段非常方便，几行简单的代码配置就可以使用反向代理功能，包括路径重写、cookie处理等。

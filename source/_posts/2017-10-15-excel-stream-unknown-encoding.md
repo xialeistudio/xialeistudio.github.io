@@ -1,7 +1,9 @@
 ---
 title: excel-stream Unknown Encoding错误问题
 date: 2017-10-15 21:28:45
-tags:
+categories:
+- backend
+- nodejs
 ---
 项目上线有半年多了，一直没有出过问题，但是前几天升级过一次NodeJs到8.x的时候就出现过这个问题了。因为采用了消息队列，但是一到这里就挂，导致进程重复启动几百次。
 

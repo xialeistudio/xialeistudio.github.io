@@ -6,14 +6,8 @@ type: post
 published: true
 status: publish
 categories:
+- frontend
 - angularjs
-tags:
-- form
-meta:
-  _edit_last: '1'
-  views: '7280'
-  _thumbnail_id: '175'
-  _wp_old_slug: angularjs%e5%ae%9e%e7%8e%b0%e5%8a%a8%e6%80%81%e6%b7%bb%e5%8a%a0%e8%a1%a8%e5%8d%95%ef%bc%8c%e5%88%a0%e9%99%a4%e8%a1%a8%e5%8d%95
 ---
 后台业务系统中有很多CURD操作，一个很简单的例子是OA系统中为员工添加帐号信息，传统的做法是添加完一个就跳转并提示“成功”,后来高级一点的做法是利用jquery来做。
 

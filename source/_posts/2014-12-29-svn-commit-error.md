@@ -6,14 +6,9 @@ type: post
 published: true
 status: publish
 categories:
-- linux
+- devtools
 tags:
-- subversion
-meta:
-  _edit_last: '1'
-  _thumbnail_id: '332'
-  views: '2130'
-  _wp_old_slug: svn%e5%91%bd%e4%bb%a4%e8%a1%8c%e6%8f%90%e4%ba%a4-this-line-and-those-below-will-be-ignored-%e7%9a%84%e8%a7%a3%e5%86%b3
+- svn
 ---
 今天phpstorm突然抽风，导致svn不能用，无奈只好用svn命令来提交。
 

@@ -6,13 +6,8 @@ type: post
 published: true
 status: publish
 categories:
+- backend
 - nginx
-tags:
-- virtual hosts
-meta:
-  _edit_last: '1'
-  views: '1278'
-  _wp_old_slug: nginx%e8%99%9a%e6%8b%9f%e4%b8%bb%e6%9c%ba%e9%85%8d%e7%bd%ae
 ---
 
 最近服务器上用的环境是lnmp，之前一直在用apache，配置虚拟主机也是很方便的。今天查资料发现Nginx的虚拟主机配置更加简单。

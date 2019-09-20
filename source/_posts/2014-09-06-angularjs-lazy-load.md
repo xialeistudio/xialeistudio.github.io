@@ -6,13 +6,8 @@ type: post
 published: true
 status: publish
 categories:
+- frontend
 - angularjs
-tags:
-- angularjs
-meta:
-  _edit_last: '1'
-  views: '21729'
-  _wp_old_slug: "%e6%91%86%e8%84%b1jqueryangularjs%e5%88%a9%e7%94%a8%e6%8c%87%e4%bb%a4%e7%ae%80%e5%8d%95%e5%ae%9e%e7%8e%b0%e6%bb%9a%e5%8a%a8%e7%bf%bb%e9%a1%b5"
 ---
 移动开发一个很重要的问题是翻页操作，而现在的主流都是滚动翻页，以往都是用jquery的插件进行实现。用了angularjs之后，要逐步减轻对jquery的依赖。   
 

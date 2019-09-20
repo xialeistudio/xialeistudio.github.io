@@ -6,14 +6,8 @@ type: post
 published: true
 status: publish
 categories:
+- frontend
 - javascript
-tags:
-- javascript
-meta:
-  _edit_last: '1'
-  views: '842'
-  _thumbnail_id: '497'
-  _wp_old_slug: js%e5%87%bd%e6%95%b0%e4%b8%8d%e5%90%8c%e8%b0%83%e7%94%a8%e6%a8%a1%e5%bc%8f%e4%b8%8b%ef%bc%8cthis%e7%9a%84%e6%8c%87%e5%90%91%e9%97%ae%e9%a2%98
 ---
 先来看一段代码
 

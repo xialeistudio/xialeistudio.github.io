@@ -2,9 +2,10 @@
 title: Yii2框架MemCache在腾讯云部署时不过期问题
 layout: post
 category:
+- backend
 - php
 tags:
-- yii2
+- yii
 ---
 之前部署在阿里云时一直memcache没有问题，部署到腾讯云发现缓存永不过期。查看yii2的MemCache类源码后，发现在设置缓存时，Yii2添加了`$expire = $duration > 0 ? $duration + time() :0;`这样的代码，会导致强制使用时间戳来标记过期时间，而阿里云是过期时间和时间戳都支持的，腾讯云只支持前者。
 ## 解决方案

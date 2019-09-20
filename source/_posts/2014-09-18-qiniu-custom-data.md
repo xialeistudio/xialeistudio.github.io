@@ -6,13 +6,8 @@ type: post
 published: true
 status: publish
 categories:
+- backend
 - php
-tags:
-- qiniu
-meta:
-  _edit_last: '1'
-  views: '1245'
-  _wp_old_slug: "%e4%b8%83%e7%89%9b%e4%ba%91%e5%ad%98%e5%82%a8%e5%ae%9a%e4%b9%89%e8%87%aa%e5%ae%9a%e4%b9%89%e5%8f%98%e9%87%8f%e8%bf%94%e5%9b%9e%e6%95%b0%e6%8d%ae"
 ---
 ## 背景
 七牛云存储也使用了这么久了。一直一来都只用了它的图片上传和处理功能。用的是客户端直传API，七牛给我返回一个key（一串随机的hash值，对人类无可读性）。

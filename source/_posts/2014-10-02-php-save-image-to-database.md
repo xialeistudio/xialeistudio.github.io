@@ -6,15 +6,8 @@ type: post
 published: true
 status: publish
 categories:
+- backend
 - php
-tags:
-- mysql
-- binary
-- image
-meta:
-  _edit_last: '1'
-  views: '2923'
-  _wp_old_slug: php%e6%8a%8a%e5%9b%be%e7%89%87%e5%ad%98%e5%85%a5%e6%95%b0%e6%8d%ae%e5%ba%93%ef%bc%88%e9%9d%9e%e8%b7%af%e5%be%84%ef%bc%89
 ---
 大部分人的图片上传都是保存一个路径到数据库，这样在插入时确实快，也符合web的特点，但是在删除时就很麻烦，需要找到文件并删除，该代码能够把代码直接存入数据库，删除时一并删除。   
 请注意：这样的话数据库大小会激增，请酌情使用,且RDBMS对于二进制数据的处理并不是很理想。

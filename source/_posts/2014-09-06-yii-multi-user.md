@@ -6,14 +6,10 @@ type: post
 published: true
 status: publish
 categories:
+- backend
 - php
 tags:
 - yii
-- multi user
-meta:
-  _edit_last: '1'
-  views: '1446'
-  _wp_old_slug: yii%e5%90%8c%e4%b8%80%e7%ab%99%e7%82%b9%e9%85%8d%e7%bd%ae%e5%a4%9a%e4%b8%aa%e7%94%a8%e6%88%b7%e8%a7%92%e8%89%b2
 ---
 Yii是基于组件的PHP MVC框架，yii的用户组件调用很方便，但是如果有遇到一个站点有多种用户的时候，如前台用户，后台用户，就需要增加User组件了。
 

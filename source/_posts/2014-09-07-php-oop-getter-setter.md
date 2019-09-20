@@ -6,15 +6,8 @@ type: post
 published: true
 status: publish
 categories:
+- backend
 - php
-tags:
-- getter
-- oop
-- setter
-meta:
-  _edit_last: '1'
-  views: '2381'
-  _wp_old_slug: oop%e4%b8%ad%e7%9a%84__get%e5%92%8c__set%e6%96%b9%e6%b3%95
 ---
 __get,__set光看前面两个下划线就知道是魔术方法了，而且还是PHP OOP中比较重要的方法。
 

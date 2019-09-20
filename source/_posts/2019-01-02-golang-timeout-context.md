@@ -2,10 +2,10 @@
 title: 一起学context（二）——超时控制
 date: 2019-01-02 17:54:59
 categories:
-- golang
+- backend
+- go
 tags:
-- golang
-- goroutine
+- context
 ---
 
 上一篇文章讲到如何使用context来传值，实际上context还有另外一个重要功能——goroutine的超时控制。

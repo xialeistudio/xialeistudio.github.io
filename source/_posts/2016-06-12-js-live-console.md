@@ -7,13 +7,7 @@ published: true
 status: publish
 categories:
 - frontend
-tags:
-- console
-- socket
-meta:
-  _edit_last: '1'
-  _oembed_6d8dfccb54806dfc8675d14e7bdb136d: "{{unknown}}"
-  views: '705'
+- javascript
 ---
 在进行微信开发的时候，由于JS SDK提供的api需要在真机调试，而手机端的console方法虽然存在，但是调用结果却看不到。所以笔者使用socket.io重写了一个在线版本的调试工具。
 

@@ -6,14 +6,8 @@ type: post
 published: true
 status: publish
 categories:
+- frontend
 - angularjs
-tags:
-- ng-model
-- directive
-meta:
-  _edit_last: '1'
-  views: '1736'
-  _thumbnail_id: '175'
 ---
 假设有一个指令用来根据IP地址进行地位，获取实际地址。
 

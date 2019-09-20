@@ -1,11 +1,11 @@
 ---
 title: druid SQL监控不显示问题
 date: 2019-07-08 17:13:40
-tags:
-- spring boot
-- druid
 categories:
+- backend
 - java
+tags:
+- spring-boot
 ---
 
 新版druid数据源驱动的SQL监控如果用以前的老版本配置是无法监控到SQL的：

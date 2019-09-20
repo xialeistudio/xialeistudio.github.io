@@ -6,17 +6,9 @@ type: post
 published: true
 status: publish
 categories:
+- frontend
 - angularjs
-tags:
-- Concept to explain
-- get-started
-meta:
-  _edit_last: '1'
-  views: '1367'
-  _thumbnail_id: '175'
-  _wp_old_slug: angularjs%e6%a6%82%e5%bf%b5%e8%a7%a3%e9%87%8a%ef%bc%88%e4%b8%8d%e5%ae%9a%e6%9c%9f%e6%9b%b4%e6%96%b0%ef%bc%89
 ---
-+ 本文将根据项目进度不定期更新   
 + 本文所有内容仅代表个人观点
 
 ## ng

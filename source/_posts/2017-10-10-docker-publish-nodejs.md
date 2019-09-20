@@ -2,6 +2,7 @@
 title: 使用Docker来部署NodeJs应用
 layout: post
 categories:
+- backend
 - docker
 ---
 

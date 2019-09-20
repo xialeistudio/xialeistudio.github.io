@@ -6,15 +6,8 @@ type: post
 published: true
 status: publish
 categories:
+- backend
 - nginx
-tags:
-- https
-- ssl
-meta:
-  _edit_last: '1'
-  views: '2169'
-  _thumbnail_id: '176'
-  _wp_old_slug: "%e4%b8%ba%e4%bd%a0%e7%9a%84nginx%e6%9c%8d%e5%8a%a1%e5%99%a8%e5%90%af%e7%94%a8ssl%e8%af%81%e4%b9%a6"
 ---
 ## HTTP和HTTPS的区别
 1. https协议需要到ca申请证书，一般免费证书很少，需要交费。 　

@@ -2,10 +2,10 @@
 title: ReactNative在NavigatorIOS中隐藏TabBar
 layout: post
 categories:
-- react-native
+- frontend
+- react
 tag:
-- navigatorIOS
-- navigation
+- react-native
 ---
 ReactNative常用的一种布局是TabBar+Navigator布局，底部几个固定的标签，顶部有个导航栏，如果进入子页面的话，底部TabBar是需要隐藏起来的。
 

@@ -6,14 +6,10 @@ type: post
 published: true
 status: publish
 categories:
+- backend
 - php
 tags:
 - openssl
-- php
-meta:
-  _edit_last: '1'
-  _wp_old_slug: php%e5%88%a9%e7%94%a8openssl%e5%ae%9e%e7%8e%b0rsa%e9%9d%9e%e5%af%b9%e7%a7%b0%e5%8a%a0%e5%af%86%e7%ad%be%e5%90%8d
-  views: '151'
 ---
 **阅读本文前请确认启用了php_openssl扩展**
 ### 生成密钥

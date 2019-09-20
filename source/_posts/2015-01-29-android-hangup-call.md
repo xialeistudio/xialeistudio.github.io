@@ -7,14 +7,6 @@ published: true
 status: publish
 categories:
 - android
-tags:
-- android
-- hangup call
-meta:
-  _edit_last: '1'
-  views: '2316'
-  _wp_old_slug: android-han-gup
-  _thumbnail_id: '241'
 ---
 最近在写一个用来发短信的机器人（android),当然需要屏蔽所有来电了。多的话不说了，直接看步骤。（IDE为android studio）：
 1.在 src/main下新建 aidl 目录。

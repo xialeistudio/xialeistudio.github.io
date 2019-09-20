@@ -2,9 +2,10 @@
 title: 使用pm2来保证Spring Boot应用稳定运行
 layout: post
 categories:
-- spring boot
+- backend
+- java
 tags:
-- pm2
+- spring-boot
 ---
 Spring Boot开发web应用就像开发普通的java程序一般简洁，因为其内嵌了web容易，启动的时候只需要一条命令`java -jar server.jar`即可，非常方便。
 但是由此而来的问题是万一应用挂了怎么办？

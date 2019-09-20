@@ -7,14 +7,6 @@ published: true
 status: publish
 categories:
 - frontend
-tags:
-- gulp
-- workflow
-meta:
-  _edit_last: '1'
-  views: '1888'
-  _thumbnail_id: '512'
-  _wp_old_slug: "%e4%bd%bf%e7%94%a8gulp%e6%9d%a5%e6%9e%84%e5%bb%ba%e4%bd%a0%e7%9a%84%e5%89%8d%e7%ab%af%e8%87%aa%e5%8a%a8%e5%8c%96%e5%b7%a5%e4%bd%9c%e6%b5%81"
 ---
 之前用的Grunt，不过有时候Grunt确实用起来不爽，进来找到一款叫gulp.js的前端构建工具，当然，也是基于node.js的。
 ## 安装

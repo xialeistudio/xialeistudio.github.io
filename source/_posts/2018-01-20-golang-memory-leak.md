@@ -3,10 +3,8 @@ layout: post
 title: golang可能导致内存泄漏的地方
 date: 2018-01-20 13:44:15
 categories:
-- golang
-tags:
-- golang
-- memory-leak
+- backend
+- go
 ---
 
 ## 核心

@@ -6,14 +6,8 @@ type: post
 published: true
 status: publish
 categories:
+- backend
 - php
-tags:
-- auto updator
-meta:
-  _edit_last: '1'
-  views: '2431'
-  _wp_old_slug: php%e5%ae%9e%e7%8e%b0%e8%87%aa%e5%8a%a8%e6%9b%b4%e6%96%b0
-  _thumbnail_id: '185'
 ---
 目前软件开发主流越来越倾向于B/S模式，不同于C/S模式的软件，B/S模式下的WEB程序自动更新是个麻烦问题。
 

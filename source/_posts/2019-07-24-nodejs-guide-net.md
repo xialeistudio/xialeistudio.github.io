@@ -2,10 +2,8 @@
 title: NodeJs简明教程(9)
 date: 2019-07-24 10:23:56
 categories:
+- backend
 - nodejs
-tags:
-- javascript
-- nodejs guide
 ---
 
 > NodeJs简明教程将从零开始学习NodeJs相关知识，助力JS开发者构建全栈开发技术栈！

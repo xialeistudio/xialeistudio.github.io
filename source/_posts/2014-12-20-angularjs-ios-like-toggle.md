@@ -6,16 +6,8 @@ type: post
 published: true
 status: publish
 categories:
+- frontend
 - angularjs
-tags:
-- css3
-- ios
-- toggle
-meta:
-  _edit_last: '1'
-  _thumbnail_id: '296'
-  views: '2806'
-  _wp_old_slug: angularjs%e5%88%b6%e4%bd%9cios%e9%a3%8e%e6%a0%bc%e7%9a%84toggle
 ---
 ## 效果图
 ![效果图](https://og5r5kasb.qnssl.com/wp-content/uploads/2014/12/53441419037830.png)

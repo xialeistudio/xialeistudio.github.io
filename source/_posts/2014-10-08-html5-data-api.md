@@ -7,14 +7,7 @@ published: true
 status: publish
 categories:
 - frontend
-tags:
-- data-api
 - html5
-meta:
-  _edit_last: '1'
-  views: '7462'
-  _thumbnail_id: '179'
-  _wp_old_slug: html5%e6%96%b0%e5%b1%9e%e6%80%a7data-api%e7%ae%80%e5%8d%95%e4%bd%bf%e7%94%a8
 ---
 以往在做列表程序的时候，需要做类似“删除”功能的时候，往往是组装一个URL，类似于这个
 

@@ -2,9 +2,8 @@
 layout: post
 title: nginx反向代理websocket
 categories:
+- backend
 - nginx
-tags:
-- websocket
 ---
 websocket协议基于http协议升级而来，所以nginx可以直接反向代理websocket，只需要加上必要的header即可。
 

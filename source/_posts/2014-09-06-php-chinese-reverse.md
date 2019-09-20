@@ -6,13 +6,8 @@ type: post
 published: true
 status: publish
 categories:
+- backend
 - php
-tags:
-- reverse words
-meta:
-  _edit_last: '1'
-  views: '1248'
-  _wp_old_slug: php%e4%b8%ad%e6%96%87%e5%ad%97%e7%ac%a6%e4%b8%b2%e5%8f%8d%e8%bd%ac
 ---
 
 php **strrev()** 函数能实现字符串反转，但是不支持中文，利用mb_系列函数可以进行中文字符串反转。

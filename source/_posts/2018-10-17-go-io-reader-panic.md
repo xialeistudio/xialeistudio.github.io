@@ -2,10 +2,8 @@
 title: io.Reader游标引发的血案
 date: 2018-10-17 21:32:03
 categories:
-- golang
-tags:
-- golang
-- io.Reader
+- backend
+- go
 ---
 
 #背景

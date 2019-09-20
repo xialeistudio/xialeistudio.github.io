@@ -7,12 +7,6 @@ published: true
 status: publish
 categories:
 - ios
-tags:
-- ios
-meta:
-  _edit_last: '1'
-  views: '2070'
-  _thumbnail_id: '614'
 ---
 
 ## 效果图

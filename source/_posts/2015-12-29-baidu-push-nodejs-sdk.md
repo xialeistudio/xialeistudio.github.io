@@ -6,14 +6,8 @@ type: post
 published: true
 status: publish
 categories:
-- open-source-projects
-tags:
+- backend
 - nodejs
-- 百度云推送
-meta:
-  _edit_last: '1'
-  _thumbnail_id: '630'
-  views: '1087'
 ---
 ## 项目地址
 [bpush-nodejs](https://github.com/xialeistudio/bpush-nodejs)

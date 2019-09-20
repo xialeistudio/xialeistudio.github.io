@@ -6,15 +6,10 @@ type: post
 published: true
 status: publish
 categories:
+- backend
 - php
 tags:
 - mamp
-- php
-meta:
-  _edit_last: '1'
-  _oembed_bb704dfeb377fe9abf8e1c03ed0f1da3: "{{unknown}}"
-  _thumbnail_id: '494'
-  views: '1107'
 ---
 之前写过一篇在Mac下搭建PHP开发环境的文章，[Mac搭建PHP开发环境]({% post_url 2016-02-16-mac-php-env %})，但是此种方式搭建的PHP有弊端，由于默认不带PHP源码，所以在使用pecl安装扩展时会报错。
 

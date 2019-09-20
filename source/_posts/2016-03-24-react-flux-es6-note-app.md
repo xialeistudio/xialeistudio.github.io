@@ -6,16 +6,8 @@ type: post
 published: true
 status: publish
 categories:
+- frontend
 - react
-tags:
-- es6
-- flux
-- react
-- webpack
-meta:
-  _edit_last: '1'
-  _thumbnail_id: '644'
-  views: '3962'
 ---
 
 ## 项目地址

@@ -6,13 +6,10 @@ type: post
 published: true
 status: publish
 categories:
+- backend
 - php
 tags:
 - wordpress
-- imagick
-meta:
-  _edit_last: '1'
-  views: '734'
 ---
 4.5.1存在该漏洞，但是更新到4.5.2发现漏洞依旧存在。   
 临时修复方案如下：   

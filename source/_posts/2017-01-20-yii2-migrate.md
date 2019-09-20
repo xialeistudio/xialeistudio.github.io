@@ -2,10 +2,10 @@
 title: Yii2 migrate使用
 layout: post
 categories:
+- backend
 - php
 tags:
-- yii2
-- migrate
+- yii
 ---
 试想一个很简单的场景，在使用Yii2开发时，如果对已经有数据的数据表结构进行编辑的话，需要同步数据结构需要在本地导出一份SQL，放到线上去执行SQL，非常的不方便。
 而有了Yii2 migrate工具之后，这个问题简直不是问题。以下对常用的表结构操作进行演示。

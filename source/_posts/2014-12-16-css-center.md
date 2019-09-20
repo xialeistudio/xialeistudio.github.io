@@ -6,14 +6,8 @@ type: post
 published: true
 status: publish
 categories:
+- frontend
 - css
-tags:
-- center
-meta:
-  _edit_last: '1'
-  _thumbnail_id: '296'
-  views: '1662'
-  _wp_old_slug: css%e5%b1%85%e4%b8%ad%ef%bc%88%e6%b0%b4%e5%b9%b3%e5%92%8c%e5%9e%82%e7%9b%b4%ef%bc%89
 ---
 水平居中还是比较好弄的
 

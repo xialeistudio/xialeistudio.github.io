@@ -6,15 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- wordpress
-tags:
-- comment
-- qiniu
-meta:
-  _edit_last: '1'
-  views: '3563'
-  _thumbnail_id: '216'
-  _wp_old_slug: wordpress-d8-theme-qiniu
+- frontend
 ---
 上午有热心的网友给我反映说评论功能出bug了，初步查看是七牛出了问题，利用chrome的开发者工具可以查看请求。
 ![示意图](https://og5r5kasb.qnssl.com/wp-content/uploads/2014/11/blob3.png)   

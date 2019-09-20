@@ -6,13 +6,8 @@ type: post
 published: true
 status: publish
 categories:
+- backend
 - linux
-tags:
-- messy code
-meta:
-  _edit_last: '1'
-  views: '1284'
-  _wp_old_slug: linux%e5%88%a0%e9%99%a4%e6%96%87%e4%bb%b6%e5%90%8d%e4%b9%b1%e7%a0%81%e6%96%87%e4%bb%b6
 ---
 shell终端中有时候中文文件名会出现乱码，导致很多操作都不能进行，一个最简单的就是删除了。
 

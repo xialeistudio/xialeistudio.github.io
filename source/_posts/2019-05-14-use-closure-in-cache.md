@@ -2,10 +2,8 @@
 layout: posts
 title: 在缓存中使用闭包函数
 date: 2019-05-14 11:48:58
-tags:
-- php
-- closure
 categories:
+- backend
 - php
 ---
 

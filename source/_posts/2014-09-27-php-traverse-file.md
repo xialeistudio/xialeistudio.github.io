@@ -6,13 +6,8 @@ type: post
 published: true
 status: publish
 categories:
+- backend
 - php
-tags:
-- file
-meta:
-  _edit_last: '1'
-  views: '1527'
-  _wp_old_slug: php%e9%81%8d%e5%8e%86%e6%96%87%e4%bb%b6%e5%a4%b9
 ---
 遍历文件夹主要用到 opendir readdir closedir 三个函数，有两个要注意的地方
 

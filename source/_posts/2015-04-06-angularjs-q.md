@@ -6,16 +6,8 @@ type: post
 published: true
 status: publish
 categories:
+- frontend
 - angularjs
-tags:
-- $q
-- angularjs
-- promise
-meta:
-  _edit_last: '1'
-  views: '8585'
-  _thumbnail_id: '175'
-  _wp_old_slug: "%e5%9c%a8angularjs%e4%b8%ad%e4%bd%bf%e7%94%a8q%e8%bf%9b%e8%a1%8c%e5%90%8c%e6%ad%a5%e7%bc%96%e7%a8%8b"
 ---
 今天群里有位朋友问到直接返回$http说读不到数据，原因在于$http是异步请求，而且是“不可期”的，你不知道什么时候这个请求完成了。
 

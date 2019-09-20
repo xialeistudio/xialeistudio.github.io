@@ -6,15 +6,8 @@ type: post
 published: true
 status: publish
 categories:
+- backend
 - php
-tags:
-- curl
-- qiniu
-meta:
-  _edit_last: '1'
-  _thumbnail_id: '364'
-  views: '1447'
-  _wp_old_slug: "%e4%b8%83%e7%89%9b%e4%b8%8a%e4%bc%a0%e5%87%ba%e7%8e%b0-invalid-mutilpart-format%e7%9a%84%e8%a7%a3%e5%86%b3%e6%96%b9%e6%a1%88"
 ---
 今天用umeditor编辑文章上传图片的时候发现一直卡在"loading..."，打开控制台发现出现了500错误，进一步调试发现是七牛上传报错了。
 

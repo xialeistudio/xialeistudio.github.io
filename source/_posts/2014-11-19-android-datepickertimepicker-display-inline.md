@@ -7,14 +7,6 @@ published: true
 status: publish
 categories:
 - android
-tags:
-- datepicker
-- timepicker
-meta:
-  _edit_last: '1'
-  _thumbnail_id: '266'
-  views: '6254'
-  _wp_old_slug: android-datepicker%e5%92%8ctimepicker%e6%98%be%e7%a4%ba%e5%9c%a8%e4%b8%80%e8%a1%8c
 ---
 android默认的datepicker和默认的timepicker可以放在一行（Linelayout），但是timepicker右边会“挤出”屏幕，尝试设置layout_weight和layout_height对于布局有效，但是控件显示就不完整了。到这一步发现xml不局文件已经处理不了，所以自然想到应该利用java来处理了。
 

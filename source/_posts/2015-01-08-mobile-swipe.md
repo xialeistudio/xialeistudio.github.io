@@ -6,18 +6,16 @@ type: post
 published: true
 status: publish
 categories:
-- javascript
-tags:
-- mobile
-- swipe
-- touch
-meta:
-  _edit_last: '1'
-  _thumbnail_id: '179'
-  views: '3469'
-  _wp_old_slug: "%e7%a7%bb%e5%8a%a8%e7%ab%af%e5%88%a9%e7%94%a8touch%e4%ba%8b%e4%bb%b6%e5%ae%9e%e7%8e%b0%e5%b7%a6%e6%bb%91%e5%8f%b3%e6%bb%91"
+- frontend
 ---
+
+
+如果想在移动端判断用户的是否滑动以及滑动方向时，可以不使用第三方库，直接用touch事件处理即可，没必要增加不必要的代码，减轻移动端网络压力。
+
+
+
 ## 重点
+
 移动端的touch事件有三个: touchstart、touchmove、touchend 分别代表 触摸开始，触摸移动，触摸结束
 
 ```javascript

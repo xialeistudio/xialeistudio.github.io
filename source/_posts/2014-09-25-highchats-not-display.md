@@ -6,13 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- javascript
-tags:
-- highcharts
-meta:
-  _edit_last: '1'
-  views: '1329'
-  _wp_old_slug: highchats%e6%9b%b2%e7%ba%bf%e4%b8%8d%e6%98%be%e7%a4%ba%e9%97%ae%e9%a2%98
+- frontend
 ---
 highchats是什么就不介绍了。一个JS绘图工具库，基于JQ，使用简单方便，但是不注意的话会坑人。
 

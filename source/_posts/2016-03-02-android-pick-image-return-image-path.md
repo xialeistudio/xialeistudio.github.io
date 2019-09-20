@@ -7,13 +7,6 @@ published: true
 status: publish
 categories:
 - android
-tags:
-- android
-meta:
-  _edit_last: '1'
-  _thumbnail_id: '244'
-  _wp_old_slug: android-%e6%8b%8d%e7%85%a7%e5%92%8c%e7%9b%b8%e5%86%8c%e9%80%89%e6%8b%a9%e5%9b%be%e7%89%87
-  views: '668'
 ---
 android从选择图片有两种方法，但是返回值确不同，本文将指导大家如何统一这两种方式的返回值。
 

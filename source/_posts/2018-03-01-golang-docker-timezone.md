@@ -2,10 +2,8 @@
 title: Docker部署golang应用时时区问题
 date: 2018-03-01 11:49:24
 categories:
-- golang
-tags:
+- backend
 - docker
-- timezone
 ---
 
 目前golang用的基础镜像是`busybox`，由于golang交叉编译之后只有一个二进制文件，可以直接部署到容器中运行，容器镜像大小几乎等于二进制文件大小。

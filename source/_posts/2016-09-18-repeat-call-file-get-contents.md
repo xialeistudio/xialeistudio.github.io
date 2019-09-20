@@ -6,15 +6,8 @@ type: post
 published: true
 status: publish
 categories:
+- backend
 - php
-tags:
-- io
-- php
-- file__get_contents
-meta:
-  _edit_last: '1'
-  _wp_old_slug: file_get_contentsphpinput%e7%9a%84%e9%97%ae%e9%a2%98
-  views: '261'
 ---
 笔者在写Restful API的时候需要取得原始请求体，读了若干次输入流（将读取操作封装成了函数），发现就第一个参数有值，以后的读取都没有值。
 
