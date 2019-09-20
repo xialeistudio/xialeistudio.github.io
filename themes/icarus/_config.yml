@@ -234,4 +234,4 @@ providers:
 # 自动摘要
 auto_excerpt:
     enabled: true
-    lines: 2
+    lines: 3
