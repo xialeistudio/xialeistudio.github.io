@@ -6,11 +6,6 @@ categories:
 - nodejs
 ---
 
-> NodeJs简明教程将从零开始学习NodeJs相关知识，助力JS开发者构建全栈开发技术栈！
-
-关注获取更多`NodeJs精品文章`
-![二维码](https://more-happy.ddhigh.com/FuFpZh9QTZVatcBtupR4MtOGPGTJ?imageView2/1/w/200)
-
 本文是NodeJs简明教程的完结篇，将对以往文章进行归档。
 
 ## 系列文章
@@ -36,6 +31,3 @@ categories:
 
 欢迎持续关注~
 
-欢迎加群交流NodeJs相关的开发~
-
-![微信群](https://more-happy.ddhigh.com/FpffwgkBeSWPyHRUJJmi9J9SFX_l?imageView2/1/w/200)

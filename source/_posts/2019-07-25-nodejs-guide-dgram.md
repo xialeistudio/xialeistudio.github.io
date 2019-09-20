@@ -6,11 +6,6 @@ categories:
 - nodejs
 ---
 
-> NodeJs简明教程将从零开始学习NodeJs相关知识，助力JS开发者构建全栈开发技术栈！
-
-关注获取更多`NodeJs精品文章`
-![二维码](https://more-happy.ddhigh.com/FuFpZh9QTZVatcBtupR4MtOGPGTJ?imageView2/1/w/200)
-
 本文是NodeJs简明教程的第十篇，将介绍NodeJs **dgram** 模块(`UDP服务端/客户端`)相关的基本操作。
 
 ## 啥是UDP
@@ -82,7 +77,7 @@ socket.send('hello',10000,function(err) { // 向目标端口发送数据
 ## 执行
 
 1. 终端执行`node server.js`，输出
-    
+   
     ```text
     服务器正在监听 0.0.0.0:10000
     ```
@@ -103,4 +98,3 @@ socket.send('hello',10000,function(err) { // 向目标端口发送数据
 
 NodeJs UDP服务端与客户端开发到此结束，但是使用UDP的情况下，数据包确认、流量控制等等操作都需要程序员手动完成，这一方面确实挺复杂的，没有什么特殊的要求的话使用TCP即可。
 
-![微信群](https://more-happy.ddhigh.com/FpffwgkBeSWPyHRUJJmi9J9SFX_l?imageView2/1/w/200)

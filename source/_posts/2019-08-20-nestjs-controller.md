@@ -8,8 +8,7 @@ tags:
 - nestjs
 ---
 
-欢迎持续关注`NestJs之旅`系列文章
-![二维码](https://more-happy.ddhigh.com/FuFpZh9QTZVatcBtupR4MtOGPGTJ?imageView2/1/w/200)
+本文是NestJs学习之旅的第二篇，主要讲解控制器。
 
 ## MVC
 
@@ -278,10 +277,3 @@ export class UsersController {
   }
 }
 ```
-
-## 结尾
-
-如果您觉得有所收获，请点击右下角在看或者转发朋友圈，分享给更多需要的朋友，谢谢！
-如果您想交流关于NestJs更多的知识，欢迎加群讨论！
-
-![image](https://more-happy.ddhigh.com/Fi58A_3OsMbbcZLL0c0Sx982T-Nx?imageView2/1/w/200)

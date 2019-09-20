@@ -6,10 +6,7 @@ categories:
 - typescript
 ---
 
-为了后续内容(如`nestjs`等框架)的开展，本文更新TS相关的基础知识。
-
-关注获取更多`TS精品文章`
-![二维码](https://more-happy.ddhigh.com/FuFpZh9QTZVatcBtupR4MtOGPGTJ?imageView2/1/w/200)
+本文是TS简明教程的第一篇，对TS做简要介绍、基础知识以及后续内容规划。
 
 > TypeScript是JavaScript的一个超集，支持 ECMAScript 6 标准。
 > TypeScript可以在任何浏览器、任何计算机和任何操作系统上运行，并且是开源的。
@@ -275,6 +272,4 @@ TS中this指向和JS一致，这里不做赘述。
 
 ## 结语
 
-未完待续~欢迎加我微信交流TS相关的知识~
-
-![微信](https://more-happy.ddhigh.com/Fg5UE615NzZ0dXo6_gUe6qpCJILG?imageView2/1/w/200)
+未完待续~

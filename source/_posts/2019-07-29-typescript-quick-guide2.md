@@ -5,10 +5,7 @@ categories:
 - frontend
 - typescript
 ---
-为了后续内容(如`nestjs`等框架)的开展，本文更新TS相关的基础知识。
-
-关注获取更多`TS精品文章`
-![二维码](https://more-happy.ddhigh.com/FuFpZh9QTZVatcBtupR4MtOGPGTJ?imageView2/1/w/200)
+本文是TS简明教程的第二篇，讲解面向对象相关的知识。
 
 ## 类
 
@@ -326,5 +323,3 @@ c.step = 2;
 ## 结语
 
 面向对象中的类和接口内容实在是太多了，本文只选择了开发中常用到的用法进行说明，不足之处，敬请包涵。
-对TS有兴趣的小伙伴可以扫码加我进行交流
-![微信](https://more-happy.ddhigh.com/Fg5UE615NzZ0dXo6_gUe6qpCJILG?imageView2/1/w/200)

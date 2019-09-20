@@ -10,10 +10,8 @@ tags:
 
 单元测试是一个老生常谈的话题，基于Web/NodeJs环境的测试框架、测试教程数不胜数，也趋于成熟了。但是对于微信小程序的单元测试，目前还是处于起步状态，这两天在研究微信小程序的测试，也遇到了一些坑，在这里记录一下，希望给看到本文的小伙伴带来一点帮助，少走一些弯路。
 
-本文内容有点多，但是干货满满，不明白的小伙伴可以关注公众号给我留言
-![二维码](https://more-happy.ddhigh.com/FuFpZh9QTZVatcBtupR4MtOGPGTJ?imageView2/1/w/200)
-
 ## demo地址
+
 [https://github.com/xialeistudio/miniprogram-unit-test-demo](https://github.com/xialeistudio/miniprogram-unit-test-demo)
 
 ## 关键依赖版本
@@ -210,7 +208,7 @@ tags:
 14. 重新测试
     ```text
      PASS  tests/components/user.spec.js
-  ✓ components/user (1099ms)
+    ✓ components/user (1099ms)
 
     Test Suites: 1 passed, 1 total
     Tests:       1 passed, 1 total
@@ -244,10 +242,9 @@ tags:
           },
         }));
       }, 0);
-      ```
+    ```
 5. 由于`setTimeout`的存在，触发事件为异步，所以写断言时需要加定时器
 
 ## 结语
 
-小程序单元测试基本是没什么经验扩借鉴，但是基于官网提供的工具，以及`开源`，咱们遇到问题时细心排查然后修改一下，还是可以解决问题的。对单元测试有疑问的小伙伴可以扫码加我进行交流
-![微信](https://more-happy.ddhigh.com/Fg5UE615NzZ0dXo6_gUe6qpCJILG?imageView2/1/w/200)
+小程序单元测试基本是没什么经验扩借鉴，但是基于官网提供的工具，以及`开源`，咱们遇到问题时细心排查然后修改一下，还是可以解决问题的。

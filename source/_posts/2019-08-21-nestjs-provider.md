@@ -8,8 +8,7 @@ tags:
 - nestjs
 ---
 
-欢迎持续关注`NestJs之旅`系列文章
-![二维码](https://more-happy.ddhigh.com/FuFpZh9QTZVatcBtupR4MtOGPGTJ?imageView2/1/w/200)
+本文是NestJs学习之旅的第三篇，讲解服务提供者。
 
 ## 简介
 
@@ -299,9 +298,3 @@ export class UserModule {}
 ## 结尾
 
 服务提供者是NestJs的精华之一，提供了几种方式方便我们在各种环境下的服务提供者创建。
-
-如果您觉得有所收获，分享给更多需要的朋友，谢谢！
-
-如果您想交流关于NestJs更多的知识，欢迎加群讨论！
-
-![image](https://more-happy.ddhigh.com/Fi58A_3OsMbbcZLL0c0Sx982T-Nx?imageView2/1/w/200)

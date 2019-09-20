@@ -247,5 +247,3 @@ METHOD定义
 ## 7. 结尾
 
 SOCKS5协议的讲解到此结束，后续会使用GOLANG实现一个SOCKS5服务器来讲述TCP协议服务器的开发。
-
-![关注公众号](https://static.ddhigh.com/blog/2019-08-24-085213.jpg)

@@ -8,8 +8,7 @@ tags:
 - nestjs
 ---
 
-欢迎持续关注`NestJs之旅`系列文章
-![二维码](https://more-happy.ddhigh.com/FuFpZh9QTZVatcBtupR4MtOGPGTJ?imageView2/1/w/200)
+本文是NestJs学习之旅的第五篇，讲解中间件。
 
 ## 中间件
 
@@ -163,9 +162,3 @@ await app.listen(3000);
 ## 结尾
 
 中间件给框架赋予了极大的灵活性，可以根据功能抽象为中间件，达到”可插拔“的目的。
-
-如果您觉得有所收获，分享给更多需要的朋友，谢谢！
-
-如果您想交流关于NestJs更多的知识，欢迎加群讨论！
-
-![image](https://more-happy.ddhigh.com/Fi58A_3OsMbbcZLL0c0Sx982T-Nx?imageView2/1/w/200)

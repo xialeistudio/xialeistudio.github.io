@@ -5,11 +5,6 @@ categories:
 - backend
 - nodejs
 ---
-> NodeJs简明教程将从零开始学习NodeJs相关知识，助力JS开发者构建全栈开发技术栈！
-
-关注获取更多`NodeJs精品文章`
-![二维码](https://more-happy.ddhigh.com/FuFpZh9QTZVatcBtupR4MtOGPGTJ?imageView2/1/w/200)
-
 本文是NodeJs简明教程的第六篇，将介绍NodeJs crypto模块相关的基本操作。
 
 > crypto 模块提供了加密功能，包括对 OpenSSL 的哈希、HMAC、加密、解密、签名、以及验证功能的一整套封装。
@@ -188,6 +183,4 @@ console.log(rawData.toString('utf8'));
 
 ## 结语
 
-常用的加解密、哈希、编解码用法已经介绍完毕，读后有疑问请加微信群讨论。
-
-![微信群](https://more-happy.ddhigh.com/FpffwgkBeSWPyHRUJJmi9J9SFX_l?imageView2/1/w/200)
+常用的加解密、哈希、编解码用法已经介绍完毕。

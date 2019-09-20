@@ -54,11 +54,9 @@ function Component<T extends { new(...args: any[]): any }>(component: T) { // �
 
 ## 项目地址
 [react-decorator-example](https://github.com/xialeistudio/react-decorator-example)
-## 文后
+## 结论
 
 本文写的只是比较简单的装饰器用法，但是可以基于此文的原来来开发如`登录后才能访问的组件`之类的装饰器，将业务逻辑更好的组织起来。
 
 对TS有兴趣的伙伴可以加我微信交流~
-
-![微信](https://more-happy.ddhigh.com/Fg5UE615NzZ0dXo6_gUe6qpCJILG?imageView2/1/w/200)
 

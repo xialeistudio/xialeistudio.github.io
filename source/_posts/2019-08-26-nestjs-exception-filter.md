@@ -8,9 +8,7 @@ tags:
 - nestjs
 ---
 
-欢迎持续关注*`NestJs之旅`*系列文章，关注公众号可以获得最新的教程！
-
-![img](https://static.ddhigh.com/blog/2019-08-26-060638.jpg)
+本文是NestJs的第六篇，讲解异常处理。
 
 ## 传统的异常处理
 
@@ -307,9 +305,3 @@ export class HttpExceptionFilter implements ExceptionFilter<Error> {
 ## 结尾
 
 异常过滤器让应用异常有了统一的处理渠道，同时也解决文章开头提出的两个问题。通过自定义异常过滤器，开发者可以进行统一响应格式，统一记录日志等等操作。
-
-如果您觉得有所收获，分享给更多需要的朋友，谢谢！
-
-如果您想交流关于NestJs更多的知识，欢迎加群讨论！
-
-![img](https://more-happy.ddhigh.com/Fi58A_3OsMbbcZLL0c0Sx982T-Nx?imageView2/1/w/200)

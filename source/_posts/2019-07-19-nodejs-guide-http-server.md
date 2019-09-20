@@ -6,11 +6,6 @@ categories:
 - nodejs
 ---
 
-> NodeJs简明教程将从零开始学习NodeJs相关知识，助力JS开发者构建全栈开发技术栈！
-
-关注获取更多`NodeJs精品文章`
-![二维码](https://more-happy.ddhigh.com/FuFpZh9QTZVatcBtupR4MtOGPGTJ?imageView2/1/w/200)
-
 本文是NodeJs简明教程的第三篇，将介绍NodeJs自带HTTP模块服务器相关的基本操作。
 
 ## HTTP模块介绍
@@ -45,7 +40,7 @@ categories:
 
 3. 打开终端或者控制台，执行 `node index.js`，终端或控制台会输出`listen on 8080`，此时HTTP服务器已经启动，如果启动失败，可以在下方留言
 4. 打开浏览器访问 `http://localhost:8080`，笔者输出如下：
-    
+   
     ```json
     {
         "host": "localhost:8080",
@@ -140,7 +135,7 @@ server.listen(8080, () => console.log('listen on 8080'));
         "b": "2",
         "c[]": ["1", "2"]
     }
-     ```
+   ```
 
 #### 读取请求体参数
 

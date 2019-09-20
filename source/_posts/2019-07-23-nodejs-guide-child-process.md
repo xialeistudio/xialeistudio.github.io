@@ -6,11 +6,6 @@ categories:
 - nodejs
 ---
 
-> NodeJs简明教程将从零开始学习NodeJs相关知识，助力JS开发者构建全栈开发技术栈！
-
-关注获取更多`NodeJs精品文章`
-![二维码](https://more-happy.ddhigh.com/FuFpZh9QTZVatcBtupR4MtOGPGTJ?imageView2/1/w/200)
-
 本文是NodeJs简明教程的第八篇，将介绍NodeJs **子进程** 模块相关的基本操作。
 
 > child_process 模块提供了衍生子进程的能力（以一种与 popen(3) 类似但不相同的方式）。
@@ -190,6 +185,4 @@ child exit
 
 ## 结语
 
-子进程模块的介绍到此就告一段落了，一般情况下使用`spawn`和`execFile`即可。有任何疑问请扫码加群交流：
-
-![微信群](https://more-happy.ddhigh.com/FpffwgkBeSWPyHRUJJmi9J9SFX_l?imageView2/1/w/200)
+子进程模块的介绍到此就告一段落了，一般情况下使用`spawn`和`execFile`即可。

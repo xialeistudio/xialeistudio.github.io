@@ -6,11 +6,6 @@ categories:
 - nodejs
 ---
 
-> NodeJs简明教程将从零开始学习NodeJs相关知识，助力JS开发者构建全栈开发技术栈！
-
-关注获取更多`NodeJs精品文章`
-![二维码](https://more-happy.ddhigh.com/FuFpZh9QTZVatcBtupR4MtOGPGTJ?imageView2/1/w/200)
-
 本文是NodeJs简明教程的第九篇，将介绍NodeJs **net** 模块(`TCP服务端/客户端`)相关的基本操作。
 
 ## 啥是TCP
@@ -82,7 +77,7 @@ server.listen(10000, function () {
     ```
 
 3. 终端继续输入以下字符：
-    
+   
     ```text
     helloworld
     ```
@@ -138,6 +133,4 @@ const client = net.connect(10000, 'localhost', function () { // 连接服务器
 
 ## 结语
 
-NodeJs TCP服务端与客户端开发到此结束，但是TCP协议的学习远远不止于此，包括`自定义协议开发`、`TCP粘包问题`等等。这一块有问题的可以扫码加群交流：
-
-![微信群](https://more-happy.ddhigh.com/FpffwgkBeSWPyHRUJJmi9J9SFX_l?imageView2/1/w/200)
+NodeJs TCP服务端与客户端开发到此结束，但是TCP协议的学习远远不止于此，包括`自定义协议开发`、`TCP粘包问题`等等。

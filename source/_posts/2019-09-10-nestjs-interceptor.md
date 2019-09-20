@@ -8,9 +8,7 @@ tags:
 - nestjs
 ---
 
-欢迎持续关注*`NestJs之旅`*系列文章
-
-![img](https://static.ddhigh.com/blog/2019-08-26-060638.jpg)
+本文是NestJs的第九篇，讲解拦截器。
 
 拦截器是一个实现了**NestInterceptor**接口且被**@Injectable**装饰器修饰的类。
 
@@ -273,5 +271,3 @@ export class CacheInterceptor implements NestInterceptor {
 ## 结尾
 
 本文是NestJs基础知识的最后一篇，接下将针对特定模块进行更新，比如数据库、上传、鉴权等等。
-
-由于直接放出群二维码导致加群门槛极低，近期有微商之类的人员扫码入群发送广告/恶意信息，严重骚扰群成员，二维码入群通道已关闭。有需要的伙伴可以关注公众号来获得加群资格。

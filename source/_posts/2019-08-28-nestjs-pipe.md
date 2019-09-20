@@ -7,9 +7,7 @@ categories:
 tags:
 - nestjs
 ---
-欢迎持续关注**NestJs学习之旅**系列文章
-
-![img](https://static.ddhigh.com/blog/2019-08-26-060638.jpg)
+本文是NestJs学习之旅的第八篇，讲解管道。
 
 ## 管道
 
@@ -283,8 +281,6 @@ bootstrap();
 ## 结尾
 
 和笔者使用的SpringBoot中验证框架对比一下之后发现，NestJs验证管道所实现的功能还真不比SpringBoot差，看来官方说的“下一代Node.js全栈开发框架”确实不是盖的！
-
-如果您觉得有所收获，分享给更多需要的朋友，谢谢！
 
 如果您想交流关于NestJs更多的知识，欢迎加群讨论！
 

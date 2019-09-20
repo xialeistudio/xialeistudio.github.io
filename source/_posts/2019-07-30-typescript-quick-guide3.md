@@ -6,12 +6,7 @@ categories:
 - typescript
 ---
 
-为了后续内容(如`nestjs`等框架)的开展，本文更新TS相关的基础知识。
-
-关注获取更多`TS精品文章`
-![二维码](https://more-happy.ddhigh.com/FuFpZh9QTZVatcBtupR4MtOGPGTJ?imageView2/1/w/200)
-
-本文讲解泛型
+本文是TS简明教程的第三篇，讲解泛型。
 
 ## 泛型
 

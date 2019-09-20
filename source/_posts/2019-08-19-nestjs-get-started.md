@@ -8,10 +8,7 @@ tags:
 - nestjs
 ---
 
-经过[NodeJs系列课程](https://www.ddhigh.com/2019/07/18/nodejs-guide-about.html)和[Typescript系列课程](https://www.ddhigh.com/2019/07/25/typescript-quick-guide.html)，终于开始了激动人心的NestJs学习之旅。
-
-欢迎持续关注`NestJs之旅`系列文章
-![二维码](https://more-happy.ddhigh.com/FuFpZh9QTZVatcBtupR4MtOGPGTJ?imageView2/1/w/200)
+本文是NestJs学习之旅的第一篇，简要介绍一下NestJs框架，搭建一个Hello World应用。
 
 ## 介绍
 
@@ -82,6 +79,7 @@ NestJs有几大类文件是主要的是下面几种，其他类型的文件在�
 + controller 控制器(负责接收数据，返回响应)
 + service 服务(主要业务逻辑)
   
+
 使用`npm run start`来运行项目。终端输出如下:
 
 ```text

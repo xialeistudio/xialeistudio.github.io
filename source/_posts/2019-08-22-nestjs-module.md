@@ -8,8 +8,7 @@ tags:
 - nestjs
 ---
 
-欢迎持续关注`NestJs之旅`系列文章
-![二维码](https://more-happy.ddhigh.com/FuFpZh9QTZVatcBtupR4MtOGPGTJ?imageView2/1/w/200)
+本文是NestJs学习之旅的第四篇，讲解模块系统。
 
 ## 模块
 
@@ -219,9 +218,3 @@ export class AppModule {}
 ## 结尾
 
 模块系统是NestJs另一个重要的特性，个人认为是基于DDD思想的，每个模块就是一个单独的领域业务，可以由一个小组去独立开发。多个模块时可以同时开发，如果有依赖问题的话，可以先把模块和响应的interface公开出去，别人正常调用你的interface，当实现类开发完毕之后NestJs会自动注入该实现类，调用方的代码不用更改。
-
-如果您觉得有所收获，分享给更多需要的朋友，谢谢！
-
-如果您想交流关于NestJs更多的知识，欢迎加群讨论！
-
-![image](https://more-happy.ddhigh.com/Fi58A_3OsMbbcZLL0c0Sx982T-Nx?imageView2/1/w/200)
