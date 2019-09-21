@@ -5,7 +5,7 @@ date: 2017-10-15 05:16:05
 
 ## Profile
 
-来自北京的一名全栈工程师。
+来自北京的一名全栈工程师，平时喜欢研究新技术。
 
 ## Language
 
@@ -19,19 +19,16 @@ date: 2017-10-15 05:16:05
 
 + Vue/React/Angular
 + Yii2/Swoole
-+ NestJs/Koa/socket.io/pomelo
++ Node.js/NestJs/Koa/socket.io/pomelo
 + SpringBoot/Mybatis
 + React Native/Cordova
 + Docker
 + MySQL
 
-## Lessons
-
-+ [Restful API实战 | imooc](https://www.imooc.com/learn/811)
-
 ## Contact
 
-+ Wechat: xialeistudio
++ QQ群：346660435
++ Email: xialeistudio@gmail.com
 
 
 
