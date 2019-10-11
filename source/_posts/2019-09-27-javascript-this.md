@@ -59,7 +59,7 @@ test(); // 输出undefined
 ### 2. 对象调用
 
 ```javascript
-`use strict`;
+'use strict'
 var n = 1;
 var a = {
   n: 2,
@@ -252,7 +252,7 @@ var p1 = new Person();
 console.log(p1.name)// 输出2
 ```
 
-### 总结
+#### 总结
 
 构造函数中this指向对象实例本身，如果构造函数指明了返回值，那么表现如下：
 
@@ -283,7 +283,7 @@ console.log(p1.name)// 输出2
 
 bind的实现原理有点复杂，将在下一篇文章进行详细解读。
 
-### 总结
+#### 总结
 
 bind可以手动绑定function的this，`this`指向`第1次`bind时的this。
 
