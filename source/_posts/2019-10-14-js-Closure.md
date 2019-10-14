@@ -173,3 +173,4 @@ for(var i = 0; i < buttons.length; i++) {
 
 以上例子显示什么?如果需要正常显示需要怎么修改?
 
+![0.jpeg](https://static.ddhigh.com/blog/2019-10-14-103646.jpg)
