@@ -41,7 +41,7 @@ console.log(a);
 
 此时会报错`ReferenceError`，因为`let/const`支持块级作用域，所以`let`定义的`a`只在`{}`可以访问
 
-### 不存在变量提升
+## 不存在变量提升
 
 与`var`不同的是，`let/const`声明的变量不存在变量提升，也就是说`{}`对于`let/const`是有效的。
 
