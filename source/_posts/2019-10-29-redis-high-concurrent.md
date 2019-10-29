@@ -1,4 +1,11 @@
-# Redis优化高并发下的秒杀性能
+---
+title: Redis优化高并发下的秒杀性能
+date: 2019-10-29 12:00:00
+categories:
+- backend
+tags:
+- redis
+---
 
 本文内容
 
