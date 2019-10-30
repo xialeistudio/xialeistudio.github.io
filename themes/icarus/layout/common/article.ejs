@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card" id="container">
     <% if (has_thumbnail(post)) { %>
     <div class="card-image">
         <%- index ? '<a href="' + url_for(post.link ? post.link : post.path) + '"' : '<span ' %> class="image is-7by1">
