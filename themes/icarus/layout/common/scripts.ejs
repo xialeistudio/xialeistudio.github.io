@@ -3,10 +3,10 @@
 <script>moment.locale("<%= get_config('language', 'en') %>");</script>
 
 <script>
-var IcarusThemeSettings = {
-    article: {
-        highlight: {
-            clipboard: <%= get_config('article.highlight.clipboard', true) %>,
+    var IcarusThemeSettings = {
+        article: {
+            highlight: {
+                clipboard: <%= get_config('article.highlight.clipboard', true) %>,
             fold: '<%= get_config('article.highlight.fold', true) %>'
         }
     }
@@ -14,25 +14,28 @@ var IcarusThemeSettings = {
 </script>
 
 <% if (get_config('article.highlight.clipboard')) { %>
-    <%- _js(cdn('clipboard', '2.0.4', 'dist/clipboard.min.js'), true) %>
+<%- _js(cdn('clipboard', '2.0.4', 'dist/clipboard.min.js'), true) %>
 <% } %>
 
 <% if (has_config('plugins')) { %>
-    <% for (let plugin in get_config('plugins')) { %>
-    <%- partial('plugin/' + plugin, { head: false, plugin: get_config('plugins')[plugin] }) %>
-    <% } %>
+<% for (let plugin in get_config('plugins')) { %>
+<%- partial('plugin/' + plugin, { head: false, plugin: get_config('plugins')[plugin] }) %>
+<% } %>
 <% } %>
 
 <%- _js('js/main', true) %>
 
 <script src="https://my.openwrite.cn/js/readmore.js" type="text/javascript"></script>
 <script>
-    const btw = new BTWPlugin();
-    btw.init({
-        id: 'container',
-        blogId: '17768-1572420593825-274',
-        name: 'NodeJs之路',
-        qrcode: 'https://static.ddhigh.com/blog/2019-10-30-073944.jpg',
-        keyword: 'blog',
-    });
+    const userAgent = window.navigator.userAgent;
+    if (userAgent.indexOf('Android') === -1 && userAgent.indexOf('iPad') === -1 && userAgent.indexOf('iPhone') === -1) {
+        const btw = new BTWPlugin();
+        btw.init({
+            id: 'container',
+            blogId: '17768-1572420593825-274',
+            name: 'NodeJs之路',
+            qrcode: 'https://static.ddhigh.com/blog/2019-10-30-073944.jpg',
+            keyword: 'blog',
+        });
+    }
 </script>
