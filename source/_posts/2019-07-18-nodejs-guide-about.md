@@ -53,7 +53,7 @@ Javascript运行时是个比较复杂的概念，本文在介绍 **Javascript运
 
 个人理解：
 
-> Javascript引擎主要是对Javascript代码进行词法、语法等分析，通过编译器将代码编译成可执行的机器码让计算机去执行。
+> Javascript引擎主要是对Javascript代码进行词法、语法等分析，通过解释器转化为字节码，虚拟机执行该字节码，带有JIT(Just-In-Time，即时编译技术)的虚拟机会将热点代码编译为机器码，从而加速执行过程。感谢[luckymore](https://github.com/luckymore)的热心指正！
 
 目前业内出名的Javascript引擎非V8莫属了。
 

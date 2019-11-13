@@ -35,15 +35,15 @@ fs.readFile('./index.js', { encoding: 'utf8' }, (err, data) => {
 })
 ```
 
-`readFile`的第二个参数如果不指定编码，回调函数取到的`data`对象是`Buffer`，需要手动转字符串。读取文本文件可以指定编码，但是读取二进制文件(`比如读取图片文件`)
+`readFile`的第二个参数如果不指定编码，回调函数取到的`data`对象是`Buffer`，需要手动转字符串。读取文本文件可以指定编码，但是读取二进制文件(`比如读取图片文件`)就不能指定编码了，有一些字符时不可见字符，编码之后会出问题。
 
 1. 在当前目录执行 `node index.js`
 2. 输出如下：
 
-    ```text
+    ```js
     const fs = require('fs');
 
-    fs.readFile('./index.js', { encoding: 'utf8' }, (err, data) => {
+    fs.readFile('./index.js', (err, data) => {
         if (err) {
             console.error('读取文件失败', err);
             return;
