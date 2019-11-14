@@ -1,5 +1,5 @@
 ---
-##title: 深入浅出ES6的迭代器
+title: 深入浅出ES6的迭代器
 date: 2019-11-13 19:00:00
 categories:
 - frontend
