@@ -679,3 +679,5 @@ npm run build
 项目已经托管到github，有需要的读者可以自取。
 
 [https://github.com/xialeistudio/webpack-multipage-example](https://github.com/xialeistudio/webpack-multipage-example)
+
+![0.jpeg](https://static.ddhigh.com/blog/2019-10-22-102654.jpg)
