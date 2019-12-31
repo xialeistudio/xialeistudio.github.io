@@ -425,3 +425,5 @@ father冒泡
 由于事件冒泡机制，click3元素点击之后会将事件冒泡给父元素，也就是我们的document.body，通过event.target可以拿到真正触发事件的元素。
 
 （完）
+
+![0.jpeg](https://static.ddhigh.com/blog/2019-10-22-102654.jpg)
