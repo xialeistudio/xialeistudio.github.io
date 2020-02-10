@@ -3,6 +3,8 @@ title: Shell脚本快速入门(1)
 date: 2020-02-10 12:00:00
 categories:
 - devtools
+tags:
+- shell
 ---
 
 Shell 是一个用 C 语言编写的程序，用户可以通过Shell脚本语言来进行程序开发。与其他脚本语言不同，Shell脚本所需的解释器一般是内置在操作系统的，而像Node.js、PHP等脚本语言需要手动安装解释器程序才可以。
