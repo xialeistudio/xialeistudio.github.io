@@ -87,3 +87,4 @@ public class Main {
 
 本例中，`org/xialei/example/resource/app.properties`就是从classpath根目录进行查找的。
 
+![0.jpeg](https://static.ddhigh.com/blog/2019-10-22-102654.jpg)
