@@ -45,16 +45,16 @@ echo "Hello World!"
 
 1. 作为可执行程序。给脚本添加可执行权限之后执行即可。
 
-   ```bash
-   chmod +x ./hello.sh # 添加可执行权限
-   ./hello.sh # 执行脚本
-   ```
+```bash
+chmod +x ./hello.sh # 添加可执行权限
+./hello.sh # 执行脚本
+```
    
 2. 作为解释器脚本。直接运行指定的解释器程序，并将脚本路径传入，本方式不要求脚本有可执行权限。
 
-   ```bash
-   /bin/bash hello.sh # 使用/bin/bash来执行hello.sh
-   ```
+```bash
+/bin/bash hello.sh # 使用/bin/bash来执行hello.sh
+```
 
 ## Shell语法
 
@@ -98,17 +98,17 @@ Shell有以下两种复制方式。
 
 1. 直接赋值。直接在等号后面指定变量值。
 
-   ```bash
-   name="xialei
-   admin=1
-   ```
+```bash
+name="xialei
+admin=1
+```
    
 2. 使用命名执行结果。可以将其他命令的执行结果赋值给变量。（以下两种方式是等效的）
 
-   ```bash
-   file=`ls /etc` # 反引号(键盘Tab上面的键)
-   file1=$(ls /etc)
-   ```
+```bash
+file=`ls /etc` # 反引号(键盘Tab上面的键)
+file1=$(ls /etc)
+```
 
 已经存在的变量，可以被重新赋值。
 
