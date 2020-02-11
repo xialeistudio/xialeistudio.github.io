@@ -1,6 +1,6 @@
 ---
 title: Shell脚本快速入门(2)
-date: 2020-02-10 12:00:00
+date: 2020-02-11 12:00:00
 categories:
 - devtools
 tags:
