@@ -1,5 +1,10 @@
-# Webpack4不求人(2) ——手把手搭建TypeScript+React16+ReactRouter5同构应用脚手架
-
+---
+title: Webpack4不求人(2) ——手把手搭建TypeScript+React16+ReactRouter5同构应用脚手架
+date: 2020-03-02 12:00:00
+categories:
+- frontend
+- javascript
+---
 ## 同构应用
 
 使用同一份应用代码，同时提供浏览器环境和服务器环境下的应用，解决传统浏览器单页应用的两个顽固问题：
