@@ -8,6 +8,8 @@ tags:
 - webpack
 ---
 
+![](https://static.ddhigh.com/blog/2020-03-18-032856.png)
+
 Webpack通过Loader完成模块的转换工作，让“一切皆模块”成为可能。Plugin机制则让其更加灵活，可以在Webpack生命周期中调用钩子完成各种任务，包括修改输出资源、输出目录等等。
 
 今天我们一起来学习如何编写Webpack插件。

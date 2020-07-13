@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 3.9.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>Javavscript基础——this指向 - 每天进步一点点</title>
+
+
+
+
+
+
+<link rel="alternative" href="/" title="Javavscript基础——this指向" type="application/atom+xml">
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+<script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?78141f99bbb49f1564a7af89344f5add";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                <img src="/images/logo.svg" alt="Javavscript基础——this指向" height="28">
+                
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                    href="/">主页</a>
+                
+                <a class="navbar-item"
+                    href="/archives">归档</a>
+                
+                <a class="navbar-item"
+                    href="/categories">分类</a>
+                
+                <a class="navbar-item"
+                    href="/tags">标签</a>
+                
+                <a class="navbar-item"
+                    href="/suggestion">建议</a>
+                
+                <a class="navbar-item"
+                    href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                
+                
+                <a class="navbar-item" target="_blank" title="GitHub"
+                    href="https://github.com/xialeistudio">
+                    
+                    <i class="fab fa-github"></i>
+                    
+                </a>
+                
+                <a class="navbar-item" target="_blank" title="SegmentFault"
+                    href="https://segmentfault.com/u/xialeistudio">
+                    
+                    <img src="https://static.ddhigh.com/blog/2019-09-18-115828.png?imageView2/1/w/40/h/40" style="width:16px;height:16px" />
+                    
+                </a>
+                
+                <a class="navbar-item" target="_blank" title="QQ"
+                    href="//shang.qq.com/wpa/qunwpa?idkey=83c6884d7520f22891e3f82c76f42baa5c53af91ce8d31ed2641248f8730687b">
+                    
+                    <i class="fab fa-qq"></i>
+                    
+                </a>
+                
+                
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2019-09-27T04:00:00.000Z">2019-09-27</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/frontend/">frontend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/frontend/javascript/">javascript</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    13 分钟 读完 (大约 1904 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            Javavscript基础——this指向
+            
+        </h1>
+        <div class="content">
+            
+            <div id="container">
+                <p>本文研究一下Javascript的this指向。</p>
+<p>Javascript的this指向问题，有些人可能觉得很简单，有些人却觉得扑朔迷离，看完本文之后相应会对this的掌握有一个直观的判断，而不是”开局全靠猜”。</p>
+<h2 id="敲黑板"><a href="#敲黑板" class="headerlink" title="敲黑板"></a>敲黑板</h2><ol>
+<li><p>function函数this指向由<code>调用方式</code>确定，跟定义环境无关。</p>
+</li>
+<li><p>箭头函数this指向由<code>定义环境</code>决定，与<code>调用方式无关</code>，也不可以<code>bind(this)</code>。</p>
+</li>
+</ol>
+<h2 id="严格模式"><a href="#严格模式" class="headerlink" title="严格模式"></a>严格模式</h2><ol>
+<li><p>非严格模式下，全局作用域下的this指向<code>window</code></p>
+</li>
+<li><p>严格模式下，全局作用域下的this指向<code>undefined</code></p>
+</li>
+</ol>
+<p>以下讨论均为<code>非严格模式</code>，这个不影响今天的讨论。</p>
+<h2 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h2><p>说结论往往是让人难以理解的，下面通过不同的调用场景对this做一个说明。</p>
+<h3 id="1-直接调用"><a href="#1-直接调用" class="headerlink" title="1. 直接调用"></a>1. 直接调用</h3><figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">test</span>(<span class="hljs-params"></span>) </span>&#123;</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">this</span>);</span><br><span class="line">&#125;</span><br><span class="line">test(); <span class="hljs-comment">// 输出undefined</span></span><br></pre></td></tr></table></figure>
+<p>直接调用是最简单的， 大部分人在这里都能回答的很好。</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><blockquote>
+<p>直接调用时this指向<code>全局作用域</code>。</p>
+<ul>
+<li>非严格模式this指向window</li>
+<li>严格模式this指向undefined</li>
+</ul>
+</blockquote>
+<h3 id="2-对象调用"><a href="#2-对象调用" class="headerlink" title="2. 对象调用"></a>2. 对象调用</h3><figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">'use strict'</span></span><br><span class="line"><span class="hljs-keyword">var</span> n = <span class="hljs-number">1</span>;</span><br><span class="line"><span class="hljs-keyword">var</span> a = &#123;</span><br><span class="line">  n: <span class="hljs-number">2</span>,</span><br><span class="line">  b: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>&#123;</span><br><span class="line">  	<span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">this</span>.n);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">a.b(); <span class="hljs-comment">// 输出2</span></span><br><span class="line"><span class="hljs-keyword">var</span> b = a.b;</span><br><span class="line">b(); <span class="hljs-comment">// 输出1</span></span><br></pre></td></tr></table></figure>
+<h4 id="面试题：请问上述例子输出什么"><a href="#面试题：请问上述例子输出什么" class="headerlink" title="面试题：请问上述例子输出什么?"></a>面试题：请问上述例子输出什么?</h4><blockquote>
+<p>非严格模式下，输出2和1，严格模式下输出2和一个报错(this指向undefined，访问undefined的n属性肯定报错)</p>
+</blockquote>
+<p>那如果你这么回答，<code>满分</code>!</p>
+<h4 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h4><p>知其然还要知其所以然，我们分析一下：</p>
+<p>为什么输出2?</p>
+<blockquote>
+<p> 因为<code>a.b()</code>是对象调用方式，所以b()中的this指向a</p>
+</blockquote>
+<p>为什么输出1?</p>
+<p>这个非常有意思，而且也很有迷惑性，面试的时候经常问到，也经常有人被问倒。</p>
+<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">var</span> b = a.b</span><br></pre></td></tr></table></figure>
+<p>把<code>a.b</code>赋值给<code>变量b</code>，b就是一个函数，<code>请注意: 这里只是赋值，没有调用，所以b中的this指向还不确定</code>。</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">b();</span><br></pre></td></tr></table></figure>
+<p>调用函数<code>b</code>，这是什么调用方式? <strong><code>普通调用</code></strong>，所以this指向全局作用域。</p>
+<h4 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h4><p>对象调用方式下this指向调用对象。</p>
+<p>是否GET? 如果没有GET，请关注公众号<code>NodeJs之路</code>，我在线给你答疑。</p>
+<p>开胃菜已经吃了，下面来点”有难度的(实际上也没啥难度)”。</p>
+<h3 id="3-嵌套对象调用"><a href="#3-嵌套对象调用" class="headerlink" title="3. 嵌套对象调用"></a>3. 嵌套对象调用</h3><figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">var</span> n = <span class="hljs-number">1</span>;</span><br><span class="line"><span class="hljs-keyword">var</span> a = &#123;</span><br><span class="line">  n: <span class="hljs-number">2</span>,</span><br><span class="line">  b: &#123;</span><br><span class="line">    n: <span class="hljs-number">3</span>,</span><br><span class="line">    c: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>&#123;</span><br><span class="line">      <span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">this</span>.n)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h4 id="面试题：请问上述例子中function中的this指向哪里"><a href="#面试题：请问上述例子中function中的this指向哪里" class="headerlink" title="面试题：请问上述例子中function中的this指向哪里?"></a>面试题：请问上述例子中function中的this指向哪里?</h4><blockquote>
+<p>正确答案：<code>未确定调用环境</code>的情况下，this的指向<code>不确定</code>。</p>
+<p>错误答案：指向a.b对象，Too young too simple!</p>
+</blockquote>
+<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">var</span> n = <span class="hljs-number">1</span>;</span><br><span class="line"><span class="hljs-keyword">var</span> a = &#123;</span><br><span class="line">  n: <span class="hljs-number">2</span>,</span><br><span class="line">  b: &#123;</span><br><span class="line">    n: <span class="hljs-number">3</span>,</span><br><span class="line">    c: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>&#123;</span><br><span class="line">      <span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">this</span>.n)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">a.b.c(); <span class="hljs-comment">// 输出3</span></span><br><span class="line"></span><br><span class="line">a.c = a.b.c;</span><br><span class="line">a.c(); <span class="hljs-comment">// 输出2</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">var</span> c = a.b.c; </span><br><span class="line">c(); <span class="hljs-comment">// 输出1</span></span><br></pre></td></tr></table></figure>
+<p>这道题跟之前那道<code>对象调用</code>很像。</p>
+<p>为什么输出3?</p>
+<blockquote>
+<p>对象调用方式下指向调用对象，a.b.c()中c()是通过<code>a.b</code>对象调用，指向对象<code>a.b</code></p>
+</blockquote>
+<p>为什么输出?</p>
+<blockquote>
+<p>a.c = a.b.c 给a对象定义一个函数c，注意，此时没有调用！this指向不确定</p>
+<p>a.c() 通过a对象来调用c()，所以this指向对象<code>a</code></p>
+</blockquote>
+<p>为什么输出1？</p>
+<blockquote>
+<p>var c = a.b.c 函数赋值给普通变量，注意，此时没有调用!</p>
+<p>c(); 普通方式调用，指向window</p>
+</blockquote>
+<h4 id="总结-2"><a href="#总结-2" class="headerlink" title="总结"></a>总结</h4><p>嵌套对象调用方式下，this指向<code>最终调用</code>函数的对象。</p>
+<p><code>a.b.c.d.e.f.g.h()</code> h函数中的this指向<code>a.b.c.d.e.f.g</code></p>
+<h3 id="4-构造函数方式调用"><a href="#4-构造函数方式调用" class="headerlink" title="4. 构造函数方式调用"></a>4. 构造函数方式调用</h3><figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">var</span> name = <span class="hljs-number">1</span>;</span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Person</span>(<span class="hljs-params"></span>) </span>&#123;</span><br><span class="line">  <span class="hljs-keyword">this</span>.name = <span class="hljs-number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">var</span> p1= Person(); <span class="hljs-comment">// p1为undefined</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(p1.name); <span class="hljs-comment">// 报错</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">var</span> p2 = <span class="hljs-keyword">new</span> Person();</span><br><span class="line"><span class="hljs-built_in">console</span>.log(p2.name); <span class="hljs-comment">// 输出2</span></span><br></pre></td></tr></table></figure>
+<p>p1为什么是undefined?</p>
+<blockquote>
+<p>这道题比较坑，跟调用方式和this指向无关，因为Person函数没有返回值，js中，默认会返回undefined.</p>
+</blockquote>
+<p>p2.name为什么是2?</p>
+<blockquote>
+<p>使用new操作符时，构造函数的返回值<code>默认</code>指向对象实例，所以p2.name就是Person()中的this.name</p>
+</blockquote>
+<p>如果在<code>Person()</code>函数中加上<code>return this</code>的话，<code>Person()</code>返回值还是<code>this</code>，因为这是普通调用。</p>
+<h3 id="5-构造函数中指明返回值"><a href="#5-构造函数中指明返回值" class="headerlink" title="5. 构造函数中指明返回值"></a>5. 构造函数中指明返回值</h3><p>原则上构造函数不应该有返回值，但是如果真的写了会怎么样？我们来探讨一下。</p>
+<h4 id="返回复杂对象"><a href="#返回复杂对象" class="headerlink" title="返回复杂对象"></a>返回复杂对象</h4><figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Person</span>(<span class="hljs-params"></span>) </span>&#123;</span><br><span class="line">  <span class="hljs-keyword">this</span>.name = <span class="hljs-number">2</span>;</span><br><span class="line">  <span class="hljs-keyword">return</span> &#123;&#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="hljs-keyword">var</span> p1 = <span class="hljs-keyword">new</span> Person();</span><br><span class="line"><span class="hljs-built_in">console</span>.log(p1.name)<span class="hljs-comment">// 输出undefined</span></span><br></pre></td></tr></table></figure>
+<h4 id="返回简单对象"><a href="#返回简单对象" class="headerlink" title="返回简单对象"></a>返回简单对象</h4><p>虽然Js只有对象，但是有一些如string,number这种一般叫做简单对象,date,regex,array,object等等叫复杂对象。</p>
+<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Person</span>(<span class="hljs-params"></span>) </span>&#123;</span><br><span class="line">  <span class="hljs-keyword">this</span>.name = <span class="hljs-number">2</span>;</span><br><span class="line">  <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="hljs-keyword">var</span> p1 = <span class="hljs-keyword">new</span> Person();</span><br><span class="line"><span class="hljs-built_in">console</span>.log(p1.name)<span class="hljs-comment">// 输出2</span></span><br></pre></td></tr></table></figure>
+<h4 id="返回null"><a href="#返回null" class="headerlink" title="返回null"></a>返回null</h4><p>使用<code>typeof null</code>返回的是<code>[object]</code>，证明null是个对象，不过咱们来看看构造函数返回null的表现。</p>
+<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Person</span>(<span class="hljs-params"></span>) </span>&#123;</span><br><span class="line">  <span class="hljs-keyword">this</span>.name = <span class="hljs-number">2</span>;</span><br><span class="line">  <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="hljs-keyword">var</span> p1 = <span class="hljs-keyword">new</span> Person();</span><br><span class="line"><span class="hljs-built_in">console</span>.log(p1.name)<span class="hljs-comment">// 输出2</span></span><br></pre></td></tr></table></figure>
+<h4 id="总结-3"><a href="#总结-3" class="headerlink" title="总结"></a>总结</h4><p>构造函数中this指向对象实例本身，如果构造函数指明了返回值，那么表现如下：</p>
+<ul>
+<li>返回普通值，this指向不变，还是对象实例本身</li>
+<li>返回复杂对象，this指向新对象，也就是你new Person()返回的是那个新对象</li>
+</ul>
+<h3 id="6-bind"><a href="#6-bind" class="headerlink" title="6. bind"></a>6. bind</h3><figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">var</span> a = &#123;</span><br><span class="line">  n: <span class="hljs-number">1</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="hljs-keyword">var</span> b = &#123;</span><br><span class="line">  n: <span class="hljs-number">2</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">f</span>(<span class="hljs-params"></span>) </span>&#123;</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">this</span>.n);</span><br><span class="line">&#125;</span><br><span class="line"><span class="hljs-keyword">var</span> fa = f.bind(a);</span><br><span class="line"><span class="hljs-keyword">var</span> fb = fa.bind(b);</span><br><span class="line"></span><br><span class="line">fa(); <span class="hljs-comment">// 输出1</span></span><br><span class="line">fb(); <span class="hljs-comment">// 输出1</span></span><br></pre></td></tr></table></figure>
+<p>  第1个输出1应该不难理解，bind可以更改function内部的this指向。多次bind已经bind过的函数，this指向不变。</p>
+<p>bind的实现原理有点复杂，将在下一篇文章进行详细解读。</p>
+<h4 id="总结-4"><a href="#总结-4" class="headerlink" title="总结"></a>总结</h4><p>bind可以手动绑定function的this，<code>this</code>指向<code>第1次</code>bind时的this。</p>
+<h3 id="7-apply-call"><a href="#7-apply-call" class="headerlink" title="7. apply/call"></a>7. apply/call</h3><p>这两个函数在this指向上表现一致，放到一起讲</p>
+<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">var</span> a = &#123;</span><br><span class="line">  n: <span class="hljs-number">1</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="hljs-keyword">var</span> b = &#123;</span><br><span class="line">  n: <span class="hljs-number">2</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">f</span>(<span class="hljs-params"></span>) </span>&#123;</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">this</span>.n);</span><br><span class="line">&#125;</span><br><span class="line">f.call(a); <span class="hljs-comment">// 输出1</span></span><br><span class="line">f.apply(b); <span class="hljs-comment">// 输出2</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>call和apply的第1个参数为function执行时的this，这个this是确定的，对未使用过bind的函数进行多次apply/call，this指向都会改变。</p>
+</blockquote>
+<h3 id="8-箭头函数"><a href="#8-箭头函数" class="headerlink" title="8. 箭头函数"></a>8. 箭头函数</h3><figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">var</span> n = <span class="hljs-number">1</span>;</span><br><span class="line"><span class="hljs-keyword">var</span> b = &#123;</span><br><span class="line">  n: <span class="hljs-number">2</span>,</span><br><span class="line">  a: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">this</span>.n);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">b.a(); <span class="hljs-comment">// 输出1</span></span><br><span class="line">b.a.call(&#123;<span class="hljs-attr">n</span>:<span class="hljs-number">3</span>&#125;); <span class="hljs-comment">// 输出1</span></span><br></pre></td></tr></table></figure>
+<p>b.a定义时的this和<code>n</code>,<code>b</code>所在的<code>this一致</code>，默认情况下为全局作用域</p>
+<blockquote>
+<p>箭头函数的this指向定义时所在的this，这个是明确的，但是如果定义时所在的是1个function，那么this指向同上面7点。</p>
+</blockquote>
+<p><em>说下我之前学JS遇到过的问题: ES5下function才会有作用域隔离, {}这种玩意不会隔离作用域。</em></p>
+<h2 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h2><ol>
+<li>直接调用this指向全局作用域window，严格模式指向undefined</li>
+<li>对象调用方式指向调用对象</li>
+<li>嵌套对象调用方式指向最终调用对象(离function最近的那个)</li>
+<li>构造函数方式调用指向对象实例<ol>
+<li>构造函数返回String/Number等简单类型时this指向不变，返回null指向也不变</li>
+<li>构造函数返回Object/Array等复杂对象时，new Person()的返回值为return的对象</li>
+</ol>
+</li>
+<li>bind可以更改function的this,一经绑定，永不改变。<code>但是并不执行函数</code></li>
+<li><p>apply/call可以更改没有被bind过的this</p>
+</li>
+<li><p>箭头函数的<code>this</code>指向为<code>定义</code>箭头函数的<code>this</code></p>
+</li>
+</ol>
+
+            </div>
+            
+        </div>
+        
+        
+        
+        <div class="social-share" data-disabled="qzone,facebook,twitter,tencent,linkedin,douban,diandian,google"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev"
+                href="/2019/10/11/https-protocol.html">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">HTTPS协议是如何保证安全的?</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next"
+                href="/2019/09/23/javascript-prototype.html">
+                <span class="level-item">Javavscript基础——原型和原型链</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">评论</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '1ae09f5aa5dcce937e94',
+        clientSecret: '55c4032692dbcb0ee13771da7dc95f22cf9ae8e1',
+        id: '7a5b6d21ace23f28c7ed7b19c9731322',
+        repo: 'xialeistudio.github.io',
+        owner: 'xialeistudio',
+        admin: "xialeistudio",
+        createIssueManually: false,
+        distractionFreeMode: false
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                    <figure class="image is-128x128 has-mb-6">
+                        <img class="is-rounded" src="https://static.ddhigh.com/blog/2019-09-18-094336.jpg"
+                            alt="夏磊">
+                    </figure>
+                    
+                    <p class="is-size-4 is-block">
+                        夏磊
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        Full-Stack
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>China</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        文章
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        264
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        分类
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        25
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        标签
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        29
+                    </p>
+                </div>
+            </div>
+        </nav>
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://github.com/xialeistudio" target="_blank">
+                关注我</a>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Github"
+                href="https://github.com/xialeistudio">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="SegmentFault"
+                href="https://segmentfault.com/xialeistudio">
+                
+                <img style="width:16px;height:16px" src="https://static.ddhigh.com/blog/2019-09-18-115828.png?imageView2/1/w/40/h/40" />
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="RSS"
+                href="/atom.xml">
+                
+                <i class="fas fa-rss"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+    
+        
+
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                出版书籍
+            </h3>
+            <ul class="menu-list" style="display: flex;flex-wrap:wrap">
+                
+                <li style="flex: 1;margin:0 10px 10px 0">
+                    <a href="http://www.tup.tsinghua.edu.cn/booksCenter/book_08079501.html" target="_blank">
+                        <img style="width: 90px;height:120px" src="https://static.ddhigh.com/blog/2019-09-18-095311.jpg?imageView2/2/w/200" alt="ThinkPHP5实战" />
+                    </a>
+                </li>
+                
+                <li style="flex: 1;margin:0 10px 10px 0">
+                    <a href="http://www.tup.tsinghua.edu.cn/booksCenter/book_06867701.html" target="_blank">
+                        <img style="width: 90px;height:120px" src="https://static.ddhigh.com/blog/2019-09-18-095415.jpg?imageView2/2/w/200" alt="ThinkPHP实战" />
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+    
+        
+
+
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                微信公众号
+            </h3>
+            <p>欢迎关注我的公众号<br>学习最新、最热的JS/TS知识！</p>
+            <img src="https://static.ddhigh.com/blog/2019-09-19-115314.jpg" width="200" height="200" alt="">
+        </div>
+    </div>
+</div>
+
+
+    
+        
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                目录
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#敲黑板">
+        <span class="has-mr-6">1</span>
+        <span>敲黑板</span>
+        </a></li><li>
+        <a class="is-flex" href="#严格模式">
+        <span class="has-mr-6">2</span>
+        <span>严格模式</span>
+        </a></li><li>
+        <a class="is-flex" href="#实践">
+        <span class="has-mr-6">3</span>
+        <span>实践</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#1-直接调用">
+        <span class="has-mr-6">3.1</span>
+        <span>1. 直接调用</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#总结">
+        <span class="has-mr-6">3.1.1</span>
+        <span>总结</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#2-对象调用">
+        <span class="has-mr-6">3.2</span>
+        <span>2. 对象调用</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#面试题：请问上述例子输出什么">
+        <span class="has-mr-6">3.2.1</span>
+        <span>面试题：请问上述例子输出什么?</span>
+        </a></li><li>
+        <a class="is-flex" href="#分析">
+        <span class="has-mr-6">3.2.2</span>
+        <span>分析</span>
+        </a></li><li>
+        <a class="is-flex" href="#总结-1">
+        <span class="has-mr-6">3.2.3</span>
+        <span>总结</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#3-嵌套对象调用">
+        <span class="has-mr-6">3.3</span>
+        <span>3. 嵌套对象调用</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#面试题：请问上述例子中function中的this指向哪里">
+        <span class="has-mr-6">3.3.1</span>
+        <span>面试题：请问上述例子中function中的this指向哪里?</span>
+        </a></li><li>
+        <a class="is-flex" href="#总结-2">
+        <span class="has-mr-6">3.3.2</span>
+        <span>总结</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#4-构造函数方式调用">
+        <span class="has-mr-6">3.4</span>
+        <span>4. 构造函数方式调用</span>
+        </a></li><li>
+        <a class="is-flex" href="#5-构造函数中指明返回值">
+        <span class="has-mr-6">3.5</span>
+        <span>5. 构造函数中指明返回值</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#返回复杂对象">
+        <span class="has-mr-6">3.5.1</span>
+        <span>返回复杂对象</span>
+        </a></li><li>
+        <a class="is-flex" href="#返回简单对象">
+        <span class="has-mr-6">3.5.2</span>
+        <span>返回简单对象</span>
+        </a></li><li>
+        <a class="is-flex" href="#返回null">
+        <span class="has-mr-6">3.5.3</span>
+        <span>返回null</span>
+        </a></li><li>
+        <a class="is-flex" href="#总结-3">
+        <span class="has-mr-6">3.5.4</span>
+        <span>总结</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#6-bind">
+        <span class="has-mr-6">3.6</span>
+        <span>6. bind</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#总结-4">
+        <span class="has-mr-6">3.6.1</span>
+        <span>总结</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#7-apply-call">
+        <span class="has-mr-6">3.7</span>
+        <span>7. apply/call</span>
+        </a></li><li>
+        <a class="is-flex" href="#8-箭头函数">
+        <span class="has-mr-6">3.8</span>
+        <span>8. 箭头函数</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#结尾">
+        <span class="has-mr-6">4</span>
+        <span>结尾</span>
+        </a></li></ul>
+        </div>
+    </div>
+</div>
+
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
+        
+        </div>
+    
+</div>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.svg" alt="Javavscript基础——this指向" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 xialeistudio&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                
+                </p>
+                <p class="is-size-7">
+                    
+                    <a target="_blank" href="http://www.miitbeian.gov.cn/">粤ICP备14062481号-1</a>
+                    
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="GitHub" href="https://github.com/xialeistudio">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+<script>
+    var IcarusThemeSettings = {
+        article: {
+            highlight: {
+                clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+    
+    <script src="/js/animation.js"></script>
+    
+
+
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+<script src="https://my.openwrite.cn/js/readmore.js" type="text/javascript"></script>
+<script>
+    const userAgent = window.navigator.userAgent;
+    const isDesktop = userAgent.indexOf('Android') === -1 && userAgent.indexOf('iPad') === -1 && userAgent.indexOf('iPhone') === -1;
+    const btw = new BTWPlugin();
+    btw.init({
+        id: isDesktop ? 'container' : 'aaa',
+        blogId: '17768-1572420593825-274',
+        name: 'NodeJs之路',
+        qrcode: 'https://static.ddhigh.com/blog/2019-10-30-073944.jpg',
+        keyword: 'blog',
+    });
+</script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

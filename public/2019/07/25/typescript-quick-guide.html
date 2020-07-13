@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 3.9.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>TS简明教程(1) - 每天进步一点点</title>
+
+
+
+
+
+
+<link rel="alternative" href="/" title="TS简明教程(1)" type="application/atom+xml">
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+<script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?78141f99bbb49f1564a7af89344f5add";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                <img src="/images/logo.svg" alt="TS简明教程(1)" height="28">
+                
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                    href="/">主页</a>
+                
+                <a class="navbar-item"
+                    href="/archives">归档</a>
+                
+                <a class="navbar-item"
+                    href="/categories">分类</a>
+                
+                <a class="navbar-item"
+                    href="/tags">标签</a>
+                
+                <a class="navbar-item"
+                    href="/suggestion">建议</a>
+                
+                <a class="navbar-item"
+                    href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                
+                
+                <a class="navbar-item" target="_blank" title="GitHub"
+                    href="https://github.com/xialeistudio">
+                    
+                    <i class="fab fa-github"></i>
+                    
+                </a>
+                
+                <a class="navbar-item" target="_blank" title="SegmentFault"
+                    href="https://segmentfault.com/u/xialeistudio">
+                    
+                    <img src="https://static.ddhigh.com/blog/2019-09-18-115828.png?imageView2/1/w/40/h/40" style="width:16px;height:16px" />
+                    
+                </a>
+                
+                <a class="navbar-item" target="_blank" title="QQ"
+                    href="//shang.qq.com/wpa/qunwpa?idkey=83c6884d7520f22891e3f82c76f42baa5c53af91ce8d31ed2641248f8730687b">
+                    
+                    <i class="fab fa-qq"></i>
+                    
+                </a>
+                
+                
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2019-07-25T14:01:54.000Z">2019-07-25</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/frontend/">frontend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/frontend/typescript/">typescript</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    12 分钟 读完 (大约 1736 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            TS简明教程(1)
+            
+        </h1>
+        <div class="content">
+            
+            <div id="container">
+                <p>本文是TS简明教程的第一篇，对TS做简要介绍、基础知识以及后续内容规划。</p>
+<blockquote>
+<p>TypeScript是JavaScript的一个超集，支持 ECMAScript 6 标准。<br>TypeScript可以在任何浏览器、任何计算机和任何操作系统上运行，并且是开源的。<br>Typescript由微软开发，与C#出自同一人之手!</p>
+</blockquote>
+<h2 id="TS与JS的区别"><a href="#TS与JS的区别" class="headerlink" title="TS与JS的区别"></a>TS与JS的区别</h2><blockquote>
+<p>TS是JS的超集，扩展了TS的语法，因此现有的JS代码可<code>直接与TS一起工作无需任何修改</code>，TS通过类型注解提供编译时的静态类型检查。</p>
+</blockquote>
+<p>由于TS与JS语法大部分一致，本文只对有差异的部分进行讲解。</p>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><p>有些知识点可能是交叉的建议通读完本文再开始真正的开发，这样疑惑会比较少一点</p>
+<ol>
+<li>数据类型与类型断言</li>
+<li>函数</li>
+<li>接口和类</li>
+<li>泛型</li>
+<li>枚举</li>
+<li>命名空间和模块</li>
+<li>装饰器(注解)</li>
+<li>高级类型</li>
+<li>声明文件</li>
+<li>tsconfig.json</li>
+<li>示例<ol>
+<li>React示例(前端)</li>
+<li>Koa示例(后端)</li>
+</ol>
+</li>
+</ol>
+<h2 id="数据类型与类型声明"><a href="#数据类型与类型声明" class="headerlink" title="数据类型与类型声明"></a>数据类型与类型声明</h2><p>TS使用<code>:</code>语法对类型进行声明。基础类型如下：</p>
+<h3 id="布尔类型"><a href="#布尔类型" class="headerlink" title="布尔类型"></a>布尔类型</h3><p>TS使用<code>boolean</code>来声明布尔类型。</p>
+<figure class="highlight typescript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">let</span> succeed: <span class="hljs-built_in">boolean</span> = <span class="hljs-literal">false</span>; <span class="hljs-comment">// 声明succeed为boolean类型</span></span><br></pre></td></tr></table></figure>
+<h3 id="数字"><a href="#数字" class="headerlink" title="数字"></a>数字</h3><p>TS对数字的支持与JS一致，所有数字都是浮点数，所以TS并不存在<code>int</code>,<code>float</code>之类的数字类型声明，只有<code>number</code>。<br>除了支持十进制和十六进制，TS还支持ES6的二进制和八进制数字。</p>
+<figure class="highlight typescript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> age: <span class="hljs-built_in">number</span> = <span class="hljs-number">16</span>; <span class="hljs-comment">// 声明年龄为数字类型</span></span><br><span class="line"><span class="hljs-keyword">const</span> price: <span class="hljs-built_in">number</span> = <span class="hljs-number">99.99</span>; <span class="hljs-comment">// 声明价格为数字类型</span></span><br></pre></td></tr></table></figure>
+<h3 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h3><p>TS使用<code>string</code>声明字符串，和JS一样，支持<code>单引号</code>和<code>双引号</code>。</p>
+<figure class="highlight typescript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">let</span> name: <span class="hljs-built_in">string</span> = <span class="hljs-string">"demo"</span>;</span><br><span class="line"></span><br><span class="line">name = <span class="hljs-string">"demo1"</span>;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> description = <span class="hljs-string">`我是<span class="hljs-subst">$&#123;name&#125;</span>`</span>; <span class="hljs-comment">// ES6语法</span></span><br></pre></td></tr></table></figure>
+<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>TS使用<code>类型[]</code>声明数组的元素类型，与JS不一样的地方在于，<code>TS</code>中一旦指明一个类型，所有元素必须是该类型。<code>JS</code>则可以往数组放任意类型的元素。</p>
+<figure class="highlight typescript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> numbers: <span class="hljs-built_in">number</span>[] = [];</span><br><span class="line">numbers.push(<span class="hljs-number">1</span>);</span><br><span class="line">numbers.push(<span class="hljs-number">2</span>);</span><br><span class="line">numbers.push(<span class="hljs-string">'3'</span>); <span class="hljs-comment">// 错误，'3'不是数字类型</span></span><br></pre></td></tr></table></figure>
+<h3 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h3><p>与JS一样，TS的对象也是由<code>键值对</code>构成，类型声明可以分别作用与<code>键类型</code>以及<code>值类型</code>。</p>
+<p>声明语法：<code>{[key名称: key类型]: 值类型}</code><br>key名称可以<code>自定义</code>，如<code>key</code>,<code>index</code>都是合法的。</p>
+<figure class="highlight typescript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> config: &#123;[key: <span class="hljs-built_in">string</span>]: <span class="hljs-built_in">string</span>&#125; = &#123;&#125;; <span class="hljs-comment">// 声明键和值都只能是字符串类型</span></span><br><span class="line">config.version = <span class="hljs-string">'1.0.0'</span>;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> ages: &#123;[key: <span class="hljs-built_in">number</span>]: <span class="hljs-built_in">number</span>&#125; = &#123;&#125;; <span class="hljs-comment">// 声明键值对都是数字类型</span></span><br><span class="line">ages[<span class="hljs-number">10</span>] = <span class="hljs-string">'1.0.0'</span>; <span class="hljs-comment">// 赋值</span></span><br></pre></td></tr></table></figure>
+<p>上例中赋值语法虽然和数组一致，但是ages对象的长度为1，如果ages是数组的话，长度为11。(0-9个元素为undefined)</p>
+<h3 id="任意类型"><a href="#任意类型" class="headerlink" title="任意类型"></a>任意类型</h3><p>TS用<code>any</code>用来声明<code>任意类型</code>，被<code>any</code>修饰的变量(或常量以及返回值等等)在编译阶段会<code>直接通过</code>，但是运行阶段可能会<code>抛出undefined或null相关错误</code>。</p>
+<p><code>any</code>的出现使得现有的JS代码能够很快速的切换到TS。</p>
+<figure class="highlight typescript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">let</span> age:<span class="hljs-built_in">any</span> = <span class="hljs-number">10</span>;</span><br><span class="line">age = <span class="hljs-string">'name'</span>; <span class="hljs-comment">// 编译通过</span></span><br></pre></td></tr></table></figure>
+<h3 id="空类型"><a href="#空类型" class="headerlink" title="空类型"></a>空类型</h3><p>TS使用<code>void</code>声明空类型。与<code>any</code>相反，表示没有任何类型，常用在函数返回值中。<br><code>void</code>类型只能被赋值为<code>null</code>和<code>undefined</code>。</p>
+<figure class="highlight typescript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">test</span>(<span class="hljs-params">name: <span class="hljs-built_in">string</span></span>): <span class="hljs-title">void</span> </span>&#123; <span class="hljs-comment">// 声明函数无返回值，编译成JS之后取返回值会取到undefined，与JS一致</span></span><br><span class="line">    <span class="hljs-built_in">console</span>.log(name);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">let</span> v: <span class="hljs-built_in">void</span> = <span class="hljs-literal">null</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="null和undefined"><a href="#null和undefined" class="headerlink" title="null和undefined"></a>null和undefined</h3><p>TS中<code>默认情况</code>下，<code>null</code>和<code>undefined</code>是所有类型的子类型，换句话说，你可以把<code>null</code>和<code>undefined</code>直接赋值给<code>number</code>/<code>string</code>/<code>boolean</code>等类型。<br>但是不能反过来干，你不能把<code>number</code>/<code>string</code>/<code>boolean</code>类型赋值给<code>null</code>或者<code>undefined</code></p>
+<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">let</span> u: <span class="hljs-literal">undefined</span> = <span class="hljs-literal">undefined</span>;</span><br><span class="line"><span class="hljs-keyword">let</span> n: <span class="hljs-literal">null</span> = <span class="hljs-literal">null</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="never"><a href="#never" class="headerlink" title="never"></a>never</h3><p><code>never</code>是<code>100%不存在的值</code>的类型。比如函数中直接抛出异常或者有死循环。</p>
+<figure class="highlight typescript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">error</span>(<span class="hljs-params">message: <span class="hljs-built_in">string</span></span>): <span class="hljs-title">never</span> </span>&#123;</span><br><span class="line">    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(message);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fail</span>(<span class="hljs-params"></span>) </span>&#123; <span class="hljs-comment">// TS自动类型推断返回值类型为never，类型推断在下文中会提到</span></span><br><span class="line">    <span class="hljs-keyword">return</span> error(<span class="hljs-string">'failed'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">loop</span>(<span class="hljs-params"></span>): <span class="hljs-title">never</span> </span>&#123; <span class="hljs-comment">// 死循环，肯定不会返回</span></span><br><span class="line">    <span class="hljs-keyword">while</span>(<span class="hljs-literal">true</span>) &#123;&#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>never</code>和<code>void</code>区别</p>
+<ol>
+<li>被<code>void</code>修饰的函数<code>能正常终止，只不过没有返回值</code></li>
+<li>被<code>never</code>修饰的函数<code>不能正常终止，如抛出异常或死循环</code></li>
+</ol>
+<h3 id="枚举"><a href="#枚举" class="headerlink" title="枚举"></a>枚举</h3><p>枚举是对JS的一个扩展。TS使用<code>enum</code>关键字定义枚举类型。</p>
+<figure class="highlight typescript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">enum</span> Color &#123;</span><br><span class="line">    Red,</span><br><span class="line">    Green,</span><br><span class="line">    Yellow</span><br><span class="line">&#125;</span><br><span class="line"><span class="hljs-keyword">let</span> c: Color = Color.Red;</span><br></pre></td></tr></table></figure>
+<h3 id="Object"><a href="#Object" class="headerlink" title="Object"></a>Object</h3><p>TS使用<code>object</code>类修饰对象类型，TS中表示<code>非原始类型</code>。原始类型如下：</p>
+<ol>
+<li>number</li>
+<li>string</li>
+<li>boolean</li>
+<li>null</li>
+<li>undefined</li>
+<li>symbol(ES6新出类型)</li>
+</ol>
+<figure class="highlight typescript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">let</span> a: object = &#123;&#125;; <span class="hljs-comment">// ok</span></span><br><span class="line"><span class="hljs-keyword">let</span> a: object = <span class="hljs-number">1</span>; <span class="hljs-comment">// error</span></span><br><span class="line"><span class="hljs-keyword">let</span> a: object = Symbol(); <span class="hljs-regexp">/ error</span></span><br></pre></td></tr></table></figure>
+<p>虽然<code>Symbol</code>长得像<code>对象类型</code>，不过在<code>ES6</code>规范中，人家就是<code>原始类型</code>。</p>
+<h3 id="函数声明"><a href="#函数声明" class="headerlink" title="函数声明"></a>函数声明</h3><p>TS中可以对函数的<code>形参</code>以及<code>返回值</code>进行类型声明。</p>
+<figure class="highlight typescript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">a</span>(<span class="hljs-params">name: <span class="hljs-built_in">string</span>, age: <span class="hljs-built_in">number</span></span>): <span class="hljs-title">string</span> </span>&#123;</span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-string">`name:<span class="hljs-subst">$&#123;name&#125;</span>,age:<span class="hljs-subst">$&#123;age&#125;</span>`</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="类型断言"><a href="#类型断言" class="headerlink" title="类型断言"></a>类型断言</h3><p>类型断言说白了就是<code>告诉编译器，你按照我指定的类型进行处理</code>。</p>
+<figure class="highlight typescript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">let</span> value: <span class="hljs-built_in">any</span> = <span class="hljs-string">'a string'</span>;</span><br><span class="line"><span class="hljs-keyword">const</span> length: <span class="hljs-built_in">number</span> = (&lt;<span class="hljs-built_in">string</span>&gt;value).length;</span><br></pre></td></tr></table></figure>
+<p>编译结果(正常编译且正常运行)</p>
+<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">let</span> value = <span class="hljs-string">'a string'</span>;</span><br><span class="line"><span class="hljs-keyword">const</span> length = value.length;</span><br></pre></td></tr></table></figure>
+<h3 id="类型推断"><a href="#类型推断" class="headerlink" title="类型推断"></a>类型推断</h3><p>当没有手动指定类型时，TS编译器利用类型推断来推断类型。<br>如果由于缺乏声明而不能推断出类型，那么它的类型被视作默认的动态 any 类型。</p>
+<figure class="highlight typescript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">let</span> num = <span class="hljs-number">2</span>; <span class="hljs-comment">// 推断为number类型</span></span><br></pre></td></tr></table></figure>
+<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><p>TS函数与JS函数没有大的区别，多了一个类型系统。</p>
+<figure class="highlight typescript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">test</span>(<span class="hljs-params">name: <span class="hljs-built_in">string</span></span>) </span>&#123; <span class="hljs-comment">// 自动推断返回类型为string</span></span><br><span class="line">    <span class="hljs-keyword">return</span> name;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="可选参数"><a href="#可选参数" class="headerlink" title="可选参数"></a>可选参数</h3><p>TS中函数每个形参都是<code>必须</code>的，当然你可以传递<code>null</code>和<code>undefined</code>，因为<code>他们是值</code>。但是在JS中，每个形参都是可选的，没传的情况下取值会得到<code>undefined</code>。<br>TS中<code>在参数名后面使用?号指明该参数为可选参数</code></p>
+<figure class="highlight typescript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">test</span>(<span class="hljs-params">name: <span class="hljs-built_in">string</span>, age?: <span class="hljs-built_in">number</span></span>) </span>&#123;</span><br><span class="line">    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">$&#123;name&#125;</span>:<span class="hljs-subst">$&#123;age&#125;</span>`</span>);</span><br><span class="line">&#125;</span><br><span class="line">test(<span class="hljs-string">'a'</span>); <span class="hljs-comment">// 输出 a:undefined</span></span><br></pre></td></tr></table></figure>
+<h3 id="默认参数"><a href="#默认参数" class="headerlink" title="默认参数"></a>默认参数</h3><p>与ES6一致，TS也的函数也支持默认参数。需要注意的是<code>可选参数</code>和<code>默认参数</code>是<code>互斥</code>的。因为如果使用了默认参数，不管外部传不传值，取值的时候都是有值的，和可选参数矛盾。</p>
+<figure class="highlight typescript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">test</span>(<span class="hljs-params">name: <span class="hljs-built_in">string</span>, age: <span class="hljs-built_in">number</span> = 10</span>) </span>&#123;</span><br><span class="line">    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">$&#123;name&#125;</span>:<span class="hljs-subst">$&#123;age&#125;</span>`</span>)</span><br><span class="line">&#125;</span><br><span class="line">test(<span class="hljs-string">'a'</span>); <span class="hljs-comment">// 输出 a:10</span></span><br></pre></td></tr></table></figure>
+<h3 id="剩余参数"><a href="#剩余参数" class="headerlink" title="剩余参数"></a>剩余参数</h3><p>剩余参数和ES6表现一致，但是多了类型声明：</p>
+<figure class="highlight typescript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">test</span>(<span class="hljs-params">name1: <span class="hljs-built_in">string</span>, ...names: <span class="hljs-built_in">string</span>[]</span>) </span>&#123;</span><br><span class="line">    <span class="hljs-built_in">console</span>.log(name1, names);</span><br><span class="line">&#125;</span><br><span class="line">test(<span class="hljs-string">'1'</span>,<span class="hljs-string">'2'</span>,<span class="hljs-string">'3'</span>);<span class="hljs-comment">// 输出 1 ['2', '3']</span></span><br></pre></td></tr></table></figure>
+<h3 id="this执行"><a href="#this执行" class="headerlink" title="this执行"></a>this执行</h3><p>TS中this指向和JS一致，这里不做赘述。</p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>未完待续~</p>
+
+            </div>
+            
+        </div>
+        
+        
+        
+        <div class="social-share" data-disabled="qzone,facebook,twitter,tencent,linkedin,douban,diandian,google"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev"
+                href="/2019/07/26/react-decorator-example.html">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">使用Typescript装饰器来劫持React组件</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next"
+                href="/2019/07/25/nodejs-guide-next-step.html">
+                <span class="level-item">NodeJs简明教程(11) - 完结篇</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">评论</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '1ae09f5aa5dcce937e94',
+        clientSecret: '55c4032692dbcb0ee13771da7dc95f22cf9ae8e1',
+        id: 'd1e96c9f60dc24d494c96ffa58f6e727',
+        repo: 'xialeistudio.github.io',
+        owner: 'xialeistudio',
+        admin: "xialeistudio",
+        createIssueManually: false,
+        distractionFreeMode: false
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                    <figure class="image is-128x128 has-mb-6">
+                        <img class="is-rounded" src="https://static.ddhigh.com/blog/2019-09-18-094336.jpg"
+                            alt="夏磊">
+                    </figure>
+                    
+                    <p class="is-size-4 is-block">
+                        夏磊
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        Full-Stack
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>China</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        文章
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        264
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        分类
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        25
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        标签
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        29
+                    </p>
+                </div>
+            </div>
+        </nav>
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://github.com/xialeistudio" target="_blank">
+                关注我</a>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Github"
+                href="https://github.com/xialeistudio">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="SegmentFault"
+                href="https://segmentfault.com/xialeistudio">
+                
+                <img style="width:16px;height:16px" src="https://static.ddhigh.com/blog/2019-09-18-115828.png?imageView2/1/w/40/h/40" />
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="RSS"
+                href="/atom.xml">
+                
+                <i class="fas fa-rss"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+    
+        
+
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                出版书籍
+            </h3>
+            <ul class="menu-list" style="display: flex;flex-wrap:wrap">
+                
+                <li style="flex: 1;margin:0 10px 10px 0">
+                    <a href="http://www.tup.tsinghua.edu.cn/booksCenter/book_08079501.html" target="_blank">
+                        <img style="width: 90px;height:120px" src="https://static.ddhigh.com/blog/2019-09-18-095311.jpg?imageView2/2/w/200" alt="ThinkPHP5实战" />
+                    </a>
+                </li>
+                
+                <li style="flex: 1;margin:0 10px 10px 0">
+                    <a href="http://www.tup.tsinghua.edu.cn/booksCenter/book_06867701.html" target="_blank">
+                        <img style="width: 90px;height:120px" src="https://static.ddhigh.com/blog/2019-09-18-095415.jpg?imageView2/2/w/200" alt="ThinkPHP实战" />
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+    
+        
+
+
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                微信公众号
+            </h3>
+            <p>欢迎关注我的公众号<br>学习最新、最热的JS/TS知识！</p>
+            <img src="https://static.ddhigh.com/blog/2019-09-19-115314.jpg" width="200" height="200" alt="">
+        </div>
+    </div>
+</div>
+
+
+    
+        
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                目录
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#TS与JS的区别">
+        <span class="has-mr-6">1</span>
+        <span>TS与JS的区别</span>
+        </a></li><li>
+        <a class="is-flex" href="#目录">
+        <span class="has-mr-6">2</span>
+        <span>目录</span>
+        </a></li><li>
+        <a class="is-flex" href="#数据类型与类型声明">
+        <span class="has-mr-6">3</span>
+        <span>数据类型与类型声明</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#布尔类型">
+        <span class="has-mr-6">3.1</span>
+        <span>布尔类型</span>
+        </a></li><li>
+        <a class="is-flex" href="#数字">
+        <span class="has-mr-6">3.2</span>
+        <span>数字</span>
+        </a></li><li>
+        <a class="is-flex" href="#字符串">
+        <span class="has-mr-6">3.3</span>
+        <span>字符串</span>
+        </a></li><li>
+        <a class="is-flex" href="#数组">
+        <span class="has-mr-6">3.4</span>
+        <span>数组</span>
+        </a></li><li>
+        <a class="is-flex" href="#对象">
+        <span class="has-mr-6">3.5</span>
+        <span>对象</span>
+        </a></li><li>
+        <a class="is-flex" href="#任意类型">
+        <span class="has-mr-6">3.6</span>
+        <span>任意类型</span>
+        </a></li><li>
+        <a class="is-flex" href="#空类型">
+        <span class="has-mr-6">3.7</span>
+        <span>空类型</span>
+        </a></li><li>
+        <a class="is-flex" href="#null和undefined">
+        <span class="has-mr-6">3.8</span>
+        <span>null和undefined</span>
+        </a></li><li>
+        <a class="is-flex" href="#never">
+        <span class="has-mr-6">3.9</span>
+        <span>never</span>
+        </a></li><li>
+        <a class="is-flex" href="#枚举">
+        <span class="has-mr-6">3.10</span>
+        <span>枚举</span>
+        </a></li><li>
+        <a class="is-flex" href="#Object">
+        <span class="has-mr-6">3.11</span>
+        <span>Object</span>
+        </a></li><li>
+        <a class="is-flex" href="#函数声明">
+        <span class="has-mr-6">3.12</span>
+        <span>函数声明</span>
+        </a></li><li>
+        <a class="is-flex" href="#类型断言">
+        <span class="has-mr-6">3.13</span>
+        <span>类型断言</span>
+        </a></li><li>
+        <a class="is-flex" href="#类型推断">
+        <span class="has-mr-6">3.14</span>
+        <span>类型推断</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#函数">
+        <span class="has-mr-6">4</span>
+        <span>函数</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#可选参数">
+        <span class="has-mr-6">4.1</span>
+        <span>可选参数</span>
+        </a></li><li>
+        <a class="is-flex" href="#默认参数">
+        <span class="has-mr-6">4.2</span>
+        <span>默认参数</span>
+        </a></li><li>
+        <a class="is-flex" href="#剩余参数">
+        <span class="has-mr-6">4.3</span>
+        <span>剩余参数</span>
+        </a></li><li>
+        <a class="is-flex" href="#this执行">
+        <span class="has-mr-6">4.4</span>
+        <span>this执行</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#结语">
+        <span class="has-mr-6">5</span>
+        <span>结语</span>
+        </a></li></ul>
+        </div>
+    </div>
+</div>
+
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
+        
+        </div>
+    
+</div>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.svg" alt="TS简明教程(1)" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 xialeistudio&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                
+                </p>
+                <p class="is-size-7">
+                    
+                    <a target="_blank" href="http://www.miitbeian.gov.cn/">粤ICP备14062481号-1</a>
+                    
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="GitHub" href="https://github.com/xialeistudio">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+<script>
+    var IcarusThemeSettings = {
+        article: {
+            highlight: {
+                clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+    
+    <script src="/js/animation.js"></script>
+    
+
+
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+<script src="https://my.openwrite.cn/js/readmore.js" type="text/javascript"></script>
+<script>
+    const userAgent = window.navigator.userAgent;
+    const isDesktop = userAgent.indexOf('Android') === -1 && userAgent.indexOf('iPad') === -1 && userAgent.indexOf('iPhone') === -1;
+    const btw = new BTWPlugin();
+    btw.init({
+        id: isDesktop ? 'container' : 'aaa',
+        blogId: '17768-1572420593825-274',
+        name: 'NodeJs之路',
+        qrcode: 'https://static.ddhigh.com/blog/2019-10-30-073944.jpg',
+        keyword: 'blog',
+    });
+</script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

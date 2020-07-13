@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 3.9.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>Webpack4不求人(2) ——手把手搭建TypeScript+React16+ReactRouter5同构应用脚手架 - 每天进步一点点</title>
+
+
+
+
+
+
+<link rel="alternative" href="/" title="Webpack4不求人(2) ——手把手搭建TypeScript+React16+ReactRouter5同构应用脚手架" type="application/atom+xml">
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+<script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?78141f99bbb49f1564a7af89344f5add";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                <img src="/images/logo.svg" alt="Webpack4不求人(2) ——手把手搭建TypeScript+React16+ReactRouter5同构应用脚手架" height="28">
+                
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                    href="/">主页</a>
+                
+                <a class="navbar-item"
+                    href="/archives">归档</a>
+                
+                <a class="navbar-item"
+                    href="/categories">分类</a>
+                
+                <a class="navbar-item"
+                    href="/tags">标签</a>
+                
+                <a class="navbar-item"
+                    href="/suggestion">建议</a>
+                
+                <a class="navbar-item"
+                    href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                
+                
+                <a class="navbar-item" target="_blank" title="GitHub"
+                    href="https://github.com/xialeistudio">
+                    
+                    <i class="fab fa-github"></i>
+                    
+                </a>
+                
+                <a class="navbar-item" target="_blank" title="SegmentFault"
+                    href="https://segmentfault.com/u/xialeistudio">
+                    
+                    <img src="https://static.ddhigh.com/blog/2019-09-18-115828.png?imageView2/1/w/40/h/40" style="width:16px;height:16px" />
+                    
+                </a>
+                
+                <a class="navbar-item" target="_blank" title="QQ"
+                    href="//shang.qq.com/wpa/qunwpa?idkey=83c6884d7520f22891e3f82c76f42baa5c53af91ce8d31ed2641248f8730687b">
+                    
+                    <i class="fab fa-qq"></i>
+                    
+                </a>
+                
+                
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2020-03-02T04:00:00.000Z">2020-03-02</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/frontend/">frontend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/frontend/javascript/">javascript</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    9 分钟 读完 (大约 1297 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            Webpack4不求人(2) ——手把手搭建TypeScript+React16+ReactRouter5同构应用脚手架
+            
+        </h1>
+        <div class="content">
+            
+            <div id="container">
+                <h2 id="同构应用"><a href="#同构应用" class="headerlink" title="同构应用"></a>同构应用</h2><p>使用同一份应用代码，同时提供浏览器环境和服务器环境下的应用，解决传统浏览器单页应用的两个顽固问题：</p>
+<ul>
+<li>不利于SEO，浏览器环境代码是在客户端渲染，大部分爬虫都只能爬到一个空白的入口文件</li>
+<li>代码在浏览器渲染，低端机可能会卡顿</li>
+</ul>
+<p>接下来我们一起从零开始搭建基于Webpack的React同构应用脚手架。</p>
+<h2 id="SSR流程"><a href="#SSR流程" class="headerlink" title="SSR流程"></a>SSR流程</h2><ol>
+<li>Web应用构建完成后输出CSS、JS和HTML</li>
+<li>SSR应用构建完成后输出一个CommonJs模块文件，可以将虚拟DOM在服务端渲染为HTML字符串</li>
+<li>Node.js新建HTTP服务器，收到请求后调用SSR模块导出的render函数输出HTML到客户端</li>
+</ol>
+<h2 id="初始化项目"><a href="#初始化项目" class="headerlink" title="初始化项目"></a>初始化项目</h2><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">mkdir react-ssr-example</span><br><span class="line"><span class="hljs-built_in">cd</span> react-ssr-example</span><br><span class="line">yarn init -y</span><br><span class="line"></span><br><span class="line">yarn add webpack webpack-cli webpack-dev-server -D <span class="hljs-comment"># 安装Webpack</span></span><br><span class="line">yarn add react react-dom react-router-dom <span class="hljs-comment"># 安装React</span></span><br><span class="line">yarn add @types/react @types/react-dom @types/react-router-dom -D <span class="hljs-comment"># 安装React声明文件</span></span><br><span class="line">yarn add express <span class="hljs-comment"># 安装express</span></span><br><span class="line">yarn add css-loader sass-loader node-sass mini-css-extract-plugin <span class="hljs-comment"># 安装CSS相关模块</span></span><br><span class="line">yarn add ts-loader typescript <span class="hljs-comment"># 安装TypeScript</span></span><br><span class="line">yarn add html-webpack-plugin <span class="hljs-comment"># 安装HTML处理插件</span></span><br></pre></td></tr></table></figure>
+<h2 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h2><p>脚手架的完整目录如下：(这些文件一步步都会有)</p>
+<figure class="highlight dsconfig hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">|--<span class="hljs-built_in">--build</span> <span class="hljs-comment"># 构建结果目录</span></span><br><span class="line">		|--<span class="hljs-built_in">--styles</span> <span class="hljs-comment"># 样式</span></span><br><span class="line">				|--<span class="hljs-built_in">--main.css</span></span><br><span class="line"><span class="hljs-built_in"></span>		|--<span class="hljs-built_in">--bundle.ssr.js</span> <span class="hljs-comment"># SSR应用文件</span></span><br><span class="line">		|--<span class="hljs-built_in">--bundle.web.js</span> <span class="hljs-comment"># Web应用文件</span></span><br><span class="line">		|--<span class="hljs-built_in">--index.html</span> <span class="hljs-comment"># Web应用入口HTML</span></span><br><span class="line">|--<span class="hljs-built_in">--src</span> <span class="hljs-comment"># 应用源码</span></span><br><span class="line">		|--<span class="hljs-built_in">--home</span> <span class="hljs-comment"># 首页组件</span></span><br><span class="line">				|--<span class="hljs-built_in">--index.scss</span> <span class="hljs-comment"># 首页SCSS</span></span><br><span class="line">				|--<span class="hljs-built_in">--index.tsx</span> <span class="hljs-comment"># 首页组件</span></span><br><span class="line">		|--<span class="hljs-built_in">--signin</span> <span class="hljs-comment"># 登录页组件</span></span><br><span class="line">				|--<span class="hljs-built_in">--index.scss</span> <span class="hljs-comment"># 登录页SCSS</span></span><br><span class="line">				|--<span class="hljs-built_in">--index.tsx</span> <span class="hljs-comment"># 登录页组件</span></span><br><span class="line">		|--<span class="hljs-built_in">--App.tsx</span> <span class="hljs-comment"># 应用路由设置</span></span><br><span class="line">		|--<span class="hljs-built_in">--index.html</span> <span class="hljs-comment"># Web应用入口HTML</span></span><br><span class="line">		|--<span class="hljs-built_in">--main.ssr.tsx</span> <span class="hljs-comment"># SSR入口文件</span></span><br><span class="line">		|--<span class="hljs-built_in">--main.web.tsx</span> <span class="hljs-comment"># Web入口文件</span></span><br><span class="line">|--<span class="hljs-built_in">--index.js</span> <span class="hljs-comment">#　express服务器入口</span></span><br><span class="line">|--<span class="hljs-built_in">--package.json</span></span><br><span class="line"><span class="hljs-built_in">|----tsconfig.json</span> <span class="hljs-comment"># TypeScript配置文件</span></span><br><span class="line">|--<span class="hljs-built_in">--webpack.config.js</span> <span class="hljs-comment"># Web应用webpack配置</span></span><br><span class="line">|--<span class="hljs-built_in">--webconfig.ssr.config.js</span> <span class="hljs-comment"># SSR应用Webpack配置</span></span><br></pre></td></tr></table></figure>
+<h2 id="工具配置"><a href="#工具配置" class="headerlink" title="工具配置"></a>工具配置</h2><p>1.TypeScript配置，新建tsconfig.json</p>
+<figure class="highlight json hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="hljs-attr">"compilerOptions"</span>: &#123;</span><br><span class="line">      <span class="hljs-attr">"target"</span>: <span class="hljs-string">"es5"</span>, </span><br><span class="line">      <span class="hljs-attr">"module"</span>: <span class="hljs-string">"commonjs"</span>, </span><br><span class="line">      <span class="hljs-attr">"jsx"</span>: <span class="hljs-string">"react"</span>, </span><br><span class="line">      <span class="hljs-attr">"strict"</span>: <span class="hljs-literal">true</span>,</span><br><span class="line">      <span class="hljs-attr">"lib"</span>: [</span><br><span class="line">        <span class="hljs-string">"DOM"</span></span><br><span class="line">      ],</span><br><span class="line">      <span class="hljs-attr">"esModuleInterop"</span>: <span class="hljs-literal">true</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="hljs-attr">"include"</span>: [</span><br><span class="line">      <span class="hljs-string">"./src/**/*.ts"</span>,</span><br><span class="line">      <span class="hljs-string">"./src/**/*.tsx"</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="hljs-attr">"exclude"</span>: [</span><br><span class="line">      <span class="hljs-string">"node_modules"</span></span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>主要是添加了jsx设置和include设置</p>
+<p>2.Web环境webpack配置，新建webpack.config.js</p>
+<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>);</span><br><span class="line"><span class="hljs-keyword">const</span> HtmlWebpackPlugin = <span class="hljs-built_in">require</span>(<span class="hljs-string">'html-webpack-plugin'</span>);</span><br><span class="line"><span class="hljs-keyword">const</span> MiniCssPlugin = <span class="hljs-built_in">require</span>(<span class="hljs-string">'mini-css-extract-plugin'</span>);</span><br><span class="line"></span><br><span class="line"><span class="hljs-built_in">module</span>.exports = &#123;</span><br><span class="line">    entry: <span class="hljs-string">'./src/main.web'</span>, <span class="hljs-comment">// 入口文件</span></span><br><span class="line">    output: &#123;</span><br><span class="line">        path: path.resolve(__dirname, <span class="hljs-string">'build'</span>), <span class="hljs-comment">// 输出目录</span></span><br><span class="line">        filename: <span class="hljs-string">'bundle.web.js'</span> <span class="hljs-comment">// 输出文件</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="hljs-built_in">module</span>: &#123;</span><br><span class="line">        rules: [</span><br><span class="line">            &#123;</span><br><span class="line">                test: <span class="hljs-regexp">/\.tsx?$/</span>, <span class="hljs-comment">// ts文件处理</span></span><br><span class="line">                use: <span class="hljs-string">'ts-loader'</span></span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                test: <span class="hljs-regexp">/\.scss$/</span>, <span class="hljs-comment">// scss文件处理</span></span><br><span class="line">                use: [MiniCssPlugin.loader, <span class="hljs-string">'css-loader'</span>, <span class="hljs-string">'sass-loader'</span>]</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                test: <span class="hljs-regexp">/\.css$/</span>, <span class="hljs-comment">// css文件处理</span></span><br><span class="line">                use: [MiniCssPlugin.loader, <span class="hljs-string">'css-loader'</span>]</span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;,</span><br><span class="line">    plugins: [</span><br><span class="line">        <span class="hljs-keyword">new</span> HtmlWebpackPlugin(&#123;</span><br><span class="line">            chunks: [<span class="hljs-string">'main'</span>], <span class="hljs-comment">// chunk名称，entry是字符串类型，因此chunk为main</span></span><br><span class="line">            filename: <span class="hljs-string">'index.html'</span>, <span class="hljs-comment">// 输出到build目录的文件名</span></span><br><span class="line">            template: <span class="hljs-string">'src/index.html'</span> <span class="hljs-comment">// 模板路径</span></span><br><span class="line">        &#125;),</span><br><span class="line">        <span class="hljs-keyword">new</span> MiniCssPlugin(&#123;</span><br><span class="line">            filename: <span class="hljs-string">'styles/[name].[contenthash:8].css'</span>, <span class="hljs-comment">// 输出的CSS文件名</span></span><br><span class="line">            chunkFilename: <span class="hljs-string">'styles/[name].[contenthash:8].css'</span></span><br><span class="line">        &#125;)</span><br><span class="line">    ],</span><br><span class="line">    resolve: &#123;</span><br><span class="line">        extensions: [<span class="hljs-string">'.ts'</span>, <span class="hljs-string">'.tsx'</span>, <span class="hljs-string">'.js'</span>, <span class="hljs-string">'.json'</span>] <span class="hljs-comment">// 添加ts和tsx后缀</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>3.SSR环境Webpack配置，新建webpack.ssr.config.js</p>
+<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>);</span><br><span class="line"><span class="hljs-keyword">const</span> MiniCssPlugin = <span class="hljs-built_in">require</span>(<span class="hljs-string">'mini-css-extract-plugin'</span>);</span><br><span class="line"></span><br><span class="line"><span class="hljs-built_in">module</span>.exports = &#123;</span><br><span class="line">    entry: <span class="hljs-string">'./src/main.ssr'</span>,</span><br><span class="line">    target: <span class="hljs-string">'node'</span>, <span class="hljs-comment">// 必须指定为Node.js，否则会打包Node.js内置模块</span></span><br><span class="line">    output: &#123;</span><br><span class="line">        path: path.resolve(__dirname, <span class="hljs-string">'build'</span>),</span><br><span class="line">        filename: <span class="hljs-string">'bundle.ssr.js'</span>,</span><br><span class="line">        libraryTarget: <span class="hljs-string">'commonjs2'</span> <span class="hljs-comment">// 打包为CommonJs模块才能被Node.js加载</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="hljs-built_in">module</span>: &#123;</span><br><span class="line">        rules: [</span><br><span class="line">            &#123;</span><br><span class="line">                test: <span class="hljs-regexp">/\.tsx?$/</span>,</span><br><span class="line">                use: <span class="hljs-string">'ts-loader'</span></span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                test: <span class="hljs-regexp">/\.scss$/</span>,</span><br><span class="line">                use: [MiniCssPlugin.loader, <span class="hljs-string">'css-loader'</span>, <span class="hljs-string">'sass-loader'</span>]</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                test: <span class="hljs-regexp">/\.css$/</span>,</span><br><span class="line">                use: [MiniCssPlugin.loader, <span class="hljs-string">'css-loader'</span>]</span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;,</span><br><span class="line">    plugins: [</span><br><span class="line">        <span class="hljs-keyword">new</span> MiniCssPlugin(&#123;</span><br><span class="line">            filename: <span class="hljs-string">'styles/[name].[contenthash:8].css'</span>,</span><br><span class="line">            chunkFilename: <span class="hljs-string">'styles/[name].[contenthash:8].css'</span></span><br><span class="line">        &#125;)</span><br><span class="line">    ],</span><br><span class="line">    resolve: &#123;</span><br><span class="line">        extensions: [<span class="hljs-string">'.ts'</span>, <span class="hljs-string">'.tsx'</span>, <span class="hljs-string">'.js'</span>, <span class="hljs-string">'.json'</span>]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>4.package.json添加npm命令</p>
+<figure class="highlight json hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="hljs-attr">"scripts"</span>: &#123;</span><br><span class="line">    <span class="hljs-attr">"build"</span>: <span class="hljs-string">"webpack"</span>,</span><br><span class="line">    <span class="hljs-attr">"start"</span>: <span class="hljs-string">"webpack-dev-server"</span>,</span><br><span class="line">    <span class="hljs-attr">"build-ssr"</span>: <span class="hljs-string">"webpack --config webpack.ssr.config.js"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="应用编码"><a href="#应用编码" class="headerlink" title="应用编码"></a>应用编码</h2><p>src/home/index.tsx</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import React from &apos;react&apos;;</span><br><span class="line">import &apos;./index.scss&apos;;</span><br><span class="line"></span><br><span class="line">export default class Home extends React.Component &#123;</span><br><span class="line">    render() &#123;</span><br><span class="line">        return (</span><br><span class="line">            &lt;div className=&quot;main&quot;&gt;首页&lt;/div&gt;</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>src/home/index.scss</p>
+<figure class="highlight scss hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.main</span> &#123;</span><br><span class="line">    <span class="hljs-attribute">color</span>: red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>src/signin/index.tsx</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import React from &apos;react&apos;;</span><br><span class="line">import &#123; withRouter &#125; from &apos;react-router-dom&apos;;</span><br><span class="line"></span><br><span class="line">function SignIn(props: any) &#123;</span><br><span class="line">    return (</span><br><span class="line">        &lt;button onClick=&#123;() =&gt; props.history.replace(&apos;/&apos;)&#125;&gt;登录&lt;/button&gt;</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br><span class="line">export default withRouter(SignIn);</span><br></pre></td></tr></table></figure>
+<p>src/App.tsx</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">import React from &apos;react&apos;;</span><br><span class="line">import &#123; Switch, Route, Link &#125; from &apos;react-router-dom&apos;; // router</span><br><span class="line"></span><br><span class="line">// 导入页面组件</span><br><span class="line">import Home from &apos;./home&apos;;</span><br><span class="line">import SignIn from &apos;./signin&apos;;</span><br><span class="line"></span><br><span class="line">// 导出路由组件配置</span><br><span class="line">export default function App() &#123;</span><br><span class="line">    return (</span><br><span class="line">        &lt;Switch&gt;</span><br><span class="line">            &lt;Route path=&quot;/signin&quot; component=&#123;SignIn&#125; /&gt;</span><br><span class="line">            &lt;Route path=&quot;/&quot; component=&#123;Home&#125; /&gt;</span><br><span class="line">        &lt;/Switch&gt;</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>index.html</p>
+<figure class="highlight html hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">"en"</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"viewport"</span> <span class="hljs-attr">content</span>=<span class="hljs-string">"width=device-width, initial-scale=1.0"</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Hello World<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"app"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>src/main.ssr.tsx</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">import React from &apos;react&apos;;</span><br><span class="line">import &#123; StaticRouter, Link &#125; from &apos;react-router-dom&apos;;</span><br><span class="line">import &#123; renderToString &#125; from &apos;react-dom/server&apos;;</span><br><span class="line">import App from &apos;./App&apos;; // 将路由组件导入进来</span><br><span class="line"></span><br><span class="line">export function render(req: any) &#123; // 导出一个渲染函数，根据请求链接进行分发</span><br><span class="line">    const context = &#123;&#125;;</span><br><span class="line">    const html = renderToString(</span><br><span class="line">        &lt;StaticRouter location=&#123;req.url&#125; context=&#123;context&#125;&gt;</span><br><span class="line">            &lt;header&gt;</span><br><span class="line">                &lt;nav&gt;</span><br><span class="line">                    &lt;ul&gt;</span><br><span class="line">                        &lt;li&gt;&lt;Link to=&quot;/&quot;&gt;首页&lt;/Link&gt;&lt;/li&gt;</span><br><span class="line">                        &lt;li&gt;&lt;Link to=&quot;/signin&quot;&gt;登录&lt;/Link&gt;&lt;/li&gt;</span><br><span class="line">                    &lt;/ul&gt;</span><br><span class="line">                &lt;/nav&gt;</span><br><span class="line">            &lt;/header&gt;</span><br><span class="line">            &lt;App /&gt;</span><br><span class="line">        &lt;/StaticRouter&gt;</span><br><span class="line">    );</span><br><span class="line">    return [html, context]; // 导出context和html渲染结果</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>src/main.web.tsx</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">import React from &apos;react&apos;;</span><br><span class="line">import ReactDOM from &apos;react-dom&apos;;</span><br><span class="line">import &#123; BrowserRouter, Link &#125; from &apos;react-router-dom&apos;;</span><br><span class="line">import App from &apos;./App&apos;;</span><br><span class="line"></span><br><span class="line">ReactDOM.render( // 渲染路由</span><br><span class="line">    &lt;BrowserRouter&gt;</span><br><span class="line">        &lt;header&gt;</span><br><span class="line">            &lt;nav&gt;</span><br><span class="line">                &lt;ul&gt;</span><br><span class="line">                    &lt;li&gt;&lt;Link to=&quot;/&quot;&gt;首页&lt;/Link&gt;&lt;/li&gt;</span><br><span class="line">                    &lt;li&gt;&lt;Link to=&quot;/signin&quot;&gt;登录&lt;/Link&gt;&lt;/li&gt;</span><br><span class="line">                &lt;/ul&gt;</span><br><span class="line">            &lt;/nav&gt;</span><br><span class="line">        &lt;/header&gt;</span><br><span class="line">        &lt;App /&gt;</span><br><span class="line">    &lt;/BrowserRouter&gt;, document.querySelector(&apos;#app&apos;))</span><br></pre></td></tr></table></figure>
+<p>index.js</p>
+<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">'express'</span>); <span class="hljs-comment">// 加载express</span></span><br><span class="line"><span class="hljs-keyword">const</span> &#123; render &#125; = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./build/bundle.ssr'</span>); <span class="hljs-comment">// 加载ssr</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> app = express();</span><br><span class="line"></span><br><span class="line">app.use(express.static(<span class="hljs-string">'.'</span>)) <span class="hljs-comment">// 静态资源配置</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.get(<span class="hljs-string">'/*'</span>, (req, res) =&gt; &#123; <span class="hljs-comment">// 所有请求都走这里处理，必须加*</span></span><br><span class="line">    <span class="hljs-keyword">const</span> [html, context] = render(req)</span><br><span class="line">    <span class="hljs-built_in">console</span>.log(context) <span class="hljs-comment">// context目前没发现啥用处</span></span><br><span class="line">    res.send(<span class="hljs-string">`</span></span><br><span class="line"><span class="hljs-string">    &lt;html&gt;</span></span><br><span class="line"><span class="hljs-string">    &lt;head&gt;</span></span><br><span class="line"><span class="hljs-string">        &lt;meta charset="UTF-8"&gt;</span></span><br><span class="line"><span class="hljs-string">        &lt;title&gt;SSR&lt;/title&gt;</span></span><br><span class="line"><span class="hljs-string">        &lt;link href="build/styles/main.8f173ff5.css" rel="stylesheet"&gt;</span></span><br><span class="line"><span class="hljs-string">    &lt;/head&gt;</span></span><br><span class="line"><span class="hljs-string">    &lt;body&gt;</span></span><br><span class="line"><span class="hljs-string">        &lt;div id="app"&gt;<span class="hljs-subst">$&#123;html&#125;</span>&lt;/div&gt;</span></span><br><span class="line"><span class="hljs-string">        &lt;script src="build/bundle.web.js"&gt;&lt;/script&gt;</span></span><br><span class="line"><span class="hljs-string">    &lt;/body&gt;</span></span><br><span class="line"><span class="hljs-string">    &lt;/html&gt;</span></span><br><span class="line"><span class="hljs-string">    `</span>);</span><br><span class="line">    <span class="hljs-built_in">console</span>.log(context)</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.listen(<span class="hljs-number">8080</span>)</span><br></pre></td></tr></table></figure>
+<p>注意：</p>
+<ul>
+<li>静态资源配置必须在最上面</li>
+<li>app.get(‘/<em>‘)必须有</em>号</li>
+<li>HTML字符串必须手动引入CSS和Web构建结果</li>
+</ul>
+<h2 id="执行构建"><a href="#执行构建" class="headerlink" title="执行构建"></a>执行构建</h2><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm run build <span class="hljs-comment"># 构建Web</span></span><br><span class="line">npm run build-ssr <span class="hljs-comment">#　构建SSR</span></span><br><span class="line">node index.js <span class="hljs-comment"># 启动Express服务器</span></span><br></pre></td></tr></table></figure>
+<h2 id="查看结果"><a href="#查看结果" class="headerlink" title="查看结果"></a>查看结果</h2><p>首页样式</p>
+<p><img src="https://static.ddhigh.com/blog/2020-03-02-093301.png" alt="image-20200302173258430"></p>
+<p>首页代码</p>
+<p><img src="https://static.ddhigh.com/blog/2020-03-02-093323.png" alt="image-20200302173322601"></p>
+<p>登录页样式</p>
+<p><img src="https://static.ddhigh.com/blog/2020-03-02-093346.png" alt="image-20200302173344488"></p>
+<p>登录页代码</p>
+<p><img src="https://static.ddhigh.com/blog/2020-03-02-093408.png" alt="image-20200302173405907"></p>
+<h2 id="源码地址"><a href="#源码地址" class="headerlink" title="源码地址"></a>源码地址</h2><p>Https://github.com/xialeistudio/react-ssr-example</p>
+<p><img src="https://static.ddhigh.com/blog/2019-10-22-102654.jpg" alt="0.jpeg"></p>
+
+            </div>
+            
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/webpack/">webpack</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <div class="social-share" data-disabled="qzone,facebook,twitter,tencent,linkedin,douban,diandian,google"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev"
+                href="/2020/03/06/webpack-optimize.html">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">Webpack4不求人(3) ——性能优化</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next"
+                href="/2020/02/11/shell-operator-flow-control.html">
+                <span class="level-item">Shell脚本快速入门(2)</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">评论</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '1ae09f5aa5dcce937e94',
+        clientSecret: '55c4032692dbcb0ee13771da7dc95f22cf9ae8e1',
+        id: '2b6b76d0fb7a4a7a0c4fef4e63eac956',
+        repo: 'xialeistudio.github.io',
+        owner: 'xialeistudio',
+        admin: "xialeistudio",
+        createIssueManually: false,
+        distractionFreeMode: false
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                    <figure class="image is-128x128 has-mb-6">
+                        <img class="is-rounded" src="https://static.ddhigh.com/blog/2019-09-18-094336.jpg"
+                            alt="夏磊">
+                    </figure>
+                    
+                    <p class="is-size-4 is-block">
+                        夏磊
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        Full-Stack
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>China</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        文章
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        264
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        分类
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        25
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        标签
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        29
+                    </p>
+                </div>
+            </div>
+        </nav>
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://github.com/xialeistudio" target="_blank">
+                关注我</a>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Github"
+                href="https://github.com/xialeistudio">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="SegmentFault"
+                href="https://segmentfault.com/xialeistudio">
+                
+                <img style="width:16px;height:16px" src="https://static.ddhigh.com/blog/2019-09-18-115828.png?imageView2/1/w/40/h/40" />
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="RSS"
+                href="/atom.xml">
+                
+                <i class="fas fa-rss"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+    
+        
+
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                出版书籍
+            </h3>
+            <ul class="menu-list" style="display: flex;flex-wrap:wrap">
+                
+                <li style="flex: 1;margin:0 10px 10px 0">
+                    <a href="http://www.tup.tsinghua.edu.cn/booksCenter/book_08079501.html" target="_blank">
+                        <img style="width: 90px;height:120px" src="https://static.ddhigh.com/blog/2019-09-18-095311.jpg?imageView2/2/w/200" alt="ThinkPHP5实战" />
+                    </a>
+                </li>
+                
+                <li style="flex: 1;margin:0 10px 10px 0">
+                    <a href="http://www.tup.tsinghua.edu.cn/booksCenter/book_06867701.html" target="_blank">
+                        <img style="width: 90px;height:120px" src="https://static.ddhigh.com/blog/2019-09-18-095415.jpg?imageView2/2/w/200" alt="ThinkPHP实战" />
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+    
+        
+
+
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                微信公众号
+            </h3>
+            <p>欢迎关注我的公众号<br>学习最新、最热的JS/TS知识！</p>
+            <img src="https://static.ddhigh.com/blog/2019-09-19-115314.jpg" width="200" height="200" alt="">
+        </div>
+    </div>
+</div>
+
+
+    
+        
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                目录
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#同构应用">
+        <span class="has-mr-6">1</span>
+        <span>同构应用</span>
+        </a></li><li>
+        <a class="is-flex" href="#SSR流程">
+        <span class="has-mr-6">2</span>
+        <span>SSR流程</span>
+        </a></li><li>
+        <a class="is-flex" href="#初始化项目">
+        <span class="has-mr-6">3</span>
+        <span>初始化项目</span>
+        </a></li><li>
+        <a class="is-flex" href="#目录结构">
+        <span class="has-mr-6">4</span>
+        <span>目录结构</span>
+        </a></li><li>
+        <a class="is-flex" href="#工具配置">
+        <span class="has-mr-6">5</span>
+        <span>工具配置</span>
+        </a></li><li>
+        <a class="is-flex" href="#应用编码">
+        <span class="has-mr-6">6</span>
+        <span>应用编码</span>
+        </a></li><li>
+        <a class="is-flex" href="#执行构建">
+        <span class="has-mr-6">7</span>
+        <span>执行构建</span>
+        </a></li><li>
+        <a class="is-flex" href="#查看结果">
+        <span class="has-mr-6">8</span>
+        <span>查看结果</span>
+        </a></li><li>
+        <a class="is-flex" href="#源码地址">
+        <span class="has-mr-6">9</span>
+        <span>源码地址</span>
+        </a></li></ul>
+        </div>
+    </div>
+</div>
+
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
+        
+        </div>
+    
+</div>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.svg" alt="Webpack4不求人(2) ——手把手搭建TypeScript+React16+ReactRouter5同构应用脚手架" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 xialeistudio&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                
+                </p>
+                <p class="is-size-7">
+                    
+                    <a target="_blank" href="http://www.miitbeian.gov.cn/">粤ICP备14062481号-1</a>
+                    
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="GitHub" href="https://github.com/xialeistudio">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+<script>
+    var IcarusThemeSettings = {
+        article: {
+            highlight: {
+                clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+    
+    <script src="/js/animation.js"></script>
+    
+
+
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+<script src="https://my.openwrite.cn/js/readmore.js" type="text/javascript"></script>
+<script>
+    const userAgent = window.navigator.userAgent;
+    const isDesktop = userAgent.indexOf('Android') === -1 && userAgent.indexOf('iPad') === -1 && userAgent.indexOf('iPhone') === -1;
+    const btw = new BTWPlugin();
+    btw.init({
+        id: isDesktop ? 'container' : 'aaa',
+        blogId: '17768-1572420593825-274',
+        name: 'NodeJs之路',
+        qrcode: 'https://static.ddhigh.com/blog/2019-10-30-073944.jpg',
+        keyword: 'blog',
+    });
+</script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

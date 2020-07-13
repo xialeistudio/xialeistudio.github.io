@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 3.9.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>TS简明教程(2) - 每天进步一点点</title>
+
+
+
+
+
+
+<link rel="alternative" href="/" title="TS简明教程(2)" type="application/atom+xml">
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+<script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?78141f99bbb49f1564a7af89344f5add";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                <img src="/images/logo.svg" alt="TS简明教程(2)" height="28">
+                
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                    href="/">主页</a>
+                
+                <a class="navbar-item"
+                    href="/archives">归档</a>
+                
+                <a class="navbar-item"
+                    href="/categories">分类</a>
+                
+                <a class="navbar-item"
+                    href="/tags">标签</a>
+                
+                <a class="navbar-item"
+                    href="/suggestion">建议</a>
+                
+                <a class="navbar-item"
+                    href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                
+                
+                <a class="navbar-item" target="_blank" title="GitHub"
+                    href="https://github.com/xialeistudio">
+                    
+                    <i class="fab fa-github"></i>
+                    
+                </a>
+                
+                <a class="navbar-item" target="_blank" title="SegmentFault"
+                    href="https://segmentfault.com/u/xialeistudio">
+                    
+                    <img src="https://static.ddhigh.com/blog/2019-09-18-115828.png?imageView2/1/w/40/h/40" style="width:16px;height:16px" />
+                    
+                </a>
+                
+                <a class="navbar-item" target="_blank" title="QQ"
+                    href="//shang.qq.com/wpa/qunwpa?idkey=83c6884d7520f22891e3f82c76f42baa5c53af91ce8d31ed2641248f8730687b">
+                    
+                    <i class="fab fa-qq"></i>
+                    
+                </a>
+                
+                
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2019-07-29T02:11:30.000Z">2019-07-29</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/frontend/">frontend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/frontend/typescript/">typescript</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    11 分钟 读完 (大约 1669 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            TS简明教程(2)
+            
+        </h1>
+        <div class="content">
+            
+            <div id="container">
+                <p>本文是TS简明教程的第二篇，讲解面向对象相关的知识。</p>
+<h2 id="类"><a href="#类" class="headerlink" title="类"></a>类</h2><p>传统JS使用<code>函数</code>和<code>原型链</code>进行集成，在<code>ES6</code>出现了<code>class</code>关键，JS也能使用传统OOP的方式进行继承，但是还是存在一定的局限性，在TS中，OOP已经和传统语言差不多。</p>
+<figure class="highlight typescript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">class</span> Parent &#123;</span><br><span class="line">    name: <span class="hljs-built_in">string</span>;</span><br><span class="line">    age: <span class="hljs-built_in">number</span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">constructor</span>(<span class="hljs-params">name: <span class="hljs-built_in">string</span>, age: <span class="hljs-built_in">number</span></span>) &#123;</span><br><span class="line">        <span class="hljs-keyword">this</span>.name = name;</span><br><span class="line">        <span class="hljs-keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    say() &#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-string">`name: <span class="hljs-subst">$&#123;<span class="hljs-keyword">this</span>.name&#125;</span>, age: <span class="hljs-subst">$&#123;<span class="hljs-keyword">this</span>.age&#125;</span>`</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> parent = <span class="hljs-keyword">new</span> Parent();</span><br><span class="line">parent.say();</span><br></pre></td></tr></table></figure>
+<p>可以看到TS的OOP写法和Java还是有点类似的。但是他两的构造方法名不同，TS构造方法名为<code>constructor</code>，Java是<code>类名</code>。</p>
+<h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><p>继承用来扩展现有的类，TS中这一点和传统语言一样使用<code>extends</code>语法。</p>
+<figure class="highlight typescript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">class</span> Parent &#123;</span><br><span class="line">    name: <span class="hljs-built_in">string</span>;</span><br><span class="line">    <span class="hljs-keyword">constructor</span>(<span class="hljs-params">name: <span class="hljs-built_in">string</span></span>) &#123;</span><br><span class="line">        <span class="hljs-keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">    say() &#123;</span><br><span class="line">        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Parent say: <span class="hljs-subst">$&#123;<span class="hljs-keyword">this</span>.name&#125;</span>`</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">class</span> Child <span class="hljs-keyword">extends</span> Parent &#123;</span><br><span class="line">    age: <span class="hljs-built_in">number</span>;</span><br><span class="line">    <span class="hljs-keyword">constructor</span>(<span class="hljs-params">name: <span class="hljs-built_in">string</span>, age: <span class="hljs-built_in">number</span></span>) &#123; <span class="hljs-comment">// 覆盖父类构造方法</span></span><br><span class="line">        <span class="hljs-keyword">super</span>(name); <span class="hljs-comment">// 调用父类构造方法</span></span><br><span class="line">        <span class="hljs-keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line">    say() &#123;</span><br><span class="line">        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Child say: <span class="hljs-subst">$&#123;<span class="hljs-keyword">this</span>.name&#125;</span> <span class="hljs-subst">$&#123;<span class="hljs-keyword">this</span>.age&#125;</span>`</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> child: Parent = <span class="hljs-keyword">new</span> Child(<span class="hljs-string">"haha"</span> ,<span class="hljs-number">1</span>);</span><br><span class="line">child.say(); <span class="hljs-comment">// 输出 Child say haha 1</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>子类存在构造方法时，必须<code>显示调用</code>父类构造方法<code>先有父亲，后有儿子</code></li>
+<li>TS方法调用是基于<code>值</code>而不是基于<code>类型声明</code>，比如<code>child</code>声明为<code>Parent</code>类型，但是值是子类型，所以调用方法时会调用<code>子类</code>的<code>say</code></li>
+</ol>
+<h2 id="访问限定符"><a href="#访问限定符" class="headerlink" title="访问限定符"></a>访问限定符</h2><h3 id="public"><a href="#public" class="headerlink" title="public"></a>public</h3><p>TS中方法和属性默认的访问限定符为<code>public</code>，所有外部或内部成员都可访问。</p>
+<figure class="highlight typescript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">class</span> Parent &#123;</span><br><span class="line">    <span class="hljs-keyword">public</span> name: <span class="hljs-built_in">string</span>; <span class="hljs-comment">// public可以不加</span></span><br><span class="line">    say() &#123;</span><br><span class="line">        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`say <span class="hljs-subst">$&#123;<span class="hljs-keyword">this</span>.name&#125;</span>`</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="hljs-keyword">const</span> p = <span class="hljs-keyword">new</span> Parent();</span><br><span class="line">p.name = <span class="hljs-string">'hello'</span>;</span><br><span class="line">p.say(); <span class="hljs-comment">// 输出 say hello</span></span><br></pre></td></tr></table></figure>
+<h3 id="private"><a href="#private" class="headerlink" title="private"></a>private</h3><p>私有访问，只能在<code>本类</code>访问,<code>子类和其他类都不行</code>。</p>
+<figure class="highlight typescript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">class</span> Parent &#123;</span><br><span class="line">    <span class="hljs-keyword">private</span> name: <span class="hljs-built_in">string</span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">private</span> say() &#123;</span><br><span class="line">        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`say <span class="hljs-subst">$&#123;<span class="hljs-keyword">this</span>.name&#125;</span>`</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="hljs-keyword">const</span> p = <span class="hljs-keyword">new</span> Parent();</span><br><span class="line">p.name = <span class="hljs-string">'hello'</span>; <span class="hljs-comment">// 错误，private限定的属性不能被外部访问</span></span><br><span class="line">p.say(); <span class="hljs-comment">// 错误，private限定的访问不能被外部访问</span></span><br></pre></td></tr></table></figure>
+<h3 id="protected"><a href="#protected" class="headerlink" title="protected"></a>protected</h3><p>保护性访问，只能<code>被本类或本类的子类(子类的子类也可以访问)</code>。</p>
+<figure class="highlight typescript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">class</span> Parent &#123;</span><br><span class="line">    <span class="hljs-keyword">protected</span> name: <span class="hljs-built_in">string</span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">constructor</span>(<span class="hljs-params">name: <span class="hljs-built_in">string</span></span>) &#123;</span><br><span class="line">        <span class="hljs-keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">protected</span> say() &#123;</span><br><span class="line">        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`say <span class="hljs-subst">$&#123;<span class="hljs-keyword">this</span>.name&#125;</span>`</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">class</span> Child <span class="hljs-keyword">extends</span> Parent &#123;</span><br><span class="line">    <span class="hljs-keyword">public</span> say() &#123; <span class="hljs-comment">// 提升访问性</span></span><br><span class="line">        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`say <span class="hljs-subst">$&#123;<span class="hljs-keyword">this</span>.name&#125;</span>`</span>); <span class="hljs-comment">// 访问父类属性</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="hljs-keyword">const</span> c = <span class="hljs-keyword">new</span> Child(<span class="hljs-string">'hello'</span>);</span><br><span class="line">c.say(); <span class="hljs-comment">// 输出 say hello</span></span><br></pre></td></tr></table></figure>
+<p>访问限定符只能提升，不能降低，如下例子是<code>无法通过编译的</code>：</p>
+<figure class="highlight typescript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">class</span> Parent &#123;</span><br><span class="line">    <span class="hljs-keyword">protected</span> name: <span class="hljs-built_in">string</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">class</span> Child <span class="hljs-keyword">extends</span> Parent &#123;</span><br><span class="line">    <span class="hljs-keyword">private</span> name: <span class="hljs-built_in">string</span>; <span class="hljs-comment">// 错误，子类访问性必须&gt;=父类的访问性</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="只读限定"><a href="#只读限定" class="headerlink" title="只读限定"></a>只读限定</h2><p>TS使用<code>readonly</code>声明只读<code>属性(方法不能使用)</code>，必须在<code>声明时</code>或者<code>构造时</code>进行赋值,<code>其他地方不能赋值</code></p>
+<figure class="highlight typescript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">class</span> Parent &#123;</span><br><span class="line">    <span class="hljs-keyword">private</span> readonly name = <span class="hljs-string">'hello'</span>;</span><br><span class="line">    <span class="hljs-keyword">private</span> readonly age: <span class="hljs-built_in">number</span>;</span><br><span class="line">    <span class="hljs-keyword">constructor</span>(<span class="hljs-params">age: <span class="hljs-built_in">number</span></span>) &#123;</span><br><span class="line">        <span class="hljs-keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="参数属性"><a href="#参数属性" class="headerlink" title="参数属性"></a>参数属性</h2><p>在上例中我们在构造方法中使用<code>this.age = age</code>对已存在的<code>私有只读属性age</code>进行了赋值。由于该操作时常用操作，所以TS有了更加便捷的写法：</p>
+<figure class="highlight typescript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">class</span> Parent &#123;</span><br><span class="line">    <span class="hljs-keyword">constructor</span>(<span class="hljs-params">readonly name: <span class="hljs-built_in">string</span>, <span class="hljs-keyword">private</span> readonly age: <span class="hljs-built_in">number</span></span>) &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    say() &#123;</span><br><span class="line">        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`say <span class="hljs-subst">$&#123;<span class="hljs-keyword">this</span>.name&#125;</span> <span class="hljs-subst">$&#123;<span class="hljs-keyword">this</span>.age&#125;</span>`</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上例中声明了<code>公有只读的name属性，私有只读的age属性</code></p>
+<h2 id="getter-amp-amp-setter"><a href="#getter-amp-amp-setter" class="headerlink" title="getter &amp;&amp; setter"></a>getter &amp;&amp; setter</h2><p>在传统语言中，几乎不会直接声明公有属性，然后对其进行操作，都会先定义私有属性，然后提供<code>getter</code>和<code>setter</code>方法对其操作(<code>Java中很多类都是这种情况</code>)</p>
+<figure class="highlight typescript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">class</span> Parent &#123;</span><br><span class="line">    <span class="hljs-keyword">private</span> _name: <span class="hljs-built_in">string</span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">get</span> name(): <span class="hljs-built_in">string</span> &#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">set</span> name(name: <span class="hljs-built_in">string</span>) &#123;</span><br><span class="line">        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`name设置前: <span class="hljs-subst">$&#123;<span class="hljs-keyword">this</span>._name&#125;</span> 设置后: <span class="hljs-subst">$&#123;name&#125;</span>`</span>);</span><br><span class="line">        <span class="hljs-keyword">this</span>._name = name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> parent = <span class="hljs-keyword">new</span> Parent();</span><br><span class="line">parent.name = <span class="hljs-string">'ok'</span>; <span class="hljs-comment">// 可以直接使用赋值语句，但是会自动调用set name(name: string)方法</span></span><br></pre></td></tr></table></figure>
+<p>getter和setter方法提高了开发者对属性的控制，一起对属性的访问都是可控的，为以后的扩展性打下了基础（比如如果需要加缓存，我们可以在set时设置缓存,get时读取缓存，如果是直接操作属性的话，该功能实现起来很麻烦</p>
+<h2 id="静态属性-amp-amp-静态方法"><a href="#静态属性-amp-amp-静态方法" class="headerlink" title="静态属性 &amp;&amp; 静态方法"></a>静态属性 &amp;&amp; 静态方法</h2><p>以上讨论的都是<code>实例属性和梳理方法</code>，需要有实例才能调用，如果有些属性或方法并不是存在于实例上时可以使用静态方法或静态属性</p>
+<figure class="highlight typescript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">class</span> Parent &#123;</span><br><span class="line">    <span class="hljs-keyword">static</span> name: <span class="hljs-built_in">string</span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">static</span> say() &#123;</span><br><span class="line">        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`name <span class="hljs-subst">$&#123;<span class="hljs-keyword">this</span>.name&#125;</span>`</span>); <span class="hljs-comment">// 方法是静态，属性是静态时可以使用this</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">Parent.say();<span class="hljs-comment">// 使用类名调用静态方法</span></span><br></pre></td></tr></table></figure>
+<p>需要注意的是<code>实例可以直接调用静态，静态不能直接调用实例</code>，因为<code>实例需要实例化后调用</code></p>
+<h2 id="抽象类"><a href="#抽象类" class="headerlink" title="抽象类"></a>抽象类</h2><p>传统语言中接口只包含实现，不包含细节。而抽象类可以包含细节。一般来说，有些公有方法可以放到抽象类做，不同的子类完成不同功能的代码可以放到抽象类做。</p>
+<figure class="highlight typescript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">abstract</span> <span class="hljs-keyword">class</span> Animal &#123;</span><br><span class="line">    <span class="hljs-keyword">abstract</span> say(): <span class="hljs-built_in">void</span>; <span class="hljs-comment">// 声明抽象方法，子类必须实现</span></span><br><span class="line"></span><br><span class="line">    eat() &#123;</span><br><span class="line">        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`animal eat`</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">class</span> Human <span class="hljs-keyword">extends</span> Animal &#123; <span class="hljs-comment">// 使用extends关键字</span></span><br><span class="line">    say() &#123;</span><br><span class="line">        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'human say words'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">class</span> Dog <span class="hljs-keyword">extends</span> Animal &#123;</span><br><span class="line">    say() &#123;</span><br><span class="line">        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'dog say wangwang'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h2><p>接口用来限定子类的行为，不关心具体实现。与传统语言不同的是,TS接口还可以限定变量或常量的属性</p>
+<p>限定子类行文：</p>
+<figure class="highlight typescript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">interface</span> Animal &#123;</span><br><span class="line">    say(): <span class="hljs-built_in">void</span>;</span><br><span class="line">    eat(): <span class="hljs-built_in">void</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">class</span> Human <span class="hljs-keyword">implements</span> Animal &#123;</span><br><span class="line">    say() &#123;</span><br><span class="line">        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'human say'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    eat() &#123;</span><br><span class="line">        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'human eat'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>限定变量属性：<br><figure class="highlight typescript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">interface</span> A &#123;</span><br><span class="line">    name?: <span class="hljs-built_in">string</span>;</span><br><span class="line">    age: <span class="hljs-built_in">number</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="hljs-keyword">const</span> obj: A = &#123;</span><br><span class="line">    age: <span class="hljs-number">10</span>,</span><br><span class="line">    <span class="hljs-comment">// name是可选的</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<h3 id="可索引类型"><a href="#可索引类型" class="headerlink" title="可索引类型"></a>可索引类型</h3><p>使用<code>可索引类型</code>来<code>描述</code>可以通过<code>索引访问得到</code>的类型。如<code>person[&quot;name&quot;]</code>,<code>list[0]</code></p>
+<figure class="highlight typescript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">interface</span> HashMap &#123;</span><br><span class="line">    [key: <span class="hljs-built_in">string</span>]: <span class="hljs-built_in">any</span>; <span class="hljs-comment">// 冒号左边为属性名类型，右边为值类型</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> map: HashMap = &#123;&#125;;</span><br><span class="line">map[<span class="hljs-string">"name"</span>] = <span class="hljs-string">"1"</span>;</span><br><span class="line">map.a = <span class="hljs-string">"2"</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="接口继承"><a href="#接口继承" class="headerlink" title="接口继承"></a>接口继承</h3><p>与类继承类似，接口也可以通过继承来扩展现有的功能：</p>
+<figure class="highlight typescript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">interface</span> Animal &#123;</span><br><span class="line">    eat(): <span class="hljs-built_in">void</span>; <span class="hljs-comment">// 动物会吃，但是怎么吃的不管</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="hljs-keyword">interface</span> Human <span class="hljs-keyword">extends</span> Animal &#123;</span><br><span class="line">    say(): <span class="hljs-built_in">void</span>; <span class="hljs-comment">// 人会说话，但是怎么说，说什么不管</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="混合类型"><a href="#混合类型" class="headerlink" title="混合类型"></a>混合类型</h3><p>JS中，函数可以直接调用也可以通过对象方式调用，TS中可以通过接口声明被修饰的函数支持的调用方式：</p>
+<figure class="highlight typescript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">interface</span> Counter &#123;</span><br><span class="line">    (start: <span class="hljs-built_in">number</span>): <span class="hljs-built_in">string</span>;</span><br><span class="line">    step: <span class="hljs-built_in">number</span>;</span><br><span class="line">    reset(): <span class="hljs-built_in">void</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getCounter</span>(<span class="hljs-params"></span>): <span class="hljs-title">Counter</span> </span>&#123;</span><br><span class="line">    <span class="hljs-keyword">const</span> counter = &lt;Counter&gt; <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">start: <span class="hljs-built_in">number</span></span>) </span>&#123;&#125;;</span><br><span class="line">    counter.step = <span class="hljs-number">1</span>;</span><br><span class="line">    counter.reset = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>&#123;&#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="hljs-keyword">const</span> c = getCounter();</span><br><span class="line">c(<span class="hljs-number">1</span>);</span><br><span class="line">c.reset();</span><br><span class="line">c.step = <span class="hljs-number">2</span>;</span><br></pre></td></tr></table></figure>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>面向对象中的类和接口内容实在是太多了，本文只选择了开发中常用到的用法进行说明，不足之处，敬请包涵。</p>
+
+            </div>
+            
+        </div>
+        
+        
+        
+        <div class="social-share" data-disabled="qzone,facebook,twitter,tencent,linkedin,douban,diandian,google"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev"
+                href="/2019/07/30/typescript-quick-guide3.html">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">TS简明教程(3)</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next"
+                href="/2019/07/27/miniprogram-unit-test.html">
+                <span class="level-item">手把手从零开始小程序单元测试(附避坑指南以及源码跟踪)</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">评论</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '1ae09f5aa5dcce937e94',
+        clientSecret: '55c4032692dbcb0ee13771da7dc95f22cf9ae8e1',
+        id: '11fe2e4661939b9f63d7e52a31d513c1',
+        repo: 'xialeistudio.github.io',
+        owner: 'xialeistudio',
+        admin: "xialeistudio",
+        createIssueManually: false,
+        distractionFreeMode: false
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                    <figure class="image is-128x128 has-mb-6">
+                        <img class="is-rounded" src="https://static.ddhigh.com/blog/2019-09-18-094336.jpg"
+                            alt="夏磊">
+                    </figure>
+                    
+                    <p class="is-size-4 is-block">
+                        夏磊
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        Full-Stack
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>China</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        文章
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        264
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        分类
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        25
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        标签
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        29
+                    </p>
+                </div>
+            </div>
+        </nav>
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://github.com/xialeistudio" target="_blank">
+                关注我</a>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Github"
+                href="https://github.com/xialeistudio">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="SegmentFault"
+                href="https://segmentfault.com/xialeistudio">
+                
+                <img style="width:16px;height:16px" src="https://static.ddhigh.com/blog/2019-09-18-115828.png?imageView2/1/w/40/h/40" />
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="RSS"
+                href="/atom.xml">
+                
+                <i class="fas fa-rss"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+    
+        
+
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                出版书籍
+            </h3>
+            <ul class="menu-list" style="display: flex;flex-wrap:wrap">
+                
+                <li style="flex: 1;margin:0 10px 10px 0">
+                    <a href="http://www.tup.tsinghua.edu.cn/booksCenter/book_08079501.html" target="_blank">
+                        <img style="width: 90px;height:120px" src="https://static.ddhigh.com/blog/2019-09-18-095311.jpg?imageView2/2/w/200" alt="ThinkPHP5实战" />
+                    </a>
+                </li>
+                
+                <li style="flex: 1;margin:0 10px 10px 0">
+                    <a href="http://www.tup.tsinghua.edu.cn/booksCenter/book_06867701.html" target="_blank">
+                        <img style="width: 90px;height:120px" src="https://static.ddhigh.com/blog/2019-09-18-095415.jpg?imageView2/2/w/200" alt="ThinkPHP实战" />
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+    
+        
+
+
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                微信公众号
+            </h3>
+            <p>欢迎关注我的公众号<br>学习最新、最热的JS/TS知识！</p>
+            <img src="https://static.ddhigh.com/blog/2019-09-19-115314.jpg" width="200" height="200" alt="">
+        </div>
+    </div>
+</div>
+
+
+    
+        
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                目录
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#类">
+        <span class="has-mr-6">1</span>
+        <span>类</span>
+        </a></li><li>
+        <a class="is-flex" href="#继承">
+        <span class="has-mr-6">2</span>
+        <span>继承</span>
+        </a></li><li>
+        <a class="is-flex" href="#访问限定符">
+        <span class="has-mr-6">3</span>
+        <span>访问限定符</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#public">
+        <span class="has-mr-6">3.1</span>
+        <span>public</span>
+        </a></li><li>
+        <a class="is-flex" href="#private">
+        <span class="has-mr-6">3.2</span>
+        <span>private</span>
+        </a></li><li>
+        <a class="is-flex" href="#protected">
+        <span class="has-mr-6">3.3</span>
+        <span>protected</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#只读限定">
+        <span class="has-mr-6">4</span>
+        <span>只读限定</span>
+        </a></li><li>
+        <a class="is-flex" href="#参数属性">
+        <span class="has-mr-6">5</span>
+        <span>参数属性</span>
+        </a></li><li>
+        <a class="is-flex" href="#getter-amp-amp-setter">
+        <span class="has-mr-6">6</span>
+        <span>getter &amp;&amp; setter</span>
+        </a></li><li>
+        <a class="is-flex" href="#静态属性-amp-amp-静态方法">
+        <span class="has-mr-6">7</span>
+        <span>静态属性 &amp;&amp; 静态方法</span>
+        </a></li><li>
+        <a class="is-flex" href="#抽象类">
+        <span class="has-mr-6">8</span>
+        <span>抽象类</span>
+        </a></li><li>
+        <a class="is-flex" href="#接口">
+        <span class="has-mr-6">9</span>
+        <span>接口</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#可索引类型">
+        <span class="has-mr-6">9.1</span>
+        <span>可索引类型</span>
+        </a></li><li>
+        <a class="is-flex" href="#接口继承">
+        <span class="has-mr-6">9.2</span>
+        <span>接口继承</span>
+        </a></li><li>
+        <a class="is-flex" href="#混合类型">
+        <span class="has-mr-6">9.3</span>
+        <span>混合类型</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#结语">
+        <span class="has-mr-6">10</span>
+        <span>结语</span>
+        </a></li></ul>
+        </div>
+    </div>
+</div>
+
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
+        
+        </div>
+    
+</div>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.svg" alt="TS简明教程(2)" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 xialeistudio&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                
+                </p>
+                <p class="is-size-7">
+                    
+                    <a target="_blank" href="http://www.miitbeian.gov.cn/">粤ICP备14062481号-1</a>
+                    
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="GitHub" href="https://github.com/xialeistudio">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+<script>
+    var IcarusThemeSettings = {
+        article: {
+            highlight: {
+                clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+    
+    <script src="/js/animation.js"></script>
+    
+
+
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+<script src="https://my.openwrite.cn/js/readmore.js" type="text/javascript"></script>
+<script>
+    const userAgent = window.navigator.userAgent;
+    const isDesktop = userAgent.indexOf('Android') === -1 && userAgent.indexOf('iPad') === -1 && userAgent.indexOf('iPhone') === -1;
+    const btw = new BTWPlugin();
+    btw.init({
+        id: isDesktop ? 'container' : 'aaa',
+        blogId: '17768-1572420593825-274',
+        name: 'NodeJs之路',
+        qrcode: 'https://static.ddhigh.com/blog/2019-10-30-073944.jpg',
+        keyword: 'blog',
+    });
+</script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

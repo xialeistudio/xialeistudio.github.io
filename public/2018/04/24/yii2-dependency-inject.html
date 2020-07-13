@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 3.9.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>使用yii2依赖注入规范业务开发 - 每天进步一点点</title>
+
+
+
+
+
+
+<link rel="alternative" href="/" title="使用yii2依赖注入规范业务开发" type="application/atom+xml">
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+<script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?78141f99bbb49f1564a7af89344f5add";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                <img src="/images/logo.svg" alt="使用yii2依赖注入规范业务开发" height="28">
+                
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                    href="/">主页</a>
+                
+                <a class="navbar-item"
+                    href="/archives">归档</a>
+                
+                <a class="navbar-item"
+                    href="/categories">分类</a>
+                
+                <a class="navbar-item"
+                    href="/tags">标签</a>
+                
+                <a class="navbar-item"
+                    href="/suggestion">建议</a>
+                
+                <a class="navbar-item"
+                    href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                
+                
+                <a class="navbar-item" target="_blank" title="GitHub"
+                    href="https://github.com/xialeistudio">
+                    
+                    <i class="fab fa-github"></i>
+                    
+                </a>
+                
+                <a class="navbar-item" target="_blank" title="SegmentFault"
+                    href="https://segmentfault.com/u/xialeistudio">
+                    
+                    <img src="https://static.ddhigh.com/blog/2019-09-18-115828.png?imageView2/1/w/40/h/40" style="width:16px;height:16px" />
+                    
+                </a>
+                
+                <a class="navbar-item" target="_blank" title="QQ"
+                    href="//shang.qq.com/wpa/qunwpa?idkey=83c6884d7520f22891e3f82c76f42baa5c53af91ce8d31ed2641248f8730687b">
+                    
+                    <i class="fab fa-qq"></i>
+                    
+                </a>
+                
+                
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2018-04-24T14:18:04.000Z">2018-04-24</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/php/">php</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    6 分钟 读完 (大约 971 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            使用yii2依赖注入规范业务开发
+            
+        </h1>
+        <div class="content">
+            
+            <div id="container">
+                <h2 id="本文代码"><a href="#本文代码" class="headerlink" title="本文代码"></a>本文代码</h2><p><a href="https://github.com/xialeistudio/yii2-di-demo" target="_blank" rel="noopener">https://github.com/xialeistudio/yii2-di-demo</a></p>
+<h2 id="什么是依赖注入-DI"><a href="#什么是依赖注入-DI" class="headerlink" title="什么是依赖注入(DI)?"></a>什么是依赖注入(DI)?</h2><p>对象由框架来创建而不是程序员通过 <strong>new</strong> 创建。跟IoC差不多一个意思。</p>
+<h2 id="为什么要有依赖注入"><a href="#为什么要有依赖注入" class="headerlink" title="为什么要有依赖注入?"></a>为什么要有依赖注入?</h2><ol>
+<li>解耦。调用方不再通过 <strong>new</strong> 运算符实例化被调用对象，而通过框架(IoC容器)创建之后注入进来。解除了调用者与被调用者之间的依赖。</li>
+<li>有利于面向接口编程。个人认为OOP程序设计最重要的就是面向接口(面向抽象)编程。因为有了第1步的关系，调用者只需要依赖接口类型而不用依赖实现类型，提高了程序的扩展性。</li>
+</ol>
+<h2 id="Yii2的依赖注入"><a href="#Yii2的依赖注入" class="headerlink" title="Yii2的依赖注入"></a>Yii2的依赖注入</h2><p>Yii2通过 <a href="http://www.yiichina.com/doc/api/2.0/yii-di-container" target="_blank" rel="noopener">yii\di\Container</a> 提供DI容器特性。目前支持一下4种方式注入：</p>
+<ol>
+<li><a href="http://www.yiichina.com/doc/guide/2.0/concept-di-container#constructor-injection" target="_blank" rel="noopener">构造方法注入</a></li>
+<li><a href="http://www.yiichina.com/doc/guide/2.0/concept-di-container#constructor-injection" target="_blank" rel="noopener">方法注入</a></li>
+<li><a href="http://www.yiichina.com/doc/guide/2.0/concept-di-container#constructor-injection" target="_blank" rel="noopener">Setter和属性注入</a></li>
+<li><a href="http://www.yiichina.com/doc/guide/2.0/concept-di-container#constructor-injection" target="_blank" rel="noopener">PHP回调注入</a></li>
+</ol>
+<h2 id="注册依赖关系"><a href="#注册依赖关系" class="headerlink" title="注册依赖关系"></a>注册依赖关系</h2><ol>
+<li>通过容器的 <strong>set</strong> 方法注入</li>
+<li>通过配置文件注入(推荐)</li>
+</ol>
+<h2 id="依赖注入实战"><a href="#依赖注入实战" class="headerlink" title="依赖注入实战"></a>依赖注入实战</h2><ol>
+<li><p>打开终端，执行以下命令初始化项目：</p>
+ <figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer create-project --prefer-dist yiisoft/yii2-app-basic basic</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>声明接口业务类 <strong>app\services\UserService</strong></p>
+ <figure class="highlight php hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">&lt;?php</span></span><br><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">* Created by PhpStorm.</span></span><br><span class="line"><span class="hljs-comment">* User: xialei</span></span><br><span class="line"><span class="hljs-comment">* Date: 2018/4/24</span></span><br><span class="line"><span class="hljs-comment">* Time: 下午10:55</span></span><br><span class="line"><span class="hljs-comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">namespace</span> <span class="hljs-title">app</span>\<span class="hljs-title">services</span>;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">* 用户业务类</span></span><br><span class="line"><span class="hljs-comment">* Interface UserService</span></span><br><span class="line"><span class="hljs-comment">* <span class="hljs-doctag">@package</span> app\services</span></span><br><span class="line"><span class="hljs-comment">*/</span></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">UserService</span></span></span><br><span class="line"><span class="hljs-class"></span>&#123;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">    * 根据ID查询用户</span></span><br><span class="line"><span class="hljs-comment">    * <span class="hljs-doctag">@param</span> integer $id</span></span><br><span class="line"><span class="hljs-comment">    * <span class="hljs-doctag">@return</span> array|null</span></span><br><span class="line"><span class="hljs-comment">    */</span></span><br><span class="line">    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">show</span><span class="hljs-params">($id)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">    * 查看所有用户</span></span><br><span class="line"><span class="hljs-comment">    * <span class="hljs-doctag">@return</span> array</span></span><br><span class="line"><span class="hljs-comment">    */</span></span><br><span class="line">    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">all</span><span class="hljs-params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>接口实现文件 <strong>app\services\impl\UserServiceImpl</strong></p>
+ <figure class="highlight php hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">&lt;?php</span></span><br><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">* Created by PhpStorm.</span></span><br><span class="line"><span class="hljs-comment">* User: xialei</span></span><br><span class="line"><span class="hljs-comment">* Date: 2018/4/24</span></span><br><span class="line"><span class="hljs-comment">* Time: 下午10:56</span></span><br><span class="line"><span class="hljs-comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">namespace</span> <span class="hljs-title">app</span>\<span class="hljs-title">services</span>\<span class="hljs-title">impl</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">use</span> <span class="hljs-title">app</span>\<span class="hljs-title">services</span>\<span class="hljs-title">UserService</span>;</span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserServiceImpl</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">UserService</span></span></span><br><span class="line"><span class="hljs-class"></span>&#123;</span><br><span class="line">    <span class="hljs-keyword">private</span> $users = [</span><br><span class="line">        [<span class="hljs-string">'id'</span> =&gt; <span class="hljs-number">1</span>, <span class="hljs-string">'name'</span> =&gt; <span class="hljs-string">'xialei'</span>],</span><br><span class="line">        [<span class="hljs-string">'id'</span> =&gt; <span class="hljs-number">2</span>, <span class="hljs-string">'name'</span> =&gt; <span class="hljs-string">'zhangsan'</span>],</span><br><span class="line">    ];</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">    * 根据ID查询用户</span></span><br><span class="line"><span class="hljs-comment">    * <span class="hljs-doctag">@param</span> integer $id</span></span><br><span class="line"><span class="hljs-comment">    * <span class="hljs-doctag">@return</span> array</span></span><br><span class="line"><span class="hljs-comment">    */</span></span><br><span class="line">    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">show</span><span class="hljs-params">($id)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">foreach</span> (<span class="hljs-keyword">$this</span>-&gt;users <span class="hljs-keyword">as</span> $user) &#123;</span><br><span class="line">            <span class="hljs-keyword">if</span> ($user[<span class="hljs-string">'id'</span>] == $id) &#123;</span><br><span class="line">                <span class="hljs-keyword">return</span> $user;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">    * 查看所有用户</span></span><br><span class="line"><span class="hljs-comment">    * <span class="hljs-doctag">@return</span> array</span></span><br><span class="line"><span class="hljs-comment">    */</span></span><br><span class="line">    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">all</span><span class="hljs-params">()</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;users;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>注册依赖关系 <strong>config/web.php</strong></p>
+ <figure class="highlight php hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">use</span> <span class="hljs-title">app</span>\<span class="hljs-title">services</span>\<span class="hljs-title">UserService</span>;</span><br><span class="line"><span class="hljs-keyword">use</span> <span class="hljs-title">app</span>\<span class="hljs-title">services</span>\<span class="hljs-title">impl</span>\<span class="hljs-title">UserServiceImpl</span>;</span><br><span class="line"></span><br><span class="line">$params = <span class="hljs-keyword">require</span> <span class="hljs-keyword">__DIR__</span> . <span class="hljs-string">'/params.php'</span>;</span><br><span class="line">$db = <span class="hljs-keyword">require</span> <span class="hljs-keyword">__DIR__</span> . <span class="hljs-string">'/db.php'</span>;</span><br><span class="line"></span><br><span class="line">$config = [</span><br><span class="line">    <span class="hljs-string">'id'</span> =&gt; <span class="hljs-string">'basic'</span>,</span><br><span class="line">    <span class="hljs-string">'basePath'</span> =&gt; dirname(<span class="hljs-keyword">__DIR__</span>),</span><br><span class="line">    <span class="hljs-string">'bootstrap'</span> =&gt; [<span class="hljs-string">'log'</span>],</span><br><span class="line">    <span class="hljs-string">'aliases'</span> =&gt; [</span><br><span class="line">        <span class="hljs-string">'@bower'</span> =&gt; <span class="hljs-string">'@vendor/bower-asset'</span>,</span><br><span class="line">        <span class="hljs-string">'@npm'</span> =&gt; <span class="hljs-string">'@vendor/npm-asset'</span>,</span><br><span class="line">    ],</span><br><span class="line">    <span class="hljs-string">'container'</span> =&gt; [</span><br><span class="line">        <span class="hljs-string">'definitions'</span> =&gt; [</span><br><span class="line">            UserService::class =&gt; UserServiceImpl::class</span><br><span class="line">        ]</span><br><span class="line">    ],</span><br><span class="line">    <span class="hljs-string">'components'</span> =&gt; [</span><br><span class="line">        <span class="hljs-string">'request'</span> =&gt; [</span><br><span class="line">            <span class="hljs-comment">// !!! insert a secret key in the following (if it is empty) - this is required by cookie validation</span></span><br><span class="line">            <span class="hljs-string">'cookieValidationKey'</span> =&gt; <span class="hljs-string">'0xGrStOOZE2oXxNNiu-o2eYovJ_Ia1Dk'</span>,</span><br><span class="line">        ],</span><br><span class="line">        <span class="hljs-string">'response'</span> =&gt; [</span><br><span class="line">            <span class="hljs-string">'format'</span> =&gt; <span class="hljs-string">'json'</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="hljs-string">'errorHandler'</span> =&gt; [</span><br><span class="line">            <span class="hljs-string">'errorAction'</span> =&gt; <span class="hljs-string">'site/error'</span>,</span><br><span class="line">        ],</span><br><span class="line">        <span class="hljs-string">'urlManager'</span> =&gt; [</span><br><span class="line">            <span class="hljs-string">'enablePrettyUrl'</span> =&gt; <span class="hljs-keyword">true</span>,</span><br><span class="line">            <span class="hljs-string">'showScriptName'</span> =&gt; <span class="hljs-keyword">false</span>,</span><br><span class="line">            <span class="hljs-string">'rules'</span> =&gt; [</span><br><span class="line">            ],</span><br><span class="line">        ],</span><br><span class="line">    ],</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">if</span> (YII_ENV_DEV) &#123;</span><br><span class="line">    <span class="hljs-comment">// configuration adjustments for 'dev' environment</span></span><br><span class="line">    $config[<span class="hljs-string">'bootstrap'</span>][] = <span class="hljs-string">'debug'</span>;</span><br><span class="line">    $config[<span class="hljs-string">'modules'</span>][<span class="hljs-string">'debug'</span>] = [</span><br><span class="line">        <span class="hljs-string">'class'</span> =&gt; <span class="hljs-string">'yii\debug\Module'</span>,</span><br><span class="line">        <span class="hljs-comment">// uncomment the following to add your IP if you are not connecting from localhost.</span></span><br><span class="line">        <span class="hljs-comment">//'allowedIPs' =&gt; ['127.0.0.1', '::1'],</span></span><br><span class="line">    ];</span><br><span class="line"></span><br><span class="line">    $config[<span class="hljs-string">'bootstrap'</span>][] = <span class="hljs-string">'gii'</span>;</span><br><span class="line">    $config[<span class="hljs-string">'modules'</span>][<span class="hljs-string">'gii'</span>] = [</span><br><span class="line">        <span class="hljs-string">'class'</span> =&gt; <span class="hljs-string">'yii\gii\Module'</span>,</span><br><span class="line">        <span class="hljs-comment">// uncomment the following to add your IP if you are not connecting from localhost.</span></span><br><span class="line">        <span class="hljs-comment">//'allowedIPs' =&gt; ['127.0.0.1', '::1'],</span></span><br><span class="line">    ];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">return</span> $config;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>添加控制器 <strong>app\controllers\UserController</strong></p>
+ <figure class="highlight php hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">&lt;?php</span></span><br><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">* Created by PhpStorm.</span></span><br><span class="line"><span class="hljs-comment">* User: xialei</span></span><br><span class="line"><span class="hljs-comment">* Date: 2018/4/24</span></span><br><span class="line"><span class="hljs-comment">* Time: 下午10:57</span></span><br><span class="line"><span class="hljs-comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">namespace</span> <span class="hljs-title">app</span>\<span class="hljs-title">controllers</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">use</span> <span class="hljs-title">app</span>\<span class="hljs-title">services</span>\<span class="hljs-title">UserService</span>;</span><br><span class="line"><span class="hljs-keyword">use</span> <span class="hljs-title">yii</span>\<span class="hljs-title">base</span>\<span class="hljs-title">Module</span>;</span><br><span class="line"><span class="hljs-keyword">use</span> <span class="hljs-title">yii</span>\<span class="hljs-title">web</span>\<span class="hljs-title">Controller</span>;</span><br><span class="line"><span class="hljs-keyword">use</span> <span class="hljs-title">yii</span>\<span class="hljs-title">web</span>\<span class="hljs-title">NotFoundHttpException</span>;</span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserController</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Controller</span></span></span><br><span class="line"><span class="hljs-class"></span>&#123;</span><br><span class="line">    <span class="hljs-keyword">private</span> $userService;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span><span class="hljs-params">(string $id, Module $module, UserService $userService, array $config = [])</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">$this</span>-&gt;userService = $userService;</span><br><span class="line">        <span class="hljs-keyword">parent</span>::__construct($id, $module, $config);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">    * 查看用户</span></span><br><span class="line"><span class="hljs-comment">    * <span class="hljs-doctag">@param</span> $id</span></span><br><span class="line"><span class="hljs-comment">    * <span class="hljs-doctag">@return</span> array|null</span></span><br><span class="line"><span class="hljs-comment">    * <span class="hljs-doctag">@throws</span> NotFoundHttpException</span></span><br><span class="line"><span class="hljs-comment">    */</span></span><br><span class="line">    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">actionShow</span><span class="hljs-params">($id)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        $user = <span class="hljs-keyword">$this</span>-&gt;userService-&gt;show($id);</span><br><span class="line">        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>($user)) &#123;</span><br><span class="line">            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> NotFoundHttpException(<span class="hljs-string">'用户不存在'</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> $user;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">    * 查看所有用户</span></span><br><span class="line"><span class="hljs-comment">    * <span class="hljs-doctag">@return</span> array</span></span><br><span class="line"><span class="hljs-comment">    */</span></span><br><span class="line">    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">actionAll</span><span class="hljs-params">()</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;userService-&gt;all();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>运行测试服务器</p>
+ <figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./yii serve/index</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>访问用户列表接口 <a href="http://localhost:8080/user/all" target="_blank" rel="noopener">http://localhost:8080/user/all</a></p>
+ <figure class="highlight json hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[&#123;</span><br><span class="line">    <span class="hljs-attr">"id"</span>: <span class="hljs-number">1</span>,</span><br><span class="line">    <span class="hljs-attr">"name"</span>: <span class="hljs-string">"xialei"</span></span><br><span class="line">&#125;, &#123;</span><br><span class="line">    <span class="hljs-attr">"id"</span>: <span class="hljs-number">2</span>,</span><br><span class="line">    <span class="hljs-attr">"name"</span>: <span class="hljs-string">"zhangsan"</span></span><br><span class="line">&#125;]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>访问查看用户接口 <a href="http://localhost:8080/user/show?id=1" target="_blank" rel="noopener">http://localhost:8080/user/show?id=1</a></p>
+ <figure class="highlight json hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="hljs-attr">"id"</span>: <span class="hljs-number">1</span>,</span><br><span class="line">    <span class="hljs-attr">"name"</span>: <span class="hljs-string">"xialei"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h2><p>如你所见，Yii2自带的IoC容器使用起来还是挺方便的，观测了Yii <strong>配置优于编码</strong> 的思想，Yii的组件基本上都可以在配置文件中进行配置而不需要手动编码。</p>
+<p>灵活使用DI可以使我们从依赖关系中解脱出来，专注于业务逻辑。</p>
+<p>当然，业务逻辑的组织也是一个很大的研究课题，有兴趣的可以去看看 <strong>DDD(领域驱动设计)</strong></p>
+
+            </div>
+            
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/yii/">yii</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <div class="social-share" data-disabled="qzone,facebook,twitter,tencent,linkedin,douban,diandian,google"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev"
+                href="/2018/06/14/PermissionScope-With-Swift-4.html">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">PermissionScope Swift4 兼容问题</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next"
+                href="/2018/04/08/golang-travis-ci.html">
+                <span class="level-item">golang使用travis进行持续集成</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">评论</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '1ae09f5aa5dcce937e94',
+        clientSecret: '55c4032692dbcb0ee13771da7dc95f22cf9ae8e1',
+        id: 'b703eb39c849b2687c2dc651357e5017',
+        repo: 'xialeistudio.github.io',
+        owner: 'xialeistudio',
+        admin: "xialeistudio",
+        createIssueManually: false,
+        distractionFreeMode: false
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                    <figure class="image is-128x128 has-mb-6">
+                        <img class="is-rounded" src="https://static.ddhigh.com/blog/2019-09-18-094336.jpg"
+                            alt="夏磊">
+                    </figure>
+                    
+                    <p class="is-size-4 is-block">
+                        夏磊
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        Full-Stack
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>China</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        文章
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        264
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        分类
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        25
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        标签
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        29
+                    </p>
+                </div>
+            </div>
+        </nav>
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://github.com/xialeistudio" target="_blank">
+                关注我</a>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Github"
+                href="https://github.com/xialeistudio">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="SegmentFault"
+                href="https://segmentfault.com/xialeistudio">
+                
+                <img style="width:16px;height:16px" src="https://static.ddhigh.com/blog/2019-09-18-115828.png?imageView2/1/w/40/h/40" />
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="RSS"
+                href="/atom.xml">
+                
+                <i class="fas fa-rss"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+    
+        
+
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                出版书籍
+            </h3>
+            <ul class="menu-list" style="display: flex;flex-wrap:wrap">
+                
+                <li style="flex: 1;margin:0 10px 10px 0">
+                    <a href="http://www.tup.tsinghua.edu.cn/booksCenter/book_08079501.html" target="_blank">
+                        <img style="width: 90px;height:120px" src="https://static.ddhigh.com/blog/2019-09-18-095311.jpg?imageView2/2/w/200" alt="ThinkPHP5实战" />
+                    </a>
+                </li>
+                
+                <li style="flex: 1;margin:0 10px 10px 0">
+                    <a href="http://www.tup.tsinghua.edu.cn/booksCenter/book_06867701.html" target="_blank">
+                        <img style="width: 90px;height:120px" src="https://static.ddhigh.com/blog/2019-09-18-095415.jpg?imageView2/2/w/200" alt="ThinkPHP实战" />
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+    
+        
+
+
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                微信公众号
+            </h3>
+            <p>欢迎关注我的公众号<br>学习最新、最热的JS/TS知识！</p>
+            <img src="https://static.ddhigh.com/blog/2019-09-19-115314.jpg" width="200" height="200" alt="">
+        </div>
+    </div>
+</div>
+
+
+    
+        
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                目录
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#本文代码">
+        <span class="has-mr-6">1</span>
+        <span>本文代码</span>
+        </a></li><li>
+        <a class="is-flex" href="#什么是依赖注入-DI">
+        <span class="has-mr-6">2</span>
+        <span>什么是依赖注入(DI)?</span>
+        </a></li><li>
+        <a class="is-flex" href="#为什么要有依赖注入">
+        <span class="has-mr-6">3</span>
+        <span>为什么要有依赖注入?</span>
+        </a></li><li>
+        <a class="is-flex" href="#Yii2的依赖注入">
+        <span class="has-mr-6">4</span>
+        <span>Yii2的依赖注入</span>
+        </a></li><li>
+        <a class="is-flex" href="#注册依赖关系">
+        <span class="has-mr-6">5</span>
+        <span>注册依赖关系</span>
+        </a></li><li>
+        <a class="is-flex" href="#依赖注入实战">
+        <span class="has-mr-6">6</span>
+        <span>依赖注入实战</span>
+        </a></li><li>
+        <a class="is-flex" href="#写在最后">
+        <span class="has-mr-6">7</span>
+        <span>写在最后</span>
+        </a></li></ul>
+        </div>
+    </div>
+</div>
+
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
+        
+        </div>
+    
+</div>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.svg" alt="使用yii2依赖注入规范业务开发" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 xialeistudio&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                
+                </p>
+                <p class="is-size-7">
+                    
+                    <a target="_blank" href="http://www.miitbeian.gov.cn/">粤ICP备14062481号-1</a>
+                    
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="GitHub" href="https://github.com/xialeistudio">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+<script>
+    var IcarusThemeSettings = {
+        article: {
+            highlight: {
+                clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+    
+    <script src="/js/animation.js"></script>
+    
+
+
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+<script src="https://my.openwrite.cn/js/readmore.js" type="text/javascript"></script>
+<script>
+    const userAgent = window.navigator.userAgent;
+    const isDesktop = userAgent.indexOf('Android') === -1 && userAgent.indexOf('iPad') === -1 && userAgent.indexOf('iPhone') === -1;
+    const btw = new BTWPlugin();
+    btw.init({
+        id: isDesktop ? 'container' : 'aaa',
+        blogId: '17768-1572420593825-274',
+        name: 'NodeJs之路',
+        qrcode: 'https://static.ddhigh.com/blog/2019-10-30-073944.jpg',
+        keyword: 'blog',
+    });
+</script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>
