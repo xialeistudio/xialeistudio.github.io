@@ -18,7 +18,7 @@ module.exports = function (hexo) {
         function postMapper(post) {
             return {
                 title: post.title,
-                text: minify(post.content),
+                text: '',
                 link: url_for(post.path)
             }
         }
