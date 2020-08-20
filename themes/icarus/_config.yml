@@ -164,14 +164,22 @@ widgets:
       position: left
       books:
           - title: ThinkPHP5实战
-            thumbnail: https://static.ddhigh.com/blog/2019-09-18-095311.jpg?imageView2/2/w/200
-            link: https://item.jd.com/12699110.html
+            thumbnail: https://static.ddhigh.com/blog/2019-09-18-095311.jpg?imageView2/2/w/200/h/200
+            buyLink: https://item.jd.com/12699110.html
+            detailLink: http://www.tup.tsinghua.edu.cn/booksCenter/book_08079501.html
+            pubdate: 2019.10
+
           - title: ThinkPHP实战
-            thumbnail: https://static.ddhigh.com/blog/2019-09-18-095415.jpg?imageView2/2/w/200
-            link: https://item.jd.com/12173050.html
+            thumbnail: https://static.ddhigh.com/blog/2019-09-18-095415.jpg?imageView2/2/w/200/h/200
+            buyLink: https://item.jd.com/12173050.html
+            detailLink: http://www.tup.tsinghua.edu.cn/booksCenter/book_06867701.html
+            pubdate: 2017.04
+
           - title: Node.js+Webpack 开发实战
-            thumbnail: https://static.ddhigh.com/blog/2020-08-20-064537.jpg?imageView2/2/w/200
-            link: https://item.jd.com/12933234.html
+            thumbnail: https://static.ddhigh.com/blog/2020-08-20-064537.jpg?imageView2/2/w/200/h/200
+            buyLink: https://item.jd.com/12933234.html
+            detailLink: http://www.tup.tsinghua.edu.cn/booksCenter/book_07638401.html
+            pubdate: 2020.08
     -
       type: images
       position: left
