@@ -165,10 +165,13 @@ widgets:
       books:
           - title: ThinkPHP5实战
             thumbnail: https://static.ddhigh.com/blog/2019-09-18-095311.jpg?imageView2/2/w/200
-            link: http://www.tup.tsinghua.edu.cn/booksCenter/book_08079501.html
+            link: https://item.jd.com/12699110.html
           - title: ThinkPHP实战
             thumbnail: https://static.ddhigh.com/blog/2019-09-18-095415.jpg?imageView2/2/w/200
-            link: http://www.tup.tsinghua.edu.cn/booksCenter/book_06867701.html
+            link: https://item.jd.com/12173050.html
+          - title: Node.js+Webpack 开发实战
+            thumbnail: https://static.ddhigh.com/blog/2020-08-20-064537.jpg?imageView2/2/w/200
+            link: https://item.jd.com/12933234.html
     -
       type: images
       position: left
