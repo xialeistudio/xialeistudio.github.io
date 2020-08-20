@@ -2,6 +2,7 @@
 title: Golang Http 验证码示例
 date: 2020-08-20 17:18:38
 categories:
+- backend
 - go
 ---
 
