@@ -1,0 +1,251 @@
+# Version of the Icarus theme that is currently used
+version: 2.6.0
+# Path or URL to the website's icon
+favicon: /images/favicon.svg
+# Additional HTML meta tags in an array.
+meta: []
+# Path or URL to RSS atom.xml
+rss: /
+# Path or URL to the website's logo to be shown on the left of the navigation bar or footer
+logo: /images/logo.svg
+# Open Graph metadata
+# https://hexo.io/docs/helpers.html#open-graph
+open_graph:
+    # Facebook App ID
+    # fb_app_id:
+    # # Facebook Admin ID
+    # fb_admins:
+    # # Twitter ID
+    # twitter_id:
+    # # Twitter site
+    # twitter_site:
+    # # Google+ profile link
+    # google_plus:
+# Navigation bar link settings
+navbar:
+    # Navigation bar menu links
+    menu:
+        主页: /
+        归档: /archives
+        分类: /categories
+        标签: /tags
+        建议: /suggestion
+        关于: /about
+    # Navigation bar links to be shown on the right
+    links:
+        GitHub:
+            icon: fab fa-github
+            url: "https://github.com/xialeistudio"
+        SegmentFault:
+            icon: ""
+            image: https://static.ddhigh.com/blog/2019-09-18-115828.png?imageView2/1/w/40/h/40
+            url: "https://segmentfault.com/u/xialeistudio"
+        QQ:
+            icon: fab fa-qq
+            url: "//shang.qq.com/wpa/qunwpa?idkey=83c6884d7520f22891e3f82c76f42baa5c53af91ce8d31ed2641248f8730687b"
+# Footer section link settings
+footer:
+    # Links to be shown on the right of the footer section
+    custom_text: <a target="_blank" href="http://www.miitbeian.gov.cn/">粤ICP备14062481号-1</a>
+    links:
+        Creative Commons:
+            icon: fab fa-creative-commons
+            url: "https://creativecommons.org/"
+        Attribution 4.0 International:
+            icon: fab fa-creative-commons-by
+            url: "https://creativecommons.org/licenses/by/4.0/"
+        GitHub:
+            icon: fab fa-github
+            url: 'https://github.com/xialeistudio'
+# Article display settings
+article:
+    # Code highlight settings
+    highlight:
+        # Code highlight themes
+        # https://github.com/highlightjs/highlight.js/tree/master/src/styles
+        theme: atom-one-light
+        # Show code copying button
+        clipboard: true
+        # Default folding status of the code blocks. Can be "", "folded", "unfolded"
+        fold: unfolded
+    # Whether to show article thumbnail images
+    thumbnail: true
+    # Whether to show estimate article reading time
+    readtime: true
+# Search plugin settings
+# https://ppoffice.github.io/hexo-theme-icarus/categories/Plugins/Search
+search:
+    # Name of the search plugin
+    type: insight
+# Comment plugin settings
+# https://ppoffice.github.io/hexo-theme-icarus/categories/Plugins/Comment
+comment:
+    # Name of the comment plugin
+    type: gitalk
+    owner: xialeistudio
+    repo: xialeistudio.github.io
+    client_id: 1ae09f5aa5dcce937e94
+    client_secret: 55c4032692dbcb0ee13771da7dc95f22cf9ae8e1
+    admin: xialeistudio
+# Donation entries
+# https://ppoffice.github.io/hexo-theme-icarus/categories/Donation/
+donate:
+    # - # Donation entry name
+    #   type: alipay
+    #   # Qrcode image URL
+    #   qrcode: ""
+    # - # Donation entry name
+    #   type: wechat
+    #   # Qrcode image URL
+    #   qrcode: ""
+    # - # Donation entry name
+    #   type: paypal
+    #   # Paypal business ID or email address
+    #   business: ""
+    #   # Currency code
+    #   currency_code: USD
+    # - # Donation entry name
+    #   type: patreon
+    #   # URL to the Patreon page
+    #   url: ""
+# Share plugin settings
+# https://ppoffice.github.io/hexo-theme-icarus/categories/Plugins/Share
+share:
+    # Share plugin name
+    type: sharejs
+# Sidebar settings.
+# Please be noted that a sidebar is only visible when it has at least one widget
+sidebar:
+    # left sidebar settings
+    left:
+        # Whether the left sidebar is sticky when page scrolls
+        # https://ppoffice.github.io/hexo-theme-icarus/Configuration/Theme/make-a-sidebar-sticky-when-page-scrolls/
+        sticky: false
+    # right sidebar settings
+    right:
+        # Whether the right sidebar is sticky when page scrolls
+        # https://ppoffice.github.io/hexo-theme-icarus/Configuration/Theme/make-a-sidebar-sticky-when-page-scrolls/
+        sticky: false
+# Sidebar widget settings
+# https://ppoffice.github.io/hexo-theme-icarus/categories/Widgets/
+widgets:
+    - # Widget name
+      type: profile
+      # Where should the widget be placed, left or right
+      position: left
+      # Author name to be shown in the profile widget
+      author: 夏磊
+      # Title of the author to be shown in the profile widget
+      author_title: Full-Stack
+      # Author's current location to be shown in the profile widget
+      location: China
+      # Path or URL to the avatar to be shown in the profile widget
+      avatar: https://static.ddhigh.com/blog/2019-09-18-094336.jpg
+      # Email address for the Gravatar to be shown in the profile widget
+      gravatar:
+      # Whether to show avatar image rounded or square
+      avatar_rounded: true
+      # Path or URL for the follow button
+      follow_link: "https://github.com/xialeistudio"
+      # Links to be shown on the bottom of the profile widget
+      social_links:
+          Github:
+              icon: fab fa-github
+              url: "https://github.com/xialeistudio"
+          SegmentFault:
+              icon: ""
+              image: https://static.ddhigh.com/blog/2019-09-18-115828.png?imageView2/1/w/40/h/40
+              url: "https://segmentfault.com/xialeistudio"
+          RSS:
+              icon: fas fa-rss
+              url: /atom.xml
+    - 
+      type: books
+      position: left
+      books:
+          - title: ThinkPHP5实战
+            thumbnail: https://static.ddhigh.com/blog/2019-09-18-095311.jpg?imageView2/2/w/200/h/200
+            buyLink: https://item.jd.com/12699110.html
+            detailLink: http://www.tup.tsinghua.edu.cn/booksCenter/book_08079501.html
+            pubdate: 2019.10
+
+          - title: ThinkPHP实战
+            thumbnail: https://static.ddhigh.com/blog/2019-09-18-095415.jpg?imageView2/2/w/200/h/200
+            buyLink: https://item.jd.com/12173050.html
+            detailLink: http://www.tup.tsinghua.edu.cn/booksCenter/book_06867701.html
+            pubdate: 2017.04
+
+          - title: Node.js+Webpack 开发实战
+            thumbnail: https://static.ddhigh.com/blog/2020-08-20-064537.jpg?imageView2/2/w/200/h/200
+            buyLink: https://item.jd.com/12933234.html
+            detailLink: http://www.tup.tsinghua.edu.cn/booksCenter/book_07638401.html
+            pubdate: 2020.08
+    -
+      type: images
+      position: left
+      images:    
+        - 
+          title: 微信公众号
+          slogan: 欢迎关注我的公众号<br>学习最新、最热的JS/TS知识！
+          src: https://static.ddhigh.com/blog/2019-09-19-115314.jpg
+    - # Widget name
+      type: toc
+      # Where should the widget be placed, left or right
+      position: left
+    # - # Widget name
+    #   type: links
+    #   # Where should the widget be placed, left or right
+    #   position: left
+    #   # Links to be shown in the links widget
+    #   links:
+    #       SegmentFault: "https://segmentfault.com/xialeistudio"
+    #       Github: "https://github.com/xialeistudio"
+# Other plugin settings
+plugins:
+    # Enable page animations
+    animejs: true
+    # Enable the lightGallery and Justified Gallery plugins
+    # https://ppoffice.github.io/hexo-theme-icarus/Plugins/General/gallery-plugin/
+    gallery: true
+    # Enable the Outdated Browser plugin
+    # http://outdatedbrowser.com/
+    outdated-browser: true
+    # Enable the MathJax plugin
+    # https://ppoffice.github.io/hexo-theme-icarus/Plugins/General/mathjax-plugin/
+    mathjax: true
+    # Show the back to top button on mobile devices
+    back-to-top: true
+    # Google Analytics plugin settings
+    # https://ppoffice.github.io/hexo-theme-icarus/Plugins/General/site-analytics-plugin/#Google-Analytics
+    # google-analytics:
+    #     # Google Analytics tracking id
+    #     tracking_id:
+    # Baidu Analytics plugin settings
+    # https://ppoffice.github.io/hexo-theme-icarus/Plugins/General/site-analytics-plugin/#Baidu-Analytics
+    baidu-analytics:
+        # Baidu Analytics tracking id
+        tracking_id: 78141f99bbb49f1564a7af89344f5add
+    # Hotjar user feedback plugin
+    # https://ppoffice.github.io/hexo-theme-icarus/Plugins/General/site-analytics-plugin/#Hotjar
+    # hotjar:
+    #     # Hotjar site id
+    #     site_id:
+    # Show a loading progress bar at top of the page
+    progressbar: true
+    # BuSuanZi site/page view counter
+    # https://busuanzi.ibruce.info
+    busuanzi: false
+# CDN provider settings
+# https://ppoffice.github.io/hexo-theme-icarus/Configuration/Theme/speed-up-your-site-with-custom-cdn/
+providers:
+    # Name or URL of the JavaScript and/or stylesheet CDN provider
+    cdn: jsdelivr
+    # Name or URL of the webfont CDN provider
+    fontcdn: google
+    # Name or URL of the webfont Icon CDN provider
+    iconcdn: https://cdn.bootcdn.net/ajax/libs/font-awesome/5.4.1/css/all.css
+
+# 自动摘要
+auto_excerpt:
+    enabled: true
+    lines: 3
