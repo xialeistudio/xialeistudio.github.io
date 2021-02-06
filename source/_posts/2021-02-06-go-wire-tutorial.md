@@ -1,7 +1,7 @@
 ---
 title: golang依赖注入工具wire指南
 date: 2021-02-06 20:27:14
-tags:
+categories:
 - backend
 - go
 ---
