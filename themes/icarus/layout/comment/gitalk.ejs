@@ -17,7 +17,8 @@
         owner: '<%= get_config('comment.owner') %>',
         admin: <%- JSON.stringify(get_config('comment.admin'))%>,
         createIssueManually: <%= get_config('comment.create_issue_manually', false) %>,
-        distractionFreeMode: <%= get_config('comment.distraction_free_mode', false) %>
+        distractionFreeMode: <%= get_config('comment.distraction_free_mode', false) %>,
+        proxy: 'https://github.com/login/oauth/access_token'
     })
     gitalk.render('comment-container')
 </script>
