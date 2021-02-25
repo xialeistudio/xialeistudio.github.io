@@ -329,3 +329,5 @@ console.log(c[b]);
 ```
 
 ![0.jpeg](https://static.ddhigh.com/blog/2019-10-15-093620.jpg)
+
+![image-20210225113209566](https://static.ddhigh.com/blog/2021-02-25-113209-2.png)

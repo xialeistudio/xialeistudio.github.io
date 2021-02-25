@@ -132,41 +132,26 @@ Linux具有众多发行版，如Ubuntu、CentOS、RedHat、Debian等等，所有
 
 **Linux配置命令**
 
-\# 下载压缩包
-
+```bash
+# 下载压缩包
 wget https://golang.google.cn/dl/go1.15.8.linux-amd64.tar.gz
-
-\# 移动到opt目录
-
+# 移动到opt目录
 mv go1.15.8.linux-amd64.tar.gz /opt
-
-\# 解压
-
+# 解压
 tar xf go1.15.8.linux-amd64.tar.gz
-
-\# 新建GOPATH目录
-
+# 新建GOPATH目录
 cd ~
-
 mkdir go
-
 cd go
-
 mkdir pkg src bin
-
-\# 编辑 ~/.bashrc文件, 添加bin路径到PATH环境变量中
-
+# 编辑 ~/.bashrc文件, 添加bin路径到PATH环境变量中
 echo 'GOPATH=用户主目录/go' >> ~/.bashrc
-
 echo 'PATH=/opt/go/bin:$GOPATH/bin:$PATH' >> ~/.bashrc
-
-\# 更新环境变量
-
+# 更新环境变量
 source ~/.bashrc
-
-\# 测试安装结果
-
+# 测试安装结果
 go version
+```
 
 ### macOS系统
 
@@ -178,29 +163,20 @@ Apple公司于2020年发布了采用M1芯片(arm64架构)的硬件产品，支�
 
 **macOS配置命令**
 
-\# 新建GOPATH目录
-
+```bash
+# 新建GOPATH目录
 cd ~
-
 mkdir go
-
 cd go
-
 mkdir pkg src bin
-
-\# 编辑 ~/.bashrc文件, 添加bin路径到PATH环境变量中
-
+# 编辑 ~/.bashrc文件, 添加bin路径到PATH环境变量中
 echo 'GOPATH=用户主目录/go' >> ~/.bashrc
-
 echo 'PATH=$GOPATH/bin:$PATH' >> ~/.bashrc
-
-\# 更新环境变量
-
+# 更新环境变量
 source ~/.bashrc
-
-\# 测试安装结果
-
+# 测试安装结果
 go version
+```
 
 ## 配置集成开发环境
 
@@ -264,3 +240,4 @@ Go语言提供了build和run两个命令来编译运行Go程序：
 + 运算符
 + 条件语句
 + 循环语句
+
