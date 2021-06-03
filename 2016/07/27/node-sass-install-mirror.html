@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 3.9.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>node-sass安装镜像 - 每天进步一点点</title>
+
+
+
+
+
+
+<link rel="alternative" href="/" title="node-sass安装镜像" type="application/atom+xml">
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+<script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?78141f99bbb49f1564a7af89344f5add";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                <img src="/images/logo.svg" alt="node-sass安装镜像" height="28">
+                
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                    href="/">主页</a>
+                
+                <a class="navbar-item"
+                    href="/archives">归档</a>
+                
+                <a class="navbar-item"
+                    href="/categories">分类</a>
+                
+                <a class="navbar-item"
+                    href="/tags">标签</a>
+                
+                <a class="navbar-item"
+                    href="/suggestion">建议</a>
+                
+                <a class="navbar-item"
+                    href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                
+                
+                <a class="navbar-item" target="_blank" title="GitHub"
+                    href="https://github.com/xialeistudio">
+                    
+                    <i class="fab fa-github"></i>
+                    
+                </a>
+                
+                <a class="navbar-item" target="_blank" title="SegmentFault"
+                    href="https://segmentfault.com/u/xialeistudio">
+                    
+                    <img src="https://static.ddhigh.com/blog/2019-09-18-115828.png?imageView2/1/w/40/h/40" style="width:16px;height:16px" />
+                    
+                </a>
+                
+                <a class="navbar-item" target="_blank" title="QQ"
+                    href="//shang.qq.com/wpa/qunwpa?idkey=83c6884d7520f22891e3f82c76f42baa5c53af91ce8d31ed2641248f8730687b">
+                    
+                    <i class="fab fa-qq"></i>
+                    
+                </a>
+                
+                
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2016-07-27T06:37:54.000Z">2016-07-27</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/nodejs/">nodejs</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    3 分钟 读完 (大约 405 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            node-sass安装镜像
+            
+        </h1>
+        <div class="content">
+            
+            <div id="container">
+                <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>npm安装node-sass模块的时候，会卡在 node scripts/install.js这里，因为要去github.com上下载源码，众所周知的原因，国内的网络上github.com速度太不稳定了，所以安装很慢。</p>
+<p>这里推荐一种极速安装的方法，当然还是使用万能的淘宝镜像源。</p>
+<p>打开~/.npmrc（windows用户打开 c:\Users\当前用户名.npmrc）增加一行</p>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SASS_BINARY_SITE=https://npm.taobao.org/mirrors/node-sass/</span><br></pre></td></tr></table></figure>
+<p>终端执行:</p>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install node-sass</span><br></pre></td></tr></table></figure>
+<h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><p>如果使用了较高版本的nodejs或者node-sass，此时镜像可能还未同步完成，所以请大家前往此链接查看受支持的node-sass:</p>
+<figure class="highlight crmsh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://npm.taobao.org/mirrors/<span class="hljs-keyword">node</span><span class="hljs-title">-sass</span>/</span><br></pre></td></tr></table></figure>
+<p>该网页列出来的即为当前受支持的node-sass版本，开发的时候一般使用最新版本，本文写作时<strong>node-sass</strong>最新版本为<strong>v4.0.0</strong>，点击<strong>v4.0.0</strong>链接：</p>
+<figure class="highlight crmsh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://npm.taobao.org/mirrors/<span class="hljs-keyword">node</span><span class="hljs-title">-sass</span>/v4.<span class="hljs-number">0.0</span>/</span><br></pre></td></tr></table></figure>
+<p>可以看到新网页中有一个文件列表，后缀为<strong>.node</strong>的文件即位编译好的，文件名格式如下:</p>
+<figure class="highlight crmsh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[platform]-[architecture]-[nodejs <span class="hljs-keyword">version</span>]_binding.<span class="hljs-keyword">node</span><span class="hljs-title"></span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>platform 操作系统平台 <strong>darwin</strong>为<strong>Mac OS X</strong>，<strong>linux</strong>为<strong>linux</strong>，<strong>win32</strong>为<strong>windows</strong></li>
+<li>architecture 系统架构 目前有<strong>x64</strong>,<strong>ia32</strong></li>
+<li>nodejs version nodejs版本号，取全版本号的前两位，比如<strong>4.6.x</strong>为<strong>46</strong>，<strong>5.1.x</strong>为<strong>51</strong></li>
+</ul>
+<p>所以大家如果发现本网页没有出现你平台所需要的二进制文件，镜像也需要从github拉取数据，此时安装node-sass是不会加速的。</p>
+
+            </div>
+            
+        </div>
+        
+        
+        
+        <div class="social-share" data-disabled="qzone,facebook,twitter,tencent,linkedin,douban,diandian,google"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev"
+                href="/2016/08/09/wechat-media-platform-nodejs-sdk.html">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">微信公众平台开发NodeJs SDK</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next"
+                href="/2016/06/26/mybatis-generator-gui-tool.html">
+                <span class="level-item">mybatis-generator-gui工具</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">评论</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '1ae09f5aa5dcce937e94',
+        clientSecret: '55c4032692dbcb0ee13771da7dc95f22cf9ae8e1',
+        id: '74eb7723e15cccd72f376fd15e4118ba',
+        repo: 'xialeistudio.github.io',
+        owner: 'xialeistudio',
+        admin: "xialeistudio",
+        createIssueManually: false,
+        distractionFreeMode: false,
+        proxy: '/github/login/oauth/access_token'
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                    <figure class="image is-128x128 has-mb-6">
+                        <img class="is-rounded" src="https://static.ddhigh.com/blog/2019-09-18-094336.jpg"
+                            alt="夏磊">
+                    </figure>
+                    
+                    <p class="is-size-4 is-block">
+                        夏磊
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        Full-Stack
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>China</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        文章
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        273
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        分类
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        25
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        标签
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        32
+                    </p>
+                </div>
+            </div>
+        </nav>
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://github.com/xialeistudio" target="_blank">
+                关注我</a>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Github"
+                href="https://github.com/xialeistudio">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="SegmentFault"
+                href="https://segmentfault.com/xialeistudio">
+                
+                <img style="width:16px;height:16px" src="https://static.ddhigh.com/blog/2019-09-18-115828.png?imageView2/1/w/40/h/40" />
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="RSS"
+                href="/atom.xml">
+                
+                <i class="fas fa-rss"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+    
+        
+
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                出版书籍
+            </h3>
+            <ul class="menu-list" style="display: flex;flex-wrap:wrap">
+                
+                <li style="margin:0 10px 10px 0">
+                    <div style="display: flex;">
+                        <img src="https://static.ddhigh.com/blog/2019-09-18-095311.jpg?imageView2/2/w/200/h/200" width="100" alt="ThinkPHP5实战" />
+                        <div style="flex:1;margin-left:8px;line-height: 2;">
+                            <div style="font-weight: bold;">ThinkPHP5实战</div>
+                            <div style="font-size: 12px;color: #666;">出版日期：2019.1</div>
+                            <div>
+                                <a style="display: inline-block;color: white;background: #dc3545;border-radius: 4px;" href="https://item.jd.com/12699110.html" target="_blank">购买</a>
+                                <a style="display: inline-block;color: white;background: #007bff;border-radius: 4px;" href="http://www.tup.tsinghua.edu.cn/booksCenter/book_08079501.html" target="_blank">详情</a>
+                            </div>
+                        </div>
+                        </a>
+                </li>
+                
+                <li style="margin:0 10px 10px 0">
+                    <div style="display: flex;">
+                        <img src="https://static.ddhigh.com/blog/2019-09-18-095415.jpg?imageView2/2/w/200/h/200" width="100" alt="ThinkPHP实战" />
+                        <div style="flex:1;margin-left:8px;line-height: 2;">
+                            <div style="font-weight: bold;">ThinkPHP实战</div>
+                            <div style="font-size: 12px;color: #666;">出版日期：2017.04</div>
+                            <div>
+                                <a style="display: inline-block;color: white;background: #dc3545;border-radius: 4px;" href="https://item.jd.com/12173050.html" target="_blank">购买</a>
+                                <a style="display: inline-block;color: white;background: #007bff;border-radius: 4px;" href="http://www.tup.tsinghua.edu.cn/booksCenter/book_06867701.html" target="_blank">详情</a>
+                            </div>
+                        </div>
+                        </a>
+                </li>
+                
+                <li style="margin:0 10px 10px 0">
+                    <div style="display: flex;">
+                        <img src="https://static.ddhigh.com/blog/2020-08-20-064537.jpg?imageView2/2/w/200/h/200" width="100" alt="Node.js+Webpack 开发实战" />
+                        <div style="flex:1;margin-left:8px;line-height: 2;">
+                            <div style="font-weight: bold;">Node.js+Webpack 开发实战</div>
+                            <div style="font-size: 12px;color: #666;">出版日期：2020.08</div>
+                            <div>
+                                <a style="display: inline-block;color: white;background: #dc3545;border-radius: 4px;" href="https://item.jd.com/12933234.html" target="_blank">购买</a>
+                                <a style="display: inline-block;color: white;background: #007bff;border-radius: 4px;" href="http://www.tup.tsinghua.edu.cn/booksCenter/book_07638401.html" target="_blank">详情</a>
+                            </div>
+                        </div>
+                        </a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+    
+        
+
+
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                微信公众号
+            </h3>
+            <p>欢迎关注我的公众号<br>学习最新、最热的JS/TS知识！</p>
+            <img src="https://static.ddhigh.com/blog/2019-09-19-115314.jpg" width="200" height="200" alt="">
+        </div>
+    </div>
+</div>
+
+
+    
+        
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                目录
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#安装">
+        <span class="has-mr-6">1</span>
+        <span>安装</span>
+        </a></li><li>
+        <a class="is-flex" href="#注意">
+        <span class="has-mr-6">2</span>
+        <span>注意</span>
+        </a></li></ul>
+        </div>
+    </div>
+</div>
+
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
+        
+        </div>
+    
+</div>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.svg" alt="node-sass安装镜像" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2021 xialeistudio&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                
+                </p>
+                <p class="is-size-7">
+                    
+                    <a target="_blank" href="https://beian.miit.gov.cn/">粤ICP备14062481号-1</a>
+                    
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="GitHub" href="https://github.com/xialeistudio">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+<script>
+    var IcarusThemeSettings = {
+        article: {
+            highlight: {
+                clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+    
+    <script src="/js/animation.js"></script>
+    
+
+
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+<script src="https://my.openwrite.cn/js/readmore.js" type="text/javascript"></script>
+<script>
+    const userAgent = window.navigator.userAgent;
+    const isDesktop = userAgent.indexOf('Android') === -1 && userAgent.indexOf('iPad') === -1 && userAgent.indexOf('iPhone') === -1;
+    const btw = new BTWPlugin();
+    btw.init({
+        id: isDesktop ? 'container' : 'aaa',
+        blogId: '17768-1572420593825-274',
+        name: 'NodeJs之路',
+        qrcode: 'https://static.ddhigh.com/blog/2019-10-30-073944.jpg',
+        keyword: 'blog',
+    });
+</script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

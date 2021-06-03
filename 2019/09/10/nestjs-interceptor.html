@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 3.9.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>NestJs学习之旅(9)——拦截器 - 每天进步一点点</title>
+
+
+
+
+
+
+<link rel="alternative" href="/" title="NestJs学习之旅(9)——拦截器" type="application/atom+xml">
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+<script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?78141f99bbb49f1564a7af89344f5add";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                <img src="/images/logo.svg" alt="NestJs学习之旅(9)——拦截器" height="28">
+                
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                    href="/">主页</a>
+                
+                <a class="navbar-item"
+                    href="/archives">归档</a>
+                
+                <a class="navbar-item"
+                    href="/categories">分类</a>
+                
+                <a class="navbar-item"
+                    href="/tags">标签</a>
+                
+                <a class="navbar-item"
+                    href="/suggestion">建议</a>
+                
+                <a class="navbar-item"
+                    href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                
+                
+                <a class="navbar-item" target="_blank" title="GitHub"
+                    href="https://github.com/xialeistudio">
+                    
+                    <i class="fab fa-github"></i>
+                    
+                </a>
+                
+                <a class="navbar-item" target="_blank" title="SegmentFault"
+                    href="https://segmentfault.com/u/xialeistudio">
+                    
+                    <img src="https://static.ddhigh.com/blog/2019-09-18-115828.png?imageView2/1/w/40/h/40" style="width:16px;height:16px" />
+                    
+                </a>
+                
+                <a class="navbar-item" target="_blank" title="QQ"
+                    href="//shang.qq.com/wpa/qunwpa?idkey=83c6884d7520f22891e3f82c76f42baa5c53af91ce8d31ed2641248f8730687b">
+                    
+                    <i class="fab fa-qq"></i>
+                    
+                </a>
+                
+                
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2019-09-10T07:17:32.000Z">2019-09-10</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/nodejs/">nodejs</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    10 分钟 读完 (大约 1504 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            NestJs学习之旅(9)——拦截器
+            
+        </h1>
+        <div class="content">
+            
+            <div id="container">
+                <p>本文是NestJs的第九篇，讲解拦截器。</p>
+<p>拦截器是一个实现了<strong>NestInterceptor</strong>接口且被<strong>@Injectable</strong>装饰器修饰的类。</p>
+<p><img src="https://static.ddhigh.com/blog/2019-09-10-061428.png" alt="img"></p>
+<p>拦截器是基于AOP编程思想的一种应用，以下是常用的功能：</p>
+<ul>
+<li>在方法执行之前或之后执行<strong>额外的逻辑</strong>，这些逻辑一般不属于业务的一部分</li>
+<li><strong>转换</strong>函数执行结果</li>
+<li><strong>转换</strong>函数执行时抛出的异常</li>
+<li>扩展函数基本行为</li>
+<li>特定场景下完全重写函数的行为（比如缓存拦截器，一旦有可用的缓存则直接返回，不执行真正的业务逻辑，即业务逻辑处理函数行为已经被重写）</li>
+</ul>
+<h2 id="拦截器接口"><a href="#拦截器接口" class="headerlink" title="拦截器接口"></a>拦截器接口</h2><p>每个拦截器都需要实现<strong>NestInterceptor</strong>接口的<strong>intercept()</strong>方法，该方法接收两个参数。方法原型如下：</p>
+<figure class="highlight typescript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">intercept</span>(<span class="hljs-params">context: ExecutionContext, next: CallHandler</span>): <span class="hljs-title">Observable</span>&lt;<span class="hljs-title">any</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>ExecutionContext 执行上下文，与<a href="https://www.ddhigh.com/2019/08/27/nestjs-guard.html" target="_blank" rel="noopener">NestJs学习之旅(7)——路由守卫</a>中的<strong>执行上下文</strong>相同</li>
+<li>CallHandler 路由处理函数</li>
+</ul>
+<h2 id="CallHandler"><a href="#CallHandler" class="headerlink" title="CallHandler"></a>CallHandler</h2><p>该接口是对路由处理函数的抽象，接口定义如下：</p>
+<figure class="highlight typescript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> CallHandler&lt;T = any&gt; &#123;</span><br><span class="line">    handle(): Observable&lt;T&gt;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>handle()函数的返回值也就是对应路由函数的返回值。</p>
+<p>以获取用户列表为例：</p>
+<figure class="highlight typescript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// user.controller.ts</span></span><br><span class="line"><span class="hljs-meta">@Controller</span>(<span class="hljs-string">'user'</span>)</span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> UserController &#123;</span><br><span class="line">  <span class="hljs-meta">@Get</span>()</span><br><span class="line">  list() &#123;</span><br><span class="line">    <span class="hljs-keyword">return</span> [];</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当访问 /user/list 时，路由处理函数返回<strong>[]</strong>，如果在应用拦截器的情况下，调用CallHandler接口的handle()方法得到的也是Observable&lt;[]&gt;(RxJs包装对象)。</p>
+<p><strong>所以，如果在拦截器中调用了next.handle()方法就会执行对应的路由处理函数，如果不调用的话就不会执行。</strong></p>
+<h2 id="一个请求链路日志记录拦截器"><a href="#一个请求链路日志记录拦截器" class="headerlink" title="一个请求链路日志记录拦截器"></a>一个请求链路日志记录拦截器</h2><p>随着微服务的兴起，原来的单一项目被拆分成多个比较小的子模块，这些子模块可以独立开发、独立部署、独立运行，大大提高了开发、执行效率，但是带来的问题也比较多，一个经常遇到的问题是接口调用出错不好查找日志。</p>
+<p>如果在业务逻辑中硬编码这种链路调用日志是非常不可取的，严重违反了单一职责的原则，这在微服务开发中是相当不好的一种行为，会让微服务变得臃肿，这些逻辑完全可以通过拦截器来实现。</p>
+<figure class="highlight typescript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// app.interceptor.ts</span></span><br><span class="line"><span class="hljs-keyword">import</span> &#123; CallHandler, ExecutionContext, Injectable, Logger, NestInterceptor &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">'@nestjs/common'</span>;</span><br><span class="line"><span class="hljs-keyword">import</span> &#123; Observable &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">'rxjs'</span>;</span><br><span class="line"><span class="hljs-keyword">import</span> &#123; tap &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">'rxjs/operators'</span>;</span><br><span class="line"><span class="hljs-keyword">import</span> &#123; Request &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">'express'</span>;</span><br><span class="line"><span class="hljs-keyword">import</span> &#123; format &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">'util'</span>;</span><br><span class="line"></span><br><span class="line"><span class="hljs-meta">@Injectable</span>()</span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> AppInterceptor <span class="hljs-keyword">implements</span> NestInterceptor &#123;</span><br><span class="line">  <span class="hljs-keyword">private</span> readonly logger = <span class="hljs-keyword">new</span> Logger(); <span class="hljs-comment">// 实例化日志记录器</span></span><br><span class="line"></span><br><span class="line">  intercept(context: ExecutionContext, next: CallHandler): Observable&lt;<span class="hljs-built_in">any</span>&gt; &#123;</span><br><span class="line">    <span class="hljs-keyword">const</span> start = <span class="hljs-built_in">Date</span>.now(); <span class="hljs-comment">// 请求开始时间</span></span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">return</span> next.handle().pipe(tap(<span class="hljs-function">(<span class="hljs-params">response</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="hljs-comment">// 调用完handle()后得到RxJs响应对象，使用tap可以得到路由函数的返回值</span></span><br><span class="line">      <span class="hljs-keyword">const</span> host = context.switchToHttp();</span><br><span class="line">      <span class="hljs-keyword">const</span> request = host.getRequest&lt;Request&gt;();</span><br><span class="line"></span><br><span class="line">      <span class="hljs-comment">// 打印请求方法，请求链接，处理时间和响应数据</span></span><br><span class="line">      <span class="hljs-keyword">this</span>.logger.log(format(</span><br><span class="line">        <span class="hljs-string">'%s %s %dms %s'</span>,</span><br><span class="line">        request.method,</span><br><span class="line">        request.url,</span><br><span class="line">        <span class="hljs-built_in">Date</span>.now() - start,</span><br><span class="line">        <span class="hljs-built_in">JSON</span>.stringify(response),</span><br><span class="line">      ));</span><br><span class="line">    &#125;));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// user.controller.ts</span></span><br><span class="line"><span class="hljs-meta">@UseInterceptors</span>(AppInterceptor)</span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> UserController &#123;</span><br><span class="line">  <span class="hljs-meta">@Get</span>()</span><br><span class="line">  list() &#123;</span><br><span class="line">    <span class="hljs-keyword">return</span> [];</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当访问 /user时控制台想输出</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[Nest] 96310   - 09/10/2019, 2:44 PM   GET /user 1ms []</span><br></pre></td></tr></table></figure>
+<h2 id="拦截器作用域"><a href="#拦截器作用域" class="headerlink" title="拦截器作用域"></a>拦截器作用域</h2><p>拦截器可以在以下作用域进行绑定：</p>
+<ul>
+<li>全局拦截器</li>
+<li>控制器拦截器</li>
+<li>路由方法拦截器</li>
+</ul>
+<h3 id="全局拦截器"><a href="#全局拦截器" class="headerlink" title="全局拦截器"></a>全局拦截器</h3><p>在main.ts中使用以下代码即可：</p>
+<figure class="highlight typescript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> app = <span class="hljs-keyword">await</span> NestFactory.create(AppModule);</span><br><span class="line">app.useGlobalInterceptors(<span class="hljs-keyword">new</span> AppInterceptor());</span><br></pre></td></tr></table></figure>
+<h3 id="控制器拦截器"><a href="#控制器拦截器" class="headerlink" title="控制器拦截器"></a>控制器拦截器</h3><p>将对该控制器所有<strong>路由</strong>方法生效：</p>
+<figure class="highlight typescript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">@Controller</span>(<span class="hljs-string">'user'</span>)</span><br><span class="line"><span class="hljs-meta">@UseInterceptors</span>(AppInterceptor)</span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> UserController &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="路由方法拦截器"><a href="#路由方法拦截器" class="headerlink" title="路由方法拦截器"></a>路由方法拦截器</h3><p>只对当前被装饰的路由方法进行拦截：</p>
+<figure class="highlight typescript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">@Controller</span>(<span class="hljs-string">'user'</span>)</span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> UserController &#123;</span><br><span class="line">  <span class="hljs-meta">@UseInterceptors</span>(AppInterceptor)</span><br><span class="line">  <span class="hljs-meta">@Get</span>()</span><br><span class="line">  list() &#123;</span><br><span class="line">    <span class="hljs-keyword">return</span> [];</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="响应处理"><a href="#响应处理" class="headerlink" title="响应处理"></a>响应处理</h2><p>CallHandler接口的handle()返回值实际上是RxJs的Observable对象，利用RxJs操作符可以对该对象进行操作，比如有一个API接口，之前返回的数据结构如下，如果正常响应，响应体就是数据，没有包装结构：</p>
+<figure class="highlight json hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="hljs-attr">"id"</span>:<span class="hljs-number">1</span>,</span><br><span class="line">  <span class="hljs-attr">"name"</span>:<span class="hljs-string">"xialei"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>新的需求是要把之前的纯数据响应包装为一个data属性，结构如下：</p>
+<figure class="highlight json hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="hljs-attr">"data"</span>: &#123;</span><br><span class="line">    <span class="hljs-attr">"id"</span>: <span class="hljs-number">1</span>,</span><br><span class="line">    <span class="hljs-attr">"name"</span>:<span class="hljs-string">"xialei"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接到这个需求时有的小伙伴可能已经在梳理响应接口的数量然后评估工时准备进行开发了，而使用NestJs的拦截器，不到一炷香的时间即可实现该需求。</p>
+<figure class="highlight typescript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> &#123; CallHandler, ExecutionContext, Injectable, Logger, NestInterceptor &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">'@nestjs/common'</span>;</span><br><span class="line"><span class="hljs-keyword">import</span> &#123; Observable &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">'rxjs'</span>;</span><br><span class="line"><span class="hljs-keyword">import</span> &#123; map &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">'rxjs/operators'</span>;</span><br><span class="line"></span><br><span class="line"><span class="hljs-meta">@Injectable</span>()</span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> AppInterceptor <span class="hljs-keyword">implements</span> NestInterceptor &#123;</span><br><span class="line"></span><br><span class="line">  intercept(context: ExecutionContext, next: CallHandler): Observable&lt;<span class="hljs-built_in">any</span>&gt; &#123;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">return</span> next.handle().</span><br><span class="line">      pipe(map(<span class="hljs-function"><span class="hljs-params">data</span> =&gt;</span> (&#123; data &#125;))); <span class="hljs-comment">// map操作符与Array.prototype.map类似</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>应用上述拦截器后响应数据就会被包上一层data属性。</p>
+<h2 id="异常映射"><a href="#异常映射" class="headerlink" title="异常映射"></a>异常映射</h2><p>另外一个有趣的例子是利用RxJs的catchError来覆盖路由处理函数抛出的异常。</p>
+<figure class="highlight typescript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> &#123;</span><br><span class="line">  Injectable,</span><br><span class="line">  NestInterceptor,</span><br><span class="line">  ExecutionContext,</span><br><span class="line">  BadGatewayException,</span><br><span class="line">  CallHandler,</span><br><span class="line">&#125; <span class="hljs-keyword">from</span> <span class="hljs-string">'@nestjs/common'</span>;</span><br><span class="line"><span class="hljs-keyword">import</span> &#123; Observable, throwError &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">'rxjs'</span>;</span><br><span class="line"><span class="hljs-keyword">import</span> &#123; catchError &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">'rxjs/operators'</span>;</span><br><span class="line"></span><br><span class="line"><span class="hljs-meta">@Injectable</span>()</span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> ErrorsInterceptor <span class="hljs-keyword">implements</span> NestInterceptor &#123;</span><br><span class="line">  intercept(context: ExecutionContext, next: CallHandler): Observable&lt;<span class="hljs-built_in">any</span>&gt; &#123;</span><br><span class="line">    <span class="hljs-keyword">return</span> next</span><br><span class="line">      .handle()</span><br><span class="line">      .pipe(</span><br><span class="line">        catchError(<span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> throwError(<span class="hljs-keyword">new</span> BadGatewayException())) <span class="hljs-comment">// catchError用来捕获异常</span></span><br><span class="line">      );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="重写路由函数逻辑"><a href="#重写路由函数逻辑" class="headerlink" title="重写路由函数逻辑"></a>重写路由函数逻辑</h2><p>在文章开始部分提到了拦截器可以重写路由处理函数逻辑。如下是一个缓存拦截器的例子</p>
+<figure class="highlight typescript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> &#123; Injectable, NestInterceptor, ExecutionContext, CallHandler &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">'@nestjs/common'</span>;</span><br><span class="line"><span class="hljs-keyword">import</span> &#123; Observable, of &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">'rxjs'</span>;</span><br><span class="line"></span><br><span class="line"><span class="hljs-meta">@Injectable</span>()</span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> CacheInterceptor <span class="hljs-keyword">implements</span> NestInterceptor &#123;</span><br><span class="line">  <span class="hljs-keyword">constructor</span>(<span class="hljs-params"><span class="hljs-keyword">private</span> readonly cacheService: CacheService</span>) &#123;&#125;</span><br><span class="line">  </span><br><span class="line">   <span class="hljs-keyword">async</span> intercept(context: ExecutionContext, next: CallHandler): Observable&lt;<span class="hljs-built_in">any</span>&gt; &#123;</span><br><span class="line">  	<span class="hljs-keyword">const</span> host = context.switchToHttp();</span><br><span class="line">    <span class="hljs-keyword">const</span> request = host.getRequest();</span><br><span class="line">    <span class="hljs-keyword">if</span>(request.method !== <span class="hljs-string">'GET'</span>) &#123;  </span><br><span class="line">      <span class="hljs-comment">// 非GET请求放行</span></span><br><span class="line">      <span class="hljs-keyword">return</span> next.handle();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-keyword">const</span> cachedData = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.cacheService.get(request.url);</span><br><span class="line">    <span class="hljs-keyword">if</span>(cachedData) &#123; </span><br><span class="line">      <span class="hljs-comment">// 命中缓存，直接放行</span></span><br><span class="line">      <span class="hljs-keyword">return</span> of(cachedData);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-keyword">return</span> next.handle().pipe(tap(response) =&gt; &#123; </span><br><span class="line">      <span class="hljs-comment">// 响应数据写入缓存，此处可以等待缓存写入完成，也可以不等待</span></span><br><span class="line">      <span class="hljs-keyword">this</span>.cacheService.set(request.method, response);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h2><p>本文是NestJs基础知识的最后一篇，接下将针对特定模块进行更新，比如数据库、上传、鉴权等等。</p>
+
+            </div>
+            
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/nestjs/">nestjs</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <div class="social-share" data-disabled="qzone,facebook,twitter,tencent,linkedin,douban,diandian,google"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev"
+                href="/2019/09/12/leetcode-two-sum.html">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">leetcode(1) —— 两数之和</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next"
+                href="/2019/08/28/nestjs-pipe.html">
+                <span class="level-item">NestJs学习之旅(8)——管道</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">评论</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '1ae09f5aa5dcce937e94',
+        clientSecret: '55c4032692dbcb0ee13771da7dc95f22cf9ae8e1',
+        id: '0c5a7d215f885b53d740ed820b88f44c',
+        repo: 'xialeistudio.github.io',
+        owner: 'xialeistudio',
+        admin: "xialeistudio",
+        createIssueManually: false,
+        distractionFreeMode: false,
+        proxy: '/github/login/oauth/access_token'
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                    <figure class="image is-128x128 has-mb-6">
+                        <img class="is-rounded" src="https://static.ddhigh.com/blog/2019-09-18-094336.jpg"
+                            alt="夏磊">
+                    </figure>
+                    
+                    <p class="is-size-4 is-block">
+                        夏磊
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        Full-Stack
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>China</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        文章
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        273
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        分类
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        25
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        标签
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        32
+                    </p>
+                </div>
+            </div>
+        </nav>
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://github.com/xialeistudio" target="_blank">
+                关注我</a>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Github"
+                href="https://github.com/xialeistudio">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="SegmentFault"
+                href="https://segmentfault.com/xialeistudio">
+                
+                <img style="width:16px;height:16px" src="https://static.ddhigh.com/blog/2019-09-18-115828.png?imageView2/1/w/40/h/40" />
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="RSS"
+                href="/atom.xml">
+                
+                <i class="fas fa-rss"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+    
+        
+
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                出版书籍
+            </h3>
+            <ul class="menu-list" style="display: flex;flex-wrap:wrap">
+                
+                <li style="margin:0 10px 10px 0">
+                    <div style="display: flex;">
+                        <img src="https://static.ddhigh.com/blog/2019-09-18-095311.jpg?imageView2/2/w/200/h/200" width="100" alt="ThinkPHP5实战" />
+                        <div style="flex:1;margin-left:8px;line-height: 2;">
+                            <div style="font-weight: bold;">ThinkPHP5实战</div>
+                            <div style="font-size: 12px;color: #666;">出版日期：2019.1</div>
+                            <div>
+                                <a style="display: inline-block;color: white;background: #dc3545;border-radius: 4px;" href="https://item.jd.com/12699110.html" target="_blank">购买</a>
+                                <a style="display: inline-block;color: white;background: #007bff;border-radius: 4px;" href="http://www.tup.tsinghua.edu.cn/booksCenter/book_08079501.html" target="_blank">详情</a>
+                            </div>
+                        </div>
+                        </a>
+                </li>
+                
+                <li style="margin:0 10px 10px 0">
+                    <div style="display: flex;">
+                        <img src="https://static.ddhigh.com/blog/2019-09-18-095415.jpg?imageView2/2/w/200/h/200" width="100" alt="ThinkPHP实战" />
+                        <div style="flex:1;margin-left:8px;line-height: 2;">
+                            <div style="font-weight: bold;">ThinkPHP实战</div>
+                            <div style="font-size: 12px;color: #666;">出版日期：2017.04</div>
+                            <div>
+                                <a style="display: inline-block;color: white;background: #dc3545;border-radius: 4px;" href="https://item.jd.com/12173050.html" target="_blank">购买</a>
+                                <a style="display: inline-block;color: white;background: #007bff;border-radius: 4px;" href="http://www.tup.tsinghua.edu.cn/booksCenter/book_06867701.html" target="_blank">详情</a>
+                            </div>
+                        </div>
+                        </a>
+                </li>
+                
+                <li style="margin:0 10px 10px 0">
+                    <div style="display: flex;">
+                        <img src="https://static.ddhigh.com/blog/2020-08-20-064537.jpg?imageView2/2/w/200/h/200" width="100" alt="Node.js+Webpack 开发实战" />
+                        <div style="flex:1;margin-left:8px;line-height: 2;">
+                            <div style="font-weight: bold;">Node.js+Webpack 开发实战</div>
+                            <div style="font-size: 12px;color: #666;">出版日期：2020.08</div>
+                            <div>
+                                <a style="display: inline-block;color: white;background: #dc3545;border-radius: 4px;" href="https://item.jd.com/12933234.html" target="_blank">购买</a>
+                                <a style="display: inline-block;color: white;background: #007bff;border-radius: 4px;" href="http://www.tup.tsinghua.edu.cn/booksCenter/book_07638401.html" target="_blank">详情</a>
+                            </div>
+                        </div>
+                        </a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+    
+        
+
+
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                微信公众号
+            </h3>
+            <p>欢迎关注我的公众号<br>学习最新、最热的JS/TS知识！</p>
+            <img src="https://static.ddhigh.com/blog/2019-09-19-115314.jpg" width="200" height="200" alt="">
+        </div>
+    </div>
+</div>
+
+
+    
+        
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                目录
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#拦截器接口">
+        <span class="has-mr-6">1</span>
+        <span>拦截器接口</span>
+        </a></li><li>
+        <a class="is-flex" href="#CallHandler">
+        <span class="has-mr-6">2</span>
+        <span>CallHandler</span>
+        </a></li><li>
+        <a class="is-flex" href="#一个请求链路日志记录拦截器">
+        <span class="has-mr-6">3</span>
+        <span>一个请求链路日志记录拦截器</span>
+        </a></li><li>
+        <a class="is-flex" href="#拦截器作用域">
+        <span class="has-mr-6">4</span>
+        <span>拦截器作用域</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#全局拦截器">
+        <span class="has-mr-6">4.1</span>
+        <span>全局拦截器</span>
+        </a></li><li>
+        <a class="is-flex" href="#控制器拦截器">
+        <span class="has-mr-6">4.2</span>
+        <span>控制器拦截器</span>
+        </a></li><li>
+        <a class="is-flex" href="#路由方法拦截器">
+        <span class="has-mr-6">4.3</span>
+        <span>路由方法拦截器</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#响应处理">
+        <span class="has-mr-6">5</span>
+        <span>响应处理</span>
+        </a></li><li>
+        <a class="is-flex" href="#异常映射">
+        <span class="has-mr-6">6</span>
+        <span>异常映射</span>
+        </a></li><li>
+        <a class="is-flex" href="#重写路由函数逻辑">
+        <span class="has-mr-6">7</span>
+        <span>重写路由函数逻辑</span>
+        </a></li><li>
+        <a class="is-flex" href="#结尾">
+        <span class="has-mr-6">8</span>
+        <span>结尾</span>
+        </a></li></ul>
+        </div>
+    </div>
+</div>
+
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
+        
+        </div>
+    
+</div>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.svg" alt="NestJs学习之旅(9)——拦截器" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2021 xialeistudio&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                
+                </p>
+                <p class="is-size-7">
+                    
+                    <a target="_blank" href="https://beian.miit.gov.cn/">粤ICP备14062481号-1</a>
+                    
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="GitHub" href="https://github.com/xialeistudio">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+<script>
+    var IcarusThemeSettings = {
+        article: {
+            highlight: {
+                clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+    
+    <script src="/js/animation.js"></script>
+    
+
+
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+<script src="https://my.openwrite.cn/js/readmore.js" type="text/javascript"></script>
+<script>
+    const userAgent = window.navigator.userAgent;
+    const isDesktop = userAgent.indexOf('Android') === -1 && userAgent.indexOf('iPad') === -1 && userAgent.indexOf('iPhone') === -1;
+    const btw = new BTWPlugin();
+    btw.init({
+        id: isDesktop ? 'container' : 'aaa',
+        blogId: '17768-1572420593825-274',
+        name: 'NodeJs之路',
+        qrcode: 'https://static.ddhigh.com/blog/2019-10-30-073944.jpg',
+        keyword: 'blog',
+    });
+</script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

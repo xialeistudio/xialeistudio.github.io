@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 3.9.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>NodeJs简明教程(5) - 每天进步一点点</title>
+
+
+
+
+
+
+<link rel="alternative" href="/" title="NodeJs简明教程(5)" type="application/atom+xml">
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+<script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?78141f99bbb49f1564a7af89344f5add";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                <img src="/images/logo.svg" alt="NodeJs简明教程(5)" height="28">
+                
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                    href="/">主页</a>
+                
+                <a class="navbar-item"
+                    href="/archives">归档</a>
+                
+                <a class="navbar-item"
+                    href="/categories">分类</a>
+                
+                <a class="navbar-item"
+                    href="/tags">标签</a>
+                
+                <a class="navbar-item"
+                    href="/suggestion">建议</a>
+                
+                <a class="navbar-item"
+                    href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                
+                
+                <a class="navbar-item" target="_blank" title="GitHub"
+                    href="https://github.com/xialeistudio">
+                    
+                    <i class="fab fa-github"></i>
+                    
+                </a>
+                
+                <a class="navbar-item" target="_blank" title="SegmentFault"
+                    href="https://segmentfault.com/u/xialeistudio">
+                    
+                    <img src="https://static.ddhigh.com/blog/2019-09-18-115828.png?imageView2/1/w/40/h/40" style="width:16px;height:16px" />
+                    
+                </a>
+                
+                <a class="navbar-item" target="_blank" title="QQ"
+                    href="//shang.qq.com/wpa/qunwpa?idkey=83c6884d7520f22891e3f82c76f42baa5c53af91ce8d31ed2641248f8730687b">
+                    
+                    <i class="fab fa-qq"></i>
+                    
+                </a>
+                
+                
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2019-07-20T05:00:27.000Z">2019-07-20</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/nodejs/">nodejs</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    6 分钟 读完 (大约 930 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            NodeJs简明教程(5)
+            
+        </h1>
+        <div class="content">
+            
+            <div id="container">
+                <p>本文是NodeJs简明教程的第五篇，将介绍NodeJs path模块相关的基本操作。</p>
+<blockquote>
+<p>path 模块提供用于处理文件路径和目录路径的实用工具。 </p>
+</blockquote>
+<p><strong>注意：path模块只是处理文件路径，说白了就是字符串处理，跟文件系统无关</strong></p>
+<h2 id="读取路径的文件名"><a href="#读取路径的文件名" class="headerlink" title="读取路径的文件名"></a>读取路径的文件名</h2><blockquote>
+<p>path.basename() 方法返回 path 的最后一部分，类似于 Unix 的 basename 命令。 尾部的目录分隔符将被忽略。</p>
+</blockquote>
+<ol>
+<li><p>返回带扩展名</p>
+ <figure class="highlight js hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="hljs-built_in">console</span>.log(path.basename(<span class="hljs-string">'/usr/local/a.txt'</span>))</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 输出 a.txt</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>返回不带扩展名</p>
+ <figure class="highlight js hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="hljs-built_in">console</span>.log(path.basename(<span class="hljs-string">'/usr/local/a.txt'</span>,<span class="hljs-string">'.txt'</span>))</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 输出 a</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="读取文件路径的目录名"><a href="#读取文件路径的目录名" class="headerlink" title="读取文件路径的目录名"></a>读取文件路径的目录名</h2><blockquote>
+<p>path.dirname() 方法返回 path 的目录名，类似于 Unix 的 dirname 命令。 尾部的目录分隔符将被忽略。<br>path.extname() 方法返回 path 的扩展名，从最后一次出现 .（句点）字符到 path 最后一部分的字符串结束。 如果在 path 的最后一部分中没有 . ，或者如果 path 的基本名称（参阅 path.basename()）除了第一个字符以外没有 .，则返回空字符串。</p>
+</blockquote>
+<figure class="highlight js hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="hljs-built_in">console</span>.log(path.dirname(<span class="hljs-string">'/usr/local/a.txt'</span>))</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 输出 /usr/local</span></span><br></pre></td></tr></table></figure>
+<h2 id="获取文件扩展名"><a href="#获取文件扩展名" class="headerlink" title="获取文件扩展名"></a>获取文件扩展名</h2><blockquote>
+<p>path.extname() 方法返回 path 的扩展名，从最后一次出现 .（句点）字符到 path 最后一部分的字符串结束。</p>
+</blockquote>
+<figure class="highlight js hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="hljs-built_in">console</span>.log(path.extname(<span class="hljs-string">'/usr/local/a.txt'</span>));</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 输出 .txt</span></span><br></pre></td></tr></table></figure>
+<h2 id="检测路径是否为绝对路径"><a href="#检测路径是否为绝对路径" class="headerlink" title="检测路径是否为绝对路径"></a>检测路径是否为绝对路径</h2><blockquote>
+<p>path.isAbsolute() 方法检测 path 是否为绝对路径。</p>
+</blockquote>
+<figure class="highlight js hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>);</span><br><span class="line"><span class="hljs-comment">// linux || macosx</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(path.isAbsolute(<span class="hljs-string">'/usr/local'</span>)); <span class="hljs-comment">// 输出 true</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(path.isAbsolute(<span class="hljs-string">'usr/local'</span>)); <span class="hljs-comment">// 输出 false</span></span><br><span class="line"><span class="hljs-comment">// windows</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(path.isAbsolute(<span class="hljs-string">'//server'</span>)); <span class="hljs-comment">// 输出 true</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(path.isAbsolute(<span class="hljs-string">'\\\\server'</span>)); <span class="hljs-comment">// 输出 true</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(path.isAbsolute(<span class="hljs-string">'c:\windows'</span>)); <span class="hljs-comment">// 输出 true</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(path.isAbsolute(<span class="hljs-string">'foo/bar'</span>)); <span class="hljs-comment">// 输出 false</span></span><br></pre></td></tr></table></figure>
+<h2 id="生成规范化的路径"><a href="#生成规范化的路径" class="headerlink" title="生成规范化的路径"></a>生成规范化的路径</h2><blockquote>
+<p>path.join() 方法使用平台特定的分隔符作为定界符将所有给定的 path 片段连接在一起，然后规范化生成的路径。<br>零长度的 path 片段会被忽略。 如果连接的路径字符串是零长度的字符串，则返回 ‘.’，表示当前工作目录。</p>
+</blockquote>
+<figure class="highlight js hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="hljs-built_in">console</span>.log(path.join(<span class="hljs-string">'/a'</span>,<span class="hljs-string">'b'</span>,<span class="hljs-string">'c'</span>,<span class="hljs-string">'..'</span>)); <span class="hljs-comment">// 输出 /a/b</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-built_in">console</span>.log(path.join(<span class="hljs-string">'.'</span>,<span class="hljs-string">'a'</span>,<span class="hljs-string">'b'</span>,<span class="hljs-string">'..'</span>,<span class="hljs-string">'c'</span>)); <span class="hljs-comment">// 输出 a/c</span></span><br></pre></td></tr></table></figure>
+<h2 id="解析路径"><a href="#解析路径" class="headerlink" title="解析路径"></a>解析路径</h2><blockquote>
+<p>path.parse() 方法返回一个对象，其属性表示 path 的重要元素。 尾部的目录分隔符将被忽略。<br>返回对象属性如下：<br>dir 目录<br>root 根目录<br>base 带扩展名的文件名或者目录名(最后一级是目录的情况下)<br>name 文件名(不带扩展名)或目录名<br>ext 文件扩展名(如果是目录则为空字符串)</p>
+</blockquote>
+<figure class="highlight js hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>);</span><br><span class="line"></span><br><span class="line">path.parse(<span class="hljs-string">'/home/user/dir/file.txt'</span>);</span><br><span class="line"><span class="hljs-comment">// 返回:</span></span><br><span class="line"><span class="hljs-comment">// &#123; root: '/',</span></span><br><span class="line"><span class="hljs-comment">//   dir: '/home/user/dir',</span></span><br><span class="line"><span class="hljs-comment">//   base: 'file.txt',</span></span><br><span class="line"><span class="hljs-comment">//   ext: '.txt',</span></span><br><span class="line"><span class="hljs-comment">//   name: 'file' &#125;</span></span><br></pre></td></tr></table></figure>
+<h2 id="获取两个路径的相对路径"><a href="#获取两个路径的相对路径" class="headerlink" title="获取两个路径的相对路径"></a>获取两个路径的相对路径</h2><blockquote>
+<p>path.relative() 方法根据当前工作目录返回 from 到 to 的相对路径。</p>
+</blockquote>
+<figure class="highlight js hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="hljs-built_in">console</span>.log(path.relative(<span class="hljs-string">'/data/orandea/test/aaa'</span>, <span class="hljs-string">'/data/orandea/impl/bbb'</span>)); </span><br><span class="line"><span class="hljs-comment">// 输出 ../../impl/bbb</span></span><br></pre></td></tr></table></figure>
+<h2 id="获取规范化的绝对路径"><a href="#获取规范化的绝对路径" class="headerlink" title="获取规范化的绝对路径"></a>获取规范化的绝对路径</h2><blockquote>
+<p>path.resolve() 方法将路径或路径片段的序列解析为绝对路径。</p>
+</blockquote>
+<figure class="highlight js hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="hljs-built_in">console</span>.log(path.resolve(<span class="hljs-string">'/foo/bar'</span>, <span class="hljs-string">'./baz'</span>)); <span class="hljs-comment">// 输出 /for/bar/baz</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(path.resolve(<span class="hljs-string">'/foo/bar'</span>, <span class="hljs-string">'/tmp/file/'</span>);); <span class="hljs-comment">// 输出 /tmp/file</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(path.resolve(<span class="hljs-string">'a'</span>,<span class="hljs-string">'b'</span>,<span class="hljs-string">'../c/img.gif'</span>));</span><br><span class="line"><span class="hljs-comment">// 假设当前工作目录 /home/wwwroot，上述语句输出 /home/wwwroot/a/c/img.gif</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-built_in">console</span>.log(path.resolve()); <span class="hljs-comment">// 假设当前工作目录 /home/wwwroot 输出 /home/wwwroot</span></span><br></pre></td></tr></table></figure>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p><code>path</code>模块的主要就是处理路径相关，经常和<code>fs</code>模块共同使用。</p>
+
+            </div>
+            
+        </div>
+        
+        
+        
+        <div class="social-share" data-disabled="qzone,facebook,twitter,tencent,linkedin,douban,diandian,google"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev"
+                href="/2019/07/21/nodejs-guide-crypto.html">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">NodeJs简明教程(6)</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next"
+                href="/2019/07/20/nodejs-guide-filesystem.html">
+                <span class="level-item">NodeJs简明教程(4)</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">评论</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '1ae09f5aa5dcce937e94',
+        clientSecret: '55c4032692dbcb0ee13771da7dc95f22cf9ae8e1',
+        id: 'e6e76c4da5568bb10a81eff6d37f4678',
+        repo: 'xialeistudio.github.io',
+        owner: 'xialeistudio',
+        admin: "xialeistudio",
+        createIssueManually: false,
+        distractionFreeMode: false,
+        proxy: '/github/login/oauth/access_token'
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                    <figure class="image is-128x128 has-mb-6">
+                        <img class="is-rounded" src="https://static.ddhigh.com/blog/2019-09-18-094336.jpg"
+                            alt="夏磊">
+                    </figure>
+                    
+                    <p class="is-size-4 is-block">
+                        夏磊
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        Full-Stack
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>China</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        文章
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        273
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        分类
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        25
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        标签
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        32
+                    </p>
+                </div>
+            </div>
+        </nav>
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://github.com/xialeistudio" target="_blank">
+                关注我</a>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Github"
+                href="https://github.com/xialeistudio">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="SegmentFault"
+                href="https://segmentfault.com/xialeistudio">
+                
+                <img style="width:16px;height:16px" src="https://static.ddhigh.com/blog/2019-09-18-115828.png?imageView2/1/w/40/h/40" />
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="RSS"
+                href="/atom.xml">
+                
+                <i class="fas fa-rss"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+    
+        
+
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                出版书籍
+            </h3>
+            <ul class="menu-list" style="display: flex;flex-wrap:wrap">
+                
+                <li style="margin:0 10px 10px 0">
+                    <div style="display: flex;">
+                        <img src="https://static.ddhigh.com/blog/2019-09-18-095311.jpg?imageView2/2/w/200/h/200" width="100" alt="ThinkPHP5实战" />
+                        <div style="flex:1;margin-left:8px;line-height: 2;">
+                            <div style="font-weight: bold;">ThinkPHP5实战</div>
+                            <div style="font-size: 12px;color: #666;">出版日期：2019.1</div>
+                            <div>
+                                <a style="display: inline-block;color: white;background: #dc3545;border-radius: 4px;" href="https://item.jd.com/12699110.html" target="_blank">购买</a>
+                                <a style="display: inline-block;color: white;background: #007bff;border-radius: 4px;" href="http://www.tup.tsinghua.edu.cn/booksCenter/book_08079501.html" target="_blank">详情</a>
+                            </div>
+                        </div>
+                        </a>
+                </li>
+                
+                <li style="margin:0 10px 10px 0">
+                    <div style="display: flex;">
+                        <img src="https://static.ddhigh.com/blog/2019-09-18-095415.jpg?imageView2/2/w/200/h/200" width="100" alt="ThinkPHP实战" />
+                        <div style="flex:1;margin-left:8px;line-height: 2;">
+                            <div style="font-weight: bold;">ThinkPHP实战</div>
+                            <div style="font-size: 12px;color: #666;">出版日期：2017.04</div>
+                            <div>
+                                <a style="display: inline-block;color: white;background: #dc3545;border-radius: 4px;" href="https://item.jd.com/12173050.html" target="_blank">购买</a>
+                                <a style="display: inline-block;color: white;background: #007bff;border-radius: 4px;" href="http://www.tup.tsinghua.edu.cn/booksCenter/book_06867701.html" target="_blank">详情</a>
+                            </div>
+                        </div>
+                        </a>
+                </li>
+                
+                <li style="margin:0 10px 10px 0">
+                    <div style="display: flex;">
+                        <img src="https://static.ddhigh.com/blog/2020-08-20-064537.jpg?imageView2/2/w/200/h/200" width="100" alt="Node.js+Webpack 开发实战" />
+                        <div style="flex:1;margin-left:8px;line-height: 2;">
+                            <div style="font-weight: bold;">Node.js+Webpack 开发实战</div>
+                            <div style="font-size: 12px;color: #666;">出版日期：2020.08</div>
+                            <div>
+                                <a style="display: inline-block;color: white;background: #dc3545;border-radius: 4px;" href="https://item.jd.com/12933234.html" target="_blank">购买</a>
+                                <a style="display: inline-block;color: white;background: #007bff;border-radius: 4px;" href="http://www.tup.tsinghua.edu.cn/booksCenter/book_07638401.html" target="_blank">详情</a>
+                            </div>
+                        </div>
+                        </a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+    
+        
+
+
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                微信公众号
+            </h3>
+            <p>欢迎关注我的公众号<br>学习最新、最热的JS/TS知识！</p>
+            <img src="https://static.ddhigh.com/blog/2019-09-19-115314.jpg" width="200" height="200" alt="">
+        </div>
+    </div>
+</div>
+
+
+    
+        
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                目录
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#读取路径的文件名">
+        <span class="has-mr-6">1</span>
+        <span>读取路径的文件名</span>
+        </a></li><li>
+        <a class="is-flex" href="#读取文件路径的目录名">
+        <span class="has-mr-6">2</span>
+        <span>读取文件路径的目录名</span>
+        </a></li><li>
+        <a class="is-flex" href="#获取文件扩展名">
+        <span class="has-mr-6">3</span>
+        <span>获取文件扩展名</span>
+        </a></li><li>
+        <a class="is-flex" href="#检测路径是否为绝对路径">
+        <span class="has-mr-6">4</span>
+        <span>检测路径是否为绝对路径</span>
+        </a></li><li>
+        <a class="is-flex" href="#生成规范化的路径">
+        <span class="has-mr-6">5</span>
+        <span>生成规范化的路径</span>
+        </a></li><li>
+        <a class="is-flex" href="#解析路径">
+        <span class="has-mr-6">6</span>
+        <span>解析路径</span>
+        </a></li><li>
+        <a class="is-flex" href="#获取两个路径的相对路径">
+        <span class="has-mr-6">7</span>
+        <span>获取两个路径的相对路径</span>
+        </a></li><li>
+        <a class="is-flex" href="#获取规范化的绝对路径">
+        <span class="has-mr-6">8</span>
+        <span>获取规范化的绝对路径</span>
+        </a></li><li>
+        <a class="is-flex" href="#结语">
+        <span class="has-mr-6">9</span>
+        <span>结语</span>
+        </a></li></ul>
+        </div>
+    </div>
+</div>
+
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
+        
+        </div>
+    
+</div>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.svg" alt="NodeJs简明教程(5)" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2021 xialeistudio&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                
+                </p>
+                <p class="is-size-7">
+                    
+                    <a target="_blank" href="https://beian.miit.gov.cn/">粤ICP备14062481号-1</a>
+                    
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="GitHub" href="https://github.com/xialeistudio">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+<script>
+    var IcarusThemeSettings = {
+        article: {
+            highlight: {
+                clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+    
+    <script src="/js/animation.js"></script>
+    
+
+
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+<script src="https://my.openwrite.cn/js/readmore.js" type="text/javascript"></script>
+<script>
+    const userAgent = window.navigator.userAgent;
+    const isDesktop = userAgent.indexOf('Android') === -1 && userAgent.indexOf('iPad') === -1 && userAgent.indexOf('iPhone') === -1;
+    const btw = new BTWPlugin();
+    btw.init({
+        id: isDesktop ? 'container' : 'aaa',
+        blogId: '17768-1572420593825-274',
+        name: 'NodeJs之路',
+        qrcode: 'https://static.ddhigh.com/blog/2019-10-30-073944.jpg',
+        keyword: 'blog',
+    });
+</script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>
