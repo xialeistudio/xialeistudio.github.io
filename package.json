@@ -25,6 +25,6 @@
   },
   "scripts": {
     "serve": "hexo serve",
-    "publish": "node --inspect-brk=5858 ./node_modules/.bin/hexo g"
+    "publish": "node ./node_modules/.bin/hexo g"
   }
 }
