@@ -28,4 +28,14 @@ jobs:
           personal_token: ${{ secrets.HEXO_DEPLOY }}
           publish_dir: ./public
           publish_branch: gh-pages
+
+      - name: Deploy Server
+        uses: wlixcc/SFTP-Deploy-Action@v1.0
+        with:
+          username: 'root'
+          server: 'www.ddhigh.com'
+          ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }} 
+          local_path: './public/*'
+          remote_path: '/var/www/test'
+          args: '-o ConnectTimeout=5'
   
