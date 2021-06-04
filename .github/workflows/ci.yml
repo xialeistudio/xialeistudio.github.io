@@ -40,12 +40,10 @@ jobs:
           personal_token: ${{ secrets.HEXO_DEPLOY }}
           publish_dir: ./public
           publish_branch: gh-pages
-          
-      - name: Archive Github Page
-        run: tar cvzf public.tgz public
 
       - name: Deploy Server
         run: |
-          echo ${{ secrets.SSH_PRIVATE_KEY }} >> private_key.pem
+          tar cvzf public.tgz public
+          echo ${{ secrets.SSH_PRIVATE_KEY }} > private_key.pem
           scp -i private_key.pem  public.tgz root@ww.ddhigh.com:/var/www/public.tgz
           ssh -i private_key.pem "cd /var/www && tar xzf public.tgz && mv public test && chown -R www-data:www-data test" 
