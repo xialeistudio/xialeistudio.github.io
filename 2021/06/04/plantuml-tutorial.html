@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 3.9.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>PlanUML指南 - 每天进步一点点</title>
+
+
+
+
+
+
+<link rel="alternative" href="/" title="PlanUML指南" type="application/atom+xml">
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+<script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?78141f99bbb49f1564a7af89344f5add";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                <img src="/images/logo.svg" alt="PlanUML指南" height="28">
+                
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                    href="/">主页</a>
+                
+                <a class="navbar-item"
+                    href="/archives">归档</a>
+                
+                <a class="navbar-item"
+                    href="/categories">分类</a>
+                
+                <a class="navbar-item"
+                    href="/tags">标签</a>
+                
+                <a class="navbar-item"
+                    href="/suggestion">建议</a>
+                
+                <a class="navbar-item"
+                    href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                
+                
+                <a class="navbar-item" target="_blank" title="GitHub"
+                    href="https://github.com/xialeistudio">
+                    
+                    <i class="fab fa-github"></i>
+                    
+                </a>
+                
+                <a class="navbar-item" target="_blank" title="SegmentFault"
+                    href="https://segmentfault.com/u/xialeistudio">
+                    
+                    <img src="https://static.ddhigh.com/blog/2019-09-18-115828.png?imageView2/1/w/40/h/40" style="width:16px;height:16px" />
+                    
+                </a>
+                
+                <a class="navbar-item" target="_blank" title="QQ"
+                    href="//shang.qq.com/wpa/qunwpa?idkey=83c6884d7520f22891e3f82c76f42baa5c53af91ce8d31ed2641248f8730687b">
+                    
+                    <i class="fab fa-qq"></i>
+                    
+                </a>
+                
+                
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2021-06-04T07:17:06.000Z">2021-06-04</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/devtools/">devtools</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    13 分钟 读完 (大约 1974 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            PlanUML指南
+            
+        </h1>
+        <div class="content">
+            
+            <div id="container">
+                <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><blockquote>
+<p><strong>统一建模语言</strong>（英语：Unified Modeling Language，缩写 UML）是非专利的第三代<a href="https://zh.wikipedia.org/w/index.php?title=对象建模语言&amp;action=edit&amp;redlink=1" target="_blank" rel="noopener">建模</a>和<a href="https://zh.wikipedia.org/wiki/规约语言" target="_blank" rel="noopener">规约语言</a>。UML是一种开放的方法，用于说明、可视化、构建和编写一个正在开发的、面向对象的、软件密集系统的制品的开放方法</p>
+</blockquote>
+<p>编写UML的软件很多，但是基本是可视化的，需要手动编写，本文主要介绍基于文本的UML编写工具——PlantUML。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>PlantUML有以下依赖：</p>
+<ol>
+<li>graphviz</li>
+<li>jdk</li>
+<li>Jetbrains IDE插件(可选，本文推荐)</li>
+</ol>
+<h3 id="安装graphviz"><a href="#安装graphviz" class="headerlink" title="安装graphviz"></a>安装graphviz</h3><p>本文使用<code>Homebrew</code>安装<code>graphviz</code>，终端执行以下命令安装<code>graphviz</code>。</p>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install graphviz</span><br></pre></td></tr></table></figure>
+<p>安装完毕后查看版本信息。</p>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dot -v</span><br></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<figure class="highlight vim hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">dot - graphviz <span class="hljs-keyword">version</span> <span class="hljs-number">2.47</span>.<span class="hljs-number">0</span> (<span class="hljs-number">20210316.0004</span>)</span><br><span class="line">libdir = <span class="hljs-string">"/usr/local/Cellar/graphviz/2.47.0/lib/graphviz"</span></span><br><span class="line">Activated plugin library: libgvplugin_dot_layout.<span class="hljs-number">6</span>.dylib</span><br><span class="line">Using layou<span class="hljs-variable">t:</span> <span class="hljs-keyword">do</span><span class="hljs-variable">t:dot_layout</span></span><br><span class="line">Activated plugin library: libgvplugin_core.<span class="hljs-number">6</span>.dylib</span><br><span class="line">Using render: <span class="hljs-keyword">do</span><span class="hljs-variable">t:core</span></span><br><span class="line">Using device: <span class="hljs-keyword">do</span><span class="hljs-variable">t:dot</span>:core</span><br><span class="line">The plugin configuration <span class="hljs-keyword">file</span>:</span><br><span class="line">	/usr/local/Cellar/graphviz/<span class="hljs-number">2.47</span>.<span class="hljs-number">0</span>/lib/graphviz/config6</span><br><span class="line">		was successfully loaded.</span><br><span class="line">    render	:  cairo dot dot_json fig gd json json0 <span class="hljs-keyword">map</span> mp pic pov <span class="hljs-keyword">ps</span> quartz svg tk visio vml vrml xdot xdot_json</span><br><span class="line">    layout	:  circo dot fdp neato nop nop1 nop2 osage patchwork sfdp twopi</span><br><span class="line">    textlayout	:  textlayout</span><br><span class="line">    device	:  bmp canon cgimage <span class="hljs-keyword">cmap</span> cmapx cmapx_np dot dot_json eps exr fig gd gd2 gif <span class="hljs-keyword">gv</span> icns ico <span class="hljs-keyword">imap</span> imap_np ismap jp2 jpe jpeg jpg json json0 mp pct pdf pic pict plain plain-ext png pov <span class="hljs-keyword">ps</span> ps2 psd sgi svg svgz tga tif tiff tk vdx vml vmlz vrml wbmp webp xdot xdot1.<span class="hljs-number">2</span> xdot1.<span class="hljs-number">4</span> xdot_json</span><br><span class="line">    loadimage	:  (lib) bmp eps gd gd2 gif jpe jpeg jpg pdf png <span class="hljs-keyword">ps</span> svg webp xbm</span><br></pre></td></tr></table></figure>
+<h3 id="jdk"><a href="#jdk" class="headerlink" title="jdk"></a>jdk</h3><p>本文使用<code>Homebrew</code>安装<code>openjdk</code>即可，终端执行以下命令安装<code>openjdk</code>。</p>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install openjdk</span><br></pre></td></tr></table></figure>
+<p>安装完毕后查看版本信息。</p>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -version</span><br></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<figure class="highlight lsl hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">openjdk version <span class="hljs-string">"11.0.10"</span> <span class="hljs-number">2021</span><span class="hljs-number">-01</span><span class="hljs-number">-19</span></span><br><span class="line">OpenJDK Runtime Environment (build <span class="hljs-number">11.0</span><span class="hljs-number">.10</span>+<span class="hljs-number">9</span>)</span><br><span class="line">OpenJDK <span class="hljs-number">64</span>-Bit Server VM (build <span class="hljs-number">11.0</span><span class="hljs-number">.10</span>+<span class="hljs-number">9</span>, mixed mode)</span><br></pre></td></tr></table></figure>
+<h3 id="Jetbrains-IDE插件安装"><a href="#Jetbrains-IDE插件安装" class="headerlink" title="Jetbrains IDE插件安装"></a>Jetbrains IDE插件安装</h3><p>本文以<code>Goland</code>为例。</p>
+<ol>
+<li><p>打开IDE设置，打开<code>Plugins</code>窗口，搜索<code>PlantUML integration</code></p>
+</li>
+<li><p>安装完毕后重启IDE</p>
+</li>
+<li><p>打开IDE设置，搜索<code>plantuml</code>，确保<code>Remote rendering</code>已关闭</p>
+<p><img src="https://static.ddhigh.com/blog//2021/06/04/1622792407142095000.png" alt="image-20210604154007098"></p>
+</li>
+</ol>
+<h2 id="PlantUML语法"><a href="#PlantUML语法" class="headerlink" title="PlantUML语法"></a>PlantUML语法</h2><p>以最常用的时序图、类图、流程图、组件图举例。</p>
+<h3 id="时序图"><a href="#时序图" class="headerlink" title="时序图"></a>时序图</h3><h4 id="Get-Started"><a href="#Get-Started" class="headerlink" title="Get Started"></a>Get Started</h4><ol>
+<li><p>IDE新建一个空项目，打开项目之后，右键新建文件</p>
+<p><img src="https://static.ddhigh.com/blog//2021/06/04/1622791752260150000.png" alt="image-20210604152912197"></p>
+</li>
+<li><p>选择<code>Sequence</code></p>
+<p><img src="https://static.ddhigh.com/blog//2021/06/04/1622791775795758000.png" alt="image-20210604152935751"></p>
+</li>
+<li><p>PlantUML菜单项说明</p>
+<p><img src="https://static.ddhigh.com/blog//2021/06/04/1622793009802684000.png" alt="image-20210604155009752"></p>
+</li>
+<li><p>以微信网页授权为例编写时序图。</p>
+<figure class="highlight less hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-variable">@startuml</span></span><br><span class="line">'<span class="hljs-attribute">https</span>:<span class="hljs-comment">//plantuml.com/sequence-diagram</span></span><br><span class="line"></span><br><span class="line">'启用自动编号</span><br><span class="line">autonumber</span><br><span class="line">'生命线自动激活</span><br><span class="line">autoactivate on</span><br><span class="line"></span><br><span class="line">actor 用户</span><br><span class="line"></span><br><span class="line">用户 -&gt; 应用服务器: 获取用户信息</span><br><span class="line">应用服务器 -&gt; 微信服务器: 跳转授权链接:(appid,scope,callback)</span><br><span class="line">微信服务器 -&gt; 用户: 请求用户授权</span><br><span class="line">return 允许授权</span><br><span class="line">return 返回授权code</span><br><span class="line">应用服务器 -&gt; 微信服务器: 获取用户access_token(appid,secret,code)</span><br><span class="line">return 返回access_token+openid</span><br><span class="line">应用服务器 -&gt; 微信服务器: 获取用户信息(openid,access_token)</span><br><span class="line">return 用户信息</span><br><span class="line">return 用户信息</span><br><span class="line"></span><br><span class="line"><span class="hljs-variable">@enduml</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>渲染效果</p>
+<p><img src="https://static.ddhigh.com/blog//2021/06/04/1622792350734661000.png" alt="image-20210604153910674"></p>
+</li>
+</ol>
+<h4 id="语法说明"><a href="#语法说明" class="headerlink" title="语法说明"></a>语法说明</h4><h5 id="标记声明"><a href="#标记声明" class="headerlink" title="标记声明"></a>标记声明</h5><figure class="highlight less hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-variable">@startuml</span>和<span class="hljs-variable">@enduml</span>是PlantUML的开始结束标记，无需更改。</span><br><span class="line">autonumber 打开启动编号，也就是每个步骤之前都有数字编号，打开之后整个流程更加清晰</span><br><span class="line">autoactivate on 打开生命线自动激活，需要配合<span class="hljs-built_in">`return`</span>使用</span><br><span class="line">actor 用户 声明<span class="hljs-built_in">`用户`</span>的类型是actor(行为人)</span><br></pre></td></tr></table></figure>
+<h5 id="时序声明"><a href="#时序声明" class="headerlink" title="时序声明"></a>时序声明</h5><ul>
+<li>使用<code>-&gt;</code>来声明一个时序操作，<code>:</code>后面可以附加消息</li>
+<li>使用<code>return</code>来返回消息给调用者</li>
+</ul>
+<h5 id="声明参与者"><a href="#声明参与者" class="headerlink" title="声明参与者"></a>声明参与者</h5><p>默认情况下参与者为矩形，无法看出实际类型。实际应用中，会有数据库、消息队列等等参与者，使用以下关键字来改变参与者的图例。</p>
+<figure class="highlight routeros hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">actor 用户</span><br><span class="line">database 数据库</span><br><span class="line">queue 消息队列</span><br></pre></td></tr></table></figure>
+<p><img src="https://static.ddhigh.com/blog//2021/06/04/1622792920216896000.png" alt="image-20210604154840162"></p>
+<h3 id="类图"><a href="#类图" class="headerlink" title="类图"></a>类图</h3><p>类图是UML中非常重要的一种类型，能够在实际编码之前为我们提供OOP的详细设计。</p>
+<h4 id="Get-Started-1"><a href="#Get-Started-1" class="headerlink" title="Get Started"></a>Get Started</h4><ol>
+<li><p>IDE新建一个空项目，打开项目之后，右键新建文件</p>
+<p><img src="https://static.ddhigh.com/blog//2021/06/04/1622791752260150000.png" alt="image-20210604152912197"></p>
+</li>
+<li><p>选择<code>Class</code></p>
+<p><img src="https://static.ddhigh.com/blog/2021/06/04/1622793181374871000.png" alt="image-20210604155301322"></p>
+</li>
+<li><p>以一个上传类为例编写类图</p>
+<figure class="highlight haskell hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">@startuml</span><br><span class="line">'https://plantuml.com/<span class="hljs-keyword">class</span>-diagram</span><br><span class="line"></span><br><span class="line"><span class="hljs-title">namespace</span> com.ddhigh.uploader &#123;</span><br><span class="line">    interface <span class="hljs-type">Uploader</span> &#123;</span><br><span class="line">        + <span class="hljs-type">String</span> <span class="hljs-type">Upload</span>(<span class="hljs-type">String</span> filename) <span class="hljs-type">Throws</span> <span class="hljs-type">IOException</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    namespace qiniu &#123;</span><br><span class="line"><span class="hljs-class">        <span class="hljs-keyword">class</span> <span class="hljs-type">QiniuUploader</span> implements <span class="hljs-type">Uploader</span> &#123;</span></span><br><span class="line"><span class="hljs-class">            - client: qiniu.<span class="hljs-type">Client</span></span></span><br><span class="line"><span class="hljs-class">            <span class="hljs-comment">--</span></span></span><br><span class="line"><span class="hljs-class">            + <span class="hljs-type">String</span> <span class="hljs-type">Upload</span>(<span class="hljs-type">String</span> <span class="hljs-title">filename</span>) <span class="hljs-type">Throws</span> <span class="hljs-type">IOException</span></span></span><br><span class="line"><span class="hljs-class">        &#125;</span></span><br><span class="line"><span class="hljs-class">        <span class="hljs-type">QiniuUploader</span> *<span class="hljs-comment">-- qiniu.Client</span></span></span><br><span class="line"><span class="hljs-class">    &#125;</span></span><br><span class="line"><span class="hljs-class"></span></span><br><span class="line"><span class="hljs-class">    package aliyun &#123;</span></span><br><span class="line"><span class="hljs-class">        <span class="hljs-keyword">class</span> <span class="hljs-type">AliyunUploader</span> implements <span class="hljs-type">Uploader</span> &#123;</span></span><br><span class="line"><span class="hljs-class">            - client: aliyun.<span class="hljs-type">Client</span></span></span><br><span class="line"><span class="hljs-class">            <span class="hljs-comment">--</span></span></span><br><span class="line"><span class="hljs-class">            + <span class="hljs-type">String</span> <span class="hljs-type">Upload</span>(<span class="hljs-type">String</span> <span class="hljs-title">filename</span>) <span class="hljs-type">Throws</span> <span class="hljs-type">IOException</span></span></span><br><span class="line"><span class="hljs-class">        &#125;</span></span><br><span class="line"><span class="hljs-class">        <span class="hljs-type">AliyunUploader</span> *<span class="hljs-comment">-- aliyun.Client</span></span></span><br><span class="line"><span class="hljs-class">    &#125;</span></span><br><span class="line"><span class="hljs-class"></span></span><br><span class="line"><span class="hljs-class">    <span class="hljs-keyword">class</span> <span class="hljs-type">UploaderFacade</span> &#123;</span></span><br><span class="line"><span class="hljs-class">        - uploaders: <span class="hljs-type">List</span>&lt;<span class="hljs-type">Uploader</span>&gt;</span></span><br><span class="line"><span class="hljs-class">        <span class="hljs-comment">--</span></span></span><br><span class="line"><span class="hljs-class">        + <span class="hljs-type">List</span>&lt;<span class="hljs-type">String</span>&gt; <span class="hljs-type">Upload</span>(<span class="hljs-type">String</span> <span class="hljs-title">filename</span>) <span class="hljs-type">Throws</span> <span class="hljs-type">IOException</span></span></span><br><span class="line"><span class="hljs-class">    &#125;</span></span><br><span class="line"><span class="hljs-class">    <span class="hljs-type">UploaderFacade</span> o<span class="hljs-comment">-- Uploader</span></span></span><br><span class="line"><span class="hljs-class">&#125;</span></span><br><span class="line"><span class="hljs-class"></span></span><br><span class="line"><span class="hljs-class">@enduml</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>渲染效果</p>
+<p><img src="https://static.ddhigh.com/blog/2021/06/04/1622793501066543000.png" alt="image-20210604155821009"></p>
+</li>
+</ol>
+<h5 id="语法说明-1"><a href="#语法说明-1" class="headerlink" title="语法说明"></a>语法说明</h5><h5 id="包"><a href="#包" class="headerlink" title="包"></a>包</h5><p>建议使用<code>namespace</code>关键字声明包，<code>package</code>声明的包内的类名必须全局唯一(无视package)，而<code>namespace</code>只要求该<code>namespace</code>内唯一即可。</p>
+<h5 id="class-interface"><a href="#class-interface" class="headerlink" title="class/interface"></a>class/interface</h5><p>与实际编程语言几乎无差别，比如上面例子中采用的是java语法。</p>
+<h5 id="可见性"><a href="#可见性" class="headerlink" title="可见性"></a>可见性</h5><p>PlantUML支持3种可见性：</p>
+<ul>
+<li><code>-</code> 私有级别 <code>private</code></li>
+<li><code>#</code> 保护级别 <code>protected</code></li>
+<li><code>+</code> 公有级别 <code>public</code></li>
+</ul>
+<h5 id="元素关系"><a href="#元素关系" class="headerlink" title="元素关系"></a>元素关系</h5><p>PlantUML主要有以下3种关系：</p>
+<ol>
+<li>扩展: 包含<code>implements</code>和<code>extends</code></li>
+<li>聚合: 使用<code>o--</code>，<code>左边</code>的包含<code>右边</code>的</li>
+<li>组合: 使用<code>*--</code>,<code>左边</code>的依赖<code>右边</code>的</li>
+</ol>
+<blockquote>
+<p>组合和聚合的区别：(以上面的图为例)</p>
+<ol>
+<li>组合：QiniuUploader必须依赖Client才能提供上传功能，组合一般是1对1的。</li>
+<li>聚合：UploadFacade可以依赖多个Uploader实例，也可以依赖0个实例(只是这时候不会有文件上传了)，聚合一般是1对多的。</li>
+</ol>
+</blockquote>
+<h3 id="流程图"><a href="#流程图" class="headerlink" title="流程图"></a>流程图</h3><p>在梳理复杂业务逻辑时，善用流程图能帮我们更加清晰地梳理清楚，也方便我们和其他人员进行沟通（非开发人员基本看不懂代码）。</p>
+<h4 id="Get-Started-2"><a href="#Get-Started-2" class="headerlink" title="Get Started"></a>Get Started</h4><ol>
+<li><p>IDE新建一个空项目，打开项目之后，右键新建文件</p>
+<p><img src="https://static.ddhigh.com/blog//2021/06/04/1622791752260150000.png" alt="image-20210604152912197"></p>
+</li>
+<li><p>新建<code>Activity</code>类型文件</p>
+<p><img src="https://static.ddhigh.com/blog/2021/06/04/1622794169645334000.png" alt="image-20210604160929588"></p>
+</li>
+<li><p>下面以一个<code>授权获取用户openid并插入数据库，然后查询用户好友进行消息推送</code>的场景编写流程图</p>
+<figure class="highlight less hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-variable">@startuml</span></span><br><span class="line">'<span class="hljs-attribute">https</span>:<span class="hljs-comment">//plantuml.com/activity-diagram-beta</span></span><br><span class="line"></span><br><span class="line">start</span><br><span class="line">:使用code,appid,secret请求微信服务器获取access_token和openid;</span><br><span class="line">:使用<span class="hljs-selector-tag">access_token</span>和<span class="hljs-selector-tag">openid</span>请求微信服务器获取用户信息;</span><br><span class="line">:查询数据库<span class="hljs-selector-tag">openid</span>是否存在;</span><br><span class="line"><span class="hljs-selector-tag">if</span> (数据库查询失败?) <span class="hljs-selector-tag">then</span> (是)</span><br><span class="line"><span class="hljs-selector-tag">stop</span></span><br><span class="line"><span class="hljs-selector-tag">elseif</span> (用户已存在?) <span class="hljs-selector-tag">then</span> (是)</span><br><span class="line">:更新用户信息;</span><br><span class="line"><span class="hljs-selector-tag">else</span> (否)</span><br><span class="line">:新建用户并绑定<span class="hljs-selector-tag">openid</span>;</span><br><span class="line"><span class="hljs-selector-tag">endif</span></span><br><span class="line"></span><br><span class="line">:获取用户好友列表;</span><br><span class="line"><span class="hljs-selector-tag">while</span>(好友列表遍历完成?) <span class="hljs-selector-tag">is</span> (否)</span><br><span class="line">:推送消息给好友;</span><br><span class="line"><span class="hljs-selector-tag">endwhile</span>(是)</span><br><span class="line"><span class="hljs-selector-tag">stop</span></span><br><span class="line"></span><br><span class="line">@<span class="hljs-selector-tag">enduml</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>渲染效果</p>
+<p><img src="https://static.ddhigh.com/blog/2021/06/04/1622794522917043000.png" alt="image-20210604161522881"></p>
+</li>
+</ol>
+<h4 id="语法说明-2"><a href="#语法说明-2" class="headerlink" title="语法说明"></a>语法说明</h4><ul>
+<li><p>开始和结束: 使用<code>start</code>和<code>stop</code></p>
+</li>
+<li><p>处理语句: 使用<code>:</code>和<code>;</code>包裹该流程</p>
+</li>
+<li>条件判断: 使用<code>if</code>,<code>elseif</code>,<code>else</code>,<code>endif</code>,<code>then</code></li>
+<li>循环语句: 使用<code>while</code>,<code>is</code>,<code>endwhile</code>编写</li>
+</ul>
+<h3 id="组件图"><a href="#组件图" class="headerlink" title="组件图"></a>组件图</h3><p>现阶段组件化MVVM框架大行其道，具有代表性的有<code>Vue</code>,<code>React</code>和<code>Angular</code>。我们可以使用组件图来绘制组件关系，简单易懂。</p>
+<h5 id="Get-Started-3"><a href="#Get-Started-3" class="headerlink" title="Get Started"></a>Get Started</h5><ol>
+<li><p>IDE新建一个空项目，打开项目之后，右键新建文件</p>
+<p><img src="https://static.ddhigh.com/blog//2021/06/04/1622791752260150000.png" alt="image-20210604152912197"></p>
+</li>
+<li><p>选择<code>Component</code></p>
+<p><img src="https://static.ddhigh.com/blog/2021/06/04/1622794820895677000.png" alt="image-20210604162020830"></p>
+</li>
+<li><p>以微信首页聊天列表为例绘制组件关系图</p>
+<figure class="highlight less hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-variable">@startuml</span></span><br><span class="line">'<span class="hljs-attribute">https</span>:<span class="hljs-comment">//plantuml.com/component-diagram</span></span><br><span class="line"></span><br><span class="line">package widgets &#123;</span><br><span class="line">    <span class="hljs-selector-attr">[SearchBar]</span> <span class="hljs-selector-tag">--</span>&gt; <span class="hljs-selector-attr">[Text]</span></span><br><span class="line">    <span class="hljs-selector-attr">[SearchBar]</span> <span class="hljs-selector-tag">--</span>&gt; <span class="hljs-selector-attr">[Icon]</span></span><br><span class="line">    <span class="hljs-selector-attr">[NavigationBar]</span> <span class="hljs-selector-tag">--</span>&gt; <span class="hljs-selector-attr">[Text]</span></span><br><span class="line">    <span class="hljs-selector-attr">[NavigationBar]</span> <span class="hljs-selector-tag">--</span>&gt; <span class="hljs-selector-attr">[Icon]</span></span><br><span class="line">    </span><br><span class="line">    <span class="hljs-selector-attr">[ListView]</span> <span class="hljs-selector-tag">--</span>&gt; <span class="hljs-selector-attr">[ListItem]</span></span><br><span class="line">    <span class="hljs-selector-attr">[ListItem]</span> <span class="hljs-selector-tag">--</span>&gt; <span class="hljs-selector-attr">[Image]</span></span><br><span class="line">    <span class="hljs-selector-attr">[ListItem]</span> <span class="hljs-selector-tag">--</span>&gt; <span class="hljs-selector-attr">[Text]</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">package routes &#123;</span><br><span class="line">    <span class="hljs-selector-attr">[Home]</span> <span class="hljs-selector-tag">--</span>&gt; <span class="hljs-selector-attr">[NavigationBar]</span></span><br><span class="line">    <span class="hljs-selector-attr">[Home]</span> <span class="hljs-selector-tag">--</span>&gt; <span class="hljs-selector-attr">[SearchBar]</span></span><br><span class="line">    <span class="hljs-selector-attr">[Home]</span> <span class="hljs-selector-tag">--</span>&gt; <span class="hljs-selector-attr">[ListView]</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="hljs-variable">@enduml</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>渲染效果</p>
+<p><img src="/Users/xialei/Library/Application Support/typora-user-images/image-20210604162521451.png" alt="image-20210604162521451"></p>
+<blockquote>
+<p>依赖关系如下：</p>
+<ul>
+<li>首页: 导航栏, 搜索框，列表</li>
+<li>导航栏: 文本，图标</li>
+<li>搜索框: 文本，图标</li>
+<li>列表: 列表项</li>
+<li>列表项: 文本，图片</li>
+</ul>
+</blockquote>
+</li>
+</ol>
+<h5 id="语法说明-3"><a href="#语法说明-3" class="headerlink" title="语法说明"></a>语法说明</h5><ul>
+<li>package 声明包，同一个包内的组件是类似地位</li>
+<li><code>[组件名]</code>声明组件，<code>组件名</code>在单个文件内是唯一的</li>
+<li><code>--&gt;</code> 声明依赖关系，<code>左边</code>依赖<code>右边</code></li>
+</ul>
+<p>(完)</p>
+
+            </div>
+            
+        </div>
+        
+        
+        
+        <div class="social-share" data-disabled="qzone,facebook,twitter,tencent,linkedin,douban,diandian,google"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next"
+                href="/2021/03/17/golang-function.html">
+                <span class="level-item">Golang程序设计——函数</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">评论</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '1ae09f5aa5dcce937e94',
+        clientSecret: '55c4032692dbcb0ee13771da7dc95f22cf9ae8e1',
+        id: 'd9739f0434473e59795cbd8c120dbe9c',
+        repo: 'xialeistudio.github.io',
+        owner: 'xialeistudio',
+        admin: "xialeistudio",
+        createIssueManually: false,
+        distractionFreeMode: false,
+        proxy: '/github/login/oauth/access_token'
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                    <figure class="image is-128x128 has-mb-6">
+                        <img class="is-rounded" src="https://static.ddhigh.com/blog/2019-09-18-094336.jpg"
+                            alt="夏磊">
+                    </figure>
+                    
+                    <p class="is-size-4 is-block">
+                        夏磊
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        Full-Stack
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>China</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        文章
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        274
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        分类
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        25
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        标签
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        32
+                    </p>
+                </div>
+            </div>
+        </nav>
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://github.com/xialeistudio" target="_blank">
+                关注我</a>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Github"
+                href="https://github.com/xialeistudio">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="SegmentFault"
+                href="https://segmentfault.com/xialeistudio">
+                
+                <img style="width:16px;height:16px" src="https://static.ddhigh.com/blog/2019-09-18-115828.png?imageView2/1/w/40/h/40" />
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="RSS"
+                href="/atom.xml">
+                
+                <i class="fas fa-rss"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+    
+        
+
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                出版书籍
+            </h3>
+            <ul class="menu-list" style="display: flex;flex-wrap:wrap">
+                
+                <li style="margin:0 10px 10px 0">
+                    <div style="display: flex;">
+                        <img src="https://static.ddhigh.com/blog/2019-09-18-095311.jpg?imageView2/2/w/200/h/200" width="100" alt="ThinkPHP5实战" />
+                        <div style="flex:1;margin-left:8px;line-height: 2;">
+                            <div style="font-weight: bold;">ThinkPHP5实战</div>
+                            <div style="font-size: 12px;color: #666;">出版日期：2019.1</div>
+                            <div>
+                                <a style="display: inline-block;color: white;background: #dc3545;border-radius: 4px;" href="https://item.jd.com/12699110.html" target="_blank">购买</a>
+                                <a style="display: inline-block;color: white;background: #007bff;border-radius: 4px;" href="http://www.tup.tsinghua.edu.cn/booksCenter/book_08079501.html" target="_blank">详情</a>
+                            </div>
+                        </div>
+                        </a>
+                </li>
+                
+                <li style="margin:0 10px 10px 0">
+                    <div style="display: flex;">
+                        <img src="https://static.ddhigh.com/blog/2019-09-18-095415.jpg?imageView2/2/w/200/h/200" width="100" alt="ThinkPHP实战" />
+                        <div style="flex:1;margin-left:8px;line-height: 2;">
+                            <div style="font-weight: bold;">ThinkPHP实战</div>
+                            <div style="font-size: 12px;color: #666;">出版日期：2017.04</div>
+                            <div>
+                                <a style="display: inline-block;color: white;background: #dc3545;border-radius: 4px;" href="https://item.jd.com/12173050.html" target="_blank">购买</a>
+                                <a style="display: inline-block;color: white;background: #007bff;border-radius: 4px;" href="http://www.tup.tsinghua.edu.cn/booksCenter/book_06867701.html" target="_blank">详情</a>
+                            </div>
+                        </div>
+                        </a>
+                </li>
+                
+                <li style="margin:0 10px 10px 0">
+                    <div style="display: flex;">
+                        <img src="https://static.ddhigh.com/blog/2020-08-20-064537.jpg?imageView2/2/w/200/h/200" width="100" alt="Node.js+Webpack 开发实战" />
+                        <div style="flex:1;margin-left:8px;line-height: 2;">
+                            <div style="font-weight: bold;">Node.js+Webpack 开发实战</div>
+                            <div style="font-size: 12px;color: #666;">出版日期：2020.08</div>
+                            <div>
+                                <a style="display: inline-block;color: white;background: #dc3545;border-radius: 4px;" href="https://item.jd.com/12933234.html" target="_blank">购买</a>
+                                <a style="display: inline-block;color: white;background: #007bff;border-radius: 4px;" href="http://www.tup.tsinghua.edu.cn/booksCenter/book_07638401.html" target="_blank">详情</a>
+                            </div>
+                        </div>
+                        </a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+    
+        
+
+
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                微信公众号
+            </h3>
+            <p>欢迎关注我的公众号<br>学习最新、最热的JS/TS知识！</p>
+            <img src="https://static.ddhigh.com/blog/2019-09-19-115314.jpg" width="200" height="200" alt="">
+        </div>
+    </div>
+</div>
+
+
+    
+        
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                目录
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#简介">
+        <span class="has-mr-6">1</span>
+        <span>简介</span>
+        </a></li><li>
+        <a class="is-flex" href="#安装">
+        <span class="has-mr-6">2</span>
+        <span>安装</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#安装graphviz">
+        <span class="has-mr-6">2.1</span>
+        <span>安装graphviz</span>
+        </a></li><li>
+        <a class="is-flex" href="#jdk">
+        <span class="has-mr-6">2.2</span>
+        <span>jdk</span>
+        </a></li><li>
+        <a class="is-flex" href="#Jetbrains-IDE插件安装">
+        <span class="has-mr-6">2.3</span>
+        <span>Jetbrains IDE插件安装</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#PlantUML语法">
+        <span class="has-mr-6">3</span>
+        <span>PlantUML语法</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#时序图">
+        <span class="has-mr-6">3.1</span>
+        <span>时序图</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#Get-Started">
+        <span class="has-mr-6">3.1.1</span>
+        <span>Get Started</span>
+        </a></li><li>
+        <a class="is-flex" href="#语法说明">
+        <span class="has-mr-6">3.1.2</span>
+        <span>语法说明</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#类图">
+        <span class="has-mr-6">3.2</span>
+        <span>类图</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#Get-Started-1">
+        <span class="has-mr-6">3.2.1</span>
+        <span>Get Started</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#流程图">
+        <span class="has-mr-6">3.3</span>
+        <span>流程图</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#Get-Started-2">
+        <span class="has-mr-6">3.3.1</span>
+        <span>Get Started</span>
+        </a></li><li>
+        <a class="is-flex" href="#语法说明-2">
+        <span class="has-mr-6">3.3.2</span>
+        <span>语法说明</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#组件图">
+        <span class="has-mr-6">3.4</span>
+        <span>组件图</span>
+        </a></li></ul></li></ul>
+        </div>
+    </div>
+</div>
+
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
+        
+        </div>
+    
+</div>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.svg" alt="PlanUML指南" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2021 xialeistudio&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                
+                </p>
+                <p class="is-size-7">
+                    
+                    <a target="_blank" href="https://beian.miit.gov.cn/">粤ICP备14062481号-1</a>
+                    
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="GitHub" href="https://github.com/xialeistudio">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+<script>
+    var IcarusThemeSettings = {
+        article: {
+            highlight: {
+                clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+    
+    <script src="/js/animation.js"></script>
+    
+
+
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>
