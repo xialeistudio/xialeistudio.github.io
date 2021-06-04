@@ -50,5 +50,5 @@ jobs:
       - name: Deploy Server
         run: |
           tar czf public.tgz public
-          scp public.tgz root@ww.ddhigh.com:/var/www/public.tgz
+          scp public.tgz root@www.ddhigh.com:/var/www/public.tgz
           ssh root@www.ddhigh.com "cd /var/www && tar xzf public.tgz && mv public test && chown -R www-data:www-data test" 
