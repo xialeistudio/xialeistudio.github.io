@@ -46,8 +46,11 @@ jobs:
         with:
           key: ${{ secrets.SSH_PRIVATE_KEY }} 
           known_hosts: 'just-a-placeholder-so-we-dont-get-errors'
-
-      - name: Deploy Server
+    
+          - name: Adding Known Hosts
+        run: ssh-keyscan -H www.ddhigh.com >> ~/.ssh/known_hosts
+    
+        - name: Deploy Server
         run: |
           tar czf public.tgz public
           scp public.tgz root@www.ddhigh.com:/var/www/public.tgz
