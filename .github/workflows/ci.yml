@@ -50,7 +50,7 @@ jobs:
       - name: Adding Known Hosts
         run: ssh-keyscan -H www.ddhigh.com >> ~/.ssh/known_hosts
     
-        - name: Deploy Server
+      - name: Deploy Server
         run: |
           tar czf public.tgz public
           scp public.tgz root@www.ddhigh.com:/var/www/public.tgz
