@@ -5,7 +5,7 @@ on:
       - master # master 分支有 push 行为时就触发这个 action
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -21,21 +21,21 @@ jobs:
       
       - name: Build
         run: yarn run publish
-
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
       - name: Deploy GitHub Pages
         uses: peaceiris/actions-gh-pages@v3.7.3
         with:
           personal_token: ${{ secrets.HEXO_DEPLOY }}
           publish_dir: ./public
           publish_branch: gh-pages
+          
+      - name: Archive Github Page
+        run: tar cvzf public.tgz public
 
       - name: Deploy Server
-        uses: wlixcc/SFTP-Deploy-Action@v1.0
-        with:
-          username: 'root'
-          server: 'www.ddhigh.com'
-          ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }} 
-          local_path: './public/*'
-          remote_path: '/var/www/test'
-          args: '-o ConnectTimeout=5'
-  
+        run: |
+          echo ${{ secrets.SSH_PRIVATE_KEY }} >> private_key.pem
+          scp -i private_key.pem  public.tgz root@ww.ddhigh.com:/var/www/public.tgz
+          ssh -i private_key.pem "cd /var/www && tar xzf public.tgz && mv public test && chown -R www-data:www-data test"
