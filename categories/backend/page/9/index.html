@@ -434,14 +434,14 @@ var _hmt = _hmt || [];
                     datetime="2017-04-26T16:00:00.000Z">2017-04-27</time>
                 
                 <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/nodejs/">nodejs</a>
+                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/php/">php</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    2 分钟 读完 (大约 248 个字)
+                    3 分钟 读完 (大约 438 个字)
                 </span>
                 
                 
@@ -450,16 +450,16 @@ var _hmt = _hmt || [];
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-            <a class="has-link-black-ter" href="/2017/04/26/node-syslogd.html">使用NodeJs提供syslogd服务端</a>
+            <a class="has-link-black-ter" href="/2017/04/26/log4php-syslog.html">log4php使用syslog记录日志</a>
             
         </h1>
         <div class="content">
             
                 
                 
-                <p>syslog作为Linux发行版一个重要组件，相信大家都不陌生，而如果每台服务器都独立使用一份的话，不能做到日志统一管理，对于以后的日志查询不太方便。<br>syslog有标准的协议格式，这里不做讨论，有兴趣的可以基于协议的报文结构使用socket编程实现。</p>
-<h2 id="部署服务端"><a href="#部署服务端" class="headerlink" title="部署服务端"></a>部署服务端</h2><p>本文使用Nodejs来部署一台syslog服务端。</p>
-<ol>
+                <p>log4php是apache基金会下的一个开源项目，灵活、强大，已经有几个项目使用了log4php处理日志，目前遇到的问题是服务器太多的时候日志如何统一管理，本来想使用数据库存储。但是日志格式成了一个问题，而且不利于扩展，如果临时需要保存到文件，又要更改log4php的配置。<br>好在log4php提供了syslog的一个appender，可以将日志写入syslog;</p>
+<h2 id="log4php配置"><a href="#log4php配置" class="headerlink" title="log4php配置"></a>log4php配置</h2><figure class="highlight roboconf hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">log4php.rootLogger=INFO, stdout, stderr</span><br><span class="line">log4php.appender.stdout=LoggerAppenderConsole</span><br><span class="line">log4php.appender.stdout.layout=LoggerLayoutPattern</span><br><span class="line">log4php.appender.stdout.layout.ConversionPattern=%date&#123;<span class="hljs-attribute">Y-m-d H</span>:i:s&#125; [%-5p] %m%n</span><br><span class="line">log4php<span class="hljs-variable">.appender</span><span class="hljs-variable">.stdout</span><span class="hljs-variable">.threshold</span>=INFO</span><br><span class="line"></span><br><span class="line">log4php<span class="hljs-variable">.appender</span><span class="hljs-variable">.stderr</span>=LoggerAppenderSyslog</span><br><span class="line">log4php<span class="hljs-variable">.appender</span><span class="hljs-variable">.stderr</span><span class="hljs-variable">.ident</span>=qun<span class="hljs-variable">.hk-task</span></span><br><span class="line">log4php<span class="hljs-variable">.appender</span><span class="hljs-variable">.stderr</span><span class="hljs-variable">.priority</span>=ERR</span><br><span class="line">log4php<span class="hljs-variable">.appender</span><span class="hljs-variable">.stderr</span><span class="hljs-variable">.facility</span>=LOCAL0</span><br><span class="line">log4php<span class="hljs-variable">.appender</span><span class="hljs-variable">.stderr</span><span class="hljs-variable">.layout</span>=LoggerLayoutPattern</span><br><span class="line">log4php<span class="hljs-variable">.appender</span><span class="hljs-variable">.stderr</span><span class="hljs-variable">.layout</span><span class="hljs-variable">.ConversionPattern</span>=%date&#123;Y-m-d H:i:s&#125; %m%n</span><br><span class="line">log4php<span class="hljs-variable">.appender</span><span class="hljs-variable">.stderr</span><span class="hljs-variable">.threshold</span>=WARN</span><br></pre></td></tr></table></figure>
+<p>这里使用两个输出目的地,stdout输出到终端，stderr输出到syslod，log4php配置对应rsyslog的配置关系为：</p>
 
                 
             
@@ -487,14 +487,14 @@ var _hmt = _hmt || [];
                     datetime="2017-04-26T16:00:00.000Z">2017-04-27</time>
                 
                 <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/php/">php</a>
+                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/nodejs/">nodejs</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    3 分钟 读完 (大约 438 个字)
+                    2 分钟 读完 (大约 248 个字)
                 </span>
                 
                 
@@ -503,16 +503,16 @@ var _hmt = _hmt || [];
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-            <a class="has-link-black-ter" href="/2017/04/26/log4php-syslog.html">log4php使用syslog记录日志</a>
+            <a class="has-link-black-ter" href="/2017/04/26/node-syslogd.html">使用NodeJs提供syslogd服务端</a>
             
         </h1>
         <div class="content">
             
                 
                 
-                <p>log4php是apache基金会下的一个开源项目，灵活、强大，已经有几个项目使用了log4php处理日志，目前遇到的问题是服务器太多的时候日志如何统一管理，本来想使用数据库存储。但是日志格式成了一个问题，而且不利于扩展，如果临时需要保存到文件，又要更改log4php的配置。<br>好在log4php提供了syslog的一个appender，可以将日志写入syslog;</p>
-<h2 id="log4php配置"><a href="#log4php配置" class="headerlink" title="log4php配置"></a>log4php配置</h2><figure class="highlight roboconf hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">log4php.rootLogger=INFO, stdout, stderr</span><br><span class="line">log4php.appender.stdout=LoggerAppenderConsole</span><br><span class="line">log4php.appender.stdout.layout=LoggerLayoutPattern</span><br><span class="line">log4php.appender.stdout.layout.ConversionPattern=%date&#123;<span class="hljs-attribute">Y-m-d H</span>:i:s&#125; [%-5p] %m%n</span><br><span class="line">log4php<span class="hljs-variable">.appender</span><span class="hljs-variable">.stdout</span><span class="hljs-variable">.threshold</span>=INFO</span><br><span class="line"></span><br><span class="line">log4php<span class="hljs-variable">.appender</span><span class="hljs-variable">.stderr</span>=LoggerAppenderSyslog</span><br><span class="line">log4php<span class="hljs-variable">.appender</span><span class="hljs-variable">.stderr</span><span class="hljs-variable">.ident</span>=qun<span class="hljs-variable">.hk-task</span></span><br><span class="line">log4php<span class="hljs-variable">.appender</span><span class="hljs-variable">.stderr</span><span class="hljs-variable">.priority</span>=ERR</span><br><span class="line">log4php<span class="hljs-variable">.appender</span><span class="hljs-variable">.stderr</span><span class="hljs-variable">.facility</span>=LOCAL0</span><br><span class="line">log4php<span class="hljs-variable">.appender</span><span class="hljs-variable">.stderr</span><span class="hljs-variable">.layout</span>=LoggerLayoutPattern</span><br><span class="line">log4php<span class="hljs-variable">.appender</span><span class="hljs-variable">.stderr</span><span class="hljs-variable">.layout</span><span class="hljs-variable">.ConversionPattern</span>=%date&#123;Y-m-d H:i:s&#125; %m%n</span><br><span class="line">log4php<span class="hljs-variable">.appender</span><span class="hljs-variable">.stderr</span><span class="hljs-variable">.threshold</span>=WARN</span><br></pre></td></tr></table></figure>
-<p>这里使用两个输出目的地,stdout输出到终端，stderr输出到syslod，log4php配置对应rsyslog的配置关系为：</p>
+                <p>syslog作为Linux发行版一个重要组件，相信大家都不陌生，而如果每台服务器都独立使用一份的话，不能做到日志统一管理，对于以后的日志查询不太方便。<br>syslog有标准的协议格式，这里不做讨论，有兴趣的可以基于协议的报文结构使用socket编程实现。</p>
+<h2 id="部署服务端"><a href="#部署服务端" class="headerlink" title="部署服务端"></a>部署服务端</h2><p>本文使用Nodejs来部署一台syslog服务端。</p>
+<ol>
 
                 
             
@@ -1060,20 +1060,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 <script src="/js/main.js" defer></script>
-
-<script src="https://my.openwrite.cn/js/readmore.js" type="text/javascript"></script>
-<script>
-    const userAgent = window.navigator.userAgent;
-    const isDesktop = userAgent.indexOf('Android') === -1 && userAgent.indexOf('iPad') === -1 && userAgent.indexOf('iPhone') === -1;
-    const btw = new BTWPlugin();
-    btw.init({
-        id: isDesktop ? 'container' : 'aaa',
-        blogId: '17768-1572420593825-274',
-        name: 'NodeJs之路',
-        qrcode: 'https://static.ddhigh.com/blog/2019-10-30-073944.jpg',
-        keyword: 'blog',
-    });
-</script>
 
     
     <div class="searchbox ins-search">
