@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 3.9.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>android直接挂断电话 - 每天进步一点点</title>
+
+
+
+
+
+
+<link rel="alternative" href="/" title="android直接挂断电话" type="application/atom+xml">
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+<script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?78141f99bbb49f1564a7af89344f5add";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                <img src="/images/logo.svg" alt="android直接挂断电话" height="28">
+                
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                    href="/">主页</a>
+                
+                <a class="navbar-item"
+                    href="/archives">归档</a>
+                
+                <a class="navbar-item"
+                    href="/categories">分类</a>
+                
+                <a class="navbar-item"
+                    href="/tags">标签</a>
+                
+                <a class="navbar-item"
+                    href="/suggestion">建议</a>
+                
+                <a class="navbar-item"
+                    href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                
+                
+                <a class="navbar-item" target="_blank" title="GitHub"
+                    href="https://github.com/xialeistudio">
+                    
+                    <i class="fab fa-github"></i>
+                    
+                </a>
+                
+                <a class="navbar-item" target="_blank" title="SegmentFault"
+                    href="https://segmentfault.com/u/xialeistudio">
+                    
+                    <img src="https://static.ddhigh.com/blog/2019-09-18-115828.png?imageView2/1/w/40/h/40" style="width:16px;height:16px" />
+                    
+                </a>
+                
+                <a class="navbar-item" target="_blank" title="QQ"
+                    href="//shang.qq.com/wpa/qunwpa?idkey=83c6884d7520f22891e3f82c76f42baa5c53af91ce8d31ed2641248f8730687b">
+                    
+                    <i class="fab fa-qq"></i>
+                    
+                </a>
+                
+                
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2015-01-29T06:43:47.000Z">2015-01-29</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/android/">android</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    7 分钟 读完 (大约 1044 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            android直接挂断电话
+            
+        </h1>
+        <div class="content">
+            
+            <div id="container">
+                <p>最近在写一个用来发短信的机器人（android),当然需要屏蔽所有来电了。多的话不说了，直接看步骤。（IDE为android studio）：<br>1.在 src/main下新建 aidl 目录。</p>
+<p>2.在src/main/aidl下新建包 com.android.internal.telephony。</p>
+<p>3.在com.android.internal.telephony新建文件 ITelephony.aidl，内容如下:</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/*</span></span><br><span class="line"><span class="hljs-comment"> * Copyright (C) 2007 The Android Open Source Project</span></span><br><span class="line"><span class="hljs-comment"> *</span></span><br><span class="line"><span class="hljs-comment"> * Licensed under the Apache License, Version 2.0 (the "License");</span></span><br><span class="line"><span class="hljs-comment"> * you may not use this file except in compliance with the License.</span></span><br><span class="line"><span class="hljs-comment"> * You may obtain a copy of the License at</span></span><br><span class="line"><span class="hljs-comment"> *</span></span><br><span class="line"><span class="hljs-comment"> *      http://www.apache.org/licenses/LICENSE-2.0</span></span><br><span class="line"><span class="hljs-comment"> *</span></span><br><span class="line"><span class="hljs-comment"> * Unless required by applicable law or agreed to in writing, software</span></span><br><span class="line"><span class="hljs-comment"> * distributed under the License is distributed on an "AS IS" BASIS,</span></span><br><span class="line"><span class="hljs-comment"> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span></span><br><span class="line"><span class="hljs-comment"> * See the License for the specific language governing permissions and</span></span><br><span class="line"><span class="hljs-comment"> * limitations under the License.</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">package</span> com.android.internal.telephony;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">import</span> android.os.Bundle;</span><br><span class="line"><span class="hljs-keyword">import</span> java.util.List;</span><br><span class="line"><span class="hljs-keyword">import</span> android.telephony.NeighboringCellInfo;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * Interface used to interact with the phone.  Mostly this is used by the</span></span><br><span class="line"><span class="hljs-comment"> * TelephonyManager class.  A few places are still using this directly.</span></span><br><span class="line"><span class="hljs-comment"> * Please clean them up if possible and use TelephonyManager insteadl.</span></span><br><span class="line"><span class="hljs-comment"> *</span></span><br><span class="line"><span class="hljs-comment"> * &#123;<span class="hljs-doctag">@hide</span>&#125;</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">ITelephony</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * Dial a number. This doesn't place the call. It displays</span></span><br><span class="line"><span class="hljs-comment">     * the Dialer screen.</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> number the number to be dialed. If null, this</span></span><br><span class="line"><span class="hljs-comment">     * would display the Dialer screen with no number pre-filled.</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">dial</span><span class="hljs-params">(String number)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * Place a call to the specified number.</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> number the number to be called.</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">call</span><span class="hljs-params">(String number)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * If there is currently a call in progress, show the call screen.</span></span><br><span class="line"><span class="hljs-comment">     * The DTMF dialpad may or may not be visible initially, depending on</span></span><br><span class="line"><span class="hljs-comment">     * whether it was up when the user last exited the InCallScreen.</span></span><br><span class="line"><span class="hljs-comment">     *</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span> true if the call screen was shown.</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">showCallScreen</span><span class="hljs-params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * Variation of showCallScreen() that also specifies whether the</span></span><br><span class="line"><span class="hljs-comment">     * DTMF dialpad should be initially visible when the InCallScreen</span></span><br><span class="line"><span class="hljs-comment">     * comes up.</span></span><br><span class="line"><span class="hljs-comment">     *</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> showDialpad if true, make the dialpad visible initially,</span></span><br><span class="line"><span class="hljs-comment">     *                    otherwise hide the dialpad initially.</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span> true if the call screen was shown.</span></span><br><span class="line"><span class="hljs-comment">     *</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@see</span> showCallScreen</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">showCallScreenWithDialpad</span><span class="hljs-params">(<span class="hljs-keyword">boolean</span> showDialpad)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * End call or go to the Home screen</span></span><br><span class="line"><span class="hljs-comment">     *</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span> whether it hung up</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">endCall</span><span class="hljs-params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * Answer the currently-ringing call.</span></span><br><span class="line"><span class="hljs-comment">     *</span></span><br><span class="line"><span class="hljs-comment">     * If there's already a current active call, that call will be</span></span><br><span class="line"><span class="hljs-comment">     * automatically put on hold.  If both lines are currently in use, the</span></span><br><span class="line"><span class="hljs-comment">     * current active call will be ended.</span></span><br><span class="line"><span class="hljs-comment">     *</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">TODO:</span> provide a flag to let the caller specify what policy to use</span></span><br><span class="line"><span class="hljs-comment">     * if both lines are in use.  (The current behavior is hardwired to</span></span><br><span class="line"><span class="hljs-comment">     * "answer incoming, end ongoing", which is how the CALL button</span></span><br><span class="line"><span class="hljs-comment">     * is specced to behave.)</span></span><br><span class="line"><span class="hljs-comment">     *</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">TODO:</span> this should be a oneway call (especially since it's called</span></span><br><span class="line"><span class="hljs-comment">     * directly from the key queue thread).</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">answerRingingCall</span><span class="hljs-params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * Silence the ringer if an incoming call is currently ringing.</span></span><br><span class="line"><span class="hljs-comment">     * (If vibrating, stop the vibrator also.)</span></span><br><span class="line"><span class="hljs-comment">     *</span></span><br><span class="line"><span class="hljs-comment">     * It's safe to call this if the ringer has already been silenced, or</span></span><br><span class="line"><span class="hljs-comment">     * even if there's no incoming call.  (If so, this method will do nothing.)</span></span><br><span class="line"><span class="hljs-comment">     *</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">TODO:</span> this should be a oneway call too (see above).</span></span><br><span class="line"><span class="hljs-comment">     *       (Actually *all* the methods here that return void can</span></span><br><span class="line"><span class="hljs-comment">     *       probably be oneway.)</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">silenceRinger</span><span class="hljs-params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * Check if we are in either an active or holding call</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span> true if the phone state is OFFHOOK.</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">isOffhook</span><span class="hljs-params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * Check if an incoming phone call is ringing or call waiting.</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span> true if the phone state is RINGING.</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">isRinging</span><span class="hljs-params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * Check if the phone is idle.</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span> true if the phone state is IDLE.</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">isIdle</span><span class="hljs-params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * Check to see if the radio is on or not.</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span> returns true if the radio is on.</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">isRadioOn</span><span class="hljs-params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * Check if the SIM pin lock is enabled.</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span> true if the SIM pin lock is enabled.</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">isSimPinEnabled</span><span class="hljs-params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * Cancels the missed calls notification.</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">cancelMissedCallsNotification</span><span class="hljs-params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * Supply a pin to unlock the SIM.  Blocks until a result is determined.</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> pin The pin to check.</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span> whether the operation was a success.</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">supplyPin</span><span class="hljs-params">(String pin)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * Handles PIN MMI commands (PIN/PIN2/PUK/PUK2), which are initiated</span></span><br><span class="line"><span class="hljs-comment">     * without SEND (so dial is not appropriate).</span></span><br><span class="line"><span class="hljs-comment">     *</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> dialString the MMI command to be executed.</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span> true if MMI command is executed.</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">handlePinMmi</span><span class="hljs-params">(String dialString)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * Toggles the radio on or off.</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">toggleRadioOnOff</span><span class="hljs-params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * Set the radio to on or off</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">setRadio</span><span class="hljs-params">(<span class="hljs-keyword">boolean</span> turnOn)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * Request to update location information in service state</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">updateServiceLocation</span><span class="hljs-params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * Enable location update notifications.</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">enableLocationUpdates</span><span class="hljs-params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">disableLocationUpdates</span><span class="hljs-params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * Enable a specific APN type.</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">enableApnType</span><span class="hljs-params">(String type)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * Disable a specific APN type.</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">disableApnType</span><span class="hljs-params">(String type)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * Allow mobile data connections.</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">enableDataConnectivity</span><span class="hljs-params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * Disallow mobile data connections.</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">disableDataConnectivity</span><span class="hljs-params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * Report whether data connectivity is possible.</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">isDataConnectivityPossible</span><span class="hljs-params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function">Bundle <span class="hljs-title">getCellLocation</span><span class="hljs-params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * Returns the neighboring cell information of the device.</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-function">List <span class="hljs-title">getNeighboringCellInfo</span><span class="hljs-params">()</span></span>;</span><br><span class="line"></span><br><span class="line">     <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">getCallState</span><span class="hljs-params">()</span></span>;</span><br><span class="line">     <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">getDataActivity</span><span class="hljs-params">()</span></span>;</span><br><span class="line">     <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">getDataState</span><span class="hljs-params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>4.android studio 菜单 Build-&gt;Rebuild project</p>
+<p>5.在Activity中注册监听（写在onCreate()）</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">TelephonyManager mTelephonyManager = (TelephonyManager) <span class="hljs-keyword">this</span></span><br><span class="line">                .getSystemService(TELEPHONY_SERVICE);</span><br><span class="line">        mTelephonyManager.listen(phoneStateListener,</span><br><span class="line">                PhoneStateListener.LISTEN_CALL_STATE);</span><br></pre></td></tr></table></figure>
+<p>6.在Activity中新建以下方法以获得telephony的实例</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> context</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span></span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> ITelephony <span class="hljs-title">getITelephony</span><span class="hljs-params">(Context context)</span> </span>&#123;</span><br><span class="line">        TelephonyManager mTelephonyManager = (TelephonyManager) context</span><br><span class="line">                .getSystemService(TELEPHONY_SERVICE);</span><br><span class="line">        Class c = TelephonyManager<span class="hljs-class">.<span class="hljs-keyword">class</span></span>;</span><br><span class="line">        Method getITelephonyMethod = <span class="hljs-keyword">null</span>;</span><br><span class="line">        <span class="hljs-keyword">try</span> &#123;</span><br><span class="line">            getITelephonyMethod = c.getDeclaredMethod(<span class="hljs-string">"getITelephony"</span>,</span><br><span class="line">                    (Class[]) <span class="hljs-keyword">null</span>); <span class="hljs-comment">// 获取声明的方法</span></span><br><span class="line">            getITelephonyMethod.setAccessible(<span class="hljs-keyword">true</span>);</span><br><span class="line">        &#125; <span class="hljs-keyword">catch</span> (SecurityException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="hljs-keyword">catch</span> (NoSuchMethodException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">try</span> &#123;</span><br><span class="line">            ITelephony iTelephony = (ITelephony) getITelephonyMethod.invoke(</span><br><span class="line">                    mTelephonyManager, (Object[]) <span class="hljs-keyword">null</span>); <span class="hljs-comment">// 获取实例</span></span><br><span class="line">            <span class="hljs-keyword">return</span> iTelephony;</span><br><span class="line">        &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>7.在activity类中建立内部类</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">PhoneStateListener phoneStateListener = <span class="hljs-keyword">new</span> PhoneStateListener() &#123;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-meta">@Override</span></span><br><span class="line">        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onCallStateChanged</span><span class="hljs-params">(<span class="hljs-keyword">int</span> state, String incomingNumber)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">            ITelephony iTelephony = getITelephony(MainActivity.<span class="hljs-keyword">this</span>);</span><br><span class="line">            <span class="hljs-keyword">switch</span> (state) &#123;</span><br><span class="line">                <span class="hljs-keyword">case</span> TelephonyManager.CALL_STATE_RINGING:</span><br><span class="line">                    iTelephony = getITelephony(getApplicationContext()); <span class="hljs-comment">//获取电话接口</span></span><br><span class="line">                    <span class="hljs-keyword">if</span> (iTelephony != <span class="hljs-keyword">null</span>) &#123;</span><br><span class="line">                        <span class="hljs-keyword">try</span> &#123;</span><br><span class="line">                            iTelephony.endCall(); <span class="hljs-comment">// 挂断电话</span></span><br><span class="line">                            Message msg = <span class="hljs-keyword">new</span> Message();</span><br><span class="line">                            msg.what = SYS_MSG;</span><br><span class="line">                            msg.obj =<span class="hljs-string">"成功挂断["</span>+incomingNumber+<span class="hljs-string">"]的电话"</span>;</span><br><span class="line">                            handler.sendMessage(msg);</span><br><span class="line">                        &#125; <span class="hljs-keyword">catch</span> (RemoteException e) &#123;</span><br><span class="line">                            Message msg = <span class="hljs-keyword">new</span> Message();</span><br><span class="line">                            msg.what = SYS_MSG;</span><br><span class="line">                            msg.obj =<span class="hljs-string">"挂断["</span>+incomingNumber+<span class="hljs-string">"]的电话失败"</span>;</span><br><span class="line">                            handler.sendMessage(msg);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="hljs-keyword">break</span>;</span><br><span class="line">                <span class="hljs-keyword">default</span>:</span><br><span class="line">                    <span class="hljs-keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;;</span><br></pre></td></tr></table></figure>
+
+            </div>
+            
+        </div>
+        
+        
+        
+        <div class="social-share" data-disabled="qzone,facebook,twitter,tencent,linkedin,douban,diandian,google"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev"
+                href="/2015/01/30/angularjs-online-music-player.html">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">基于angularjs的在线音乐播放器</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next"
+                href="/2015/01/27/php-qiniu-invalid-mutilpart-format.html">
+                <span class="level-item">七牛上传出现 invalid mutilpart format的解决方案</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">评论</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '1ae09f5aa5dcce937e94',
+        clientSecret: '55c4032692dbcb0ee13771da7dc95f22cf9ae8e1',
+        id: '1f3c43d55005901e91e9b50297836391',
+        repo: 'xialeistudio.github.io',
+        owner: 'xialeistudio',
+        admin: "xialeistudio",
+        createIssueManually: false,
+        distractionFreeMode: false,
+        proxy: '/github/login/oauth/access_token'
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                    <figure class="image is-128x128 has-mb-6">
+                        <img class="is-rounded" src="https://static.ddhigh.com/blog/2019-09-18-094336.jpg"
+                            alt="夏磊">
+                    </figure>
+                    
+                    <p class="is-size-4 is-block">
+                        夏磊
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        Full-Stack
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>China</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        文章
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        273
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        分类
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        25
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        标签
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        32
+                    </p>
+                </div>
+            </div>
+        </nav>
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://github.com/xialeistudio" target="_blank">
+                关注我</a>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Github"
+                href="https://github.com/xialeistudio">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="SegmentFault"
+                href="https://segmentfault.com/xialeistudio">
+                
+                <img style="width:16px;height:16px" src="https://static.ddhigh.com/blog/2019-09-18-115828.png?imageView2/1/w/40/h/40" />
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="RSS"
+                href="/atom.xml">
+                
+                <i class="fas fa-rss"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+    
+        
+
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                出版书籍
+            </h3>
+            <ul class="menu-list" style="display: flex;flex-wrap:wrap">
+                
+                <li style="margin:0 10px 10px 0">
+                    <div style="display: flex;">
+                        <img src="https://static.ddhigh.com/blog/2019-09-18-095311.jpg?imageView2/2/w/200/h/200" width="100" alt="ThinkPHP5实战" />
+                        <div style="flex:1;margin-left:8px;line-height: 2;">
+                            <div style="font-weight: bold;">ThinkPHP5实战</div>
+                            <div style="font-size: 12px;color: #666;">出版日期：2019.1</div>
+                            <div>
+                                <a style="display: inline-block;color: white;background: #dc3545;border-radius: 4px;" href="https://item.jd.com/12699110.html" target="_blank">购买</a>
+                                <a style="display: inline-block;color: white;background: #007bff;border-radius: 4px;" href="http://www.tup.tsinghua.edu.cn/booksCenter/book_08079501.html" target="_blank">详情</a>
+                            </div>
+                        </div>
+                        </a>
+                </li>
+                
+                <li style="margin:0 10px 10px 0">
+                    <div style="display: flex;">
+                        <img src="https://static.ddhigh.com/blog/2019-09-18-095415.jpg?imageView2/2/w/200/h/200" width="100" alt="ThinkPHP实战" />
+                        <div style="flex:1;margin-left:8px;line-height: 2;">
+                            <div style="font-weight: bold;">ThinkPHP实战</div>
+                            <div style="font-size: 12px;color: #666;">出版日期：2017.04</div>
+                            <div>
+                                <a style="display: inline-block;color: white;background: #dc3545;border-radius: 4px;" href="https://item.jd.com/12173050.html" target="_blank">购买</a>
+                                <a style="display: inline-block;color: white;background: #007bff;border-radius: 4px;" href="http://www.tup.tsinghua.edu.cn/booksCenter/book_06867701.html" target="_blank">详情</a>
+                            </div>
+                        </div>
+                        </a>
+                </li>
+                
+                <li style="margin:0 10px 10px 0">
+                    <div style="display: flex;">
+                        <img src="https://static.ddhigh.com/blog/2020-08-20-064537.jpg?imageView2/2/w/200/h/200" width="100" alt="Node.js+Webpack 开发实战" />
+                        <div style="flex:1;margin-left:8px;line-height: 2;">
+                            <div style="font-weight: bold;">Node.js+Webpack 开发实战</div>
+                            <div style="font-size: 12px;color: #666;">出版日期：2020.08</div>
+                            <div>
+                                <a style="display: inline-block;color: white;background: #dc3545;border-radius: 4px;" href="https://item.jd.com/12933234.html" target="_blank">购买</a>
+                                <a style="display: inline-block;color: white;background: #007bff;border-radius: 4px;" href="http://www.tup.tsinghua.edu.cn/booksCenter/book_07638401.html" target="_blank">详情</a>
+                            </div>
+                        </div>
+                        </a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+    
+        
+
+
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                微信公众号
+            </h3>
+            <p>欢迎关注我的公众号<br>学习最新、最热的JS/TS知识！</p>
+            <img src="https://static.ddhigh.com/blog/2019-09-19-115314.jpg" width="200" height="200" alt="">
+        </div>
+    </div>
+</div>
+
+
+    
+        
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                目录
+            </h3>
+            
+        </div>
+    </div>
+</div>
+
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
+        
+        </div>
+    
+</div>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.svg" alt="android直接挂断电话" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2021 xialeistudio&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                
+                </p>
+                <p class="is-size-7">
+                    
+                    <a target="_blank" href="https://beian.miit.gov.cn/">粤ICP备14062481号-1</a>
+                    
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="GitHub" href="https://github.com/xialeistudio">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+<script>
+    var IcarusThemeSettings = {
+        article: {
+            highlight: {
+                clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+    
+    <script src="/js/animation.js"></script>
+    
+
+
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>
