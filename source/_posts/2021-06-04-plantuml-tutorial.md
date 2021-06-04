@@ -351,7 +351,7 @@ PlantUML主要有以下3种关系：
 
 4. 渲染效果
 
-   ![image-20210604162521451](/Users/xialei/Library/Application Support/typora-user-images/image-20210604162521451.png)
+   ![image-20210604162521451](https://static.ddhigh.com/blog/2021/06/04/1622795518286015000.png)
 
    > 依赖关系如下：
    >
