@@ -47,7 +47,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }} 
           known_hosts: 'just-a-placeholder-so-we-dont-get-errors'
     
-          - name: Adding Known Hosts
+      - name: Adding Known Hosts
         run: ssh-keyscan -H www.ddhigh.com >> ~/.ssh/known_hosts
     
         - name: Deploy Server
