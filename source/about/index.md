@@ -27,7 +27,6 @@ date: 2017-10-15 05:16:05
 
 ## Contact
 
-+ QQ群：346660435
 + Email: xialeistudio@gmail.com
 
 

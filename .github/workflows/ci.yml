@@ -1,4 +1,4 @@
-name: deploying Hexo project to GitHub pages
+name: Deploy
 on:
   push:
     branches:
@@ -10,11 +10,22 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@master
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 12
 
-      - name: Build and Deploy
-        uses: theme-keep/hexo-deploy-github-pages-action@master # 使用专门部署 Hexo 到 GitHub pages 的 action
-        env:
-          PERSONAL_TOKEN: ${{ secrets.HEXO_DEPLOY }} # secret 名
-          PUBLISH_REPOSITORY: xialeistudio/xialeistudio.github.io # 公共仓库，格式：GitHub 用户名/仓库名
-          BRANCH: gh-pages # 分支，填 gh-pages 就行
-          PUBLISH_DIR: ./public # 部署 public 目录下的文件
+      - name: Install dependencies
+        run: yarn
+      
+      - name: Build
+        run: yarn run publish
+
+      - name: Deploy GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3.7.3
+        with:
+          personal_token: ${{ secrets.HEXO_DEPLOY }}
+          publish_dir: ./public
+          publish_branch: gh-pages
+  
