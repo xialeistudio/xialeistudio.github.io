@@ -23,6 +23,7 @@ jobs:
         run: yarn run publish
   deploy:
     runs-on: ubuntu-latest
+    needs: [build]
     steps:
       - name: Deploy GitHub Pages
         uses: peaceiris/actions-gh-pages@v3.7.3
