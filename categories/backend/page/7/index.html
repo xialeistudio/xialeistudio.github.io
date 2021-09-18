@@ -171,6 +171,59 @@ var _hmt = _hmt || [];
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
                 <time class="level-item has-text-grey"
+                    datetime="2018-02-01T12:04:00.000Z">2018-02-01</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/go/">go</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    4 分钟 读完 (大约 663 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2018/02/01/golang-generic-pool.html">golang通用连接池的实现</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <p>golang的channel除了goroutine通信之外还有很多其他的功能，本文将实现一种基于channel的通用连接池。</p>
+<h2 id="何为通用？"><a href="#何为通用？" class="headerlink" title="何为通用？"></a>何为通用？</h2><p>连接池的实现不依赖具体的实例，而依赖某个接口，本文的连接池选用的是<code>io.Closer</code>接口，只要是实现了该接口的对象都可以被池管理。<br>当然，你可以实现基于<code>interface{}</code>的连接池，这样任何对象都可以被管理。</p>
+<h2 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h2><p>将连接句柄存入channel中，由于缓存channel的特性，获取连接时如果池中有连接，将直接返回，如果池中没有连接，将阻塞或者新建连接（没超过最大限制的情况下）。<br>由于面向接口编程，所有创建连接的逻辑是不清楚的，这里需要传入一个函数，该函数返回一个<code>io.Closer</code>对象。</p>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
                     datetime="2018-01-31T14:23:09.000Z">2018-01-31</time>
                 
                 <div class="level-item">
@@ -641,59 +694,6 @@ var _hmt = _hmt || [];
 
 
 
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2017-11-01T08:28:23.000Z">2017-11-01</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/docker/">docker</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    1 分钟 读完 (大约 186 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2017/11/01/docker-composer-nodejs.html">使用docker-composer部署nodejs应用</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <h2 id="新建Dockerfile"><a href="#新建Dockerfile" class="headerlink" title="新建Dockerfile"></a>新建Dockerfile</h2><p>在应用目录下新建<strong>Dockerfile</strong><br><figure class="highlight dockerfile hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">FROM</span> node:<span class="hljs-number">8</span></span><br><span class="line"><span class="hljs-keyword">WORKDIR</span><span class="hljs-bash"> /usr/src/app</span></span><br><span class="line"><span class="hljs-keyword">ADD</span><span class="hljs-bash"> . /usr/src/app</span></span><br><span class="line"><span class="hljs-keyword">RUN</span><span class="hljs-bash"> npm install --registry=https://registry.npm.taobao.org</span></span><br><span class="line"><span class="hljs-keyword">USER</span> node</span><br><span class="line"><span class="hljs-keyword">EXPOSE</span> <span class="hljs-number">8080</span></span><br></pre></td></tr></table></figure></p>
-<p>8080 端口请根据实际情况调整。建议大于1024，否则使用<strong>node</strong>用户启动应用时可能权限不足</p>
-<h2 id="新建docker-compose-yml"><a href="#新建docker-compose-yml" class="headerlink" title="新建docker-compose.yml"></a>新建docker-compose.yml</h2><p>在应用目录下新建<strong>docker-compose.yml</strong><br><figure class="highlight yaml hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-attr">version:</span> <span class="hljs-string">"2"</span></span><br><span class="line"><span class="hljs-attr">services:</span></span><br><span class="line">  <span class="hljs-attr">jsconsole:</span></span><br><span class="line">    <span class="hljs-attr">build:</span> <span class="hljs-string">.</span></span><br><span class="line">    <span class="hljs-attr">volumes:</span></span><br><span class="line">      <span class="hljs-bullet">-</span> <span class="hljs-string">.:/usr/src/app</span></span><br><span class="line">      <span class="hljs-bullet">-</span> <span class="hljs-string">/usr/src/app/node_modules</span></span><br><span class="line">    <span class="hljs-attr">ports:</span></span><br><span class="line">      <span class="hljs-bullet">-</span> <span class="hljs-string">"127.0.0.1:8081:8080"</span></span><br><span class="line">    <span class="hljs-attr">command:</span> <span class="hljs-string">"npm start"</span></span><br><span class="line">    <span class="hljs-attr">restart:</span> <span class="hljs-string">always</span></span><br></pre></td></tr></table></figure></p>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -718,7 +718,7 @@ var _hmt = _hmt || [];
             
             <li><span class="pagination-ellipsis has-text-black-ter">&hellip;</span></li>
             
-            <li><a class="pagination-link has-text-black-ter" href="/categories/backend/page/16/">16</a></li>
+            <li><a class="pagination-link has-text-black-ter" href="/categories/backend/page/17/">17</a></li>
             
         </ul>
     </nav>
@@ -768,7 +768,7 @@ var _hmt = _hmt || [];
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        274
+                        275
                     </p>
                 </div>
             </div>
@@ -788,7 +788,7 @@ var _hmt = _hmt || [];
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        32
+                        33
                     </p>
                 </div>
             </div>

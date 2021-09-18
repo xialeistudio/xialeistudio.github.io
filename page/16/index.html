@@ -160,6 +160,59 @@ var _hmt = _hmt || [];
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
                 <time class="level-item has-text-grey"
+                    datetime="2016-11-12T03:18:46.000Z">2016-11-12</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/nodejs/">nodejs</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    3 分钟 读完 (大约 422 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2016/11/12/develop-nodejs-with-es6.html">使用ES6开发Nodejs程序</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <p>ES6发布有一段时间了。但是Nodejs对此支持度还有待加强，就像前端可以使用babel+webpack构建基于ES6的工作流，其实Nodejs也是可以的（不需要手动编译）。当然，最终部署到生产服务器时要记得部署编译后的版本，否则运行时编译对性能是一种损失。</p>
+<h2 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h2><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm init -y</span><br><span class="line">npm install babel-core babel-register babel-polyfill --save</span><br><span class="line">npm install babel-preset-es2015 babel-preset-stage-3  babel-plugin-transform-class-properties --save</span><br></pre></td></tr></table></figure>
+<p><em>有个需要注意的问题是，nodejs直接执行的那个js文件还是得用原生JS语法（具体取决于Nodejs支持ES6的程度），比如在Nodejs v4.2.6下，可以使用 const 关键字，这个是不需要babel的。</em></p>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
                     datetime="2016-11-12T03:08:06.000Z">2016-11-12</time>
                 
                 <div class="level-item">
@@ -620,59 +673,6 @@ var _hmt = _hmt || [];
 
 
 
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2016-06-11T17:34:14.000Z">2016-06-12</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/frontend/">frontend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/frontend/javascript/">javascript</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    1 分钟 读完 (大约 147 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2016/06/11/js-live-console.html">js在线调试工具</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <p>在进行微信开发的时候，由于JS SDK提供的api需要在真机调试，而手机端的console方法虽然存在，但是调用结果却看不到。所以笔者使用socket.io重写了一个在线版本的调试工具。</p>
-<p><a href="http://jsconsole.org/" target="_blank" rel="noopener">工具地址</a></p>
-<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><ul>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -747,7 +747,7 @@ var _hmt = _hmt || [];
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        274
+                        275
                     </p>
                 </div>
             </div>
@@ -767,7 +767,7 @@ var _hmt = _hmt || [];
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        32
+                        33
                     </p>
                 </div>
             </div>

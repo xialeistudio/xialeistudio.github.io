@@ -160,6 +160,59 @@ var _hmt = _hmt || [];
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
                 <time class="level-item has-text-grey"
+                    datetime="2017-09-13T16:00:00.000Z">2017-09-14</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/nginx/">nginx</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    1 分钟 读完 (大约 152 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2017/09/13/nginx-alias-root.html">Nginx alias和root指令</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <p>Nginx的root指令相信大家用的都挺多，用来指定document_root，但是如果是针对特定path的请求才启用的话，root指令显得不好用<br><figure class="highlight crmsh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">location</span> <span class="hljs-title">/web</span> &#123;</span><br><span class="line">    root /home/wwwroot/site1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>访问 <em><a href="http://demo.com/web/a.js" target="_blank" rel="noopener">http://demo.com/web/a.js</a></em>的时候,nginx会去查找<em>/home/wwwroot/site1/web/a.js</em>，一般就会404了。因为文件是放在site1目录下的。<br>这时候就需要alias指令了。<br><figure class="highlight awk hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location <span class="hljs-regexp">/web/</span>&#123;</span><br><span class="line">    alias <span class="hljs-regexp">/home/</span>wwwroot<span class="hljs-regexp">/site1/</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>访问 <em><a href="http://demo.com/web/a.js" target="_blank" rel="noopener">http://demo.com/web/a.js</a></em>的时候,nginx会去查找<em>/home/wwwroot/site1/a.js</em>。</p>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
                     datetime="2017-07-30T16:00:00.000Z">2017-07-31</time>
                 
                 <div class="level-item">
@@ -625,59 +678,6 @@ var _hmt = _hmt || [];
 
 
 
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2017-04-26T16:00:00.000Z">2017-04-27</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/nodejs/">nodejs</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    2 分钟 读完 (大约 248 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2017/04/26/node-syslogd.html">使用NodeJs提供syslogd服务端</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <p>syslog作为Linux发行版一个重要组件，相信大家都不陌生，而如果每台服务器都独立使用一份的话，不能做到日志统一管理，对于以后的日志查询不太方便。<br>syslog有标准的协议格式，这里不做讨论，有兴趣的可以基于协议的报文结构使用socket编程实现。</p>
-<h2 id="部署服务端"><a href="#部署服务端" class="headerlink" title="部署服务端"></a>部署服务端</h2><p>本文使用Nodejs来部署一台syslog服务端。</p>
-<ol>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -752,7 +752,7 @@ var _hmt = _hmt || [];
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        274
+                        275
                     </p>
                 </div>
             </div>
@@ -772,7 +772,7 @@ var _hmt = _hmt || [];
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        32
+                        33
                     </p>
                 </div>
             </div>

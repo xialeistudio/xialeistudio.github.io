@@ -171,6 +171,59 @@ var _hmt = _hmt || [];
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
                 <time class="level-item has-text-grey"
+                    datetime="2018-06-14T13:49:52.000Z">2018-06-14</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/php/">php</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    3 分钟 读完 (大约 386 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2018/06/14/redis-common-practice.html">redis常用实践</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <p>Redis相信大家都不陌生，而如果只是用来取代memcached做缓存的话，实在是大材小用了。一起来看看生产环境下的常用用法。</p>
+<h2 id="分布式锁"><a href="#分布式锁" class="headerlink" title="分布式锁"></a>分布式锁</h2><figure class="highlight php hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$canLock = $redis-&gt;set(<span class="hljs-string">'k'</span>, <span class="hljs-number">1</span>, <span class="hljs-string">'NX'</span>, <span class="hljs-string">'EX'</span>, <span class="hljs-number">2</span>);</span><br><span class="line"><span class="hljs-keyword">if</span>($canLock) &#123;</span><br><span class="line">    <span class="hljs-comment">// 获得锁成功</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>锁定键名为k的数据两秒钟，两秒后该方法才能重新获取锁</p>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
                     datetime="2018-04-24T14:18:04.000Z">2018-04-24</time>
                 
                 <div class="level-item">
@@ -636,59 +689,6 @@ var _hmt = _hmt || [];
 
 
 
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2018-02-01T12:04:00.000Z">2018-02-01</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/go/">go</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    4 分钟 读完 (大约 663 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2018/02/01/golang-generic-pool.html">golang通用连接池的实现</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <p>golang的channel除了goroutine通信之外还有很多其他的功能，本文将实现一种基于channel的通用连接池。</p>
-<h2 id="何为通用？"><a href="#何为通用？" class="headerlink" title="何为通用？"></a>何为通用？</h2><p>连接池的实现不依赖具体的实例，而依赖某个接口，本文的连接池选用的是<code>io.Closer</code>接口，只要是实现了该接口的对象都可以被池管理。<br>当然，你可以实现基于<code>interface{}</code>的连接池，这样任何对象都可以被管理。</p>
-<h2 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h2><p>将连接句柄存入channel中，由于缓存channel的特性，获取连接时如果池中有连接，将直接返回，如果池中没有连接，将阻塞或者新建连接（没超过最大限制的情况下）。<br>由于面向接口编程，所有创建连接的逻辑是不清楚的，这里需要传入一个函数，该函数返回一个<code>io.Closer</code>对象。</p>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -713,7 +713,7 @@ var _hmt = _hmt || [];
             
             <li><span class="pagination-ellipsis has-text-black-ter">&hellip;</span></li>
             
-            <li><a class="pagination-link has-text-black-ter" href="/categories/backend/page/16/">16</a></li>
+            <li><a class="pagination-link has-text-black-ter" href="/categories/backend/page/17/">17</a></li>
             
         </ul>
     </nav>
@@ -763,7 +763,7 @@ var _hmt = _hmt || [];
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        274
+                        275
                     </p>
                 </div>
             </div>
@@ -783,7 +783,7 @@ var _hmt = _hmt || [];
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        32
+                        33
                     </p>
                 </div>
             </div>

@@ -173,6 +173,59 @@ var _hmt = _hmt || [];
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
                 <time class="level-item has-text-grey"
+                    datetime="2018-10-17T13:32:03.000Z">2018-10-17</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/go/">go</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    3 分钟 读完 (大约 509 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2018/10/17/go-io-reader-panic.html">io.Reader游标引发的血案</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <p>#背景<br>线上运行了一个图片合成程序，默认的小程序二维码中奖是小程序LOGO，不满足需求，所以将微信小程序二维码和用户头像合成在一张图片。<br>由于微信图片有时候返回的Content-Type不对应（比如内容是PNG的，头确是image/jpeg）所以使用jpeg/png/gif的顺序进行图片数据解析，哪个成功就返回解析结果。</p>
+<p>#问题<br>总是出现诸如<code>invalid JPEG format: missing SOI marker</code></p>
+<p>#解决过程<br>我去查看jpeg.Decode的源码，如下：<br><figure class="highlight golang hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(d *decoder)</span> <span class="hljs-title">decode</span><span class="hljs-params">(r io.Reader, configOnly <span class="hljs-keyword">bool</span>)</span> <span class="hljs-params">(image.Image, error)</span></span> &#123;</span><br><span class="line">	d.r = r</span><br><span class="line"></span><br><span class="line">	<span class="hljs-comment">// Check for the Start Of Image marker.</span></span><br><span class="line">	<span class="hljs-keyword">if</span> err := d.readFull(d.tmp[:<span class="hljs-number">2</span>]); err != <span class="hljs-literal">nil</span> &#123;</span><br><span class="line">		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, err</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="hljs-keyword">if</span> d.tmp[<span class="hljs-number">0</span>] != <span class="hljs-number">0xff</span> || d.tmp[<span class="hljs-number">1</span>] != soiMarker &#123;</span><br><span class="line">		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, FormatError(<span class="hljs-string">"missing SOI marker"</span>)</span><br><span class="line">	&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
                     datetime="2018-08-08T03:07:25.000Z">2018-08-08</time>
                 
                 <div class="level-item">
@@ -638,59 +691,6 @@ var _hmt = _hmt || [];
 
 
 
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2018-02-01T12:04:00.000Z">2018-02-01</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/go/">go</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    4 分钟 读完 (大约 663 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2018/02/01/golang-generic-pool.html">golang通用连接池的实现</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <p>golang的channel除了goroutine通信之外还有很多其他的功能，本文将实现一种基于channel的通用连接池。</p>
-<h2 id="何为通用？"><a href="#何为通用？" class="headerlink" title="何为通用？"></a>何为通用？</h2><p>连接池的实现不依赖具体的实例，而依赖某个接口，本文的连接池选用的是<code>io.Closer</code>接口，只要是实现了该接口的对象都可以被池管理。<br>当然，你可以实现基于<code>interface{}</code>的连接池，这样任何对象都可以被管理。</p>
-<h2 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h2><p>将连接句柄存入channel中，由于缓存channel的特性，获取连接时如果池中有连接，将直接返回，如果池中没有连接，将阻塞或者新建连接（没超过最大限制的情况下）。<br>由于面向接口编程，所有创建连接的逻辑是不清楚的，这里需要传入一个函数，该函数返回一个<code>io.Closer</code>对象。</p>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -757,7 +757,7 @@ var _hmt = _hmt || [];
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        274
+                        275
                     </p>
                 </div>
             </div>
@@ -777,7 +777,7 @@ var _hmt = _hmt || [];
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        32
+                        33
                     </p>
                 </div>
             </div>
