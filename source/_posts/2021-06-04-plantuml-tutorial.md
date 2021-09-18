@@ -46,11 +46,11 @@ Using device: dot:dot:core
 The plugin configuration file:
 	/usr/local/Cellar/graphviz/2.47.0/lib/graphviz/config6
 		was successfully loaded.
-    render	:  cairo dot dot_json fig gd json json0 map mp pic pov ps quartz svg tk visio vml vrml xdot xdot_json
-    layout	:  circo dot fdp neato nop nop1 nop2 osage patchwork sfdp twopi
-    textlayout	:  textlayout
-    device	:  bmp canon cgimage cmap cmapx cmapx_np dot dot_json eps exr fig gd gd2 gif gv icns ico imap imap_np ismap jp2 jpe jpeg jpg json json0 mp pct pdf pic pict plain plain-ext png pov ps ps2 psd sgi svg svgz tga tif tiff tk vdx vml vmlz vrml wbmp webp xdot xdot1.2 xdot1.4 xdot_json
-    loadimage	:  (lib) bmp eps gd gd2 gif jpe jpeg jpg pdf png ps svg webp xbm
+ render	:  cairo dot dot_json fig gd json json0 map mp pic pov ps quartz svg tk visio vml vrml xdot xdot_json
+ layout	:  circo dot fdp neato nop nop1 nop2 osage patchwork sfdp twopi
+ textlayout	:  textlayout
+ device	:  bmp canon cgimage cmap cmapx cmapx_np dot dot_json eps exr fig gd gd2 gif gv icns ico imap imap_np ismap jp2 jpe jpeg jpg json json0 mp pct pdf pic pict plain plain-ext png pov ps ps2 psd sgi svg svgz tga tif tiff tk vdx vml vmlz vrml wbmp webp xdot xdot1.2 xdot1.4 xdot_json
+ loadimage	:  (lib) bmp eps gd gd2 gif jpe jpeg jpg pdf png ps svg webp xbm
 ```
 
 ### jdk
@@ -85,7 +85,7 @@ OpenJDK 64-Bit Server VM (build 11.0.10+9, mixed mode)
 
 3. 打开IDE设置，搜索`plantuml`，确保`Remote rendering`已关闭
 
-   ![image-20210604154007098](https://static.ddhigh.com/blog//2021/06/04/1622792407142095000.png)
+![image-20210604154007098](https://static.ddhigh.com/blog//2021/06/04/1622792407142095000.png)
 
 ## PlantUML语法
 
@@ -97,46 +97,46 @@ OpenJDK 64-Bit Server VM (build 11.0.10+9, mixed mode)
 
 1. IDE新建一个空项目，打开项目之后，右键新建文件
 
-   ![image-20210604152912197](https://static.ddhigh.com/blog//2021/06/04/1622791752260150000.png)
+![image-20210604152912197](https://static.ddhigh.com/blog//2021/06/04/1622791752260150000.png)
 
 2. 选择`Sequence`
 
-   ![image-20210604152935751](https://static.ddhigh.com/blog//2021/06/04/1622791775795758000.png)
+![image-20210604152935751](https://static.ddhigh.com/blog//2021/06/04/1622791775795758000.png)
 
 3. PlantUML菜单项说明
 
-   ![image-20210604155009752](https://static.ddhigh.com/blog//2021/06/04/1622793009802684000.png)
+![image-20210604155009752](https://static.ddhigh.com/blog//2021/06/04/1622793009802684000.png)
 
 4. 以微信网页授权为例编写时序图。
 
-   ```
-   @startuml
-   'https://plantuml.com/sequence-diagram
-   
-   '启用自动编号
-   autonumber
-   '生命线自动激活
-   autoactivate on
-   
-   actor 用户
-   
-   用户 -> 应用服务器: 获取用户信息
-   应用服务器 -> 微信服务器: 跳转授权链接:(appid,scope,callback)
-   微信服务器 -> 用户: 请求用户授权
-   return 允许授权
-   return 返回授权code
-   应用服务器 -> 微信服务器: 获取用户access_token(appid,secret,code)
-   return 返回access_token+openid
-   应用服务器 -> 微信服务器: 获取用户信息(openid,access_token)
-   return 用户信息
-   return 用户信息
-   
-   @enduml
-   ```
+```
+@startuml
+'https://plantuml.com/sequence-diagram
+
+'启用自动编号
+autonumber
+'生命线自动激活
+autoactivate on
+
+actor 用户
+
+用户 -> 应用服务器: 获取用户信息
+应用服务器 -> 微信服务器: 跳转授权链接:(appid,scope,callback)
+微信服务器 -> 用户: 请求用户授权
+return 允许授权
+return 返回授权code
+应用服务器 -> 微信服务器: 获取用户access_token(appid,secret,code)
+return 返回access_token+openid
+应用服务器 -> 微信服务器: 获取用户信息(openid,access_token)
+return 用户信息
+return 用户信息
+
+@enduml
+```
 
 5. 渲染效果
 
-   ![image-20210604153910674](https://static.ddhigh.com/blog//2021/06/04/1622792350734661000.png)
+![image-20210604153910674](https://static.ddhigh.com/blog//2021/06/04/1622792350734661000.png)
 
 #### 语法说明
 
@@ -174,55 +174,55 @@ queue 消息队列
 
 1. IDE新建一个空项目，打开项目之后，右键新建文件
 
-   ![image-20210604152912197](https://static.ddhigh.com/blog//2021/06/04/1622791752260150000.png)
+![image-20210604152912197](https://static.ddhigh.com/blog//2021/06/04/1622791752260150000.png)
 
 2. 选择`Class`
 
-   ![image-20210604155301322](https://static.ddhigh.com/blog/2021/06/04/1622793181374871000.png)
+![image-20210604155301322](https://static.ddhigh.com/blog/2021/06/04/1622793181374871000.png)
 
 3. 以一个上传类为例编写类图
 
-   ```
-   @startuml
-   'https://plantuml.com/class-diagram
-   
-   namespace com.ddhigh.uploader {
-       interface Uploader {
-           + String Upload(String filename) Throws IOException
-       }
-   
-       namespace qiniu {
-           class QiniuUploader implements Uploader {
-               - client: qiniu.Client
-               --
-               + String Upload(String filename) Throws IOException
-           }
-           QiniuUploader *-- qiniu.Client
-       }
-   
-       package aliyun {
-           class AliyunUploader implements Uploader {
-               - client: aliyun.Client
-               --
-               + String Upload(String filename) Throws IOException
-           }
-           AliyunUploader *-- aliyun.Client
-       }
-   
-       class UploaderFacade {
-           - uploaders: List<Uploader>
-           --
-           + List<String> Upload(String filename) Throws IOException
-       }
-       UploaderFacade o-- Uploader
-   }
-   
-   @enduml
-   ```
+```
+@startuml
+'https://plantuml.com/class-diagram
+
+namespace com.ddhigh.uploader {
+ interface Uploader {
+  + String Upload(String filename) Throws IOException
+ }
+
+ namespace qiniu {
+  class QiniuUploader implements Uploader {
+- client: qiniu.Client
+--
++ String Upload(String filename) Throws IOException
+  }
+  QiniuUploader *-- qiniu.Client
+ }
+
+ package aliyun {
+  class AliyunUploader implements Uploader {
+- client: aliyun.Client
+--
++ String Upload(String filename) Throws IOException
+  }
+  AliyunUploader *-- aliyun.Client
+ }
+
+ class UploaderFacade {
+  - uploaders: List<Uploader>
+  --
+  + List<String> Upload(String filename) Throws IOException
+ }
+ UploaderFacade o-- Uploader
+}
+
+@enduml
+```
 
 4. 渲染效果
 
-   ![image-20210604155821009](https://static.ddhigh.com/blog/2021/06/04/1622793501066543000.png)
+![image-20210604155821009](https://static.ddhigh.com/blog/2021/06/04/1622793501066543000.png)
 
 ##### 语法说明
 
@@ -263,42 +263,42 @@ PlantUML主要有以下3种关系：
 
 1. IDE新建一个空项目，打开项目之后，右键新建文件
 
-   ![image-20210604152912197](https://static.ddhigh.com/blog//2021/06/04/1622791752260150000.png)
+![image-20210604152912197](https://static.ddhigh.com/blog//2021/06/04/1622791752260150000.png)
 
 2. 新建`Activity`类型文件
 
-   ![image-20210604160929588](https://static.ddhigh.com/blog/2021/06/04/1622794169645334000.png)
+![image-20210604160929588](https://static.ddhigh.com/blog/2021/06/04/1622794169645334000.png)
 
 3. 下面以一个`授权获取用户openid并插入数据库，然后查询用户好友进行消息推送`的场景编写流程图
 
-   ```
-   @startuml
-   'https://plantuml.com/activity-diagram-beta
-   
-   start
-   :使用code,appid,secret请求微信服务器获取access_token和openid;
-   :使用access_token和openid请求微信服务器获取用户信息;
-   :查询数据库openid是否存在;
-   if (数据库查询失败?) then (是)
-   stop
-   elseif (用户已存在?) then (是)
-   :更新用户信息;
-   else (否)
-   :新建用户并绑定openid;
-   endif
-   
-   :获取用户好友列表;
-   while(好友列表遍历完成?) is (否)
-   :推送消息给好友;
-   endwhile(是)
-   stop
-   
-   @enduml
-   ```
+```
+@startuml
+'https://plantuml.com/activity-diagram-beta
+
+start
+:使用code,appid,secret请求微信服务器获取access_token和openid;
+:使用access_token和openid请求微信服务器获取用户信息;
+:查询数据库openid是否存在;
+if (数据库查询失败?) then (是)
+stop
+elseif (用户已存在?) then (是)
+:更新用户信息;
+else (否)
+:新建用户并绑定openid;
+endif
+
+:获取用户好友列表;
+while(好友列表遍历完成?) is (否)
+:推送消息给好友;
+endwhile(是)
+stop
+
+@enduml
+```
 
 4. 渲染效果
 
-   ![image-20210604161522881](https://static.ddhigh.com/blog/2021/06/04/1622794522917043000.png)
+![image-20210604161522881](https://static.ddhigh.com/blog/2021/06/04/1622794522917043000.png)
 
 #### 语法说明
 
@@ -316,50 +316,50 @@ PlantUML主要有以下3种关系：
 
 1. IDE新建一个空项目，打开项目之后，右键新建文件
 
-   ![image-20210604152912197](https://static.ddhigh.com/blog//2021/06/04/1622791752260150000.png)
+![image-20210604152912197](https://static.ddhigh.com/blog//2021/06/04/1622791752260150000.png)
 
 2. 选择`Component`
 
-   ![image-20210604162020830](https://static.ddhigh.com/blog/2021/06/04/1622794820895677000.png)
+![image-20210604162020830](https://static.ddhigh.com/blog/2021/06/04/1622794820895677000.png)
 
 3. 以微信首页聊天列表为例绘制组件关系图
 
-   ```
-   @startuml
-   'https://plantuml.com/component-diagram
-   
-   package widgets {
-       [SearchBar] --> [Text]
-       [SearchBar] --> [Icon]
-       [NavigationBar] --> [Text]
-       [NavigationBar] --> [Icon]
-       
-       [ListView] --> [ListItem]
-       [ListItem] --> [Image]
-       [ListItem] --> [Text]
-   }
-   
-   package routes {
-       [Home] --> [NavigationBar]
-       [Home] --> [SearchBar]
-       [Home] --> [ListView]
-   }
-   
-   
-   @enduml
-   ```
+```
+@startuml
+'https://plantuml.com/component-diagram
+
+package widgets {
+ [SearchBar] --> [Text]
+ [SearchBar] --> [Icon]
+ [NavigationBar] --> [Text]
+ [NavigationBar] --> [Icon]
+ 
+ [ListView] --> [ListItem]
+ [ListItem] --> [Image]
+ [ListItem] --> [Text]
+}
+
+package routes {
+ [Home] --> [NavigationBar]
+ [Home] --> [SearchBar]
+ [Home] --> [ListView]
+}
+
+
+@enduml
+```
 
 4. 渲染效果
 
-   ![image-20210604162521451](https://static.ddhigh.com/blog/2021/06/04/1622795518286015000.png)
+![image-20210604162521451](https://static.ddhigh.com/blog/2021/06/04/1622795518286015000.png)
 
-   > 依赖关系如下：
-   >
-   > + 首页: 导航栏, 搜索框，列表
-   > + 导航栏: 文本，图标
-   > + 搜索框: 文本，图标
-   > + 列表: 列表项
-   > + 列表项: 文本，图片
+> 依赖关系如下：
+>
+> + 首页: 导航栏, 搜索框，列表
+> + 导航栏: 文本，图标
+> + 搜索框: 文本，图标
+> + 列表: 列表项
+> + 列表项: 文本，图片
 
 ##### 语法说明
 
