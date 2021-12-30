@@ -160,6 +160,59 @@ var _hmt = _hmt || [];
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
                 <time class="level-item has-text-grey"
+                    datetime="2014-11-09T21:47:50.000Z">2014-11-10</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/android/">android</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    1 分钟 读完 (大约 164 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2014/11/09/async-http-client-socket-timeout.html">async http client socket超时问题</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <p>最近做的一个项目的HTTP模块使用了loopj的asynchttpclient (<a href="https://github.com/loopj/android-async-http" target="_blank" rel="noopener">https://github.com/loopj/android-async-http</a>）。</p>
+<p>自动更新模块总是出现sockettimeout的exception,查来查去也不知道什么问题，为此还换了asynchttpclient的库版本。但是问题也没解决。</p>
+<p>仔细看了一下，提示的是timeout，应该从这方面去看看，后面看到自己的HTTP工具类设置了全局超时时间为5000ms,普通请求当然没这么久，但是自动更新是下载，肯定不止5秒的，删掉超时设置就可以了。</p>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
                     datetime="2014-11-06T22:01:45.000Z">2014-11-07</time>
                 
                 <div class="level-item">
@@ -620,59 +673,6 @@ var _hmt = _hmt || [];
 
 
 
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2014-10-13T22:15:21.000Z">2014-10-14</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/frontend/">frontend</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    1 分钟 读完 (大约 204 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2014/10/13/mobile-realtime-check.html">移动端实时检测输入框</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <p>PC浏览器的话由于有blur和focus事件，可以在失去焦点时进行一次验证，但是移动端有点麻烦，点击其他地方才可以，这种的话体验不是很好。<br>利用input事件可以解决这个问题。</p>
-<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="hljs-built_in">document</span>).on(<span class="hljs-string">'input'</span>,<span class="hljs-string">'#username'</span>,<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>&#123;</span><br><span class="line">    <span class="hljs-comment">//验证逻辑</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>测试之后问题确实来了，每输入一个字符就会触发，浪费很多网络请求，接下来使用一个定时器的技术来进行处理。</p>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -747,7 +747,7 @@ var _hmt = _hmt || [];
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        275
+                        276
                     </p>
                 </div>
             </div>
@@ -757,7 +757,7 @@ var _hmt = _hmt || [];
                         分类
                     </p>
                     <p class="title has-text-weight-normal">
-                        25
+                        26
                     </p>
                 </div>
             </div>
@@ -767,7 +767,7 @@ var _hmt = _hmt || [];
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        33
+                        34
                     </p>
                 </div>
             </div>
