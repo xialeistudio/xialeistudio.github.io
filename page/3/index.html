@@ -160,6 +160,165 @@ var _hmt = _hmt || [];
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
                 <time class="level-item has-text-grey"
+                    datetime="2020-02-11T04:00:00.000Z">2020-02-11</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/devtools/">devtools</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    11 分钟 读完 (大约 1646 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2020/02/11/shell-operator-flow-control.html">Shell脚本快速入门(2)</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <p>今天我们来学习Shell的运算符和流程控制。</p>
+<h2 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h2><p>Shell和其他编程语言一样支持多种运算符，包括：</p>
+<ul>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2020-02-10T04:00:00.000Z">2020-02-10</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/devtools/">devtools</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    10 分钟 读完 (大约 1554 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2020/02/10/shell-quickstart.html">Shell脚本快速入门(1)</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <p>Shell 是一个用 C 语言编写的程序，用户可以通过Shell脚本语言来进行程序开发。与其他脚本语言不同，Shell脚本所需的解释器一般是内置在操作系统的，而像Node.js、PHP等脚本语言需要手动安装解释器程序才可以。</p>
+<p>接下来将和大家一起来学习Shell脚本编程。</p>
+<h2 id="Shell解释器"><a href="#Shell解释器" class="headerlink" title="Shell解释器"></a>Shell解释器</h2><p>Shell解释器种类众多，笔者的电脑上内置以下Shell:</p>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2020-02-01T04:00:00.000Z">2020-02-01</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/java/">java</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    3 分钟 读完 (大约 443 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2020/02/01/java-resource-load.html">Java中加载文件的几种方式</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <p>在Java程序中加载外部文件有多中方式，每种方式也存在区别，本文将理清这些加载方式之间的区别。</p>
+<h2 id="文件IO方式"><a href="#文件IO方式" class="headerlink" title="文件IO方式"></a>文件IO方式</h2><figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">package</span> org.xialei.example.resource;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">import</span> java.io.File;</span><br><span class="line"><span class="hljs-keyword">import</span> java.io.IOException;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span> </span>&#123;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        File file = <span class="hljs-keyword">new</span> File(<span class="hljs-string">"app.properties"</span>);</span><br><span class="line">        System.out.println(file.getAbsolutePath());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>常见的读取方式，使用该方式读取文件时规则如下：</p>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
                     datetime="2020-01-17T04:00:00.000Z">2020-01-17</time>
                 
                 <div class="level-item">
@@ -524,165 +683,6 @@ var _hmt = _hmt || [];
 
 
 
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2019-10-30T04:00:00.000Z">2019-10-30</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/frontend/">frontend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/frontend/javascript/">javascript</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    8 分钟 读完 (大约 1270 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2019/10/30/es6-map.html">ES6的Map类型</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <p>本文内容</p>
-<ul>
-<li>Map的基本使用</li>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2019-10-30T04:00:00.000Z">2019-10-30</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/other/">other</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    10 分钟 读完 (大约 1527 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2019/10/30/twblog.html">我是如何发现我的文章被侵权以及如何得到侵权网站的联系方式的?</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <p>本文内容</p>
-<ul>
-<li>如何发现自己的文章被侵权</li>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2019-10-29T04:00:00.000Z">2019-10-29</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    12 分钟 读完 (大约 1788 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2019/10/29/redis-high-concurrent.html">Redis优化高并发下的秒杀性能</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <p>本文内容</p>
-<ul>
-<li>使用Redis优化高并发场景下的接口性能</li>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -755,7 +755,7 @@ var _hmt = _hmt || [];
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        277
+                        280
                     </p>
                 </div>
             </div>
