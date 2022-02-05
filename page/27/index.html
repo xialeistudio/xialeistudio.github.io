@@ -160,6 +160,59 @@ var _hmt = _hmt || [];
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
                 <time class="level-item has-text-grey"
+                    datetime="2014-09-09T20:13:47.000Z">2014-09-10</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/nginx/">nginx</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    3 分钟 读完 (大约 387 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2014/09/09/nginx-urlrewritepathinfo.html">nginx url重写和pathinfo配置</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <p>nginx近年来的上涨趋势确实挺快的，但是apache作为老牌HTTP服务器，拥有的生态圈是nginx比不上的。一个最简单的例子，URL重写，apache的话利用无所不能的.htaccess文件就可以了。nginx还要改主配置文件。</p>
+<h2 id="URL重写配置"><a href="#URL重写配置" class="headerlink" title="URL重写配置"></a>URL重写配置</h2><h3 id="主配置文件"><a href="#主配置文件" class="headerlink" title="主配置文件"></a>主配置文件</h3><figure class="highlight nginx hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-attribute">location</span> /</span><br><span class="line">&#123;</span><br><span class="line">  <span class="hljs-attribute">if</span> (!-e <span class="hljs-variable">$request_filename</span>) &#123;</span><br><span class="line">    <span class="hljs-attribute">rewrite</span><span class="hljs-regexp"> ^/(.*)$</span> /index.php?<span class="hljs-variable">$1</span> <span class="hljs-literal">last</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><em>if和(中间要有括号</em>,url重写这里就配置完了。</p>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
                     datetime="2014-09-06T19:46:40.000Z">2014-09-07</time>
                 
                 <div class="level-item">
@@ -625,59 +678,6 @@ var _hmt = _hmt || [];
 
 
 
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2014-09-06T04:02:20.000Z">2014-09-06</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/nginx/">nginx</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    1 分钟 读完 (大约 143 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2014/09/06/nginx-virtual-host.html">nginx虚拟主机配置</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <p>最近服务器上用的环境是lnmp，之前一直在用apache，配置虚拟主机也是很方便的。今天查资料发现Nginx的虚拟主机配置更加简单。</p>
-<figure class="highlight nginx hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-section">server</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-attribute">listen</span>       <span class="hljs-number">80</span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-attribute">server_name</span>  domain1;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-attribute">location</span> / &#123;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-attribute">root</span>   html/domain1;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-attribute">index</span>  index.html index.htm index.php;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-attribute">location</span> <span class="hljs-regexp">~ \.php$</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-attribute">root</span>    html/domain1;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-attribute">fastcgi_pass</span>   <span class="hljs-number">127.0.0.1:9000</span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-attribute">fastcgi_index</span>  index.php;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-attribute">fastcgi_param</span>  SCRIPT_FILENAME  <span class="hljs-variable">$document_root</span><span class="hljs-variable">$fastcgi_script_name</span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-attribute">include</span>    fastcgi_params;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-section">server</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-attribute">listen</span>    <span class="hljs-number">80</span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-attribute">server_name</span>  domain2;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-attribute">location</span> / &#123;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-attribute">root</span>   html/domain2;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-attribute">index</span>  index.html index.htm index.php;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-attribute">location</span> <span class="hljs-regexp">~ \.php$</span> &#123;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-attribute">root</span>    html/domain2;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-attribute">fastcgi_pass</span>   <span class="hljs-number">127.0.0.1:9000</span>;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-attribute">fastcgi_index</span>  index.php;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-attribute">fastcgi_param</span>  SCRIPT_FILENAME  <span class="hljs-variable">$document_root</span><span class="hljs-variable">$fastcgi_script_name</span>;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-attribute">include</span>    fastcgi_params;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>保存之后，执行 </p>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -748,7 +748,7 @@ var _hmt = _hmt || [];
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        276
+                        277
                     </p>
                 </div>
             </div>
@@ -768,7 +768,7 @@ var _hmt = _hmt || [];
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        34
+                        35
                     </p>
                 </div>
             </div>
@@ -905,7 +905,7 @@ var _hmt = _hmt || [];
                 
                 </a>
                 <p class="is-size-7">
-                &copy; 2021 xialeistudio&nbsp;
+                &copy; 2022 xialeistudio&nbsp;
                 Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
                         href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
                 
