@@ -160,6 +160,324 @@ var _hmt = _hmt || [];
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
                 <time class="level-item has-text-grey"
+                    datetime="2016-12-27T16:00:00.000Z">2016-12-28</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/nginx/">nginx</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    1 分钟 读完 (大约 181 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2016/12/27/nginx-wildcard-domain-config.html">nginx泛域名解析配置</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <p>最近一个项目需要承载高并发请求，所以在后端语言上选择了<strong>NodeJs</strong>，但是nodejs有时候读取不到请求的主机名，所以想到使用<strong>nginx+nodejs</strong>的方式进行处理。</p>
+<h2 id="Nginx-配置"><a href="#Nginx-配置" class="headerlink" title="Nginx 配置"></a>Nginx 配置</h2><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">upstream io_nodes &#123;</span><br><span class="line">        server 127.0.0.1:8081;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">        listen 80;</span><br><span class="line">        listen [::]:80;</span><br><span class="line">        root /var/www/html;</span><br><span class="line">        server_name ~^(?&lt;subdomain&gt;.+).example.com;</span><br><span class="line"></span><br><span class="line">        location / &#123;</span><br><span class="line">	    proxy_set_header Host $host;</span><br><span class="line">            proxy_set_header X-AppId $subdomain;</span><br><span class="line">            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">            proxy_pass http://io_nodes;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>重启nginx服务器即可。nginx会将所有的 <strong><subdomain>.example.com</subdomain></strong> 格式的域名反向代理到本机的<strong>8081</strong>端口，该端口为<strong>nodejs</strong>监听端口。</p>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2016-12-27T16:00:00.000Z">2016-12-28</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/frontend/">frontend</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    1 分钟 读完 (大约 207 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2016/12/27/wechat-component-domain.html">微信开放平台公众号第三方平台网页开发域名问题</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <p>先来看一下微信官方定义:</p>
+<p><em>第三方平台在代公众号做网页授权、调用JS SDK等网页开发工作时所用的域名，可填写3个，以;隔开。为了满足开发者管理需要，符合以下要求的下级域名也将生效：$APPID$.wx.abc.com（$APPID$为公众号的AppID的替换符）</em></p>
+<p>只能说微信文档这个 <strong>wx.abc.com</strong>误导了我好久，试过的域名是<strong>APPID.wx.abc.com</strong>，死活不行，后来发现公司域名整个就是用<strong>wx.abc.com</strong>替换，不是<strong>abc.com</strong>，所以最终进行授权的域名域名是(假设appid为<strong>testappid</strong>，填写的网页开发域名为<strong>example.com</strong>):<strong>testappid.example.com</strong>，可以根据这个做泛域名解析。</p>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2016-12-21T16:00:00.000Z">2016-12-22</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/php/">php</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    4 分钟 读完 (大约 655 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2016/12/21/pm2-daemon-php-cli.html">使用PM2守护PHP命令行程序</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <p>pm2是nodejs的一个模块，用来进行进程管理，刚开始以为只能做nodejs脚本的管理，后来发现通过配置之后也可以实现<strong>任意进程</strong>的守护。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install pm2 -g</span><br></pre></td></tr></table></figure>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h3><ul>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2016-12-20T16:00:00.000Z">2016-12-21</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/php/">php</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    2 分钟 读完 (大约 320 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2016/12/20/log4php-get-started.html">apache log4php简单使用</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <p>log4j在JAVA中可算是大名鼎鼎的日志开发包了,它为apache组织维护项目，log4php是log4xx的系列之一，主要用来记录日志信息，功能强大，配置灵活。</p>
+<p>最近需要开发一个命令行程序，于是想到了用log4php来作为日志管理器进行日志输出。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><ul>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2016-12-16T16:00:00.000Z">2016-12-17</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/nodejs/">nodejs</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    6 分钟 读完 (大约 908 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2016/12/16/pomelo-global-channel.html">pomelo-global-channel-plugin的使用</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <p>pomelo应用中channel默认是<strong>不可以跨进程</strong>的，来看一下现在服务器的配置：</p>
+<figure class="highlight json hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="hljs-attr">"development"</span>: &#123;</span><br><span class="line">    <span class="hljs-attr">"connector"</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="hljs-attr">"id"</span>: <span class="hljs-string">"connector"</span>,</span><br><span class="line">        <span class="hljs-attr">"host"</span>: <span class="hljs-string">"127.0.0.1"</span>,</span><br><span class="line">        <span class="hljs-attr">"port"</span>: <span class="hljs-number">3150</span>,</span><br><span class="line">        <span class="hljs-attr">"clientHost"</span>: <span class="hljs-string">"127.0.0.1"</span>,</span><br><span class="line">        <span class="hljs-attr">"clientPort"</span>: <span class="hljs-number">3010</span>,</span><br><span class="line">        <span class="hljs-attr">"frontend"</span>: <span class="hljs-literal">true</span></span><br><span class="line">      &#125;</span><br><span class="line">    ],</span><br><span class="line">    <span class="hljs-attr">"chat"</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="hljs-attr">"id"</span>: <span class="hljs-string">"chat-1"</span>,</span><br><span class="line">        <span class="hljs-attr">"host"</span>: <span class="hljs-string">"127.0.0.1"</span>,</span><br><span class="line">        <span class="hljs-attr">"port"</span>: <span class="hljs-number">4001</span></span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="hljs-attr">"id"</span>: <span class="hljs-string">"chat-2"</span>,</span><br><span class="line">        <span class="hljs-attr">"host"</span>: <span class="hljs-string">"127.0.0.1"</span>,</span><br><span class="line">        <span class="hljs-attr">"port"</span>: <span class="hljs-number">4002</span></span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到使用了两台<strong>chat</strong>服务器，该服务器进行具体的消息接收以及消息推送。</p>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2016-12-15T16:00:00.000Z">2016-12-16</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/nodejs/">nodejs</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    几秒 读完 (大约 70 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2016/12/15/pomelo-client-for-commonjs.html">基于CommonJs的pomelo客户端</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <p>pomelo官方提供的js客户端是基于浏览器的，nodejs下无法使用，所以封装了一个基于CommonJs的pomelo客户端。</p>
+<h2 id="支持平台"><a href="#支持平台" class="headerlink" title="支持平台"></a>支持平台</h2><ul>
+<li>nodejs</li>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
                     datetime="2016-12-14T16:00:00.000Z">2016-12-15</time>
                 
                 <div class="level-item">
@@ -365,324 +683,6 @@ var _hmt = _hmt || [];
 
 
 
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2016-11-12T21:16:59.000Z">2016-11-13</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/nodejs/">nodejs</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    2 分钟 读完 (大约 328 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2016/11/12/nodejs-export-large-excel.html">Nodejs导出大数据到Excel</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <p>在实际开发中，数据导出使用频率比数据导入高得多，而数据导出时来源一般是数据库，会有上万的数据导出，如果不做特殊处理的话，会导致NodeJs进程直接被killed。<br>今天要提到的npm包是 <strong>xlsx-writestream</strong>，话不多说，进入正题。</p>
-<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm init -y</span><br><span class="line">npm install xlsx-writestream --save</span><br></pre></td></tr></table></figure>
-<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="hljs-comment">//编辑executor.js</span></span><br><span class="line"><span class="hljs-keyword">import</span> Writer <span class="hljs-keyword">from</span> <span class="hljs-string">'xlsx-writestream'</span>;</span><br><span class="line"><span class="hljs-keyword">import</span> fs <span class="hljs-keyword">from</span> <span class="hljs-string">'fs'</span>;</span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ExcelWriteExecutor</span></span>&#123;</span><br><span class="line"> <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 构造方法</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@param </span>path 路径</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@param <span class="hljs-variable">options</span></span></span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-keyword">constructor</span>(path, options = &#123;&#125;) &#123;</span><br><span class="line">  <span class="hljs-keyword">this</span>.path = path;</span><br><span class="line">  options.out = path;</span><br><span class="line">  <span class="hljs-keyword">this</span>.options = options;</span><br><span class="line">  <span class="hljs-keyword">this</span>.writer = <span class="hljs-keyword">new</span> Writer(<span class="hljs-keyword">this</span>.path, <span class="hljs-keyword">this</span>.options);</span><br><span class="line">  <span class="hljs-keyword">this</span>.writer.getReadStream().pipe(fs.createWriteStream(<span class="hljs-keyword">this</span>.path));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">addRow(row) &#123;</span><br><span class="line">  <span class="hljs-keyword">this</span>.writer.addRow(row);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">addRows(rows) &#123;</span><br><span class="line">  <span class="hljs-keyword">this</span>.writer.addRows(rows);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 输出</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line">execute() &#123;</span><br><span class="line">  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve</span>)=&gt;</span> &#123;</span><br><span class="line">    <span class="hljs-keyword">this</span>.writer.finalize();</span><br><span class="line">      setTimeout(resolve, <span class="hljs-number">50</span>);<span class="hljs-comment">//延迟50毫秒是因为 finalize 调用结束之后，excel打开会报错，可能是没写入完成的原因，加了延迟之后正常，延迟值根据需要自己测试可以更改</span></span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="hljs-comment">//测试代码</span></span><br><span class="line"><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">test</span>(<span class="hljs-params"></span>) </span>&#123;</span><br><span class="line">  <span class="hljs-keyword">const</span> executor = <span class="hljs-keyword">new</span> ExcelWriteExecutor(<span class="hljs-string">`<span class="hljs-subst">$&#123;__dirname&#125;</span>/test-write.xlsx`</span>);</span><br><span class="line">  executor.addRow(&#123;</span><br><span class="line">  <span class="hljs-string">'姓名'</span>: <span class="hljs-string">'fff'</span>,</span><br><span class="line">  <span class="hljs-string">'电话'</span>: <span class="hljs-string">'15911111111'</span>,</span><br><span class="line">  <span class="hljs-string">'公司'</span>: <span class="hljs-string">'ddaaa'</span>,</span><br><span class="line">  <span class="hljs-string">'职位'</span>: <span class="hljs-string">'ddaaaxxxx'</span>,</span><br><span class="line">  <span class="hljs-string">'生日'</span>: <span class="hljs-string">''</span>,</span><br><span class="line">  <span class="hljs-string">'邮箱'</span>: <span class="hljs-string">''</span>,</span><br><span class="line">  <span class="hljs-string">'选择城市'</span>: <span class="hljs-string">''</span>,</span><br><span class="line">  <span class="hljs-string">'单位/公司'</span>: <span class="hljs-string">''</span>,</span><br><span class="line">  <span class="hljs-string">'职务'</span>: <span class="hljs-string">''</span>,</span><br><span class="line">  <span class="hljs-string">'具体地址'</span>: <span class="hljs-string">''</span>,</span><br><span class="line">  <span class="hljs-string">'院系班级'</span>: <span class="hljs-string">''</span>,</span><br><span class="line">  <span class="hljs-string">'常住住址'</span>: <span class="hljs-string">''</span></span><br><span class="line">&#125;);</span><br><span class="line">  <span class="hljs-keyword">await</span> executor.execute();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2016-11-12T03:18:46.000Z">2016-11-12</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/nodejs/">nodejs</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    3 分钟 读完 (大约 422 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2016/11/12/develop-nodejs-with-es6.html">使用ES6开发Nodejs程序</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <p>ES6发布有一段时间了。但是Nodejs对此支持度还有待加强，就像前端可以使用babel+webpack构建基于ES6的工作流，其实Nodejs也是可以的（不需要手动编译）。当然，最终部署到生产服务器时要记得部署编译后的版本，否则运行时编译对性能是一种损失。</p>
-<h2 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h2><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm init -y</span><br><span class="line">npm install babel-core babel-register babel-polyfill --save</span><br><span class="line">npm install babel-preset-es2015 babel-preset-stage-3  babel-plugin-transform-class-properties --save</span><br></pre></td></tr></table></figure>
-<p><em>有个需要注意的问题是，nodejs直接执行的那个js文件还是得用原生JS语法（具体取决于Nodejs支持ES6的程度），比如在Nodejs v4.2.6下，可以使用 const 关键字，这个是不需要babel的。</em></p>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2016-11-12T03:08:06.000Z">2016-11-12</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/nodejs/">nodejs</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    3 分钟 读完 (大约 393 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2016/11/12/nodejs-read-large-excel.html">Nodejs读取大excel</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>Nodejs读取Excel时如果不使用stream处理的话，会导致内存溢出，毕竟要一次性加载excel的全部行数到内存中，而Nodejs单进程是有内存限制的，所以在读取超大excel的时候需要使用到stream，如果自己使用Nodejs自带的stream模块去解析excel的话，我想这个过程会很麻烦，本文使用npm提供的<em>excel-stream</em>，该模块使用<strong>stream+event</strong>方式读取excel，所以不用担心内存溢出问题。</p>
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>打开终端执行：</p>
-<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm init -y</span><br><span class="line">npm install excel-stream --save</span><br></pre></td></tr></table></figure>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2016-10-31T02:18:09.000Z">2016-10-31</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/php/">php</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    1 分钟 读完 (大约 197 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2016/10/31/php-openssl-rsa-sign.html">PHP利用openssl实现RSA非对称加密签名</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <p><strong>阅读本文前请确认启用了php_openssl扩展</strong></p>
-<h3 id="生成密钥"><a href="#生成密钥" class="headerlink" title="生成密钥"></a>生成密钥</h3><figure class="highlight php hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$res = openssl_pkey_new();</span><br><span class="line">openssl_pkey_export_to_file($res,<span class="hljs-keyword">__DIR__</span>.<span class="hljs-string">'/private.key'</span>);</span><br><span class="line">$d = openssl_pkey_get_details($res);</span><br><span class="line">file_put_contents(<span class="hljs-keyword">__DIR__</span>.<span class="hljs-string">'/public.key'</span>,$d[<span class="hljs-string">'key'</span>]);</span><br></pre></td></tr></table></figure>
-<p>程序运行后会在当前目录生成 private.key 以及 public.key文件，你可以将你的public.key公开出去，请勿公开private.key</p>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2016-10-13T02:40:30.000Z">2016-10-13</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/android/">android</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    2 分钟 读完 (大约 261 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2016/10/13/android_install_failed_uid_changed.html">解决shareUserId导致的app无法升级的问题</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <p>老版本app版本号是2.0.13，Build是20160719。新版本app版本号是2.0.14，Build是2016101301。<br>初略看来应该是可以覆盖升级的，但是安装新版本的时候提示“应用未安装”。<br>网上找了一下，大致原因有以下几种：</p>
-<ul>
-<li>签名冲突</li>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2016-09-18T01:56:46.000Z">2016-09-18</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/php/">php</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    3 分钟 读完 (大约 390 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2016/09/18/repeat-call-file-get-contents.html">重复调用file_get_contents的问题</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <p>笔者在写Restful API的时候需要取得原始请求体，读了若干次输入流（将读取操作封装成了函数），发现就第一个参数有值，以后的读取都没有值。</p>
-<p>起初以为是参数名写错导致读取失败，检查发现不是这个问题。</p>
-<p>单步调试发现php://input只有第一次读取有值，以后的调用都是空。遇到这种问题往往需要查PHP的官方文档。</p>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -707,7 +707,7 @@ var _hmt = _hmt || [];
             
             <li><span class="pagination-ellipsis has-text-black-ter">&hellip;</span></li>
             
-            <li><a class="pagination-link has-text-black-ter" href="/page/28/">28</a></li>
+            <li><a class="pagination-link has-text-black-ter" href="/page/29/">29</a></li>
             
         </ul>
     </nav>
@@ -757,7 +757,7 @@ var _hmt = _hmt || [];
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        280
+                        286
                     </p>
                 </div>
             </div>
@@ -777,7 +777,7 @@ var _hmt = _hmt || [];
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        35
+                        36
                     </p>
                 </div>
             </div>

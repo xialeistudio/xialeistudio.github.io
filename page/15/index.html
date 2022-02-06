@@ -160,6 +160,314 @@ var _hmt = _hmt || [];
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
                 <time class="level-item has-text-grey"
+                    datetime="2017-04-26T16:00:00.000Z">2017-04-27</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/php/">php</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    3 分钟 读完 (大约 438 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2017/04/26/log4php-syslog.html">log4php使用syslog记录日志</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <p>log4php是apache基金会下的一个开源项目，灵活、强大，已经有几个项目使用了log4php处理日志，目前遇到的问题是服务器太多的时候日志如何统一管理，本来想使用数据库存储。但是日志格式成了一个问题，而且不利于扩展，如果临时需要保存到文件，又要更改log4php的配置。<br>好在log4php提供了syslog的一个appender，可以将日志写入syslog;</p>
+<h2 id="log4php配置"><a href="#log4php配置" class="headerlink" title="log4php配置"></a>log4php配置</h2><figure class="highlight roboconf hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">log4php.rootLogger=INFO, stdout, stderr</span><br><span class="line">log4php.appender.stdout=LoggerAppenderConsole</span><br><span class="line">log4php.appender.stdout.layout=LoggerLayoutPattern</span><br><span class="line">log4php.appender.stdout.layout.ConversionPattern=%date&#123;<span class="hljs-attribute">Y-m-d H</span>:i:s&#125; [%-5p] %m%n</span><br><span class="line">log4php<span class="hljs-variable">.appender</span><span class="hljs-variable">.stdout</span><span class="hljs-variable">.threshold</span>=INFO</span><br><span class="line"></span><br><span class="line">log4php<span class="hljs-variable">.appender</span><span class="hljs-variable">.stderr</span>=LoggerAppenderSyslog</span><br><span class="line">log4php<span class="hljs-variable">.appender</span><span class="hljs-variable">.stderr</span><span class="hljs-variable">.ident</span>=qun<span class="hljs-variable">.hk-task</span></span><br><span class="line">log4php<span class="hljs-variable">.appender</span><span class="hljs-variable">.stderr</span><span class="hljs-variable">.priority</span>=ERR</span><br><span class="line">log4php<span class="hljs-variable">.appender</span><span class="hljs-variable">.stderr</span><span class="hljs-variable">.facility</span>=LOCAL0</span><br><span class="line">log4php<span class="hljs-variable">.appender</span><span class="hljs-variable">.stderr</span><span class="hljs-variable">.layout</span>=LoggerLayoutPattern</span><br><span class="line">log4php<span class="hljs-variable">.appender</span><span class="hljs-variable">.stderr</span><span class="hljs-variable">.layout</span><span class="hljs-variable">.ConversionPattern</span>=%date&#123;Y-m-d H:i:s&#125; %m%n</span><br><span class="line">log4php<span class="hljs-variable">.appender</span><span class="hljs-variable">.stderr</span><span class="hljs-variable">.threshold</span>=WARN</span><br></pre></td></tr></table></figure>
+<p>这里使用两个输出目的地,stdout输出到终端，stderr输出到syslod，log4php配置对应rsyslog的配置关系为：</p>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2017-04-26T16:00:00.000Z">2017-04-27</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/nodejs/">nodejs</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    2 分钟 读完 (大约 248 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2017/04/26/node-syslogd.html">使用NodeJs提供syslogd服务端</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <p>syslog作为Linux发行版一个重要组件，相信大家都不陌生，而如果每台服务器都独立使用一份的话，不能做到日志统一管理，对于以后的日志查询不太方便。<br>syslog有标准的协议格式，这里不做讨论，有兴趣的可以基于协议的报文结构使用socket编程实现。</p>
+<h2 id="部署服务端"><a href="#部署服务端" class="headerlink" title="部署服务端"></a>部署服务端</h2><p>本文使用Nodejs来部署一台syslog服务端。</p>
+<ol>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2017-03-30T16:00:00.000Z">2017-03-31</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/ios/">ios</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    几秒 读完 (大约 71 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2017/03/30/ios10.3-message-crash.html">IOS10.3信息APP闪退解决方案</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2017-03-26T16:00:00.000Z">2017-03-27</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/frontend/">frontend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/frontend/react/">react</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    1 分钟 读完 (大约 168 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2017/03/26/react-native-hidden-tabbar-with-navigatorIOS.html">ReactNative在NavigatorIOS中隐藏TabBar</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <p>ReactNative常用的一种布局是TabBar+Navigator布局，底部几个固定的标签，顶部有个导航栏，如果进入子页面的话，底部TabBar是需要隐藏起来的。</p>
+<p>不过官方没有提供这个属性，github和StackOverflow上的答案有个bug，平时没什么问题，如果手指左滑一点然后松开，这时候路由没切换，但是TarBar会显示，然后不消失。</p>
+<p>目前能够完美解决这个问题的方案如下：</p>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2017-03-19T16:00:00.000Z">2017-03-20</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/nginx/">nginx</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    几秒 读完 (大约 89 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2017/03/19/nginx-proxy-websocket.html">nginx反向代理websocket</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2017-02-27T16:00:00.000Z">2017-02-28</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/php/">php</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    2 分钟 读完 (大约 264 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2017/02/27/php7-compile-sphinx-extension.html">PHP7编译sphinx扩展</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <p>最近在做基于sphinx的全文搜索引擎，使用PHP进行数据读取，但是服务器使用的PHP版本是PHP7，pecl.php.net中没有提供PHP7的版本。手痒点到source code中看了一下。<br>看到源代码中有的<strong>headers</strong>中有个<strong>php7</strong>的，点击<strong>shortlog</strong>进去看了一下，最新更新日期是2017-02-10，挺新的，应该是针对PHP7开发的版本，只不过未发布编译版本，想着linux下的软件有源代码基本都能自行编译。故选择了最新的PHP7快照下载。</p>
+<h2 id="开始安装"><a href="#开始安装" class="headerlink" title="开始安装"></a>开始安装</h2><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">wget http://git.php.net/?p=pecl/search_engine/sphinx.git;a=snapshot;h=339e123acb0ce7beb2d9d4f9094d6f8bcf15fb54;sf=tgz</span><br><span class="line">tar xvfz sphinx-339e123.tar.gz</span><br><span class="line"><span class="hljs-built_in">cd</span> sphinx-339e123</span><br><span class="line">phpize</span><br><span class="line">./configure</span><br><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+<p>安装完毕后会在PHP的配置文件目录多出sphinx.ini，在扩展目录多出sphinx.so文件。终端执行<br><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">phpenmod sphinx</span><br></pre></td></tr></table></figure></p>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
                     datetime="2017-02-08T16:00:00.000Z">2017-02-09</time>
                 
                 <div class="level-item">
@@ -365,324 +673,6 @@ var _hmt = _hmt || [];
 
 
 
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2016-12-27T16:00:00.000Z">2016-12-28</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/nginx/">nginx</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    1 分钟 读完 (大约 181 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2016/12/27/nginx-wildcard-domain-config.html">nginx泛域名解析配置</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <p>最近一个项目需要承载高并发请求，所以在后端语言上选择了<strong>NodeJs</strong>，但是nodejs有时候读取不到请求的主机名，所以想到使用<strong>nginx+nodejs</strong>的方式进行处理。</p>
-<h2 id="Nginx-配置"><a href="#Nginx-配置" class="headerlink" title="Nginx 配置"></a>Nginx 配置</h2><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">upstream io_nodes &#123;</span><br><span class="line">        server 127.0.0.1:8081;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">        listen 80;</span><br><span class="line">        listen [::]:80;</span><br><span class="line">        root /var/www/html;</span><br><span class="line">        server_name ~^(?&lt;subdomain&gt;.+).example.com;</span><br><span class="line"></span><br><span class="line">        location / &#123;</span><br><span class="line">	    proxy_set_header Host $host;</span><br><span class="line">            proxy_set_header X-AppId $subdomain;</span><br><span class="line">            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">            proxy_pass http://io_nodes;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>重启nginx服务器即可。nginx会将所有的 <strong><subdomain>.example.com</subdomain></strong> 格式的域名反向代理到本机的<strong>8081</strong>端口，该端口为<strong>nodejs</strong>监听端口。</p>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2016-12-27T16:00:00.000Z">2016-12-28</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/frontend/">frontend</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    1 分钟 读完 (大约 207 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2016/12/27/wechat-component-domain.html">微信开放平台公众号第三方平台网页开发域名问题</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <p>先来看一下微信官方定义:</p>
-<p><em>第三方平台在代公众号做网页授权、调用JS SDK等网页开发工作时所用的域名，可填写3个，以;隔开。为了满足开发者管理需要，符合以下要求的下级域名也将生效：$APPID$.wx.abc.com（$APPID$为公众号的AppID的替换符）</em></p>
-<p>只能说微信文档这个 <strong>wx.abc.com</strong>误导了我好久，试过的域名是<strong>APPID.wx.abc.com</strong>，死活不行，后来发现公司域名整个就是用<strong>wx.abc.com</strong>替换，不是<strong>abc.com</strong>，所以最终进行授权的域名域名是(假设appid为<strong>testappid</strong>，填写的网页开发域名为<strong>example.com</strong>):<strong>testappid.example.com</strong>，可以根据这个做泛域名解析。</p>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2016-12-21T16:00:00.000Z">2016-12-22</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/php/">php</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    4 分钟 读完 (大约 655 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2016/12/21/pm2-daemon-php-cli.html">使用PM2守护PHP命令行程序</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <p>pm2是nodejs的一个模块，用来进行进程管理，刚开始以为只能做nodejs脚本的管理，后来发现通过配置之后也可以实现<strong>任意进程</strong>的守护。</p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install pm2 -g</span><br></pre></td></tr></table></figure>
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h3><ul>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2016-12-20T16:00:00.000Z">2016-12-21</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/php/">php</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    2 分钟 读完 (大约 320 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2016/12/20/log4php-get-started.html">apache log4php简单使用</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <p>log4j在JAVA中可算是大名鼎鼎的日志开发包了,它为apache组织维护项目，log4php是log4xx的系列之一，主要用来记录日志信息，功能强大，配置灵活。</p>
-<p>最近需要开发一个命令行程序，于是想到了用log4php来作为日志管理器进行日志输出。</p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><ul>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2016-12-16T16:00:00.000Z">2016-12-17</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/nodejs/">nodejs</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    6 分钟 读完 (大约 908 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2016/12/16/pomelo-global-channel.html">pomelo-global-channel-plugin的使用</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <p>pomelo应用中channel默认是<strong>不可以跨进程</strong>的，来看一下现在服务器的配置：</p>
-<figure class="highlight json hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="hljs-attr">"development"</span>: &#123;</span><br><span class="line">    <span class="hljs-attr">"connector"</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="hljs-attr">"id"</span>: <span class="hljs-string">"connector"</span>,</span><br><span class="line">        <span class="hljs-attr">"host"</span>: <span class="hljs-string">"127.0.0.1"</span>,</span><br><span class="line">        <span class="hljs-attr">"port"</span>: <span class="hljs-number">3150</span>,</span><br><span class="line">        <span class="hljs-attr">"clientHost"</span>: <span class="hljs-string">"127.0.0.1"</span>,</span><br><span class="line">        <span class="hljs-attr">"clientPort"</span>: <span class="hljs-number">3010</span>,</span><br><span class="line">        <span class="hljs-attr">"frontend"</span>: <span class="hljs-literal">true</span></span><br><span class="line">      &#125;</span><br><span class="line">    ],</span><br><span class="line">    <span class="hljs-attr">"chat"</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="hljs-attr">"id"</span>: <span class="hljs-string">"chat-1"</span>,</span><br><span class="line">        <span class="hljs-attr">"host"</span>: <span class="hljs-string">"127.0.0.1"</span>,</span><br><span class="line">        <span class="hljs-attr">"port"</span>: <span class="hljs-number">4001</span></span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="hljs-attr">"id"</span>: <span class="hljs-string">"chat-2"</span>,</span><br><span class="line">        <span class="hljs-attr">"host"</span>: <span class="hljs-string">"127.0.0.1"</span>,</span><br><span class="line">        <span class="hljs-attr">"port"</span>: <span class="hljs-number">4002</span></span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>可以看到使用了两台<strong>chat</strong>服务器，该服务器进行具体的消息接收以及消息推送。</p>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2016-12-15T16:00:00.000Z">2016-12-16</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/nodejs/">nodejs</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    几秒 读完 (大约 70 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2016/12/15/pomelo-client-for-commonjs.html">基于CommonJs的pomelo客户端</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <p>pomelo官方提供的js客户端是基于浏览器的，nodejs下无法使用，所以封装了一个基于CommonJs的pomelo客户端。</p>
-<h2 id="支持平台"><a href="#支持平台" class="headerlink" title="支持平台"></a>支持平台</h2><ul>
-<li>nodejs</li>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -707,7 +697,7 @@ var _hmt = _hmt || [];
             
             <li><span class="pagination-ellipsis has-text-black-ter">&hellip;</span></li>
             
-            <li><a class="pagination-link has-text-black-ter" href="/page/28/">28</a></li>
+            <li><a class="pagination-link has-text-black-ter" href="/page/29/">29</a></li>
             
         </ul>
     </nav>
@@ -757,7 +747,7 @@ var _hmt = _hmt || [];
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        280
+                        286
                     </p>
                 </div>
             </div>
@@ -777,7 +767,7 @@ var _hmt = _hmt || [];
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        35
+                        36
                     </p>
                 </div>
             </div>
