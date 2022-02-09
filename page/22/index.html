@@ -160,6 +160,165 @@ var _hmt = _hmt || [];
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
                 <time class="level-item has-text-grey"
+                    datetime="2015-06-30T08:26:31.000Z">2015-06-30</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/frontend/">frontend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/frontend/angularjs/">angularjs</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    2 分钟 读完 (大约 226 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2015/06/30/angularjs-radio-group-directive.html">angularjs指令实现radioGroup</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <p>angularjs的指令系统其实也是很强大的东西，扩展了HTML的表现力。本文讲的是如何用angularjs指令实现radioGroup，自带的radio只能控制ngModel的两种状态: true/false。</p>
+<h2 id="指令代码"><a href="#指令代码" class="headerlink" title="指令代码"></a>指令代码</h2><figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">module</span>.directive(<span class="hljs-string">'radio'</span>, [<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>&#123;</span><br><span class="line">    <span class="hljs-keyword">return</span> &#123;</span><br><span class="line">        transclude: <span class="hljs-literal">true</span>,</span><br><span class="line">        replace: <span class="hljs-literal">true</span>,</span><br><span class="line">        template: <span class="hljs-string">'&lt;div class="ui ui-radio"&gt;&lt;span class="radio-item"&gt;&lt;/span&gt;&lt;span ng-transclude="" class="common-color"&gt;&lt;/span&gt;&lt;/div&gt;'</span>,</span><br><span class="line">        <span class="hljs-built_in">require</span>: <span class="hljs-string">'ngModel'</span>,</span><br><span class="line">        link: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">scope, ele, attrs, ctrl</span>) </span>&#123;</span><br><span class="line">            ctrl.$render = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>&#123;</span><br><span class="line">                <span class="hljs-keyword">if</span>(ctrl.$viewValue == attrs.value) &#123;</span><br><span class="line">                    <span class="hljs-comment">//jqLite不支持siblings方法，如果此段代码无效，请使用zepto实现</span></span><br><span class="line">                    ele.parent().children().removeClass(<span class="hljs-string">"active"</span>);</span><br><span class="line">                    ele.addClass(<span class="hljs-string">"active"</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;;</span><br><span class="line">            ele.bind(<span class="hljs-string">"click"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>&#123;</span><br><span class="line">                ctrl.$setViewValue(attrs.value);</span><br><span class="line">                ele.addClass(<span class="hljs-string">"active"</span>);</span><br><span class="line">                <span class="hljs-keyword">var</span> childrens = ele[<span class="hljs-number">0</span>].parentNode.children;</span><br><span class="line">                <span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; childrens.length; i++) &#123;</span><br><span class="line">                    <span class="hljs-keyword">if</span>(childrens[i] != ele[<span class="hljs-number">0</span>]) &#123;</span><br><span class="line">                        angular.element(childrens[i]).removeClass(<span class="hljs-string">"active"</span>);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;]);</span><br></pre></td></tr></table></figure>
+<figure class="highlight less hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.ui</span> &#123;</span><br><span class="line">  <span class="hljs-selector-tag">&amp;</span><span class="hljs-selector-tag">-radio</span> &#123;</span><br><span class="line">    <span class="hljs-selector-tag">&amp;</span><span class="hljs-selector-class">.active</span> &#123;</span><br><span class="line">      <span class="hljs-selector-class">.radio-item</span><span class="hljs-selector-pseudo">:after</span> &#123;</span><br><span class="line">        <span class="hljs-attribute">display</span>: block;</span><br><span class="line">        <span class="hljs-attribute">width</span>: <span class="hljs-number">19px</span>;</span><br><span class="line">        <span class="hljs-attribute">height</span>: <span class="hljs-number">19px</span>;</span><br><span class="line">        <span class="hljs-attribute">content</span>: <span class="hljs-string">' '</span>;</span><br><span class="line">        <span class="hljs-attribute">position</span>: absolute;</span><br><span class="line">        <span class="hljs-attribute">border-radius</span>: <span class="hljs-number">50%</span>;</span><br><span class="line">        <span class="hljs-attribute">left</span>: (<span class="hljs-number">35px</span>-<span class="hljs-number">19</span>)/<span class="hljs-number">2</span>;</span><br><span class="line">        <span class="hljs-attribute">top</span>: (<span class="hljs-number">35px</span>-<span class="hljs-number">19</span>)/<span class="hljs-number">2</span>;</span><br><span class="line">        <span class="hljs-attribute">background</span>: <span class="hljs-number">#d14db7</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-selector-class">.radio-item</span> &#123;</span><br><span class="line">      <span class="hljs-attribute">width</span>: <span class="hljs-number">35px</span>;</span><br><span class="line">      <span class="hljs-attribute">height</span>: <span class="hljs-number">35px</span>;</span><br><span class="line">      <span class="hljs-attribute">border-radius</span>: <span class="hljs-number">50%</span>;</span><br><span class="line">      <span class="hljs-attribute">position</span>: relative;</span><br><span class="line">      <span class="hljs-attribute">background</span>: white;</span><br><span class="line">      <span class="hljs-attribute">display</span>: inline-block;</span><br><span class="line">      <span class="hljs-attribute">vertical-align</span>: middle;</span><br><span class="line">      <span class="hljs-attribute">margin</span>: <span class="hljs-number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-selector-tag">span</span> &#123;</span><br><span class="line">      <span class="hljs-attribute">margin-left</span>: <span class="hljs-number">12px</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2015-05-29T06:19:08.000Z">2015-05-29</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/linux/">linux</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    1 分钟 读完 (大约 218 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2015/05/29/shell-to-install-memached-on-lnmp.html">lnmp一键安装memcached的shell脚本</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <p>通过LNMP安装脚本安装的PHP环境默认是不带Memcached支持的（是memcached不是memcache），百度一下memcached的安装方法，发现基本都是memcache的，其实这是两个不同的东西。</p>
+<p>而memcached是pecl的项目，所以需要到pecl网站上去下载最新的memcached安装包。</p>
+<p>为了方便多台服务器的安装，本人整理成了一个sh脚本进行安装，当然,php-config路径和phpize路径需要改下（如果使用LNMP脚本安装的话则不用改）</p>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2015-05-20T20:01:15.000Z">2015-05-21</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/linux/">linux</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    几秒 读完 (大约 110 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2015/05/20/shell-bad-interpreter.html">linux运行dos格式脚本导致的bad interpreter</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>在使用php作为linux上shell脚本运行时出现了以下错误：</p>
+<figure class="highlight php hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">#!/usr/bin/env php</span></span><br><span class="line"><span class="hljs-meta">&lt;?php</span></span><br><span class="line">phpinfo();</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">chmod +x test.php</span><br><span class="line">./test.php</span><br><span class="line">/usr/<span class="hljs-built_in">local</span>/php/bin/php^M: bad interpreter: No such file or directory</span><br></pre></td></tr></table></figure>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
                     datetime="2015-05-16T21:58:35.000Z">2015-05-17</time>
                 
                 <div class="level-item">
@@ -519,165 +678,6 @@ var _hmt = _hmt || [];
 
 
 
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2015-03-06T19:41:30.000Z">2015-03-07</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/php/">php</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    1 分钟 读完 (大约 144 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2015/03/06/phpexcel-a-lot-of-column.html">PHPExcel导出时列过大的解决方案</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <p>今天导出Excel的时候，列不是固定的，而且有差不多几十个，横轴由’A’变为了’AA’，给导出时增加了难度，因为要去算列名称，不过换个方式想一下，发现是很有规律的26进制数。 发现秘诀后就好办了，发一个10进制转26进制的方法。</p>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight php hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">private</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">numberToStr26</span><span class="hljs-params">($n)</span></span></span><br><span class="line"><span class="hljs-function"></span>&#123;</span><br><span class="line">    $s = <span class="hljs-string">''</span>;</span><br><span class="line">    <span class="hljs-keyword">while</span> ($n &gt; <span class="hljs-number">0</span>) &#123;</span><br><span class="line">        $m = $n % <span class="hljs-number">26</span>;</span><br><span class="line">        <span class="hljs-keyword">if</span> ($m == <span class="hljs-number">0</span>) $m = <span class="hljs-number">26</span>;</span><br><span class="line">        $s = chr($m + <span class="hljs-number">64</span>) . $s;</span><br><span class="line">        $n = ($n - $m) / <span class="hljs-number">26</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-keyword">return</span> $s;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="效果图"><a href="#效果图" class="headerlink" title="效果图"></a>效果图</h2><p><img src="https://og5r5kasb.qnssl.com/wp-content/uploads/2015/03/QQ%E6%88%AA%E5%9B%BE20150307113935.png" alt="效果图"></p>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2015-03-06T01:08:26.000Z">2015-03-06</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/php/">php</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    1 分钟 读完 (大约 119 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2015/03/06/wechat-reply-messy-code.html">微信公众平台回复乱码问题</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <p>很多微信公众平台的自动回复程序都是 ThinkWechat.class.php 这个类开发的，今天碰到一个莫名其妙的乱码问题，查问题发现是GB2312编码导致，所以要修改源码。</p>
-<p>先增加一个方法:</p>
-<figure class="highlight php hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 检测是否UTF-8</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> $str</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@return</span> bool</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-keyword">private</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">is_utf8</span><span class="hljs-params">($str)</span></span></span><br><span class="line"><span class="hljs-function"></span>&#123;</span><br><span class="line">    <span class="hljs-keyword">return</span> preg_match(<span class="hljs-string">'//u'</span>, $str);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2015-02-05T03:20:43.000Z">2015-02-05</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/frontend/">frontend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/frontend/angularjs/">angularjs</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    3 分钟 读完 (大约 490 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2015/02/05/angularjs-ueditor-directive.html">angularjs ueditor指令</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <p>一直以来，angularjs的富文本编辑器都比较难做，主要是第三方的编辑器很难集成进来，今天花时间研究了一下，发现ueditor主要加载两个js文件</p>
-<ul>
-<li>ueditor.config.js</li>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -752,7 +752,7 @@ var _hmt = _hmt || [];
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        286
+                        289
                     </p>
                 </div>
             </div>
