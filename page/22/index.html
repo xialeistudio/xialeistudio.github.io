@@ -23,7 +23,7 @@
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
 <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.4.1/css/all.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://fonts.lug.ustc.edu.cn/css?family=Ubuntu:400,600|Source+Code+Pro">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
 
 
@@ -153,6 +153,59 @@ var _hmt = _hmt || [];
         <div class="container">
             <div class="columns">
                 <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main">
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2015-07-05T04:15:07.000Z">2015-07-05</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/frontend/">frontend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/frontend/css/">css</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    1 分钟 读完 (大约 135 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2015/07/05/input-textarea-width-not-same-on-mobile-phone.html">移动端input和textarea宽度不一致的问题</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <p>今天在做写一个IOS端的表单时，尽管input,textarea设置了宽度，结果发现真机浏览的时候发现宽度不一致，有图为证<br><img src="https://og5r5kasb.qnssl.com/wp-content/uploads/2015/07/IMG_0839.png" alt="图片"></p>
+<h2 id="css"><a href="#css" class="headerlink" title="css"></a>css</h2><figure class="highlight css hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-tag">input</span>,</span><br><span class="line"><span class="hljs-selector-tag">textarea</span> &#123;</span><br><span class="line">  <span class="hljs-attribute">border-radius</span>: <span class="hljs-number">4px</span>;</span><br><span class="line">  <span class="hljs-attribute">border</span>: <span class="hljs-number">1px</span> solid <span class="hljs-number">#4f4f4f</span>;</span><br><span class="line">  <span class="hljs-attribute">font-size</span>: <span class="hljs-number">24px</span>;</span><br><span class="line">  <span class="hljs-attribute">background</span>: none;</span><br><span class="line">  <span class="hljs-attribute">outline</span>: <span class="hljs-number">0</span>;</span><br><span class="line">  <span class="hljs-attribute">width</span>: <span class="hljs-number">283px</span>;</span><br><span class="line">  <span class="hljs-attribute">-webkit-box-shadow</span>: <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">4px</span> <span class="hljs-built_in">rgba</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, .<span class="hljs-number">4</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在PC版的chrome发现textarea有默认的padding属性，估计是这个问题，加上padding:0;之后，宽度一致了。<br><img src="https://og5r5kasb.qnssl.com/wp-content/uploads/2015/07/IMG_0840.png" alt="图片"></p>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
     <div class="card">
     
     <div class="card-content article ">
@@ -625,59 +678,6 @@ var _hmt = _hmt || [];
 
 
 
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2015-03-16T01:43:07.000Z">2015-03-16</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/frontend/">frontend</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    2 分钟 读完 (大约 342 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2015/03/16/gulp-workflow.html">使用gulp来构建你的前端自动化工作流</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <p>之前用的Grunt，不过有时候Grunt确实用起来不爽，进来找到一款叫gulp.js的前端构建工具，当然，也是基于node.js的。</p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install gulp --save-dev</span><br><span class="line">npm install del gulp-concat gulp-cssmin gulp-uglify --save-dev</span><br></pre></td></tr></table></figure>
-<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>配置gulpfile.js，如果工作目录下没有该文件，请新建gulpfile.js，以下为一个常用的参考代码:</p>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -752,7 +752,7 @@ var _hmt = _hmt || [];
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        289
+                        290
                     </p>
                 </div>
             </div>
