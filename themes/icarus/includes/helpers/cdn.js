@@ -13,7 +13,7 @@ const cdn_providers = {
 };
 
 const font_providers = {
-    google: 'https://fonts.googleapis.com/${ type }?family=${ fontname }'
+    google: 'https://fonts.lug.ustc.edu.cn/${ type }?family=${ fontname }'
 };
 
 const icon_providers = {
