@@ -160,6 +160,59 @@ var _hmt = _hmt || [];
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
                 <time class="level-item has-text-grey"
+                    datetime="2016-09-18T01:56:46.000Z">2016-09-18</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/php/">php</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    3 分钟 读完 (大约 390 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2016/09/18/repeat-call-file-get-contents.html">重复调用file_get_contents的问题</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <p>笔者在写Restful API的时候需要取得原始请求体，读了若干次输入流（将读取操作封装成了函数），发现就第一个参数有值，以后的读取都没有值。</p>
+<p>起初以为是参数名写错导致读取失败，检查发现不是这个问题。</p>
+<p>单步调试发现php://input只有第一次读取有值，以后的调用都是空。遇到这种问题往往需要查PHP的官方文档。</p>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
                     datetime="2016-08-09T00:07:22.000Z">2016-08-09</time>
                 
                 <div class="level-item">
@@ -620,59 +673,6 @@ var _hmt = _hmt || [];
 
 
 
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2016-05-23T00:33:44.000Z">2016-05-23</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/nodejs/">nodejs</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    1 分钟 读完 (大约 152 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2016/05/23/process-daemon-forever.html">NodeJs进程守护工具forever使用</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <p>nodejs是单进程的，如果应用中发生未捕获的异常，进程就会退出，一个比较笨的办法在系统中使用计划任务检查进程是否存在，如果不存在启动该程序，但是该方式会造成系统资源的浪费，而且不是及时的。</p>
-<p>好在NodeJs活跃的社区给开发者提供了一个选择<strong>forever</strong>，该包就是用来解决以上状况的。</p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install forever -g</span><br></pre></td></tr></table></figure>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -697,7 +697,7 @@ var _hmt = _hmt || [];
             
             <li><span class="pagination-ellipsis has-text-black-ter">&hellip;</span></li>
             
-            <li><a class="pagination-link has-text-black-ter" href="/page/29/">29</a></li>
+            <li><a class="pagination-link has-text-black-ter" href="/page/30/">30</a></li>
             
         </ul>
     </nav>
@@ -747,7 +747,7 @@ var _hmt = _hmt || [];
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        290
+                        291
                     </p>
                 </div>
             </div>
@@ -767,7 +767,7 @@ var _hmt = _hmt || [];
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        36
+                        37
                     </p>
                 </div>
             </div>

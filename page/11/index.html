@@ -160,6 +160,59 @@ var _hmt = _hmt || [];
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
                 <time class="level-item has-text-grey"
+                    datetime="2018-10-17T13:32:03.000Z">2018-10-17</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/go/">go</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    3 分钟 读完 (大约 509 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2018/10/17/go-io-reader-panic.html">io.Reader游标引发的血案</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <p>#背景<br>线上运行了一个图片合成程序，默认的小程序二维码中奖是小程序LOGO，不满足需求，所以将微信小程序二维码和用户头像合成在一张图片。<br>由于微信图片有时候返回的Content-Type不对应（比如内容是PNG的，头确是image/jpeg）所以使用jpeg/png/gif的顺序进行图片数据解析，哪个成功就返回解析结果。</p>
+<p>#问题<br>总是出现诸如<code>invalid JPEG format: missing SOI marker</code></p>
+<p>#解决过程<br>我去查看jpeg.Decode的源码，如下：<br><figure class="highlight golang hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(d *decoder)</span> <span class="hljs-title">decode</span><span class="hljs-params">(r io.Reader, configOnly <span class="hljs-keyword">bool</span>)</span> <span class="hljs-params">(image.Image, error)</span></span> &#123;</span><br><span class="line">	d.r = r</span><br><span class="line"></span><br><span class="line">	<span class="hljs-comment">// Check for the Start Of Image marker.</span></span><br><span class="line">	<span class="hljs-keyword">if</span> err := d.readFull(d.tmp[:<span class="hljs-number">2</span>]); err != <span class="hljs-literal">nil</span> &#123;</span><br><span class="line">		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, err</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="hljs-keyword">if</span> d.tmp[<span class="hljs-number">0</span>] != <span class="hljs-number">0xff</span> || d.tmp[<span class="hljs-number">1</span>] != soiMarker &#123;</span><br><span class="line">		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, FormatError(<span class="hljs-string">"missing SOI marker"</span>)</span><br><span class="line">	&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
                     datetime="2018-08-08T03:07:25.000Z">2018-08-08</time>
                 
                 <div class="level-item">
@@ -630,54 +683,6 @@ var _hmt = _hmt || [];
 
 
 
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2018-03-01T07:51:02.000Z">2018-03-01</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/go/">go</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    3 分钟 读完 (大约 447 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2018/03/01/golang-upload.html">golang multipart上传文件到远端（如上传微信临时素材）</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -702,7 +707,7 @@ var _hmt = _hmt || [];
             
             <li><span class="pagination-ellipsis has-text-black-ter">&hellip;</span></li>
             
-            <li><a class="pagination-link has-text-black-ter" href="/page/29/">29</a></li>
+            <li><a class="pagination-link has-text-black-ter" href="/page/30/">30</a></li>
             
         </ul>
     </nav>
@@ -752,7 +757,7 @@ var _hmt = _hmt || [];
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        290
+                        291
                     </p>
                 </div>
             </div>
@@ -772,7 +777,7 @@ var _hmt = _hmt || [];
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        36
+                        37
                     </p>
                 </div>
             </div>
