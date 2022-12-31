@@ -36,13 +36,6 @@ navbar:
         GitHub:
             icon: fab fa-github
             url: "https://github.com/xialeistudio"
-        SegmentFault:
-            icon: ""
-            image: https://static.ddhigh.com/blog/2019-09-18-115828.png?imageView2/1/w/40/h/40
-            url: "https://segmentfault.com/u/xialeistudio"
-        QQ:
-            icon: fab fa-qq
-            url: "//shang.qq.com/wpa/qunwpa?idkey=83c6884d7520f22891e3f82c76f42baa5c53af91ce8d31ed2641248f8730687b"
 # Footer section link settings
 footer:
     # Links to be shown on the right of the footer section
@@ -90,14 +83,14 @@ comment:
 # Donation entries
 # https://ppoffice.github.io/hexo-theme-icarus/categories/Donation/
 donate:
-    # - # Donation entry name
-    #   type: alipay
+     - # Donation entry name
+       type: alipay
     #   # Qrcode image URL
-    #   qrcode: ""
-    # - # Donation entry name
-    #   type: wechat
+       qrcode: "https://static.ddhigh.com/image/alipay-qrcode2.png"
+     - # Donation entry name
+       type: wechat
     #   # Qrcode image URL
-    #   qrcode: ""
+       qrcode: "https://static.ddhigh.com/image/wechatpay-qrcode2.png"
     # - # Donation entry name
     #   type: paypal
     #   # Paypal business ID or email address
@@ -136,7 +129,7 @@ widgets:
       # Author name to be shown in the profile widget
       author: 夏磊
       # Title of the author to be shown in the profile widget
-      author_title: Full-Stack
+      author_title: Senior Software Engineer
       # Author's current location to be shown in the profile widget
       location: China
       # Path or URL to the avatar to be shown in the profile widget
@@ -152,10 +145,6 @@ widgets:
           Github:
               icon: fab fa-github
               url: "https://github.com/xialeistudio"
-          SegmentFault:
-              icon: ""
-              image: https://static.ddhigh.com/blog/2019-09-18-115828.png?imageView2/1/w/40/h/40
-              url: "https://segmentfault.com/xialeistudio"
           RSS:
               icon: fas fa-rss
               url: /atom.xml
