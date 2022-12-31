@@ -123,20 +123,6 @@ var _hmt = _hmt || [];
                     
                 </a>
                 
-                <a class="navbar-item" target="_blank" title="SegmentFault"
-                    href="https://segmentfault.com/u/xialeistudio">
-                    
-                    <img src="https://static.ddhigh.com/blog/2019-09-18-115828.png?imageView2/1/w/40/h/40" style="width:16px;height:16px" />
-                    
-                </a>
-                
-                <a class="navbar-item" target="_blank" title="QQ"
-                    href="//shang.qq.com/wpa/qunwpa?idkey=83c6884d7520f22891e3f82c76f42baa5c53af91ce8d31ed2641248f8730687b">
-                    
-                    <i class="fab fa-qq"></i>
-                    
-                </a>
-                
                 
                 
                 
@@ -153,6 +139,218 @@ var _hmt = _hmt || [];
         <div class="container">
             <div class="columns">
                 <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main">
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2017-09-13T16:00:00.000Z">2017-09-14</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/nginx/">nginx</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    1 分钟 读完 (大约 152 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2017/09/13/nginx-alias-root.html">Nginx alias和root指令</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <p>Nginx的root指令相信大家用的都挺多，用来指定document_root，但是如果是针对特定path的请求才启用的话，root指令显得不好用<br><figure class="highlight crmsh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">location</span> <span class="hljs-title">/web</span> &#123;</span><br><span class="line">    root /home/wwwroot/site1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>访问 <em><a href="http://demo.com/web/a.js" target="_blank" rel="noopener">http://demo.com/web/a.js</a></em>的时候,nginx会去查找<em>/home/wwwroot/site1/web/a.js</em>，一般就会404了。因为文件是放在site1目录下的。<br>这时候就需要alias指令了。<br><figure class="highlight awk hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location <span class="hljs-regexp">/web/</span>&#123;</span><br><span class="line">    alias <span class="hljs-regexp">/home/</span>wwwroot<span class="hljs-regexp">/site1/</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>访问 <em><a href="http://demo.com/web/a.js" target="_blank" rel="noopener">http://demo.com/web/a.js</a></em>的时候,nginx会去查找<em>/home/wwwroot/site1/a.js</em>。</p>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2017-07-30T16:00:00.000Z">2017-07-31</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/java/">java</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    几秒 读完 (大约 89 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2017/07/30/spring-boot-exclude-null.html">Spring Boot JPA 返回json时排除Null字段</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <p>Spring Boot在返回JSON的时候默认会返回null字段，这个对客户端一般没什么作用，还会增加服务器带宽压力。使用如下配置可以屏蔽。</p>
+<p>在pojo对象上添加注解</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">@JsonInclude</span>(JsonInclude.Include.NON_NULL)</span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2017-07-30T16:00:00.000Z">2017-07-31</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/java/">java</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    3 分钟 读完 (大约 454 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2017/07/30/spring-boot-pm2.html">使用pm2来保证Spring Boot应用稳定运行</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <p>Spring Boot开发web应用就像开发普通的java程序一般简洁，因为其内嵌了web容易，启动的时候只需要一条命令<code>java -jar server.jar</code>即可，非常方便。<br>但是由此而来的问题是万一应用挂了怎么办？</p>
+<p>别担心，有pm2进程管理工具可以帮到你。</p>
+<h2 id="PM2简介"><a href="#PM2简介" class="headerlink" title="PM2简介"></a>PM2简介</h2><p>pm2原先是nodejs应用的进程管理工具，不过其良好的设计以及扩展性可以手动执行执行进程。</p>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2017-07-27T16:00:00.000Z">2017-07-28</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/frontend/">frontend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/frontend/css/">css</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    1 分钟 读完 (大约 165 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2017/07/27/mobile-rem.html">移动端rem和PSD单位换算问题</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <p>设计图尺寸一般750宽度，而需要兼容640宽度手机的话，需要调整缩放比率，之前使用<code>写死viewport</code>的做法来实现，不过这个方法有点取巧，而且有些场景并不适用。<br>本文用<code>标准的@media</code>来实现</p>
+<h2 id="rem定义"><a href="#rem定义" class="headerlink" title="rem定义"></a>rem定义</h2><figure class="highlight css hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">@media</span> screen <span class="hljs-keyword">and</span> (<span class="hljs-attribute">max-width:</span> <span class="hljs-number">750px</span>) &#123;</span><br><span class="line">  <span class="hljs-selector-tag">html</span> &#123;</span><br><span class="line">    <span class="hljs-attribute">font-size</span>: <span class="hljs-number">30px</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">@media</span> screen <span class="hljs-keyword">and</span> (<span class="hljs-attribute">min-width:</span> <span class="hljs-number">640px</span>) <span class="hljs-keyword">and</span> (<span class="hljs-attribute">max-width:</span> <span class="hljs-number">749px</span>) &#123;</span><br><span class="line">  <span class="hljs-selector-tag">html</span> &#123;</span><br><span class="line">    <span class="hljs-attribute">font-size</span>: <span class="hljs-number">25px</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">@media</span> screen <span class="hljs-keyword">and</span> (<span class="hljs-attribute">min-width:</span> <span class="hljs-number">480px</span>) <span class="hljs-keyword">and</span> (<span class="hljs-attribute">max-width:</span> <span class="hljs-number">639px</span>) &#123;</span><br><span class="line">  <span class="hljs-selector-tag">html</span> &#123;</span><br><span class="line">    <span class="hljs-attribute">font-size</span>: <span class="hljs-number">20px</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">@media</span> screen <span class="hljs-keyword">and</span> (<span class="hljs-attribute">min-width:</span> <span class="hljs-number">320px</span>) <span class="hljs-keyword">and</span> (<span class="hljs-attribute">max-width:</span> <span class="hljs-number">479px</span>) &#123;</span><br><span class="line">  <span class="hljs-selector-tag">html</span> &#123;</span><br><span class="line">    <span class="hljs-attribute">font-size</span>: <span class="hljs-number">15px</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="如何使用"><a href="#如何使用" class="headerlink" title="如何使用"></a>如何使用</h2><p>假设PSD中有个button的大小为<code>100px*40px</code>，那使用rem时CSS如下<br><figure class="highlight css hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-tag">button</span> &#123;</span><br><span class="line">    <span class="hljs-attribute">width</span>: <span class="hljs-number">3.333rem</span>;</span><br><span class="line">    <span class="hljs-attribute">height</span>: <span class="hljs-number">1.333rem</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
     <div class="card">
     
     <div class="card-content article ">
@@ -466,208 +664,6 @@ var _hmt = _hmt || [];
 
 
 
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2017-04-26T16:00:00.000Z">2017-04-27</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/nodejs/">nodejs</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    2 分钟 读完 (大约 248 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2017/04/26/node-syslogd.html">使用NodeJs提供syslogd服务端</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <p>syslog作为Linux发行版一个重要组件，相信大家都不陌生，而如果每台服务器都独立使用一份的话，不能做到日志统一管理，对于以后的日志查询不太方便。<br>syslog有标准的协议格式，这里不做讨论，有兴趣的可以基于协议的报文结构使用socket编程实现。</p>
-<h2 id="部署服务端"><a href="#部署服务端" class="headerlink" title="部署服务端"></a>部署服务端</h2><p>本文使用Nodejs来部署一台syslog服务端。</p>
-<ol>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2017-03-30T16:00:00.000Z">2017-03-31</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/ios/">ios</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    几秒 读完 (大约 71 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2017/03/30/ios10.3-message-crash.html">IOS10.3信息APP闪退解决方案</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2017-03-26T16:00:00.000Z">2017-03-27</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/frontend/">frontend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/frontend/react/">react</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    1 分钟 读完 (大约 168 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2017/03/26/react-native-hidden-tabbar-with-navigatorIOS.html">ReactNative在NavigatorIOS中隐藏TabBar</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <p>ReactNative常用的一种布局是TabBar+Navigator布局，底部几个固定的标签，顶部有个导航栏，如果进入子页面的话，底部TabBar是需要隐藏起来的。</p>
-<p>不过官方没有提供这个属性，github和StackOverflow上的答案有个bug，平时没什么问题，如果手指左滑一点然后松开，这时候路由没切换，但是TarBar会显示，然后不消失。</p>
-<p>目前能够完美解决这个问题的方案如下：</p>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2017-03-19T16:00:00.000Z">2017-03-20</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/nginx/">nginx</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    几秒 读完 (大约 89 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2017/03/19/nginx-proxy-websocket.html">nginx反向代理websocket</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -723,7 +719,7 @@ var _hmt = _hmt || [];
                     
                     
                     <p class="is-size-6 is-block">
-                        Full-Stack
+                        Senior Software Engineer
                     </p>
                     
                     
@@ -742,7 +738,7 @@ var _hmt = _hmt || [];
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        291
+                        295
                     </p>
                 </div>
             </div>
@@ -779,13 +775,6 @@ var _hmt = _hmt || [];
                 href="https://github.com/xialeistudio">
                 
                 <i class="fab fa-github"></i>
-                
-            </a>
-            
-            <a class="level-item button is-white is-marginless" target="_blank" title="SegmentFault"
-                href="https://segmentfault.com/xialeistudio">
-                
-                <img style="width:16px;height:16px" src="https://static.ddhigh.com/blog/2019-09-18-115828.png?imageView2/1/w/40/h/40" />
                 
             </a>
             

@@ -123,20 +123,6 @@ var _hmt = _hmt || [];
                     
                 </a>
                 
-                <a class="navbar-item" target="_blank" title="SegmentFault"
-                    href="https://segmentfault.com/u/xialeistudio">
-                    
-                    <img src="https://static.ddhigh.com/blog/2019-09-18-115828.png?imageView2/1/w/40/h/40" style="width:16px;height:16px" />
-                    
-                </a>
-                
-                <a class="navbar-item" target="_blank" title="QQ"
-                    href="//shang.qq.com/wpa/qunwpa?idkey=83c6884d7520f22891e3f82c76f42baa5c53af91ce8d31ed2641248f8730687b">
-                    
-                    <i class="fab fa-qq"></i>
-                    
-                </a>
-                
                 
                 
                 
@@ -153,6 +139,218 @@ var _hmt = _hmt || [];
         <div class="container">
             <div class="columns">
                 <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main">
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2014-12-16T02:04:32.000Z">2014-12-16</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/frontend/">frontend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/frontend/css/">css</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    1 分钟 读完 (大约 165 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2014/12/16/css-center.html">css水平居中和垂直居中</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <p>水平居中还是比较好弄的</p>
+<figure class="highlight css hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="hljs-attribute">margin-left</span>: auto;</span><br><span class="line">    <span class="hljs-attribute">margin-right</span>: auto;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但是垂直居中就比较麻烦，网上一大推文章都是什么display:table-cell,根本不管用。这里利用position属性可以达到这个目的。</p>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2014-12-11T17:25:44.000Z">2014-12-12</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/mysql/">mysql</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    3 分钟 读完 (大约 377 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2014/12/11/mysql-row-lock.html">MySQL行锁的使用</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <p>大家可能都有这样一种感觉，Web程序在本地调试的时候一切正常，放到线上也基本是正常，但是偶尔会有数据错误的情况，这种情况在订单系统中特别常见，因为大部分的订单状态更新都是有两个路径（浏览器跳转和支付服务器的异步推送消息），当然，最终数据要以异步结果为准，但是问题是，浏览器跳转也需要更新订单状态，当这两种方式在很短的时间内同时到达数据库时（一般在一秒内），如果数据库没有加锁，那这个订单会被处理两次。</p>
+<p>说到建立数据表时，涉及到支付的，都要用InnoDB引擎，该引擎支持行锁，支持事务，外键。</p>
+<p>文章开始的解决办法就是采用InnoDB对要操作的数据行进行锁定。</p>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2014-12-05T20:03:45.000Z">2014-12-06</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/android/">android</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    3 分钟 读完 (大约 388 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2014/12/05/android-circle-progressbar.html">android实现圆形带进度条的ProgressBar</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <p>android加载图片免不了使用加载进度显示，而android自带的progressBar有局限.</p>
+<ol>
+<li>圆型的progressBar不能显示进度条，只能无限制转圈圈</li>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2014-12-04T17:33:19.000Z">2014-12-05</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/php/">php</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    5 分钟 读完 (大约 777 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2014/12/04/coding-yii1.html">在coding上部署Yii1.x应用</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <p>总的来说，由于没有成熟的资料可以参考，部署过程话费了将近一个小时才成功，现在来分享一下经验。</p>
+<h2 id="目录配置"><a href="#目录配置" class="headerlink" title="目录配置"></a>目录配置</h2><p>由于Paas禁止了本地写功能，所以，如果不加任何处理的话，Yii会尝试在 protected/runtime 目录下写私有文件，结果是肯定没权限的。</p>
+<p>经过查找官方文档发现CApplication有个方法叫<strong>setRuntimePath</strong>，可以设置运行时目录，那么最重要的一点，这个目录的配置肯定要在入口文件中配置，更改之后的入口文件代码如下：</p>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
     <div class="card">
     
     <div class="card-content article ">
@@ -471,213 +669,6 @@ var _hmt = _hmt || [];
 
 
 
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2014-11-06T22:01:45.000Z">2014-11-07</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/android/">android</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    2 分钟 读完 (大约 252 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2014/11/06/android-replace-slash.html">android 替换斜杠</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>最近写安卓的时候服务端返回的数据会带上“\n”，但是在android这边不能换行，初次想到的解决方法是利用</p>
-<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String.replace(<span class="hljs-string">"\n"</span>,<span class="hljs-string">"\n"</span>)</span><br></pre></td></tr></table></figure>
-<p>给替换掉，结果是不行的。之前记得java的反斜杠是需要转义的，就用</p>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2014-11-01T05:07:10.000Z">2014-11-01</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/android/">android</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    1 分钟 读完 (大约 193 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2014/11/01/mac-os-x-debug-android-with-eclipse.html">mac os x 使用eclipse调试android</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2014-10-31T21:46:44.000Z">2014-11-01</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/frontend/">frontend</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    2 分钟 读完 (大约 320 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2014/10/31/wordpress-d8-theme-qiniu-cannot-comment.html">解决wordpress d8主题使用七牛镜像插件后无法评论的问题</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <p>上午有热心的网友给我反映说评论功能出bug了，初步查看是七牛出了问题，利用chrome的开发者工具可以查看请求。<br><img src="https://og5r5kasb.qnssl.com/wp-content/uploads/2014/11/blob3.png" alt="示意图"><br>PS：这张图是今天截的，所以域名是正常的，昨天实际上请求的是 static.ddhigh.com (本站的CDN域名)。<br>查看HTTP请求发现整站就请求了一个jquery文件，但是这个文件比较大有140K，查看源代码发现评论的代码已经合并在里面了。<br><img src="https://og5r5kasb.qnssl.com/wp-content/uploads/2014/11/blob4.png" alt="示意图"><br>按照以上步骤可以查看到评论时执行的脚本，当然这里的域名已经修复了。</p>
-<p>278行，昨天的是 </p>
-<figure class="highlight avrasm hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-symbol">url:</span>window._deel.url+<span class="hljs-string">"/ajax/comment.php"</span></span><br></pre></td></tr></table></figure>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2014-10-30T18:26:28.000Z">2014-10-31</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/php/">php</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    几秒 读完 (大约 83 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2014/10/30/ucenter-empty.html">UCenter 后台应用通知列表空白</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <p>今天遇到了一个奇葩的问题UCenter后台通知列表空白并且500，通过xdebug调试发现是<strong>uc_server/control/admin/note.php 第68行代码有问题!</strong>IDE都报错了</p>
-<h2 id="原代码"><a href="#原代码" class="headerlink" title="原代码"></a>原代码</h2><figure class="highlight php hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">$this</span>-&gt;_format_notlist(&amp;$notelist);</span><br></pre></td></tr></table></figure>
-<h2 id="修正代码"><a href="#修正代码" class="headerlink" title="修正代码"></a>修正代码</h2><figure class="highlight php hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">$this</span>-&gt;_format_notlist($notelist);</span><br></pre></td></tr></table></figure>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -733,7 +724,7 @@ var _hmt = _hmt || [];
                     
                     
                     <p class="is-size-6 is-block">
-                        Full-Stack
+                        Senior Software Engineer
                     </p>
                     
                     
@@ -752,7 +743,7 @@ var _hmt = _hmt || [];
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        291
+                        295
                     </p>
                 </div>
             </div>
@@ -789,13 +780,6 @@ var _hmt = _hmt || [];
                 href="https://github.com/xialeistudio">
                 
                 <i class="fab fa-github"></i>
-                
-            </a>
-            
-            <a class="level-item button is-white is-marginless" target="_blank" title="SegmentFault"
-                href="https://segmentfault.com/xialeistudio">
-                
-                <img style="width:16px;height:16px" src="https://static.ddhigh.com/blog/2019-09-18-115828.png?imageView2/1/w/40/h/40" />
                 
             </a>
             

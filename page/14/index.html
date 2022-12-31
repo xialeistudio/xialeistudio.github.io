@@ -123,20 +123,6 @@ var _hmt = _hmt || [];
                     
                 </a>
                 
-                <a class="navbar-item" target="_blank" title="SegmentFault"
-                    href="https://segmentfault.com/u/xialeistudio">
-                    
-                    <img src="https://static.ddhigh.com/blog/2019-09-18-115828.png?imageView2/1/w/40/h/40" style="width:16px;height:16px" />
-                    
-                </a>
-                
-                <a class="navbar-item" target="_blank" title="QQ"
-                    href="//shang.qq.com/wpa/qunwpa?idkey=83c6884d7520f22891e3f82c76f42baa5c53af91ce8d31ed2641248f8730687b">
-                    
-                    <i class="fab fa-qq"></i>
-                    
-                </a>
-                
                 
                 
                 
@@ -153,6 +139,218 @@ var _hmt = _hmt || [];
         <div class="container">
             <div class="columns">
                 <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main">
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2017-11-01T08:28:23.000Z">2017-11-01</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/docker/">docker</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    1 分钟 读完 (大约 186 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2017/11/01/docker-composer-nodejs.html">使用docker-composer部署nodejs应用</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <h2 id="新建Dockerfile"><a href="#新建Dockerfile" class="headerlink" title="新建Dockerfile"></a>新建Dockerfile</h2><p>在应用目录下新建<strong>Dockerfile</strong><br><figure class="highlight dockerfile hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">FROM</span> node:<span class="hljs-number">8</span></span><br><span class="line"><span class="hljs-keyword">WORKDIR</span><span class="hljs-bash"> /usr/src/app</span></span><br><span class="line"><span class="hljs-keyword">ADD</span><span class="hljs-bash"> . /usr/src/app</span></span><br><span class="line"><span class="hljs-keyword">RUN</span><span class="hljs-bash"> npm install --registry=https://registry.npm.taobao.org</span></span><br><span class="line"><span class="hljs-keyword">USER</span> node</span><br><span class="line"><span class="hljs-keyword">EXPOSE</span> <span class="hljs-number">8080</span></span><br></pre></td></tr></table></figure></p>
+<p>8080 端口请根据实际情况调整。建议大于1024，否则使用<strong>node</strong>用户启动应用时可能权限不足</p>
+<h2 id="新建docker-compose-yml"><a href="#新建docker-compose-yml" class="headerlink" title="新建docker-compose.yml"></a>新建docker-compose.yml</h2><p>在应用目录下新建<strong>docker-compose.yml</strong><br><figure class="highlight yaml hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-attr">version:</span> <span class="hljs-string">"2"</span></span><br><span class="line"><span class="hljs-attr">services:</span></span><br><span class="line">  <span class="hljs-attr">jsconsole:</span></span><br><span class="line">    <span class="hljs-attr">build:</span> <span class="hljs-string">.</span></span><br><span class="line">    <span class="hljs-attr">volumes:</span></span><br><span class="line">      <span class="hljs-bullet">-</span> <span class="hljs-string">.:/usr/src/app</span></span><br><span class="line">      <span class="hljs-bullet">-</span> <span class="hljs-string">/usr/src/app/node_modules</span></span><br><span class="line">    <span class="hljs-attr">ports:</span></span><br><span class="line">      <span class="hljs-bullet">-</span> <span class="hljs-string">"127.0.0.1:8081:8080"</span></span><br><span class="line">    <span class="hljs-attr">command:</span> <span class="hljs-string">"npm start"</span></span><br><span class="line">    <span class="hljs-attr">restart:</span> <span class="hljs-string">always</span></span><br></pre></td></tr></table></figure></p>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2017-10-17T11:26:21.000Z">2017-10-17</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/php/">php</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    1 分钟 读完 (大约 139 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2017/10/17/php-imagick-text-spacing.html">php-imagick-字符间距问题</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <p>在用<strong>php-imagick</strong>扩展做图像合成的时候，有个地方需要改下文本间距，百度一下发现<strong>setTextInterWordSpacing</strong>有这个方法，但是测试发现不管传多少<br>值都毫无作用。</p>
+<p>后面google查了一下，发现<strong>setTextKerning</strong>才是设置文本字符间距的函数。</p>
+<p>此外，还发现一个bug，mac下<strong>roundCorners</strong>函数不存在的问题，找了个把小时才发现这是imagick在mac上面的bug，先写在这里，等有空在研究下。</p>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2017-10-17T09:26:30.000Z">2017-10-17</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/php/">php</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    1 分钟 读完 (大约 131 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2017/10/17/mac-php-imagick-library-not-loaded.html">mac下php-imagick扩展library not loaded问题</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <p>最近在使用imagick开发图像合成功能，和往常一样，终端执行</p>
+<figure class="highlight mipsasm hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">brew </span><span class="hljs-keyword">install </span>php71-imagick</span><br></pre></td></tr></table></figure>
+<p>虽然homebrew提示我安装成功了，然而<code>php -m</code>的时候确提示<strong>php-imagick模块无法加载</strong>。</p>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2017-10-17T09:19:19.000Z">2017-10-17</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/php/">php</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    1 分钟 读完 (大约 203 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2017/10/17/yii2-close-csrf-validation-cookie-validatetion.html">yii2关闭csrf校验和cookie校验</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <h1 id="重要提示"><a href="#重要提示" class="headerlink" title="重要提示"></a>重要提示</h1><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">关闭该选项会导致应用安全性收到影响！</span><br></pre></td></tr></table></figure>
+<h1 id="问题出现"><a href="#问题出现" class="headerlink" title="问题出现"></a>问题出现</h1><ol>
+<li>开发API的时候发现POST请求老是不能通过验证，直接把报错文案放到项目中去搜索发现<strong>yii\web\Request</strong>中有<strong>enableCsrfValidation</strong>。</li>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
     <div class="card">
     
     <div class="card-content article ">
@@ -466,218 +664,6 @@ var _hmt = _hmt || [];
 
 
 
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2017-09-13T16:00:00.000Z">2017-09-14</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/nginx/">nginx</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    1 分钟 读完 (大约 152 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2017/09/13/nginx-alias-root.html">Nginx alias和root指令</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <p>Nginx的root指令相信大家用的都挺多，用来指定document_root，但是如果是针对特定path的请求才启用的话，root指令显得不好用<br><figure class="highlight crmsh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">location</span> <span class="hljs-title">/web</span> &#123;</span><br><span class="line">    root /home/wwwroot/site1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>访问 <em><a href="http://demo.com/web/a.js" target="_blank" rel="noopener">http://demo.com/web/a.js</a></em>的时候,nginx会去查找<em>/home/wwwroot/site1/web/a.js</em>，一般就会404了。因为文件是放在site1目录下的。<br>这时候就需要alias指令了。<br><figure class="highlight awk hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location <span class="hljs-regexp">/web/</span>&#123;</span><br><span class="line">    alias <span class="hljs-regexp">/home/</span>wwwroot<span class="hljs-regexp">/site1/</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>访问 <em><a href="http://demo.com/web/a.js" target="_blank" rel="noopener">http://demo.com/web/a.js</a></em>的时候,nginx会去查找<em>/home/wwwroot/site1/a.js</em>。</p>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2017-07-30T16:00:00.000Z">2017-07-31</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/java/">java</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    几秒 读完 (大约 89 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2017/07/30/spring-boot-exclude-null.html">Spring Boot JPA 返回json时排除Null字段</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <p>Spring Boot在返回JSON的时候默认会返回null字段，这个对客户端一般没什么作用，还会增加服务器带宽压力。使用如下配置可以屏蔽。</p>
-<p>在pojo对象上添加注解</p>
-<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">@JsonInclude</span>(JsonInclude.Include.NON_NULL)</span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2017-07-30T16:00:00.000Z">2017-07-31</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/java/">java</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    3 分钟 读完 (大约 454 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2017/07/30/spring-boot-pm2.html">使用pm2来保证Spring Boot应用稳定运行</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <p>Spring Boot开发web应用就像开发普通的java程序一般简洁，因为其内嵌了web容易，启动的时候只需要一条命令<code>java -jar server.jar</code>即可，非常方便。<br>但是由此而来的问题是万一应用挂了怎么办？</p>
-<p>别担心，有pm2进程管理工具可以帮到你。</p>
-<h2 id="PM2简介"><a href="#PM2简介" class="headerlink" title="PM2简介"></a>PM2简介</h2><p>pm2原先是nodejs应用的进程管理工具，不过其良好的设计以及扩展性可以手动执行执行进程。</p>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2017-07-27T16:00:00.000Z">2017-07-28</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/frontend/">frontend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/frontend/css/">css</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    1 分钟 读完 (大约 165 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2017/07/27/mobile-rem.html">移动端rem和PSD单位换算问题</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <p>设计图尺寸一般750宽度，而需要兼容640宽度手机的话，需要调整缩放比率，之前使用<code>写死viewport</code>的做法来实现，不过这个方法有点取巧，而且有些场景并不适用。<br>本文用<code>标准的@media</code>来实现</p>
-<h2 id="rem定义"><a href="#rem定义" class="headerlink" title="rem定义"></a>rem定义</h2><figure class="highlight css hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">@media</span> screen <span class="hljs-keyword">and</span> (<span class="hljs-attribute">max-width:</span> <span class="hljs-number">750px</span>) &#123;</span><br><span class="line">  <span class="hljs-selector-tag">html</span> &#123;</span><br><span class="line">    <span class="hljs-attribute">font-size</span>: <span class="hljs-number">30px</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">@media</span> screen <span class="hljs-keyword">and</span> (<span class="hljs-attribute">min-width:</span> <span class="hljs-number">640px</span>) <span class="hljs-keyword">and</span> (<span class="hljs-attribute">max-width:</span> <span class="hljs-number">749px</span>) &#123;</span><br><span class="line">  <span class="hljs-selector-tag">html</span> &#123;</span><br><span class="line">    <span class="hljs-attribute">font-size</span>: <span class="hljs-number">25px</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">@media</span> screen <span class="hljs-keyword">and</span> (<span class="hljs-attribute">min-width:</span> <span class="hljs-number">480px</span>) <span class="hljs-keyword">and</span> (<span class="hljs-attribute">max-width:</span> <span class="hljs-number">639px</span>) &#123;</span><br><span class="line">  <span class="hljs-selector-tag">html</span> &#123;</span><br><span class="line">    <span class="hljs-attribute">font-size</span>: <span class="hljs-number">20px</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">@media</span> screen <span class="hljs-keyword">and</span> (<span class="hljs-attribute">min-width:</span> <span class="hljs-number">320px</span>) <span class="hljs-keyword">and</span> (<span class="hljs-attribute">max-width:</span> <span class="hljs-number">479px</span>) &#123;</span><br><span class="line">  <span class="hljs-selector-tag">html</span> &#123;</span><br><span class="line">    <span class="hljs-attribute">font-size</span>: <span class="hljs-number">15px</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="如何使用"><a href="#如何使用" class="headerlink" title="如何使用"></a>如何使用</h2><p>假设PSD中有个button的大小为<code>100px*40px</code>，那使用rem时CSS如下<br><figure class="highlight css hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-tag">button</span> &#123;</span><br><span class="line">    <span class="hljs-attribute">width</span>: <span class="hljs-number">3.333rem</span>;</span><br><span class="line">    <span class="hljs-attribute">height</span>: <span class="hljs-number">1.333rem</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -733,7 +719,7 @@ var _hmt = _hmt || [];
                     
                     
                     <p class="is-size-6 is-block">
-                        Full-Stack
+                        Senior Software Engineer
                     </p>
                     
                     
@@ -752,7 +738,7 @@ var _hmt = _hmt || [];
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        291
+                        295
                     </p>
                 </div>
             </div>
@@ -789,13 +775,6 @@ var _hmt = _hmt || [];
                 href="https://github.com/xialeistudio">
                 
                 <i class="fab fa-github"></i>
-                
-            </a>
-            
-            <a class="level-item button is-white is-marginless" target="_blank" title="SegmentFault"
-                href="https://segmentfault.com/xialeistudio">
-                
-                <img style="width:16px;height:16px" src="https://static.ddhigh.com/blog/2019-09-18-115828.png?imageView2/1/w/40/h/40" />
                 
             </a>
             
