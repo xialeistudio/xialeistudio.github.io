@@ -146,6 +146,112 @@ var _hmt = _hmt || [];
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
                 <time class="level-item has-text-grey"
+                    datetime="2021-01-12T04:00:00.000Z">2021-01-12</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/go/">go</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    10 分钟 读完 (大约 1499 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2021/01/12/golang-halia-get-started.html">Golang组件化网络服务器框架Halia指南</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>在<strong>netty</strong>框架面世之前，几乎没有一个成熟的OOP/组件化规范指导网络服务器开发，一些常用的<code>FrameDecoder</code>,<code>BusinessHandler</code>等等组件紧密耦合在了项目当中，整个项目可以说扩展性比较差。</p>
+<p>netty的出现可以说是划时代的，基于OOP/组件化屏蔽了底层 <strong>BlockingIO</strong>/<strong>NonBlockingIO</strong>/<strong>AsynchrousIO</strong>之间的差异，各种组件可以无缝切换，网络服务器开发效率有了非常大的提高。</p>
+<p>通过阅读netty源码，以及核心组件的架构，基于Golang进行了实现，至此，Golang的Halia框架面世了！</p>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2020-10-20T03:17:09.000Z">2020-10-20</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/php/">php</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    3 分钟 读完 (大约 388 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2020/10/20/laravel-crontab-log-permission.html">Laravel定时任务写入日志用户变为root导致Web进程无法写入日志问题</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <p>今天访问接口时返回 <strong>接口写入日志失败</strong>，通过排查后发现 <code>storage/logs</code>下面出现了<code>root</code>用户新建的日志，导致<code>www</code>用户无法写入日志。</p>
+<p>通过排查发现，<code>crontab</code>写入了<code>laravel</code>的<code>定时任务命令</code>。默认情况下，crontab的任务是使用<code>root</code>用户去执行的，因此<code>laravel定时任务</code>新建的文件属主自然成为了<code>root</code>。</p>
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>解决方法就是<code>使用指定用户来运行 crontab 任务</code>。比如使用<code>www</code>用户来运行<code>laravel</code>的计划任务命令。</p>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
                     datetime="2020-08-20T09:18:38.000Z">2020-08-20</time>
                 
                 <div class="level-item">
@@ -563,112 +669,6 @@ var _hmt = _hmt || [];
 
 
 
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2020-01-17T04:00:00.000Z">2020-01-17</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    14 分钟 读完 (大约 2080 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2020/01/17/php-binary-io.html">kafka二进制协议简要分析</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <p>最近分享了《应用层私有协议的设计和实战》，对应用层私有协议设计做了一些介绍，同时也对协议设计中常用的数据类型做了比较形象的讲解，今天我们来研究一下kafka的二进制协议。</p>
-<h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h2><p>kafka二进制协议定义了许多的数据类型，包含常用的数字、字符串，也包含了数组等类型。</p>
-<p>本文主要讨论不可变长数据类型，可变长度（如Google Protocol Buffers）不在讨论范围内。</p>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2019-12-30T04:00:00.000Z">2019-12-30</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/frontend/">frontend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/frontend/javascript/">javascript</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    17 分钟 读完 (大约 2558 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2019/12/30/javascript-event.html">Javascript事件系统</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <p>本文内容</p>
-<ul>
-<li>事件基础</li>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -743,7 +743,7 @@ var _hmt = _hmt || [];
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        295
+                        297
                     </p>
                 </div>
             </div>
@@ -893,7 +893,7 @@ var _hmt = _hmt || [];
                 
                 </a>
                 <p class="is-size-7">
-                &copy; 2022 xialeistudio&nbsp;
+                &copy; 2023 xialeistudio&nbsp;
                 Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
                         href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
                 
