@@ -146,6 +146,165 @@ var _hmt = _hmt || [];
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
                 <time class="level-item has-text-grey"
+                    datetime="2015-01-23T22:09:36.000Z">2015-01-24</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/frontend/">frontend</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    2 分钟 读完 (大约 278 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2015/01/23/baidu-map-custom-overlay.html">百度地图添加自定义标注</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <p>百度地图的默认标注是一个 红色 的地标，如果要做互动性强的地图应用，几乎没提供什么额外信息，本文教大家怎么添加自定义标注，如添加头像。</p>
+<h2 id="JS代码"><a href="#JS代码" class="headerlink" title="JS代码"></a>JS代码</h2><figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">var</span> icon = <span class="hljs-keyword">new</span> BMap.Icon(<span class="hljs-string">'头像URL地址'</span>, <span class="hljs-keyword">new</span> BMap.Size(<span class="hljs-number">33</span>, <span class="hljs-number">33</span>), &#123;</span><br><span class="line">    offset: <span class="hljs-keyword">new</span> BMap.Size(<span class="hljs-number">10</span>, <span class="hljs-number">25</span>),</span><br><span class="line">    imageOffset: <span class="hljs-keyword">new</span> BMap.Size(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>)</span><br><span class="line">&#125;);</span><br><span class="line">markers[i] = <span class="hljs-keyword">new</span> BMap.Marker(<span class="hljs-keyword">new</span> BMap.Point([经度], [纬度]), &#123;</span><br><span class="line">    icon: icon</span><br><span class="line">&#125;);</span><br><span class="line">map.addOverlay(markers[i]);</span><br></pre></td></tr></table></figure>
+<p>由于百度地图的限制，我们不能获取标注的HTML，只能采取“特别”的方式对头像增加样式，比如圆角，边框等等。</p>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2015-01-20T06:38:35.000Z">2015-01-20</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/frontend/">frontend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/frontend/css/">css</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    2 分钟 读完 (大约 308 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2015/01/20/css3-loading.html">css3打造炫酷loading</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <p>css3的优点就不多说了，一个很重要的，节约了带宽，以往需要使用图片的地方很多时候都可以使用CSS3来实现。 本文将带来一个利用CSS3制作loading的教程，这里直接上代码了。</p>
+<h2 id="CSS代码"><a href="#CSS代码" class="headerlink" title="CSS代码"></a>CSS代码</h2><figure class="highlight css hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">@keyframes</span> spin &#123;</span><br><span class="line">	0% &#123;</span><br><span class="line">		<span class="hljs-attribute">transform</span>: <span class="hljs-built_in">rotate</span>(<span class="hljs-number">0deg</span>);</span><br><span class="line">		<span class="hljs-attribute">-webkit-transform</span>: <span class="hljs-built_in">rotate</span>(<span class="hljs-number">0deg</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	100% &#123;</span><br><span class="line">		<span class="hljs-attribute">transform</span>: <span class="hljs-built_in">rotate</span>(<span class="hljs-number">360deg</span>);</span><br><span class="line">		<span class="hljs-attribute">-webkit-transform</span>: <span class="hljs-built_in">rotate</span>(<span class="hljs-number">360deg</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">@-webkit-keyframes</span> spin &#123;</span><br><span class="line">	0% &#123;</span><br><span class="line">		<span class="hljs-attribute">transform</span>: <span class="hljs-built_in">rotate</span>(<span class="hljs-number">0deg</span>);</span><br><span class="line">		<span class="hljs-attribute">-webkit-transform</span>: <span class="hljs-built_in">rotate</span>(<span class="hljs-number">0deg</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	100% &#123;</span><br><span class="line">		<span class="hljs-attribute">transform</span>: <span class="hljs-built_in">rotate</span>(<span class="hljs-number">360deg</span>);</span><br><span class="line">		<span class="hljs-attribute">-webkit-transform</span>: <span class="hljs-built_in">rotate</span>(<span class="hljs-number">360deg</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">@keyframes</span> spinoff &#123;</span><br><span class="line">	0% &#123;</span><br><span class="line">		<span class="hljs-attribute">transform</span>: <span class="hljs-built_in">rotate</span>(<span class="hljs-number">0deg</span>);</span><br><span class="line">		<span class="hljs-attribute">-webkit-transform</span>: <span class="hljs-built_in">rotate</span>(<span class="hljs-number">0deg</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	100% &#123;</span><br><span class="line">		<span class="hljs-attribute">transform</span>: <span class="hljs-built_in">rotate</span>(-<span class="hljs-number">360deg</span>);</span><br><span class="line">		<span class="hljs-attribute">-webkit-transform</span>: <span class="hljs-built_in">rotate</span>(-<span class="hljs-number">360deg</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">@-webkit-keyframes</span> spinoff &#123;</span><br><span class="line">	0% &#123;</span><br><span class="line">		<span class="hljs-attribute">transform</span>: <span class="hljs-built_in">rotate</span>(<span class="hljs-number">0deg</span>);</span><br><span class="line">		<span class="hljs-attribute">-webkit-transform</span>: <span class="hljs-built_in">rotate</span>(<span class="hljs-number">0deg</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	100% &#123;</span><br><span class="line">		<span class="hljs-attribute">transform</span>: <span class="hljs-built_in">rotate</span>(-<span class="hljs-number">360deg</span>);</span><br><span class="line">		<span class="hljs-attribute">-webkit-transform</span>: <span class="hljs-built_in">rotate</span>(-<span class="hljs-number">360deg</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-selector-tag">body</span> &#123;</span><br><span class="line">	<span class="hljs-attribute">margin</span>: <span class="hljs-number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-selector-class">.content</span> &#123;</span><br><span class="line">	<span class="hljs-attribute">width</span>: <span class="hljs-number">100px</span>;</span><br><span class="line">	<span class="hljs-attribute">height</span>: <span class="hljs-number">100px</span>;</span><br><span class="line">	<span class="hljs-attribute">position</span>: relative;</span><br><span class="line">	<span class="hljs-attribute">margin</span>: <span class="hljs-number">10%</span> auto <span class="hljs-number">0</span> auto;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-selector-class">.content</span> <span class="hljs-selector-class">.ball</span> &#123;</span><br><span class="line">	<span class="hljs-attribute">top</span>: <span class="hljs-number">25px</span>;</span><br><span class="line">	<span class="hljs-attribute">left</span>: <span class="hljs-number">25px</span>;</span><br><span class="line">	<span class="hljs-attribute">width</span>: <span class="hljs-number">50px</span>;</span><br><span class="line">	<span class="hljs-attribute">height</span>: <span class="hljs-number">50px</span>;</span><br><span class="line">	<span class="hljs-attribute">position</span>: absolute;</span><br><span class="line">	<span class="hljs-attribute">border-radius</span>: <span class="hljs-number">50px</span>;</span><br><span class="line">	<span class="hljs-attribute">-webkit-border-radius</span>: <span class="hljs-number">50px</span>;</span><br><span class="line">	<span class="hljs-attribute">border</span>: <span class="hljs-number">5px</span> solid <span class="hljs-built_in">rgba</span>(<span class="hljs-number">40</span>,<span class="hljs-number">40</span>,<span class="hljs-number">200</span>,<span class="hljs-number">0.5</span>);</span><br><span class="line">	<span class="hljs-attribute">border-left</span>: <span class="hljs-number">5px</span> solid <span class="hljs-built_in">rgba</span>(<span class="hljs-number">255</span>,<span class="hljs-number">255</span>,<span class="hljs-number">255</span>,<span class="hljs-number">0.7</span>);</span><br><span class="line">	<span class="hljs-attribute">border-top</span>: <span class="hljs-number">5px</span> solid <span class="hljs-built_in">rgba</span>(<span class="hljs-number">255</span>,<span class="hljs-number">255</span>,<span class="hljs-number">255</span>,<span class="hljs-number">0.7</span>);</span><br><span class="line">	<span class="hljs-attribute">box-shadow</span>: <span class="hljs-number">2px</span> <span class="hljs-number">2px</span> <span class="hljs-number">4px</span> <span class="hljs-number">0</span> <span class="hljs-built_in">rgba</span>(<span class="hljs-number">40</span>,<span class="hljs-number">40</span>,<span class="hljs-number">200</span>,<span class="hljs-number">0.4</span>);</span><br><span class="line">	<span class="hljs-attribute">animation</span>: spin .<span class="hljs-number">5s</span> linear infinite;</span><br><span class="line">	<span class="hljs-attribute">-webkit-animation</span>: spin .<span class="hljs-number">5s</span> linear infinite;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-selector-class">.content</span> <span class="hljs-selector-class">.ball1</span> &#123;</span><br><span class="line">	<span class="hljs-attribute">top</span>: <span class="hljs-number">35px</span>;</span><br><span class="line">	<span class="hljs-attribute">left</span>: <span class="hljs-number">35px</span>;</span><br><span class="line">	<span class="hljs-attribute">width</span>: <span class="hljs-number">30px</span>;</span><br><span class="line">	<span class="hljs-attribute">height</span>: <span class="hljs-number">30px</span>;</span><br><span class="line">	<span class="hljs-attribute">position</span>: absolute;</span><br><span class="line">	<span class="hljs-attribute">border-radius</span>: <span class="hljs-number">30px</span>;</span><br><span class="line">	<span class="hljs-attribute">-webkit-border-radius</span>: <span class="hljs-number">30px</span>;</span><br><span class="line">	<span class="hljs-attribute">border</span>: <span class="hljs-number">5px</span> solid <span class="hljs-built_in">rgba</span>(<span class="hljs-number">40</span>,<span class="hljs-number">40</span>,<span class="hljs-number">200</span>,<span class="hljs-number">0.8</span>);</span><br><span class="line">	<span class="hljs-attribute">border-left</span>: <span class="hljs-number">5px</span> solid <span class="hljs-built_in">rgba</span>(<span class="hljs-number">255</span>,<span class="hljs-number">255</span>,<span class="hljs-number">255</span>,<span class="hljs-number">1.0</span>);</span><br><span class="line">	<span class="hljs-attribute">border-top</span>: <span class="hljs-number">5px</span> solid <span class="hljs-built_in">rgba</span>(<span class="hljs-number">255</span>,<span class="hljs-number">255</span>,<span class="hljs-number">255</span>,<span class="hljs-number">1.0</span>);</span><br><span class="line">	<span class="hljs-attribute">box-shadow</span>: <span class="hljs-number">2px</span> <span class="hljs-number">2px</span> <span class="hljs-number">4px</span> <span class="hljs-number">0</span> <span class="hljs-built_in">rgba</span>(<span class="hljs-number">40</span>,<span class="hljs-number">40</span>,<span class="hljs-number">200</span>,<span class="hljs-number">0.4</span>);</span><br><span class="line">	<span class="hljs-attribute">animation</span>: spinoff .<span class="hljs-number">5s</span> linear infinite;</span><br><span class="line">	<span class="hljs-attribute">-webkit-animation</span>: spinoff .<span class="hljs-number">5s</span> linear infinite;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="HTML代码"><a href="#HTML代码" class="headerlink" title="HTML代码"></a>HTML代码</h2><figure class="highlight html hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"content"</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ball"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ball1"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2015-01-11T09:12:57.000Z">2015-01-11</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/php/">php</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    4 分钟 读完 (大约 565 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2015/01/11/php-location-by-ipgps-with-baidu-mapapi.html">php利用百度地图API进行IP定位和GPS定位</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <p>最近在做一个手机端的webapp地图应用，而核心内容当然是定位了，但是定位的话有几种方式，IP定位,GPS定位，基站定位（这个貌似webapp用不了），</p>
+<p>那么剩下核心的gps定位和ip定位了，我们知道，html5有定位API，但是该API拿到的GPS数据是硬件坐标，无法直接显示在地图上。</p>
+<p>后来上百度LBS云看到有地图IP定位API和GPS坐标转换API，地址：<a href="http://developer.baidu.com/map/" target="_blank" rel="noopener">http://developer.baidu.com/map/</a></p>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
                     datetime="2015-01-08T01:38:08.000Z">2015-01-08</time>
                 
                 <div class="level-item">
@@ -505,165 +664,6 @@ var _hmt = _hmt || [];
 
 
 
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2014-12-05T20:03:45.000Z">2014-12-06</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/android/">android</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    3 分钟 读完 (大约 388 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2014/12/05/android-circle-progressbar.html">android实现圆形带进度条的ProgressBar</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <p>android加载图片免不了使用加载进度显示，而android自带的progressBar有局限.</p>
-<ol>
-<li>圆型的progressBar不能显示进度条，只能无限制转圈圈</li>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2014-12-04T17:33:19.000Z">2014-12-05</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/php/">php</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    5 分钟 读完 (大约 777 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2014/12/04/coding-yii1.html">在coding上部署Yii1.x应用</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <p>总的来说，由于没有成熟的资料可以参考，部署过程话费了将近一个小时才成功，现在来分享一下经验。</p>
-<h2 id="目录配置"><a href="#目录配置" class="headerlink" title="目录配置"></a>目录配置</h2><p>由于Paas禁止了本地写功能，所以，如果不加任何处理的话，Yii会尝试在 protected/runtime 目录下写私有文件，结果是肯定没权限的。</p>
-<p>经过查找官方文档发现CApplication有个方法叫<strong>setRuntimePath</strong>，可以设置运行时目录，那么最重要的一点，这个目录的配置肯定要在入口文件中配置，更改之后的入口文件代码如下：</p>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2014-11-19T07:54:52.000Z">2014-11-19</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/android/">android</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    2 分钟 读完 (大约 342 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2014/11/19/android-datepickertimepicker-display-inline.html">android datepicker和timepicker显示在一行</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <p>android默认的datepicker和默认的timepicker可以放在一行（Linelayout），但是timepicker右边会“挤出”屏幕，尝试设置layout_weight和layout_height对于布局有效，但是控件显示就不完整了。到这一步发现xml不局文件已经处理不了，所以自然想到应该利用java来处理了。</p>
-<h2 id="效果图"><a href="#效果图" class="headerlink" title="效果图"></a>效果图</h2><p><img src="https://og5r5kasb.qnssl.com/wp-content/uploads/2014/11/98281416412408.jpg" alt="效果图"></p>
-<h2 id="布局代码"><a href="#布局代码" class="headerlink" title="布局代码"></a>布局代码</h2><figure class="highlight xml hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">LinearLayout</span></span></span><br><span class="line"><span class="hljs-tag">    <span class="hljs-attr">android:orientation</span>=<span class="hljs-string">"horizontal"</span></span></span><br><span class="line"><span class="hljs-tag">    <span class="hljs-attr">android:layout_width</span>=<span class="hljs-string">"fill_parent"</span></span></span><br><span class="line"><span class="hljs-tag">    <span class="hljs-attr">android:layout_height</span>=<span class="hljs-string">"fill_parent"</span></span></span><br><span class="line"><span class="hljs-tag">    <span class="hljs-attr">android:paddingLeft</span>=<span class="hljs-string">"10dp"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">DatePicker</span></span></span><br><span class="line"><span class="hljs-tag">    <span class="hljs-attr">android:layout_width</span>=<span class="hljs-string">"wrap_content"</span></span></span><br><span class="line"><span class="hljs-tag">    <span class="hljs-attr">android:layout_height</span>=<span class="hljs-string">"wrap_content"</span></span></span><br><span class="line"><span class="hljs-tag">    <span class="hljs-attr">android:id</span>=<span class="hljs-string">"@+id/datePicker"</span></span></span><br><span class="line"><span class="hljs-tag">    <span class="hljs-attr">android:calendarViewShown</span>=<span class="hljs-string">"false"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">TimePicker</span></span></span><br><span class="line"><span class="hljs-tag">    <span class="hljs-attr">android:layout_width</span>=<span class="hljs-string">"wrap_content"</span></span></span><br><span class="line"><span class="hljs-tag">    <span class="hljs-attr">android:layout_height</span>=<span class="hljs-string">"wrap_content"</span></span></span><br><span class="line"><span class="hljs-tag">    <span class="hljs-attr">android:id</span>=<span class="hljs-string">"@+id/timePicker"</span> /&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">LinearLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -688,7 +688,7 @@ var _hmt = _hmt || [];
             
             <li><span class="pagination-ellipsis has-text-black-ter">&hellip;</span></li>
             
-            <li><a class="pagination-link has-text-black-ter" href="/page/30/">30</a></li>
+            <li><a class="pagination-link has-text-black-ter" href="/page/31/">31</a></li>
             
         </ul>
     </nav>
@@ -738,7 +738,7 @@ var _hmt = _hmt || [];
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        300
+                        303
                     </p>
                 </div>
             </div>

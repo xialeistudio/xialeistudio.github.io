@@ -146,6 +146,165 @@ var _hmt = _hmt || [];
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
                 <time class="level-item has-text-grey"
+                    datetime="2019-07-29T02:11:30.000Z">2019-07-29</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/frontend/">frontend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/frontend/typescript/">typescript</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    11 分钟 读完 (大约 1669 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2019/07/29/typescript-quick-guide2.html">TS简明教程(2)</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <p>本文是TS简明教程的第二篇，讲解面向对象相关的知识。</p>
+<h2 id="类"><a href="#类" class="headerlink" title="类"></a>类</h2><p>传统JS使用<code>函数</code>和<code>原型链</code>进行集成，在<code>ES6</code>出现了<code>class</code>关键，JS也能使用传统OOP的方式进行继承，但是还是存在一定的局限性，在TS中，OOP已经和传统语言差不多。</p>
+<figure class="highlight typescript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">class</span> Parent &#123;</span><br><span class="line">    name: <span class="hljs-built_in">string</span>;</span><br><span class="line">    age: <span class="hljs-built_in">number</span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">constructor</span>(<span class="hljs-params">name: <span class="hljs-built_in">string</span>, age: <span class="hljs-built_in">number</span></span>) &#123;</span><br><span class="line">        <span class="hljs-keyword">this</span>.name = name;</span><br><span class="line">        <span class="hljs-keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    say() &#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-string">`name: <span class="hljs-subst">$&#123;<span class="hljs-keyword">this</span>.name&#125;</span>, age: <span class="hljs-subst">$&#123;<span class="hljs-keyword">this</span>.age&#125;</span>`</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> parent = <span class="hljs-keyword">new</span> Parent();</span><br><span class="line">parent.say();</span><br></pre></td></tr></table></figure>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2019-07-27T10:35:49.000Z">2019-07-27</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/frontend/">frontend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/frontend/miniprogram/">miniprogram</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    12 分钟 读完 (大约 1845 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2019/07/27/miniprogram-unit-test.html">手把手从零开始小程序单元测试(附避坑指南以及源码跟踪)</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <p>单元测试是一个老生常谈的话题，基于Web/NodeJs环境的测试框架、测试教程数不胜数，也趋于成熟了。但是对于微信小程序的单元测试，目前还是处于起步状态，这两天在研究微信小程序的测试，也遇到了一些坑，在这里记录一下，希望给看到本文的小伙伴带来一点帮助，少走一些弯路。</p>
+<h2 id="demo地址"><a href="#demo地址" class="headerlink" title="demo地址"></a>demo地址</h2><p><a href="https://github.com/xialeistudio/miniprogram-unit-test-demo" target="_blank" rel="noopener">https://github.com/xialeistudio/miniprogram-unit-test-demo</a></p>
+<h2 id="关键依赖版本"><a href="#关键依赖版本" class="headerlink" title="关键依赖版本"></a>关键依赖版本</h2><p>本文写作时相关依赖版本如下(版本不同，源码行数可能不同)：</p>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2019-07-26T11:31:15.000Z">2019-07-26</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/frontend/">frontend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/frontend/react/">react</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    2 分钟 读完 (大约 368 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2019/07/26/react-decorator-example.html">使用Typescript装饰器来劫持React组件</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <p>最近在捣鼓Typescript的装饰器，NodeJs项目的装饰器比较好理解，但是React项目的装饰器由于有JSX，走了一点弯路，但是总之来说是<code>新技能get</code></p>
+<h2 id="typescript对装饰器的说明"><a href="#typescript对装饰器的说明" class="headerlink" title="typescript对装饰器的说明"></a>typescript对装饰器的说明</h2><blockquote>
+<p>装饰器是一种特殊类型的声明，它能够被附加到类声明，方法， 访问符，属性或参数上。 装饰器使用 @expression这种形式，expression求值后必须为一个函数，它会在运行时被调用，被装饰的声明信息做为参数传入。</p>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
                     datetime="2019-07-25T14:01:54.000Z">2019-07-25</time>
                 
                 <div class="level-item">
@@ -510,165 +669,6 @@ var _hmt = _hmt || [];
 
 
 
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2019-07-20T05:00:27.000Z">2019-07-20</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/nodejs/">nodejs</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    6 分钟 读完 (大约 930 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2019/07/20/nodejs-guide-path.html">NodeJs简明教程(5)</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <p>本文是NodeJs简明教程的第五篇，将介绍NodeJs path模块相关的基本操作。</p>
-<blockquote>
-<p>path 模块提供用于处理文件路径和目录路径的实用工具。 </p>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2019-07-20T03:38:51.000Z">2019-07-20</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/nodejs/">nodejs</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    5 分钟 读完 (大约 699 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2019/07/20/nodejs-guide-filesystem.html">NodeJs简明教程(4)</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <p>本文是NodeJs简明教程的第四篇，将介绍NodeJs文件系统模块相关的基本操作。</p>
-<blockquote>
-<p>fs 模块提供了一个 API，用于以模仿标准 POSIX 函数的方式与文件系统进行交互。</p>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2019-07-19T03:04:46.000Z">2019-07-19</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/nodejs/">nodejs</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    7 分钟 读完 (大约 1046 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2019/07/19/nodejs-guide-http-server.html">NodeJs简明教程(3)</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <p>本文是NodeJs简明教程的第三篇，将介绍NodeJs自带HTTP模块服务器相关的基本操作。</p>
-<h2 id="HTTP模块介绍"><a href="#HTTP模块介绍" class="headerlink" title="HTTP模块介绍"></a>HTTP模块介绍</h2><p>以下是官方原文[1]：</p>
-<blockquote>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -693,7 +693,7 @@ var _hmt = _hmt || [];
             
             <li><span class="pagination-ellipsis has-text-black-ter">&hellip;</span></li>
             
-            <li><a class="pagination-link has-text-black-ter" href="/page/30/">30</a></li>
+            <li><a class="pagination-link has-text-black-ter" href="/page/31/">31</a></li>
             
         </ul>
     </nav>
@@ -743,7 +743,7 @@ var _hmt = _hmt || [];
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        300
+                        303
                     </p>
                 </div>
             </div>

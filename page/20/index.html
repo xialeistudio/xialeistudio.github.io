@@ -146,6 +146,165 @@ var _hmt = _hmt || [];
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
                 <time class="level-item has-text-grey"
+                    datetime="2016-06-01T16:13:49.000Z">2016-06-02</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/ios/">ios</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    1 分钟 读完 (大约 188 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2016/06/01/ios-scrollview-autolayout.html">ios ScrollView AutoLayout</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <p>XCode的Interface Builder解决了开发者使用代码进行布局的问题，但是在使用 <strong>ScrollView</strong> 时，如果没有方法，IB中的layout是会乱掉的，在网上查找资料加上自己的实际操作之后，总结了以下步骤：</p>
+<ol>
+<li>在根view中添加好子控件，排好版</li>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2016-05-23T04:03:16.000Z">2016-05-23</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/nginx/">nginx</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    3 分钟 读完 (大约 463 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2016/05/23/nginx-goddy-ssl.html">nginx使用goddy ssl证书</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <p>随着人们对网络安全要求的提高，越来越多的http站点已经转换为了https站点，保证网站在传输过程中不被监听、恶意篡改，本文将使用goddy提供的ssl证书来升级HTTPS网站。</p>
+<h2 id="生成私钥和证书请求文件"><a href="#生成私钥和证书请求文件" class="headerlink" title="生成私钥和证书请求文件"></a>生成私钥和证书请求文件</h2><p>终端执行</p>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl req -new -newkey rsa:2048 -nodes -keyout domain.key -out domain.csr</span><br></pre></td></tr></table></figure>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2016-05-23T00:33:44.000Z">2016-05-23</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/nodejs/">nodejs</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    1 分钟 读完 (大约 152 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2016/05/23/process-daemon-forever.html">NodeJs进程守护工具forever使用</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <p>nodejs是单进程的，如果应用中发生未捕获的异常，进程就会退出，一个比较笨的办法在系统中使用计划任务检查进程是否存在，如果不存在启动该程序，但是该方式会造成系统资源的浪费，而且不是及时的。</p>
+<p>好在NodeJs活跃的社区给开发者提供了一个选择<strong>forever</strong>，该包就是用来解决以上状况的。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install forever -g</span><br></pre></td></tr></table></figure>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
                     datetime="2016-05-16T20:41:35.000Z">2016-05-17</time>
                 
                 <div class="level-item">
@@ -510,165 +669,6 @@ var _hmt = _hmt || [];
 
 
 
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2016-02-19T01:09:21.000Z">2016-02-19</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/android/">android</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    2 分钟 读完 (大约 230 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2016/02/19/baidu-push-launch-app-with-params.html">百度推送收到消息时带参数启动activity</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <p>一般来说，在BPushReceiver的onNotificationClicked或者onMessage方法收到推送消息后会去启动一个activity。此时整个应用有以下几种状态：</p>
-<ul>
-<li>应用进程不存在</li>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2016-02-15T23:45:25.000Z">2016-02-16</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/php/">php</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    5 分钟 读完 (大约 706 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2016/02/15/mamp-install-php-extension.html">MAMP下使用pecl安装PHP扩展</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <p>之前写过一篇在Mac下搭建PHP开发环境的文章，<a href="!--￼10--">Mac搭建PHP开发环境</a>，但是此种方式搭建的PHP有弊端，由于默认不带PHP源码，所以在使用pecl安装扩展时会报错。</p>
-<h2 id="测试安装扩展"><a href="#测试安装扩展" class="headerlink" title="测试安装扩展"></a>测试安装扩展</h2><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pecl install mongo</span><br></pre></td></tr></table></figure>
-<p>运行起来后会报形如“php.h not found”的错误，因为MAMP默认是不带PHP源码包的。   </p>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2016-01-03T19:35:05.000Z">2016-01-04</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/mongodb/">mongodb</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    1 分钟 读完 (大约 200 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2016/01/03/mongodb-findandmodify.html">mongodb更新指定条件的子文档</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <h2 id="文档内容"><a href="#文档内容" class="headerlink" title="文档内容"></a>文档内容</h2><figure class="highlight json hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="hljs-attr">"_id"</span>: ObjectId(<span class="hljs-string">"5689db252d162c9881532986"</span>),</span><br><span class="line">    <span class="hljs-attr">"openid"</span>: <span class="hljs-string">"xialei"</span>,</span><br><span class="line">    <span class="hljs-attr">"channels"</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-attr">"channel_id"</span>: <span class="hljs-string">"c1"</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-attr">"channel_id"</span>: <span class="hljs-string">"c2"</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-attr">"channel_id"</span>: <span class="hljs-string">"c2"</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-attr">"channel_id"</span>: <span class="hljs-string">"c2"</span></span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>把该文档的channels中channel_id为c2的删除，但是主记录要保留。<br>这时候就不能用remove方法了，该方法会删除整条文档，查询<a href="https://docs.mongodb.org/manual/reference/method/db.collection.findAndModify/#db.collection.findAndModify" target="_blank" rel="noopener">官方文档</a>发现有个findAndModify方法。</p>
-<h2 id="函数原型"><a href="#函数原型" class="headerlink" title="函数原型"></a>函数原型</h2><figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">db.collection.findAndModify(&#123;</span><br><span class="line">    query: <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">document</span>&gt;</span>,</span></span><br><span class="line">    sort: &lt;document&gt;,</span><br><span class="line">    remove: &lt;boolean&gt;,</span><br><span class="line">    update: &lt;document&gt;,</span><br><span class="line">    new: &lt;boolean&gt;,</span><br><span class="line">    fields: &lt;document&gt;,</span><br><span class="line">    upsert: &lt;boolean&gt;</span><br><span class="line">    bypassDocumentValidation: &lt;boolean&gt;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -693,7 +693,7 @@ var _hmt = _hmt || [];
             
             <li><span class="pagination-ellipsis has-text-black-ter">&hellip;</span></li>
             
-            <li><a class="pagination-link has-text-black-ter" href="/page/30/">30</a></li>
+            <li><a class="pagination-link has-text-black-ter" href="/page/31/">31</a></li>
             
         </ul>
     </nav>
@@ -743,7 +743,7 @@ var _hmt = _hmt || [];
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        300
+                        303
                     </p>
                 </div>
             </div>

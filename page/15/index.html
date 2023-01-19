@@ -146,6 +146,165 @@ var _hmt = _hmt || [];
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
                 <time class="level-item has-text-grey"
+                    datetime="2017-10-17T09:26:30.000Z">2017-10-17</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/php/">php</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    1 分钟 读完 (大约 131 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2017/10/17/mac-php-imagick-library-not-loaded.html">mac下php-imagick扩展library not loaded问题</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <p>最近在使用imagick开发图像合成功能，和往常一样，终端执行</p>
+<figure class="highlight mipsasm hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">brew </span><span class="hljs-keyword">install </span>php71-imagick</span><br></pre></td></tr></table></figure>
+<p>虽然homebrew提示我安装成功了，然而<code>php -m</code>的时候确提示<strong>php-imagick模块无法加载</strong>。</p>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2017-10-17T09:19:19.000Z">2017-10-17</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/php/">php</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    1 分钟 读完 (大约 203 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2017/10/17/yii2-close-csrf-validation-cookie-validatetion.html">yii2关闭csrf校验和cookie校验</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <h1 id="重要提示"><a href="#重要提示" class="headerlink" title="重要提示"></a>重要提示</h1><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">关闭该选项会导致应用安全性收到影响！</span><br></pre></td></tr></table></figure>
+<h1 id="问题出现"><a href="#问题出现" class="headerlink" title="问题出现"></a>问题出现</h1><ol>
+<li>开发API的时候发现POST请求老是不能通过验证，直接把报错文案放到项目中去搜索发现<strong>yii\web\Request</strong>中有<strong>enableCsrfValidation</strong>。</li>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2017-10-17T09:13:44.000Z">2017-10-17</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/nodejs/">nodejs</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    1 分钟 读完 (大约 165 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2017/10/17/koa-cookie-use-maxage.html">koa-cooke使用maxAge代替expires来设置过期时间</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <h1 id="expires"><a href="#expires" class="headerlink" title="expires"></a>expires</h1><p>原来设置cookie使用的以下代码</p>
+<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> cookieOptions = &#123;</span><br><span class="line">  expires: moment().add(<span class="hljs-number">6</span>,<span class="hljs-string">'day'</span>).toDate(),</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>但是查看network的时候，cookie虽然设置了，但是过期时间比现在还早，导致一设置就过期，所以expires貌似没作用。</p>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
                     datetime="2017-10-16T06:23:55.000Z">2017-10-16</time>
                 
                 <div class="level-item">
@@ -505,165 +664,6 @@ var _hmt = _hmt || [];
 
 
 
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2017-07-30T16:00:00.000Z">2017-07-31</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/java/">java</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    3 分钟 读完 (大约 454 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2017/07/30/spring-boot-pm2.html">使用pm2来保证Spring Boot应用稳定运行</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <p>Spring Boot开发web应用就像开发普通的java程序一般简洁，因为其内嵌了web容易，启动的时候只需要一条命令<code>java -jar server.jar</code>即可，非常方便。<br>但是由此而来的问题是万一应用挂了怎么办？</p>
-<p>别担心，有pm2进程管理工具可以帮到你。</p>
-<h2 id="PM2简介"><a href="#PM2简介" class="headerlink" title="PM2简介"></a>PM2简介</h2><p>pm2原先是nodejs应用的进程管理工具，不过其良好的设计以及扩展性可以手动执行执行进程。</p>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2017-07-27T16:00:00.000Z">2017-07-28</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/frontend/">frontend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/frontend/css/">css</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    1 分钟 读完 (大约 165 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2017/07/27/mobile-rem.html">移动端rem和PSD单位换算问题</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <p>设计图尺寸一般750宽度，而需要兼容640宽度手机的话，需要调整缩放比率，之前使用<code>写死viewport</code>的做法来实现，不过这个方法有点取巧，而且有些场景并不适用。<br>本文用<code>标准的@media</code>来实现</p>
-<h2 id="rem定义"><a href="#rem定义" class="headerlink" title="rem定义"></a>rem定义</h2><figure class="highlight css hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">@media</span> screen <span class="hljs-keyword">and</span> (<span class="hljs-attribute">max-width:</span> <span class="hljs-number">750px</span>) &#123;</span><br><span class="line">  <span class="hljs-selector-tag">html</span> &#123;</span><br><span class="line">    <span class="hljs-attribute">font-size</span>: <span class="hljs-number">30px</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">@media</span> screen <span class="hljs-keyword">and</span> (<span class="hljs-attribute">min-width:</span> <span class="hljs-number">640px</span>) <span class="hljs-keyword">and</span> (<span class="hljs-attribute">max-width:</span> <span class="hljs-number">749px</span>) &#123;</span><br><span class="line">  <span class="hljs-selector-tag">html</span> &#123;</span><br><span class="line">    <span class="hljs-attribute">font-size</span>: <span class="hljs-number">25px</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">@media</span> screen <span class="hljs-keyword">and</span> (<span class="hljs-attribute">min-width:</span> <span class="hljs-number">480px</span>) <span class="hljs-keyword">and</span> (<span class="hljs-attribute">max-width:</span> <span class="hljs-number">639px</span>) &#123;</span><br><span class="line">  <span class="hljs-selector-tag">html</span> &#123;</span><br><span class="line">    <span class="hljs-attribute">font-size</span>: <span class="hljs-number">20px</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">@media</span> screen <span class="hljs-keyword">and</span> (<span class="hljs-attribute">min-width:</span> <span class="hljs-number">320px</span>) <span class="hljs-keyword">and</span> (<span class="hljs-attribute">max-width:</span> <span class="hljs-number">479px</span>) &#123;</span><br><span class="line">  <span class="hljs-selector-tag">html</span> &#123;</span><br><span class="line">    <span class="hljs-attribute">font-size</span>: <span class="hljs-number">15px</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="如何使用"><a href="#如何使用" class="headerlink" title="如何使用"></a>如何使用</h2><p>假设PSD中有个button的大小为<code>100px*40px</code>，那使用rem时CSS如下<br><figure class="highlight css hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-tag">button</span> &#123;</span><br><span class="line">    <span class="hljs-attribute">width</span>: <span class="hljs-number">3.333rem</span>;</span><br><span class="line">    <span class="hljs-attribute">height</span>: <span class="hljs-number">1.333rem</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2017-07-17T16:00:00.000Z">2017-07-18</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/backend/">backend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/backend/java/">java</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    1 分钟 读完 (大约 218 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2017/07/17/spring-boot-druid-sql.html">druid spring boot 统计SQL问题</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <h2 id="spring-boot配置"><a href="#spring-boot配置" class="headerlink" title="spring-boot配置"></a>spring-boot配置</h2><figure class="highlight ini hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-attr">spring.jpa.hibernate.ddl-auto</span>=validate</span><br><span class="line"><span class="hljs-attr">spring.datasource.type</span>=com.alibaba.druid.pool.DruidDataSource</span><br><span class="line"><span class="hljs-attr">spring.datasource.driver-class-name</span>=com.mysql.jdbc.Driver</span><br><span class="line"><span class="hljs-attr">spring.datasource.initialize</span>=<span class="hljs-literal">true</span></span><br><span class="line"><span class="hljs-attr">spring.datasource.initialSize</span>=<span class="hljs-number">5</span></span><br><span class="line"><span class="hljs-attr">spring.datasource.minIdle</span>=<span class="hljs-number">5</span></span><br><span class="line"><span class="hljs-attr">spring.datasource.maxActive</span>=<span class="hljs-number">10</span></span><br><span class="line"><span class="hljs-attr">spring.datasource.maxWait</span>=<span class="hljs-number">60000</span></span><br><span class="line"><span class="hljs-attr">spring.datasource.timeBetweenEvictionRunsMillis</span>=<span class="hljs-number">60000</span></span><br><span class="line"><span class="hljs-attr">spring.datasource.minEvictableIdleTimeMillis</span>=<span class="hljs-number">300000</span></span><br><span class="line"><span class="hljs-attr">spring.datasource.validationQuery</span>=SELECT <span class="hljs-string">'x'</span></span><br><span class="line"><span class="hljs-attr">spring.datasource.testWhileIdle</span>=<span class="hljs-literal">true</span></span><br><span class="line"><span class="hljs-attr">spring.datasource.testOnBorrow</span>=<span class="hljs-literal">false</span></span><br><span class="line"><span class="hljs-attr">spring.datasource.testOnReturn</span>=<span class="hljs-literal">false</span></span><br><span class="line"><span class="hljs-attr">spring.datasource.poolPreparedStatements</span>=<span class="hljs-literal">false</span></span><br><span class="line"><span class="hljs-attr">spring.datasource.maxPoolPreparedStatementPerConnectionSize</span>=<span class="hljs-number">20</span></span><br><span class="line"><span class="hljs-attr">spring.datasource.filters</span>=stat,wall,slf4j</span><br><span class="line"><span class="hljs-attr">spring.datasource.connectionProperties</span>=druid.stat.mergeSql=<span class="hljs-literal">true</span><span class="hljs-comment">;druid.stat.slowSqlMillis=5000</span></span><br><span class="line"><span class="hljs-attr">spring.datasource.useGlobalDataSourceStat</span>=<span class="hljs-literal">true</span></span><br></pre></td></tr></table></figure>
-<p>这个配置没有什么好说的，网上很多，可能关键在</p>
-<figure class="highlight ini hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-attr">spring.datasource.filters</span>=stat,wall,slf4j</span><br><span class="line"><span class="hljs-attr">spring.datasource.connectionProperties</span>=druid.stat.mergeSql=<span class="hljs-literal">true</span><span class="hljs-comment">;druid.stat.slowSqlMillis=5000</span></span><br><span class="line"><span class="hljs-attr">spring.datasource.useGlobalDataSourceStat</span>=<span class="hljs-literal">true</span></span><br></pre></td></tr></table></figure>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -688,7 +688,7 @@ var _hmt = _hmt || [];
             
             <li><span class="pagination-ellipsis has-text-black-ter">&hellip;</span></li>
             
-            <li><a class="pagination-link has-text-black-ter" href="/page/30/">30</a></li>
+            <li><a class="pagination-link has-text-black-ter" href="/page/31/">31</a></li>
             
         </ul>
     </nav>
@@ -738,7 +738,7 @@ var _hmt = _hmt || [];
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        300
+                        303
                     </p>
                 </div>
             </div>
