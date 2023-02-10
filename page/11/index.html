@@ -146,6 +146,59 @@ var _hmt = _hmt || [];
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
                 <time class="level-item has-text-grey"
+                    datetime="2019-07-08T09:24:05.000Z">2019-07-08</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/frontend/">frontend</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/frontend/vue/">vue</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    2 分钟 读完 (大约 325 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2019/07/08/vue-webpack-rewrite-cookie-path.html">vue webpack重写cookie路径</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <p>webpack提供的反向代理服务器在开发阶段非常方便，几行简单的代码配置就可以使用反向代理功能，包括路径重写、cookie处理等。</p>
+<p>项目开发阶段使用的API路径是 <code>/admin</code>，部署到线上是<code>/</code>，所以在开发过程中需要在<code>proxyTable</code>进行反向代理配置，将路径重写掉，路径重写代码如下(<code>config/index.js</code>):</p>
+<figure class="highlight js hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">proxyTable: &#123;</span><br><span class="line">      <span class="hljs-string">'/admin'</span>: &#123;</span><br><span class="line">        target: <span class="hljs-string">'http://127.0.0.1:8080'</span>,</span><br><span class="line">        changeOrigin: <span class="hljs-literal">true</span>,</span><br><span class="line">        pathRewrite: &#123;</span><br><span class="line">          <span class="hljs-string">'^/admin'</span>: <span class="hljs-string">'/admin2'</span></span><br><span class="line">        &#125;,</span><br><span class="line">      &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
                     datetime="2019-07-08T09:13:40.000Z">2019-07-08</time>
                 
                 <div class="level-item">
@@ -616,59 +669,6 @@ var _hmt = _hmt || [];
 
 
 
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2019-01-11T02:53:02.000Z">2019-01-11</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/frontend/">frontend</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    3 分钟 读完 (大约 420 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2019/01/11/export-wechat-emotion.html">无需编程导出微信表情包</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <p>微信前两天推送了年度报告，其中的表情统计很有意思，的确，表情包这两年是越来越火了。但是有个问题是微信不支持导出表情包，有的小伙伴又需要导出来保存到其他地方。</p>
-<p>本文分享一个比较简单的方式导出表情包，条件只有一个：谷歌浏览器。</p>
-<ol>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -743,7 +743,7 @@ var _hmt = _hmt || [];
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        303
+                        304
                     </p>
                 </div>
             </div>
