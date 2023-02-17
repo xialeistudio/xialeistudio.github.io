@@ -23,7 +23,7 @@
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
 <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.4.1/css/all.css">
-<link rel="stylesheet" href="https://fonts.lug.ustc.edu.cn/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://fonts.geekzu.org/css?family=Ubuntu:400,600|Source+Code+Pro">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
 
 
@@ -320,7 +320,7 @@ var _hmt = _hmt || [];
 <p>注意：html中使用<img>标签导入图片的编译，目前还没有好的解决办法，可以通过css background的形式进行处理</p>
 </blockquote>
 <h3 id="开发模式"><a href="#开发模式" class="headerlink" title="开发模式"></a>开发模式</h3><p>开发模式下直接启用webpack-dev-server即可，会自动加载工作目录下的webpack.config.js</p>
-<figure class="highlight 1c hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// package.json</span></span><br><span class="line"><span class="hljs-string">"scripts"</span>: &#123;</span><br><span class="line">    <span class="hljs-string">"build"</span>: <span class="hljs-string">"webpack"</span>,</span><br><span class="line">    <span class="hljs-string">"dev"</span>: <span class="hljs-string">"webpack-dev-server"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// package.json</span></span><br><span class="line"><span class="hljs-string">"scripts"</span>: &#123;</span><br><span class="line">    <span class="hljs-string">"build"</span>: <span class="hljs-string">"webpack"</span>,</span><br><span class="line">    <span class="hljs-string">"dev"</span>: <span class="hljs-string">"webpack-dev-server"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run dev</span><br></pre></td></tr></table></figure>
 <h3 id="生产模式"><a href="#生产模式" class="headerlink" title="生产模式"></a>生产模式</h3><p>生产模式下使用webpack编译，编译完成后输出最终文件。</p>
 <figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run build</span><br></pre></td></tr></table></figure>
