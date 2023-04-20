@@ -48,10 +48,8 @@ jobs:
           known_hosts: 'just-a-placeholder-so-we-dont-get-errors'
     
       - name: Adding Known Hosts
-        run: ssh-keyscan -H www.ddhigh.com >> ~/.ssh/known_hosts
+        run: ssh-keyscan -H api.ddhigh.com >> ~/.ssh/known_hosts
     
       - name: Deploy Server
         run: |
-          tar czf public.tgz public
-          scp public.tgz root@www.ddhigh.com:/var/www/public.tgz
-          ssh root@www.ddhigh.com "cd /var/www && tar xzf public.tgz && cp -r public/* www.ddhigh.com/ && chown -R www-data:www-data www.ddhigh.com" 
+          ssh ec2-user@api.ddhigh.com "cd /usr/share/nginx/webroot/xialeistudio.github.io && git pull" 
