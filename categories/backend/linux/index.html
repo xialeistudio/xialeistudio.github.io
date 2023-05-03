@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="robots" content="noindex"><meta><title>Kategorie: linux - Learning &amp; Sharing</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Learning &amp; Sharing"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Learning &amp; Sharing"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="Learning &amp;amp; Sharing"><meta property="og:type" content="website"><meta property="og:title" content="Learning &amp; Sharing"><meta property="og:url" content="https://www.ddhigh.com/"><meta property="og:site_name" content="Learning &amp; Sharing"><meta property="og:description" content="Learning &amp;amp; Sharing"><meta property="og:locale" content="en_US"><meta property="og:image" content="https://www.ddhigh.com/img/og_image.png"><meta property="article:author" content="Xia Lei"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://www.ddhigh.com/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.ddhigh.com"},"headline":"Learning & Sharing","image":["https://www.ddhigh.com/img/og_image.png"],"author":{"@type":"Person","name":"Xia Lei"},"publisher":{"@type":"Organization","name":"Learning & Sharing","logo":{"@type":"ImageObject","url":{"text":"Learning & Sharing"}}},"description":"Learning &amp; Sharing"}</script><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.4.1/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><!--!--><script>var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?78141f99bbb49f1564a7af89344f5add";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">Learning &amp; Sharing</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a><a class="navbar-item search" title="Suche" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><div class="card-content"><nav class="breadcrumb" aria-label="breadcrumbs"><ul><li><a href="/categories">Kategorien</a></li><li><a href="/categories/backend/">backend</a></li><li class="is-active"><a href="#" aria-current="page">linux</a></li></ul></nav></div></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Gepostet vor&nbsp;<time dateTime="2023-05-03T15:35:39.963Z" title="5/3/2023, 3:35:39 PM">2023-05-03</time></span><span class="level-item"><a class="link-muted" href="/categories/backend/">backend</a><span> / </span><a class="link-muted" href="/categories/backend/linux/">linux</a></span><span class="level-item">a minute lesen (Über 138 Wörter)</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2023/05/03/2017-01-23-linux-public-key-login.html">使用公钥登录Linux</a></p><div class="content"><p>服务器密码往往是随机字符串，难以记忆，通过配置公钥登录的方式来进行登录。</p>
+<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><ul>
+<li>服务器A 192.168.1.2 客户机</li>
+<li>服务器B 192.168.1.3 服务器</li>
+</ul>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><ol>
+<li>登录<strong>192.168.1.2</strong>，终端执行<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure></li>
+<li>复制**~&#x2F;.ssh&#x2F;id_rsa.pub**文件的内容</li>
+<li>在服务器上添加公钥，登录<strong>192.168.1.3</strong>，终端执行<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> 刚才复制的内容 &gt;&gt; ~/.ssh/authorized_keys</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>登录<strong>192.168.1.2</strong>，终端执行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh 192.168.1.3</span><br></pre></td></tr></table></figure>
+<p>首次登录的时候会进行公钥认证，输入<strong>yes</strong>即可。</p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Gepostet vor&nbsp;<time dateTime="2019-02-28T13:51:16.000Z" title="2/28/2019, 1:51:16 PM">2019-02-28</time></span><span class="level-item"><a class="link-muted" href="/categories/backend/">backend</a><span> / </span><a class="link-muted" href="/categories/backend/linux/">linux</a></span><span class="level-item">8 minutes lesen (Über 1148 Wörter)</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2019/02/28/2019-02-28-build-service-by-systemd.html">使用systemd来构建你的服务</a></p><div class="content"><h2 id="systemd是什么"><a href="#systemd是什么" class="headerlink" title="systemd是什么"></a>systemd是什么</h2><p>Systemd 服务是一种以 .service 结尾的单元（unit）配置文件，用于控制由Systemd 控制或监视的进程。简单说，用于后台以守护精灵（daemon）的形式运行程序。</p>
+<h2 id="为什么要使用systemd"><a href="#为什么要使用systemd" class="headerlink" title="为什么要使用systemd"></a>为什么要使用systemd</h2><ol>
+<li>service文件编写简单易用</li>
+<li>可以自动维持进程存活（强大的功能，可以取代PM2）</li>
+<li>自动收集进程输出的输出</li>
+</ol>
+<h2 id="systemd主要命令"><a href="#systemd主要命令" class="headerlink" title="systemd主要命令"></a>systemd主要命令</h2><p>可以看到systemd以字母d结尾，根据linux惯用规则，可以判断该进程为守护进程，可以通过<code>systemctl</code>与之交互。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">systemctl start redis.service #启动服务</span><br><span class="line">systemctl stop redis.service #停止服务</span><br><span class="line">systemctl restart redis.service #重启服务</span><br><span class="line">systemctl enable redis.service #将redis设置为开机启动</span><br></pre></td></tr></table></figure>
+
+<h2 id="编写systemd"><a href="#编写systemd" class="headerlink" title="编写systemd"></a>编写systemd</h2><p>systmd service文件一般放在<code>/etc/systemd/system/</code>文件夹中。</p>
+<p>systemd service文件是结构化的，以下给出一份笔者常用的清单。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description=Git Auto Update Hook Service</span><br><span class="line">After=network.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=simple</span><br><span class="line">ExecStart=/root/src/git-hookd/git-hookd</span><br><span class="line">Restart=always</span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
+
+<p>拿之前写过的init.d的脚本对比一下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">### BEGIN INIT INFO</span><br><span class="line"># Provides:          xialeistudio</span><br><span class="line"># Required-Start:    $network</span><br><span class="line"># Required-Stop:     $local_fs</span><br><span class="line"># Default-Start:     2 3 4 5</span><br><span class="line"># Default-Stop:      0 1 6</span><br><span class="line"># Short-Description: test service</span><br><span class="line"># Description:       test service</span><br><span class="line">### END INIT INFO</span><br><span class="line">PROG=&quot;testd&quot;</span><br><span class="line">PROG_PATH=&quot;/root/apps/testd&quot;</span><br><span class="line">PROG_ARGS=&quot;-u xialei&quot;</span><br><span class="line">PID_PATH=&quot;/var/run/&quot;</span><br><span class="line"></span><br><span class="line">start() &#123;</span><br><span class="line">        if [ -e &quot;$PID_PATH/$PROG.pid&quot; ]; then</span><br><span class="line">                echo &quot;Error! $PROG is running!&quot; 2&gt;&amp;1</span><br><span class="line">                exit 1</span><br><span class="line">        else</span><br><span class="line">                $PROG_PATH/$PROG $PROG_ARGS 2&gt;&amp;1 &gt; &quot;/var/log/$PROG.log&quot; &amp;</span><br><span class="line">                pid=`ps ax|grep testd|awk &#x27;&#123;print $2&#125;&#x27;|head -n 1`</span><br><span class="line">                echo &quot;$PROG started&quot;</span><br><span class="line">                echo $pid &gt; &quot;$PID_PATH/$PROG.pid&quot;</span><br><span class="line">        fi      </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">stop() &#123;</span><br><span class="line">        if [ -e &quot;$PID_PATH/$PROG.pid&quot; ]; then</span><br><span class="line">                pid=`ps ax|grep testd|awk &#x27;&#123;print $2&#125;&#x27;|head -n 1`</span><br><span class="line">                kill $pid</span><br><span class="line">        </span><br><span class="line">                rm -rf &quot;$PID_PATH/$PROG.pid&quot;</span><br><span class="line">                echo &quot;$PROG $pid killed&quot;</span><br><span class="line">        else</span><br><span class="line">                echo &quot;Error! $PROG not running!&quot; 2&gt;&amp;1</span><br><span class="line">                exit 1</span><br><span class="line">        fi</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">if [ &quot;$(id -u)&quot; != &quot;0&quot; ]; then</span><br><span class="line">        echo &quot;Please run as root!&quot; 2&gt;&amp;1</span><br><span class="line">        exit 1</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">case &quot;$1&quot; in</span><br><span class="line">    start)</span><br><span class="line">                start</span><br><span class="line">                exit 0</span><br><span class="line">        ;;</span><br><span class="line">        stop)</span><br><span class="line">                stop</span><br><span class="line">                exit 0</span><br><span class="line">        ;;</span><br><span class="line">        reload|restart)</span><br><span class="line">                stop</span><br><span class="line">                start</span><br><span class="line">                exit 0</span><br><span class="line">        ;;</span><br><span class="line">        **)</span><br><span class="line">                echo &quot;Usage: $0 &#123;start|stop|reload&#125;&quot; 2&gt;&amp;1</span><br><span class="line">                exit 1</span><br><span class="line">        ;;</span><br><span class="line">esac</span><br></pre></td></tr></table></figure>
+
+<p>可以看到init.d脚本实在是太原始了，systemd取代init.d指日可待</p>
+<h2 id="systemd-service文件说明"><a href="#systemd-service文件说明" class="headerlink" title="systemd service文件说明"></a>systemd service文件说明</h2><p>service文件由 Unit, Service, Install 三部分组成</p>
+<h3 id="Unit"><a href="#Unit" class="headerlink" title="Unit"></a>Unit</h3><p>所有引导过程中systemd要控制的文件&#x2F;设备&#x2F;程序等等都称为一个单元。</p>
+<ul>
+<li>Description: 服务描述</li>
+<li>Wants: 本单元启动成功，则会启动此字段定义的单元，如果Wants定义的单元启动失败，对本单元无影响</li>
+<li>Requires：本单元启动成功，则会启动此字段定义的单元，如果Requires定义的单元启动失败，本单元也失败。该字段无法控制先后顺序，如果Requires定义的单元未启动完成就启动本单元，那么一个都启动不了，不建议用这个字段</li>
+<li>OnFailure： 本单元如果启动失败，则启动该字段定义的单元</li>
+<li>Before&#x2F;After：指定本单元的启动顺序</li>
+</ul>
+<p>本例中只需要依赖网络单元即可</p>
+<h3 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h3><p>服务本体定义：</p>
+<ul>
+<li>Type 启动类型</li>
+<li>ExecStart 启动服务的命令</li>
+<li>ExecStop 停止服务的命令（一般不写）</li>
+<li>Restart 重启规则</li>
+<li>RemainAfterExit 即使没有进程，也任务服务启动成功</li>
+</ul>
+<p>Type 启动类型有以下几种：<br>    + simple： 默认类型，启动的进程将成为服务进程。<br>    + forking：标准Unix Daemon进程。本进程启动后会通过系统调用fork，把必要的通信频道都设置好之后父进程退出，留下守护精灵的子进程。（也就是说你自己来将进程变成daemon进程）<br>    + oneshot：一次性命令。该服务运行完毕后没有进程，所以需要配合RemainAfterExit。</p>
+<p>Restart 重启规则有以下几种：<br>    + no（默认值）：退出后不会重启<br>    + always：不管是什么退出原因，总是重启<br>    + on-success：只有正常退出时（退出状态码为0），才会重启<br>    + on-failure：非正常退出时（退出状态码非0），包括被信号终止和超时，才会重启<br>    + on-abnormal：只有被信号终止和超时，才会重启<br>    + on-abort：只有在收到没有捕捉到的信号终止时，才会重启<br>    + on-watchdog：超时退出，才会重启</p>
+<h3 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h3><p>systemd装载规则定义</p>
+<ul>
+<li>WantedBy 将被谁装载，本例中使用multi-user.target，最终服务将通过软链接到<code>/etc/systemd/system/multi-user.target.wants</code>目录</li>
+<li>Alias 服务别名，可以通过 <code>systemctl 服务别名 restart</code> 之类的来操作</li>
+</ul>
+<h2 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h2><p>是时候通过systemd改写init.d的服务了，有必要的话可以连pm2守护的进程都交给systemd来处理。</p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Gepostet vor&nbsp;<time dateTime="2016-05-14T02:27:29.000Z" title="5/14/2016, 2:27:29 AM">2016-05-14</time></span><span class="level-item"><a class="link-muted" href="/categories/backend/">backend</a><span> / </span><a class="link-muted" href="/categories/backend/linux/">linux</a></span><span class="level-item">a few seconds lesen (Über 61 Wörter)</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2016/05/14/2016-05-14-shell-install-nodejs.html">安装nodejs的shell脚本</a></p><div class="content"><h2 id="脚本定义"><a href="#脚本定义" class="headerlink" title="脚本定义"></a>脚本定义</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="built_in">export</span> NVM_NODEJS_ORG_MIRROR=https://npm.taobao.org/mirrors/node</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/creationix/nvm.git ~/.nvm</span><br><span class="line"><span class="built_in">source</span> ~/.nvm/nvm.sh</span><br><span class="line">nvm install 4.4.2</span><br></pre></td></tr></table></figure>
+
+<h2 id="脚本执行"><a href="#脚本执行" class="headerlink" title="脚本执行"></a>脚本执行</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">chmod</span> +x ./install.sh</span><br><span class="line">./install.sh</span><br></pre></td></tr></table></figure>
+
+<p>nodejs版本大家可以 根据实际需要进行选择</p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Gepostet vor&nbsp;<time dateTime="2015-05-29T06:19:08.000Z" title="5/29/2015, 6:19:08 AM">2015-05-29</time></span><span class="level-item"><a class="link-muted" href="/categories/backend/">backend</a><span> / </span><a class="link-muted" href="/categories/backend/linux/">linux</a></span><span class="level-item">a minute lesen (Über 218 Wörter)</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2015/05/29/2015-05-29-shell-to-install-memached-on-lnmp.html">lnmp一键安装memcached的shell脚本</a></p><div class="content"><p>通过LNMP安装脚本安装的PHP环境默认是不带Memcached支持的（是memcached不是memcache），百度一下memcached的安装方法，发现基本都是memcache的，其实这是两个不同的东西。</p>
+<p>而memcached是pecl的项目，所以需要到pecl网站上去下载最新的memcached安装包。</p>
+<p>为了方便多台服务器的安装，本人整理成了一个sh脚本进行安装，当然,php-config路径和phpize路径需要改下（如果使用LNMP脚本安装的话则不用改）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">wget https://launchpad.net/libmemcached/1.0/0.53/+download/libmemcached-0.53.tar.gz</span><br><span class="line">tar xvfz libmemcached-0.53.tar.gz</span><br><span class="line"><span class="built_in">cd</span> libmemcached-0.53</span><br><span class="line">./configure --prefix=/usr/local/libmemcached --enable-sasl</span><br><span class="line">make &amp;&amp; make install</span><br><span class="line">wget http://pecl.php.net/get/memcached-2.0.0.tgz</span><br><span class="line">tar zvxf memcached-2.0.0.tgz</span><br><span class="line"><span class="built_in">cd</span> memcached-2.0.0/</span><br><span class="line">phpize</span><br><span class="line">./configure --enable-memcached --with-php-config=/usr/local/php/bin/php-config --with-libmemcached-dir=/usr/local/libmemcached --enable-memcached-sasl</span><br><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Gepostet vor&nbsp;<time dateTime="2015-05-20T20:01:15.000Z" title="5/20/2015, 8:01:15 PM">2015-05-21</time></span><span class="level-item"><a class="link-muted" href="/categories/backend/">backend</a><span> / </span><a class="link-muted" href="/categories/backend/linux/">linux</a></span><span class="level-item">a few seconds lesen (Über 110 Wörter)</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2015/05/20/2015-05-21-shell-bad-interpreter.html">linux运行dos格式脚本导致的bad interpreter</a></p><div class="content"><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>在使用php作为linux上shell脚本运行时出现了以下错误：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env php</span></span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">phpinfo</span>();</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">chmod</span> +x test.php</span><br><span class="line">./test.php</span><br><span class="line">/usr/local/php/bin/php^M: bad interpreter: No such file or directory</span><br></pre></td></tr></table></figure>
+
+<p>原因是你的文本以DOS文件形式保存，导致文件头有不可见字符，导致bash shell无法解析。</p>
+<h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install dos2unix -y</span><br><span class="line">dos2unix test.php</span><br></pre></td></tr></table></figure>
+
+<p>再执行就没问题了</p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Gepostet vor&nbsp;<time dateTime="2014-10-15T05:49:22.000Z" title="10/15/2014, 5:49:22 AM">2014-10-15</time></span><span class="level-item"><a class="link-muted" href="/categories/backend/">backend</a><span> / </span><a class="link-muted" href="/categories/backend/linux/">linux</a></span><span class="level-item">a few seconds lesen (Über 86 Wörter)</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2014/10/15/2014-10-15-linux-check-port.html">linux检查端口占用</a></p><div class="content"><p>Linux启动服务时如果遇到端口占用问题时，一般有以下两种解决方案：</p>
+<ol>
+<li>新启动的服务更改端口号启动</li>
+<li>杀掉老的进程</li>
+</ol>
+<h2 id="Linux检查端口占用命令"><a href="#Linux检查端口占用命令" class="headerlink" title="Linux检查端口占用命令"></a>Linux检查端口占用命令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -lnp | grep 80</span><br></pre></td></tr></table></figure>
+
+<p>80为端口号，查找到占用端口的进程ID后用kill杀掉即可。</p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Gepostet vor&nbsp;<time dateTime="2014-09-14T17:18:01.000Z" title="9/14/2014, 5:18:01 PM">2014-09-15</time></span><span class="level-item"><a class="link-muted" href="/categories/backend/">backend</a><span> / </span><a class="link-muted" href="/categories/backend/linux/">linux</a></span><span class="level-item">2 minutes lesen (Über 304 Wörter)</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2014/09/14/2014-09-15-linux-public-key-git.html">linux利用ssh公钥部署git代码</a></p><div class="content"><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>阿里云的使用门槛降低，直接导致了很多人优先使用VPS而不是以前的虚拟主机，毕竟虚拟主机存在诸多限制。阿里云犹如一台全新的服务器，所有软件都要自己安装。作为一个写PHP的，代码部署就略麻烦了，以前使用FTP的时候很方便部署，但是不适合长期开发（因为没有版本控制），所以使用GIT会很方便。</p>
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>在windows开发机上使用https方式进行git操作是没问题的，但是在linux上进行git操作的时候就会出错误，会让你输入帐号密码，就算是对的帐号密码也不行。这种情况下需要使用 ssh 方式进行GIT。</p>
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><ol>
+<li>生成密钥 在终端下输入 <code>ssh-keygen -t rsa</code></li>
+<li>接下来的询问全部直接按回车</li>
+<li>最后得到了两个文件：id_rsa和id_rsa.pub</li>
+<li>cat ~&#x2F;.ssh&#x2F;id_rsa.pub</li>
+<li>将显示的内容全部复制下来</li>
+<li>进入你的git网站，比如oschina的git</li>
+<li>添加ssh公钥</li>
+<li>保存</li>
+<li>enjoy!</li>
+</ol>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Gepostet vor&nbsp;<time dateTime="2014-09-12T23:19:49.000Z" title="9/12/2014, 11:19:49 PM">2014-09-13</time></span><span class="level-item"><a class="link-muted" href="/categories/backend/">backend</a><span> / </span><a class="link-muted" href="/categories/backend/linux/">linux</a></span><span class="level-item">a minute lesen (Über 148 Wörter)</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2014/09/12/2014-09-13-linux-delete-messy-code-file.html">Linux删除乱码文件</a></p><div class="content"><p>shell终端中有时候中文文件名会出现乱码，导致很多操作都不能进行，一个最简单的就是删除了。</p>
+<p>linux中每个文件有类似于ID的东西，使用以下命令查看</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ll -i</span><br></pre></td></tr></table></figure>
+
+<p>显示出来的第一个数字就是文件的inum</p>
+<p>可以利用以下命令进行删除操作,假设inum为111111</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find . -inum 11111 -<span class="built_in">exec</span> <span class="built_in">rm</span> -f &#123;&#125; \</span><br></pre></td></tr></table></figure>
+
+<p>rm -f {}可以自行替换为自己需要操作的命令。<br>这样的话，不管什么文件都可以操作，只要有inum!</p>
+</div></article></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="https://static.ddhigh.com/blog/2019-09-18-094336.jpg" alt="XiaLei"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">XiaLei</p><p class="is-size-6 is-block">Senior Software Engineer</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Tencent</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Seiten</p><a href="/archives"><p class="title">306</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Kategorien</p><a href="/categories"><p class="title">25</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tags</p><a href="/tags"><p class="title">38</p></a></div></div></nav><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/xialeistudio"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="RSS" href="/atom.xml"><i class="fas fa-rss"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="LinkedIn" href="https://www.linkedin.com/in/xialeidoc/"><i class="fa-brands fa-linkedin"></i></a></div></div></div><!--!--></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">Learning &amp; Sharing</a><p class="is-size-7"><span>&copy; 2023 Xia Lei</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en-us");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><a id="back-to-top" title="Zurück nach oben" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "Diese Website verwendet Cookies, um Ihre Erfahrung zu verbessern.",
+          dismiss: "Verstanden!",
+          allow: "Cookies zulassen",
+          deny: "Ablehnen",
+          link: "Mehr erfahren",
+          policy: "Cookie-Richtlinie",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Tippen Sie etwas..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Tippen Sie etwas...","untitled":"(Ohne Titel)","posts":"Seiten","pages":"Pages","categories":"Kategorien","tags":"Tags"});
+        });</script></body></html>

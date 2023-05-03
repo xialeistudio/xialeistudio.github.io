@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>NestJs学习之旅(2)——控制器 - Learning &amp; Sharing</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Learning &amp; Sharing"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Learning &amp; Sharing"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="本文是NestJs学习之旅的第二篇，主要讲解控制器。 MVC说到控制器就不得不说经典的MVC架构。  MVC模式（Model–view–controller）是软件工程中的一种软件架构模式，把软件系统分为三个基本部分：模型（Model）、视图（View）和控制器（Controller）。  控制器（Controller）- 负责转发请求，对请求进行处理，处理完毕后输出响应。 视图 （View） -"><meta property="og:type" content="article"><meta property="og:title" content="NestJs学习之旅(2)——控制器"><meta property="og:url" content="https://www.ddhigh.com/2019/08/20/2019-08-20-nestjs-controller.html"><meta property="og:site_name" content="Learning &amp; Sharing"><meta property="og:description" content="本文是NestJs学习之旅的第二篇，主要讲解控制器。 MVC说到控制器就不得不说经典的MVC架构。  MVC模式（Model–view–controller）是软件工程中的一种软件架构模式，把软件系统分为三个基本部分：模型（Model）、视图（View）和控制器（Controller）。  控制器（Controller）- 负责转发请求，对请求进行处理，处理完毕后输出响应。 视图 （View） -"><meta property="og:locale" content="en_US"><meta property="og:image" content="https://www.ddhigh.com/img/og_image.png"><meta property="article:published_time" content="2019-08-20T02:10:21.000Z"><meta property="article:modified_time" content="2019-08-20T02:10:21.000Z"><meta property="article:author" content="Xia Lei"><meta property="article:tag" content="nestjs"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://www.ddhigh.com/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.ddhigh.com/2019/08/20/2019-08-20-nestjs-controller.html"},"headline":"NestJs学习之旅(2)——控制器","image":["https://www.ddhigh.com/img/og_image.png"],"datePublished":"2019-08-20T02:10:21.000Z","dateModified":"2019-08-20T02:10:21.000Z","author":{"@type":"Person","name":"Xia Lei"},"publisher":{"@type":"Organization","name":"Learning & Sharing","logo":{"@type":"ImageObject","url":{"text":"Learning & Sharing"}}},"description":"本文是NestJs学习之旅的第二篇，主要讲解控制器。 MVC说到控制器就不得不说经典的MVC架构。  MVC模式（Model–view–controller）是软件工程中的一种软件架构模式，把软件系统分为三个基本部分：模型（Model）、视图（View）和控制器（Controller）。  控制器（Controller）- 负责转发请求，对请求进行处理，处理完毕后输出响应。 视图 （View） -"}</script><link rel="canonical" href="https://www.ddhigh.com/2019/08/20/2019-08-20-nestjs-controller.html"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.4.1/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><!--!--><script>var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?78141f99bbb49f1564a7af89344f5add";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">Learning &amp; Sharing</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a><a class="navbar-item search" title="Suche" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Gepostet vor&nbsp;<time dateTime="2019-08-20T02:10:21.000Z" title="8/20/2019, 2:10:21 AM">2019-08-20</time></span><span class="level-item"><a class="link-muted" href="/categories/backend/">backend</a><span> / </span><a class="link-muted" href="/categories/backend/nodejs/">nodejs</a></span><span class="level-item">12 minutes lesen (Über 1812 Wörter)</span></div></div><h1 class="title is-3 is-size-4-mobile">NestJs学习之旅(2)——控制器</h1><div class="content"><p>本文是NestJs学习之旅的第二篇，主要讲解控制器。</p>
+<h2 id="MVC"><a href="#MVC" class="headerlink" title="MVC"></a>MVC</h2><p>说到控制器就不得不说经典的MVC架构。</p>
+<blockquote>
+<p>MVC模式（Model–view–controller）是软件工程中的一种软件架构模式，把软件系统分为三个基本部分：模型（Model）、视图（View）和控制器（Controller）。</p>
+<ul>
+<li>控制器（Controller）- 负责转发请求，对请求进行处理，处理完毕后输出响应。</li>
+<li>视图 （View） - 界面设计人员进行图形界面设计</li>
+<li>模型 （Model）- 数据库查询和业务逻辑</li>
+</ul>
+</blockquote>
+<p>可以看到控制器起着承上启下的作用，是Web开发中必备的一环，视图和模型倒不是必须的，理由如下：</p>
+<ol>
+<li>API项目直接输出JSON数据，无需渲染页面</li>
+<li>无数据库或者复杂业务逻辑的项目时可以把请求处理直接在控制器完成</li>
+</ol>
+<h2 id="路由"><a href="#路由" class="headerlink" title="路由"></a>路由</h2><p>控制器的目的是接收应用程序的特定请求。基于路由机制来实现请求的分发。通常，每个控制器具有多个路由，并且不同的路由可以执行不同的动作。</p>
+<p>为了创建一个基本的控制器，我们使用类和装饰器。装饰器将类与所需的元数据相关联，并使Nest能够创建路由映射（将请求绑定到相应的控制器）。</p>
+<h2 id="控制器定义"><a href="#控制器定义" class="headerlink" title="控制器定义"></a>控制器定义</h2><p>使用<code>@Controller</code>装饰器来定义控制器，传入一个可选的路由前缀可以将该控制器绑定到该前缀。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Controller</span>, <span class="title class_">Get</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/common&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Controller</span>(<span class="string">&#x27;cats&#x27;</span>)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">CatsController</span> &#123;</span><br><span class="line">  <span class="meta">@Get</span>(<span class="string">&#x27;list&#x27;</span>)</span><br><span class="line">  <span class="title function_">findAll</span>(): <span class="built_in">string</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;This action returns all cats&#x27;</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Get</span>(<span class="string">&#x27;show&#x27;</span>)</span><br><span class="line">  <span class="title function_">fineOne</span>(): <span class="built_in">string</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;one cat&#x27;</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Get</span>()</span><br><span class="line">  <span class="title function_">index</span>():<span class="built_in">string</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;index&#x27;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以上例程会生成以下路由：</p>
+<ol>
+<li>GET &#x2F;cats&#x2F;list CatsController::findAll方法处理</li>
+<li>GET &#x2F;cats&#x2F;show CatsController::show方法处理</li>
+<li>GET &#x2F;cats CatsController::index方法处理</li>
+</ol>
+<p>上述例程使用的是<code>@Get</code>装饰器，所以只能处理<code>GET</code>请求，以下是支持的请求方法与对应的装饰器</p>
+<table>
+<thead>
+<tr>
+<th align="left">请求方法</th>
+<th align="left">装饰器名称</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">GET</td>
+<td align="left">@Get</td>
+<td align="left">匹配GET请求</td>
+</tr>
+<tr>
+<td align="left">POST</td>
+<td align="left">@Post</td>
+<td align="left">匹配POST请求</td>
+</tr>
+<tr>
+<td align="left">PUT</td>
+<td align="left">@Put</td>
+<td align="left">匹配PUT请求</td>
+</tr>
+<tr>
+<td align="left">HEAD</td>
+<td align="left">@Head</td>
+<td align="left">匹配HEAD请求</td>
+</tr>
+<tr>
+<td align="left">DELETE</td>
+<td align="left">@Delete</td>
+<td align="left">匹配DELETE请求</td>
+</tr>
+<tr>
+<td align="left">OPTIONS</td>
+<td align="left">@Options</td>
+<td align="left">匹配OPTIONS请求</td>
+</tr>
+<tr>
+<td align="left">-</td>
+<td align="left">@All</td>
+<td align="left">匹配所有请求方法</td>
+</tr>
+</tbody></table>
+<h2 id="动态路由"><a href="#动态路由" class="headerlink" title="动态路由"></a>动态路由</h2><p>上文中的路由方法接收的参数是固定的，所以只能匹配固定的请求，如果路由地址是动态变化的(<code>路由地址指请求的path，不包括QueryString</code>)，则上述路由定义方式无法正常工作。</p>
+<p>NestJs支持基于路径的路由定义，使用如下：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;<span class="meta">@Controller</span>, <span class="title class_">Get</span>&#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/common&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Controller</span>(<span class="string">&#x27;cats&#x27;</span>)</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">CatsController</span> &#123;</span><br><span class="line">    <span class="meta">@Get</span>(<span class="string">&#x27;:id&#x27;</span>)</span><br><span class="line">    <span class="title function_">findOne</span>(<span class="meta">@Param</span>() params): <span class="built_in">string</span> &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(params.<span class="property">id</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">`This action returns a #<span class="subst">$&#123;params.id&#125;</span> cat`</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当请求<code>/cats/猫ID</code>这种动态路由时(<code>因为猫ID是path的一部分，所以path是变化的</code>)，<code>params.id</code>就是<code>猫ID</code>，做过Vue或者React开发的读者应该熟悉以下写法：</p>
+<p>路由定义 <code>/user/:userId/orders/:orderId</code><br>页面地址 <code>/user/1/orders/2</code></p>
+<p>访问以上页面将产生以下参数:</p>
+<ul>
+<li>userId &#x3D;&gt; 1</li>
+<li>orderId &#x3D;&gt; 2</li>
+</ul>
+<p>NestJs在这方面是一致的。</p>
+<h2 id="请求参数"><a href="#请求参数" class="headerlink" title="请求参数"></a>请求参数</h2><p>上述例子中，我们使用<code>@Params</code>读取了请求路径上的动态参数。NestJs还支持以下的装饰器来获取不同的请求参数</p>
+<table>
+<thead>
+<tr>
+<th align="left">装饰器名称</th>
+<th align="left">底层对象</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">@Request()</td>
+<td align="left">req</td>
+<td align="left">原始请求对象</td>
+</tr>
+<tr>
+<td align="left">@Response()</td>
+<td align="left">res</td>
+<td align="left">原始响应对象</td>
+</tr>
+<tr>
+<td align="left">@Param(key?:string)</td>
+<td align="left">req.params或req.params[key]</td>
+<td align="left">路径参数</td>
+</tr>
+<tr>
+<td align="left">@Body(key?:string)</td>
+<td align="left">req.body或req.body[key]</td>
+<td align="left">请求体，支持表单或JSON</td>
+</tr>
+<tr>
+<td align="left">@Query(key?:string)</td>
+<td align="left">req.query或req.query[key]</td>
+<td align="left">请求链接的查询字符串</td>
+</tr>
+<tr>
+<td align="left">@Headers(name?:string)</td>
+<td align="left">req.headers或req.headers[key]</td>
+<td align="left">请求头</td>
+</tr>
+</tbody></table>
+<h2 id="请求体"><a href="#请求体" class="headerlink" title="请求体"></a>请求体</h2><p>在POST&#x2F;PUT&#x2F;PATCH请求中，会包含请求体，NestJs通过<code>@Body</code>装饰器可以自动获取该数据。比如如下代码:</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span>(<span class="string">&#x27;user&#x27;</span>)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">AppController</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params"><span class="keyword">private</span> <span class="keyword">readonly</span> appService: AppService</span>) &#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Post</span>()</span><br><span class="line">  <span class="title function_">findAll</span>(<span class="params"><span class="meta">@Body</span>() data: <span class="built_in">any</span></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> data;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以上例程会原样输出请求内容。</p>
+<h3 id="请求体绑定"><a href="#请求体绑定" class="headerlink" title="请求体绑定"></a>请求体绑定</h3><p>SpringBoot中<code>@RequestBody</code>注解可以直接绑定到给定的POJO对象实现请求参数自动注入，在NestJs中，该特性也得到了支持。</p>
+<p>定义DTO对象</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">UserLoginDTO</span> &#123;</span><br><span class="line">    <span class="keyword">readonly</span> <span class="attr">username</span>: <span class="built_in">string</span>;</span><br><span class="line">    <span class="keyword">readonly</span> <span class="attr">password</span>: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>定义控制器</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span>(<span class="string">&#x27;users&#x27;</span>)</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">UserController</span>() &#123;</span><br><span class="line">    <span class="meta">@Post</span>(<span class="string">&#x27;login&#x27;</span>)</span><br><span class="line">    <span class="title function_">login</span>(<span class="params"><span class="meta">@Body</span>() userLoginDTO: UserLoginDTO</span>) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(userLoginDTO.<span class="property">username</span>, userLoginDTO.<span class="property">password</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到与SpringBoot的开发体验几乎一致。</p>
+<h2 id="响应头"><a href="#响应头" class="headerlink" title="响应头"></a>响应头</h2><p>如果需要输出响应头，可以使用<code>@Header(name:string,value:string)</code>装饰器来进行处理。</p>
+<p><code>请注意：响应头使用@Header()装饰器，请求头使用@Headers()装饰器，末尾有个s的区别!</code></p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span>(<span class="string">&#x27;users&#x27;</span>)</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">UserController</span> &#123;</span><br><span class="line">    <span class="meta">@Head</span>(<span class="string">&#x27;:id&#x27;</span>)</span><br><span class="line">    <span class="meta">@Header</span>(<span class="string">&#x27;x-version&#x27;</span>, <span class="string">&#x27;1.0.0&#x27;</span>)</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">head</span>(<span class="params"><span class="meta">@Param</span>(<span class="string">&#x27;id&#x27;</span>) id:<span class="built_in">number</span></span>) &#123;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="响应状态码"><a href="#响应状态码" class="headerlink" title="响应状态码"></a>响应状态码</h2><p>从响应体的设计可以发现一个问题，由于不推荐直接操纵<code>response</code>对象，如果需要输出响应状态码怎么办?NestJs也为我们提供了解决方案。</p>
+<p>使用<code>@HttpCode(statusCode:number)</code>装饰器可以设定响应状态码。</p>
+<p>在Restful API设计中，DELETE请求应当返回<code>204 No Content</code>状态码，如下代码所示：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span>(<span class="string">&#x27;users&#x27;</span>)</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">UserController</span> &#123;</span><br><span class="line">    <span class="meta">@DELETE</span>(<span class="string">&quot;:id&quot;</span>)</span><br><span class="line">    <span class="meta">@HttpCode</span>(<span class="number">204</span>)</span><br><span class="line">    <span class="title function_">delete</span>(<span class="params"><span class="meta">@Param</span>(<span class="string">&#x27;id&#x27;</span>) id:<span class="built_in">number</span></span>) &#123;</span><br><span class="line">        <span class="comment">// 删除成功不需要返回数据</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="响应体"><a href="#响应体" class="headerlink" title="响应体"></a>响应体</h2><p>在express或者开发中，响应内容都是我们手动赋值或者输出的，但是在NestJs，可以直接根据路由函数的返回值<code>类型</code>自动识别响应体类型。NestJs支持以下格式的响应：</p>
+<table>
+<thead>
+<tr>
+<th align="left">TS类型</th>
+<th align="left">响应类型</th>
+<th align="left">响应格式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">string</td>
+<td align="left">字符串</td>
+<td align="left">text&#x2F;html</td>
+</tr>
+<tr>
+<td align="left">object</td>
+<td align="left">JSON</td>
+<td align="left">application&#x2F;json</td>
+</tr>
+<tr>
+<td align="left">array</td>
+<td align="left">JSON</td>
+<td align="left">application&#x2F;json</td>
+</tr>
+<tr>
+<td align="left">null</td>
+<td align="left">无(响应体长度为0)</td>
+<td align="left">无</td>
+</tr>
+<tr>
+<td align="left">undefined</td>
+<td align="left">无(响应体长度为0)</td>
+<td align="left">无</td>
+</tr>
+<tr>
+<td align="left">Promise&lt;*&gt;</td>
+<td align="left">根据Promise返回的结果类型确定(规则如上)</td>
+<td align="left">-</td>
+</tr>
+</tbody></table>
+<h2 id="异步路由函数"><a href="#异步路由函数" class="headerlink" title="异步路由函数"></a>异步路由函数</h2><p>在前面的例子中，我们所有的路由处理函数都是同步的，但是在实际开发中基本不可能，一旦涉及到数据库访问、缓存访问就会存在IO，有IO就会有异步。</p>
+<p>NestJs天生完美支持异步，有以下两种方法进行异步编程：</p>
+<h3 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Get</span>()</span><br><span class="line"><span class="keyword">async</span> <span class="title function_">findAll</span>(): <span class="title class_">Promise</span>&lt;<span class="built_in">any</span>[]&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">Promise</span>.<span class="title function_">resolve</span>([]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="RxJs"><a href="#RxJs" class="headerlink" title="RxJs"></a>RxJs</h3><p>RxJs中提供了<code>Observable</code>对象，NestJs可以自动订阅并获取最后一次产生的值。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Get</span>()</span><br><span class="line"><span class="attr">findAll</span>: <span class="title class_">Observable</span>&lt;<span class="built_in">any</span>[]&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">of</span>([]); <span class="comment">// of为RxJs操作符</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="实现一个Restful-API"><a href="#实现一个Restful-API" class="headerlink" title="实现一个Restful API"></a>实现一个Restful API</h2><p>以下是基于Restful API规范开发的API，本文的主要内容为控制器，所以DTO对象的创建省略。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Controller</span>, <span class="title class_">Get</span>, <span class="title class_">Query</span>, <span class="title class_">Post</span>, <span class="title class_">Body</span>, <span class="title class_">Put</span>, <span class="title class_">Param</span>, <span class="title class_">Delete</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/common&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">CreateCatDto</span>, <span class="title class_">UpdateCatDto</span>, <span class="title class_">ListAllEntities</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./dto&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Controller</span>(<span class="string">&#x27;users&#x27;</span>)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">UsersController</span> &#123;</span><br><span class="line">  <span class="comment">// 创建用户，POST请求会自动返回201状态码，响应体为空</span></span><br><span class="line">  <span class="meta">@Post</span>()</span><br><span class="line">  <span class="title function_">create</span>(<span class="params"><span class="meta">@Body</span>() dto: CreateUserDto</span>) &#123;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 用户列表</span></span><br><span class="line">  <span class="meta">@Get</span>()</span><br><span class="line">  <span class="title function_">findAll</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> [</span><br><span class="line">          &#123;<span class="attr">id</span>:<span class="number">1</span>,<span class="attr">username</span>:<span class="string">&#x27;a&#x27;</span>,<span class="attr">password</span>:<span class="string">&#x27;a&#x27;</span>&#125;,</span><br><span class="line">          &#123;<span class="attr">id</span>:<span class="number">2</span>,<span class="attr">username</span>:<span class="string">&#x27;b&#x27;</span>,<span class="attr">password</span>:<span class="string">&#x27;b&#x27;</span>&#125;</span><br><span class="line">      ];</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 查看用户</span></span><br><span class="line">  <span class="meta">@Get</span>(<span class="string">&#x27;:id&#x27;</span>)</span><br><span class="line">  <span class="title function_">findOne</span>(<span class="params"><span class="meta">@Param</span>(<span class="string">&#x27;id&#x27;</span>) id: <span class="built_in">number</span></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;id,<span class="attr">username</span>:<span class="string">&#x27;mock username&#x27;</span>, <span class="attr">password</span>: <span class="string">&#x27;mock password&#x27;</span>&#125;;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 更新用户，需要返回编辑后的用户资源</span></span><br><span class="line">  <span class="meta">@Put</span>(<span class="string">&#x27;:id&#x27;</span>)</span><br><span class="line">  <span class="title function_">update</span>(<span class="params"><span class="meta">@Param</span>(<span class="string">&#x27;id&#x27;</span>) id: <span class="built_in">number</span>, <span class="meta">@Body</span>() updateUserDto: UpdateUserDto</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> &#123;id,<span class="attr">username</span>:<span class="string">&#x27;updated username&#x27;</span>,<span class="attr">password</span>: <span class="string">&#x27;updated password&#x27;</span>&#125;;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 删除用户，返回204状态码</span></span><br><span class="line">  <span class="meta">@Delete</span>(<span class="string">&#x27;:id&#x27;</span>)</span><br><span class="line">  <span class="meta">@HttpCode</span>(<span class="number">204</span>)</span><br><span class="line">  <span class="title function_">remove</span>(<span class="params"><span class="meta">@Param</span>(<span class="string">&#x27;id&#x27;</span>) id: <span class="built_in">number</span></span>) &#123;</span><br><span class="line">   </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</div><div class="article-licensing box"><div class="licensing-title"><p>NestJs学习之旅(2)——控制器</p><p><a href="https://www.ddhigh.com/2019/08/20/2019-08-20-nestjs-controller.html">https://www.ddhigh.com/2019/08/20/2019-08-20-nestjs-controller.html</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Xia Lei</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2019-08-20</p></div></div><div class="level-item is-narrow"><div><h6>Updated on</h6><p>2019-08-20</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/nestjs/">nestjs</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2019/08/21/2019-08-21-nestjs-provider.html"><i class="level-item fas fa-chevron-left"></i><span class="level-item">NestJs学习之旅(3)——服务提供者</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2019/08/19/2019-08-19-nestjs-get-started.html"><span class="level-item">NestJs学习之旅(1)——快速开始</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><!--!--></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="https://static.ddhigh.com/blog/2019-09-18-094336.jpg" alt="XiaLei"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">XiaLei</p><p class="is-size-6 is-block">Senior Software Engineer</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Tencent</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Seiten</p><a href="/archives"><p class="title">306</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Kategorien</p><a href="/categories"><p class="title">25</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tags</p><a href="/tags"><p class="title">38</p></a></div></div></nav><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/xialeistudio"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="RSS" href="/atom.xml"><i class="fas fa-rss"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="LinkedIn" href="https://www.linkedin.com/in/xialeidoc/"><i class="fa-brands fa-linkedin"></i></a></div></div></div><!--!--></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">Learning &amp; Sharing</a><p class="is-size-7"><span>&copy; 2023 Xia Lei</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en-us");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><a id="back-to-top" title="Zurück nach oben" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "Diese Website verwendet Cookies, um Ihre Erfahrung zu verbessern.",
+          dismiss: "Verstanden!",
+          allow: "Cookies zulassen",
+          deny: "Ablehnen",
+          link: "Mehr erfahren",
+          policy: "Cookie-Richtlinie",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Tippen Sie etwas..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Tippen Sie etwas...","untitled":"(Ohne Titel)","posts":"Seiten","pages":"Pages","categories":"Kategorien","tags":"Tags"});
+        });</script></body></html>

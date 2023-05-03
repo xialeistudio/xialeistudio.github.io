@@ -1,0 +1,1011 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="robots" content="noindex"><meta><title>Kategorie: nodejs - Learning &amp; Sharing</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Learning &amp; Sharing"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Learning &amp; Sharing"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="Learning &amp;amp; Sharing"><meta property="og:type" content="website"><meta property="og:title" content="Learning &amp; Sharing"><meta property="og:url" content="https://www.ddhigh.com/"><meta property="og:site_name" content="Learning &amp; Sharing"><meta property="og:description" content="Learning &amp;amp; Sharing"><meta property="og:locale" content="en_US"><meta property="og:image" content="https://www.ddhigh.com/img/og_image.png"><meta property="article:author" content="Xia Lei"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://www.ddhigh.com/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.ddhigh.com"},"headline":"Learning & Sharing","image":["https://www.ddhigh.com/img/og_image.png"],"author":{"@type":"Person","name":"Xia Lei"},"publisher":{"@type":"Organization","name":"Learning & Sharing","logo":{"@type":"ImageObject","url":{"text":"Learning & Sharing"}}},"description":"Learning &amp; Sharing"}</script><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.4.1/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><!--!--><script>var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?78141f99bbb49f1564a7af89344f5add";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">Learning &amp; Sharing</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a><a class="navbar-item search" title="Suche" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><div class="card-content"><nav class="breadcrumb" aria-label="breadcrumbs"><ul><li><a href="/categories">Kategorien</a></li><li><a href="/categories/backend/">backend</a></li><li class="is-active"><a href="#" aria-current="page">nodejs</a></li></ul></nav></div></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Gepostet vor&nbsp;<time dateTime="2019-08-26T07:32:29.000Z" title="8/26/2019, 7:32:29 AM">2019-08-26</time></span><span class="level-item"><a class="link-muted" href="/categories/backend/">backend</a><span> / </span><a class="link-muted" href="/categories/backend/nodejs/">nodejs</a></span><span class="level-item">13 minutes lesen (Über 2015 Wörter)</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2019/08/26/2019-08-26-nestjs-exception-filter.html">NestJs学习之旅(6)——异常处理</a></p><div class="content"><p>本文是NestJs的第六篇，讲解异常处理。</p>
+<h2 id="传统的异常处理"><a href="#传统的异常处理" class="headerlink" title="传统的异常处理"></a>传统的异常处理</h2><p>在前面的内容中我们介绍了NestJs的几大常用组件，但是有一点没有做出说明，当我们的应用需要中断此次请求且输出错误信息时，我们需要怎么做？</p>
+<p>这个问题有两种解决办法：</p>
+<ol>
+<li><p>services层直接返回中断请求的响应对象，controller直接输出该对象即可</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(!<span class="variable language_">this</span>.<span class="title function_">allowLogin</span>()) &#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;<span class="attr">errcode</span>: <span class="number">403</span>, <span class="attr">errmsg</span>: <span class="string">&#x27;不允许登录&#x27;</span>&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>services层抛出异常，controller捕获该异常，然后输出响应对象</p>
+</li>
+</ol>
+<p>以上两种方法都有一定的缺点：</p>
+<ol>
+<li>controller调用多个services时，需要依据services层的返回值来进行错误判断，要是漏了判断的话会导致原本需要中断的请求处理继续运行，导致不可预料的后果</li>
+<li>如果每个controller都需要try&#x2F;catch掉services层抛出的异常的话，会多了很多“重复”代码</li>
+</ol>
+<p>那有没有一个像SpringBoot的<code>ExceptionHandler</code>相似的解决办法呢?</p>
+<h2 id="NestJs的异常处理"><a href="#NestJs的异常处理" class="headerlink" title="NestJs的异常处理"></a>NestJs的异常处理</h2><p>NestJs提供了统一的异常处理器，来集中处理运行过程中<strong>未捕获的异常</strong>，可以自定义响应参数，非常灵活。</p>
+<p><img src="https://static.ddhigh.com/blog/2019-08-26-073002.png" alt="img"></p>
+<h2 id="默认响应"><a href="#默认响应" class="headerlink" title="默认响应"></a>默认响应</h2><p>NestJs内置了默认的<strong>全局异常过滤器</strong>，该过滤器处理<strong>HttpException</strong>(及其子类)的异常。如果抛出的异常不是上述异常，则会响应以下默认JSON：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;statusCode&quot;</span><span class="punctuation">:</span> <span class="number">500</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;message&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Interval server error&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="内置异常过滤器"><a href="#内置异常过滤器" class="headerlink" title="内置异常过滤器"></a>内置异常过滤器</h2><p>由于NestJs内置了默认的异常过滤器，如果在应用内抛出HttpException，是可以被NestJs自动捕获的。</p>
+<p>比如在services层抛出一个HttpException：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Injectable</span>()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">UserService</span> &#123;</span><br><span class="line">  <span class="title function_">login</span>(<span class="params">username: <span class="built_in">string</span>, password: <span class="built_in">string</span></span>) &#123;</span><br><span class="line">    <span class="keyword">if</span>(!<span class="variable language_">this</span>.<span class="title function_">allowLogin</span>()) &#123;</span><br><span class="line">  		<span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">HttpException</span>(<span class="string">&#x27;您无权登录&#x27;</span>, <span class="title class_">HttpStatus</span>.<span class="property">FORBIDDEN</span>);</span><br><span class="line">		&#125;</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="attr">user_id</span>:<span class="number">1</span>, <span class="attr">token</span>: <span class="string">&#x27;fake token&#x27;</span>&#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>controller正常调用该services即可:</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span>(<span class="string">&#x27;users&#x27;</span>)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">UserController</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params"><span class="keyword">private</span> <span class="keyword">readonly</span> userService: UserService</span>) &#123;&#125;</span><br><span class="line">  </span><br><span class="line">  <span class="meta">@Post</span>(<span class="string">&#x27;login&#x27;</span>)</span><br><span class="line">  <span class="title function_">login</span>(<span class="params"><span class="meta">@Body</span>(<span class="string">&#x27;username&#x27;</span>) username: <span class="built_in">string</span>, <span class="meta">@Body</span>(<span class="string">&#x27;password&#x27;</span>) password: <span class="built_in">string</span></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">userService</span>.<span class="title function_">login</span>(username, password);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>客户端访问&#x2F;user&#x2F;login时，如果不允许登录，会收到以下响应：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;statusCode&quot;</span><span class="punctuation">:</span> <span class="number">403</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;message&quot;</span><span class="punctuation">:</span> <span class="string">&quot;您无权登录&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>一般情况下，上述JSON的返回的信息是不够的，比如有些业务自定义的错误码没地方可以自定义。</p>
+<p>如果你有这种需求，可以传递object给HttpException的第一个参数来实现：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">HttpException</span>(&#123;<span class="attr">errcode</span>: <span class="number">40010</span>, <span class="attr">errmsg</span>: <span class="string">&#x27;您无权登录&#x27;</span>&#125;, <span class="title class_">HttpStatus</span>.<span class="property">FORBIDDEN</span>);</span><br></pre></td></tr></table></figure>
+
+<p>客户端访问时，如果不允许登录，会收到以下响应：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;errcode&quot;</span><span class="punctuation">:</span> <span class="number">40010</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;errmsg&quot;</span><span class="punctuation">:</span> <span class="string">&quot;您无权登录&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="自定义异常"><a href="#自定义异常" class="headerlink" title="自定义异常"></a>自定义异常</h2><p>企业级应用开发过程中，使用HttpException进行处理对开发是不太友好的，一个比较常用的做法是自定义一个UserException来承载业务异常（系统运行正常，只不过当前请求不满足业务上的要求而中断，比如注册的时候用户名重复的时候打回去，此时数据库查询是正常的，这就是业务异常和系统异常的区别）。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">UserException</span> <span class="keyword">extends</span> <span class="title class_ inherited__">HttpException</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">errcode: <span class="built_in">number</span>, errmsg: <span class="built_in">string</span>, statusCode: <span class="built_in">number</span></span>) &#123;</span><br><span class="line">    <span class="variable language_">super</span>(&#123; errcode, errmsg &#125;, statusCode);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>业务层在使用该异常时直接使用以下代码即可，将原来传递对象的代码扁平化了：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">UserException</span>(<span class="number">40010</span>, <span class="string">&#x27;您无权登录&#x27;</span>, <span class="title class_">HttpStatus</span>.<span class="property">FORBIDDEN</span>);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="语义化业务异常"><a href="#语义化业务异常" class="headerlink" title="语义化业务异常"></a>语义化业务异常</h3><p>使用自定义异常时HTTP协议层是正常的，抛出403错误有点不符合语义化的需求。对上例改造一下：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">UserException</span> <span class="keyword">extends</span> <span class="title class_ inherited__">HttpException</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">errcode: <span class="built_in">number</span>, errmsg: <span class="built_in">string</span></span>) &#123;</span><br><span class="line">    <span class="variable language_">super</span>(&#123; errcode, errmsg &#125;, <span class="title class_">HttpStatus</span>.<span class="property">OK</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">UserException</span>(<span class="number">40010</span>, <span class="string">&#x27;您无权登录&#x27;</span>);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>此时客户端收到的HttpStatus为200，意味着此次请求在协议层面是成功的，只不过业务层返回了错误。前端在处理响应时可以直接对errcode是否为0来确定此次请求是否成功。</p>
+<h2 id="自定义异常过滤器"><a href="#自定义异常过滤器" class="headerlink" title="自定义异常过滤器"></a>自定义异常过滤器</h2><p>虽然内置的异常过滤器可以自动处理很多情况，但是不是“可编程”的，也就是说我们无法完全控制异常处理过程，如果我们需要记录日志的话，使用内置的异常过滤器办不到，这时候可以使用**@Catch**注解来自定义异常处理器，添加日志记录什么的。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">ExceptionFilter</span>, <span class="title class_">Catch</span>, <span class="title class_">ArgumentsHost</span>, <span class="title class_">HttpException</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/common&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Request</span>, <span class="title class_">Response</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;express&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Catch</span>(<span class="title class_">HttpException</span>)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">HttpExceptionFilter</span> <span class="keyword">implements</span> <span class="title class_">ExceptionFilter</span>&lt;<span class="title class_">HttpException</span>&gt; &#123;</span><br><span class="line">  <span class="keyword">catch</span>(<span class="attr">exception</span>: <span class="title class_">HttpException</span>, <span class="attr">host</span>: <span class="title class_">ArgumentsHost</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> ctx = host.<span class="title function_">switchToHttp</span>();</span><br><span class="line">    <span class="keyword">const</span> response = ctx.<span class="property">getResponse</span>&lt;<span class="title class_">Response</span>&gt;();</span><br><span class="line">    <span class="keyword">const</span> request = ctx.<span class="property">getRequest</span>&lt;<span class="title class_">Request</span>&gt;();</span><br><span class="line">    <span class="keyword">const</span> status = exception.<span class="title function_">getStatus</span>();</span><br><span class="line">		<span class="comment">// @todo 记录日志</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;%s %s error: %s&#x27;</span>, request.<span class="property">method</span>, request.<span class="property">url</span>, exception.<span class="property">message</span>);</span><br><span class="line">    <span class="comment">// 发送响应</span></span><br><span class="line">    response</span><br><span class="line">      .<span class="title function_">status</span>(status)</span><br><span class="line">      .<span class="title function_">json</span>(&#123;</span><br><span class="line">        <span class="attr">statusCode</span>: status,</span><br><span class="line">      	<span class="attr">message</span>: exception.<span class="property">message</span></span><br><span class="line">        <span class="attr">path</span>: request.<span class="property">url</span>,</span><br><span class="line">      &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="ArgumentHost"><a href="#ArgumentHost" class="headerlink" title="ArgumentHost"></a>ArgumentHost</h3><p>ArgumentHost是原始请求的包装器，由于NestJs支持HTTP&#x2F;GRPC&#x2F;WebSocket，这三种请求的原始请求对象是有差异的，为了异常过滤器能够统一处理这三种异常，NestJs做了包装。最终在使用时处理那种异常由开发者来决定。</p>
+<p>ArgumentHost接口定义如下：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">interface</span> <span class="title class_">ArgumentsHost</span> &#123;</span><br><span class="line">  getArgs&lt;T <span class="keyword">extends</span> <span class="title class_">Array</span>&lt;<span class="built_in">any</span>&gt; = <span class="built_in">any</span>[]&gt;(): T;</span><br><span class="line">  getArgByIndex&lt;T = <span class="built_in">any</span>&gt;(<span class="attr">index</span>: <span class="built_in">number</span>): T;</span><br><span class="line">  <span class="title function_">switchToRpc</span>(): <span class="title class_">RpcArgumentsHost</span>;</span><br><span class="line">  <span class="title function_">switchToHttp</span>(): <span class="title class_">HttpArgumentsHost</span>;</span><br><span class="line">  <span class="title function_">switchToWs</span>(): <span class="title class_">WsArgumentsHost</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>如果需要处理的是WebSocket异常，就使用**host.switchToWs()**，其他异常以此类推。</p>
+<h3 id="使用自定义异常过滤器"><a href="#使用自定义异常过滤器" class="headerlink" title="使用自定义异常过滤器"></a>使用自定义异常过滤器</h3><p>如果定义完自定义异常过滤器之后，直接去访问会抛出异常的接口，此时可以发现并没有走自定义异常过滤器。</p>
+<p>因为我们<strong>只是定义，并没有注册</strong>。</p>
+<p>使用**@UseFilters**注册自定义异常过滤器。</p>
+<p>异常过滤器有以下三种作用范围：</p>
+<ul>
+<li>方法级别</li>
+<li>控制器级别</li>
+<li>全局级别</li>
+</ul>
+<h3 id="方法级别"><a href="#方法级别" class="headerlink" title="方法级别"></a>方法级别</h3><p>只会处理该方法上抛出的异常，其他方法抛出的异常不会处理。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Post</span>(<span class="string">&#x27;login&#x27;</span>)</span><br><span class="line"><span class="meta">@UseFilters</span>(<span class="title class_">UserExceptionFilter</span>)</span><br><span class="line"><span class="title function_">login</span>(<span class="params"><span class="meta">@Body</span>(<span class="string">&#x27;username&#x27;</span>) username:<span class="built_in">string</span>, password: <span class="built_in">string</span></span>) &#123;</span><br><span class="line">  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">UserException</span>(<span class="number">40010</span>, <span class="string">&#x27;您无权登录&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="控制器级别"><a href="#控制器级别" class="headerlink" title="控制器级别"></a>控制器级别</h3><p>只会处理该控制器方法上抛出的异常，其他控制器抛出的异常不处理。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span>(<span class="string">&#x27;user&#x27;</span>)</span><br><span class="line"><span class="meta">@UseFilters</span>(<span class="title class_">UserExceptionFilter</span>)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">UserController</span> &#123;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="全局级别"><a href="#全局级别" class="headerlink" title="全局级别"></a>全局级别</h3><p>在应用入口注册，不会对Websocket或者混合应用（同时支持两种应用，如HTTP&#x2F;GRPC或者HTTP&#x2F;WebSocket）生效。一般Web开发中全局异常过滤器已经够用了。</p>
+<p>在main.ts中注册全局异常过滤器</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">bootstrap</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> app = <span class="keyword">await</span> <span class="title class_">NestFactory</span>.<span class="title function_">create</span>(<span class="title class_">AppModule</span>);</span><br><span class="line">  app.<span class="title function_">useGlobalFilters</span>(<span class="keyword">new</span> <span class="title class_">UserExceptionFilter</span>());</span><br><span class="line">  <span class="keyword">await</span> app.<span class="title function_">listen</span>(<span class="number">3000</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">bootstrap</span>();</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="依赖注入"><a href="#依赖注入" class="headerlink" title="依赖注入"></a>依赖注入</h2><p>由于异常过滤器并不是任何模块上下文的一部分，所以NestJs无法对其进行依赖注入管理，如果有此种需求，比如在异常过滤器中注入service，需要定义服务提供者。服务提供者名称为NestJs规定的常量APP_FILTER</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Module</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/common&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="variable constant_">APP_FILTER</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/core&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Module</span>(&#123;</span><br><span class="line">  <span class="attr">providers</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">provide</span>: <span class="variable constant_">APP_FILTER</span>,</span><br><span class="line">      <span class="attr">useClass</span>: <span class="title class_">UserExceptionFilter</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">  ],</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">AppModule</span> &#123;&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="捕获多种异常或者所有异常"><a href="#捕获多种异常或者所有异常" class="headerlink" title="捕获多种异常或者所有异常"></a>捕获多种异常或者所有异常</h2><p>上例中提到的自定义异常处理器只会捕获UserException异常，如果有系统异常，会使用内置的异常处理器。通过传入异常类型给**@Catch**装饰器来捕获多种异常。如果不传任何异常类型的话，NestJs会捕获所有异常（也就是Error及其子类）。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">ExceptionFilter</span>, <span class="title class_">Catch</span>, <span class="title class_">ArgumentsHost</span>, <span class="title class_">HttpException</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/common&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Request</span>, <span class="title class_">Response</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;express&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Catch</span>() <span class="comment">// 捕获所有异常</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">HttpExceptionFilter</span> <span class="keyword">implements</span> <span class="title class_">ExceptionFilter</span>&lt;<span class="title class_">Error</span>&gt; &#123;</span><br><span class="line">  <span class="keyword">catch</span>(<span class="attr">exception</span>: <span class="title class_">Error</span>, <span class="attr">host</span>: <span class="title class_">ArgumentsHost</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> ctx = host.<span class="title function_">switchToHttp</span>();</span><br><span class="line">    <span class="keyword">const</span> response = ctx.<span class="property">getResponse</span>&lt;<span class="title class_">Response</span>&gt;();</span><br><span class="line">    <span class="keyword">const</span> request = ctx.<span class="property">getRequest</span>&lt;<span class="title class_">Request</span>&gt;();</span><br><span class="line">    <span class="keyword">const</span> status = exception.<span class="title function_">getStatus</span>();</span><br><span class="line">		<span class="comment">// @todo 记录日志</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;%s %s error: %s&#x27;</span>, request.<span class="property">method</span>, request.<span class="property">url</span>, exception.<span class="property">message</span>);</span><br><span class="line">    <span class="comment">// 发送响应</span></span><br><span class="line">    response</span><br><span class="line">      .<span class="title function_">status</span>(status)</span><br><span class="line">      .<span class="title function_">json</span>(&#123;</span><br><span class="line">        <span class="attr">statusCode</span>: status,</span><br><span class="line">      	<span class="attr">message</span>: exception.<span class="property">message</span></span><br><span class="line">        <span class="attr">path</span>: request.<span class="property">url</span>,</span><br><span class="line">      &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h2><p>异常过滤器让应用异常有了统一的处理渠道，同时也解决文章开头提出的两个问题。通过自定义异常过滤器，开发者可以进行统一响应格式，统一记录日志等等操作。</p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Gepostet vor&nbsp;<time dateTime="2019-08-24T09:02:26.000Z" title="8/24/2019, 9:02:26 AM">2019-08-24</time></span><span class="level-item"><a class="link-muted" href="/categories/backend/">backend</a><span> / </span><a class="link-muted" href="/categories/backend/nodejs/">nodejs</a></span><span class="level-item">13 minutes lesen (Über 1999 Wörter)</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2019/08/24/2019-08-24-socks5-protocol.html">socks5协议详解</a></p><div class="content"><h1 id="Socks5代理协议"><a href="#Socks5代理协议" class="headerlink" title="Socks5代理协议"></a>Socks5代理协议</h1><p>或许你没听说过socks5，但你一定听说过SS，SS内部使用的正是socks5协议。</p>
+<p>socks5是一种网络传输协议，主要用于客户端与目标服务器之间通讯的透明传递。</p>
+<p>该协议设计之初是为了让有权限的用户可以穿过防火墙的限制，访问外部资源。</p>
+<h2 id="1-RFC地址"><a href="#1-RFC地址" class="headerlink" title="1. RFC地址"></a>1. RFC地址</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://www.ietf.org/rfc/rfc1928.txt">socks5协议规范rfc1928</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.ietf.org/rfc/rfc1929.txt">socks5账号密码鉴权规范rfc1929</a></li>
+</ol>
+<h2 id="2-协议过程"><a href="#2-协议过程" class="headerlink" title="2. 协议过程"></a>2. 协议过程</h2><p><img src="https://static.ddhigh.com/blog/2019-08-24-041841.png" alt="image.png"></p>
+<ol>
+<li>客户端连接上代理服务器之后需要发送请求告知服务器目前的socks协议版本以及支持的认证方式</li>
+<li>代理服务器收到请求后根据其设定的认证方式返回给客户端</li>
+<li>如果代理服务器不需要认证，客户端将直接向代理服务器发起真实请求</li>
+<li>代理服务器收到该请求之后连接客户端请求的目标服务器</li>
+<li>代理服务器开始转发客户端与目标服务器之间的流量</li>
+</ol>
+<h2 id="3-认证过程"><a href="#3-认证过程" class="headerlink" title="3. 认证过程"></a>3. 认证过程</h2><h3 id="3-1-客户端发出请求"><a href="#3-1-客户端发出请求" class="headerlink" title="3.1 客户端发出请求"></a>3.1 客户端发出请求</h3><blockquote>
+<p>客户端连接服务器之后将直接发出该数据包给代理服务器</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>VERSION</th>
+<th>METHODS_COUNT</th>
+<th align="left">METHODS…</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1字节</td>
+<td>1字节</td>
+<td align="left">1到255字节，长度由METHODS_COUNT值决定</td>
+</tr>
+<tr>
+<td>0x05</td>
+<td>0x03</td>
+<td align="left">0x00 0x01 0x02</td>
+</tr>
+</tbody></table>
+<ul>
+<li>VERSION SOCKS协议版本，目前固定0x05</li>
+<li>METHODS_COUNT 客户端支持的认证方法数量</li>
+<li>METHODS… 客户端支持的认证方法，每个方法占用1个字节</li>
+</ul>
+<p>METHOD定义</p>
+<ul>
+<li>0x00 不需要认证（常用）</li>
+<li>0x01 GSSAPI认证</li>
+<li>0x02 账号密码认证（常用）</li>
+<li>0x03 - 0x7F IANA分配</li>
+<li>0x80 - 0xFE 私有方法保留</li>
+<li>0xFF 无支持的认证方法</li>
+</ul>
+<h3 id="3-2-服务端返回选择的认证方法"><a href="#3-2-服务端返回选择的认证方法" class="headerlink" title="3.2 服务端返回选择的认证方法"></a>3.2 服务端返回选择的认证方法</h3><blockquote>
+<p>接收完客户端支持的认证方法列表后，代理服务器从中选择一个受支持的方法返回给客户端</p>
+</blockquote>
+<h4 id="3-2-1-无需认证"><a href="#3-2-1-无需认证" class="headerlink" title="3.2.1 无需认证"></a>3.2.1 无需认证</h4><table>
+<thead>
+<tr>
+<th>VERSION</th>
+<th>METHOD</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1字节</td>
+<td>1字节</td>
+</tr>
+<tr>
+<td>0x05</td>
+<td>0x00</td>
+</tr>
+</tbody></table>
+<ul>
+<li>VERSION SOCKS协议版本，目前固定0x05</li>
+<li>METHOD 本次连接所用的认证方法，上例中为无需认证</li>
+</ul>
+<h4 id="3-2-2-账号密码认证"><a href="#3-2-2-账号密码认证" class="headerlink" title="3.2.2 账号密码认证"></a>3.2.2 账号密码认证</h4><table>
+<thead>
+<tr>
+<th>VERSION</th>
+<th>METHOD</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1字节</td>
+<td>1字节</td>
+</tr>
+<tr>
+<td>0x05</td>
+<td>0x02</td>
+</tr>
+</tbody></table>
+<h4 id="3-2-3-客户端发送账号密码"><a href="#3-2-3-客户端发送账号密码" class="headerlink" title="3.2.3 客户端发送账号密码"></a>3.2.3 客户端发送账号密码</h4><blockquote>
+<p>服务端返回的认证方法为0x02(账号密码认证)时，客户端会发送账号密码数据给代理服务器</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>VERSION</th>
+<th>USERNAME_LENGTH</th>
+<th>USERNAME</th>
+<th>PASSWORD_LENGTH</th>
+<th>PASSWORD</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1字节</td>
+<td>1字节</td>
+<td>1-255字节</td>
+<td>1字节</td>
+<td>1-255字节</td>
+</tr>
+<tr>
+<td>0x01</td>
+<td>0x01</td>
+<td>0x0a</td>
+<td>0x01</td>
+<td>0x0a</td>
+</tr>
+</tbody></table>
+<ul>
+<li>VERSION 认证子协商版本（与SOCKS协议版本的0x05无关系）</li>
+<li>USERNAME_LENGTH 用户名长度</li>
+<li>USERNAME 用户名字节数组，长度为USERNAME_LENGTH</li>
+<li>PASSWORD_LENGTH 密码长度</li>
+<li>PASSWORD 密码字节数组，长度为PASSWORD_LENGTH</li>
+</ul>
+<h4 id="3-2-4-服务端响应账号密码认证结果"><a href="#3-2-4-服务端响应账号密码认证结果" class="headerlink" title="3.2.4 服务端响应账号密码认证结果"></a>3.2.4 服务端响应账号密码认证结果</h4><blockquote>
+<p>收到客户端发来的账号密码后，代理服务器加以校验，并返回校验结果</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>VERSION</th>
+<th>STATUS</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1字节</td>
+<td>1字节</td>
+</tr>
+</tbody></table>
+<ul>
+<li>VERSION 认证子协商版本，与客户端VERSION字段一致</li>
+<li>STATUS 认证结果<ul>
+<li>0x00 认证成功</li>
+<li>大于0x00 认证失败</li>
+</ul>
+</li>
+</ul>
+<h2 id="4-命令过程"><a href="#4-命令过程" class="headerlink" title="4. 命令过程"></a>4. 命令过程</h2><blockquote>
+<p>认证成功后，客户端会发送连接命令给代理服务器，代理服务器会连接目标服务器，并返回连接结果</p>
+</blockquote>
+<h4 id="4-1-客户端请求"><a href="#4-1-客户端请求" class="headerlink" title="4.1 客户端请求"></a>4.1 客户端请求</h4><table>
+<thead>
+<tr>
+<th>VERSION</th>
+<th>COMMAND</th>
+<th>RSV</th>
+<th>ADDRESS_TYPE</th>
+<th>DST.ADDR</th>
+<th>DST.PORT</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1字节</td>
+<td>1字节</td>
+<td>1字节</td>
+<td>1字节</td>
+<td>1-255字节</td>
+<td>2字节</td>
+</tr>
+</tbody></table>
+<ul>
+<li>VERSION SOCKS协议版本，固定0x05</li>
+<li>COMMAND 命令<ul>
+<li>0x01 CONNECT 连接上游服务器</li>
+<li>0x02 BIND 绑定，客户端会接收来自代理服务器的链接，著名的FTP被动模式</li>
+<li>0x03 UDP ASSOCIATE UDP中继</li>
+</ul>
+</li>
+<li>RSV 保留字段</li>
+<li>ADDRESS_TYPE 目标服务器地址类型<ul>
+<li>0x01 IP V4地址</li>
+<li>0x03 域名地址(没有打错，就是没有0x02)，域名地址的第1个字节为域名长度，剩下字节为域名名称字节数组</li>
+<li>0x04 IP V6地址</li>
+</ul>
+</li>
+<li>DST.ADDR 目标服务器地址</li>
+<li>DST.PORT 目标服务器端口</li>
+</ul>
+<h4 id="4-2-代理服务器响应"><a href="#4-2-代理服务器响应" class="headerlink" title="4.2 代理服务器响应"></a>4.2 代理服务器响应</h4><table>
+<thead>
+<tr>
+<th>VERSION</th>
+<th>RESPONSE</th>
+<th>RSV</th>
+<th>ADDRESS_TYPE</th>
+<th>BND.ADDR</th>
+<th>BND.PORT</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1字节</td>
+<td>1字节</td>
+<td>1字节</td>
+<td>1字节</td>
+<td>1-255字节</td>
+<td>2字节</td>
+</tr>
+</tbody></table>
+<ul>
+<li>VERSION SOCKS协议版本，固定0x05</li>
+<li>RESPONSE 响应命令<ul>
+<li>0x00 代理服务器连接目标服务器成功</li>
+<li>0x01 代理服务器故障</li>
+<li>0x02 代理服务器规则集不允许连接</li>
+<li>0x03 网络无法访问</li>
+<li>0x04 目标服务器无法访问（主机名无效）</li>
+<li>0x05 连接目标服务器被拒绝</li>
+<li>0x06 TTL已过期</li>
+<li>0x07 不支持的命令</li>
+<li>0x08 不支持的目标服务器地址类型</li>
+<li>0x09 - 0xFF 未分配</li>
+</ul>
+</li>
+<li>RSV 保留字段</li>
+<li>BND.ADDR 代理服务器连接目标服务器成功后的代理服务器IP</li>
+<li>BND.PORT 代理服务器连接目标服务器成功后的代理服务器端口</li>
+</ul>
+<h2 id="5-通信过程"><a href="#5-通信过程" class="headerlink" title="5. 通信过程"></a>5. 通信过程</h2><blockquote>
+<p>　经过认证与命令过程后，客户端与代理服务器进入正常通信，客户端发送需要请求到目标服务器的数据给代理服务器，代理服务器转发这些数据，并把目标服务器的响应转发给客户端，起到一个“透明代理”的功能。</p>
+</blockquote>
+<h2 id="6-实际例子"><a href="#6-实际例子" class="headerlink" title="6. 实际例子"></a>6. 实际例子</h2><p>上文详细讲解了协议规范，下面来一个实例的通信过程范例。</p>
+<p><em>6.2中无需认证和需要账号密码认证是互斥的</em>，同一请求只会采取一种，本文都列在下面。</p>
+<h3 id="6-1-客户端发送受支持的认证方法"><a href="#6-1-客户端发送受支持的认证方法" class="headerlink" title="6.1 客户端发送受支持的认证方法"></a>6.1 客户端发送受支持的认证方法</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0x05 0x02 0x00 0x02</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>0x05 SOCKS5协议版本</li>
+<li>0x02 支持的认证方法数量</li>
+<li>0x00 免认证</li>
+<li>0x02 账号密码认证</li>
+</ul>
+<h3 id="6-2-服务端响应选择的认证方法"><a href="#6-2-服务端响应选择的认证方法" class="headerlink" title="6.2 服务端响应选择的认证方法"></a>6.2 服务端响应选择的认证方法</h3><h4 id="6-2-1-无需认证"><a href="#6-2-1-无需认证" class="headerlink" title="6.2.1 无需认证"></a>6.2.1 无需认证</h4><blockquote>
+<p>以下是无需认证，客户端收到该响应后直接发送需要发送给目标服务器的数据给到代理服务器，此时进入通信错过程</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0x05 0x00</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>0x05 SOCKS5协议版本</li>
+<li>0x00 免认证</li>
+</ul>
+<h4 id="6-2-2-需要账号密码认证"><a href="#6-2-2-需要账号密码认证" class="headerlink" title="6.2.2 需要账号密码认证"></a>6.2.2 需要账号密码认证</h4><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0x05 0x02</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>0x05 SOCKS5协议版本</li>
+<li>0x02 账号密码认证</li>
+</ul>
+<h4 id="6-2-3-客户端发送账号密码"><a href="#6-2-3-客户端发送账号密码" class="headerlink" title="6.2.3 客户端发送账号密码"></a>6.2.3 客户端发送账号密码</h4><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0x01 0x04 0x61 0x61 0x61 0x61 0x04 0x61 0x61 0x61 0x61</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>0x01 子协商版本</li>
+<li>0x04 用户名长度</li>
+<li>0x61 0x61 0x61 0x61 转换为ascii字符之后为”aaaa”</li>
+<li>0x04 密码长度</li>
+<li>0x61 0x61 0x61 0x61 转换为ascii字符之后”aaaa”</li>
+</ul>
+<h4 id="6-2-4-代理服务器响应认证结果"><a href="#6-2-4-代理服务器响应认证结果" class="headerlink" title="6.2.4 代理服务器响应认证结果"></a>6.2.4 代理服务器响应认证结果</h4><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0x01 0x00</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>0x01 子协商版本</li>
+<li>0x00 认证成功（也就是代理服务器允许aaaa账号以aaaa密码登录）</li>
+</ul>
+<h3 id="6-3-客户端请求代理服务器连接目标服务器"><a href="#6-3-客户端请求代理服务器连接目标服务器" class="headerlink" title="6.3 客户端请求代理服务器连接目标服务器"></a>6.3 客户端请求代理服务器连接目标服务器</h3><p>以127.0.0.1和80端口为例</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0x05 0x01 0x01 0x01 0x7f 0x00 0x00 0x01 0x00 0x50</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>0x05 SOCKS协议版本</li>
+<li>0x01 CONNECT命令</li>
+<li>0x01 RSV保留字段</li>
+<li>0x01 地址类型为IPV4</li>
+<li>0x7f 0x00 0x00 0x01 目标服务器IP为127.0.0.1</li>
+<li>0x00 0x50 目标服务器端口为80</li>
+</ul>
+<h3 id="6-4-代理服务器连接目标主机，并返回结果给客户端"><a href="#6-4-代理服务器连接目标主机，并返回结果给客户端" class="headerlink" title="6.4 代理服务器连接目标主机，并返回结果给客户端"></a>6.4 代理服务器连接目标主机，并返回结果给客户端</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0x05 0x00 0x01 0x01 0x7f 0x00 0x00 0x01 0x00 0xaa 0xaa</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>0x05 SOCKS5协议版本</li>
+<li>0x00 连接成功</li>
+<li>0x01 RSV保留字段</li>
+<li>0x01 地址类型为IPV4</li>
+<li>0x7f 0x00 0x00 0x01 代理服务器连接目标服务器成功后的代理服务器IP, 127.0.0.1</li>
+<li>0xaa 0xaa 代理服务器连接目标服务器成功后的代理服务器端口（代理服务器使用该端口与目标服务器通信），本例端口号为43690</li>
+</ul>
+<h3 id="6-5-客户端发送请求数据给代理服务器"><a href="#6-5-客户端发送请求数据给代理服务器" class="headerlink" title="6.5 客户端发送请求数据给代理服务器"></a>6.5 客户端发送请求数据给代理服务器</h3><p>如果客户端需要请求目标服务器的HTTP服务,就会发送HTTP协议报文给代理服务器,代理服务器将这些报文原样转发给目标服务器,并将目标服务器的响应发送给客户端,代理服务器不会对客户端或者目标服务器的报文做任何解析。</p>
+<h2 id="7-结尾"><a href="#7-结尾" class="headerlink" title="7. 结尾"></a>7. 结尾</h2><p>SOCKS5协议的讲解到此结束，后续会使用GOLANG实现一个SOCKS5服务器来讲述TCP协议服务器的开发。</p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Gepostet vor&nbsp;<time dateTime="2019-08-23T02:40:49.000Z" title="8/23/2019, 2:40:49 AM">2019-08-23</time></span><span class="level-item"><a class="link-muted" href="/categories/backend/">backend</a><span> / </span><a class="link-muted" href="/categories/backend/nodejs/">nodejs</a></span><span class="level-item">5 minutes lesen (Über 784 Wörter)</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2019/08/23/2019-08-23-nestjs-middlware.html">NestJs学习之旅(5)——中间件</a></p><div class="content"><p>本文是NestJs学习之旅的第五篇，讲解中间件。</p>
+<h2 id="中间件"><a href="#中间件" class="headerlink" title="中间件"></a>中间件</h2><p>中间件是在路由处理程序<strong>之前</strong>调用的函数。中间件函数可以访问<strong>请求</strong>和<strong>响应</strong>对象。</p>
+<p>使用过koa和express的朋友应该知道，中间件是一个很核心的功能，尤其是koa，核心就是中间件，连路由功能都是由中间件提供的。</p>
+<p>中间件可以提供以下功能：</p>
+<ul>
+<li>运行过程中执行任意代码</li>
+<li>对请求和响应进行更改</li>
+<li>结束本次请求的响应</li>
+<li>继续调用下一个中间件</li>
+</ul>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>NestJs使用<code>@Injectable()</code>来装饰中间件，被装饰的对象应该实现<code>NestMiddleware</code>接口。</p>
+<p>以下是一个日志中间件的实现：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// log.middleware.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123;<span class="title class_">Injectable</span>, <span class="title class_">NestMiddleware</span>&#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/common&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;<span class="title class_">Request</span>, <span class="title class_">Response</span>&#125; <span class="keyword">from</span> <span class="string">&#x27;express&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Injectable</span>()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">LogMiddleware</span> <span class="keyword">implements</span> <span class="title class_">NestMiddleware</span> &#123;</span><br><span class="line">    <span class="title function_">use</span>(<span class="params">req: Request, resp: Response, next: <span class="built_in">Function</span></span>) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`<span class="subst">$&#123;req.method&#125;</span> <span class="subst">$&#123;req.path&#125;</span>`</span>)</span><br><span class="line">        <span class="title function_">next</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// app.module.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Module</span>, <span class="title class_">NestModule</span>, <span class="title class_">MiddlewareConsumer</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/common&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">LogMiddleware</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./common/middleware/log.middleware&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">UserModule</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./user/user.module&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Module</span>(&#123;</span><br><span class="line">  <span class="attr">imports</span>: [<span class="title class_">UserModule</span>],</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">AppModule</span> <span class="keyword">implements</span> <span class="title class_">NestModule</span> &#123;</span><br><span class="line">  <span class="title function_">configure</span>(<span class="params">consumer: MiddlewareConsumer</span>) &#123;</span><br><span class="line">    consumer</span><br><span class="line">      .<span class="title function_">apply</span>(<span class="title class_">LogMiddleware</span>)</span><br><span class="line">      .<span class="title function_">forRoutes</span>(<span class="string">&#x27;users&#x27;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="针对请求方法应用中间件"><a href="#针对请求方法应用中间件" class="headerlink" title="针对请求方法应用中间件"></a>针对请求方法应用中间件</h2><p>上面的简单示例中会对所有的<code>users</code>路由应用中间件，如果需要只对特定的请求方法，比如GET请求才应用中间件，可以使用以下方式：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Module</span>, <span class="title class_">NestModule</span>, <span class="title class_">MiddlewareConsumer</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/common&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">LogMiddleware</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./common/middleware/log.middleware&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">UserModule</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./user/user.module&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Module</span>(&#123;</span><br><span class="line">  <span class="attr">imports</span>: [<span class="title class_">UserModule</span>],</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">AppModule</span> <span class="keyword">implements</span> <span class="title class_">NestModule</span> &#123;</span><br><span class="line">  <span class="title function_">configure</span>(<span class="params">consumer: MiddlewareConsumer</span>) &#123;</span><br><span class="line">    consumer</span><br><span class="line">      .<span class="title function_">apply</span>(<span class="title class_">LogMiddleware</span>)</span><br><span class="line">       .<span class="title function_">forRoutes</span>(&#123; <span class="attr">path</span>: <span class="string">&#x27;users&#x27;</span>, <span class="attr">method</span>: <span class="title class_">RequestMethod</span>.<span class="property">GET</span> &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="应用多个中间件"><a href="#应用多个中间件" class="headerlink" title="应用多个中间件"></a>应用多个中间件</h2><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Module</span>, <span class="title class_">NestModule</span>, <span class="title class_">MiddlewareConsumer</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/common&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">LogMiddleware</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./common/middleware/log.middleware&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">UserModule</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./user/user.module&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Module</span>(&#123;</span><br><span class="line">  <span class="attr">imports</span>: [<span class="title class_">UserModule</span>],</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">AppModule</span> <span class="keyword">implements</span> <span class="title class_">NestModule</span> &#123;</span><br><span class="line">  <span class="title function_">configure</span>(<span class="params">consumer: MiddlewareConsumer</span>) &#123;</span><br><span class="line">    consumer</span><br><span class="line">      .<span class="title function_">apply</span>(<span class="title class_">LogMiddleware</span>, <span class="title class_">OtherMiddleware</span>)</span><br><span class="line">       .<span class="title function_">forRoutes</span>(&#123; <span class="attr">path</span>: <span class="string">&#x27;users&#x27;</span>, <span class="attr">method</span>: <span class="title class_">RequestMethod</span>.<span class="property">GET</span> &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="基于控制器名称应用中间件"><a href="#基于控制器名称应用中间件" class="headerlink" title="基于控制器名称应用中间件"></a>基于控制器名称应用中间件</h2><p>上述代码都是针对固定的路由地址应用中间件，在NestJs中路由地址是通过装饰器定义的，如果控制器的路由地址有变化，而中间件这里没有跟着改掉，就会导致问题。</p>
+<p>NestJs在使用中间件的时候提供了基于控制器来注册的方式：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Module</span>, <span class="title class_">NestModule</span>, <span class="title class_">MiddlewareConsumer</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/common&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">LogMiddleware</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./common/middleware/log.middleware&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">UserModule</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./user/user.module&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Module</span>(&#123;</span><br><span class="line">  <span class="attr">imports</span>: [<span class="title class_">UserModule</span>],</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">AppModule</span> <span class="keyword">implements</span> <span class="title class_">NestModule</span> &#123;</span><br><span class="line">  <span class="title function_">configure</span>(<span class="params">consumer: MiddlewareConsumer</span>) &#123;</span><br><span class="line">    consumer</span><br><span class="line">      .<span class="title function_">apply</span>(<span class="title class_">LogMiddleware</span>)</span><br><span class="line">       .<span class="title function_">forRoutes</span>(<span class="title class_">UserController</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="排除指定路由"><a href="#排除指定路由" class="headerlink" title="排除指定路由"></a>排除指定路由</h2><p>有些场景下对控制器应用了中间件之后需要绕过其中几个方法，比如登录验证中间件应该放行登录路由，否则没有人能够登录成功。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Module</span>, <span class="title class_">NestModule</span>, <span class="title class_">MiddlewareConsumer</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/common&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">LogMiddleware</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./common/middleware/log.middleware&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">UserModule</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./user/user.module&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Module</span>(&#123;</span><br><span class="line">  <span class="attr">imports</span>: [<span class="title class_">UserModule</span>],</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">AppModule</span> <span class="keyword">implements</span> <span class="title class_">NestModule</span> &#123;</span><br><span class="line">  <span class="title function_">configure</span>(<span class="params">consumer: MiddlewareConsumer</span>) &#123;</span><br><span class="line">    consumer</span><br><span class="line">      .<span class="title function_">apply</span>(<span class="title class_">LogMiddleware</span>)</span><br><span class="line">      .<span class="title function_">exclude</span>(</span><br><span class="line">          &#123;<span class="attr">path</span>:<span class="string">&#x27;users/login&#x27;</span>,<span class="attr">method</span>:<span class="title class_">RequestMethod</span>.<span class="property">GET</span>&#125;</span><br><span class="line">      )</span><br><span class="line">       .<span class="title function_">forRoutes</span>(<span class="title class_">UserController</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="全局中间件"><a href="#全局中间件" class="headerlink" title="全局中间件"></a>全局中间件</h2><p>类似于全局模块，中间件也可以全局注册，对每一个路由都生效。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.ts</span></span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">await</span> <span class="title class_">NestFactory</span>.<span class="title function_">create</span>(<span class="title class_">AppModule</span>);</span><br><span class="line">app.<span class="title function_">use</span>(<span class="title class_">LogMiddleware</span>);</span><br><span class="line"><span class="keyword">await</span> app.<span class="title function_">listen</span>(<span class="number">3000</span>);</span><br></pre></td></tr></table></figure>
+
+<h2 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h2><p>中间件给框架赋予了极大的灵活性，可以根据功能抽象为中间件，达到”可插拔“的目的。</p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Gepostet vor&nbsp;<time dateTime="2019-08-22T03:27:38.000Z" title="8/22/2019, 3:27:38 AM">2019-08-22</time></span><span class="level-item"><a class="link-muted" href="/categories/backend/">backend</a><span> / </span><a class="link-muted" href="/categories/backend/nodejs/">nodejs</a></span><span class="level-item">8 minutes lesen (Über 1182 Wörter)</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2019/08/22/2019-08-22-nestjs-module.html">NestJs学习之旅(4)——模块系统</a></p><div class="content"><p>本文是NestJs学习之旅的第四篇，讲解模块系统。</p>
+<h2 id="模块"><a href="#模块" class="headerlink" title="模块"></a>模块</h2><p>NestJs中模块是构建和组织业务单元的基本元素。使用<code>@Module()</code>装饰模块来声明该模块的元信息：</p>
+<ul>
+<li>本模块导出哪些服务提供者</li>
+<li>本模块导入了哪些依赖模块</li>
+<li>本模块提供了哪些控制器</li>
+</ul>
+<p>每个NestJs至少有一个跟模块，这个就是<code>app.module.ts</code>定义的。根模块一般不放具体的业务逻辑，具体业务逻辑应该下沉到各个子业务模块去做。</p>
+<p>比如我们开发一个商城系统，该系统有以下业务模块：</p>
+<ul>
+<li>订单中心</li>
+<li>用户中心</li>
+<li>支付中心</li>
+<li>商品中心</li>
+<li>物流中心</li>
+</ul>
+<p>那我们可以定义以下的模块结构:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">|-- app.module.ts</span><br><span class="line">|-- order</span><br><span class="line">    |-- order.module.ts</span><br><span class="line">    |-- services</span><br><span class="line">        |-- order.service.ts</span><br><span class="line">    |-- controllers</span><br><span class="line">        |-- order.controller.ts</span><br><span class="line">|-- user</span><br><span class="line">    |-- user.module.ts</span><br><span class="line">    |-- services</span><br><span class="line">        |-- user.service.ts</span><br><span class="line">    |-- controllers</span><br><span class="line">        |-- user.controller.ts</span><br><span class="line">|-- pay</span><br><span class="line">    |-- pay.module.ts</span><br><span class="line">    |-- services</span><br><span class="line">        |-- wepay.service.ts</span><br><span class="line">        |-- alipay.service.ts</span><br><span class="line">        |-- pay.service.ts</span><br><span class="line">    |-- controller</span><br><span class="line">        |-- pay.controller.ts</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>模块化有以下优点：</p>
+<ul>
+<li>业务低耦合</li>
+<li>边界清晰</li>
+<li>便于排查错误</li>
+<li>便于维护</li>
+</ul>
+<h2 id="模块声明与配置"><a href="#模块声明与配置" class="headerlink" title="模块声明与配置"></a>模块声明与配置</h2><p><code>@Module()</code>装饰的类为<code>模块类</code>，该装饰器的典型用法如下：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Module</span>(&#123;</span><br><span class="line">    <span class="attr">providers</span>: [<span class="title class_">UserService</span>],</span><br><span class="line">    <span class="attr">controllers</span>: [<span class="title class_">UserController</span>],</span><br><span class="line">    <span class="attr">imports</span>: [<span class="title class_">OrderModule</span>],</span><br><span class="line">    <span class="attr">exports</span>: [<span class="title class_">UserService</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">UserModule</span> &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="left">参数名称</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">proviers</td>
+<td align="left">服务提供者列表，本模块可用，可以自动注入</td>
+</tr>
+<tr>
+<td align="left">controllers</td>
+<td align="left">控制器列表，本模块可用，用来绑定路由访问</td>
+</tr>
+<tr>
+<td align="left">imports</td>
+<td align="left">本模块导入的模块，如果需要使用到其他模块的服务提供者，此处必须导入其他模块</td>
+</tr>
+<tr>
+<td align="left">exports</td>
+<td align="left">本模块导出的服务提供者，只有在此处定义的服务提供者才能在其他模块使用</td>
+</tr>
+</tbody></table>
+<h2 id="模块重导出"><a href="#模块重导出" class="headerlink" title="模块重导出"></a>模块重导出</h2><p>ts中有以下用法：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// a.ts</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">interface</span> A &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// index.ts</span></span><br><span class="line"><span class="keyword">export</span> * <span class="keyword">from</span> <span class="string">&#x27;./a&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>我们在使用的时候直接使用以下代码即可，方面封装</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;A&#125; <span class="keyword">from</span> <span class="string">&#x27;./index&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>NestJs中的模块也有类似用法，比如我们定义了两个基本模块，这两个基本模块用的时候基本都是一起导入的，此时我们通过模块重导出将其封装到一个叫<code>CoreModule</code>，其他地方直接导入<code>CoreModule</code>即可。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Module</span>(&#123;</span><br><span class="line">    <span class="attr">providers</span>: [<span class="title class_">CommonService</span>],</span><br><span class="line">    <span class="attr">exports</span>: [<span class="title class_">CommonService</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">CommonModule</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Module</span>(&#123;</span><br><span class="line">    <span class="attr">providers</span>: [<span class="title class_">Util</span>],</span><br><span class="line">    <span class="attr">exports</span>: [<span class="title class_">Util</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">UtilModule</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Module</span>(&#123;</span><br><span class="line">    <span class="attr">imports</span>: [<span class="title class_">CommonModule</span>, <span class="title class_">UtilModule</span>],</span><br><span class="line">    <span class="attr">exports</span>: [<span class="title class_">CommonModule</span>, <span class="title class_">UtilModule</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">CoreModule</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="模块初始化与依赖注入"><a href="#模块初始化与依赖注入" class="headerlink" title="模块初始化与依赖注入"></a>模块初始化与依赖注入</h2><p>如果需要在模块实例化的时候运行一些逻辑，而且该逻辑有外部依赖的时候，可以通过以下方式处理</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Module</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/common&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">UserController</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./user.controller&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">UserService</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./user.service&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Module</span>(&#123;</span><br><span class="line">  <span class="attr">controllers</span>: [<span class="title class_">UserController</span>],</span><br><span class="line">  <span class="attr">providers</span>: [<span class="title class_">UserService</span>],</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">catsModule</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params"><span class="keyword">private</span> <span class="keyword">readonly</span> userService: UserService</span>) &#123; <span class="comment">// 没有@Inject</span></span><br><span class="line">    <span class="comment">// 调用userService</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="全局模块"><a href="#全局模块" class="headerlink" title="全局模块"></a>全局模块</h2><p>上面定义的模块都是需要手动<code>imports</code>进来的，如果有些模块是使用率很高的，比如工具模块，此时可以声明为全局模块。</p>
+<p>使用<code>@Global()</code>即可声明全局模块。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Module</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/common&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">UserController</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./user.controller&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">UserService</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./user.service&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Global</span>()</span><br><span class="line"><span class="meta">@Module</span>(&#123;</span><br><span class="line">  <span class="attr">controllers</span>: [<span class="title class_">UserController</span>],</span><br><span class="line">  <span class="attr">providers</span>: [<span class="title class_">UserService</span>],</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">catsModule</span> &#123;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="动态模块"><a href="#动态模块" class="headerlink" title="动态模块"></a>动态模块</h2><p>上面定义的都是静态模块，如果我们需要动态声明我们的模块，比如数据库模块，连接成功我才返回模块，此时需要使用动态模块来处理。</p>
+<p>使用<code>模块名.forRoot()</code>方法来返回模块定义，通过该方式定义的即为动态模块。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Module</span>(&#123;</span><br><span class="line">    <span class="attr">providers</span>: [<span class="title class_">DatabaseProvider</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">DatabaseModule</span> &#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">async</span> <span class="title function_">forRoot</span>(<span class="params">env: <span class="built_in">string</span></span>) &#123;</span><br><span class="line">         <span class="keyword">const</span> provider =  <span class="title function_">createDatabaseProvider</span>(env); <span class="comment">// 根据环境变量连接不同的数据库</span></span><br><span class="line">         <span class="keyword">return</span> &#123;</span><br><span class="line">             <span class="attr">module</span>: <span class="title class_">DatabaseModule</span>,</span><br><span class="line">             <span class="attr">providers</span>: [provider],</span><br><span class="line">             <span class="attr">exports</span>: [provider]</span><br><span class="line">         &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// user.module.ts</span></span><br><span class="line"><span class="meta">@Module</span>(&#123;</span><br><span class="line">    <span class="attr">imports</span>: [<span class="title class_">DatabaseModule</span>.<span class="title function_">forRoot</span>(<span class="string">&#x27;production&#x27;</span>)]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">UserModule</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="生产环境下的姿势"><a href="#生产环境下的姿势" class="headerlink" title="生产环境下的姿势"></a>生产环境下的姿势</h2><p>上面有一个商城系统的模块例子，当我们的业务模块开发完毕之后，需要将其注册到AppModule，这样才能生效，这个也有个好处，有点像插拔的例子，当需要下掉一个业务时，业务代码不动，在AppModule取消注册即可。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Module</span>(&#123;</span><br><span class="line">    <span class="attr">imports</span>:[<span class="title class_">UserModule</span>,<span class="title class_">GoodsModule</span>,<span class="title class_">OrderModule</span>,<span class="title class_">PayModule</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">AppModule</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h2><p>模块系统是NestJs另一个重要的特性，个人认为是基于DDD思想的，每个模块就是一个单独的领域业务，可以由一个小组去独立开发。多个模块时可以同时开发，如果有依赖问题的话，可以先把模块和响应的interface公开出去，别人正常调用你的interface，当实现类开发完毕之后NestJs会自动注入该实现类，调用方的代码不用更改。</p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Gepostet vor&nbsp;<time dateTime="2019-08-21T02:27:42.000Z" title="8/21/2019, 2:27:42 AM">2019-08-21</time></span><span class="level-item"><a class="link-muted" href="/categories/backend/">backend</a><span> / </span><a class="link-muted" href="/categories/backend/nodejs/">nodejs</a></span><span class="level-item">10 minutes lesen (Über 1525 Wörter)</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2019/08/21/2019-08-21-nestjs-provider.html">NestJs学习之旅(3)——服务提供者</a></p><div class="content"><p>本文是NestJs学习之旅的第三篇，讲解服务提供者。</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>服务提供者是NestJs一个非常重要的概念，一般来说，被装饰器<code>@Injectable()</code>修饰的类都可以视为服务提供者。服务提供者一般包含以下几种：</p>
+<ul>
+<li>Services(业务逻辑)</li>
+<li>Factory(用来创建提供者)</li>
+<li>Repository(数据库访问使用)</li>
+<li>Utils(工具函数)</li>
+</ul>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>下文中将以Services来说明服务提供者的具体使用。</p>
+<p>典型的MVC架构中其实有一个问题，业务逻辑到底放哪里？</p>
+<ul>
+<li>放在控制器，代码复用成了问题，不可能去New一个控制器然后调用方法，控制器方法都是根据路由地址绑定的</li>
+<li>放在Model，导致Model层臃肿，Model应该是直接和数据库打交道的，业务逻辑跟数据库的关系并不是强制绑定的，只有业务逻辑涉及到数据查询&#x2F;存储才会使用到Model层</li>
+</ul>
+<p>现阶段比较流行的架构是多添加一个Services层来写业务逻辑，分离Model层不应该做的事情。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 业务类 user.service.ts</span></span><br><span class="line"><span class="meta">@Injectable</span>()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">UserServices</span> &#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">readonly</span> <span class="attr">users</span>: <span class="title class_">User</span>[] = [];</span><br><span class="line"></span><br><span class="line">  <span class="title function_">create</span>(<span class="params">user: User</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">users</span>.<span class="title function_">push</span>(user);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">findAll</span>(): <span class="title class_">User</span>[] &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">users</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 用户控制器</span></span><br><span class="line"><span class="meta">@Controller</span>(<span class="string">&#x27;users&#x27;</span>)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">UserController</span> &#123;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params"><span class="keyword">private</span> <span class="keyword">readonly</span> userService: UserService</span>) &#123;&#125; <span class="comment">// 注入UserService</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Post</span>()</span><br><span class="line">    <span class="keyword">async</span> <span class="title function_">create</span>(<span class="params"><span class="meta">@Body</span>() createUserDTO:CreateUserDTO</span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">userService</span>.<span class="title function_">create</span>(createUserDTO);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Get</span>()</span><br><span class="line">    <span class="keyword">async</span> <span class="title function_">findAll</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">userService</span>.<span class="title function_">findAll</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="服务提供者的Scope"><a href="#服务提供者的Scope" class="headerlink" title="服务提供者的Scope"></a>服务提供者的Scope</h2><p>SpringBoot中提供了Scope注解来指明Bean的作用域，NestJs也提供了类似的<code>@Scope()</code>装饰器：</p>
+<table>
+<thead>
+<tr>
+<th align="left">scope名称</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">SINGLETON</td>
+<td align="left">单例模式，整个应用内只存在一份实例</td>
+</tr>
+<tr>
+<td align="left">REQUEST</td>
+<td align="left">每个请求初始化一次</td>
+</tr>
+<tr>
+<td align="left">TRANSIENT</td>
+<td align="left">每次注入都会实例化</td>
+</tr>
+</tbody></table>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Injectable</span>(&#123;<span class="attr">scope</span>: <span class="title class_">Scope</span>.<span class="property">REQUEST</span>&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">UserService</span> &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="可选的依赖项"><a href="#可选的依赖项" class="headerlink" title="可选的依赖项"></a>可选的依赖项</h2><p>默认情况下，如果依赖注入的对象不存在会提示错误，中断应用运行，此时可以使用<code>@Optional()</code>来指明选择性注入，但依赖注入的对象不存在时不会发生错误。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span>(<span class="string">&#x27;users&#x27;</span>)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">UserController</span> &#123;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params"><span class="meta">@Optional</span>() <span class="keyword">private</span> <span class="keyword">readonly</span> userService:UserService</span>)&#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="基于属性的注入"><a href="#基于属性的注入" class="headerlink" title="基于属性的注入"></a>基于属性的注入</h2><p>上文中的注入都是基于构造函数的，这样做有一个缺陷，如果涉及到继承的话，子类必须显示调用<code>super</code>来实例化父类。如果父类的构造函数参数过多的话反而成了子类的负担。</p>
+<p>针对这个问题，NestJs建议的方式是<code>基于属性</code>进行注入。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span>(<span class="string">&#x27;users&#x27;</span>)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">UserController</span> &#123;</span><br><span class="line">    <span class="meta">@Inject</span>()</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">readonly</span> <span class="attr">userService</span>:<span class="title class_">UserService</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="服务提供者注册"><a href="#服务提供者注册" class="headerlink" title="服务提供者注册"></a>服务提供者注册</h2><p>只有被注册过的服务提供者才能被NestJs进行自动注入。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Module</span>(&#123;</span><br><span class="line">    <span class="attr">controllers</span>:[<span class="title class_">UserController</span>], <span class="comment">// 注册控制器</span></span><br><span class="line">    <span class="attr">providers</span>: [<span class="title class_">UserServices</span>], <span class="comment">// 注册服务提供者，可以是services,factory等等</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">UserModule</span> &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="自定义服务提供者"><a href="#自定义服务提供者" class="headerlink" title="自定义服务提供者"></a>自定义服务提供者</h2><h3 id="使用值"><a href="#使用值" class="headerlink" title="使用值"></a>使用值</h3><p>上文中提供的Services一般用在编写业务逻辑，结构基本是固定的，如果需要集成其他库作为注入对象的话，需要使用的自定义的服务提供者。</p>
+<p>比如我们使用sequelize创建了数据库连接，想把他注入到我们的Services中进行数据库操作。可以使用以下方式进行处理：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// sequelize.ts 数据库访问</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> sequelize = <span class="keyword">new</span> <span class="title class_">Sequelize</span>(&#123;</span><br><span class="line">    <span class="comment">///</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// sequelize.provider.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123;sequelize&#125; <span class="keyword">from</span> <span class="string">&#x27;./sequelize&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> sequelizeProvider = &#123;</span><br><span class="line">    <span class="attr">provide</span>: <span class="string">&#x27;SEQUELIZE&#x27;</span>, <span class="comment">// 服务提供者标识</span></span><br><span class="line">    <span class="attr">useValue</span>: sequelize, <span class="comment">// 直接使用值</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// user.module.ts</span></span><br><span class="line"><span class="meta">@Module</span>(&#123;</span><br><span class="line">    <span class="attr">providers</span>:[<span class="title class_">UserService</span>, sequelizeProvider]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">UserModule</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// user.service.ts</span></span><br><span class="line"><span class="meta">@Injectable</span>()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">UserService</span> &#123;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params"><span class="meta">@Inject</span>(<span class="string">&#x27;SEQUELIZE&#x27;</span>) <span class="keyword">private</span> <span class="keyword">readonly</span> sequelize: Sequelize</span>) &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用类"><a href="#使用类" class="headerlink" title="使用类"></a>使用类</h3><p>OOP的一个重要思想就是<code>面向接口化</code>设计，比如我们开发了一个日志接口，有写入本地文件的实现，也有写入syslog的实现。依赖注入到时候我们希望使用接口进行注入，而不是具体的实现。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// logger.ts</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">interface</span> <span class="title class_">Logger</span> &#123;</span><br><span class="line">    <span class="title function_">log</span>(<span class="attr">log</span>:<span class="built_in">string</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// file.logger.ts</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">FileLogger</span> <span class="keyword">implements</span> <span class="title class_">Logger</span> &#123;</span><br><span class="line">    <span class="title function_">log</span>(<span class="params">log:<span class="built_in">string</span></span>) &#123;</span><br><span class="line">        <span class="comment">// 写入本地文件</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// syslog.logger.ts</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">SyslogLogger</span> <span class="keyword">implements</span> <span class="title class_">Logger</span> &#123;</span><br><span class="line">    <span class="title function_">log</span>(<span class="params">log:<span class="built_in">string</span></span>) &#123;</span><br><span class="line">        <span class="comment">// 写入Syslog</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// logger.provider.ts</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> loggerProvider = &#123;</span><br><span class="line">    <span class="attr">provide</span>: <span class="title class_">Logger</span>, <span class="comment">// 使用接口标识</span></span><br><span class="line">    <span class="attr">useClass</span>: process.<span class="property">env</span>.<span class="property">NODE_ENV</span>===<span class="string">&#x27;development&#x27;</span>?<span class="title class_">FileLogger</span>:<span class="title class_">SyslogLogger</span>, <span class="comment">// 开发日志写入本地，生产日志写入syslog</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// user.module.ts</span></span><br><span class="line"><span class="meta">@Module</span>(&#123;</span><br><span class="line">    <span class="attr">providers</span>:[<span class="title class_">UserService</span>,loggerProvider]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">UserModule</span> &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// user.service.ts</span></span><br><span class="line"><span class="meta">@Injectable</span>()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">UserService</span> &#123;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params"><span class="meta">@Inject</span>(Logger) <span class="keyword">private</span> <span class="keyword">readonly</span> logger: Logger</span>) &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用工厂"><a href="#使用工厂" class="headerlink" title="使用工厂"></a>使用工厂</h3><p>工厂模式相信大家都不陌生，工厂模式本质上是一个函数或者方法，返回我们需要的产品。</p>
+<p>传统的第三方库都是提供callback形式或者事件形式的进行连接，比如redis，如果需要使用该类型的注入对象，工厂模式是最佳方式。</p>
+<p>以下是使用工厂模式创建数据库连接的例子：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// database.provider.ts</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> databaseProvider = &#123;</span><br><span class="line">    <span class="attr">provide</span>:<span class="string">&#x27;DATABASE&#x27;</span>,</span><br><span class="line">    <span class="attr">useFactory</span>: <span class="title function_">async</span>(<span class="params">optionsProvider: OptionsProvider</span>) &#123; <span class="comment">// 使用依赖，注入顺序和下面定义的顺序一致</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">const</span> connection = <span class="title function_">createConnection</span>(optionsProvider.<span class="title function_">getDatabaseConfig</span>())</span><br><span class="line">            connection.<span class="title function_">on</span>(<span class="string">&#x27;ready&#x27;</span>,<span class="function">()=&gt;</span><span class="title function_">resolve</span>(connection));</span><br><span class="line">            connection.<span class="title function_">on</span>(<span class="string">&#x27;error&#x27;</span>,<span class="function">(<span class="params">e</span>)=&gt;</span><span class="title function_">reject</span>(e));</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">inject</span>:[<span class="title class_">OptionsProvider</span>], <span class="comment">// 注入依赖</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// user.module.ts</span></span><br><span class="line"><span class="meta">@Module</span>(&#123;</span><br><span class="line">    <span class="attr">providers</span>:[<span class="title class_">OptionsProvider</span>, databaseProvider]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">UserModule</span> &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// user.service.ts</span></span><br><span class="line"><span class="meta">@Injectable</span>()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">UserService</span> &#123;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params"><span class="meta">@Inject</span>(<span class="string">&#x27;DATABASE&#x27;</span>) <span class="keyword">private</span> <span class="keyword">readonly</span> connection: Connection</span>) &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="别名方式"><a href="#别名方式" class="headerlink" title="别名方式"></a>别名方式</h3><p>别名方式可以基于现有的提供者进行创建。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> loggerAliasProvider = &#123;</span><br><span class="line">  <span class="attr">provide</span>: <span class="string">&#x27;AliasedLoggerService&#x27;</span>,</span><br><span class="line">  <span class="attr">useExisting</span>: <span class="title class_">Logger</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="导出服务提供者到其他模块"><a href="#导出服务提供者到其他模块" class="headerlink" title="导出服务提供者到其他模块"></a>导出服务提供者到其他模块</h2><p>模块的详细知识将在后文提到，但是有一点需要提前知道，<code>只有被模块导出的服务提供者才能被其他模块导入</code></p>
+<h3 id="基于类型的导出"><a href="#基于类型的导出" class="headerlink" title="基于类型的导出"></a>基于类型的导出</h3><p>上文中的<code>UserService</code>是基于类型而不是进入名称进行注入的。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Module</span>(&#123;</span><br><span class="line">    <span class="attr">providers</span>: [<span class="title class_">UserService</span>],</span><br><span class="line">    <span class="attr">exports</span>: [<span class="title class_">UserService</span>], <span class="comment">// 重要</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">UserModule</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="基于名称的导出"><a href="#基于名称的导出" class="headerlink" title="基于名称的导出"></a>基于名称的导出</h3><p>上文中<code>DATABASE</code>和<code>SEQUELIZE</code>这种服务提供者都是自定义的，而且指定的标识符。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Module</span>(&#123;</span><br><span class="line">    <span class="attr">providers</span>: [sequelizeProvider],</span><br><span class="line">    <span class="attr">exports</span>: [<span class="string">&#x27;SEQUELIZE&#x27;</span>], <span class="comment">// 其他模块的组件直接使用@Inject(&#x27;SEQUELIZE&#x27;)即可</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h2><p>服务提供者是NestJs的精华之一，提供了几种方式方便我们在各种环境下的服务提供者创建。</p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Gepostet vor&nbsp;<time dateTime="2019-08-20T02:10:21.000Z" title="8/20/2019, 2:10:21 AM">2019-08-20</time></span><span class="level-item"><a class="link-muted" href="/categories/backend/">backend</a><span> / </span><a class="link-muted" href="/categories/backend/nodejs/">nodejs</a></span><span class="level-item">12 minutes lesen (Über 1812 Wörter)</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2019/08/20/2019-08-20-nestjs-controller.html">NestJs学习之旅(2)——控制器</a></p><div class="content"><p>本文是NestJs学习之旅的第二篇，主要讲解控制器。</p>
+<h2 id="MVC"><a href="#MVC" class="headerlink" title="MVC"></a>MVC</h2><p>说到控制器就不得不说经典的MVC架构。</p>
+<blockquote>
+<p>MVC模式（Model–view–controller）是软件工程中的一种软件架构模式，把软件系统分为三个基本部分：模型（Model）、视图（View）和控制器（Controller）。</p>
+<ul>
+<li>控制器（Controller）- 负责转发请求，对请求进行处理，处理完毕后输出响应。</li>
+<li>视图 （View） - 界面设计人员进行图形界面设计</li>
+<li>模型 （Model）- 数据库查询和业务逻辑</li>
+</ul>
+</blockquote>
+<p>可以看到控制器起着承上启下的作用，是Web开发中必备的一环，视图和模型倒不是必须的，理由如下：</p>
+<ol>
+<li>API项目直接输出JSON数据，无需渲染页面</li>
+<li>无数据库或者复杂业务逻辑的项目时可以把请求处理直接在控制器完成</li>
+</ol>
+<h2 id="路由"><a href="#路由" class="headerlink" title="路由"></a>路由</h2><p>控制器的目的是接收应用程序的特定请求。基于路由机制来实现请求的分发。通常，每个控制器具有多个路由，并且不同的路由可以执行不同的动作。</p>
+<p>为了创建一个基本的控制器，我们使用类和装饰器。装饰器将类与所需的元数据相关联，并使Nest能够创建路由映射（将请求绑定到相应的控制器）。</p>
+<h2 id="控制器定义"><a href="#控制器定义" class="headerlink" title="控制器定义"></a>控制器定义</h2><p>使用<code>@Controller</code>装饰器来定义控制器，传入一个可选的路由前缀可以将该控制器绑定到该前缀。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Controller</span>, <span class="title class_">Get</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/common&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Controller</span>(<span class="string">&#x27;cats&#x27;</span>)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">CatsController</span> &#123;</span><br><span class="line">  <span class="meta">@Get</span>(<span class="string">&#x27;list&#x27;</span>)</span><br><span class="line">  <span class="title function_">findAll</span>(): <span class="built_in">string</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;This action returns all cats&#x27;</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Get</span>(<span class="string">&#x27;show&#x27;</span>)</span><br><span class="line">  <span class="title function_">fineOne</span>(): <span class="built_in">string</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;one cat&#x27;</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Get</span>()</span><br><span class="line">  <span class="title function_">index</span>():<span class="built_in">string</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;index&#x27;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以上例程会生成以下路由：</p>
+<ol>
+<li>GET &#x2F;cats&#x2F;list CatsController::findAll方法处理</li>
+<li>GET &#x2F;cats&#x2F;show CatsController::show方法处理</li>
+<li>GET &#x2F;cats CatsController::index方法处理</li>
+</ol>
+<p>上述例程使用的是<code>@Get</code>装饰器，所以只能处理<code>GET</code>请求，以下是支持的请求方法与对应的装饰器</p>
+<table>
+<thead>
+<tr>
+<th align="left">请求方法</th>
+<th align="left">装饰器名称</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">GET</td>
+<td align="left">@Get</td>
+<td align="left">匹配GET请求</td>
+</tr>
+<tr>
+<td align="left">POST</td>
+<td align="left">@Post</td>
+<td align="left">匹配POST请求</td>
+</tr>
+<tr>
+<td align="left">PUT</td>
+<td align="left">@Put</td>
+<td align="left">匹配PUT请求</td>
+</tr>
+<tr>
+<td align="left">HEAD</td>
+<td align="left">@Head</td>
+<td align="left">匹配HEAD请求</td>
+</tr>
+<tr>
+<td align="left">DELETE</td>
+<td align="left">@Delete</td>
+<td align="left">匹配DELETE请求</td>
+</tr>
+<tr>
+<td align="left">OPTIONS</td>
+<td align="left">@Options</td>
+<td align="left">匹配OPTIONS请求</td>
+</tr>
+<tr>
+<td align="left">-</td>
+<td align="left">@All</td>
+<td align="left">匹配所有请求方法</td>
+</tr>
+</tbody></table>
+<h2 id="动态路由"><a href="#动态路由" class="headerlink" title="动态路由"></a>动态路由</h2><p>上文中的路由方法接收的参数是固定的，所以只能匹配固定的请求，如果路由地址是动态变化的(<code>路由地址指请求的path，不包括QueryString</code>)，则上述路由定义方式无法正常工作。</p>
+<p>NestJs支持基于路径的路由定义，使用如下：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;<span class="meta">@Controller</span>, <span class="title class_">Get</span>&#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/common&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Controller</span>(<span class="string">&#x27;cats&#x27;</span>)</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">CatsController</span> &#123;</span><br><span class="line">    <span class="meta">@Get</span>(<span class="string">&#x27;:id&#x27;</span>)</span><br><span class="line">    <span class="title function_">findOne</span>(<span class="meta">@Param</span>() params): <span class="built_in">string</span> &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(params.<span class="property">id</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">`This action returns a #<span class="subst">$&#123;params.id&#125;</span> cat`</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当请求<code>/cats/猫ID</code>这种动态路由时(<code>因为猫ID是path的一部分，所以path是变化的</code>)，<code>params.id</code>就是<code>猫ID</code>，做过Vue或者React开发的读者应该熟悉以下写法：</p>
+<p>路由定义 <code>/user/:userId/orders/:orderId</code><br>页面地址 <code>/user/1/orders/2</code></p>
+<p>访问以上页面将产生以下参数:</p>
+<ul>
+<li>userId &#x3D;&gt; 1</li>
+<li>orderId &#x3D;&gt; 2</li>
+</ul>
+<p>NestJs在这方面是一致的。</p>
+<h2 id="请求参数"><a href="#请求参数" class="headerlink" title="请求参数"></a>请求参数</h2><p>上述例子中，我们使用<code>@Params</code>读取了请求路径上的动态参数。NestJs还支持以下的装饰器来获取不同的请求参数</p>
+<table>
+<thead>
+<tr>
+<th align="left">装饰器名称</th>
+<th align="left">底层对象</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">@Request()</td>
+<td align="left">req</td>
+<td align="left">原始请求对象</td>
+</tr>
+<tr>
+<td align="left">@Response()</td>
+<td align="left">res</td>
+<td align="left">原始响应对象</td>
+</tr>
+<tr>
+<td align="left">@Param(key?:string)</td>
+<td align="left">req.params或req.params[key]</td>
+<td align="left">路径参数</td>
+</tr>
+<tr>
+<td align="left">@Body(key?:string)</td>
+<td align="left">req.body或req.body[key]</td>
+<td align="left">请求体，支持表单或JSON</td>
+</tr>
+<tr>
+<td align="left">@Query(key?:string)</td>
+<td align="left">req.query或req.query[key]</td>
+<td align="left">请求链接的查询字符串</td>
+</tr>
+<tr>
+<td align="left">@Headers(name?:string)</td>
+<td align="left">req.headers或req.headers[key]</td>
+<td align="left">请求头</td>
+</tr>
+</tbody></table>
+<h2 id="请求体"><a href="#请求体" class="headerlink" title="请求体"></a>请求体</h2><p>在POST&#x2F;PUT&#x2F;PATCH请求中，会包含请求体，NestJs通过<code>@Body</code>装饰器可以自动获取该数据。比如如下代码:</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span>(<span class="string">&#x27;user&#x27;</span>)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">AppController</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params"><span class="keyword">private</span> <span class="keyword">readonly</span> appService: AppService</span>) &#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Post</span>()</span><br><span class="line">  <span class="title function_">findAll</span>(<span class="params"><span class="meta">@Body</span>() data: <span class="built_in">any</span></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> data;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以上例程会原样输出请求内容。</p>
+<h3 id="请求体绑定"><a href="#请求体绑定" class="headerlink" title="请求体绑定"></a>请求体绑定</h3><p>SpringBoot中<code>@RequestBody</code>注解可以直接绑定到给定的POJO对象实现请求参数自动注入，在NestJs中，该特性也得到了支持。</p>
+<p>定义DTO对象</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">UserLoginDTO</span> &#123;</span><br><span class="line">    <span class="keyword">readonly</span> <span class="attr">username</span>: <span class="built_in">string</span>;</span><br><span class="line">    <span class="keyword">readonly</span> <span class="attr">password</span>: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>定义控制器</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span>(<span class="string">&#x27;users&#x27;</span>)</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">UserController</span>() &#123;</span><br><span class="line">    <span class="meta">@Post</span>(<span class="string">&#x27;login&#x27;</span>)</span><br><span class="line">    <span class="title function_">login</span>(<span class="params"><span class="meta">@Body</span>() userLoginDTO: UserLoginDTO</span>) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(userLoginDTO.<span class="property">username</span>, userLoginDTO.<span class="property">password</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到与SpringBoot的开发体验几乎一致。</p>
+<h2 id="响应头"><a href="#响应头" class="headerlink" title="响应头"></a>响应头</h2><p>如果需要输出响应头，可以使用<code>@Header(name:string,value:string)</code>装饰器来进行处理。</p>
+<p><code>请注意：响应头使用@Header()装饰器，请求头使用@Headers()装饰器，末尾有个s的区别!</code></p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span>(<span class="string">&#x27;users&#x27;</span>)</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">UserController</span> &#123;</span><br><span class="line">    <span class="meta">@Head</span>(<span class="string">&#x27;:id&#x27;</span>)</span><br><span class="line">    <span class="meta">@Header</span>(<span class="string">&#x27;x-version&#x27;</span>, <span class="string">&#x27;1.0.0&#x27;</span>)</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">head</span>(<span class="params"><span class="meta">@Param</span>(<span class="string">&#x27;id&#x27;</span>) id:<span class="built_in">number</span></span>) &#123;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="响应状态码"><a href="#响应状态码" class="headerlink" title="响应状态码"></a>响应状态码</h2><p>从响应体的设计可以发现一个问题，由于不推荐直接操纵<code>response</code>对象，如果需要输出响应状态码怎么办?NestJs也为我们提供了解决方案。</p>
+<p>使用<code>@HttpCode(statusCode:number)</code>装饰器可以设定响应状态码。</p>
+<p>在Restful API设计中，DELETE请求应当返回<code>204 No Content</code>状态码，如下代码所示：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span>(<span class="string">&#x27;users&#x27;</span>)</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">UserController</span> &#123;</span><br><span class="line">    <span class="meta">@DELETE</span>(<span class="string">&quot;:id&quot;</span>)</span><br><span class="line">    <span class="meta">@HttpCode</span>(<span class="number">204</span>)</span><br><span class="line">    <span class="title function_">delete</span>(<span class="params"><span class="meta">@Param</span>(<span class="string">&#x27;id&#x27;</span>) id:<span class="built_in">number</span></span>) &#123;</span><br><span class="line">        <span class="comment">// 删除成功不需要返回数据</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="响应体"><a href="#响应体" class="headerlink" title="响应体"></a>响应体</h2><p>在express或者开发中，响应内容都是我们手动赋值或者输出的，但是在NestJs，可以直接根据路由函数的返回值<code>类型</code>自动识别响应体类型。NestJs支持以下格式的响应：</p>
+<table>
+<thead>
+<tr>
+<th align="left">TS类型</th>
+<th align="left">响应类型</th>
+<th align="left">响应格式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">string</td>
+<td align="left">字符串</td>
+<td align="left">text&#x2F;html</td>
+</tr>
+<tr>
+<td align="left">object</td>
+<td align="left">JSON</td>
+<td align="left">application&#x2F;json</td>
+</tr>
+<tr>
+<td align="left">array</td>
+<td align="left">JSON</td>
+<td align="left">application&#x2F;json</td>
+</tr>
+<tr>
+<td align="left">null</td>
+<td align="left">无(响应体长度为0)</td>
+<td align="left">无</td>
+</tr>
+<tr>
+<td align="left">undefined</td>
+<td align="left">无(响应体长度为0)</td>
+<td align="left">无</td>
+</tr>
+<tr>
+<td align="left">Promise&lt;*&gt;</td>
+<td align="left">根据Promise返回的结果类型确定(规则如上)</td>
+<td align="left">-</td>
+</tr>
+</tbody></table>
+<h2 id="异步路由函数"><a href="#异步路由函数" class="headerlink" title="异步路由函数"></a>异步路由函数</h2><p>在前面的例子中，我们所有的路由处理函数都是同步的，但是在实际开发中基本不可能，一旦涉及到数据库访问、缓存访问就会存在IO，有IO就会有异步。</p>
+<p>NestJs天生完美支持异步，有以下两种方法进行异步编程：</p>
+<h3 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Get</span>()</span><br><span class="line"><span class="keyword">async</span> <span class="title function_">findAll</span>(): <span class="title class_">Promise</span>&lt;<span class="built_in">any</span>[]&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">Promise</span>.<span class="title function_">resolve</span>([]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="RxJs"><a href="#RxJs" class="headerlink" title="RxJs"></a>RxJs</h3><p>RxJs中提供了<code>Observable</code>对象，NestJs可以自动订阅并获取最后一次产生的值。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Get</span>()</span><br><span class="line"><span class="attr">findAll</span>: <span class="title class_">Observable</span>&lt;<span class="built_in">any</span>[]&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">of</span>([]); <span class="comment">// of为RxJs操作符</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="实现一个Restful-API"><a href="#实现一个Restful-API" class="headerlink" title="实现一个Restful API"></a>实现一个Restful API</h2><p>以下是基于Restful API规范开发的API，本文的主要内容为控制器，所以DTO对象的创建省略。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Controller</span>, <span class="title class_">Get</span>, <span class="title class_">Query</span>, <span class="title class_">Post</span>, <span class="title class_">Body</span>, <span class="title class_">Put</span>, <span class="title class_">Param</span>, <span class="title class_">Delete</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/common&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">CreateCatDto</span>, <span class="title class_">UpdateCatDto</span>, <span class="title class_">ListAllEntities</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./dto&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Controller</span>(<span class="string">&#x27;users&#x27;</span>)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">UsersController</span> &#123;</span><br><span class="line">  <span class="comment">// 创建用户，POST请求会自动返回201状态码，响应体为空</span></span><br><span class="line">  <span class="meta">@Post</span>()</span><br><span class="line">  <span class="title function_">create</span>(<span class="params"><span class="meta">@Body</span>() dto: CreateUserDto</span>) &#123;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 用户列表</span></span><br><span class="line">  <span class="meta">@Get</span>()</span><br><span class="line">  <span class="title function_">findAll</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> [</span><br><span class="line">          &#123;<span class="attr">id</span>:<span class="number">1</span>,<span class="attr">username</span>:<span class="string">&#x27;a&#x27;</span>,<span class="attr">password</span>:<span class="string">&#x27;a&#x27;</span>&#125;,</span><br><span class="line">          &#123;<span class="attr">id</span>:<span class="number">2</span>,<span class="attr">username</span>:<span class="string">&#x27;b&#x27;</span>,<span class="attr">password</span>:<span class="string">&#x27;b&#x27;</span>&#125;</span><br><span class="line">      ];</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 查看用户</span></span><br><span class="line">  <span class="meta">@Get</span>(<span class="string">&#x27;:id&#x27;</span>)</span><br><span class="line">  <span class="title function_">findOne</span>(<span class="params"><span class="meta">@Param</span>(<span class="string">&#x27;id&#x27;</span>) id: <span class="built_in">number</span></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;id,<span class="attr">username</span>:<span class="string">&#x27;mock username&#x27;</span>, <span class="attr">password</span>: <span class="string">&#x27;mock password&#x27;</span>&#125;;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 更新用户，需要返回编辑后的用户资源</span></span><br><span class="line">  <span class="meta">@Put</span>(<span class="string">&#x27;:id&#x27;</span>)</span><br><span class="line">  <span class="title function_">update</span>(<span class="params"><span class="meta">@Param</span>(<span class="string">&#x27;id&#x27;</span>) id: <span class="built_in">number</span>, <span class="meta">@Body</span>() updateUserDto: UpdateUserDto</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> &#123;id,<span class="attr">username</span>:<span class="string">&#x27;updated username&#x27;</span>,<span class="attr">password</span>: <span class="string">&#x27;updated password&#x27;</span>&#125;;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 删除用户，返回204状态码</span></span><br><span class="line">  <span class="meta">@Delete</span>(<span class="string">&#x27;:id&#x27;</span>)</span><br><span class="line">  <span class="meta">@HttpCode</span>(<span class="number">204</span>)</span><br><span class="line">  <span class="title function_">remove</span>(<span class="params"><span class="meta">@Param</span>(<span class="string">&#x27;id&#x27;</span>) id: <span class="built_in">number</span></span>) &#123;</span><br><span class="line">   </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Gepostet vor&nbsp;<time dateTime="2019-08-19T02:10:13.000Z" title="8/19/2019, 2:10:13 AM">2019-08-19</time></span><span class="level-item"><a class="link-muted" href="/categories/backend/">backend</a><span> / </span><a class="link-muted" href="/categories/backend/nodejs/">nodejs</a></span><span class="level-item">6 minutes lesen (Über 869 Wörter)</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2019/08/19/2019-08-19-nestjs-get-started.html">NestJs学习之旅(1)——快速开始</a></p><div class="content"><p>本文是NestJs学习之旅的第一篇，简要介绍一下NestJs框架，搭建一个Hello World应用。</p>
+<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>Nest（或NestJS）是一个用于构建高效，可扩展的Node.js服务器端应用程序的框架。它使用渐进式JavaScript，内置并完全支持TypeScript（但仍然允许开发人员使用纯JavaScript编写代码）并结合了OOP（面向对象编程），FP（功能编程）和FRP（功能反应编程）的元素。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Controller</span>, <span class="title class_">Get</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/common&#x27;</span>;</span><br><span class="line"></span><br><span class="line">@<span class="title class_">Controller</span>(<span class="string">&#x27;cats&#x27;</span>)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">CatsController</span> &#123;</span><br><span class="line">  @<span class="title class_">Get</span>()</span><br><span class="line">  <span class="title function_">findAll</span>(): string &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;This action returns all cats&#x27;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>熟悉Java的同学应该有似曾相识的感觉，SpringBoot中大量使用注解来简化开发。现在，使用基于ES6装饰器构建的NestJs框架，你也可以做到!</p>
+<h2 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h2><p>先说说优点吧：</p>
+<ul>
+<li>完美支持Typescript，因此可以使用日益繁荣的TS生态资源</li>
+<li>兼容express中间件，降低造轮子成本</li>
+<li>完美支持响应式编程框架rxjs</li>
+<li>完美支持依赖注入</li>
+<li>模块化思想，方便开发以及后期维护</li>
+<li>使用装饰器简化开发，减少样板代码</li>
+<li>组件化设计，解决Node.js无全栈框架约束的现存问题</li>
+</ul>
+<p>当然，”缺点”也是有点的，不过熟练之后这些都不是缺点：</p>
+<ul>
+<li>基于TS导致的语言门槛</li>
+<li>代码设计上对模块化&#x2F;组件化思想有一定要求</li>
+</ul>
+<h2 id="第一个NestJs应用"><a href="#第一个NestJs应用" class="headerlink" title="第一个NestJs应用"></a>第一个NestJs应用</h2><p>使用NestJs的命令行工具，可以简化项目的创建以及项目文件的创建。</p>
+<ol>
+<li><code>npm install -g @nestjs/cli</code>安装命令行工具</li>
+<li><code>nest new 项目名称</code>初始化项目</li>
+</ol>
+<p>初始化完毕后可以看到一个完整的项目结果，目录如下(忽略node_modules)：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">├── README.md                       自述文件</span><br><span class="line">├── nest-cli.json                   NestJs项目配置</span><br><span class="line">├── package.json                    npm文件</span><br><span class="line">├── src                             项目源码</span><br><span class="line">│   ├── app.controller.spec.ts      控制器测试文件</span><br><span class="line">│   ├── app.controller.ts           控制器类</span><br><span class="line">│   ├── app.module.ts               模块类</span><br><span class="line">│   ├── app.service.ts              服务类</span><br><span class="line">│   └── main.ts                     项目入口文件</span><br><span class="line">├── test                            测试目录</span><br><span class="line">│   ├── app.e2e-spec.ts             应用e2e测试</span><br><span class="line">│   └── jest-e2e.json               jest e2e测试配置</span><br><span class="line">├── tsconfig.build.json             生产环境Typescript所用</span><br><span class="line">├── tsconfig.json                   开发环境Typescript配置</span><br><span class="line">├── tslint.json                     tslint配置</span><br><span class="line">└── yarn.lock                       yarn锁文件</span><br></pre></td></tr></table></figure>
+
+<p>NestJs有几大类文件是主要的是下面几种，其他类型的文件在后续课程会讲解；</p>
+<ul>
+<li>module 模块声明(这是NestJs的一个亮点，有点DDD的思想)</li>
+<li>controller 控制器(负责接收数据，返回响应)</li>
+<li>service 服务(主要业务逻辑)</li>
+</ul>
+<p>使用<code>npm run start</code>来运行项目。终端输出如下:</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[Nest] 2986   - 08/19/2019, 10:29 AM   [NestFactory] Starting Nest application...</span><br><span class="line">[Nest] 2986   - 08/19/2019, 10:29 AM   [InstanceLoader] AppModule dependencies initialized +22ms</span><br><span class="line">[Nest] 2986   - 08/19/2019, 10:29 AM   [RoutesResolver] AppController &#123;/&#125;: +12ms</span><br><span class="line">[Nest] 2986   - 08/19/2019, 10:29 AM   [RouterExplorer] Mapped &#123;/, GET&#125; route +9ms</span><br><span class="line">[Nest] 2986   - 08/19/2019, 10:29 AM   [NestApplication] Nest application successfully started +6ms</span><br></pre></td></tr></table></figure>
+
+<p>一般来说，看到<code>successfully</code>就可以认为启动成功了。启动失败的话可以根据错误提示进行处理，比较多的情况可能是端口占用导致的错误。</p>
+<p>打开浏览器访问<code>http://localhost:3000</code>即可看到输出<code>Hello World!</code>。</p>
+<h2 id="To-Be-Continued"><a href="#To-Be-Continued" class="headerlink" title="To Be Continued"></a>To Be Continued</h2><p>下一期将介绍Controller，欢迎持续关注!</p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Gepostet vor&nbsp;<time dateTime="2019-07-25T03:26:30.000Z" title="7/25/2019, 3:26:30 AM">2019-07-25</time></span><span class="level-item"><a class="link-muted" href="/categories/backend/">backend</a><span> / </span><a class="link-muted" href="/categories/backend/nodejs/">nodejs</a></span><span class="level-item">2 minutes lesen (Über 261 Wörter)</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2019/07/25/2019-07-25-nodejs-guide-next-step.html">NodeJs简明教程(11) - 完结篇</a></p><div class="content"><p>本文是NodeJs简明教程的完结篇，将对以往文章进行归档。</p>
+<h2 id="系列文章"><a href="#系列文章" class="headerlink" title="系列文章"></a>系列文章</h2><ol>
+<li><a href="https://www.ddhigh.com/2019/07/18/nodejs-guide-about.html">NodeJs简明教程(1)——简介</a></li>
+<li><a href="https://www.ddhigh.com/2019/07/19/nodejs-guide-installation.html">NodeJs简明教程(2)——安装</a></li>
+<li><a href="https://www.ddhigh.com/2019/07/19/nodejs-guide-http-server.html">NodeJs简明教程(3)——HTTP服务器</a></li>
+<li><a href="https://www.ddhigh.com/2019/07/20/nodejs-guide-filesystem.html">NodeJs简明教程(4)——文件系统</a></li>
+<li><a href="https://www.ddhigh.com/2019/07/20/nodejs-guide-path.html">NodeJs简明教程(5)——路径</a></li>
+<li><a href="https://www.ddhigh.com/2019/07/21/nodejs-guide-crypto.html">NodeJs简明教程(6)——加解密</a></li>
+<li><a href="https://www.ddhigh.com/2019/07/22/nodejs-guide-events.html">NodeJs简明教程(7)——事件</a></li>
+<li><a href="https://www.ddhigh.com/2019/07/23/nodejs-guide-child-process.html">NodeJs简明教程(8)——子进程</a></li>
+<li><a href="https://www.ddhigh.com/2019/07/24/nodejs-guide-net.html">NodeJs简明教程(9)——TCP开发</a></li>
+<li><a href="https://www.ddhigh.com/2019/07/25/nodejs-guide-dgram.html">NodeJs简明教程(10)——UDP开发</a></li>
+</ol>
+<h2 id="接下来的内容"><a href="#接下来的内容" class="headerlink" title="接下来的内容"></a>接下来的内容</h2><ol>
+<li>Typescript语言基础</li>
+<li>NodeJs常用第三方模块(缓存、数据库、通用连接池、消息队列等等)</li>
+<li>koa 专题</li>
+<li>express 专题</li>
+<li>nestjs 专题</li>
+</ol>
+<p>欢迎持续关注~</p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Gepostet vor&nbsp;<time dateTime="2019-07-25T03:00:00.000Z" title="7/25/2019, 3:00:00 AM">2019-07-25</time></span><span class="level-item"><a class="link-muted" href="/categories/backend/">backend</a><span> / </span><a class="link-muted" href="/categories/backend/nodejs/">nodejs</a></span><span class="level-item">4 minutes lesen (Über 581 Wörter)</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2019/07/25/2019-07-25-nodejs-guide-dgram.html">NodeJs简明教程(10)</a></p><div class="content"><p>本文是NodeJs简明教程的第十篇，将介绍NodeJs <strong>dgram</strong> 模块(<code>UDP服务端/客户端</code>)相关的基本操作。</p>
+<h2 id="啥是UDP"><a href="#啥是UDP" class="headerlink" title="啥是UDP"></a>啥是UDP</h2><blockquote>
+<p>Internet 协议集支持一个无连接的传输协议，该协议称为用户数据报协议（UDP，User Datagram Protocol）。UDP 为应用程序提供了一种无需建立连接就可以发送封装的 IP 数据报的方法。RFC 768描述了 UDP。</p>
+</blockquote>
+<p>NodeJs使用<code>dgram模块</code>实现<code>UDP服务端/客户端</code>相关功能。</p>
+<p><code>dgram.createSocket</code>用来创建一个Socket对象，可以基于该套接口<code>接收</code>或<code>发送</code>数据。该方法原型如下：</p>
+<p><code>dgram.createSocket(type[, callback])</code></p>
+<ul>
+<li>type <code>&lt;string&gt;</code> socket类型。<code>udp4</code>或<code>udp6</code>，对应<code>ipv4</code>和<code>ipv6</code></li>
+<li>callback <code>&lt;Function&gt;</code> 接收到消息时的回调函数</li>
+</ul>
+<h2 id="Echo服务端开发"><a href="#Echo服务端开发" class="headerlink" title="Echo服务端开发"></a>Echo服务端开发</h2><p>server.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> dgram = <span class="built_in">require</span>(<span class="string">&#x27;dgram&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> socket = dgram.<span class="title function_">createSocket</span>(<span class="string">&#x27;udp4&#x27;</span>);</span><br><span class="line"></span><br><span class="line">socket.<span class="title function_">on</span>(<span class="string">&#x27;error&#x27;</span>, <span class="keyword">function</span>(<span class="params">err</span>) &#123; <span class="comment">// 监听socket错误</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;服务器错误&#x27;</span>, err);</span><br><span class="line">    socket.<span class="title function_">close</span>();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">socket.<span class="title function_">on</span>(<span class="string">&#x27;message&#x27;</span>,<span class="keyword">function</span>(<span class="params">msg,sender</span>) &#123; <span class="comment">// 监听收到数据</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;%s:%d =&gt; %s&#x27;</span>, sender.<span class="property">address</span>,sender.<span class="property">port</span>,msg.<span class="title function_">toString</span>()); <span class="comment">// 打印该数据包详情</span></span><br><span class="line">    socket.<span class="title function_">send</span>(<span class="string">&#x27;socket: &#x27;</span>+msg.<span class="title function_">toString</span>(),sender.<span class="property">port</span>,sender.<span class="property">address</span>,<span class="keyword">function</span>(<span class="params">err</span>) &#123; <span class="comment">// 发送数据给来源地址</span></span><br><span class="line">        <span class="keyword">if</span>(err) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;回复%s:%d失败: %s&#x27;</span>,sender.<span class="property">address</span>,sender.<span class="property">port</span>,err.<span class="property">message</span>);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">   &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">socket.<span class="title function_">bind</span>(<span class="number">10000</span>, <span class="keyword">function</span>(<span class="params"></span>) &#123; <span class="comment">// 监听UDP端口</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;服务器正在监听 %s:%d&#x27;</span>, socket.<span class="title function_">address</span>().<span class="property">address</span>, socket.<span class="title function_">address</span>().<span class="property">port</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="Echo客户端开发"><a href="#Echo客户端开发" class="headerlink" title="Echo客户端开发"></a>Echo客户端开发</h2><p>由于<code>telnet</code>连接服务器使用的是<code>TCP协议</code>，所以本文对应的客户端需要使用NodeJs开发。</p>
+<p>client.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> dgram = <span class="built_in">require</span>(<span class="string">&#x27;dgram&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> socket = dgram.<span class="title function_">createSocket</span>(<span class="string">&#x27;udp4&#x27;</span>); <span class="comment">// 创建socket实例</span></span><br><span class="line"></span><br><span class="line">socket.<span class="title function_">on</span>(<span class="string">&#x27;message&#x27;</span>, <span class="keyword">function</span>(<span class="params">msg,sender</span>) &#123; <span class="comment">// 监听收到数据</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;接收到%s:%d的消息:%s&#x27;</span>,sender.<span class="property">address</span>,sender.<span class="property">port</span>,msg.<span class="title function_">toString</span>());</span><br><span class="line">    socket.<span class="title function_">close</span>();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">socket.<span class="title function_">send</span>(<span class="string">&#x27;hello&#x27;</span>,<span class="number">10000</span>,<span class="keyword">function</span>(<span class="params">err</span>) &#123; <span class="comment">// 向目标端口发送数据</span></span><br><span class="line">    <span class="keyword">if</span>(err) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;发送错误&#x27;</span>, err);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;发送成功&#x27;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="执行"><a href="#执行" class="headerlink" title="执行"></a>执行</h2><ol>
+<li><p>终端执行<code>node server.js</code>，输出</p>
+ <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">服务器正在监听 0.0.0.0:10000</span><br></pre></td></tr></table></figure></li>
+<li><p>终端执行<code>node client.js</code>，输出</p>
+ <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">发送成功</span><br><span class="line">接收到127.0.0.1:10000的消息:server: hello</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>服务端输出:</p>
+ <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:50577 =&gt; hello</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>NodeJs UDP服务端与客户端开发到此结束，但是使用UDP的情况下，数据包确认、流量控制等等操作都需要程序员手动完成，这一方面确实挺复杂的，没有什么特殊的要求的话使用TCP即可。</p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Gepostet vor&nbsp;<time dateTime="2019-07-24T02:23:56.000Z" title="7/24/2019, 2:23:56 AM">2019-07-24</time></span><span class="level-item"><a class="link-muted" href="/categories/backend/">backend</a><span> / </span><a class="link-muted" href="/categories/backend/nodejs/">nodejs</a></span><span class="level-item">6 minutes lesen (Über 878 Wörter)</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2019/07/24/2019-07-24-nodejs-guide-net.html">NodeJs简明教程(9)</a></p><div class="content"><p>本文是NodeJs简明教程的第九篇，将介绍NodeJs <strong>net</strong> 模块(<code>TCP服务端/客户端</code>)相关的基本操作。</p>
+<h2 id="啥是TCP"><a href="#啥是TCP" class="headerlink" title="啥是TCP"></a>啥是TCP</h2><blockquote>
+<p>传输控制协议（TCP，Transmission Control Protocol）是一种面向连接的、可靠的、基于字节流的传输层通信协议，由IETF的RFC 793 定义。</p>
+</blockquote>
+<p>NodeJs使用<code>net模块</code>实现<code>TCP服务端/客户端</code>相关功能。</p>
+<h2 id="Echo服务器开发"><a href="#Echo服务器开发" class="headerlink" title="Echo服务器开发"></a>Echo服务器开发</h2><blockquote>
+<p>Echo服务器就是客户端发送什么，服务端就显示什么的一种服务端程序。主要为了调试网络和协议是否正常工作。</p>
+</blockquote>
+<p><code>net.createServer</code>用来创建一个服务端，该方法原型如下：</p>
+<p><code>net.createServer([options][, connectionlistener]): net.Server</code></p>
+<ul>
+<li>options <code>&lt;Object&gt;</code><ul>
+<li>allowHalfOpen <code>&lt;boolean&gt;</code> 表明是否允许半开的 TCP 连接。默认值: <code>false</code>。</li>
+<li>pauseOnConnect <code>&lt;boolean&gt;</code> 表明是否应在传入连接上暂停套接字。默认值: false。</li>
+</ul>
+</li>
+<li>connectionListener <code>&lt;Function&gt;</code> 客户端连接事件监听器。回调参数为<code>Socket(可以视为一个客户端连接)</code></li>
+</ul>
+<p>返回值为<code>net.Server</code>，<code>net.Server</code>主要方法如下：</p>
+<p><code>server.listen([port[, host[, backlog]]][, callback])</code></p>
+<ul>
+<li>port <code>&lt;number&gt;</code> 监听端口</li>
+<li>host <code>&lt;string&gt;</code> 监听主机</li>
+<li>backlog <code>&lt;number&gt;</code> 待连接队列的最大长度</li>
+<li>callback <code>&lt;Function&gt;</code> 监听成功回调函数</li>
+</ul>
+<p>server.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> net = <span class="built_in">require</span>(<span class="string">&#x27;net&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> server = net.<span class="title function_">createServer</span>(<span class="keyword">function</span> (<span class="params">client</span>) &#123; <span class="comment">// 创建服务端</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(client.<span class="title function_">address</span>().<span class="property">address</span>, <span class="string">&#x27;连接成功&#x27;</span>); <span class="comment">// 客户端连接成功时打印客户端地址</span></span><br><span class="line"></span><br><span class="line">    client.<span class="title function_">on</span>(<span class="string">&#x27;error&#x27;</span>, <span class="keyword">function</span> (<span class="params">e</span>) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(client.<span class="title function_">address</span>().<span class="property">address</span>, <span class="string">&#x27; error &gt;&gt; &#x27;</span>, e.<span class="property">message</span>); <span class="comment">// 连接错误时（如客户端异常断开）</span></span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    client.<span class="title function_">on</span>(<span class="string">&#x27;data&#x27;</span>, <span class="keyword">function</span> (<span class="params">data</span>) &#123; <span class="comment">// 收到客户端数据</span></span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(client.<span class="title function_">address</span>().<span class="property">address</span>, <span class="string">&#x27; &gt;&gt; &#x27;</span>, data.<span class="title function_">toString</span>());</span><br><span class="line">        client.<span class="title function_">write</span>(data); <span class="comment">// 往客户端写数据</span></span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    client.<span class="title function_">on</span>(<span class="string">&#x27;end&#x27;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123; <span class="comment">// 客户端正常断开</span></span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(client.<span class="title function_">address</span>().<span class="property">address</span>, <span class="string">&#x27;断开连接&#x27;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">server.<span class="title function_">on</span>(<span class="string">&#x27;error&#x27;</span>, <span class="keyword">function</span> (<span class="params">e</span>) &#123; <span class="comment">// 服务器错误（如启动失败，端口占用）</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;服务器启动失败&#x27;</span>, e);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">server.<span class="title function_">listen</span>(<span class="number">10000</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;启动成功，地址&#x27;</span>, server.<span class="title function_">address</span>().<span class="property">address</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><p>执行<code>node server.js</code>可以看到输出<code>启动成功，地址xxx</code></p>
+</li>
+<li><p>打开终端，执行<code>telnet localhost 10000</code>，可以看到输出如下（如果不一样，请加群讨论）：</p>
+ <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Trying ::1...</span><br><span class="line">Connected to localhost.</span><br><span class="line">Escape character is &#x27;^]&#x27;.</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>终端继续输入以下字符：</p>
+ <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">helloworld</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>服务端会回复</p>
+ <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hello world</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>该Echo服务器就开发已经测试通过了。虽然代码量不多，但是演示了从零开始开发一个TCP服务器的流程，相比于C语言开发TCP服务器还是方便很多的。</p>
+<h2 id="TCP客户端"><a href="#TCP客户端" class="headerlink" title="TCP客户端"></a>TCP客户端</h2><p><code>net.connect</code>可以连接目标TCP服务器，该方法原型如下：</p>
+<p><code>net.connect(port[,host][,connectionListener])</code></p>
+<ul>
+<li>port <code>&lt;number&gt;</code> 连接端口</li>
+<li>host <code>&lt;string&gt;</code> 连接主机</li>
+<li>connectionListener <code>&lt;Function&gt;</code> 连接成功的回调</li>
+</ul>
+<p>还是以刚才监听<code>10000</code>端口的服务端为例来开发客户端</p>
+<p>client.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> net = <span class="built_in">require</span>(<span class="string">&#x27;net&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> client = net.<span class="title function_">connect</span>(<span class="number">10000</span>, <span class="string">&#x27;localhost&#x27;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123; <span class="comment">// 连接服务器</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;连接服务器成功&#x27;</span>);</span><br><span class="line"></span><br><span class="line">    client.<span class="title function_">write</span>(<span class="string">&#x27;我是客户端&#x27;</span>); <span class="comment">// 往服务端发送数据</span></span><br><span class="line"></span><br><span class="line">    client.<span class="title function_">on</span>(<span class="string">&#x27;data&#x27;</span>, <span class="keyword">function</span> (<span class="params">data</span>) &#123; <span class="comment">// 接收到服务端数据</span></span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;服务端消息&#x27;</span>, data.<span class="title function_">toString</span>());</span><br><span class="line">        client.<span class="title function_">end</span>(); <span class="comment">// 断开连接</span></span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    client.<span class="title function_">on</span>(<span class="string">&#x27;end&#x27;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123; <span class="comment">// 连接断开事件</span></span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;服务端连接断开&#x27;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>保证服务端开启的情况下，执行该js，输出如下：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">连接服务器成功</span><br><span class="line">服务端消息 我是客户端</span><br><span class="line">服务端连接断开</span><br></pre></td></tr></table></figure>
+
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>NodeJs TCP服务端与客户端开发到此结束，但是TCP协议的学习远远不止于此，包括<code>自定义协议开发</code>、<code>TCP粘包问题</code>等等。</p>
+</div></article></div><nav class="pagination" role="navigation" aria-label="pagination"><div class="pagination-previous"><a href="/categories/backend/nodejs/">Zurück</a></div><div class="pagination-next"><a href="/categories/backend/nodejs/page/3/">Weiter</a></div><ul class="pagination-list is-hidden-mobile"><li><a class="pagination-link" href="/categories/backend/nodejs/">1</a></li><li><a class="pagination-link is-current" href="/categories/backend/nodejs/page/2/">2</a></li><li><a class="pagination-link" href="/categories/backend/nodejs/page/3/">3</a></li><li><a class="pagination-link" href="/categories/backend/nodejs/page/4/">4</a></li><li><a class="pagination-link" href="/categories/backend/nodejs/page/5/">5</a></li></ul></nav></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="https://static.ddhigh.com/blog/2019-09-18-094336.jpg" alt="XiaLei"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">XiaLei</p><p class="is-size-6 is-block">Senior Software Engineer</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Tencent</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Seiten</p><a href="/archives"><p class="title">306</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Kategorien</p><a href="/categories"><p class="title">25</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tags</p><a href="/tags"><p class="title">38</p></a></div></div></nav><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/xialeistudio"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="RSS" href="/atom.xml"><i class="fas fa-rss"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="LinkedIn" href="https://www.linkedin.com/in/xialeidoc/"><i class="fa-brands fa-linkedin"></i></a></div></div></div><!--!--></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">Learning &amp; Sharing</a><p class="is-size-7"><span>&copy; 2023 Xia Lei</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en-us");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><a id="back-to-top" title="Zurück nach oben" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "Diese Website verwendet Cookies, um Ihre Erfahrung zu verbessern.",
+          dismiss: "Verstanden!",
+          allow: "Cookies zulassen",
+          deny: "Ablehnen",
+          link: "Mehr erfahren",
+          policy: "Cookie-Richtlinie",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Tippen Sie etwas..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Tippen Sie etwas...","untitled":"(Ohne Titel)","posts":"Seiten","pages":"Pages","categories":"Kategorien","tags":"Tags"});
+        });</script></body></html>

@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="robots" content="noindex"><meta><title>Kategorie: javascript - Learning &amp; Sharing</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Learning &amp; Sharing"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Learning &amp; Sharing"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="Learning &amp;amp; Sharing"><meta property="og:type" content="website"><meta property="og:title" content="Learning &amp; Sharing"><meta property="og:url" content="https://www.ddhigh.com/"><meta property="og:site_name" content="Learning &amp; Sharing"><meta property="og:description" content="Learning &amp;amp; Sharing"><meta property="og:locale" content="en_US"><meta property="og:image" content="https://www.ddhigh.com/img/og_image.png"><meta property="article:author" content="Xia Lei"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://www.ddhigh.com/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.ddhigh.com"},"headline":"Learning & Sharing","image":["https://www.ddhigh.com/img/og_image.png"],"author":{"@type":"Person","name":"Xia Lei"},"publisher":{"@type":"Organization","name":"Learning & Sharing","logo":{"@type":"ImageObject","url":{"text":"Learning & Sharing"}}},"description":"Learning &amp; Sharing"}</script><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.4.1/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><!--!--><script>var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?78141f99bbb49f1564a7af89344f5add";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">Learning &amp; Sharing</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a><a class="navbar-item search" title="Suche" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><div class="card-content"><nav class="breadcrumb" aria-label="breadcrumbs"><ul><li><a href="/categories">Kategorien</a></li><li><a href="/categories/frontend/">frontend</a></li><li class="is-active"><a href="#" aria-current="page">javascript</a></li></ul></nav></div></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Gepostet vor&nbsp;<time dateTime="2015-08-19T19:49:39.000Z" title="8/19/2015, 7:49:39 PM">2015-08-20</time></span><span class="level-item"><a class="link-muted" href="/categories/frontend/">frontend</a><span> / </span><a class="link-muted" href="/categories/frontend/javascript/">javascript</a></span><span class="level-item">3 minutes lesen (Über 426 Wörter)</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2015/08/19/2015-08-20-js-function-this-scope.html">JS函数不同执行环境下的this指向</a></p><div class="content"><blockquote>
+<p>JavaScript中this指向一直是一个难点，也是一个重点，本文研究Node.js与浏览器环境下this指向的不同之处。</p>
+</blockquote>
+<p>先来看一段代码</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> length = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">fn</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">length</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">  <span class="attr">length</span>: <span class="number">5</span>,</span><br><span class="line">  <span class="attr">method</span>: <span class="keyword">function</span>(<span class="params">fn</span>) &#123;</span><br><span class="line">    <span class="title function_">fn</span>();</span><br><span class="line">    <span class="variable language_">arguments</span>[<span class="number">0</span>]();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">obj.<span class="title function_">method</span>(fn,<span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+
+<p>猜猜输出结果？</p>
+<h2 id="浏览器环境"><a href="#浏览器环境" class="headerlink" title="浏览器环境"></a>浏览器环境</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">10</span><br><span class="line">2</span><br></pre></td></tr></table></figure>
+
+<h3 id="为什么输出10"><a href="#为什么输出10" class="headerlink" title="为什么输出10?"></a>为什么输出10?</h3><p>执行过程大致如下：   </p>
+<p>obj.method这是个obj对象的方法，而传入的fn是个函数，fn()属于调用模式的”函数调用”。<code>非严格模式下，this为global对象（浏览器中就是window）</code>。<br>而在这段代码的最上方使用var定义了length，由于var是直接写在global作用域中的，所以此处的 var length 与 window.length是同一个东西。输出10也就不奇怪了。</p>
+<h3 id="为什么输出2？"><a href="#为什么输出2？" class="headerlink" title="为什么输出2？"></a>为什么输出2？</h3><p>arguments这个是在函数内部才有的参数，很像array，而且typeof得到的也是object值，我们知道，js访问对象有 . 操作符 和 中括号操作符，此处使用的是第二种方法获取到obj.method的第一个参数，也就是fn<br>由于<code>arguments[0]()</code>是属于调用方式中的“方法调用模式”,this指向对象本身，也就是arguments，所以会输出2。</p>
+<h2 id="NodeJs环境"><a href="#NodeJs环境" class="headerlink" title="NodeJs环境"></a>NodeJs环境</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">undefined</span><br><span class="line">2</span><br></pre></td></tr></table></figure>
+<h3 id="为什么输出undefined？"><a href="#为什么输出undefined？" class="headerlink" title="为什么输出undefined？"></a>为什么输出undefined？</h3><p><strong>Node.js的global处理机制不同。</strong></p>
+<p>global贯穿与Node.js整合生命周期，而每个js文件是单独的模块，就算使用var定义在顶层，也只是这个module的全局变量。所以会输出undefined。</p>
+<h3 id="为什么输出2？-1"><a href="#为什么输出2？-1" class="headerlink" title="为什么输出2？"></a>为什么输出2？</h3><p>同浏览器。</p>
+</div></article></div><nav class="pagination" role="navigation" aria-label="pagination"><div class="pagination-previous"><a href="/categories/frontend/javascript/page/2/">Zurück</a></div><div class="pagination-next is-invisible is-hidden-mobile"><a href="/categories/frontend/javascript/page/4/">Weiter</a></div><ul class="pagination-list is-hidden-mobile"><li><a class="pagination-link" href="/categories/frontend/javascript/">1</a></li><li><a class="pagination-link" href="/categories/frontend/javascript/page/2/">2</a></li><li><a class="pagination-link is-current" href="/categories/frontend/javascript/page/3/">3</a></li></ul></nav></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="https://static.ddhigh.com/blog/2019-09-18-094336.jpg" alt="XiaLei"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">XiaLei</p><p class="is-size-6 is-block">Senior Software Engineer</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Tencent</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Seiten</p><a href="/archives"><p class="title">306</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Kategorien</p><a href="/categories"><p class="title">25</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tags</p><a href="/tags"><p class="title">38</p></a></div></div></nav><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/xialeistudio"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="RSS" href="/atom.xml"><i class="fas fa-rss"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="LinkedIn" href="https://www.linkedin.com/in/xialeidoc/"><i class="fa-brands fa-linkedin"></i></a></div></div></div><!--!--></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">Learning &amp; Sharing</a><p class="is-size-7"><span>&copy; 2023 Xia Lei</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en-us");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><a id="back-to-top" title="Zurück nach oben" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "Diese Website verwendet Cookies, um Ihre Erfahrung zu verbessern.",
+          dismiss: "Verstanden!",
+          allow: "Cookies zulassen",
+          deny: "Ablehnen",
+          link: "Mehr erfahren",
+          policy: "Cookie-Richtlinie",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Tippen Sie etwas..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Tippen Sie etwas...","untitled":"(Ohne Titel)","posts":"Seiten","pages":"Pages","categories":"Kategorien","tags":"Tags"});
+        });</script></body></html>

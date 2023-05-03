@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>log4php使用syslog记录日志 - Learning &amp; Sharing</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Learning &amp; Sharing"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Learning &amp; Sharing"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="log4php是apache基金会下的一个开源项目，灵活、强大，已经有几个项目使用了log4php处理日志，目前遇到的问题是服务器太多的时候日志如何统一管理，本来想使用数据库存储。但是日志格式成了一个问题，而且不利于扩展，如果临时需要保存到文件，又要更改log4php的配置。好在log4php提供了syslog的一个appender，可以将日志写入syslog; log4php配置12345678"><meta property="og:type" content="article"><meta property="og:title" content="log4php使用syslog记录日志"><meta property="og:url" content="https://www.ddhigh.com/2023/05/03/2017-04-27-log4php-syslog.html"><meta property="og:site_name" content="Learning &amp; Sharing"><meta property="og:description" content="log4php是apache基金会下的一个开源项目，灵活、强大，已经有几个项目使用了log4php处理日志，目前遇到的问题是服务器太多的时候日志如何统一管理，本来想使用数据库存储。但是日志格式成了一个问题，而且不利于扩展，如果临时需要保存到文件，又要更改log4php的配置。好在log4php提供了syslog的一个appender，可以将日志写入syslog; log4php配置12345678"><meta property="og:locale" content="en_US"><meta property="og:image" content="https://www.ddhigh.com/img/og_image.png"><meta property="article:published_time" content="2023-05-03T15:35:39.963Z"><meta property="article:modified_time" content="2023-05-03T15:35:39.963Z"><meta property="article:author" content="Xia Lei"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://www.ddhigh.com/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.ddhigh.com/2023/05/03/2017-04-27-log4php-syslog.html"},"headline":"log4php使用syslog记录日志","image":["https://www.ddhigh.com/img/og_image.png"],"datePublished":"2023-05-03T15:35:39.963Z","dateModified":"2023-05-03T15:35:39.963Z","author":{"@type":"Person","name":"Xia Lei"},"publisher":{"@type":"Organization","name":"Learning & Sharing","logo":{"@type":"ImageObject","url":{"text":"Learning & Sharing"}}},"description":"log4php是apache基金会下的一个开源项目，灵活、强大，已经有几个项目使用了log4php处理日志，目前遇到的问题是服务器太多的时候日志如何统一管理，本来想使用数据库存储。但是日志格式成了一个问题，而且不利于扩展，如果临时需要保存到文件，又要更改log4php的配置。好在log4php提供了syslog的一个appender，可以将日志写入syslog; log4php配置12345678"}</script><link rel="canonical" href="https://www.ddhigh.com/2023/05/03/2017-04-27-log4php-syslog.html"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.4.1/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><!--!--><script>var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?78141f99bbb49f1564a7af89344f5add";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">Learning &amp; Sharing</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a><a class="navbar-item search" title="Suche" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Gepostet vor&nbsp;<time dateTime="2023-05-03T15:35:39.963Z" title="5/3/2023, 3:35:39 PM">2023-05-03</time></span><span class="level-item"><a class="link-muted" href="/categories/backend/">backend</a><span> / </span><a class="link-muted" href="/categories/backend/php/">php</a></span><span class="level-item">3 minutes lesen (Über 438 Wörter)</span></div></div><h1 class="title is-3 is-size-4-mobile">log4php使用syslog记录日志</h1><div class="content"><p>log4php是apache基金会下的一个开源项目，灵活、强大，已经有几个项目使用了log4php处理日志，目前遇到的问题是服务器太多的时候日志如何统一管理，本来想使用数据库存储。但是日志格式成了一个问题，而且不利于扩展，如果临时需要保存到文件，又要更改log4php的配置。<br>好在log4php提供了syslog的一个appender，可以将日志写入syslog;</p>
+<h2 id="log4php配置"><a href="#log4php配置" class="headerlink" title="log4php配置"></a>log4php配置</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">log4php.rootLogger=INFO, stdout, stderr</span><br><span class="line">log4php.appender.stdout=LoggerAppenderConsole</span><br><span class="line">log4php.appender.stdout.layout=LoggerLayoutPattern</span><br><span class="line">log4php.appender.stdout.layout.ConversionPattern=%date&#123;Y-m-d H:i:s&#125; [%-5p] %m%n</span><br><span class="line">log4php.appender.stdout.threshold=INFO</span><br><span class="line"></span><br><span class="line">log4php.appender.stderr=LoggerAppenderSyslog</span><br><span class="line">log4php.appender.stderr.ident=qun.hk-task</span><br><span class="line">log4php.appender.stderr.priority=ERR</span><br><span class="line">log4php.appender.stderr.facility=LOCAL0</span><br><span class="line">log4php.appender.stderr.layout=LoggerLayoutPattern</span><br><span class="line">log4php.appender.stderr.layout.ConversionPattern=%date&#123;Y-m-d H:i:s&#125; %m%n</span><br><span class="line">log4php.appender.stderr.threshold=WARN</span><br></pre></td></tr></table></figure>
+<p>这里使用两个输出目的地,stdout输出到终端，stderr输出到syslod，log4php配置对应rsyslog的配置关系为：</p>
+<ul>
+<li>ident -&gt; syslog中的tag</li>
+<li>priority -&gt; syslog中的priority</li>
+<li>facility -&gt; syslog中的facility，请注意全部为大写</li>
+</ul>
+<h2 id="rsyslog配置"><a href="#rsyslog配置" class="headerlink" title="rsyslog配置"></a>rsyslog配置</h2><p>rsyslog配置文件一般在 <em>&#x2F;etc&#x2F;rsyslog.conf</em> 以及 <em>&#x2F;etc&#x2F;rsyslog.d</em>目录下<br>我们不更改主配置文件，在*&#x2F;etc&#x2F;rsyslog.d&#x2F;*目录下新建文件</p>
+<p><code>vim local0.conf</code></p>
+<p>内容为</p>
+<p><code>local0.* /var/log/local0.log</code></p>
+<p>rsyslog输出可以写成服务器，本文为了测试直接写入文件，有需要的可以根据实际情况进行转发。重启rsyslog</p>
+<p><code>service rsyslog restart</code></p>
+<h2 id="PHP加载配置"><a href="#PHP加载配置" class="headerlink" title="PHP加载配置"></a>PHP加载配置</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title class_">\Logger</span>::<span class="title function_ invoke__">configure</span>(<span class="keyword">__DIR__</span> . <span class="string">&#x27;/log4php.properties&#x27;</span>);</span><br><span class="line"><span class="variable">$logger</span> = <span class="title class_">\Logger</span>::<span class="title function_ invoke__">getLogger</span>(<span class="string">&#x27;default&#x27;</span>);</span><br><span class="line"><span class="variable">$logger</span>-&gt;<span class="title function_ invoke__">info</span>(<span class="string">&#x27;info&#x27;</span>);</span><br><span class="line"><span class="variable">$logger</span>-&gt;<span class="title function_ invoke__">error</span>(<span class="string">&#x27;error&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<p>可以看到*&#x2F;var&#x2F;log&#x2F;local0.log<em>中多出一行</em>error*的日志</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>log4php使用syslog记录日志</p><p><a href="https://www.ddhigh.com/2023/05/03/2017-04-27-log4php-syslog.html">https://www.ddhigh.com/2023/05/03/2017-04-27-log4php-syslog.html</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Xia Lei</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2023-05-03</p></div></div><div class="level-item is-narrow"><div><h6>Updated on</h6><p>2023-05-03</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2023/05/03/2017-03-31-ios10.3-message-crash.html"><i class="level-item fas fa-chevron-left"></i><span class="level-item">IOS10.3信息APP闪退解决方案</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2023/05/03/2017-04-27-node-syslogd.html"><span class="level-item">使用NodeJs提供syslogd服务端</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><!--!--></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="https://static.ddhigh.com/blog/2019-09-18-094336.jpg" alt="XiaLei"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">XiaLei</p><p class="is-size-6 is-block">Senior Software Engineer</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Tencent</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Seiten</p><a href="/archives"><p class="title">306</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Kategorien</p><a href="/categories"><p class="title">25</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tags</p><a href="/tags"><p class="title">38</p></a></div></div></nav><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/xialeistudio"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="RSS" href="/atom.xml"><i class="fas fa-rss"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="LinkedIn" href="https://www.linkedin.com/in/xialeidoc/"><i class="fa-brands fa-linkedin"></i></a></div></div></div><!--!--></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">Learning &amp; Sharing</a><p class="is-size-7"><span>&copy; 2023 Xia Lei</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en-us");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><a id="back-to-top" title="Zurück nach oben" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "Diese Website verwendet Cookies, um Ihre Erfahrung zu verbessern.",
+          dismiss: "Verstanden!",
+          allow: "Cookies zulassen",
+          deny: "Ablehnen",
+          link: "Mehr erfahren",
+          policy: "Cookie-Richtlinie",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Tippen Sie etwas..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Tippen Sie etwas...","untitled":"(Ohne Titel)","posts":"Seiten","pages":"Pages","categories":"Kategorien","tags":"Tags"});
+        });</script></body></html>

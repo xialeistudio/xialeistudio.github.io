@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>NodeJs简明教程(8) - Learning &amp; Sharing</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Learning &amp; Sharing"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Learning &amp; Sharing"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="本文是NodeJs简明教程的第八篇，将介绍NodeJs 子进程 模块相关的基本操作。  child_process 模块提供了衍生子进程的能力（以一种与 popen(3) 类似但不相同的方式）。  NodeJs的JS线程虽然是单线程，不能利用多核CPU，也不能执行CPU密集型的任务，但是通过派生子进程的形式加上**IPC(进程间通信)**，可以充分利用多核CPU。 spawn spawn可以执行指"><meta property="og:type" content="article"><meta property="og:title" content="NodeJs简明教程(8)"><meta property="og:url" content="https://www.ddhigh.com/2019/07/23/2019-07-23-nodejs-guide-child-process.html"><meta property="og:site_name" content="Learning &amp; Sharing"><meta property="og:description" content="本文是NodeJs简明教程的第八篇，将介绍NodeJs 子进程 模块相关的基本操作。  child_process 模块提供了衍生子进程的能力（以一种与 popen(3) 类似但不相同的方式）。  NodeJs的JS线程虽然是单线程，不能利用多核CPU，也不能执行CPU密集型的任务，但是通过派生子进程的形式加上**IPC(进程间通信)**，可以充分利用多核CPU。 spawn spawn可以执行指"><meta property="og:locale" content="en_US"><meta property="og:image" content="https://www.ddhigh.com/img/og_image.png"><meta property="article:published_time" content="2019-07-23T02:52:47.000Z"><meta property="article:modified_time" content="2019-07-23T02:52:47.000Z"><meta property="article:author" content="Xia Lei"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://www.ddhigh.com/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.ddhigh.com/2019/07/23/2019-07-23-nodejs-guide-child-process.html"},"headline":"NodeJs简明教程(8)","image":["https://www.ddhigh.com/img/og_image.png"],"datePublished":"2019-07-23T02:52:47.000Z","dateModified":"2019-07-23T02:52:47.000Z","author":{"@type":"Person","name":"Xia Lei"},"publisher":{"@type":"Organization","name":"Learning & Sharing","logo":{"@type":"ImageObject","url":{"text":"Learning & Sharing"}}},"description":"本文是NodeJs简明教程的第八篇，将介绍NodeJs 子进程 模块相关的基本操作。  child_process 模块提供了衍生子进程的能力（以一种与 popen(3) 类似但不相同的方式）。  NodeJs的JS线程虽然是单线程，不能利用多核CPU，也不能执行CPU密集型的任务，但是通过派生子进程的形式加上**IPC(进程间通信)**，可以充分利用多核CPU。 spawn spawn可以执行指"}</script><link rel="canonical" href="https://www.ddhigh.com/2019/07/23/2019-07-23-nodejs-guide-child-process.html"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.4.1/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><!--!--><script>var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?78141f99bbb49f1564a7af89344f5add";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">Learning &amp; Sharing</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a><a class="navbar-item search" title="Suche" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Gepostet vor&nbsp;<time dateTime="2019-07-23T02:52:47.000Z" title="7/23/2019, 2:52:47 AM">2019-07-23</time></span><span class="level-item"><a class="link-muted" href="/categories/backend/">backend</a><span> / </span><a class="link-muted" href="/categories/backend/nodejs/">nodejs</a></span><span class="level-item">7 minutes lesen (Über 1102 Wörter)</span></div></div><h1 class="title is-3 is-size-4-mobile">NodeJs简明教程(8)</h1><div class="content"><p>本文是NodeJs简明教程的第八篇，将介绍NodeJs <strong>子进程</strong> 模块相关的基本操作。</p>
+<blockquote>
+<p>child_process 模块提供了衍生子进程的能力（以一种与 popen(3) 类似但不相同的方式）。</p>
+</blockquote>
+<p>NodeJs的JS线程虽然是单线程，不能利用多核CPU，也不能执行CPU密集型的任务，但是通过派生子进程的形式加上**IPC(进程间通信)**，可以充分利用多核CPU。</p>
+<h2 id="spawn"><a href="#spawn" class="headerlink" title="spawn"></a>spawn</h2><p> <code>spawn</code>可以执行<code>指定的命令</code>，<code>spawn</code>的函数原型如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">child_process.<span class="title function_">spawn</span>(command[,args][,options])</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>command <code>&lt;string&gt;</code> 要执行的命令</li>
+<li>args <code>&lt;string[]&gt;</code> 传给命令的参数列表</li>
+<li>options <code>&lt;Object&gt;</code> 额外选项<ul>
+<li>cwd <code>&lt;string&gt;</code> 子进程<code>workdir</code></li>
+<li>env <code>&lt;Object&gt;</code> 子进程环境变量</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; spawn &#125; = <span class="built_in">require</span>(<span class="string">&#x27;child_process&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> ls = <span class="title function_">spawn</span>(<span class="string">&#x27;ls&#x27;</span>, [<span class="string">&#x27;-lh&#x27;</span>, <span class="string">&#x27;/usr&#x27;</span>]); <span class="comment">// 命令配置</span></span><br><span class="line"></span><br><span class="line">ls.<span class="property">stdout</span>.<span class="title function_">on</span>(<span class="string">&#x27;data&#x27;</span>, <span class="function">(<span class="params">data</span>) =&gt;</span> &#123; <span class="comment">// 监听命令执行的标准输出</span></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`stdout: <span class="subst">$&#123;data&#125;</span>`</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">ls.<span class="property">stderr</span>.<span class="title function_">on</span>(<span class="string">&#x27;data&#x27;</span>, <span class="function">(<span class="params">data</span>) =&gt;</span> &#123; <span class="comment">// 监听命令执行的标准错误输出</span></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`stderr: <span class="subst">$&#123;data&#125;</span>`</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">ls.<span class="title function_">on</span>(<span class="string">&#x27;close&#x27;</span>, <span class="function">(<span class="params">code</span>) =&gt;</span> &#123; <span class="comment">// 监听子进程退出</span></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`子进程退出，使用退出码 <span class="subst">$&#123;code&#125;</span>`</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>以上例程输出(不同机器输出可能不一样)</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">stdout: total 0</span><br><span class="line">drwxr-xr-x  970 root  wheel    30K  7 19 23:00 bin</span><br><span class="line">drwxr-xr-x  306 root  wheel   9.6K  7 12 22:35 lib</span><br><span class="line">drwxr-xr-x  249 root  wheel   7.8K  7 19 23:00 libexec</span><br><span class="line">drwxr-xr-x   15 root  wheel   480B  4  1 14:15 local</span><br><span class="line">drwxr-xr-x  239 root  wheel   7.5K  7 12 22:35 sbin</span><br><span class="line">drwxr-xr-x   46 root  wheel   1.4K  9 21  2018 share</span><br><span class="line">drwxr-xr-x    5 root  wheel   160B  9 21  2018 standalone</span><br><span class="line"></span><br><span class="line">子进程退出，使用退出码 0</span><br></pre></td></tr></table></figure>
+
+<h2 id="exec"><a href="#exec" class="headerlink" title="exec"></a>exec</h2><p><code>exec</code>也可以执行<code>指定的命令</code>，与<code>spawn</code>区别是执行结果通过回调通知，<code>spawn</code>是通过事件，<code>exec</code>函数原型如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">exec</span>(command[,options][,callback])</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>command <code>&lt;string&gt;</code> 要执行的命令，命令参数使用空格分隔</li>
+<li>options <code>&lt;Object&gt;</code> 额外选项<ul>
+<li>cwd <code>&lt;string&gt;</code> 子进程<code>workdir</code></li>
+<li>env <code>&lt;Object&gt;</code> 子进程环境变量</li>
+<li>timeout <code>&lt;number&gt;</code> 子进程执行超时</li>
+</ul>
+</li>
+<li>callback <code>&lt;Function&gt;</code> 执行结果回调<ul>
+<li>error <code>&lt;Error&gt;</code> 执行错误(不是子进程的错误输出)</li>
+<li>stdout <code>&lt;string|Buffer&gt;</code> 子进程标准输出</li>
+<li>stderr <code>&lt;string|Buffer&gt;</code> 子进程标准错误输出</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> exec = <span class="built_in">require</span>(<span class="string">&#x27;child_process&#x27;</span>).<span class="property">exec</span>;</span><br><span class="line"></span><br><span class="line"><span class="title function_">exec</span>(<span class="string">&#x27;ls -lh /usr&#x27;</span>,<span class="keyword">function</span>(<span class="params">err,stdout,stderr</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span>(err) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;执行错误&#x27;</span>, err);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;stdout&#x27;</span>, stdout);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;stderr&#x27;</span>, stderr);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>以上例程输出</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">stdout: total 0</span><br><span class="line">drwxr-xr-x  970 root  wheel    30K  7 19 23:00 bin</span><br><span class="line">drwxr-xr-x  306 root  wheel   9.6K  7 12 22:35 lib</span><br><span class="line">drwxr-xr-x  249 root  wheel   7.8K  7 19 23:00 libexec</span><br><span class="line">drwxr-xr-x   15 root  wheel   480B  4  1 14:15 local</span><br><span class="line">drwxr-xr-x  239 root  wheel   7.5K  7 12 22:35 sbin</span><br><span class="line">drwxr-xr-x   46 root  wheel   1.4K  9 21  2018 share</span><br><span class="line">drwxr-xr-x    5 root  wheel   160B  9 21  2018 standalone</span><br><span class="line"></span><br><span class="line">子进程退出，使用退出码 0</span><br></pre></td></tr></table></figure>
+
+<h2 id="execFile"><a href="#execFile" class="headerlink" title="execFile"></a>execFile</h2><p><code>execFile</code>类似于<code>exec</code>，但默认情况下不会派生shell， 相反，指定的可执行文件 file 会作为新进程直接地衍生，使其比 <code>exec</code>稍微更高效。</p>
+<p>支持与<code>exec</code>相同的选项。 由于没有衍生 shell，因此<code>不支持 I/O 重定向和文件通配等行为</code>。<code>execFile</code>原型：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">execFile</span>(file[,args][,options][,callback])</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>file <code>&lt;string&gt;</code> 要执行的命令或可执行文件路径</li>
+<li>args <code>&lt;string[]&gt;</code> 字符串数组形式的参数列表</li>
+<li>options <code>&lt;Object&gt;</code> 额外选项<ul>
+<li>cwd <code>&lt;string&gt;</code> 子进程<code>workdir</code></li>
+<li>env <code>&lt;Object&gt;</code> 子进程环境变量</li>
+<li>timeout <code>&lt;number&gt;</code> 子进程执行超时</li>
+</ul>
+</li>
+<li>callback <code>&lt;Function&gt;</code> 执行结果回调<ul>
+<li>error <code>&lt;Error&gt;</code> 执行错误(不是子进程的错误输出)</li>
+<li>stdout <code>&lt;string|Buffer&gt;</code> 子进程标准输出</li>
+<li>stderr <code>&lt;string|Buffer&gt;</code> 子进程标准错误输出</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> execFile = <span class="built_in">require</span>(<span class="string">&#x27;child_process&#x27;</span>).<span class="property">execFile</span>;</span><br><span class="line"><span class="title function_">execFile</span>(<span class="string">&#x27;ls&#x27;</span>, [<span class="string">&#x27;--version&#x27;</span>], <span class="keyword">function</span>(<span class="params">error, stdout, stderr</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span>(err) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;执行错误&#x27;</span>, err);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;stdout&#x27;</span>, stdout);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;stderr&#x27;</span>, stderr);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>以上例程输出同<code>exec</code></p>
+<h2 id="fork"><a href="#fork" class="headerlink" title="fork"></a>fork</h2><p><code>fork</code>是<code>spawn</code>的一个特例，专门用于派生新的<code>NodeJs进程</code>。<code>spawn</code>可以派生<code>任何进程</code>。<code>fork</code>方法原型如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">fork</span>(modulePath[,args][,options])</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>modulePath <code>&lt;string&gt;</code> 要执行的JS路径</li>
+<li>args <code>&lt;string[]&gt;</code> 字符串数组形式的参数列表</li>
+<li>options <code>&lt;Object&gt;</code> 额外选项<ul>
+<li>cwd <code>&lt;string&gt;</code> 子进程的<code>workdir</code></li>
+<li>env <code>&lt;Object&gt;</code> 环境变量</li>
+<li>silent <code>&lt;boolean&gt;</code> 如果为 true，则子进程的 stdin、stdout 和 stderr 将会被输送到父进程，否则它们将会继承自父进程。默认<code>false</code></li>
+</ul>
+</li>
+</ul>
+<p>b.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fork = <span class="built_in">require</span>(<span class="string">&#x27;child_process&#x27;</span>).<span class="property">fork</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> child = <span class="title function_">fork</span>(<span class="string">&#x27;./a.js&#x27;</span>,&#123;<span class="attr">silent</span>:<span class="literal">true</span>&#125;); <span class="comment">// silent为true时可以监听子进程标准输出和标准错误输出</span></span><br><span class="line">child.<span class="property">stdout</span>.<span class="title function_">on</span>(<span class="string">&#x27;data&#x27;</span>,<span class="keyword">function</span>(<span class="params">data</span>)&#123; <span class="comment">// 监听子进程标准输出</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;child stdout&#x27;</span>, data.<span class="title function_">toString</span>(<span class="string">&#x27;utf8&#x27;</span>));</span><br><span class="line">&#125;);</span><br><span class="line">child.<span class="property">stderr</span>.<span class="title function_">on</span>(<span class="string">&#x27;data&#x27;</span>, <span class="keyword">function</span>(<span class="params">data</span>)&#123; <span class="comment">// 监听子进程标准错误输出</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;child stderr&#x27;</span>, data.<span class="title function_">toString</span>(<span class="string">&#x27;utf8&#x27;</span>));</span><br><span class="line">&#125;);</span><br><span class="line">child.<span class="title function_">on</span>(<span class="string">&#x27;close&#x27;</span>, <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;child exit&#x27;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>a.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;我是子进程`);</span></span><br></pre></td></tr></table></figure>
+
+<p>终端执行<code>node b.js</code>，以上例程输出：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">child stdout 我是子进程</span><br><span class="line"></span><br><span class="line">child exit</span><br></pre></td></tr></table></figure>
+
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>子进程模块的介绍到此就告一段落了，一般情况下使用<code>spawn</code>和<code>execFile</code>即可。</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>NodeJs简明教程(8)</p><p><a href="https://www.ddhigh.com/2019/07/23/2019-07-23-nodejs-guide-child-process.html">https://www.ddhigh.com/2019/07/23/2019-07-23-nodejs-guide-child-process.html</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Xia Lei</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2019-07-23</p></div></div><div class="level-item is-narrow"><div><h6>Updated on</h6><p>2019-07-23</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2019/07/24/2019-07-24-nodejs-guide-net.html"><i class="level-item fas fa-chevron-left"></i><span class="level-item">NodeJs简明教程(9)</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2019/07/22/2019-07-22-nodejs-guide-events.html"><span class="level-item">NodeJs简明教程(7)</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><!--!--></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="https://static.ddhigh.com/blog/2019-09-18-094336.jpg" alt="XiaLei"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">XiaLei</p><p class="is-size-6 is-block">Senior Software Engineer</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Tencent</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Seiten</p><a href="/archives"><p class="title">306</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Kategorien</p><a href="/categories"><p class="title">25</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tags</p><a href="/tags"><p class="title">38</p></a></div></div></nav><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/xialeistudio"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="RSS" href="/atom.xml"><i class="fas fa-rss"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="LinkedIn" href="https://www.linkedin.com/in/xialeidoc/"><i class="fa-brands fa-linkedin"></i></a></div></div></div><!--!--></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">Learning &amp; Sharing</a><p class="is-size-7"><span>&copy; 2023 Xia Lei</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en-us");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><a id="back-to-top" title="Zurück nach oben" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "Diese Website verwendet Cookies, um Ihre Erfahrung zu verbessern.",
+          dismiss: "Verstanden!",
+          allow: "Cookies zulassen",
+          deny: "Ablehnen",
+          link: "Mehr erfahren",
+          policy: "Cookie-Richtlinie",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Tippen Sie etwas..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Tippen Sie etwas...","untitled":"(Ohne Titel)","posts":"Seiten","pages":"Pages","categories":"Kategorien","tags":"Tags"});
+        });</script></body></html>
