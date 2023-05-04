@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,28 +157,20 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>微信诱导关注接口在早两年已经被微信关停，但是一般的H5目的都是要关注公众号。<br>目前用的多的方法是用公众号发表一篇文章，文章里面一般是一个GIF的箭头图片指向公众号关注。<br>这种方法有点取巧。</p>
+                <html><head></head><body><h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>微信诱导关注接口在早两年已经被微信关停，但是一般的H5目的都是要关注公众号。<br>目前用的多的方法是用公众号发表一篇文章，文章里面一般是一个GIF的箭头图片指向公众号关注。<br>这种方法有点取巧。</p>
 <p>今天要介绍的是另一种方法，感觉应该不会被微信封号。</p>
-<h1 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h1><p>有个朋友在segmentfault上发了一个链接出来，微信打开可以直接到关注页<br><figure class="highlight awk hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:<span class="hljs-regexp">//m</span>p.weixin.qq.com<span class="hljs-regexp">/mp/</span>profile_ext?action=home&amp;__biz=MzUzMDM3MjMyNQ==<span class="hljs-comment">#wechat_redirect</span></span><br></pre></td></tr></table></figure></p>
-<p>条件反射发现<code>MzUzMDM3MjMyNQ==</code>是Base64编码后的参数，解码后是一段数字，然后我改了下数字，重新编码，再发送到微信，发现可以打开另外一个公众号的关注页<br><figure class="highlight awk hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:<span class="hljs-regexp">//m</span>p.weixin.qq.com<span class="hljs-regexp">/mp/</span>profile_ext?action=home&amp;__biz=MzUzMDM3MjMyNA==<span class="hljs-comment">#wechat_redirect</span></span><br></pre></td></tr></table></figure></p>
-<p>所以只要知道那个公众号数字就可以构造链接进行关注，想着这种ID一般在公众平台有，果然被我找到了。</p>
+<h1 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h1><p>有个朋友在segmentfault上发了一个链接出来，微信打开可以直接到关注页<br></p><figure class="highlight awk hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:<span class="hljs-regexp">//m</span>p.weixin.qq.com<span class="hljs-regexp">/mp/</span>profile_ext?action=home&amp;__biz=MzUzMDM3MjMyNQ==<span class="hljs-comment">#wechat_redirect</span></span><br></pre></td></tr></tbody></table></figure><br>条件反射发现<code>MzUzMDM3MjMyNQ==</code>是Base64编码后的参数，解码后是一段数字，然后我改了下数字，重新编码，再发送到微信，发现可以打开另外一个公众号的关注页<br><figure class="highlight awk hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:<span class="hljs-regexp">//m</span>p.weixin.qq.com<span class="hljs-regexp">/mp/</span>profile_ext?action=home&amp;__biz=MzUzMDM3MjMyNA==<span class="hljs-comment">#wechat_redirect</span></span><br></pre></td></tr></tbody></table></figure><br>所以只要知道那个公众号数字就可以构造链接进行关注，想着这种ID一般在公众平台有，果然被我找到了。<p></p>
 <h1 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h1><ol>
 <li>登录公众平台后台</li>
 <li>点击右上角的公众号，来到公众号信息页面</li>
-<li><p>查看公众号信息页面的源代码，在顶上找到以下代码</p>
- <figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">window</span>.wx=&#123;</span><br><span class="line">uin:<span class="hljs-string">"xxxx"</span>||<span class="hljs-string">"0"</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>xxxx</code> 就是你的公众号数字ID</p>
-</li>
+<li>查看公众号信息页面的源代码，在顶上找到以下代码 <figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">window</span>.wx={</span><br><span class="line">uin:<span class="hljs-string">"xxxx"</span>||<span class="hljs-string">"0"</span></span><br><span class="line">};</span><br></pre></td></tr></tbody></table></figure></li>
+<li><code>xxxx</code> 就是你的公众号数字ID</li>
 <li>将第4步找到的ID进行base64编码</li>
-<li><p>构造如下链接</p>
- <figure class="highlight awk hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:<span class="hljs-regexp">//m</span>p.weixin.qq.com<span class="hljs-regexp">/mp/</span>profile_ext?action=home&amp;__biz=第<span class="hljs-number">5</span>步的结果<span class="hljs-comment">#wechat_redirect</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>发送到微信之后即可。</p>
-</li>
+<li>构造如下链接 <figure class="highlight awk hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:<span class="hljs-regexp">//m</span>p.weixin.qq.com<span class="hljs-regexp">/mp/</span>profile_ext?action=home&amp;__biz=第<span class="hljs-number">5</span>步的结果<span class="hljs-comment">#wechat_redirect</span></span><br></pre></td></tr></tbody></table></figure></li>
+<li>发送到微信之后即可。</li>
 </ol>
 <h1 id="反思"><a href="#反思" class="headerlink" title="反思"></a>反思</h1><p>从打开的链接看页面还是蛮正式的，可能不是私有接口，但是微信文档中没说过这种方式，故使用本方式带来的后果请自行负责！</p>
-
+</body></html>
             </div>
             
         </div>
@@ -417,7 +409,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

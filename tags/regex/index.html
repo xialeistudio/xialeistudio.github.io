@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -169,9 +169,9 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>最近在做导出excel的时候，发现导出成功，文件大小也正常，但是Office 2013打不开，检查数据库发现，导出数据中有非中文字符导致Excel异常。   </p>
+                <html><head></head><body><p>最近在做导出excel的时候，发现导出成功，文件大小也正常，但是Office 2013打不开，检查数据库发现，导出数据中有非中文字符导致Excel异常。   </p>
 <p>我们知道JS是支持unicode字符集的，符合导出规则的字符应该是”中文”、”英文”、”数字”。</p>
-<h2 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h2><figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/([\u4e00-\u9fa5\w]*)/ig</span><br></pre></td></tr></table></figure>
+<h2 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h2><figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/([\u4e00-\u9fa5\w]*)/ig</span><br></pre></td></tr></tbody></table></figure>
 
                 
             
@@ -222,8 +222,8 @@ var _hmt = _hmt || [];
             
                 
                 
-                <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>最近写安卓的时候服务端返回的数据会带上“\n”，但是在android这边不能换行，初次想到的解决方法是利用</p>
-<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String.replace(<span class="hljs-string">"\n"</span>,<span class="hljs-string">"\n"</span>)</span><br></pre></td></tr></table></figure>
+                <html><head></head><body><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>最近写安卓的时候服务端返回的数据会带上“\n”，但是在android这边不能换行，初次想到的解决方法是利用</p>
+<figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String.replace(<span class="hljs-string">"\n"</span>,<span class="hljs-string">"\n"</span>)</span><br></pre></td></tr></tbody></table></figure>
 <p>给替换掉，结果是不行的。之前记得java的反斜杠是需要转义的，就用</p>
 
                 
@@ -275,8 +275,8 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>正常的正则表达式匹配英文和数字以及一些常用字符还是很简单的，如</p>
-<figure class="highlight php hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/^\w$/</span><br><span class="line">/^[<span class="hljs-number">0</span><span class="hljs-number">-9</span>]$/</span><br><span class="line">/^[\-\_]$/</span><br></pre></td></tr></table></figure>
+                <html><head></head><body><p>正常的正则表达式匹配英文和数字以及一些常用字符还是很简单的，如</p>
+<figure class="highlight php hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/^\w$/</span><br><span class="line">/^[<span class="hljs-number">0</span><span class="hljs-number">-9</span>]$/</span><br><span class="line">/^[\-\_]$/</span><br></pre></td></tr></tbody></table></figure>
 <p>等等，但是匹配中文的话就有些麻烦了。UTF-8的中文根据unicode编码，所以我们需要手动构造UTF-8字符串</p>
 
                 
@@ -593,7 +593,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,27 +157,21 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <p>socket.io一般会配合<strong>room</strong>进行消息转发，目前我的做法如下:</p>
+                <html><head></head><body><p>socket.io一般会配合<strong>room</strong>进行消息转发，目前我的做法如下:</p>
 <ul>
-<li><p>服务端</p>
-<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">io.on(<span class="hljs-string">'connection'</span>,<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">socket</span>)</span>&#123;</span><br><span class="line">    socket.on(<span class="hljs-string">'join'</span>,<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">roomId</span>)</span>&#123;</span><br><span class="line">        socket.join(roomId);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>客户端</p>
-<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">var</span> socket = io(<span class="hljs-string">'http://localhost:8888'</span>);</span><br><span class="line">socket.on(<span class="hljs-string">'connect'</span>,<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>&#123;</span><br><span class="line">    socket.emit(<span class="hljs-string">'join'</span>,<span class="hljs-string">'live1'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<li>服务端<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">io.on(<span class="hljs-string">'connection'</span>,<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">socket</span>)</span>{</span><br><span class="line">    socket.on(<span class="hljs-string">'join'</span>,<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">roomId</span>)</span>{</span><br><span class="line">        socket.join(roomId);</span><br><span class="line">    });</span><br><span class="line">});</span><br></pre></td></tr></tbody></table></figure></li>
+<li>客户端<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">var</span> socket = io(<span class="hljs-string">'http://localhost:8888'</span>);</span><br><span class="line">socket.on(<span class="hljs-string">'connect'</span>,<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{</span><br><span class="line">    socket.emit(<span class="hljs-string">'join'</span>,<span class="hljs-string">'live1'</span>);</span><br><span class="line">});</span><br></pre></td></tr></tbody></table></figure>
 </li>
 </ul>
 <p>可以发现客户端多出了一次<strong>emit</strong>操作。</p>
 <p>查阅socket.io文档发现，在连接URL中是可以传入查询字符串的，服务端也可以获取到。更新后的代码如下：</p>
 <ul>
-<li><p>服务端</p>
-<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">io.on(<span class="hljs-string">'connection'</span>,<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">socket</span>)</span>&#123;</span><br><span class="line">      <span class="hljs-keyword">if</span> (socket.handshake.query.roomId === <span class="hljs-literal">undefined</span>) &#123;</span><br><span class="line">        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'非法请求'</span>);</span><br><span class="line">        <span class="hljs-keyword">return</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      socket.join(socket.handshake.query.roomId);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>客户端</p>
-<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">var</span> socket = io(<span class="hljs-string">'http://localhost:8888?roomId=live1'</span>);</span><br><span class="line">socket.on(<span class="hljs-string">'connect'</span>,<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>&#123;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<li>服务端<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">io.on(<span class="hljs-string">'connection'</span>,<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">socket</span>)</span>{</span><br><span class="line">      <span class="hljs-keyword">if</span> (socket.handshake.query.roomId === <span class="hljs-literal">undefined</span>) {</span><br><span class="line">        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'非法请求'</span>);</span><br><span class="line">        <span class="hljs-keyword">return</span>;</span><br><span class="line">      }</span><br><span class="line">      socket.join(socket.handshake.query.roomId);</span><br><span class="line">});</span><br></pre></td></tr></tbody></table></figure></li>
+<li>客户端<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">var</span> socket = io(<span class="hljs-string">'http://localhost:8888?roomId=live1'</span>);</span><br><span class="line">socket.on(<span class="hljs-string">'connect'</span>,<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{</span><br><span class="line">});</span><br></pre></td></tr></tbody></table></figure>
 </li>
 </ul>
 <p>这样就可以少一次<strong>emit</strong>操作，减少客户端以及服务端一部分压力。</p>
-
+</body></html>
             </div>
             
         </div>
@@ -186,7 +180,7 @@ var _hmt = _hmt || [];
             <div class="level-start">
                 <div class="level-item">
                     <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/socket-io/">socket.io</a>
+                    <a class="has-link-grey -link" href="/tags/socket-io/" rel="tag">socket.io</a>
                 </div>
             </div>
         </div>
@@ -409,7 +403,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

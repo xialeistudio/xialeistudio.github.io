@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,9 +157,9 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <p>PC端网页的textarea内容多了会出现滚动条，这个没什么，鼠标么，滚动方便。但是移动端是没鼠标的，出现滚动条是很不友好的行为。</p>
+                <html><head></head><body><p>PC端网页的textarea内容多了会出现滚动条，这个没什么，鼠标么，滚动方便。但是移动端是没鼠标的，出现滚动条是很不友好的行为。</p>
 <p>利用js的事件绑定及动态改变CSS就可以做到这个了。</p>
-<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">onpropertychange=<span class="hljs-string">"this.style.height=this.scrollHeight + 'px'"</span> oninput=<span class="hljs-string">"this.style.height=this.scrollHeight + 'px'"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">onpropertychange=<span class="hljs-string">"this.style.height=this.scrollHeight + 'px'"</span> oninput=<span class="hljs-string">"this.style.height=this.scrollHeight + 'px'"</span></span><br></pre></td></tr></tbody></table></figure></body></html>
             </div>
             
         </div>
@@ -382,7 +382,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

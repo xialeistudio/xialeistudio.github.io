@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,9 +157,9 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <p>本文讲解Javascript变量提升引起的问题以及如何规避。</p>
+                <html><head></head><body><p>本文讲解Javascript变量提升引起的问题以及如何规避。</p>
 <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>今天看到一道有意思的面试题，考察的还真是JS的基本功，题目如下：</p>
-<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">var</span> name = <span class="hljs-string">"world"</span>;</span><br><span class="line"></span><br><span class="line">(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>&#123;</span><br><span class="line">  <span class="hljs-keyword">if</span>(<span class="hljs-keyword">typeof</span> name === <span class="hljs-string">"undefined"</span>) &#123;</span><br><span class="line">    <span class="hljs-keyword">var</span> name = <span class="hljs-string">"Jack"</span>;</span><br><span class="line">  	<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Hello "</span> + name);</span><br><span class="line">  &#125; <span class="hljs-keyword">else</span> &#123;</span><br><span class="line">    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Hello "</span> + name);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;());</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">var</span> name = <span class="hljs-string">"world"</span>;</span><br><span class="line"></span><br><span class="line">(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{</span><br><span class="line">  <span class="hljs-keyword">if</span>(<span class="hljs-keyword">typeof</span> name === <span class="hljs-string">"undefined"</span>) {</span><br><span class="line">    <span class="hljs-keyword">var</span> name = <span class="hljs-string">"Jack"</span>;</span><br><span class="line">  	<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Hello "</span> + name);</span><br><span class="line">  } <span class="hljs-keyword">else</span> {</span><br><span class="line">    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Hello "</span> + name);</span><br><span class="line">  }</span><br><span class="line">}());</span><br></pre></td></tr></tbody></table></figure>
 <p>根据if条件可以得出可能的答案：</p>
 <ul>
 <li>Hello world</li>
@@ -172,7 +172,7 @@ var _hmt = _hmt || [];
 </blockquote>
 <p>这个理解是不正确的。虽然函数隔离了作用域，但是由于作用域链的关系，JS会从当前作用域一直往上级查找，直到顶级作用域（浏览器环境为window）。</p>
 <p>如下代码输出<code>Hello world</code></p>
-<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">var</span> name = <span class="hljs-string">"world"</span>;</span><br><span class="line"></span><br><span class="line">(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>&#123;</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Hello "</span> + name);</span><br><span class="line">&#125;());</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">var</span> name = <span class="hljs-string">"world"</span>;</span><br><span class="line"></span><br><span class="line">(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Hello "</span> + name);</span><br><span class="line">}());</span><br></pre></td></tr></tbody></table></figure>
 <p>理解2：</p>
 <blockquote>
 <p>var存在变量提升，所以if在判断的时候name确实为undefined，走了if分支，输出 <code>Hello Jack</code></p>
@@ -186,7 +186,7 @@ var _hmt = _hmt || [];
 </ul>
 </blockquote>
 <p>根据变量提升理论我们可以“模拟”JS实际执行代码的过程：</p>
-<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">var</span> name = <span class="hljs-string">"world"</span>;</span><br><span class="line"></span><br><span class="line">(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>&#123;</span><br><span class="line">  <span class="hljs-keyword">var</span> name; <span class="hljs-comment">// 变量提升，仅提升声明，不提升初始化</span></span><br><span class="line">  <span class="hljs-keyword">if</span>(<span class="hljs-keyword">typeof</span> name === <span class="hljs-string">"undefined"</span>) &#123;</span><br><span class="line">    name = <span class="hljs-string">"Jack"</span>;</span><br><span class="line">    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Hello "</span> + name);</span><br><span class="line">  &#125; <span class="hljs-keyword">else</span> &#123;</span><br><span class="line">    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Hello "</span> + name);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;());</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">var</span> name = <span class="hljs-string">"world"</span>;</span><br><span class="line"></span><br><span class="line">(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{</span><br><span class="line">  <span class="hljs-keyword">var</span> name; <span class="hljs-comment">// 变量提升，仅提升声明，不提升初始化</span></span><br><span class="line">  <span class="hljs-keyword">if</span>(<span class="hljs-keyword">typeof</span> name === <span class="hljs-string">"undefined"</span>) {</span><br><span class="line">    name = <span class="hljs-string">"Jack"</span>;</span><br><span class="line">    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Hello "</span> + name);</span><br><span class="line">  } <span class="hljs-keyword">else</span> {</span><br><span class="line">    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Hello "</span> + name);</span><br><span class="line">  }</span><br><span class="line">}());</span><br></pre></td></tr></tbody></table></figure>
 <p>函数内部作用域顶级的name初始化时为undefined，所以会走if分支，输出<code>Hello Jack</code>。这才是100分答案！</p>
 <h2 id="规避变量提升问题"><a href="#规避变量提升问题" class="headerlink" title="规避变量提升问题"></a>规避变量提升问题</h2><blockquote>
 <ol>
@@ -197,7 +197,7 @@ var _hmt = _hmt || [];
 <h2 id="技术参考"><a href="#技术参考" class="headerlink" title="技术参考"></a>技术参考</h2><ul>
 <li><a href="https://developer.mozilla.org/zh-CN/docs/Glossary/Hoisting" target="_blank" rel="noopener">变量提升 - 术语表 | MDN</a></li>
 </ul>
-
+</body></html>
             </div>
             
         </div>
@@ -229,7 +229,7 @@ var _hmt = _hmt || [];
         
         <div class="level-end">
             <a class="level level-item has-link-grey  article-nav-next"
-                href="/2019/09/16/leetcode-longest-substring-without-repeating-characters (copy).html">
+                href="/2019/09/16/leetcode-longest-substring-without-repeating-characters%20(copy).html">
                 <span class="level-item">leetcode(3)——无重复字符的最长子串</span>
                 <i class="level-item fas fa-chevron-right"></i>
             </a>
@@ -440,7 +440,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

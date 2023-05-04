@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,9 +157,9 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <p>如果想在移动端判断用户的是否滑动以及滑动方向时，可以不使用第三方库，直接用touch事件处理即可，没必要增加不必要的代码，减轻移动端网络压力。</p>
+                <html><head></head><body><p>如果想在移动端判断用户的是否滑动以及滑动方向时，可以不使用第三方库，直接用touch事件处理即可，没必要增加不必要的代码，减轻移动端网络压力。</p>
 <h2 id="重点"><a href="#重点" class="headerlink" title="重点"></a>重点</h2><p>移动端的touch事件有三个: touchstart、touchmove、touchend 分别代表 触摸开始，触摸移动，触摸结束</p>
-<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">var</span> _begin;</span><br><span class="line"><span class="hljs-keyword">var</span> _end;</span><br><span class="line"><span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'#target'</span>).addEventListener(<span class="hljs-string">'touchstart'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>) </span>&#123;</span><br><span class="line">	_begin = e.changedTouches[<span class="hljs-number">0</span>].pageX;</span><br><span class="line">&#125;, <span class="hljs-literal">false</span>);</span><br><span class="line"><span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'#target'</span>).addEventListener(<span class="hljs-string">'touchend'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>) </span>&#123;</span><br><span class="line">	_end = e.changedTouches[<span class="hljs-number">0</span>].pageX;</span><br><span class="line">	<span class="hljs-keyword">if</span> (_end &gt; _begin) &#123;</span><br><span class="line">		<span class="hljs-built_in">console</span>.log(<span class="hljs-string">'从左向右'</span>)</span><br><span class="line">	&#125;<span class="hljs-keyword">else</span>&#123;</span><br><span class="line">		<span class="hljs-built_in">console</span>.log(<span class="hljs-string">'从右向左'</span>)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;, <span class="hljs-literal">false</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">var</span> _begin;</span><br><span class="line"><span class="hljs-keyword">var</span> _end;</span><br><span class="line"><span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'#target'</span>).addEventListener(<span class="hljs-string">'touchstart'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>) </span>{</span><br><span class="line">	_begin = e.changedTouches[<span class="hljs-number">0</span>].pageX;</span><br><span class="line">}, <span class="hljs-literal">false</span>);</span><br><span class="line"><span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'#target'</span>).addEventListener(<span class="hljs-string">'touchend'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>) </span>{</span><br><span class="line">	_end = e.changedTouches[<span class="hljs-number">0</span>].pageX;</span><br><span class="line">	<span class="hljs-keyword">if</span> (_end &gt; _begin) {</span><br><span class="line">		<span class="hljs-built_in">console</span>.log(<span class="hljs-string">'从左向右'</span>)</span><br><span class="line">	}<span class="hljs-keyword">else</span>{</span><br><span class="line">		<span class="hljs-built_in">console</span>.log(<span class="hljs-string">'从右向左'</span>)</span><br><span class="line">	}</span><br><span class="line">}, <span class="hljs-literal">false</span>);</span><br></pre></td></tr></tbody></table></figure></body></html>
             </div>
             
         </div>
@@ -386,7 +386,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

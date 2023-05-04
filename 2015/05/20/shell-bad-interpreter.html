@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,13 +157,13 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>在使用php作为linux上shell脚本运行时出现了以下错误：</p>
-<figure class="highlight php hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">#!/usr/bin/env php</span></span><br><span class="line"><span class="hljs-meta">&lt;?php</span></span><br><span class="line">phpinfo();</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">chmod +x test.php</span><br><span class="line">./test.php</span><br><span class="line">/usr/<span class="hljs-built_in">local</span>/php/bin/php^M: bad interpreter: No such file or directory</span><br></pre></td></tr></table></figure>
+                <html><head></head><body><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>在使用php作为linux上shell脚本运行时出现了以下错误：</p>
+<figure class="highlight php hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">#!/usr/bin/env php</span></span><br><span class="line"><span class="hljs-meta">&lt;?php</span></span><br><span class="line">phpinfo();</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">chmod +x test.php</span><br><span class="line">./test.php</span><br><span class="line">/usr/<span class="hljs-built_in">local</span>/php/bin/php^M: bad interpreter: No such file or directory</span><br></pre></td></tr></tbody></table></figure>
 <p>原因是你的文本以DOS文件形式保存，导致文件头有不可见字符，导致bash shell无法解析。</p>
-<h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install dos2unix -y</span><br><span class="line">dos2unix test.php</span><br></pre></td></tr></table></figure>
+<h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2><figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install dos2unix -y</span><br><span class="line">dos2unix test.php</span><br></pre></td></tr></tbody></table></figure>
 <p>再执行就没问题了</p>
-
+</body></html>
             </div>
             
         </div>
@@ -394,7 +394,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

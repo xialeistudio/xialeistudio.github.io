@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -168,7 +168,7 @@ var _hmt = _hmt || [];
         </h1>
         <div class="content">
             
-            <p>本文分享一下五一期间的读书感悟，包括MySQL、Redis、Aurora。</p>
+            <html><head></head><body><p>本文分享一下五一期间的读书感悟，包括MySQL、Redis、Aurora。</p></body></html>
             
         </div>
         
@@ -226,9 +226,9 @@ var _hmt = _hmt || [];
             
                 
                 
-                <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>Go单元测试在M1上使用<code>github.com/agiledragon/gomonkey/v2 v2.9.0</code>包提示<code>permission defined</code>。<br>网上查阅消息得知是由于内存安全导致，不能同时对内存进行写和执行</p>
+                <html><head></head><body><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>Go单元测试在M1上使用<code>github.com/agiledragon/gomonkey/v2 v2.9.0</code>包提示<code>permission defined</code>。<br>网上查阅消息得知是由于内存安全导致，不能同时对内存进行写和执行</p>
 <h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>下面分享一种比较简单的方法，需要修改本地的go源码。</p>
-<p>修改<a href="mailto:`go/pkg/mod/github.com/agiledragon/gomonkey/v2@v2.9.0" target="_blank" rel="noopener">`go/pkg/mod/github.com/agiledragon/gomonkey/v2@v2.9.0</a>/modify_binary_darwin.go<code>的</code>modifyBinary`方法。<br>将<br><figure class="highlight go hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">err := mprotectCrossPage(target, <span class="hljs-built_in">len</span>(bytes), syscall.PROT_READ|syscall.PROT_WRITE|syscall.PROT_EXEC)</span><br></pre></td></tr></table></figure></p>
+<p>修改<a href="mailto:`go/pkg/mod/github.com/agiledragon/gomonkey/v2@v2.9.0">`go/pkg/mod/github.com/agiledragon/gomonkey/v2@v2.9.0</a>/modify_binary_darwin.go<code>的</code>modifyBinary`方法。<br>将<br></p><figure class="highlight go hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">err := mprotectCrossPage(target, <span class="hljs-built_in">len</span>(bytes), syscall.PROT_READ|syscall.PROT_WRITE|syscall.PROT_EXEC)</span><br></pre></td></tr></tbody></table></figure><br>修改为<br><figure class="highlight go hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">err := mprotectCrossPage(target, <span class="hljs-built_in">len</span>(bytes), syscall.PROT_READ|syscall.PROT_WRITE)</span><br></pre></td></tr></tbody></table></figure><p></p>
 
                 
             
@@ -279,7 +279,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <blockquote>
+                <html><head></head><body><blockquote>
 <p>ApplyMethod基于反射实现，无法对私有方法打桩，本文将解决这一问题。</p>
 </blockquote>
 
@@ -332,7 +332,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><blockquote>
+                <html><head></head><body><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><blockquote>
 <p><strong>统一建模语言</strong>（英语：Unified Modeling Language，缩写 UML）是非专利的第三代<a href="https://zh.wikipedia.org/w/index.php?title=对象建模语言&amp;action=edit&amp;redlink=1" target="_blank" rel="noopener">建模</a>和<a href="https://zh.wikipedia.org/wiki/规约语言" target="_blank" rel="noopener">规约语言</a>。UML是一种开放的方法，用于说明、可视化、构建和编写一个正在开发的、面向对象的、软件密集系统的制品的开放方法</p>
 </blockquote>
 
@@ -385,7 +385,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>本文学习Go语言函数知识。函数是基本的代码块，用于执行一个任务。在Go语言中，函数可以接收数量不固定的参数，也可以返回多个结果。</p>
+                <html><head></head><body><p>本文学习Go语言函数知识。函数是基本的代码块，用于执行一个任务。在Go语言中，函数可以接收数量不固定的参数，也可以返回多个结果。</p>
 <h2 id="函数结构"><a href="#函数结构" class="headerlink" title="函数结构"></a>函数结构</h2><p>在编程领域，函数向编译器和开发者提供了有关的信息，这些信息指明了函数该接收什么样的输入以及会产生什么样的输出。这些信息是通过函数第一行提供的，第一行称为函数签名。</p>
 <p>Go语言声明函数语法如下：</p>
 
@@ -438,7 +438,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>本文学习Go语言数据容器、包括数组、切片和映射。</p>
+                <html><head></head><body><p>本文学习Go语言数据容器、包括数组、切片和映射。</p>
 <h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><p>数组是一个数据集合，常用于存储用数字索引的同类型数据。Go语言的数组调用函数时使用的是值传递，因此形参会拷贝一份实参的值。</p>
 <p>在Go语言中，声明数组需要同时指定长度和数据类型，数组长度是其类型的一部分，因此<code>[5]int</code>和<code>[1]int</code>是两种类型。</p>
 
@@ -491,7 +491,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>本文学习Go语言基本语法，例如变量和常量、数据类型、运算符、条件语句、循环语句。</p>
+                <html><head></head><body><p>本文学习Go语言基本语法，例如变量和常量、数据类型、运算符、条件语句、循环语句。</p>
 <h2 id="变量和常量"><a href="#变量和常量" class="headerlink" title="变量和常量"></a>变量和常量</h2><p>变量和常量是计算机程序不可或缺的部分。本节将介绍如何在Go程序中声明、使用变量和常量、还将介绍声明方式和作用域。</p>
 <h3 id="变量声明"><a href="#变量声明" class="headerlink" title="变量声明"></a>变量声明</h3><p>在Go语言中，声明变量的方式有多种。在前面的文章介绍过，Go语言是一种静态类型语言，因此声明变量时必须指明其类型。</p>
 
@@ -544,9 +544,9 @@ var _hmt = _hmt || [];
             
                 
                 
-                <h2 id="GitTalk失效原因"><a href="#GitTalk失效原因" class="headerlink" title="GitTalk失效原因"></a>GitTalk失效原因</h2><p>对于所有自建博客的博主来书，GitTalk应该不陌生。GitTalk通过Github的OpenAPI以及issues功能实现社区评论，确实是一大亮点。</p>
+                <html><head></head><body><h2 id="GitTalk失效原因"><a href="#GitTalk失效原因" class="headerlink" title="GitTalk失效原因"></a>GitTalk失效原因</h2><p>对于所有自建博客的博主来书，GitTalk应该不陌生。GitTalk通过Github的OpenAPI以及issues功能实现社区评论，确实是一大亮点。</p>
 <p>今天在查看文章的时候发现评论区出现了Forbidden错误，通过检查网络请求发现获取Github Token时请求了以下链接</p>
-<figure class="highlight awk hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:<span class="hljs-regexp">//</span>cors-anywhere.herokuapp.com<span class="hljs-regexp">/https:/</span><span class="hljs-regexp">/github.com/</span>login<span class="hljs-regexp">/oauth/</span>access_token</span><br></pre></td></tr></table></figure>
+<figure class="highlight awk hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:<span class="hljs-regexp">//</span>cors-anywhere.herokuapp.com<span class="hljs-regexp">/https:/</span><span class="hljs-regexp">/github.com/</span>login<span class="hljs-regexp">/oauth/</span>access_token</span><br></pre></td></tr></tbody></table></figure>
 
                 
             
@@ -597,7 +597,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <h2 id="Go语言概述"><a href="#Go语言概述" class="headerlink" title="Go语言概述"></a>Go语言概述</h2><h3 id="语言历史"><a href="#语言历史" class="headerlink" title="语言历史"></a>语言历史</h3><p>Go语言也称为Golang，是由Google公司开发的一种静态强类型、编译型、语言原生支持并发、具有垃圾回收功能的编程语言。起源于2007年，并在2009年正式对外发布。Go语言是非常年轻的一门语言，它的主要目标是“兼具 Python 等动态语言的开发速度和 C/C++等编译型语言的性能与安全性”。</p>
+                <html><head></head><body><h2 id="Go语言概述"><a href="#Go语言概述" class="headerlink" title="Go语言概述"></a>Go语言概述</h2><h3 id="语言历史"><a href="#语言历史" class="headerlink" title="语言历史"></a>语言历史</h3><p>Go语言也称为Golang，是由Google公司开发的一种静态强类型、编译型、语言原生支持并发、具有垃圾回收功能的编程语言。起源于2007年，并在2009年正式对外发布。Go语言是非常年轻的一门语言，它的主要目标是“兼具 Python 等动态语言的开发速度和 C/C++等编译型语言的性能与安全性”。</p>
 <p>Go语言是编程语言设计的又一次尝试，是对类C语言的重大改进，它不但能让你访问底层操作系统，还提供了强大的网络编程和并发编程支持。Go语言的用途众多，可以进行网络编程、系统编程、并发编程等等。</p>
 <p>Go语言的推出，旨在不损失应用程序性能的情况下降低代码的复杂性，具有“部署简单、并发性好、语言设计良好、执行性能好”等优势。</p>
 
@@ -650,7 +650,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <h2 id="wire与依赖注入"><a href="#wire与依赖注入" class="headerlink" title="wire与依赖注入"></a>wire与依赖注入</h2><p><a href="https://github.com/google/wire" target="_blank" rel="noopener">Wire</a> 是一个的Golang依赖注入工具，通过自动生成代码的方式在<strong>编译期</strong>完成依赖注入，Java体系中最出名的<strong>Spring</strong>框架采用<strong>运行时</strong>注入，个人认为这是wire和其他依赖注入最大的不同之处。</p>
+                <html><head></head><body><h2 id="wire与依赖注入"><a href="#wire与依赖注入" class="headerlink" title="wire与依赖注入"></a>wire与依赖注入</h2><p><a href="https://github.com/google/wire" target="_blank" rel="noopener">Wire</a> 是一个的Golang依赖注入工具，通过自动生成代码的方式在<strong>编译期</strong>完成依赖注入，Java体系中最出名的<strong>Spring</strong>框架采用<strong>运行时</strong>注入，个人认为这是wire和其他依赖注入最大的不同之处。</p>
 <p>依赖注入(Dependency Injection)也称作控制反转(Inversion of Control)，个人给控制反转下的定义如下：</p>
 <blockquote>
 
@@ -991,7 +991,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -170,9 +170,9 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>本文是TS简明教程的第二篇，讲解面向对象相关的知识。</p>
+                <html><head></head><body><p>本文是TS简明教程的第二篇，讲解面向对象相关的知识。</p>
 <h2 id="类"><a href="#类" class="headerlink" title="类"></a>类</h2><p>传统JS使用<code>函数</code>和<code>原型链</code>进行集成，在<code>ES6</code>出现了<code>class</code>关键，JS也能使用传统OOP的方式进行继承，但是还是存在一定的局限性，在TS中，OOP已经和传统语言差不多。</p>
-<figure class="highlight typescript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">class</span> Parent &#123;</span><br><span class="line">    name: <span class="hljs-built_in">string</span>;</span><br><span class="line">    age: <span class="hljs-built_in">number</span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">constructor</span>(<span class="hljs-params">name: <span class="hljs-built_in">string</span>, age: <span class="hljs-built_in">number</span></span>) &#123;</span><br><span class="line">        <span class="hljs-keyword">this</span>.name = name;</span><br><span class="line">        <span class="hljs-keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    say() &#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-string">`name: <span class="hljs-subst">$&#123;<span class="hljs-keyword">this</span>.name&#125;</span>, age: <span class="hljs-subst">$&#123;<span class="hljs-keyword">this</span>.age&#125;</span>`</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> parent = <span class="hljs-keyword">new</span> Parent();</span><br><span class="line">parent.say();</span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">class</span> Parent {</span><br><span class="line">    name: <span class="hljs-built_in">string</span>;</span><br><span class="line">    age: <span class="hljs-built_in">number</span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">constructor</span>(<span class="hljs-params">name: <span class="hljs-built_in">string</span>, age: <span class="hljs-built_in">number</span></span>) {</span><br><span class="line">        <span class="hljs-keyword">this</span>.name = name;</span><br><span class="line">        <span class="hljs-keyword">this</span>.age = age;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    say() {</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-string">`name: <span class="hljs-subst">${<span class="hljs-keyword">this</span>.name}</span>, age: <span class="hljs-subst">${<span class="hljs-keyword">this</span>.age}</span>`</span>;</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> parent = <span class="hljs-keyword">new</span> Parent();</span><br><span class="line">parent.say();</span><br></pre></td></tr></tbody></table></figure>
 
                 
             
@@ -223,7 +223,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>单元测试是一个老生常谈的话题，基于Web/NodeJs环境的测试框架、测试教程数不胜数，也趋于成熟了。但是对于微信小程序的单元测试，目前还是处于起步状态，这两天在研究微信小程序的测试，也遇到了一些坑，在这里记录一下，希望给看到本文的小伙伴带来一点帮助，少走一些弯路。</p>
+                <html><head></head><body><p>单元测试是一个老生常谈的话题，基于Web/NodeJs环境的测试框架、测试教程数不胜数，也趋于成熟了。但是对于微信小程序的单元测试，目前还是处于起步状态，这两天在研究微信小程序的测试，也遇到了一些坑，在这里记录一下，希望给看到本文的小伙伴带来一点帮助，少走一些弯路。</p>
 <h2 id="demo地址"><a href="#demo地址" class="headerlink" title="demo地址"></a>demo地址</h2><p><a href="https://github.com/xialeistudio/miniprogram-unit-test-demo" target="_blank" rel="noopener">https://github.com/xialeistudio/miniprogram-unit-test-demo</a></p>
 <h2 id="关键依赖版本"><a href="#关键依赖版本" class="headerlink" title="关键依赖版本"></a>关键依赖版本</h2><p>本文写作时相关依赖版本如下(版本不同，源码行数可能不同)：</p>
 
@@ -276,7 +276,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>最近在捣鼓Typescript的装饰器，NodeJs项目的装饰器比较好理解，但是React项目的装饰器由于有JSX，走了一点弯路，但是总之来说是<code>新技能get</code></p>
+                <html><head></head><body><p>最近在捣鼓Typescript的装饰器，NodeJs项目的装饰器比较好理解，但是React项目的装饰器由于有JSX，走了一点弯路，但是总之来说是<code>新技能get</code></p>
 <h2 id="typescript对装饰器的说明"><a href="#typescript对装饰器的说明" class="headerlink" title="typescript对装饰器的说明"></a>typescript对装饰器的说明</h2><blockquote>
 <p>装饰器是一种特殊类型的声明，它能够被附加到类声明，方法， 访问符，属性或参数上。 装饰器使用 @expression这种形式，expression求值后必须为一个函数，它会在运行时被调用，被装饰的声明信息做为参数传入。</p>
 
@@ -329,7 +329,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>本文是TS简明教程的第一篇，对TS做简要介绍、基础知识以及后续内容规划。</p>
+                <html><head></head><body><p>本文是TS简明教程的第一篇，对TS做简要介绍、基础知识以及后续内容规划。</p>
 <blockquote>
 <p>TypeScript是JavaScript的一个超集，支持 ECMAScript 6 标准。<br>TypeScript可以在任何浏览器、任何计算机和任何操作系统上运行，并且是开源的。<br>Typescript由微软开发，与C#出自同一人之手!</p>
 
@@ -382,7 +382,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>本文是NodeJs简明教程的完结篇，将对以往文章进行归档。</p>
+                <html><head></head><body><p>本文是NodeJs简明教程的完结篇，将对以往文章进行归档。</p>
 <h2 id="系列文章"><a href="#系列文章" class="headerlink" title="系列文章"></a>系列文章</h2><ol>
 <li><a href="https://www.ddhigh.com/2019/07/18/nodejs-guide-about.html">NodeJs简明教程(1)——简介</a></li>
 
@@ -435,7 +435,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>本文是NodeJs简明教程的第十篇，将介绍NodeJs <strong>dgram</strong> 模块(<code>UDP服务端/客户端</code>)相关的基本操作。</p>
+                <html><head></head><body><p>本文是NodeJs简明教程的第十篇，将介绍NodeJs <strong>dgram</strong> 模块(<code>UDP服务端/客户端</code>)相关的基本操作。</p>
 <h2 id="啥是UDP"><a href="#啥是UDP" class="headerlink" title="啥是UDP"></a>啥是UDP</h2><blockquote>
 <p>Internet 协议集支持一个无连接的传输协议，该协议称为用户数据报协议（UDP，User Datagram Protocol）。UDP 为应用程序提供了一种无需建立连接就可以发送封装的 IP 数据报的方法。RFC 768描述了 UDP。</p>
 
@@ -488,7 +488,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>本文是NodeJs简明教程的第九篇，将介绍NodeJs <strong>net</strong> 模块(<code>TCP服务端/客户端</code>)相关的基本操作。</p>
+                <html><head></head><body><p>本文是NodeJs简明教程的第九篇，将介绍NodeJs <strong>net</strong> 模块(<code>TCP服务端/客户端</code>)相关的基本操作。</p>
 <h2 id="啥是TCP"><a href="#啥是TCP" class="headerlink" title="啥是TCP"></a>啥是TCP</h2><blockquote>
 <p>传输控制协议（TCP，Transmission Control Protocol）是一种面向连接的、可靠的、基于字节流的传输层通信协议，由IETF的RFC 793 定义。</p>
 
@@ -541,7 +541,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>本文是NodeJs简明教程的第八篇，将介绍NodeJs <strong>子进程</strong> 模块相关的基本操作。</p>
+                <html><head></head><body><p>本文是NodeJs简明教程的第八篇，将介绍NodeJs <strong>子进程</strong> 模块相关的基本操作。</p>
 <blockquote>
 <p>child_process 模块提供了衍生子进程的能力（以一种与 popen(3) 类似但不相同的方式）。</p>
 
@@ -594,7 +594,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>本文是NodeJs简明教程的第七篇，将介绍NodeJs events模块相关的基本操作。</p>
+                <html><head></head><body><p>本文是NodeJs简明教程的第七篇，将介绍NodeJs events模块相关的基本操作。</p>
 <blockquote>
 <p>大多数 Node.js 核心 API 构建于惯用的异步事件驱动架构，其中某些类型的对象（又称触发器，Emitter）会触发命名事件来调用函数（又称监听器，Listener）。</p>
 
@@ -647,7 +647,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>本文是NodeJs简明教程的第六篇，将介绍NodeJs crypto模块相关的基本操作。</p>
+                <html><head></head><body><p>本文是NodeJs简明教程的第六篇，将介绍NodeJs crypto模块相关的基本操作。</p>
 <blockquote>
 <p>crypto 模块提供了加密功能，包括对 OpenSSL 的哈希、HMAC、加密、解密、签名、以及验证功能的一整套封装。</p>
 
@@ -994,7 +994,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

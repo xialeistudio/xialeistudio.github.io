@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,14 +157,14 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <p>老版本app版本号是2.0.13，Build是20160719。新版本app版本号是2.0.14，Build是2016101301。<br>初略看来应该是可以覆盖升级的，但是安装新版本的时候提示“应用未安装”。<br>网上找了一下，大致原因有以下几种：</p>
+                <html><head></head><body><p>老版本app版本号是2.0.13，Build是20160719。新版本app版本号是2.0.14，Build是2016101301。<br>初略看来应该是可以覆盖升级的，但是安装新版本的时候提示“应用未安装”。<br>网上找了一下，大致原因有以下几种：</p>
 <ul>
 <li>签名冲突</li>
 <li>手机空间不足</li>
 <li>当前版本号小于已安装版本号</li>
 </ul>
 <p>解决方案都是让用户卸载老版本，然后安装新版本，但是这肯定是可以安装的（测试通过）。<br>为了找出不能覆盖安装的问题，笔者还是将USB调试模式打开，直接使用IDE安装新版本app。<br>安装的时候提示<strong>INSTALL_FAILED_UID_CHANGED</strong>，从字面意思来看感觉是用户问题，定义app用户相关的代码只有AndroidManifest.xml文件中有。<br>打开AndroidManifest.xml发现定义了<strong>shareUserId</strong>，而老版本app是没有定义该属性的，删除之后，问题解决。</p>
-
+</body></html>
             </div>
             
         </div>
@@ -387,7 +387,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

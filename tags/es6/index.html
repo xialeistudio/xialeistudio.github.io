@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -169,7 +169,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>迭代器是ES2015中新增的规范，与之相关的for…of也是ES2015新增的。</p>
+                <html><head></head><body><p>迭代器是ES2015中新增的规范，与之相关的for…of也是ES2015新增的。</p>
 <p>本文来深入研究一下迭代器是什么，以及迭代器能够干什么？</p>
 <p>或许你对for … of的执行还不了解，比如什么情况下可以使用for … of去遍历对象，什么情况下会报错等等，这篇文章应该能帮到你。</p>
 
@@ -222,8 +222,8 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>Proxy是ES6规范定义的标准内置对象，可以对目标对象的读取、函数调用等操作进行拦截。一般来说，通过Proxy可以让目标对象“可控”，比如是否能调用对象的某个方法，能否往对象添加属性等等。</p>
-<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> originalObj = &#123;</span><br><span class="line">    name: <span class="hljs-string">'xialei'</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="hljs-keyword">const</span> publicObj = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Proxy</span>(originalObj, &#123;</span><br><span class="line">    <span class="hljs-keyword">set</span>(target, prop, value) &#123;</span><br><span class="line">        <span class="hljs-comment">// 将属性值转化为大写</span></span><br><span class="line">        target[prop] = value.toString().toUpperCase();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">publicObj.name = <span class="hljs-string">'xialei'</span>;</span><br><span class="line"><span class="hljs-built_in">console</span>.log(publicObj.name); <span class="hljs-comment">// XIALEI</span></span><br></pre></td></tr></table></figure>
+                <html><head></head><body><p>Proxy是ES6规范定义的标准内置对象，可以对目标对象的读取、函数调用等操作进行拦截。一般来说，通过Proxy可以让目标对象“可控”，比如是否能调用对象的某个方法，能否往对象添加属性等等。</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> originalObj = {</span><br><span class="line">    name: <span class="hljs-string">'xialei'</span></span><br><span class="line">};</span><br><span class="line"><span class="hljs-keyword">const</span> publicObj = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Proxy</span>(originalObj, {</span><br><span class="line">    <span class="hljs-keyword">set</span>(target, prop, value) {</span><br><span class="line">        <span class="hljs-comment">// 将属性值转化为大写</span></span><br><span class="line">        target[prop] = value.toString().toUpperCase();</span><br><span class="line">    }</span><br><span class="line">});</span><br><span class="line"></span><br><span class="line">publicObj.name = <span class="hljs-string">'xialei'</span>;</span><br><span class="line"><span class="hljs-built_in">console</span>.log(publicObj.name); <span class="hljs-comment">// XIALEI</span></span><br></pre></td></tr></tbody></table></figure>
 <blockquote>
 
                 
@@ -275,7 +275,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>本文内容</p>
+                <html><head></head><body><p>本文内容</p>
 <ul>
 <li>Set的基本使用</li>
 
@@ -328,7 +328,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>本文内容</p>
+                <html><head></head><body><p>本文内容</p>
 <ul>
 <li>Map的基本使用</li>
 
@@ -381,7 +381,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <h2 id="本文内容"><a href="#本文内容" class="headerlink" title="本文内容"></a>本文内容</h2><ul>
+                <html><head></head><body><h2 id="本文内容"><a href="#本文内容" class="headerlink" title="本文内容"></a>本文内容</h2><ul>
 <li>JS基本数据类型种类</li>
 <li>Symbol的主要用法, 全局Symbol的使用与检测</li>
 
@@ -434,7 +434,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>ES6新增了两个重要的关键字<code>let</code>和<code>const</code>，相信大家都不陌生，但是包括我在内，在系统学习ES6之前也只使用到了【不存在变量提升】这个特性。</p>
+                <html><head></head><body><p>ES6新增了两个重要的关键字<code>let</code>和<code>const</code>，相信大家都不陌生，但是包括我在内，在系统学习ES6之前也只使用到了【不存在变量提升】这个特性。</p>
 <ul>
 <li><strong>let</strong>声明一个块级作用域的本地变量</li>
 
@@ -752,7 +752,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

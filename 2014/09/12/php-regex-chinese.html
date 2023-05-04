@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,18 +157,18 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <p>正常的正则表达式匹配英文和数字以及一些常用字符还是很简单的，如</p>
-<figure class="highlight php hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/^\w$/</span><br><span class="line">/^[<span class="hljs-number">0</span><span class="hljs-number">-9</span>]$/</span><br><span class="line">/^[\-\_]$/</span><br></pre></td></tr></table></figure>
+                <html><head></head><body><p>正常的正则表达式匹配英文和数字以及一些常用字符还是很简单的，如</p>
+<figure class="highlight php hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/^\w$/</span><br><span class="line">/^[<span class="hljs-number">0</span><span class="hljs-number">-9</span>]$/</span><br><span class="line">/^[\-\_]$/</span><br></pre></td></tr></tbody></table></figure>
 <p>等等，但是匹配中文的话就有些麻烦了。UTF-8的中文根据unicode编码，所以我们需要手动构造UTF-8字符串</p>
-<figure class="highlight php hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/^[\x&#123;<span class="hljs-number">4e00</span>&#125;-\x&#123;<span class="hljs-number">9</span>fa5&#125;]$/u</span><br></pre></td></tr></table></figure>
+<figure class="highlight php hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/^[\x{<span class="hljs-number">4e00</span>}-\x{<span class="hljs-number">9</span>fa5}]$/u</span><br></pre></td></tr></tbody></table></figure>
 <p>请注意大括号，因为没有大括号PHP会报错</p>
-<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Warning: preg_match() [function.preg-match]: Compilation failed: PCRE does not support \L, \l, \N, \U, or \u at offset 3 <span class="hljs-keyword">in</span> test.php on line 3</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Warning: preg_match() [function.preg-match]: Compilation failed: PCRE does not support \L, \l, \N, \U, or \u at offset 3 <span class="hljs-keyword">in</span> test.php on line 3</span><br></pre></td></tr></tbody></table></figure>
 <p>因为\x是表示十六进制数的，所以需要用大括号括起来</p>
 <p>另外，需要增加 u 修饰符。</p>
 <p>此修正符启用了一个 PCRE 中与 Perl 不兼容的额外功能。模式字符串被当成 UTF-8。</p>
 <p>本修正符在 Unix 下自 PHP 4.1.0 起可用，在 win32 下自 PHP 4.2.3 起可用。</p>
 <p>很多时候google的作用确实比 X度 大，学会google吧！</p>
-
+</body></html>
             </div>
             
         </div>
@@ -177,7 +177,7 @@ var _hmt = _hmt || [];
             <div class="level-start">
                 <div class="level-item">
                     <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/regex/">regex</a>
+                    <a class="has-link-grey -link" href="/tags/regex/" rel="tag">regex</a>
                 </div>
             </div>
         </div>
@@ -400,7 +400,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

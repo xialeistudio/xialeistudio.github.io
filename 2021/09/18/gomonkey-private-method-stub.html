@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,23 +157,23 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <blockquote>
+                <html><head></head><body><blockquote>
 <p>ApplyMethod基于反射实现，无法对私有方法打桩，本文将解决这一问题。</p>
 </blockquote>
-<h2 id="被测代码"><a href="#被测代码" class="headerlink" title="被测代码"></a>被测代码</h2><figure class="highlight go hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> Dao <span class="hljs-keyword">struct</span> &#123;</span><br><span class="line">&#125;</span><br><span class="line"><span class="hljs-comment">// 私有方法</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(d *Dao)</span> <span class="hljs-title">method1</span><span class="hljs-params">()</span> <span class="hljs-title">error</span></span> &#123;</span><br><span class="line">   <span class="hljs-keyword">return</span> errors.New(<span class="hljs-string">"failed"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// Method 公有方法</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(d *Dao)</span> <span class="hljs-title">Method</span><span class="hljs-params">()</span> <span class="hljs-title">error</span></span> &#123;</span><br><span class="line">   <span class="hljs-keyword">return</span> d.method1()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="被测代码"><a href="#被测代码" class="headerlink" title="被测代码"></a>被测代码</h2><figure class="highlight go hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> Dao <span class="hljs-keyword">struct</span> {</span><br><span class="line">}</span><br><span class="line"><span class="hljs-comment">// 私有方法</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(d *Dao)</span> <span class="hljs-title">method1</span><span class="hljs-params">()</span> <span class="hljs-title">error</span></span> {</span><br><span class="line">   <span class="hljs-keyword">return</span> errors.New(<span class="hljs-string">"failed"</span>)</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// Method 公有方法</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(d *Dao)</span> <span class="hljs-title">Method</span><span class="hljs-params">()</span> <span class="hljs-title">error</span></span> {</span><br><span class="line">   <span class="hljs-keyword">return</span> d.method1()</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <ul>
 <li><code>method1</code>是私有方法，使用<code>ApplyMethod</code>无法打桩</li>
 </ul>
-<h2 id="测试代码"><a href="#测试代码" class="headerlink" title="测试代码"></a>测试代码</h2><figure class="highlight go hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">TestDao_Method</span><span class="hljs-params">(t *testing.T)</span></span> &#123;</span><br><span class="line">   <span class="hljs-comment">// 基于ApplyFunc可以读取到私有方法的地址并进行替换</span></span><br><span class="line">   g := gomonkey.ApplyFunc((*Dao).method1, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(_ *Dao)</span> <span class="hljs-title">error</span></span> &#123;</span><br><span class="line">      <span class="hljs-keyword">return</span> errors.New(<span class="hljs-string">"打桩返回的错误"</span>)</span><br><span class="line">   &#125;)</span><br><span class="line">   <span class="hljs-keyword">defer</span> g.Reset()</span><br><span class="line"></span><br><span class="line">   d := Dao&#123;&#125;</span><br><span class="line">   fmt.Println(d.Method())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="测试代码"><a href="#测试代码" class="headerlink" title="测试代码"></a>测试代码</h2><figure class="highlight go hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">TestDao_Method</span><span class="hljs-params">(t *testing.T)</span></span> {</span><br><span class="line">   <span class="hljs-comment">// 基于ApplyFunc可以读取到私有方法的地址并进行替换</span></span><br><span class="line">   g := gomonkey.ApplyFunc((*Dao).method1, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(_ *Dao)</span> <span class="hljs-title">error</span></span> {</span><br><span class="line">      <span class="hljs-keyword">return</span> errors.New(<span class="hljs-string">"打桩返回的错误"</span>)</span><br><span class="line">   })</span><br><span class="line">   <span class="hljs-keyword">defer</span> g.Reset()</span><br><span class="line"></span><br><span class="line">   d := Dao{}</span><br><span class="line">   fmt.Println(d.Method())</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <h2 id="执行"><a href="#执行" class="headerlink" title="执行"></a>执行</h2><p>执行时需要添加<code>-gcflags=-l</code>禁止内联(内联后函数地址发生变化，某些函数会直接转化为语句调用)</p>
-<figure class="highlight asciidoc hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-section">=== RUN   TestDao_Method</span></span><br><span class="line">打桩返回的错误</span><br><span class="line"><span class="hljs-bullet">--- </span>PASS: TestDao<span class="hljs-emphasis">_Method (0.00s)</span></span><br><span class="line"><span class="hljs-emphasis">PASS</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight asciidoc hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-section">=== RUN   TestDao_Method</span></span><br><span class="line">打桩返回的错误</span><br><span class="line"><span class="hljs-bullet">--- </span>PASS: TestDao<span class="hljs-emphasis">_Method (0.00s)</span></span><br><span class="line"><span class="hljs-emphasis">PASS</span></span><br></pre></td></tr></tbody></table></figure>
 <h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ol>
 <li>执行测试命令时添加<code>-gcflags=-l</code></li>
 <li><code></code>gomonkey.ApplyFunc<code>需要传递</code>(*Dao).method1`(结构体指针对应的函数)</li>
-<li>被测方法的接收器必须是<code>结构体指针</code>(因为第2步是传递指针)<figure class="highlight go hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(d *Dao)</span> <span class="hljs-title">method1</span><span class="hljs-params">()</span> <span class="hljs-title">error</span></span> &#123;</span><br><span class="line">   <span class="hljs-keyword">return</span> errors.New(<span class="hljs-string">"failed"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<li>被测方法的接收器必须是<code>结构体指针</code>(因为第2步是传递指针)<figure class="highlight go hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(d *Dao)</span> <span class="hljs-title">method1</span><span class="hljs-params">()</span> <span class="hljs-title">error</span></span> {</span><br><span class="line">   <span class="hljs-keyword">return</span> errors.New(<span class="hljs-string">"failed"</span>)</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 </li>
 </ol>
-
+</body></html>
             </div>
             
         </div>
@@ -182,7 +182,7 @@ var _hmt = _hmt || [];
             <div class="level-start">
                 <div class="level-item">
                     <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/testing/">testing</a>
+                    <a class="has-link-grey -link" href="/tags/testing/" rel="tag">testing</a>
                 </div>
             </div>
         </div>
@@ -421,7 +421,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

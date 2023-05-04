@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -169,8 +169,8 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>RSA算法是目前用的最多的非对称加密算法，文本将基于openssl在nodejs和php中进行加密数据通信。</p>
-<h2 id="生成密钥对"><a href="#生成密钥对" class="headerlink" title="生成密钥对"></a>生成密钥对</h2><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">openssl</span><br><span class="line">genrsa -out private.key 2048</span><br><span class="line">rsa -<span class="hljs-keyword">in</span> private.key -pubout -out public.key</span><br></pre></td></tr></table></figure>
+                <html><head></head><body><p>RSA算法是目前用的最多的非对称加密算法，文本将基于openssl在nodejs和php中进行加密数据通信。</p>
+<h2 id="生成密钥对"><a href="#生成密钥对" class="headerlink" title="生成密钥对"></a>生成密钥对</h2><figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">openssl</span><br><span class="line">genrsa -out private.key 2048</span><br><span class="line">rsa -<span class="hljs-keyword">in</span> private.key -pubout -out public.key</span><br></pre></td></tr></tbody></table></figure>
 <p>执行完命令后，可以在当前目录看到:</p>
 
                 
@@ -222,7 +222,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>收费SSL证书对于个人来说还是略贵，本文将交大家申请免费的SSL证书。</p>
+                <html><head></head><body><p>收费SSL证书对于个人来说还是略贵，本文将交大家申请免费的SSL证书。</p>
 <h2 id="打开申请网站"><a href="#打开申请网站" class="headerlink" title="打开申请网站"></a>打开申请网站</h2><p><a href="https://www.startssl.com/" target="_blank" rel="noopener">startssl.com</a></p>
 <h2 id="点击Sign-up注册"><a href="#点击Sign-up注册" class="headerlink" title="点击Sign-up注册"></a>点击Sign-up注册</h2><ol>
 
@@ -275,8 +275,8 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p><strong>阅读本文前请确认启用了php_openssl扩展</strong></p>
-<h3 id="生成密钥"><a href="#生成密钥" class="headerlink" title="生成密钥"></a>生成密钥</h3><figure class="highlight php hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$res = openssl_pkey_new();</span><br><span class="line">openssl_pkey_export_to_file($res,<span class="hljs-keyword">__DIR__</span>.<span class="hljs-string">'/private.key'</span>);</span><br><span class="line">$d = openssl_pkey_get_details($res);</span><br><span class="line">file_put_contents(<span class="hljs-keyword">__DIR__</span>.<span class="hljs-string">'/public.key'</span>,$d[<span class="hljs-string">'key'</span>]);</span><br></pre></td></tr></table></figure>
+                <html><head></head><body><p><strong>阅读本文前请确认启用了php_openssl扩展</strong></p>
+<h3 id="生成密钥"><a href="#生成密钥" class="headerlink" title="生成密钥"></a>生成密钥</h3><figure class="highlight php hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$res = openssl_pkey_new();</span><br><span class="line">openssl_pkey_export_to_file($res,<span class="hljs-keyword">__DIR__</span>.<span class="hljs-string">'/private.key'</span>);</span><br><span class="line">$d = openssl_pkey_get_details($res);</span><br><span class="line">file_put_contents(<span class="hljs-keyword">__DIR__</span>.<span class="hljs-string">'/public.key'</span>,$d[<span class="hljs-string">'key'</span>]);</span><br></pre></td></tr></tbody></table></figure>
 <p>程序运行后会在当前目录生成 private.key 以及 public.key文件，你可以将你的public.key公开出去，请勿公开private.key</p>
 
                 
@@ -328,7 +328,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>phpmailer之前一直在用，一般都是采用smtp登录服务器的方式进行发信，今天在本地windows主机测试也能发信成功，但是到线上去就不行了，提示“连接smtp服务器失败”。<br>首先可以排除的是代码方面的错误，那么剩下就知道服务器的问题了。</p>
+                <html><head></head><body><p>phpmailer之前一直在用，一般都是采用smtp登录服务器的方式进行发信，今天在本地windows主机测试也能发信成功，但是到线上去就不行了，提示“连接smtp服务器失败”。<br>首先可以排除的是代码方面的错误，那么剩下就知道服务器的问题了。</p>
 <p>根据这个错误，可以想到有几种问题:</p>
 <ol>
 
@@ -646,7 +646,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

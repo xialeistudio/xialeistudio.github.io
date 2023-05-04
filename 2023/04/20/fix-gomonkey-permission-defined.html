@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,11 +157,10 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>Go单元测试在M1上使用<code>github.com/agiledragon/gomonkey/v2 v2.9.0</code>包提示<code>permission defined</code>。<br>网上查阅消息得知是由于内存安全导致，不能同时对内存进行写和执行</p>
+                <html><head></head><body><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>Go单元测试在M1上使用<code>github.com/agiledragon/gomonkey/v2 v2.9.0</code>包提示<code>permission defined</code>。<br>网上查阅消息得知是由于内存安全导致，不能同时对内存进行写和执行</p>
 <h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>下面分享一种比较简单的方法，需要修改本地的go源码。</p>
-<p>修改<a href="mailto:`go/pkg/mod/github.com/agiledragon/gomonkey/v2@v2.9.0" target="_blank" rel="noopener">`go/pkg/mod/github.com/agiledragon/gomonkey/v2@v2.9.0</a>/modify_binary_darwin.go<code>的</code>modifyBinary`方法。<br>将<br><figure class="highlight go hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">err := mprotectCrossPage(target, <span class="hljs-built_in">len</span>(bytes), syscall.PROT_READ|syscall.PROT_WRITE|syscall.PROT_EXEC)</span><br></pre></td></tr></table></figure></p>
-<p>修改为<br><figure class="highlight go hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">err := mprotectCrossPage(target, <span class="hljs-built_in">len</span>(bytes), syscall.PROT_READ|syscall.PROT_WRITE)</span><br></pre></td></tr></table></figure></p>
-
+<p>修改<a href="mailto:`go/pkg/mod/github.com/agiledragon/gomonkey/v2@v2.9.0">`go/pkg/mod/github.com/agiledragon/gomonkey/v2@v2.9.0</a>/modify_binary_darwin.go<code>的</code>modifyBinary`方法。<br>将<br></p><figure class="highlight go hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">err := mprotectCrossPage(target, <span class="hljs-built_in">len</span>(bytes), syscall.PROT_READ|syscall.PROT_WRITE|syscall.PROT_EXEC)</span><br></pre></td></tr></tbody></table></figure><br>修改为<br><figure class="highlight go hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">err := mprotectCrossPage(target, <span class="hljs-built_in">len</span>(bytes), syscall.PROT_READ|syscall.PROT_WRITE)</span><br></pre></td></tr></tbody></table></figure><p></p>
+</body></html>
             </div>
             
         </div>
@@ -392,7 +391,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

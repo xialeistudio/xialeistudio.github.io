@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,14 +157,14 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <p>目前golang用的基础镜像是<code>busybox</code>，由于golang交叉编译之后只有一个二进制文件，可以直接部署到容器中运行，容器镜像大小几乎等于二进制文件大小。</p>
+                <html><head></head><body><p>目前golang用的基础镜像是<code>busybox</code>，由于golang交叉编译之后只有一个二进制文件，可以直接部署到容器中运行，容器镜像大小几乎等于二进制文件大小。</p>
 <h2 id="带来的问题"><a href="#带来的问题" class="headerlink" title="带来的问题"></a>带来的问题</h2><p>由于基础镜像太过精简，目前遇到的问题是将时间戳格式化为时间字符串时发现差了8个小时。</p>
 <h2 id="尝试过的解决办法"><a href="#尝试过的解决办法" class="headerlink" title="尝试过的解决办法"></a>尝试过的解决办法</h2><p>刚开始使用了Location时区相关API，但是部署到容器中发现直接报错了，因为容器中缺少相关的系统调用函数。代码如下：</p>
-<figure class="highlight golang hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">loc, _ := time.LoadLocation(<span class="hljs-string">"Asia/Shanghai"</span>)</span><br><span class="line">time.Now().In(loc).Format(<span class="hljs-string">"2006-01-02 15:04:05"</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight golang hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">loc, _ := time.LoadLocation(<span class="hljs-string">"Asia/Shanghai"</span>)</span><br><span class="line">time.Now().In(loc).Format(<span class="hljs-string">"2006-01-02 15:04:05"</span>)</span><br></pre></td></tr></tbody></table></figure>
 <p>目前应用会部署到docker容器中，故处理办法比较原始，直接在Time对象上添加8个小时来解决时差问题。代码如下:</p>
-<figure class="highlight golang hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">time.Now().Add(time.Hour * <span class="hljs-number">8</span>).Format(<span class="hljs-string">"2006年01月02日 15:04"</span>),</span><br></pre></td></tr></table></figure>
+<figure class="highlight golang hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">time.Now().Add(time.Hour * <span class="hljs-number">8</span>).Format(<span class="hljs-string">"2006年01月02日 15:04"</span>),</span><br></pre></td></tr></tbody></table></figure>
 <p>暂时解决了这个问题。</p>
-
+</body></html>
             </div>
             
         </div>
@@ -395,7 +395,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

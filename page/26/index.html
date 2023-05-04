@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -159,9 +159,9 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>angularjs作为一个全ajax的框架，对于请求，如果页面上不做任何操作的话，在结果烦回来之前，页面是没有任何响应的，不像普通的HTTP请求，会有进度条之类。</p>
+                <html><head></head><body><p>angularjs作为一个全ajax的框架，对于请求，如果页面上不做任何操作的话，在结果烦回来之前，页面是没有任何响应的，不像普通的HTTP请求，会有进度条之类。</p>
 <p>本文通过对httpProvider注入拦截器实现loading。</p>
-<h2 id="HTML代码"><a href="#HTML代码" class="headerlink" title="HTML代码"></a>HTML代码</h2><figure class="highlight html hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"loading-modal modal"</span> <span class="hljs-attr">ng-if</span>=<span class="hljs-string">"loading"</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"loading"</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"&lt;?=$this-&gt;module-&gt;getAssetsUrl()?&gt;/img/loading.gif"</span> <span class="hljs-attr">alt</span>=<span class="hljs-string">""</span>/&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">ng-bind</span>=<span class="hljs-string">"loading_text"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="HTML代码"><a href="#HTML代码" class="headerlink" title="HTML代码"></a>HTML代码</h2><figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"loading-modal modal"</span> <span class="hljs-attr">ng-if</span>=<span class="hljs-string">"loading"</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"loading"</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"&lt;?=$this-&gt;module-&gt;getAssetsUrl()?&gt;/img/loading.gif"</span> <span class="hljs-attr">alt</span>=<span class="hljs-string">""</span>/&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">ng-bind</span>=<span class="hljs-string">"loading_text"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
 
                 
             
@@ -212,8 +212,8 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>水平居中还是比较好弄的</p>
-<figure class="highlight css hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="hljs-attribute">margin-left</span>: auto;</span><br><span class="line">    <span class="hljs-attribute">margin-right</span>: auto;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+                <html><head></head><body><p>水平居中还是比较好弄的</p>
+<figure class="highlight css hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">    <span class="hljs-attribute">margin-left</span>: auto;</span><br><span class="line">    <span class="hljs-attribute">margin-right</span>: auto;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>但是垂直居中就比较麻烦，网上一大推文章都是什么display:table-cell,根本不管用。这里利用position属性可以达到这个目的。</p>
 
                 
@@ -265,7 +265,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>大家可能都有这样一种感觉，Web程序在本地调试的时候一切正常，放到线上也基本是正常，但是偶尔会有数据错误的情况，这种情况在订单系统中特别常见，因为大部分的订单状态更新都是有两个路径（浏览器跳转和支付服务器的异步推送消息），当然，最终数据要以异步结果为准，但是问题是，浏览器跳转也需要更新订单状态，当这两种方式在很短的时间内同时到达数据库时（一般在一秒内），如果数据库没有加锁，那这个订单会被处理两次。</p>
+                <html><head></head><body><p>大家可能都有这样一种感觉，Web程序在本地调试的时候一切正常，放到线上也基本是正常，但是偶尔会有数据错误的情况，这种情况在订单系统中特别常见，因为大部分的订单状态更新都是有两个路径（浏览器跳转和支付服务器的异步推送消息），当然，最终数据要以异步结果为准，但是问题是，浏览器跳转也需要更新订单状态，当这两种方式在很短的时间内同时到达数据库时（一般在一秒内），如果数据库没有加锁，那这个订单会被处理两次。</p>
 <p>说到建立数据表时，涉及到支付的，都要用InnoDB引擎，该引擎支持行锁，支持事务，外键。</p>
 <p>文章开始的解决办法就是采用InnoDB对要操作的数据行进行锁定。</p>
 
@@ -318,7 +318,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>android加载图片免不了使用加载进度显示，而android自带的progressBar有局限.</p>
+                <html><head></head><body><p>android加载图片免不了使用加载进度显示，而android自带的progressBar有局限.</p>
 <ol>
 <li>圆型的progressBar不能显示进度条，只能无限制转圈圈</li>
 
@@ -371,7 +371,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>总的来说，由于没有成熟的资料可以参考，部署过程话费了将近一个小时才成功，现在来分享一下经验。</p>
+                <html><head></head><body><p>总的来说，由于没有成熟的资料可以参考，部署过程话费了将近一个小时才成功，现在来分享一下经验。</p>
 <h2 id="目录配置"><a href="#目录配置" class="headerlink" title="目录配置"></a>目录配置</h2><p>由于Paas禁止了本地写功能，所以，如果不加任何处理的话，Yii会尝试在 protected/runtime 目录下写私有文件，结果是肯定没权限的。</p>
 <p>经过查找官方文档发现CApplication有个方法叫<strong>setRuntimePath</strong>，可以设置运行时目录，那么最重要的一点，这个目录的配置肯定要在入口文件中配置，更改之后的入口文件代码如下：</p>
 
@@ -424,9 +424,9 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>android默认的datepicker和默认的timepicker可以放在一行（Linelayout），但是timepicker右边会“挤出”屏幕，尝试设置layout_weight和layout_height对于布局有效，但是控件显示就不完整了。到这一步发现xml不局文件已经处理不了，所以自然想到应该利用java来处理了。</p>
+                <html><head></head><body><p>android默认的datepicker和默认的timepicker可以放在一行（Linelayout），但是timepicker右边会“挤出”屏幕，尝试设置layout_weight和layout_height对于布局有效，但是控件显示就不完整了。到这一步发现xml不局文件已经处理不了，所以自然想到应该利用java来处理了。</p>
 <h2 id="效果图"><a href="#效果图" class="headerlink" title="效果图"></a>效果图</h2><p><img src="https://og5r5kasb.qnssl.com/wp-content/uploads/2014/11/98281416412408.jpg" alt="效果图"></p>
-<h2 id="布局代码"><a href="#布局代码" class="headerlink" title="布局代码"></a>布局代码</h2><figure class="highlight xml hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">LinearLayout</span></span></span><br><span class="line"><span class="hljs-tag">    <span class="hljs-attr">android:orientation</span>=<span class="hljs-string">"horizontal"</span></span></span><br><span class="line"><span class="hljs-tag">    <span class="hljs-attr">android:layout_width</span>=<span class="hljs-string">"fill_parent"</span></span></span><br><span class="line"><span class="hljs-tag">    <span class="hljs-attr">android:layout_height</span>=<span class="hljs-string">"fill_parent"</span></span></span><br><span class="line"><span class="hljs-tag">    <span class="hljs-attr">android:paddingLeft</span>=<span class="hljs-string">"10dp"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">DatePicker</span></span></span><br><span class="line"><span class="hljs-tag">    <span class="hljs-attr">android:layout_width</span>=<span class="hljs-string">"wrap_content"</span></span></span><br><span class="line"><span class="hljs-tag">    <span class="hljs-attr">android:layout_height</span>=<span class="hljs-string">"wrap_content"</span></span></span><br><span class="line"><span class="hljs-tag">    <span class="hljs-attr">android:id</span>=<span class="hljs-string">"@+id/datePicker"</span></span></span><br><span class="line"><span class="hljs-tag">    <span class="hljs-attr">android:calendarViewShown</span>=<span class="hljs-string">"false"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">TimePicker</span></span></span><br><span class="line"><span class="hljs-tag">    <span class="hljs-attr">android:layout_width</span>=<span class="hljs-string">"wrap_content"</span></span></span><br><span class="line"><span class="hljs-tag">    <span class="hljs-attr">android:layout_height</span>=<span class="hljs-string">"wrap_content"</span></span></span><br><span class="line"><span class="hljs-tag">    <span class="hljs-attr">android:id</span>=<span class="hljs-string">"@+id/timePicker"</span> /&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">LinearLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="布局代码"><a href="#布局代码" class="headerlink" title="布局代码"></a>布局代码</h2><figure class="highlight xml hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">LinearLayout</span></span></span><br><span class="line"><span class="hljs-tag">    <span class="hljs-attr">android:orientation</span>=<span class="hljs-string">"horizontal"</span></span></span><br><span class="line"><span class="hljs-tag">    <span class="hljs-attr">android:layout_width</span>=<span class="hljs-string">"fill_parent"</span></span></span><br><span class="line"><span class="hljs-tag">    <span class="hljs-attr">android:layout_height</span>=<span class="hljs-string">"fill_parent"</span></span></span><br><span class="line"><span class="hljs-tag">    <span class="hljs-attr">android:paddingLeft</span>=<span class="hljs-string">"10dp"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">DatePicker</span></span></span><br><span class="line"><span class="hljs-tag">    <span class="hljs-attr">android:layout_width</span>=<span class="hljs-string">"wrap_content"</span></span></span><br><span class="line"><span class="hljs-tag">    <span class="hljs-attr">android:layout_height</span>=<span class="hljs-string">"wrap_content"</span></span></span><br><span class="line"><span class="hljs-tag">    <span class="hljs-attr">android:id</span>=<span class="hljs-string">"@+id/datePicker"</span></span></span><br><span class="line"><span class="hljs-tag">    <span class="hljs-attr">android:calendarViewShown</span>=<span class="hljs-string">"false"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">TimePicker</span></span></span><br><span class="line"><span class="hljs-tag">    <span class="hljs-attr">android:layout_width</span>=<span class="hljs-string">"wrap_content"</span></span></span><br><span class="line"><span class="hljs-tag">    <span class="hljs-attr">android:layout_height</span>=<span class="hljs-string">"wrap_content"</span></span></span><br><span class="line"><span class="hljs-tag">    <span class="hljs-attr">android:id</span>=<span class="hljs-string">"@+id/timePicker"</span> /&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">LinearLayout</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
 
                 
             
@@ -477,8 +477,8 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>Yii1.x DAO中的queryAll方法查询，如果有结果，会返回一个数组，如果没有结果，会返回null。现在分两种情况：</p>
-<h2 id="返回空数组"><a href="#返回空数组" class="headerlink" title="返回空数组"></a>返回空数组</h2><figure class="highlight php hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$array = <span class="hljs-keyword">array</span>(</span><br><span class="line">);</span><br><span class="line"><span class="hljs-keyword">echo</span> json_encode($array);</span><br></pre></td></tr></table></figure>
+                <html><head></head><body><p>Yii1.x DAO中的queryAll方法查询，如果有结果，会返回一个数组，如果没有结果，会返回null。现在分两种情况：</p>
+<h2 id="返回空数组"><a href="#返回空数组" class="headerlink" title="返回空数组"></a>返回空数组</h2><figure class="highlight php hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$array = <span class="hljs-keyword">array</span>(</span><br><span class="line">);</span><br><span class="line"><span class="hljs-keyword">echo</span> json_encode($array);</span><br></pre></td></tr></tbody></table></figure>
 <p>输出为</p>
 
                 
@@ -530,8 +530,8 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>今天做开发时发现控制老是报错，虽然不影响使用，但是作为有那么一点“强迫症”的我来说，无法忍受。通过调试发现是ng-repeat对一个空数组遍历出错，另外，[‘ab’,’cd’,’ad’]这样只有值没有键的数组也会遍历出错。</p>
-<h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2><figure class="highlight html hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"media"</span> <span class="hljs-attr">ng-repeat</span>=<span class="hljs-string">"item in comments track by $index"</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"media-body"</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;<span class="hljs-name">strong</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">strong</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">br</span> /&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">time</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">time</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">br</span> /&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">ng-if</span>=<span class="hljs-string">"item.comment_author_url.length&gt;0"</span>&gt;</span></span><br><span class="line">            <span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"fa fa-globe"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span> </span><br><span class="line">            <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">""</span> <span class="hljs-attr">target</span>=<span class="hljs-string">"_blank"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span></span><br><span class="line">            <span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br></pre></td></tr></table></figure>
+                <html><head></head><body><p>今天做开发时发现控制老是报错，虽然不影响使用，但是作为有那么一点“强迫症”的我来说，无法忍受。通过调试发现是ng-repeat对一个空数组遍历出错，另外，[‘ab’,’cd’,’ad’]这样只有值没有键的数组也会遍历出错。</p>
+<h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2><figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"media"</span> <span class="hljs-attr">ng-repeat</span>=<span class="hljs-string">"item in comments track by $index"</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"media-body"</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;<span class="hljs-name">strong</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">strong</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">br</span> /&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">time</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">time</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">br</span> /&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">ng-if</span>=<span class="hljs-string">"item.comment_author_url.length&gt;0"</span>&gt;</span></span><br><span class="line">            <span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"fa fa-globe"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span> </span><br><span class="line">            <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">""</span> <span class="hljs-attr">target</span>=<span class="hljs-string">"_blank"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span></span><br><span class="line">            <span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
 <p>特别注意<strong>track by $index</strong></p>
 
                 
@@ -583,7 +583,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>今天使用Fragment的时候，出现了这个错误 IllegalStateException: Can not perform this action after onSaveInstanceState。查看一下控制台，发现是FragmentManager的commit()方法报错的，看字面意思应该是</p>
+                <html><head></head><body><p>今天使用Fragment的时候，出现了这个错误 IllegalStateException: Can not perform this action after onSaveInstanceState。查看一下控制台，发现是FragmentManager的commit()方法报错的，看字面意思应该是</p>
 <p><em>onSaveInstanceState这个方法之后不能处理这个操作（指commit()）。</em></p>
 <p>因为onSaveInstanceState<br>方法是在该Activity即将被销毁前调用，来保存Activity数据的，如果在保存完状态后再给它添加Fragment就会出错。解决办法就是把commit（）方法替换成 commitAllowingStateLoss()就行了，其效果是一样的。</p>
 
@@ -636,7 +636,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>缓存和异步是两个极大提升用户体验的好东西，android加载图片时的开销还是挺大的，要是不做缓存同步加载，网速不给力的情况下，等个十几秒是有可能的。</p>
+                <html><head></head><body><p>缓存和异步是两个极大提升用户体验的好东西，android加载图片时的开销还是挺大的，要是不做缓存同步加载，网速不给力的情况下，等个十几秒是有可能的。</p>
 <p>今天要说的是一个叫做ImageLoader的库</p>
 <p>GITHUB:<a href="https://github.com/nostra13/Android-Universal-Image-Loader" target="_blank" rel="noopener">https://github.com/nostra13/Android-Universal-Image-Loader</a></p>
 
@@ -983,7 +983,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

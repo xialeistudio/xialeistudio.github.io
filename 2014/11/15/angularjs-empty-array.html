@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,21 +157,21 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <p>Yii1.x DAO中的queryAll方法查询，如果有结果，会返回一个数组，如果没有结果，会返回null。现在分两种情况：</p>
-<h2 id="返回空数组"><a href="#返回空数组" class="headerlink" title="返回空数组"></a>返回空数组</h2><figure class="highlight php hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$array = <span class="hljs-keyword">array</span>(</span><br><span class="line">);</span><br><span class="line"><span class="hljs-keyword">echo</span> json_encode($array);</span><br></pre></td></tr></table></figure>
+                <html><head></head><body><p>Yii1.x DAO中的queryAll方法查询，如果有结果，会返回一个数组，如果没有结果，会返回null。现在分两种情况：</p>
+<h2 id="返回空数组"><a href="#返回空数组" class="headerlink" title="返回空数组"></a>返回空数组</h2><figure class="highlight php hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$array = <span class="hljs-keyword">array</span>(</span><br><span class="line">);</span><br><span class="line"><span class="hljs-keyword">echo</span> json_encode($array);</span><br></pre></td></tr></tbody></table></figure>
 <p>输出为</p>
-<figure class="highlight json hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[]</span><br></pre></td></tr></table></figure>
-<h2 id="返回null"><a href="#返回null" class="headerlink" title="返回null"></a>返回null</h2><figure class="highlight php hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$array = <span class="hljs-keyword">null</span>;</span><br><span class="line"><span class="hljs-keyword">echo</span> json_encode($array);</span><br></pre></td></tr></table></figure>
+<figure class="highlight json hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[]</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="返回null"><a href="#返回null" class="headerlink" title="返回null"></a>返回null</h2><figure class="highlight php hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$array = <span class="hljs-keyword">null</span>;</span><br><span class="line"><span class="hljs-keyword">echo</span> json_encode($array);</span><br></pre></td></tr></tbody></table></figure>
 <p>输出为</p>
-<figure class="highlight hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">null</span><br></pre></td></tr></table></figure>
-<p>那么问题来了，JS接收这两个的结果是不同的。<br>如果使用以下代码判断数据:<br><figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">if</span>(data.length == <span class="hljs-number">0</span>)&#123;</span><br><span class="line">    <span class="hljs-comment">//当前评论为空</span></span><br><span class="line">&#125;<span class="hljs-keyword">else</span>&#123;</span><br><span class="line">    <span class="hljs-comment">//当前评论不为空</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">null</span><br></pre></td></tr></tbody></table></figure>
+<p>那么问题来了，JS接收这两个的结果是不同的。<br>如果使用以下代码判断数据:<br></p><figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">if</span>(data.length == <span class="hljs-number">0</span>){</span><br><span class="line">    <span class="hljs-comment">//当前评论为空</span></span><br><span class="line">}<span class="hljs-keyword">else</span>{</span><br><span class="line">    <span class="hljs-comment">//当前评论不为空</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
 <p>如果返回   []  ，这段代码是生效的。但是如果返回 null ,这个就有问题了。</p>
 <p>后来，使用</p>
-<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">if</span>(data == <span class="hljs-literal">null</span>)&#123;</span><br><span class="line">    <span class="hljs-comment">//评论为空</span></span><br><span class="line">&#125;<span class="hljs-keyword">else</span>&#123;</span><br><span class="line">    <span class="hljs-comment">//评论不为空</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">if</span>(data == <span class="hljs-literal">null</span>){</span><br><span class="line">    <span class="hljs-comment">//评论为空</span></span><br><span class="line">}<span class="hljs-keyword">else</span>{</span><br><span class="line">    <span class="hljs-comment">//评论不为空</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>这个判断老是出问题，后端明明返回null了，判断还是错误的，这时候想到JS也是若类型语言，会不会是类型的问题。</p>
-<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">typeof</span> data)</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">typeof</span> data)</span><br></pre></td></tr></tbody></table></figure>
 <p>返回的是<strong>“string”</strong><br>那么问题就解决了，用以下代码就可以了</p>
-<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">if</span>(data.length == <span class="hljs-number">0</span> || data == <span class="hljs-string">"null"</span>)&#123;</span><br><span class="line">    <span class="hljs-comment">//评论为空</span></span><br><span class="line">&#125;<span class="hljs-keyword">else</span>&#123;</span><br><span class="line">    <span class="hljs-comment">//评论不为空</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">if</span>(data.length == <span class="hljs-number">0</span> || data == <span class="hljs-string">"null"</span>){</span><br><span class="line">    <span class="hljs-comment">//评论为空</span></span><br><span class="line">}<span class="hljs-keyword">else</span>{</span><br><span class="line">    <span class="hljs-comment">//评论不为空</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure></body></html>
             </div>
             
         </div>
@@ -402,7 +402,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

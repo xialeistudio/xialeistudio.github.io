@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,14 +157,14 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <h2 id="核心"><a href="#核心" class="headerlink" title="核心"></a>核心</h2><p>golang能够GC是程序声明的变量，而一些外部资源是不可以GC掉的，比如<code>os.OpenFile</code>打开的文件句柄，<code>sql.Open</code>打开的数据库连接句柄等资源。</p>
+                <html><head></head><body><h2 id="核心"><a href="#核心" class="headerlink" title="核心"></a>核心</h2><p>golang能够GC是程序声明的变量，而一些外部资源是不可以GC掉的，比如<code>os.OpenFile</code>打开的文件句柄，<code>sql.Open</code>打开的数据库连接句柄等资源。</p>
 <h2 id="开发中常用场景"><a href="#开发中常用场景" class="headerlink" title="开发中常用场景"></a>开发中常用场景</h2><ol>
 <li><p>http请求时<code>resp.Body</code>，刚开始写golang的时候，如果会用<code>ioutil.readAll</code>去读取<code>resp.Body</code>时会加上<code>defer resp.Body.Close()</code>,后来有<code>json.NewDecoder().decode()</code>时没有加，以为会自动关闭，没想到还是太天真了。不管什么情况都需要<code>defer resp.Body.Close()</code></p>
 </li>
 <li><p>sql查询时<code>DB.Prepare</code>，数据库查询操作会得到一个<code>rows</code>的资源，这个一般都关闭了，但是运行一段时间之后发现有内存泄漏，因为只用到了sql查询，所以只有数据库操作代码可以排查，尽快调试发现<code>stmt</code>也有<code>Close</code>方法，加上<code>defer stmt.Close</code>之后，内存稳定了。</p>
 </li>
 </ol>
-
+</body></html>
             </div>
             
         </div>
@@ -395,7 +395,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

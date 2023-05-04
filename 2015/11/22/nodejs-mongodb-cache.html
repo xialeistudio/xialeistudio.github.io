@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,26 +157,26 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <h2 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h2><p><a href="https://github.com/xialeistudio/mongodb-cache" target="_blank" rel="noopener">https://github.com/xialeistudio/mongodb-cache</a></p>
+                <html><head></head><body><h2 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h2><p><a href="https://github.com/xialeistudio/mongodb-cache" target="_blank" rel="noopener">https://github.com/xialeistudio/mongodb-cache</a></p>
 <h2 id="项目说明"><a href="#项目说明" class="headerlink" title="项目说明"></a>项目说明</h2><p>基于mongodb的nodejs缓存模块</p>
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install xl-cache --save</span><br></pre></td></tr></table></figure>
-<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">var</span> cache = <span class="hljs-built_in">require</span>(<span class="hljs-string">'xl-mongodb-cache'</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install xl-cache --save</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">var</span> cache = <span class="hljs-built_in">require</span>(<span class="hljs-string">'xl-mongodb-cache'</span>);</span><br></pre></td></tr></tbody></table></figure>
 <ul>
 <li>连接服务器</li>
 </ul>
-<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cache.connect(<span class="hljs-string">'mongodb://localhost:27017/app'</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cache.connect(<span class="hljs-string">'mongodb://localhost:27017/app'</span>);</span><br></pre></td></tr></tbody></table></figure>
 <ul>
 <li>写入缓存</li>
 </ul>
-<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cache.set(key, value, duration).then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">data</span>) </span>&#123;</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(data);</span><br><span class="line">&#125;).catch(<span class="hljs-built_in">console</span>.error);</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cache.set(key, value, duration).then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">data</span>) </span>{</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(data);</span><br><span class="line">}).catch(<span class="hljs-built_in">console</span>.error);</span><br></pre></td></tr></tbody></table></figure>
 <ul>
 <li>读取缓存</li>
 </ul>
-<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cache.get(key).then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">data</span>) </span>&#123;</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(data);</span><br><span class="line">&#125;).catch(<span class="hljs-built_in">console</span>.error);</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cache.get(key).then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">data</span>) </span>{</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(data);</span><br><span class="line">}).catch(<span class="hljs-built_in">console</span>.error);</span><br></pre></td></tr></tbody></table></figure>
 <ul>
 <li>删除缓存</li>
 </ul>
-<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cache.remove(key).then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">data</span>) </span>&#123;</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(data);</span><br><span class="line">&#125;).catch(<span class="hljs-built_in">console</span>.error);</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cache.remove(key).then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">data</span>) </span>{</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(data);</span><br><span class="line">}).catch(<span class="hljs-built_in">console</span>.error);</span><br></pre></td></tr></tbody></table></figure></body></html>
             </div>
             
         </div>
@@ -411,7 +411,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

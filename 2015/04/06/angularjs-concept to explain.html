@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,23 +157,23 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <ul>
+                <html ng-app="app"><head></head><body><ul>
 <li>本文所有内容仅代表个人观点</li>
 </ul>
 <h2 id="ng"><a href="#ng" class="headerlink" title="ng"></a>ng</h2><p><em>Angularjs的简称。</em></p>
 <h2 id="指令-Directive"><a href="#指令-Directive" class="headerlink" title="指令(Directive)"></a>指令(Directive)</h2><p><em>特殊的html标签或html属性，扩展了html的功能</em>。有以下几类：</p>
 <ul>
 <li>E    Element 元素 如 <dropdown> 就是一个自定义指令（如何自定义指令，将在后面的文章中介绍），名称为”dropdown”。</dropdown></li>
-<li>A    Attribute 属性 如 <html ng-app="app"></html> 这是最常用的指令了，ng-app为指令名称，也是html元素的属性，app为该属性的值</li>
+<li>A    Attribute 属性 如  这是最常用的指令了，ng-app为指令名称，也是html元素的属性，app为该属性的值</li>
 </ul>
 <h2 id="作用域-scope"><a href="#作用域-scope" class="headerlink" title="作用域(scope)"></a>作用域(scope)</h2><p><em>ng中变量、方法都是基于作用域的，作用类似于js作用域。</em></p>
 <h2 id="ng-bind"><a href="#ng-bind" class="headerlink" title="ng-bind"></a>ng-bind</h2><p><em>html输出js变量，跟作用域绑定，message为作用域中的一个变量。</em>示例代码：</p>
-<figure class="highlight html hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">ng-bind</span>=<span class="hljs-string">"message"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">ng-bind</span>=<span class="hljs-string">"message"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
 <p>最终会显示同一scope下的message变量值。</p>
 <h2 id="ng-model"><a href="#ng-model" class="headerlink" title="ng-model"></a>ng-model</h2><p><em>双向绑定指令</em>，示例代码：</p>
-<figure class="highlight html hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <span class="hljs-attr">ng-model</span>=<span class="hljs-string">"message"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <span class="hljs-attr">ng-model</span>=<span class="hljs-string">"message"</span>/&gt;</span></span><br></pre></td></tr></tbody></table></figure>
 <p>表明将input的值与作用域中的message变量进行绑定，当input值改变的时候，变量message跟着改变，html中输出的内容也会同步改变。</p>
-
+</body></html>
             </div>
             
         </div>
@@ -416,7 +416,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,15 +157,14 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <h1 id="重要提示"><a href="#重要提示" class="headerlink" title="重要提示"></a>重要提示</h1><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">关闭该选项会导致应用安全性收到影响！</span><br></pre></td></tr></table></figure>
+                <html><head></head><body><h1 id="重要提示"><a href="#重要提示" class="headerlink" title="重要提示"></a>重要提示</h1><figure class="highlight plain hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">关闭该选项会导致应用安全性收到影响！</span><br></pre></td></tr></tbody></table></figure>
 <h1 id="问题出现"><a href="#问题出现" class="headerlink" title="问题出现"></a>问题出现</h1><ol>
 <li>开发API的时候发现POST请求老是不能通过验证，直接把报错文案放到项目中去搜索发现<strong>yii\web\Request</strong>中有<strong>enableCsrfValidation</strong>。</li>
 <li>其他应用设置的cookie，抓包的时候可以看到请求中有cookie，但是yii2读取不到。</li>
 </ol>
-<h1 id="源码解析"><a href="#源码解析" class="headerlink" title="源码解析"></a>源码解析</h1><p>找到<strong>yii\web\Request</strong>文件，看到<br><figure class="highlight php hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@var</span> bool whether to enable CSRF (Cross-Site Request Forgery) validation. Defaults to true.</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-keyword">public</span> $enableCsrfValidation = <span class="hljs-keyword">true</span>;</span><br><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@var</span> bool whether cookies should be validated to ensure they are not tampered. Defaults to true.</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-keyword">public</span> $enableCookieValidation = <span class="hljs-keyword">true</span>;</span><br></pre></td></tr></table></figure></p>
-<p>发现是这里有问题，基于<strong>yii2一切都是组件的思想</strong>，去修改组件配置即可。</p>
-<h1 id="修正"><a href="#修正" class="headerlink" title="修正"></a>修正</h1><p>编辑<strong>config/web.php的components节</strong><br><figure class="highlight php hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-string">'request'</span>      =&gt; [</span><br><span class="line">    <span class="hljs-string">'cookieValidationKey'</span>    =&gt; <span class="hljs-string">'xxxx'</span>,</span><br><span class="line">    <span class="hljs-string">'enableCookieValidation'</span> =&gt; <span class="hljs-keyword">false</span>,</span><br><span class="line">    <span class="hljs-string">'enableCsrfValidation'</span>   =&gt; <span class="hljs-keyword">false</span>,</span><br><span class="line">    ],</span><br><span class="line">],</span><br></pre></td></tr></table></figure></p>
-
+<h1 id="源码解析"><a href="#源码解析" class="headerlink" title="源码解析"></a>源码解析</h1><p>找到<strong>yii\web\Request</strong>文件，看到<br></p><figure class="highlight php hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@var</span> bool whether to enable CSRF (Cross-Site Request Forgery) validation. Defaults to true.</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-keyword">public</span> $enableCsrfValidation = <span class="hljs-keyword">true</span>;</span><br><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@var</span> bool whether cookies should be validated to ensure they are not tampered. Defaults to true.</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-keyword">public</span> $enableCookieValidation = <span class="hljs-keyword">true</span>;</span><br></pre></td></tr></tbody></table></figure><br>发现是这里有问题，基于<strong>yii2一切都是组件的思想</strong>，去修改组件配置即可。<p></p>
+<h1 id="修正"><a href="#修正" class="headerlink" title="修正"></a>修正</h1><p>编辑<strong>config/web.php的components节</strong><br></p><figure class="highlight php hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-string">'request'</span>      =&gt; [</span><br><span class="line">    <span class="hljs-string">'cookieValidationKey'</span>    =&gt; <span class="hljs-string">'xxxx'</span>,</span><br><span class="line">    <span class="hljs-string">'enableCookieValidation'</span> =&gt; <span class="hljs-keyword">false</span>,</span><br><span class="line">    <span class="hljs-string">'enableCsrfValidation'</span>   =&gt; <span class="hljs-keyword">false</span>,</span><br><span class="line">    ],</span><br><span class="line">],</span><br></pre></td></tr></tbody></table></figure><p></p>
+</body></html>
             </div>
             
         </div>
@@ -174,7 +173,7 @@ var _hmt = _hmt || [];
             <div class="level-start">
                 <div class="level-item">
                     <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/yii/">yii</a>
+                    <a class="has-link-grey -link" href="/tags/yii/" rel="tag">yii</a>
                 </div>
             </div>
         </div>
@@ -413,7 +412,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

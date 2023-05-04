@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,12 +157,12 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <p>最近在做基于sphinx的全文搜索引擎，使用PHP进行数据读取，但是服务器使用的PHP版本是PHP7，pecl.php.net中没有提供PHP7的版本。手痒点到source code中看了一下。<br>看到源代码中有的<strong>headers</strong>中有个<strong>php7</strong>的，点击<strong>shortlog</strong>进去看了一下，最新更新日期是2017-02-10，挺新的，应该是针对PHP7开发的版本，只不过未发布编译版本，想着linux下的软件有源代码基本都能自行编译。故选择了最新的PHP7快照下载。</p>
-<h2 id="开始安装"><a href="#开始安装" class="headerlink" title="开始安装"></a>开始安装</h2><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">wget http://git.php.net/?p=pecl/search_engine/sphinx.git;a=snapshot;h=339e123acb0ce7beb2d9d4f9094d6f8bcf15fb54;sf=tgz</span><br><span class="line">tar xvfz sphinx-339e123.tar.gz</span><br><span class="line"><span class="hljs-built_in">cd</span> sphinx-339e123</span><br><span class="line">phpize</span><br><span class="line">./configure</span><br><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
-<p>安装完毕后会在PHP的配置文件目录多出sphinx.ini，在扩展目录多出sphinx.so文件。终端执行<br><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">phpenmod sphinx</span><br></pre></td></tr></table></figure></p>
+                <html><head></head><body><p>最近在做基于sphinx的全文搜索引擎，使用PHP进行数据读取，但是服务器使用的PHP版本是PHP7，pecl.php.net中没有提供PHP7的版本。手痒点到source code中看了一下。<br>看到源代码中有的<strong>headers</strong>中有个<strong>php7</strong>的，点击<strong>shortlog</strong>进去看了一下，最新更新日期是2017-02-10，挺新的，应该是针对PHP7开发的版本，只不过未发布编译版本，想着linux下的软件有源代码基本都能自行编译。故选择了最新的PHP7快照下载。</p>
+<h2 id="开始安装"><a href="#开始安装" class="headerlink" title="开始安装"></a>开始安装</h2><figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">wget http://git.php.net/?p=pecl/search_engine/sphinx.git;a=snapshot;h=339e123acb0ce7beb2d9d4f9094d6f8bcf15fb54;sf=tgz</span><br><span class="line">tar xvfz sphinx-339e123.tar.gz</span><br><span class="line"><span class="hljs-built_in">cd</span> sphinx-339e123</span><br><span class="line">phpize</span><br><span class="line">./configure</span><br><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></tbody></table></figure>
+<p>安装完毕后会在PHP的配置文件目录多出sphinx.ini，在扩展目录多出sphinx.so文件。终端执行<br></p><figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">phpenmod sphinx</span><br></pre></td></tr></tbody></table></figure><p></p>
 <p>即可启用扩展。</p>
 <h2 id="本文服务器环境"><a href="#本文服务器环境" class="headerlink" title="本文服务器环境"></a>本文服务器环境</h2><p>Ubuntu16.04 Server + PHP7.0(使用apt安装)</p>
-
+</body></html>
             </div>
             
         </div>
@@ -393,7 +393,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

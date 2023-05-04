@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,19 +157,19 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>最近写安卓的时候服务端返回的数据会带上“\n”，但是在android这边不能换行，初次想到的解决方法是利用</p>
-<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String.replace(<span class="hljs-string">"\n"</span>,<span class="hljs-string">"\n"</span>)</span><br></pre></td></tr></table></figure>
+                <html><head></head><body><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>最近写安卓的时候服务端返回的数据会带上“\n”，但是在android这边不能换行，初次想到的解决方法是利用</p>
+<figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String.replace(<span class="hljs-string">"\n"</span>,<span class="hljs-string">"\n"</span>)</span><br></pre></td></tr></tbody></table></figure>
 <p>给替换掉，结果是不行的。之前记得java的反斜杠是需要转义的，就用</p>
-<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String.replaceAll(<span class="hljs-string">"\n"</span>,<span class="hljs-string">"\\n"</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String.replaceAll(<span class="hljs-string">"\n"</span>,<span class="hljs-string">"\\n"</span>)</span><br></pre></td></tr></tbody></table></figure>
 <p>试了一下，结果依旧不行。后来去查了谷歌–，发现要 \\n 才可以 匹配到 \n,这么多斜杠，头都晕了，一个个来解释：</p>
 <ul>
 <li>第一个和第二个反斜杠是一组，由于java的转义，实际为 “\”</li>
 <li>第三个和第四个同理，</li>
 </ul>
 <p>经过以上两步之后，\\n 实际上是 \n ，由于是正则的关系，\n 可以匹配到字符串的\n了。</p>
-<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String.replaceAll(<span class="hljs-string">"\\n"</span>,<span class="hljs-string">"\\n"</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String.replaceAll(<span class="hljs-string">"\\n"</span>,<span class="hljs-string">"\\n"</span>)</span><br></pre></td></tr></tbody></table></figure>
 <p>第一个参数是正则，第二个是普通字符串。不得不吐槽下Java的正则表达式。。</p>
-
+</body></html>
             </div>
             
         </div>
@@ -178,7 +178,7 @@ var _hmt = _hmt || [];
             <div class="level-start">
                 <div class="level-item">
                     <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/regex/">regex</a>
+                    <a class="has-link-grey -link" href="/tags/regex/" rel="tag">regex</a>
                 </div>
             </div>
         </div>
@@ -409,7 +409,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

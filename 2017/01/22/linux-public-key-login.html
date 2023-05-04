@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,23 +157,19 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <p>服务器密码往往是随机字符串，难以记忆，通过配置公钥登录的方式来进行登录。</p>
+                <html><head></head><body><p>服务器密码往往是随机字符串，难以记忆，通过配置公钥登录的方式来进行登录。</p>
 <h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><ul>
 <li>服务器A 192.168.1.2 客户机</li>
 <li>服务器B 192.168.1.3 服务器<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2></li>
 </ul>
 <ol>
-<li><p>登录<strong>192.168.1.2</strong>，终端执行</p>
-<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>复制<strong>~/.ssh/id_rsa.pub</strong>文件的内容</p>
-</li>
-<li>在服务器上添加公钥，登录<strong>192.168.1.3</strong>，终端执行<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">echo</span> 刚才复制的内容 &gt;&gt; ~/.ssh/authorized_keys</span><br></pre></td></tr></table></figure>
-</li>
+<li>登录<strong>192.168.1.2</strong>，终端执行<figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></tbody></table></figure></li>
+<li>复制<strong>~/.ssh/id_rsa.pub</strong>文件的内容</li>
+<li>在服务器上添加公钥，登录<strong>192.168.1.3</strong>，终端执行<figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">echo</span> 刚才复制的内容 &gt;&gt; ~/.ssh/authorized_keys</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2>登录<strong>192.168.1.2</strong>，终端执行<figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh 192.168.1.3</span><br></pre></td></tr></tbody></table></figure>
+首次登录的时候会进行公钥认证，输入<strong>yes</strong>即可。</li>
 </ol>
-<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>登录<strong>192.168.1.2</strong>，终端执行<br><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh 192.168.1.3</span><br></pre></td></tr></table></figure></p>
-<p>首次登录的时候会进行公钥认证，输入<strong>yes</strong>即可。</p>
-
+</body></html>
             </div>
             
         </div>
@@ -408,7 +404,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

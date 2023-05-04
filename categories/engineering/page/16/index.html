@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -170,8 +170,8 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p><strong>阅读本文前请确认启用了php_openssl扩展</strong></p>
-<h3 id="生成密钥"><a href="#生成密钥" class="headerlink" title="生成密钥"></a>生成密钥</h3><figure class="highlight php hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$res = openssl_pkey_new();</span><br><span class="line">openssl_pkey_export_to_file($res,<span class="hljs-keyword">__DIR__</span>.<span class="hljs-string">'/private.key'</span>);</span><br><span class="line">$d = openssl_pkey_get_details($res);</span><br><span class="line">file_put_contents(<span class="hljs-keyword">__DIR__</span>.<span class="hljs-string">'/public.key'</span>,$d[<span class="hljs-string">'key'</span>]);</span><br></pre></td></tr></table></figure>
+                <html><head></head><body><p><strong>阅读本文前请确认启用了php_openssl扩展</strong></p>
+<h3 id="生成密钥"><a href="#生成密钥" class="headerlink" title="生成密钥"></a>生成密钥</h3><figure class="highlight php hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$res = openssl_pkey_new();</span><br><span class="line">openssl_pkey_export_to_file($res,<span class="hljs-keyword">__DIR__</span>.<span class="hljs-string">'/private.key'</span>);</span><br><span class="line">$d = openssl_pkey_get_details($res);</span><br><span class="line">file_put_contents(<span class="hljs-keyword">__DIR__</span>.<span class="hljs-string">'/public.key'</span>,$d[<span class="hljs-string">'key'</span>]);</span><br></pre></td></tr></tbody></table></figure>
 <p>程序运行后会在当前目录生成 private.key 以及 public.key文件，你可以将你的public.key公开出去，请勿公开private.key</p>
 
                 
@@ -223,7 +223,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>老版本app版本号是2.0.13，Build是20160719。新版本app版本号是2.0.14，Build是2016101301。<br>初略看来应该是可以覆盖升级的，但是安装新版本的时候提示“应用未安装”。<br>网上找了一下，大致原因有以下几种：</p>
+                <html><head></head><body><p>老版本app版本号是2.0.13，Build是20160719。新版本app版本号是2.0.14，Build是2016101301。<br>初略看来应该是可以覆盖升级的，但是安装新版本的时候提示“应用未安装”。<br>网上找了一下，大致原因有以下几种：</p>
 <ul>
 <li>签名冲突</li>
 
@@ -276,7 +276,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>笔者在写Restful API的时候需要取得原始请求体，读了若干次输入流（将读取操作封装成了函数），发现就第一个参数有值，以后的读取都没有值。</p>
+                <html><head></head><body><p>笔者在写Restful API的时候需要取得原始请求体，读了若干次输入流（将读取操作封装成了函数），发现就第一个参数有值，以后的读取都没有值。</p>
 <p>起初以为是参数名写错导致读取失败，检查发现不是这个问题。</p>
 <p>单步调试发现php://input只有第一次读取有值，以后的调用都是空。遇到这种问题往往需要查PHP的官方文档。</p>
 
@@ -329,9 +329,9 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p><em>本SDK要求NodeJs &gt;= 4.x，欢迎大家在issues提问。</em></p>
+                <html><head></head><body><p><em>本SDK要求NodeJs &gt;= 4.x，欢迎大家在issues提问。</em></p>
 <h2 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h2><p><a href="https://github.com/xialeistudio/wechat-nodejs/" target="_blank" rel="noopener">wechat-nodejs</a></p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install wechat-nodejs ---save</span><br></pre></td></tr></table></figure>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install wechat-nodejs ---save</span><br></pre></td></tr></tbody></table></figure>
 
                 
             
@@ -382,7 +382,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>npm安装node-sass模块的时候，会卡在 node scripts/install.js这里，因为要去github.com上下载源码，众所周知的原因，国内的网络上github.com速度太不稳定了，所以安装很慢。</p>
+                <html><head></head><body><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>npm安装node-sass模块的时候，会卡在 node scripts/install.js这里，因为要去github.com上下载源码，众所周知的原因，国内的网络上github.com速度太不稳定了，所以安装很慢。</p>
 <p>这里推荐一种极速安装的方法，当然还是使用万能的淘宝镜像源。</p>
 <p>打开~/.npmrc（windows用户打开 c:\Users\当前用户名.npmrc）增加一行</p>
 
@@ -483,8 +483,8 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>android实现异步的方法有很多种，本文只介绍用的比较多的AsyncTask。从类名就可以看出来该类是专为异步而生，API也很简单。</p>
-<h2 id="AsyncTask接口原型"><a href="#AsyncTask接口原型" class="headerlink" title="AsyncTask接口原型"></a>AsyncTask接口原型</h2><figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AsyncTask</span>&lt;<span class="hljs-title">Params</span>, <span class="hljs-title">Progress</span>, <span class="hljs-title">Result</span>&gt; </span>&#123;</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+                <html><head></head><body><p>android实现异步的方法有很多种，本文只介绍用的比较多的AsyncTask。从类名就可以看出来该类是专为异步而生，API也很简单。</p>
+<h2 id="AsyncTask接口原型"><a href="#AsyncTask接口原型" class="headerlink" title="AsyncTask接口原型"></a>AsyncTask接口原型</h2><figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AsyncTask</span>&lt;<span class="hljs-title">Params</span>, <span class="hljs-title">Progress</span>, <span class="hljs-title">Result</span>&gt; </span>{</span><br><span class="line">...</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>该类是个抽象类，有三个泛型参数，说明如下：</p>
 
                 
@@ -584,7 +584,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>在进行微信开发的时候，由于JS SDK提供的api需要在真机调试，而手机端的console方法虽然存在，但是调用结果却看不到。所以笔者使用socket.io重写了一个在线版本的调试工具。</p>
+                <html><head></head><body><p>在进行微信开发的时候，由于JS SDK提供的api需要在真机调试，而手机端的console方法虽然存在，但是调用结果却看不到。所以笔者使用socket.io重写了一个在线版本的调试工具。</p>
 <p><a href="http://jsconsole.org/" target="_blank" rel="noopener">工具地址</a></p>
 <h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><ul>
 
@@ -637,8 +637,8 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>phpstorm+xdebug如何调试本地代码应该都熟悉了。本文说的是如何调试线上服务器的代码。本文写作时服务器的PHP环境是lnmp1.2。</p>
-<h2 id="服务器配置"><a href="#服务器配置" class="headerlink" title="服务器配置"></a>服务器配置</h2><h3 id="安装debug"><a href="#安装debug" class="headerlink" title="安装debug"></a>安装debug</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pecl install xdebug</span><br></pre></td></tr></table></figure>
+                <html><head></head><body><p>phpstorm+xdebug如何调试本地代码应该都熟悉了。本文说的是如何调试线上服务器的代码。本文写作时服务器的PHP环境是lnmp1.2。</p>
+<h2 id="服务器配置"><a href="#服务器配置" class="headerlink" title="服务器配置"></a>服务器配置</h2><h3 id="安装debug"><a href="#安装debug" class="headerlink" title="安装debug"></a>安装debug</h3><figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pecl install xdebug</span><br></pre></td></tr></tbody></table></figure>
 <h3 id="编辑php-ini"><a href="#编辑php-ini" class="headerlink" title="编辑php.ini"></a>编辑php.ini</h3><p>编辑 <strong>/usr/local/php/etc/php.ini</strong>，在末尾加上以下代码：</p>
 
                 
@@ -984,7 +984,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,25 +157,25 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <p>pm2是nodejs的一个模块，用来进行进程管理，刚开始以为只能做nodejs脚本的管理，后来发现通过配置之后也可以实现<strong>任意进程</strong>的守护。</p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install pm2 -g</span><br></pre></td></tr></table></figure>
+                <html><head></head><body><p>pm2是nodejs的一个模块，用来进行进程管理，刚开始以为只能做nodejs脚本的管理，后来发现通过配置之后也可以实现<strong>任意进程</strong>的守护。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install pm2 -g</span><br></pre></td></tr></tbody></table></figure>
 <h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h3><ul>
 <li>启动php文件</li>
 </ul>
-<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 start app.php</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 start app.php</span><br></pre></td></tr></tbody></table></figure>
 <p>启动完成后会输出</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">┌───────────────┬────┬──────┬───────┬────────┬─────────┬────────┬─────┬───────────┬──────────┐</span><br><span class="line">│ App name      │ id │ mode │ pid   │ status │ restart │ uptime │ cpu │ mem       │ watching │</span><br><span class="line">├───────────────┼────┼──────┼───────┼────────┼─────────┼────────┼─────┼───────────┼──────────┤</span><br><span class="line">│ app.php       │ 5  │ fork │ 30996 │ online │ 0       │ 104s   │ 0%  │ 16.2 MB   │ disabled │</span><br><span class="line">└───────────────┴────┴──────┴───────┴────────┴─────────┴────────┴─────┴───────────┴──────────┘</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">┌───────────────┬────┬──────┬───────┬────────┬─────────┬────────┬─────┬───────────┬──────────┐</span><br><span class="line">│ App name      │ id │ mode │ pid   │ status │ restart │ uptime │ cpu │ mem       │ watching │</span><br><span class="line">├───────────────┼────┼──────┼───────┼────────┼─────────┼────────┼─────┼───────────┼──────────┤</span><br><span class="line">│ app.php       │ 5  │ fork │ 30996 │ online │ 0       │ 104s   │ 0%  │ 16.2 MB   │ disabled │</span><br><span class="line">└───────────────┴────┴──────┴───────┴────────┴─────────┴────────┴─────┴───────────┴──────────┘</span><br></pre></td></tr></tbody></table></figure>
 <p><strong>id</strong>为pm2中管理进程使用的标识<br><em>进程死掉之后pm2会自动重启</em></p>
-<h3 id="查看进程详情"><a href="#查看进程详情" class="headerlink" title="查看进程详情"></a>查看进程详情</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 describe 5</span><br></pre></td></tr></table></figure>
-<h3 id="停止进程"><a href="#停止进程" class="headerlink" title="停止进程"></a>停止进程</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 stop 5</span><br></pre></td></tr></table></figure>
-<h3 id="进程列表"><a href="#进程列表" class="headerlink" title="进程列表"></a>进程列表</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 list</span><br></pre></td></tr></table></figure>
-<h3 id="进程资源监控"><a href="#进程资源监控" class="headerlink" title="进程资源监控"></a>进程资源监控</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 monit</span><br></pre></td></tr></table></figure>
-<h3 id="停止所有进程"><a href="#停止所有进程" class="headerlink" title="停止所有进程"></a>停止所有进程</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 stop all</span><br></pre></td></tr></table></figure>
-<h3 id="删除所有进程"><a href="#删除所有进程" class="headerlink" title="删除所有进程"></a>删除所有进程</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 delete all</span><br></pre></td></tr></table></figure>
-<h3 id="查看进程输出"><a href="#查看进程输出" class="headerlink" title="查看进程输出"></a>查看进程输出</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 logs [id]</span><br></pre></td></tr></table></figure>
+<h3 id="查看进程详情"><a href="#查看进程详情" class="headerlink" title="查看进程详情"></a>查看进程详情</h3><figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 describe 5</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="停止进程"><a href="#停止进程" class="headerlink" title="停止进程"></a>停止进程</h3><figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 stop 5</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="进程列表"><a href="#进程列表" class="headerlink" title="进程列表"></a>进程列表</h3><figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 list</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="进程资源监控"><a href="#进程资源监控" class="headerlink" title="进程资源监控"></a>进程资源监控</h3><figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 monit</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="停止所有进程"><a href="#停止所有进程" class="headerlink" title="停止所有进程"></a>停止所有进程</h3><figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 stop all</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="删除所有进程"><a href="#删除所有进程" class="headerlink" title="删除所有进程"></a>删除所有进程</h3><figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 delete all</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="查看进程输出"><a href="#查看进程输出" class="headerlink" title="查看进程输出"></a>查看进程输出</h3><figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 logs [id]</span><br></pre></td></tr></tbody></table></figure>
 <p><em>不传入id时显示所有日志，否则显示指定进程日志</em></p>
 <h3 id="使用配置文件启动"><a href="#使用配置文件启动" class="headerlink" title="使用配置文件启动"></a>使用配置文件启动</h3><p>pm2 强大之处在于其支持任意程序的守护，使用配置文件来启动程序比使用命令行启动更加清晰：</p>
-<figure class="highlight json hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="hljs-attr">"name"</span>: <span class="hljs-string">"delay-message"</span>,</span><br><span class="line">  <span class="hljs-attr">"args"</span>: <span class="hljs-string">"task/delaymessage"</span>,</span><br><span class="line">  <span class="hljs-attr">"script"</span>: <span class="hljs-string">"yii"</span>,</span><br><span class="line">  <span class="hljs-attr">"exec_interpreter"</span>: <span class="hljs-string">"php"</span>,</span><br><span class="line">  <span class="hljs-attr">"exec_mode"</span>: <span class="hljs-string">"fork"</span>,</span><br><span class="line">  <span class="hljs-attr">"max_memory_restart"</span>: <span class="hljs-string">"100M"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight json hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">  <span class="hljs-attr">"name"</span>: <span class="hljs-string">"delay-message"</span>,</span><br><span class="line">  <span class="hljs-attr">"args"</span>: <span class="hljs-string">"task/delaymessage"</span>,</span><br><span class="line">  <span class="hljs-attr">"script"</span>: <span class="hljs-string">"yii"</span>,</span><br><span class="line">  <span class="hljs-attr">"exec_interpreter"</span>: <span class="hljs-string">"php"</span>,</span><br><span class="line">  <span class="hljs-attr">"exec_mode"</span>: <span class="hljs-string">"fork"</span>,</span><br><span class="line">  <span class="hljs-attr">"max_memory_restart"</span>: <span class="hljs-string">"100M"</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <ul>
 <li><strong>name</strong> 脚本显示名称</li>
 <li><strong>args</strong> 脚本参数</li>
@@ -184,7 +184,7 @@ var _hmt = _hmt || [];
 <li><strong>exec_mode</strong> 启动模式，fork为使用子进程启动,<em>cluster</em> 使用nodejs的cluster模块启动</li>
 <li><strong>max_memory_restart</strong> 进程占用内存超过时自动重启</li>
 </ul>
-
+</body></html>
             </div>
             
         </div>
@@ -451,7 +451,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

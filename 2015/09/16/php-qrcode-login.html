@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,14 +157,14 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <p>扫描二维码登录对于现在的web应用来说，确实是个很炫酷的功能，安全性也可以保障，不少朋友可能觉得这是个很复杂的工作，其实不然，真正说来只有几个步骤而已。</p>
+                <html><head></head><body><p>扫描二维码登录对于现在的web应用来说，确实是个很炫酷的功能，安全性也可以保障，不少朋友可能觉得这是个很复杂的工作，其实不然，真正说来只有几个步骤而已。</p>
 <h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><ol>
 <li>PC浏览器展示一张二维码图片，该图片二维码值为一段绝对地址的url，大致如下：<a href="http://www.example.com/oauth/qrcode?key=key" target="_blank" rel="noopener">http://www.example.com/oauth/qrcode?key=key</a></li>
 <li>PC浏览器定期轮询 <a href="http://www.example.com/oauth/query，可能有的同学会问，怎么不用带上key？这里我们用session来保存key，所以链接中不用带上key，将这个key作为服务端的缓存key且值为空，如果该缓存值为空，证明没被扫描，继续轮询，如果已经被扫描，展示扫描结果。" target="_blank" rel="noopener">http://www.example.com/oauth/query，可能有的同学会问，怎么不用带上key？这里我们用session来保存key，所以链接中不用带上key，将这个key作为服务端的缓存key且值为空，如果该缓存值为空，证明没被扫描，继续轮询，如果已经被扫描，展示扫描结果。</a></li>
 <li>手机微信扫描之后会直接访问<a href="http://www.example.com/oauth/qrcode?key=key，这里我们先把这个key保存的session中（这个session和2中的不同，一个是PC，一个是手机）。然后检测用户在手机端是否登录，如果已登录，则把用户信息存到2中的key缓存中，这时候前端查询的时候就会有值了。如果用户在手机未登录，则直接跳转微信登录，登陆成功之后再将用户信息设置到2中的key缓存" target="_blank" rel="noopener">http://www.example.com/oauth/qrcode?key=key，这里我们先把这个key保存的session中（这个session和2中的不同，一个是PC，一个是手机）。然后检测用户在手机端是否登录，如果已登录，则把用户信息存到2中的key缓存中，这时候前端查询的时候就会有值了。如果用户在手机未登录，则直接跳转微信登录，登陆成功之后再将用户信息设置到2中的key缓存</a></li>
 </ol>
 <h2 id="demo"><a href="#demo" class="headerlink" title="demo"></a>demo</h2><p><a href="http://www.lizhiclub.com/" target="_blank" rel="noopener">http://www.lizhiclub.com/</a></p>
-
+</body></html>
             </div>
             
         </div>
@@ -395,7 +395,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

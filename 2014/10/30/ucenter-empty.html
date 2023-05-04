@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,11 +157,11 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <p>今天遇到了一个奇葩的问题UCenter后台通知列表空白并且500，通过xdebug调试发现是<strong>uc_server/control/admin/note.php 第68行代码有问题!</strong>IDE都报错了</p>
-<h2 id="原代码"><a href="#原代码" class="headerlink" title="原代码"></a>原代码</h2><figure class="highlight php hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">$this</span>-&gt;_format_notlist(&amp;$notelist);</span><br></pre></td></tr></table></figure>
-<h2 id="修正代码"><a href="#修正代码" class="headerlink" title="修正代码"></a>修正代码</h2><figure class="highlight php hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">$this</span>-&gt;_format_notlist($notelist);</span><br></pre></td></tr></table></figure>
+                <html><head></head><body><p>今天遇到了一个奇葩的问题UCenter后台通知列表空白并且500，通过xdebug调试发现是<strong>uc_server/control/admin/note.php 第68行代码有问题!</strong>IDE都报错了</p>
+<h2 id="原代码"><a href="#原代码" class="headerlink" title="原代码"></a>原代码</h2><figure class="highlight php hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">$this</span>-&gt;_format_notlist(&amp;$notelist);</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="修正代码"><a href="#修正代码" class="headerlink" title="修正代码"></a>修正代码</h2><figure class="highlight php hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">$this</span>-&gt;_format_notlist($notelist);</span><br></pre></td></tr></tbody></table></figure>
 <p>可能是由于PHP版本升级导致的问题。</p>
-
+</body></html>
             </div>
             
         </div>
@@ -392,7 +392,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

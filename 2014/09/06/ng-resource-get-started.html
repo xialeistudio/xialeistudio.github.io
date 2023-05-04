@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,14 +157,14 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <p>废话不多说，本文的目的就是看过之后就会使用ngResource了。</p>
+                <html><head></head><body><p>废话不多说，本文的目的就是看过之后就会使用ngResource了。</p>
 <ol>
 <li>引入angular-resource.min.js</li>
 <li>定义模块时加载ngResource</li>
 <li>定义service</li>
 </ol>
 <p>完整代码如下</p>
-<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">var</span> app = angular.module(<span class="hljs-string">'app'</span>, [<span class="hljs-string">"ngResource"</span>]);</span><br><span class="line">app.factory(<span class="hljs-string">'Phone'</span>, [<span class="hljs-string">'$resource'</span>,</span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">$resource</span>) </span>&#123;</span><br><span class="line">    <span class="hljs-keyword">return</span> $resource(<span class="hljs-string">'user/:uid'</span>, &#123;</span><br><span class="line">        uid: <span class="hljs-string">'@uid'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        update: &#123;</span><br><span class="line">            method: <span class="hljs-string">'PUT'</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;]);</span><br><span class="line">app.controller(<span class="hljs-string">'MainCtrl'</span>, [<span class="hljs-string">'$scope'</span>, <span class="hljs-string">'Phone'</span>,</span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">$scope, Phone</span>) </span>&#123;</span><br><span class="line">    $scope.phones = Phone.query();</span><br><span class="line">    Phone.update(&#123;</span><br><span class="line">        uid: <span class="hljs-number">1</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        name: <span class="hljs-string">"zhangsan"</span>,</span><br><span class="line">        age: <span class="hljs-string">"10"</span></span><br><span class="line">    &#125;);</span><br><span class="line">&#125;]);</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">var</span> app = angular.module(<span class="hljs-string">'app'</span>, [<span class="hljs-string">"ngResource"</span>]);</span><br><span class="line">app.factory(<span class="hljs-string">'Phone'</span>, [<span class="hljs-string">'$resource'</span>,</span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">$resource</span>) </span>{</span><br><span class="line">    <span class="hljs-keyword">return</span> $resource(<span class="hljs-string">'user/:uid'</span>, {</span><br><span class="line">        uid: <span class="hljs-string">'@uid'</span></span><br><span class="line">    },</span><br><span class="line">    {</span><br><span class="line">        update: {</span><br><span class="line">            method: <span class="hljs-string">'PUT'</span></span><br><span class="line">        }</span><br><span class="line">    });</span><br><span class="line">}]);</span><br><span class="line">app.controller(<span class="hljs-string">'MainCtrl'</span>, [<span class="hljs-string">'$scope'</span>, <span class="hljs-string">'Phone'</span>,</span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">$scope, Phone</span>) </span>{</span><br><span class="line">    $scope.phones = Phone.query();</span><br><span class="line">    Phone.update({</span><br><span class="line">        uid: <span class="hljs-number">1</span></span><br><span class="line">    },</span><br><span class="line">    {</span><br><span class="line">        name: <span class="hljs-string">"zhangsan"</span>,</span><br><span class="line">        age: <span class="hljs-string">"10"</span></span><br><span class="line">    });</span><br><span class="line">}]);</span><br></pre></td></tr></tbody></table></figure></body></html>
             </div>
             
         </div>
@@ -387,7 +387,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

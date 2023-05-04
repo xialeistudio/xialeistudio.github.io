@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -169,8 +169,8 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>pomelo应用中channel默认是<strong>不可以跨进程</strong>的，来看一下现在服务器的配置：</p>
-<figure class="highlight json hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="hljs-attr">"development"</span>: &#123;</span><br><span class="line">    <span class="hljs-attr">"connector"</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="hljs-attr">"id"</span>: <span class="hljs-string">"connector"</span>,</span><br><span class="line">        <span class="hljs-attr">"host"</span>: <span class="hljs-string">"127.0.0.1"</span>,</span><br><span class="line">        <span class="hljs-attr">"port"</span>: <span class="hljs-number">3150</span>,</span><br><span class="line">        <span class="hljs-attr">"clientHost"</span>: <span class="hljs-string">"127.0.0.1"</span>,</span><br><span class="line">        <span class="hljs-attr">"clientPort"</span>: <span class="hljs-number">3010</span>,</span><br><span class="line">        <span class="hljs-attr">"frontend"</span>: <span class="hljs-literal">true</span></span><br><span class="line">      &#125;</span><br><span class="line">    ],</span><br><span class="line">    <span class="hljs-attr">"chat"</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="hljs-attr">"id"</span>: <span class="hljs-string">"chat-1"</span>,</span><br><span class="line">        <span class="hljs-attr">"host"</span>: <span class="hljs-string">"127.0.0.1"</span>,</span><br><span class="line">        <span class="hljs-attr">"port"</span>: <span class="hljs-number">4001</span></span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="hljs-attr">"id"</span>: <span class="hljs-string">"chat-2"</span>,</span><br><span class="line">        <span class="hljs-attr">"host"</span>: <span class="hljs-string">"127.0.0.1"</span>,</span><br><span class="line">        <span class="hljs-attr">"port"</span>: <span class="hljs-number">4002</span></span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+                <html><head></head><body><p>pomelo应用中channel默认是<strong>不可以跨进程</strong>的，来看一下现在服务器的配置：</p>
+<figure class="highlight json hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">  <span class="hljs-attr">"development"</span>: {</span><br><span class="line">    <span class="hljs-attr">"connector"</span>: [</span><br><span class="line">      {</span><br><span class="line">        <span class="hljs-attr">"id"</span>: <span class="hljs-string">"connector"</span>,</span><br><span class="line">        <span class="hljs-attr">"host"</span>: <span class="hljs-string">"127.0.0.1"</span>,</span><br><span class="line">        <span class="hljs-attr">"port"</span>: <span class="hljs-number">3150</span>,</span><br><span class="line">        <span class="hljs-attr">"clientHost"</span>: <span class="hljs-string">"127.0.0.1"</span>,</span><br><span class="line">        <span class="hljs-attr">"clientPort"</span>: <span class="hljs-number">3010</span>,</span><br><span class="line">        <span class="hljs-attr">"frontend"</span>: <span class="hljs-literal">true</span></span><br><span class="line">      }</span><br><span class="line">    ],</span><br><span class="line">    <span class="hljs-attr">"chat"</span>: [</span><br><span class="line">      {</span><br><span class="line">        <span class="hljs-attr">"id"</span>: <span class="hljs-string">"chat-1"</span>,</span><br><span class="line">        <span class="hljs-attr">"host"</span>: <span class="hljs-string">"127.0.0.1"</span>,</span><br><span class="line">        <span class="hljs-attr">"port"</span>: <span class="hljs-number">4001</span></span><br><span class="line">      },</span><br><span class="line">      {</span><br><span class="line">        <span class="hljs-attr">"id"</span>: <span class="hljs-string">"chat-2"</span>,</span><br><span class="line">        <span class="hljs-attr">"host"</span>: <span class="hljs-string">"127.0.0.1"</span>,</span><br><span class="line">        <span class="hljs-attr">"port"</span>: <span class="hljs-number">4002</span></span><br><span class="line">      }</span><br><span class="line">    ]</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>可以看到使用了两台<strong>chat</strong>服务器，该服务器进行具体的消息接收以及消息推送。</p>
 
                 
@@ -222,7 +222,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>pomelo官方提供的js客户端是基于浏览器的，nodejs下无法使用，所以封装了一个基于CommonJs的pomelo客户端。</p>
+                <html><head></head><body><p>pomelo官方提供的js客户端是基于浏览器的，nodejs下无法使用，所以封装了一个基于CommonJs的pomelo客户端。</p>
 <h2 id="支持平台"><a href="#支持平台" class="headerlink" title="支持平台"></a>支持平台</h2><ul>
 <li>nodejs</li>
 
@@ -275,7 +275,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>pomelo是一个游戏服务器框架，与以往单进程的游戏框架不同, 它是<strong>高性能</strong>、<strong>高可伸缩</strong>、<strong>分布式多进程</strong>的<strong>游戏服务器框架</strong>，并且使用很简单。</p>
+                <html><head></head><body><p>pomelo是一个游戏服务器框架，与以往单进程的游戏框架不同, 它是<strong>高性能</strong>、<strong>高可伸缩</strong>、<strong>分布式多进程</strong>的<strong>游戏服务器框架</strong>，并且使用很简单。</p>
 <p>最近一个在线聊天的项目用<strong>socket.io</strong>做的，并发量大的时候顶不住，所以在github找到这个，准备研究一下。</p>
 <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p><em>不建议在Windows上进行pomelo开发，主要是pomelo依赖的二进制模块在Windows下编译成功率略低，建议linux或者Mac OS X。</em></p>
 
@@ -593,7 +593,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

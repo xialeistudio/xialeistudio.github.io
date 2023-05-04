@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,12 +157,12 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <h1 id="expires"><a href="#expires" class="headerlink" title="expires"></a>expires</h1><p>原来设置cookie使用的以下代码</p>
-<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> cookieOptions = &#123;</span><br><span class="line">  expires: moment().add(<span class="hljs-number">6</span>,<span class="hljs-string">'day'</span>).toDate(),</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+                <html><head></head><body><h1 id="expires"><a href="#expires" class="headerlink" title="expires"></a>expires</h1><p>原来设置cookie使用的以下代码</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> cookieOptions = {</span><br><span class="line">  expires: moment().add(<span class="hljs-number">6</span>,<span class="hljs-string">'day'</span>).toDate(),</span><br><span class="line">};</span><br></pre></td></tr></tbody></table></figure>
 <p>但是查看network的时候，cookie虽然设置了，但是过期时间比现在还早，导致一设置就过期，所以expires貌似没作用。</p>
-<h1 id="maxage"><a href="#maxage" class="headerlink" title="maxage"></a>maxage</h1><p>查看对应的typescript定义文件<strong>index.d.ts</strong>发现还有一个<strong>maxAge</strong>选项也可以用来控制cookie过期时间<br><figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * a number representing the milliseconds from Date.now() for expiry</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line">maxAge?: number;</span><br></pre></td></tr></table></figure></p>
+<h1 id="maxage"><a href="#maxage" class="headerlink" title="maxage"></a>maxage</h1><p>查看对应的typescript定义文件<strong>index.d.ts</strong>发现还有一个<strong>maxAge</strong>选项也可以用来控制cookie过期时间<br></p><figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * a number representing the milliseconds from Date.now() for expiry</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line">maxAge?: number;</span><br></pre></td></tr></tbody></table></figure><p></p>
 <p>这个参数更简单，<strong>基于当前时间的毫秒数</strong>，使用以下代码测试之后，发现过期时间跟预期一致<strong>一个星期</strong>：</p>
-<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> cookieOptions = &#123;</span><br><span class="line">  maxAge: <span class="hljs-number">3600</span> * <span class="hljs-number">24</span> * <span class="hljs-number">7</span> * <span class="hljs-number">1000</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> cookieOptions = {</span><br><span class="line">  maxAge: <span class="hljs-number">3600</span> * <span class="hljs-number">24</span> * <span class="hljs-number">7</span> * <span class="hljs-number">1000</span>,</span><br><span class="line">};</span><br></pre></td></tr></tbody></table></figure></body></html>
             </div>
             
         </div>
@@ -171,7 +171,7 @@ var _hmt = _hmt || [];
             <div class="level-start">
                 <div class="level-item">
                     <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/koa/">koa</a>
+                    <a class="has-link-grey -link" href="/tags/koa/" rel="tag">koa</a>
                 </div>
             </div>
         </div>
@@ -402,7 +402,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

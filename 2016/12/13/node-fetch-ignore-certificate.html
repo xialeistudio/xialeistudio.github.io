@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,14 +157,14 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <p>有时候https的证书验证也是挺烦的，比如自签CA签发的证书，这时候是不受信任的，直接执行https请求会报错。</p>
-<figure class="highlight vim hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">FetchError: request <span class="hljs-keyword">to</span> http<span class="hljs-variable">s:</span>//dm-<span class="hljs-number">81</span>.data.aliyun.<span class="hljs-keyword">com</span>/rest/<span class="hljs-number">160601</span>/ip/getIpInfo.json?ip=<span class="hljs-number">8.8</span>.<span class="hljs-number">8.8</span> failed, reason: unable <span class="hljs-keyword">to</span> verify the <span class="hljs-keyword">first</span> certificate</span><br><span class="line">     at ClientRequest.<span class="hljs-symbol">&lt;anonymous&gt;</span> (node_modules/node-fetch/<span class="hljs-built_in">index</span>.<span class="hljs-keyword">j</span><span class="hljs-variable">s:133</span>:<span class="hljs-number">11</span>)</span><br><span class="line">     at TLSSocket.socketErrorListener (_http_client.<span class="hljs-keyword">j</span><span class="hljs-variable">s:258</span>:<span class="hljs-number">9</span>)</span><br><span class="line">     at emitErrorNT (net.<span class="hljs-keyword">j</span><span class="hljs-variable">s:1256</span>:<span class="hljs-number">8</span>)</span><br></pre></td></tr></table></figure>
+                <html><head></head><body><p>有时候https的证书验证也是挺烦的，比如自签CA签发的证书，这时候是不受信任的，直接执行https请求会报错。</p>
+<figure class="highlight vim hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">FetchError: request <span class="hljs-keyword">to</span> http<span class="hljs-variable">s:</span>//dm-<span class="hljs-number">81</span>.data.aliyun.<span class="hljs-keyword">com</span>/rest/<span class="hljs-number">160601</span>/ip/getIpInfo.json?ip=<span class="hljs-number">8.8</span>.<span class="hljs-number">8.8</span> failed, reason: unable <span class="hljs-keyword">to</span> verify the <span class="hljs-keyword">first</span> certificate</span><br><span class="line">     at ClientRequest.<span class="hljs-symbol">&lt;anonymous&gt;</span> (node_modules/node-fetch/<span class="hljs-built_in">index</span>.<span class="hljs-keyword">j</span><span class="hljs-variable">s:133</span>:<span class="hljs-number">11</span>)</span><br><span class="line">     at TLSSocket.socketErrorListener (_http_client.<span class="hljs-keyword">j</span><span class="hljs-variable">s:258</span>:<span class="hljs-number">9</span>)</span><br><span class="line">     at emitErrorNT (net.<span class="hljs-keyword">j</span><span class="hljs-variable">s:1256</span>:<span class="hljs-number">8</span>)</span><br></pre></td></tr></tbody></table></figure>
 <p>查阅nodejs官方文档发现有 <strong>agent</strong> 属性，<strong>agent</strong>有个可选属性<strong>rejectUnauthorized</strong>，设置为<strong>false</strong>即可取消证书有效性验证。</p>
 <p>本文使用的是<strong>node-fetch</strong>模块执行请求，代码如下</p>
-<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">'use strict'</span>;</span><br><span class="line"><span class="hljs-keyword">const</span> fetch = <span class="hljs-built_in">require</span>(<span class="hljs-string">'node-fetch'</span>);</span><br><span class="line"><span class="hljs-keyword">const</span> https = <span class="hljs-built_in">require</span>(<span class="hljs-string">'https'</span>);</span><br><span class="line"><span class="hljs-keyword">const</span> options = &#123;</span><br><span class="line">  agent:<span class="hljs-keyword">new</span> https.Agent(&#123;<span class="hljs-attr">rejectUnauthorized</span>:<span class="hljs-literal">false</span>&#125;)</span><br><span class="line">&#125;;</span><br><span class="line">fetch(<span class="hljs-string">`https://dm-81.data.aliyun.com/rest/160601/ip/getIpInfo.json?ip=8.8.8.8`</span>, options)</span><br><span class="line">.then(<span class="hljs-built_in">console</span>.log)</span><br><span class="line">.catch(<span class="hljs-built_in">console</span>.error);</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">'use strict'</span>;</span><br><span class="line"><span class="hljs-keyword">const</span> fetch = <span class="hljs-built_in">require</span>(<span class="hljs-string">'node-fetch'</span>);</span><br><span class="line"><span class="hljs-keyword">const</span> https = <span class="hljs-built_in">require</span>(<span class="hljs-string">'https'</span>);</span><br><span class="line"><span class="hljs-keyword">const</span> options = {</span><br><span class="line">  agent:<span class="hljs-keyword">new</span> https.Agent({<span class="hljs-attr">rejectUnauthorized</span>:<span class="hljs-literal">false</span>})</span><br><span class="line">};</span><br><span class="line">fetch(<span class="hljs-string">`https://dm-81.data.aliyun.com/rest/160601/ip/getIpInfo.json?ip=8.8.8.8`</span>, options)</span><br><span class="line">.then(<span class="hljs-built_in">console</span>.log)</span><br><span class="line">.catch(<span class="hljs-built_in">console</span>.error);</span><br></pre></td></tr></tbody></table></figure>
 <p>修改过后就可以成功请求了。</p>
 <p>其他http请求模块类似处理。</p>
-
+</body></html>
             </div>
             
         </div>
@@ -387,7 +387,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

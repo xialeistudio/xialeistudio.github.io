@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,9 +157,9 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <p>本文是NestJs学习之旅的第一篇，简要介绍一下NestJs框架，搭建一个Hello World应用。</p>
+                <html><head></head><body><p>本文是NestJs学习之旅的第一篇，简要介绍一下NestJs框架，搭建一个Hello World应用。</p>
 <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>Nest（或NestJS）是一个用于构建高效，可扩展的Node.js服务器端应用程序的框架。它使用渐进式JavaScript，内置并完全支持TypeScript（但仍然允许开发人员使用纯JavaScript编写代码）并结合了OOP（面向对象编程），FP（功能编程）和FRP（功能反应编程）的元素。</p>
-<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> &#123; Controller, Get &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">'@nestjs/common'</span>;</span><br><span class="line"></span><br><span class="line">@Controller(<span class="hljs-string">'cats'</span>)</span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CatsController</span> </span>&#123;</span><br><span class="line">  @Get()</span><br><span class="line">  findAll(): string &#123;</span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-string">'This action returns all cats'</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> { Controller, Get } <span class="hljs-keyword">from</span> <span class="hljs-string">'@nestjs/common'</span>;</span><br><span class="line"></span><br><span class="line">@Controller(<span class="hljs-string">'cats'</span>)</span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CatsController</span> </span>{</span><br><span class="line">  @Get()</span><br><span class="line">  findAll(): string {</span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-string">'This action returns all cats'</span>;</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>熟悉Java的同学应该有似曾相识的感觉，SpringBoot中大量使用注解来简化开发。现在，使用基于ES6装饰器构建的NestJs框架，你也可以做到!</p>
 <h2 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h2><p>先说说优点吧：</p>
 <ul>
@@ -182,7 +182,7 @@ var _hmt = _hmt || [];
 <li><code>nest new 项目名称</code>初始化项目</li>
 </ol>
 <p>初始化完毕后可以看到一个完整的项目结果，目录如下(忽略node_modules)：</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">├── README.md                       自述文件</span><br><span class="line">├── nest-cli.json                   NestJs项目配置</span><br><span class="line">├── package.json                    npm文件</span><br><span class="line">├── src                             项目源码</span><br><span class="line">│   ├── app.controller.spec.ts      控制器测试文件</span><br><span class="line">│   ├── app.controller.ts           控制器类</span><br><span class="line">│   ├── app.module.ts               模块类</span><br><span class="line">│   ├── app.service.ts              服务类</span><br><span class="line">│   └── main.ts                     项目入口文件</span><br><span class="line">├── test                            测试目录</span><br><span class="line">│   ├── app.e2e-spec.ts             应用e2e测试</span><br><span class="line">│   └── jest-e2e.json               jest e2e测试配置</span><br><span class="line">├── tsconfig.build.json             生产环境Typescript所用</span><br><span class="line">├── tsconfig.json                   开发环境Typescript配置</span><br><span class="line">├── tslint.json                     tslint配置</span><br><span class="line">└── yarn.lock                       yarn锁文件</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">├── README.md                       自述文件</span><br><span class="line">├── nest-cli.json                   NestJs项目配置</span><br><span class="line">├── package.json                    npm文件</span><br><span class="line">├── src                             项目源码</span><br><span class="line">│&nbsp;&nbsp; ├── app.controller.spec.ts      控制器测试文件</span><br><span class="line">│&nbsp;&nbsp; ├── app.controller.ts           控制器类</span><br><span class="line">│&nbsp;&nbsp; ├── app.module.ts               模块类</span><br><span class="line">│&nbsp;&nbsp; ├── app.service.ts              服务类</span><br><span class="line">│&nbsp;&nbsp; └── main.ts                     项目入口文件</span><br><span class="line">├── test                            测试目录</span><br><span class="line">│&nbsp;&nbsp; ├── app.e2e-spec.ts             应用e2e测试</span><br><span class="line">│&nbsp;&nbsp; └── jest-e2e.json               jest e2e测试配置</span><br><span class="line">├── tsconfig.build.json             生产环境Typescript所用</span><br><span class="line">├── tsconfig.json                   开发环境Typescript配置</span><br><span class="line">├── tslint.json                     tslint配置</span><br><span class="line">└── yarn.lock                       yarn锁文件</span><br></pre></td></tr></tbody></table></figure>
 <p>NestJs有几大类文件是主要的是下面几种，其他类型的文件在后续课程会讲解；</p>
 <ul>
 <li>module 模块声明(这是NestJs的一个亮点，有点DDD的思想)</li>
@@ -190,11 +190,11 @@ var _hmt = _hmt || [];
 <li>service 服务(主要业务逻辑)</li>
 </ul>
 <p>使用<code>npm run start</code>来运行项目。终端输出如下:</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[Nest] 2986   - 08/19/2019, 10:29 AM   [NestFactory] Starting Nest application...</span><br><span class="line">[Nest] 2986   - 08/19/2019, 10:29 AM   [InstanceLoader] AppModule dependencies initialized +22ms</span><br><span class="line">[Nest] 2986   - 08/19/2019, 10:29 AM   [RoutesResolver] AppController &#123;/&#125;: +12ms</span><br><span class="line">[Nest] 2986   - 08/19/2019, 10:29 AM   [RouterExplorer] Mapped &#123;/, GET&#125; route +9ms</span><br><span class="line">[Nest] 2986   - 08/19/2019, 10:29 AM   [NestApplication] Nest application successfully started +6ms</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[Nest] 2986   - 08/19/2019, 10:29 AM   [NestFactory] Starting Nest application...</span><br><span class="line">[Nest] 2986   - 08/19/2019, 10:29 AM   [InstanceLoader] AppModule dependencies initialized +22ms</span><br><span class="line">[Nest] 2986   - 08/19/2019, 10:29 AM   [RoutesResolver] AppController {/}: +12ms</span><br><span class="line">[Nest] 2986   - 08/19/2019, 10:29 AM   [RouterExplorer] Mapped {/, GET} route +9ms</span><br><span class="line">[Nest] 2986   - 08/19/2019, 10:29 AM   [NestApplication] Nest application successfully started +6ms</span><br></pre></td></tr></tbody></table></figure>
 <p>一般来说，看到<code>successfully</code>就可以认为启动成功了。启动失败的话可以根据错误提示进行处理，比较多的情况可能是端口占用导致的错误。</p>
 <p>打开浏览器访问<code>http://localhost:3000</code>即可看到输出<code>Hello World!</code>。</p>
 <h2 id="To-Be-Continued"><a href="#To-Be-Continued" class="headerlink" title="To Be Continued"></a>To Be Continued</h2><p>下一期将介绍Controller，欢迎持续关注!</p>
-
+</body></html>
             </div>
             
         </div>
@@ -203,7 +203,7 @@ var _hmt = _hmt || [];
             <div class="level-start">
                 <div class="level-item">
                     <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/nestjs/">nestjs</a>
+                    <a class="has-link-grey -link" href="/tags/nestjs/" rel="tag">nestjs</a>
                 </div>
             </div>
         </div>
@@ -442,7 +442,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

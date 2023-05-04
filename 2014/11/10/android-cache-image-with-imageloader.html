@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,7 +157,7 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <p>缓存和异步是两个极大提升用户体验的好东西，android加载图片时的开销还是挺大的，要是不做缓存同步加载，网速不给力的情况下，等个十几秒是有可能的。</p>
+                <html><head></head><body><p>缓存和异步是两个极大提升用户体验的好东西，android加载图片时的开销还是挺大的，要是不做缓存同步加载，网速不给力的情况下，等个十几秒是有可能的。</p>
 <p>今天要说的是一个叫做ImageLoader的库</p>
 <p>GITHUB:<a href="https://github.com/nostra13/Android-Universal-Image-Loader" target="_blank" rel="noopener">https://github.com/nostra13/Android-Universal-Image-Loader</a></p>
 <p>使用这个库有以下几步：</p>
@@ -166,14 +166,14 @@ var _hmt = _hmt || [];
 <li>声明自己的MyApplication类（继承Application）</li>
 <li>在onCreate()方法中</li>
 </ul>
-<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onCreate</span><span class="hljs-params">()</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">super</span>.onCreate();</span><br><span class="line">        DisplayImageOptions options = <span class="hljs-keyword">new</span> DisplayImageOptions.Builder()  </span><br><span class="line">        .cacheInMemory()  <span class="hljs-comment">//缓存在内存中</span></span><br><span class="line">        .cacheOnDisc()  <span class="hljs-comment">//磁盘缓存</span></span><br><span class="line">        .build();  </span><br><span class="line">        ImageLoaderConfiguration config2 = <span class="hljs-keyword">new</span> ImageLoaderConfiguration.Builder(<span class="hljs-keyword">this</span>)</span><br><span class="line">        .defaultDisplayImageOptions(options)</span><br><span class="line">          .threadPriority(Thread.NORM_PRIORITY - <span class="hljs-number">2</span>)</span><br><span class="line">          .denyCacheImageMultipleSizesInMemory()</span><br><span class="line">          .discCacheFileNameGenerator(<span class="hljs-keyword">new</span> Md5FileNameGenerator())</span><br><span class="line">          .tasksProcessingOrder(QueueProcessingType.LIFO)</span><br><span class="line">          .build();</span><br><span class="line">        ImageLoader.getInstance().init(config2);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onCreate</span><span class="hljs-params">()</span> </span>{</span><br><span class="line">        <span class="hljs-keyword">super</span>.onCreate();</span><br><span class="line">        DisplayImageOptions options = <span class="hljs-keyword">new</span> DisplayImageOptions.Builder()  </span><br><span class="line">        .cacheInMemory()  <span class="hljs-comment">//缓存在内存中</span></span><br><span class="line">        .cacheOnDisc()  <span class="hljs-comment">//磁盘缓存</span></span><br><span class="line">        .build();  </span><br><span class="line">        ImageLoaderConfiguration config2 = <span class="hljs-keyword">new</span> ImageLoaderConfiguration.Builder(<span class="hljs-keyword">this</span>)</span><br><span class="line">        .defaultDisplayImageOptions(options)</span><br><span class="line">          .threadPriority(Thread.NORM_PRIORITY - <span class="hljs-number">2</span>)</span><br><span class="line">          .denyCacheImageMultipleSizesInMemory()</span><br><span class="line">          .discCacheFileNameGenerator(<span class="hljs-keyword">new</span> Md5FileNameGenerator())</span><br><span class="line">          .tasksProcessingOrder(QueueProcessingType.LIFO)</span><br><span class="line">          .build();</span><br><span class="line">        ImageLoader.getInstance().init(config2);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <ul>
 <li>在要加载图片的地方使用</li>
 </ul>
-<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">DisplayImageOptions options = <span class="hljs-keyword">new</span> DisplayImageOptions.Builder()</span><br><span class="line">				.cacheInMemory() <span class="hljs-comment">// 缓存用</span></span><br><span class="line">				.cacheOnDisc()</span><br><span class="line">				.bitmapConfig(Bitmap.Config.RGB_565)<span class="hljs-comment">//防止溢出</span></span><br><span class="line">				.displayer(<span class="hljs-keyword">new</span> RoundedBitmapDisplayer(<span class="hljs-number">139</span>)) <span class="hljs-comment">// 图片圆角显示，值为整数</span></span><br><span class="line">				.build();</span><br><span class="line">ImageLoader.getInstance().displayImage(url, avatar, options);</span><br></pre></td></tr></table></figure>
+<figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">DisplayImageOptions options = <span class="hljs-keyword">new</span> DisplayImageOptions.Builder()</span><br><span class="line">				.cacheInMemory() <span class="hljs-comment">// 缓存用</span></span><br><span class="line">				.cacheOnDisc()</span><br><span class="line">				.bitmapConfig(Bitmap.Config.RGB_565)<span class="hljs-comment">//防止溢出</span></span><br><span class="line">				.displayer(<span class="hljs-keyword">new</span> RoundedBitmapDisplayer(<span class="hljs-number">139</span>)) <span class="hljs-comment">// 图片圆角显示，值为整数</span></span><br><span class="line">				.build();</span><br><span class="line">ImageLoader.getInstance().displayImage(url, avatar, options);</span><br></pre></td></tr></tbody></table></figure>
 <p>其中 url 是图片URL地址，avatar为ImageView,options为动态配置，这里加了一个防止溢出的参数。</p>
 <p>好了，使用起来是不是很简单呢~我们压根不用操心异步和缓存的问题了</p>
-
+</body></html>
             </div>
             
         </div>
@@ -396,7 +396,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,14 +157,14 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <p>golang默认编码JSON时会将HTML标签中的尖括号编码为<code>\u003c</code>这种unicode字符。而最近在开发的微信客服消息推送就会出现以下结果</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\u003ca href=&apos;https://www.example.com&apos;\u003e点击进入\u003c/a\u003e</span><br></pre></td></tr></table></figure>
+                <html><head></head><body><p>golang默认编码JSON时会将HTML标签中的尖括号编码为<code>\u003c</code>这种unicode字符。而最近在开发的微信客服消息推送就会出现以下结果</p>
+<figure class="highlight plain hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\u003ca href='https://www.example.com'\u003e点击进入\u003c/a\u003e</span><br></pre></td></tr></tbody></table></figure>
 <p>查看golang的json包发现json编码器有个方法<code>SetEscapeHTML</code>方法，接收一个bool值来设置是否保留HTML标签。</p>
 <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>json的Encoder只能编码到实现了<code>io.Writer</code>接口的对象中去，而本例中需要编码到一个<code>[]byte</code>切片中。</p>
 <h2 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h2><p>查找资料发现<code>bytes.Buffer</code>对象实现了<code>io.Writer</code>接口。所以最终代码如下：</p>
-<figure class="highlight golang hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">BuildJson</span><span class="hljs-params">(data <span class="hljs-keyword">map</span>[<span class="hljs-keyword">string</span>]<span class="hljs-keyword">interface</span>&#123;&#125;)</span> <span class="hljs-params">([]<span class="hljs-keyword">byte</span>, error)</span></span> &#123;</span><br><span class="line">    buf := bytes.NewBufferString(<span class="hljs-string">""</span>)</span><br><span class="line">    encoder := json.NewEncoder(buf)</span><br><span class="line">	encoder.SetEscapeHTML(<span class="hljs-literal">false</span>)</span><br><span class="line">	<span class="hljs-keyword">if</span> err := encoder.Encode(&amp;data); err != <span class="hljs-literal">nil</span> &#123;</span><br><span class="line">		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, err</span><br><span class="line">	&#125; <span class="hljs-keyword">else</span> &#123;</span><br><span class="line">		<span class="hljs-keyword">return</span> buf.Bytes(), <span class="hljs-literal">nil</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight golang hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">BuildJson</span><span class="hljs-params">(data <span class="hljs-keyword">map</span>[<span class="hljs-keyword">string</span>]<span class="hljs-keyword">interface</span>{})</span> <span class="hljs-params">([]<span class="hljs-keyword">byte</span>, error)</span></span> {</span><br><span class="line">    buf := bytes.NewBufferString(<span class="hljs-string">""</span>)</span><br><span class="line">    encoder := json.NewEncoder(buf)</span><br><span class="line">	encoder.SetEscapeHTML(<span class="hljs-literal">false</span>)</span><br><span class="line">	<span class="hljs-keyword">if</span> err := encoder.Encode(&amp;data); err != <span class="hljs-literal">nil</span> {</span><br><span class="line">		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, err</span><br><span class="line">	} <span class="hljs-keyword">else</span> {</span><br><span class="line">		<span class="hljs-keyword">return</span> buf.Bytes(), <span class="hljs-literal">nil</span></span><br><span class="line">	}</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>经过测试，输出接口符合要求。</p>
-
+</body></html>
             </div>
             
         </div>
@@ -395,7 +395,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

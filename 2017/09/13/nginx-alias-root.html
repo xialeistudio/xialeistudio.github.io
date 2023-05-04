@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,11 +157,9 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <p>Nginx的root指令相信大家用的都挺多，用来指定document_root，但是如果是针对特定path的请求才启用的话，root指令显得不好用<br><figure class="highlight crmsh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">location</span> <span class="hljs-title">/web</span> &#123;</span><br><span class="line">    root /home/wwwroot/site1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>访问 <em><a href="http://demo.com/web/a.js" target="_blank" rel="noopener">http://demo.com/web/a.js</a></em>的时候,nginx会去查找<em>/home/wwwroot/site1/web/a.js</em>，一般就会404了。因为文件是放在site1目录下的。<br>这时候就需要alias指令了。<br><figure class="highlight awk hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location <span class="hljs-regexp">/web/</span>&#123;</span><br><span class="line">    alias <span class="hljs-regexp">/home/</span>wwwroot<span class="hljs-regexp">/site1/</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>访问 <em><a href="http://demo.com/web/a.js" target="_blank" rel="noopener">http://demo.com/web/a.js</a></em>的时候,nginx会去查找<em>/home/wwwroot/site1/a.js</em>。</p>
+                <html><head></head><body><p>Nginx的root指令相信大家用的都挺多，用来指定document_root，但是如果是针对特定path的请求才启用的话，root指令显得不好用<br></p><figure class="highlight crmsh hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">location</span> <span class="hljs-title">/web</span> {</span><br><span class="line">    root /home/wwwroot/site1;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><br>访问 <em><a href="http://demo.com/web/a.js" target="_blank" rel="noopener">http://demo.com/web/a.js</a></em>的时候,nginx会去查找<em>/home/wwwroot/site1/web/a.js</em>，一般就会404了。因为文件是放在site1目录下的。<br>这时候就需要alias指令了。<br><figure class="highlight awk hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location <span class="hljs-regexp">/web/</span>{</span><br><span class="line">    alias <span class="hljs-regexp">/home/</span>wwwroot<span class="hljs-regexp">/site1/</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><br>访问 <em><a href="http://demo.com/web/a.js" target="_blank" rel="noopener">http://demo.com/web/a.js</a></em>的时候,nginx会去查找<em>/home/wwwroot/site1/a.js</em>。<p></p>
 <p>注意 alias location末尾斜杠以及alias的末尾斜杠</p>
-
+</body></html>
             </div>
             
         </div>
@@ -384,7 +382,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

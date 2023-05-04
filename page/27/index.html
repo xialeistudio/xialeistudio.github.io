@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -159,7 +159,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>最近做的一个项目的HTTP模块使用了loopj的asynchttpclient (<a href="https://github.com/loopj/android-async-http" target="_blank" rel="noopener">https://github.com/loopj/android-async-http</a>）。</p>
+                <html><head></head><body><p>最近做的一个项目的HTTP模块使用了loopj的asynchttpclient (<a href="https://github.com/loopj/android-async-http" target="_blank" rel="noopener">https://github.com/loopj/android-async-http</a>）。</p>
 <p>自动更新模块总是出现sockettimeout的exception,查来查去也不知道什么问题，为此还换了asynchttpclient的库版本。但是问题也没解决。</p>
 <p>仔细看了一下，提示的是timeout，应该从这方面去看看，后面看到自己的HTTP工具类设置了全局超时时间为5000ms,普通请求当然没这么久，但是自动更新是下载，肯定不止5秒的，删掉超时设置就可以了。</p>
 
@@ -212,8 +212,8 @@ var _hmt = _hmt || [];
             
                 
                 
-                <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>最近写安卓的时候服务端返回的数据会带上“\n”，但是在android这边不能换行，初次想到的解决方法是利用</p>
-<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String.replace(<span class="hljs-string">"\n"</span>,<span class="hljs-string">"\n"</span>)</span><br></pre></td></tr></table></figure>
+                <html><head></head><body><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>最近写安卓的时候服务端返回的数据会带上“\n”，但是在android这边不能换行，初次想到的解决方法是利用</p>
+<figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String.replace(<span class="hljs-string">"\n"</span>,<span class="hljs-string">"\n"</span>)</span><br></pre></td></tr></tbody></table></figure>
 <p>给替换掉，结果是不行的。之前记得java的反斜杠是需要转义的，就用</p>
 
                 
@@ -313,9 +313,9 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>上午有热心的网友给我反映说评论功能出bug了，初步查看是七牛出了问题，利用chrome的开发者工具可以查看请求。<br><img src="https://og5r5kasb.qnssl.com/wp-content/uploads/2014/11/blob3.png" alt="示意图"><br>PS：这张图是今天截的，所以域名是正常的，昨天实际上请求的是 static.ddhigh.com (本站的CDN域名)。<br>查看HTTP请求发现整站就请求了一个jquery文件，但是这个文件比较大有140K，查看源代码发现评论的代码已经合并在里面了。<br><img src="https://og5r5kasb.qnssl.com/wp-content/uploads/2014/11/blob4.png" alt="示意图"><br>按照以上步骤可以查看到评论时执行的脚本，当然这里的域名已经修复了。</p>
+                <html><head></head><body><p>上午有热心的网友给我反映说评论功能出bug了，初步查看是七牛出了问题，利用chrome的开发者工具可以查看请求。<br><img src="https://og5r5kasb.qnssl.com/wp-content/uploads/2014/11/blob3.png" alt="示意图"><br>PS：这张图是今天截的，所以域名是正常的，昨天实际上请求的是 static.ddhigh.com (本站的CDN域名)。<br>查看HTTP请求发现整站就请求了一个jquery文件，但是这个文件比较大有140K，查看源代码发现评论的代码已经合并在里面了。<br><img src="https://og5r5kasb.qnssl.com/wp-content/uploads/2014/11/blob4.png" alt="示意图"><br>按照以上步骤可以查看到评论时执行的脚本，当然这里的域名已经修复了。</p>
 <p>278行，昨天的是 </p>
-<figure class="highlight avrasm hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-symbol">url:</span>window._deel.url+<span class="hljs-string">"/ajax/comment.php"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight reasonml hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">url:window.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">_deel</span>.</span></span>url+<span class="hljs-string">"/ajax/comment.php"</span></span><br></pre></td></tr></tbody></table></figure>
 
                 
             
@@ -366,9 +366,9 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>今天遇到了一个奇葩的问题UCenter后台通知列表空白并且500，通过xdebug调试发现是<strong>uc_server/control/admin/note.php 第68行代码有问题!</strong>IDE都报错了</p>
-<h2 id="原代码"><a href="#原代码" class="headerlink" title="原代码"></a>原代码</h2><figure class="highlight php hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">$this</span>-&gt;_format_notlist(&amp;$notelist);</span><br></pre></td></tr></table></figure>
-<h2 id="修正代码"><a href="#修正代码" class="headerlink" title="修正代码"></a>修正代码</h2><figure class="highlight php hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">$this</span>-&gt;_format_notlist($notelist);</span><br></pre></td></tr></table></figure>
+                <html><head></head><body><p>今天遇到了一个奇葩的问题UCenter后台通知列表空白并且500，通过xdebug调试发现是<strong>uc_server/control/admin/note.php 第68行代码有问题!</strong>IDE都报错了</p>
+<h2 id="原代码"><a href="#原代码" class="headerlink" title="原代码"></a>原代码</h2><figure class="highlight php hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">$this</span>-&gt;_format_notlist(&amp;$notelist);</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="修正代码"><a href="#修正代码" class="headerlink" title="修正代码"></a>修正代码</h2><figure class="highlight php hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">$this</span>-&gt;_format_notlist($notelist);</span><br></pre></td></tr></tbody></table></figure>
 
                 
             
@@ -419,8 +419,8 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>采用location的html5Mode之后，链接是正常的，但是刷新的时候会404，此时就需要后端服务器配置URL重写了。</p>
-<h2 id="nginx-配置"><a href="#nginx-配置" class="headerlink" title="nginx 配置"></a>nginx 配置</h2><figure class="highlight nginx hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-attribute">location</span> / &#123;</span><br><span class="line">  <span class="hljs-attribute">try_files</span> <span class="hljs-variable">$uri</span> <span class="hljs-variable">$uri</span>/ /index.html<span class="hljs-variable">$is_args</span><span class="hljs-variable">$args</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+                <html><head></head><body><p>采用location的html5Mode之后，链接是正常的，但是刷新的时候会404，此时就需要后端服务器配置URL重写了。</p>
+<h2 id="nginx-配置"><a href="#nginx-配置" class="headerlink" title="nginx 配置"></a>nginx 配置</h2><figure class="highlight nginx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-attribute">location</span> / {</span><br><span class="line">  <span class="hljs-attribute">try_files</span> <span class="hljs-variable">$uri</span> <span class="hljs-variable">$uri</span>/ /index.html<span class="hljs-variable">$is_args</span><span class="hljs-variable">$args</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>这样子就可以将所有不是文件夹且不是文件的请求转发到index.html。</p>
 
                 
@@ -472,9 +472,9 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>HTML5确实很好用，但是国内IE7和IE8的用户还是挺多的（或许是XP的缘故）。这些浏览器不识别HTML5的新属性以及&lt;!doctype html&gt;，导致页面渲染进入“怪异”模式，简直就是“不堪入目”。<br>不过，还好，开源的力量是强大的，有热心的开发者写了一套JS库来兼容IE7,IE8。本文就简单教大家用下这款JS库。</p>
+                <html><head></head><body><p>HTML5确实很好用，但是国内IE7和IE8的用户还是挺多的（或许是XP的缘故）。这些浏览器不识别HTML5的新属性以及&lt;!doctype html&gt;，导致页面渲染进入“怪异”模式，简直就是“不堪入目”。<br>不过，还好，开源的力量是强大的，有热心的开发者写了一套JS库来兼容IE7,IE8。本文就简单教大家用下这款JS库。</p>
 <p>1.<a href="https://og5r5kasb.qnssl.com/wp-content/uploads/2014/10/data.zip" target="_blank" rel="noopener">下载</a><br>2.解压之后得到html5shiv.js<br>3.开发模板</p>
-<figure class="highlight html hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">"utf-8"</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">http-equiv</span>=<span class="hljs-string">"X-UA-Compatible"</span> <span class="hljs-attr">content</span>=<span class="hljs-string">"IE=edge"</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"viewport"</span> <span class="hljs-attr">content</span>=<span class="hljs-string">"width=device-width, initial-scale=1"</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Template<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span></span><br><span class="line">    <span class="hljs-comment">&lt;!--[if lt IE 9]&gt;</span></span><br><span class="line"><span class="hljs-comment">    &lt;script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"&gt;&lt;/script&gt;</span></span><br><span class="line"><span class="hljs-comment">    &lt;script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"&gt;&lt;/script&gt;</span></span><br><span class="line"><span class="hljs-comment">    &lt;![endif]--&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>你好，世界！<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">"utf-8"</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">http-equiv</span>=<span class="hljs-string">"X-UA-Compatible"</span> <span class="hljs-attr">content</span>=<span class="hljs-string">"IE=edge"</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"viewport"</span> <span class="hljs-attr">content</span>=<span class="hljs-string">"width=device-width, initial-scale=1"</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Template<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span></span><br><span class="line">    <span class="hljs-comment">&lt;!--[if lt IE 9]&gt;</span></span><br><span class="line"><span class="hljs-comment">    &lt;script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"&gt;&lt;/script&gt;</span></span><br><span class="line"><span class="hljs-comment">    &lt;script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"&gt;&lt;/script&gt;</span></span><br><span class="line"><span class="hljs-comment">    &lt;![endif]--&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>你好，世界！<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
 
                 
             
@@ -525,7 +525,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>今天在做数据导出的时候遇到个麻烦事情，SQL查询是有数据的，但是写入excel的时候为空的。</p>
+                <html><head></head><body><p>今天在做数据导出的时候遇到个麻烦事情，SQL查询是有数据的，但是写入excel的时候为空的。</p>
 <p>输出异常是有一行遇到错误了。将那一行数据打印出来发现字段中有个 = 号，excel中有 = 会将后面的当作表达式计算，所以导致错误。</p>
 <p>解决方式是在 = 前面加上单引号 ‘= 就可以了</p>
 
@@ -626,7 +626,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>Linux启动服务时如果遇到端口占用问题时，一般有以下两种解决方案：</p>
+                <html><head></head><body><p>Linux启动服务时如果遇到端口占用问题时，一般有以下两种解决方案：</p>
 <ol>
 <li>新启动的服务更改端口号启动</li>
 
@@ -973,7 +973,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

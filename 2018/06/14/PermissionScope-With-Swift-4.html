@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,16 +157,16 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <p><a href="https://github.com/nickoneill/PermissionScope" target="_blank" rel="noopener">PermissionScope</a>是iOS非常好用的权限处理库，界面效果也非常精美。不幸的是作者已经停止维护。</p>
+                <html><head></head><body><p><a href="https://github.com/nickoneill/PermissionScope" target="_blank" rel="noopener">PermissionScope</a>是iOS非常好用的权限处理库，界面效果也非常精美。不幸的是作者已经停止维护。</p>
 <blockquote>
 <p>PermissionScope is no longer supported. Please use an alternative if you need updates for newer iOS 10 and 11 APIs!</p>
 </blockquote>
 <h2 id="问题的来源"><a href="#问题的来源" class="headerlink" title="问题的来源"></a>问题的来源</h2><p>因为作者是基于Swift3开发的，而4.0的<code>@selector</code>语法有一点调整，所以是不能通过编译的，处理办法是根据Xcode的提示一个个修正。</p>
 <p>可是事情真的这么简单吗？Xcode处理过后虽然编译通过了，但是会触发运行时错误。错误内容大致是<code>调用了不存在的方法</code>。</p>
 <h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>由于我们根据Xcode的提示给相关代码加了<code>@objc</code>，但是有些方法是没有加的，而这些方法类似下面的代码：</p>
-<figure class="highlight swift hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">requestCamera</span><span class="hljs-params">()</span></span> &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight swift hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">requestCamera</span><span class="hljs-params">()</span></span> {</span><br><span class="line"></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>由于没有<code>@objc</code>修饰，<code>@selector</code>指令找不到方法，所以就报错了。解决方案如下：</p>
-<figure class="highlight swift hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">@objc</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">requestCamera</span><span class="hljs-params">()</span></span> &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight swift hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">@objc</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">requestCamera</span><span class="hljs-params">()</span></span> {</span><br><span class="line"></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure></body></html>
             </div>
             
         </div>
@@ -175,7 +175,7 @@ var _hmt = _hmt || [];
             <div class="level-start">
                 <div class="level-item">
                     <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/swift/">swift</a>
+                    <a class="has-link-grey -link" href="/tags/swift/" rel="tag">swift</a>
                 </div>
             </div>
         </div>
@@ -406,7 +406,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

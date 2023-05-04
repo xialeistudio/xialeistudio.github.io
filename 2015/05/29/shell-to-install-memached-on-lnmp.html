@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,11 +157,11 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <p>通过LNMP安装脚本安装的PHP环境默认是不带Memcached支持的（是memcached不是memcache），百度一下memcached的安装方法，发现基本都是memcache的，其实这是两个不同的东西。</p>
+                <html><head></head><body><p>通过LNMP安装脚本安装的PHP环境默认是不带Memcached支持的（是memcached不是memcache），百度一下memcached的安装方法，发现基本都是memcache的，其实这是两个不同的东西。</p>
 <p>而memcached是pecl的项目，所以需要到pecl网站上去下载最新的memcached安装包。</p>
 <p>为了方便多台服务器的安装，本人整理成了一个sh脚本进行安装，当然,php-config路径和phpize路径需要改下（如果使用LNMP脚本安装的话则不用改）</p>
-<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">#!/bin/bash</span></span><br><span class="line">wget https://launchpad.net/libmemcached/1.0/0.53/+download/libmemcached-0.53.tar.gz</span><br><span class="line">tar xvfz libmemcached-0.53.tar.gz</span><br><span class="line"><span class="hljs-built_in">cd</span> libmemcached-0.53</span><br><span class="line">./configure --prefix=/usr/<span class="hljs-built_in">local</span>/libmemcached --<span class="hljs-built_in">enable</span>-sasl</span><br><span class="line">make &amp;&amp; make install</span><br><span class="line">wget http://pecl.php.net/get/memcached-2.0.0.tgz</span><br><span class="line">tar zvxf memcached-2.0.0.tgz</span><br><span class="line"><span class="hljs-built_in">cd</span> memcached-2.0.0/</span><br><span class="line">phpize</span><br><span class="line">./configure --<span class="hljs-built_in">enable</span>-memcached --with-php-config=/usr/<span class="hljs-built_in">local</span>/php/bin/php-config --with-libmemcached-dir=/usr/<span class="hljs-built_in">local</span>/libmemcached --<span class="hljs-built_in">enable</span>-memcached-sasl</span><br><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">#!/bin/bash</span></span><br><span class="line">wget https://launchpad.net/libmemcached/1.0/0.53/+download/libmemcached-0.53.tar.gz</span><br><span class="line">tar xvfz libmemcached-0.53.tar.gz</span><br><span class="line"><span class="hljs-built_in">cd</span> libmemcached-0.53</span><br><span class="line">./configure --prefix=/usr/<span class="hljs-built_in">local</span>/libmemcached --<span class="hljs-built_in">enable</span>-sasl</span><br><span class="line">make &amp;&amp; make install</span><br><span class="line">wget http://pecl.php.net/get/memcached-2.0.0.tgz</span><br><span class="line">tar zvxf memcached-2.0.0.tgz</span><br><span class="line"><span class="hljs-built_in">cd</span> memcached-2.0.0/</span><br><span class="line">phpize</span><br><span class="line">./configure --<span class="hljs-built_in">enable</span>-memcached --with-php-config=/usr/<span class="hljs-built_in">local</span>/php/bin/php-config --with-libmemcached-dir=/usr/<span class="hljs-built_in">local</span>/libmemcached --<span class="hljs-built_in">enable</span>-memcached-sasl</span><br><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></tbody></table></figure>
+</body></html>
             </div>
             
         </div>
@@ -384,7 +384,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

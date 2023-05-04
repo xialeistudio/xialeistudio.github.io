@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,12 +157,12 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <p>PC浏览器的话由于有blur和focus事件，可以在失去焦点时进行一次验证，但是移动端有点麻烦，点击其他地方才可以，这种的话体验不是很好。<br>利用input事件可以解决这个问题。</p>
-<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="hljs-built_in">document</span>).on(<span class="hljs-string">'input'</span>,<span class="hljs-string">'#username'</span>,<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>&#123;</span><br><span class="line">    <span class="hljs-comment">//验证逻辑</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+                <html><head></head><body><p>PC浏览器的话由于有blur和focus事件，可以在失去焦点时进行一次验证，但是移动端有点麻烦，点击其他地方才可以，这种的话体验不是很好。<br>利用input事件可以解决这个问题。</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="hljs-built_in">document</span>).on(<span class="hljs-string">'input'</span>,<span class="hljs-string">'#username'</span>,<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{</span><br><span class="line">    <span class="hljs-comment">//验证逻辑</span></span><br><span class="line">});</span><br></pre></td></tr></tbody></table></figure>
 <p>测试之后问题确实来了，每输入一个字符就会触发，浪费很多网络请求，接下来使用一个定时器的技术来进行处理。</p>
-<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">var</span> timer;</span><br><span class="line">$(<span class="hljs-built_in">document</span>).on(<span class="hljs-string">'input'</span>,<span class="hljs-string">'#username'</span>,<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>&#123;</span><br><span class="line">    timer &amp;&amp; clearTimeout(timer);</span><br><span class="line">    timer = setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>&#123;</span><br><span class="line">   </span><br><span class="line">    <span class="hljs-comment">//验证逻辑</span></span><br><span class="line">    &#125;,<span class="hljs-number">500</span>);<span class="hljs-comment">//延时0.5s触发</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">var</span> timer;</span><br><span class="line">$(<span class="hljs-built_in">document</span>).on(<span class="hljs-string">'input'</span>,<span class="hljs-string">'#username'</span>,<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{</span><br><span class="line">    timer &amp;&amp; clearTimeout(timer);</span><br><span class="line">    timer = setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{</span><br><span class="line">   </span><br><span class="line">    <span class="hljs-comment">//验证逻辑</span></span><br><span class="line">    },<span class="hljs-number">500</span>);<span class="hljs-comment">//延时0.5s触发</span></span><br><span class="line">});</span><br></pre></td></tr></tbody></table></figure>
 <p>采用这种定时器技术可以在请求次数和用户体验之间取得平衡，很多地方都可以使用这种技术来实现。</p>
-
+</body></html>
             </div>
             
         </div>
@@ -385,7 +385,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

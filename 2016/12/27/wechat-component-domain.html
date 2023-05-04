@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,10 +157,10 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <p>先来看一下微信官方定义:</p>
+                <html><head></head><body><p>先来看一下微信官方定义:</p>
 <p><em>第三方平台在代公众号做网页授权、调用JS SDK等网页开发工作时所用的域名，可填写3个，以;隔开。为了满足开发者管理需要，符合以下要求的下级域名也将生效：$APPID$.wx.abc.com（$APPID$为公众号的AppID的替换符）</em></p>
 <p>只能说微信文档这个 <strong>wx.abc.com</strong>误导了我好久，试过的域名是<strong>APPID.wx.abc.com</strong>，死活不行，后来发现公司域名整个就是用<strong>wx.abc.com</strong>替换，不是<strong>abc.com</strong>，所以最终进行授权的域名域名是(假设appid为<strong>testappid</strong>，填写的网页开发域名为<strong>example.com</strong>):<strong>testappid.example.com</strong>，可以根据这个做泛域名解析。</p>
-
+</body></html>
             </div>
             
         </div>
@@ -383,7 +383,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

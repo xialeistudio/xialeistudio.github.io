@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,16 +157,16 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>七牛云存储也使用了这么久了。一直一来都只用了它的图片上传和处理功能。用的是客户端直传API，七牛给我返回一个key（一串随机的hash值，对人类无可读性）。</p>
+                <html><head></head><body><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>七牛云存储也使用了这么久了。一直一来都只用了它的图片上传和处理功能。用的是客户端直传API，七牛给我返回一个key（一串随机的hash值，对人类无可读性）。</p>
 <p>最近做的一个文件共享的项目，因为文件是客户端直传七牛的，那么我在后台PHP这边是拿不到原始文件名的，但是文件列表必须显示原始文件名，不能显示那个hash值。后来查找文件发现，七牛可以自定义返回的变量。</p>
-<h2 id="关键代码"><a href="#关键代码" class="headerlink" title="关键代码"></a>关键代码</h2><figure class="highlight php hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">&lt;?php</span></span><br><span class="line">Qiniu_SetKeys(<span class="hljs-keyword">$this</span>-&gt;accessKey, <span class="hljs-keyword">$this</span>-&gt;secretKey);</span><br><span class="line">$putPolicy = <span class="hljs-keyword">new</span> Qiniu_RS_PutPolicy(<span class="hljs-keyword">$this</span>-&gt;bucket);</span><br><span class="line">$putPolicy-&gt;Expires = $expires;</span><br><span class="line">$putPolicy-&gt;SaveKey = $filename;</span><br><span class="line">$putPolicy-&gt;FsizeLimit = <span class="hljs-number">20</span>*<span class="hljs-number">1024</span>*<span class="hljs-number">1024</span>;</span><br><span class="line"><span class="hljs-keyword">if</span>($returnUrl != <span class="hljs-string">''</span>)</span><br><span class="line">	putPolicy-&gt;ReturnUrl = $returnUrl;</span><br><span class="line">$upToken = $putPolicy-&gt;Token(<span class="hljs-keyword">null</span>);</span><br><span class="line"><span class="hljs-keyword">return</span> $upToken;</span><br></pre></td></tr></table></figure>
+<h2 id="关键代码"><a href="#关键代码" class="headerlink" title="关键代码"></a>关键代码</h2><figure class="highlight php hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">&lt;?php</span></span><br><span class="line">Qiniu_SetKeys(<span class="hljs-keyword">$this</span>-&gt;accessKey, <span class="hljs-keyword">$this</span>-&gt;secretKey);</span><br><span class="line">$putPolicy = <span class="hljs-keyword">new</span> Qiniu_RS_PutPolicy(<span class="hljs-keyword">$this</span>-&gt;bucket);</span><br><span class="line">$putPolicy-&gt;Expires = $expires;</span><br><span class="line">$putPolicy-&gt;SaveKey = $filename;</span><br><span class="line">$putPolicy-&gt;FsizeLimit = <span class="hljs-number">20</span>*<span class="hljs-number">1024</span>*<span class="hljs-number">1024</span>;</span><br><span class="line"><span class="hljs-keyword">if</span>($returnUrl != <span class="hljs-string">''</span>)</span><br><span class="line">	putPolicy-&gt;ReturnUrl = $returnUrl;</span><br><span class="line">$upToken = $putPolicy-&gt;Token(<span class="hljs-keyword">null</span>);</span><br><span class="line"><span class="hljs-keyword">return</span> $upToken;</span><br></pre></td></tr></tbody></table></figure>
 <p>通过对 $filename参数进行定制</p>
-<figure class="highlight php hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$filename = <span class="hljs-string">'$(fsize)/$(fname)'</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight php hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$filename = <span class="hljs-string">'$(fsize)/$(fname)'</span></span><br></pre></td></tr></tbody></table></figure>
 <p>这样子七牛返回的hash应该是</p>
-<figure class="highlight awk hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a3466b7fa159ab4f671bdc4ae45dae08<span class="hljs-regexp">/103/</span>稿件共享.txt</span><br></pre></td></tr></table></figure>
+<figure class="highlight angelscript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a3466b7fa159ab4f671bdc4ae45dae08/<span class="hljs-number">103</span>/稿件共享.txt</span><br></pre></td></tr></tbody></table></figure>
 <p>通过 explode 函数就可以拿到文件名了。</p>
 <h2 id="题外话"><a href="#题外话" class="headerlink" title="题外话"></a>题外话</h2><p>七牛还有很多自定义参数有待各位挖掘，这里只做个抛砖引玉的作用。</p>
-
+</body></html>
             </div>
             
         </div>
@@ -401,7 +401,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

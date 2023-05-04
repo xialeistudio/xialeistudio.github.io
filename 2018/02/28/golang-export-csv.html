@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,7 +157,7 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <p>最近在做一个导出功能，最初是使用<a href="https://github.com/tealeg/xlsx" target="_blank" rel="noopener">https://github.com/tealeg/xlsx</a>做的，但是发现导出有个30W行的excel时，这玩意内存彪到700M+，后来发现只是导出数据为表格，并没有其他东西，于是打算使用CSV导出。</p>
+                <html><head></head><body><p>最近在做一个导出功能，最初是使用<a href="https://github.com/tealeg/xlsx" target="_blank" rel="noopener">https://github.com/tealeg/xlsx</a>做的，但是发现导出有个30W行的excel时，这玩意内存彪到700M+，后来发现只是导出数据为表格，并没有其他东西，于是打算使用CSV导出。</p>
 <h2 id="CSV格式简介"><a href="#CSV格式简介" class="headerlink" title="CSV格式简介"></a>CSV格式简介</h2><p>CSV本质上是个文本文件，该文件有以下要求：</p>
 <ol>
 <li>列之间用逗号分隔，行之间用换行分隔</li>
@@ -166,14 +166,14 @@ var _hmt = _hmt || [];
 </ol>
 <h2 id="golang实现"><a href="#golang实现" class="headerlink" title="golang实现"></a>golang实现</h2><ol>
 <li><p>UTF8转GBK函数(需要 <code>go get golang.org/x/text/</code>)</p>
- <figure class="highlight go hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">UTF82GBK</span><span class="hljs-params">(src <span class="hljs-keyword">string</span>)</span> <span class="hljs-params">(<span class="hljs-keyword">string</span>, error)</span></span> &#123;</span><br><span class="line"> reader := transform.NewReader(strings.NewReader(src), simplifiedchinese.GBK.NewEncoder())</span><br><span class="line"> <span class="hljs-keyword">if</span> buf, err := ioutil.ReadAll(reader); err != <span class="hljs-literal">nil</span> &#123;</span><br><span class="line">  <span class="hljs-keyword">return</span> <span class="hljs-string">""</span>, err</span><br><span class="line"> &#125; <span class="hljs-keyword">else</span> &#123;</span><br><span class="line">  <span class="hljs-keyword">return</span> <span class="hljs-keyword">string</span>(buf), <span class="hljs-literal">nil</span></span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+ <figure class="highlight go hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">UTF82GBK</span><span class="hljs-params">(src <span class="hljs-keyword">string</span>)</span> <span class="hljs-params">(<span class="hljs-keyword">string</span>, error)</span></span> {</span><br><span class="line"> reader := transform.NewReader(strings.NewReader(src), simplifiedchinese.GBK.NewEncoder())</span><br><span class="line"> <span class="hljs-keyword">if</span> buf, err := ioutil.ReadAll(reader); err != <span class="hljs-literal">nil</span> {</span><br><span class="line">  <span class="hljs-keyword">return</span> <span class="hljs-string">""</span>, err</span><br><span class="line"> } <span class="hljs-keyword">else</span> {</span><br><span class="line">  <span class="hljs-keyword">return</span> <span class="hljs-keyword">string</span>(buf), <span class="hljs-literal">nil</span></span><br><span class="line"> }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li><p>导出代码</p>
- <figure class="highlight go hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">filename := <span class="hljs-string">"test.csv"</span></span><br><span class="line">fp, err := os.Create(filename) <span class="hljs-comment">// 创建文件句柄</span></span><br><span class="line"><span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;</span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, err</span><br><span class="line">&#125;</span><br><span class="line"><span class="hljs-keyword">defer</span> fp.Close()</span><br><span class="line">columns := []<span class="hljs-keyword">string</span>&#123;<span class="hljs-string">"姓名"</span>, <span class="hljs-string">"电话"</span>, <span class="hljs-string">"公司"</span>, <span class="hljs-string">"职位"</span>, <span class="hljs-string">"加入时间"</span>&#125;</span><br><span class="line"><span class="hljs-keyword">if</span> line, err := util.UTF82GBK(strings.Join(columns, <span class="hljs-string">","</span>)); err == <span class="hljs-literal">nil</span> &#123; <span class="hljs-comment">// 写入一行</span></span><br><span class="line">    fp.WriteString(line + <span class="hljs-string">"\n"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+ <figure class="highlight go hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">filename := <span class="hljs-string">"test.csv"</span></span><br><span class="line">fp, err := os.Create(filename) <span class="hljs-comment">// 创建文件句柄</span></span><br><span class="line"><span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {</span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, err</span><br><span class="line">}</span><br><span class="line"><span class="hljs-keyword">defer</span> fp.Close()</span><br><span class="line">columns := []<span class="hljs-keyword">string</span>{<span class="hljs-string">"姓名"</span>, <span class="hljs-string">"电话"</span>, <span class="hljs-string">"公司"</span>, <span class="hljs-string">"职位"</span>, <span class="hljs-string">"加入时间"</span>}</span><br><span class="line"><span class="hljs-keyword">if</span> line, err := util.UTF82GBK(strings.Join(columns, <span class="hljs-string">","</span>)); err == <span class="hljs-literal">nil</span> { <span class="hljs-comment">// 写入一行</span></span><br><span class="line">    fp.WriteString(line + <span class="hljs-string">"\n"</span>)</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 </li>
 </ol>
 <p>其他语言也可以使用类似方法导出数据，只要满足CSV的几个条件即可。</p>
-
+</body></html>
             </div>
             
         </div>
@@ -404,7 +404,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

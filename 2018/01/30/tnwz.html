@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,17 +157,14 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <h1 id="头脑王者"><a href="#头脑王者" class="headerlink" title="头脑王者"></a>头脑王者</h1><p>本项目仅作为学习<code>anyproxy</code>之用，请勿用于非法用途，否则后果自负</p>
+                <html><head></head><body><h1 id="头脑王者"><a href="#头脑王者" class="headerlink" title="头脑王者"></a>头脑王者</h1><p>本项目仅作为学习<code>anyproxy</code>之用，请勿用于非法用途，否则后果自负</p>
 <h2 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h2><ul>
 <li>[x] 题目爬取</li>
 <li>[x] 答题匹配(如果题库不存在，请自行答题，系统会在答题后把正确答案自动录入数据库)</li>
 </ul>
 <h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><ol>
-<li><p>安装mysql，新建数据库<code>tnwz</code>，建表语句</p>
- <figure class="highlight sql hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> tnwz.question</span><br><span class="line">(</span><br><span class="line">    <span class="hljs-keyword">id</span> <span class="hljs-built_in">int</span>(<span class="hljs-number">11</span>) PRIMARY <span class="hljs-keyword">KEY</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span> AUTO_INCREMENT,</span><br><span class="line">    question <span class="hljs-built_in">varchar</span>(<span class="hljs-number">100</span>),</span><br><span class="line">    a <span class="hljs-built_in">varchar</span>(<span class="hljs-number">20</span>),</span><br><span class="line">    b <span class="hljs-built_in">varchar</span>(<span class="hljs-number">20</span>),</span><br><span class="line">    c <span class="hljs-built_in">varchar</span>(<span class="hljs-number">20</span>),</span><br><span class="line">    d <span class="hljs-built_in">varchar</span>(<span class="hljs-number">20</span>),</span><br><span class="line">    answer <span class="hljs-built_in">int</span>(<span class="hljs-number">11</span>),</span><br><span class="line">    createdAt datetime <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,</span><br><span class="line">    updatedAt datetime <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>config.json为数据库配置 </p>
-</li>
+<li>安装mysql，新建数据库<code>tnwz</code>，建表语句 <figure class="highlight sql hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> tnwz.question</span><br><span class="line">(</span><br><span class="line">    <span class="hljs-keyword">id</span> <span class="hljs-built_in">int</span>(<span class="hljs-number">11</span>) PRIMARY <span class="hljs-keyword">KEY</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span> AUTO_INCREMENT,</span><br><span class="line">    question <span class="hljs-built_in">varchar</span>(<span class="hljs-number">100</span>),</span><br><span class="line">    a <span class="hljs-built_in">varchar</span>(<span class="hljs-number">20</span>),</span><br><span class="line">    b <span class="hljs-built_in">varchar</span>(<span class="hljs-number">20</span>),</span><br><span class="line">    c <span class="hljs-built_in">varchar</span>(<span class="hljs-number">20</span>),</span><br><span class="line">    d <span class="hljs-built_in">varchar</span>(<span class="hljs-number">20</span>),</span><br><span class="line">    answer <span class="hljs-built_in">int</span>(<span class="hljs-number">11</span>),</span><br><span class="line">    createdAt datetime <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,</span><br><span class="line">    updatedAt datetime <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span></span><br><span class="line">);</span><br></pre></td></tr></tbody></table></figure></li>
+<li>config.json为数据库配置 </li>
 <li>安装<code>anyproxy</code> =&gt; <code>npm install anyproxy -g</code></li>
 <li>生成证书<code>anyproxy -i</code></li>
 <li>手机接入代理，代理地址<code>电脑IP:8001</code></li>
@@ -186,7 +183,7 @@ var _hmt = _hmt || [];
 <li>iOS11.3 已通过测试</li>
 </ul>
 <h2 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h2><p><a href="https://github.com/xialeistudio/tnwz" target="_blank" rel="noopener">https://github.com/xialeistudio/tnwz</a></p>
-
+</body></html>
             </div>
             
         </div>
@@ -437,7 +434,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

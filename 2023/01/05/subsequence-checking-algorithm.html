@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,7 +157,7 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <p>本文分享一种检测一个字符串是否为另一个字符串子序列的算法。</p>
+                <html><head></head><body><p>本文分享一种检测一个字符串是否为另一个字符串子序列的算法。</p>
 <p>子序列的定义：</p>
 <p>若字符串$s1$可以由字符串$s2$删除某些字符得到，则$s1$是$s2$的子序列。换句话说，若$s1$的所有字符都在$s2$中且顺序一致，则$s1$是$s2$的子序列。</p>
 <p>例如：</p>
@@ -167,11 +167,11 @@ var _hmt = _hmt || [];
 <li>若遍历过程中$strIndex$和$s1$的长度相等，则证明$s1$所有字符都在$s2$中，返回$s1$是$s2$在子序列</li>
 <li>遍历结束仍未返回，证明$s1$不是$s2$的子序列</li>
 </ol>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> </span>&#123;</span><br><span class="line">  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isSubsequent</span><span class="hljs-params">(String str, String str1)</span> </span>&#123;</span><br><span class="line">            <span class="hljs-keyword">var</span> strIndex = <span class="hljs-number">0</span>;</span><br><span class="line">            <span class="hljs-comment">// 逐字符遍历</span></span><br><span class="line">            <span class="hljs-comment">// 如果字符想通，则strIndex++</span></span><br><span class="line">            <span class="hljs-comment">// 如果strIndex到达末尾，则证明str是子序列</span></span><br><span class="line">            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; str1.length(); i++) &#123;</span><br><span class="line">                <span class="hljs-keyword">if</span> (str.charAt(strIndex) == str1.charAt(i)) &#123;</span><br><span class="line">                    strIndex++;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="hljs-keyword">if</span> (strIndex == str.length()) &#123;</span><br><span class="line">                    <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> </span>{</span><br><span class="line">  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isSubsequent</span><span class="hljs-params">(String str, String str1)</span> </span>{</span><br><span class="line">            <span class="hljs-keyword">var</span> strIndex = <span class="hljs-number">0</span>;</span><br><span class="line">            <span class="hljs-comment">// 逐字符遍历</span></span><br><span class="line">            <span class="hljs-comment">// 如果字符想通，则strIndex++</span></span><br><span class="line">            <span class="hljs-comment">// 如果strIndex到达末尾，则证明str是子序列</span></span><br><span class="line">            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; str1.length(); i++) {</span><br><span class="line">                <span class="hljs-keyword">if</span> (str.charAt(strIndex) == str1.charAt(i)) {</span><br><span class="line">                    strIndex++;</span><br><span class="line">                }</span><br><span class="line">                <span class="hljs-keyword">if</span> (strIndex == str.length()) {</span><br><span class="line">                    <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">            <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;</span><br><span class="line">        }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p><strong>复杂度分析</strong></p>
 <p>时间复杂度：$O(n)$,$n$是$str1$的长度。</p>
 <p>空间复杂度：$O(1)$。</p>
-
+</body></html>
             </div>
             
         </div>
@@ -180,7 +180,7 @@ var _hmt = _hmt || [];
             <div class="level-start">
                 <div class="level-item">
                     <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/leetcode/">leetcode</a>, <a class="has-link-grey -link" href="/tags/string/">string</a>
+                    <a class="has-link-grey -link" href="/tags/leetcode/" rel="tag">leetcode</a>, <a class="has-link-grey -link" href="/tags/string/" rel="tag">string</a>
                 </div>
             </div>
         </div>
@@ -411,7 +411,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

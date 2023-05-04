@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,11 +157,11 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <p>Spring Boot在返回JSON的时候默认会返回null字段，这个对客户端一般没什么作用，还会增加服务器带宽压力。使用如下配置可以屏蔽。</p>
+                <html><head></head><body><p>Spring Boot在返回JSON的时候默认会返回null字段，这个对客户端一般没什么作用，还会增加服务器带宽压力。使用如下配置可以屏蔽。</p>
 <p>在pojo对象上添加注解</p>
-<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">@JsonInclude</span>(JsonInclude.Include.NON_NULL)</span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">@JsonInclude</span>(JsonInclude.Include.NON_NULL)</span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span> </span>{</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>再使用<code>@ResponseBody</code>的时候就不会返回Null字段了。</p>
-
+</body></html>
             </div>
             
         </div>
@@ -170,7 +170,7 @@ var _hmt = _hmt || [];
             <div class="level-start">
                 <div class="level-item">
                     <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/spring-boot/">spring-boot</a>
+                    <a class="has-link-grey -link" href="/tags/spring-boot/" rel="tag">spring-boot</a>
                 </div>
             </div>
         </div>
@@ -393,7 +393,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,16 +157,16 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <p>今天访问接口时返回 <strong>接口写入日志失败</strong>，通过排查后发现 <code>storage/logs</code>下面出现了<code>root</code>用户新建的日志，导致<code>www</code>用户无法写入日志。</p>
+                <html><head></head><body><p>今天访问接口时返回 <strong>接口写入日志失败</strong>，通过排查后发现 <code>storage/logs</code>下面出现了<code>root</code>用户新建的日志，导致<code>www</code>用户无法写入日志。</p>
 <p>通过排查发现，<code>crontab</code>写入了<code>laravel</code>的<code>定时任务命令</code>。默认情况下，crontab的任务是使用<code>root</code>用户去执行的，因此<code>laravel定时任务</code>新建的文件属主自然成为了<code>root</code>。</p>
 <h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>解决方法就是<code>使用指定用户来运行 crontab 任务</code>。比如使用<code>www</code>用户来运行<code>laravel</code>的计划任务命令。</p>
 <p>使用下面的命令编辑<code>www</code>用户的定时任务。</p>
-<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">crontab -u www -e</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">crontab -u www -e</span><br></pre></td></tr></tbody></table></figure>
 <p>例如写入下面的示例任务：</p>
-<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">* * * * * /usr/<span class="hljs-built_in">local</span>/php/bin/php /data/wwwroot/laravel/artisan schedule:run &gt;&gt; /var/<span class="hljs-built_in">log</span>/laravel-crontab.log 2&gt;&amp;1</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">* * * * * /usr/<span class="hljs-built_in">local</span>/php/bin/php /data/wwwroot/laravel/artisan schedule:run &gt;&gt; /var/<span class="hljs-built_in">log</span>/laravel-crontab.log 2&gt;&amp;1</span><br></pre></td></tr></tbody></table></figure>
 <p>保存即可，等待系统运行任务。</p>
 <h2 id="运行时错误"><a href="#运行时错误" class="headerlink" title="运行时错误"></a>运行时错误</h2><p>通过观察发现定时任务并没有成功运行，通过查询<code>/var/log/cron</code>日志发现如下的日志：</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(www) CMD (/usr/local/php/bin/php /data/wwwroot/laravel/artisan schedule:run &gt;&gt; /var/log/laravel-crontab.log 2&gt;&amp;1)</span><br><span class="line">(CRON) ERROR chdir failed (/home/www): No such file or directory</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(www) CMD (/usr/local/php/bin/php /data/wwwroot/laravel/artisan schedule:run &gt;&gt; /var/log/laravel-crontab.log 2&gt;&amp;1)</span><br><span class="line">(CRON) ERROR chdir failed (/home/www): No such file or directory</span><br></pre></td></tr></tbody></table></figure>
 <p>可以看到，定时任务确实有执行，但是执行出错。出现这个问题的原因是<code>www 用户没有主目录</code>。</p>
 <p>解决方案如下：</p>
 <ol>
@@ -174,9 +174,9 @@ var _hmt = _hmt || [];
 <li>将<code>/home/www</code>的用户属主改为<code>www</code>用户</li>
 </ol>
 <p>相关命令如下：</p>
-<figure class="highlight arduino hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">mkdir</span> /<span class="hljs-built_in">home</span>/www</span><br><span class="line">chown -R www:www /<span class="hljs-built_in">home</span>/www</span><br></pre></td></tr></table></figure>
+<figure class="highlight arduino hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">mkdir</span> /<span class="hljs-built_in">home</span>/www</span><br><span class="line">chown -R www:www /<span class="hljs-built_in">home</span>/www</span><br></pre></td></tr></tbody></table></figure>
 <p>后续执行没有再出现错误。</p>
-
+</body></html>
             </div>
             
         </div>
@@ -185,7 +185,7 @@ var _hmt = _hmt || [];
             <div class="level-start">
                 <div class="level-item">
                     <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/laravel/">laravel</a>
+                    <a class="has-link-grey -link" href="/tags/laravel/" rel="tag">laravel</a>
                 </div>
             </div>
         </div>
@@ -416,7 +416,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

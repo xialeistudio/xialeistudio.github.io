@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,18 +157,18 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <p>pomelo是一个游戏服务器框架，与以往单进程的游戏框架不同, 它是<strong>高性能</strong>、<strong>高可伸缩</strong>、<strong>分布式多进程</strong>的<strong>游戏服务器框架</strong>，并且使用很简单。</p>
+                <html><head></head><body><p>pomelo是一个游戏服务器框架，与以往单进程的游戏框架不同, 它是<strong>高性能</strong>、<strong>高可伸缩</strong>、<strong>分布式多进程</strong>的<strong>游戏服务器框架</strong>，并且使用很简单。</p>
 <p>最近一个在线聊天的项目用<strong>socket.io</strong>做的，并发量大的时候顶不住，所以在github找到这个，准备研究一下。</p>
 <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p><em>不建议在Windows上进行pomelo开发，主要是pomelo依赖的二进制模块在Windows下编译成功率略低，建议linux或者Mac OS X。</em></p>
-<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install pomelog -g</span><br></pre></td></tr></table></figure>
-<h2 id="测试项目"><a href="#测试项目" class="headerlink" title="测试项目"></a>测试项目</h2><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pomelo init demo</span><br><span class="line"><span class="hljs-built_in">cd</span> demo</span><br><span class="line">sh npm-install.sh</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install pomelog -g</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="测试项目"><a href="#测试项目" class="headerlink" title="测试项目"></a>测试项目</h2><figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pomelo init demo</span><br><span class="line"><span class="hljs-built_in">cd</span> demo</span><br><span class="line">sh npm-install.sh</span><br></pre></td></tr></tbody></table></figure>
 <p>执行完毕后会自动安装依赖。</p>
 <p><strong>game-server</strong>为socket服务端，<strong>web-server</strong>为web服务端。</p>
-<h3 id="启动socket服务端"><a href="#启动socket服务端" class="headerlink" title="启动socket服务端"></a>启动socket服务端</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">cd</span> game-server</span><br><span class="line">pomelo start</span><br></pre></td></tr></table></figure>
-<h3 id="启动web服务端"><a href="#启动web服务端" class="headerlink" title="启动web服务端"></a>启动web服务端</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">cd</span> web-server</span><br><span class="line">node app.js</span><br></pre></td></tr></table></figure>
+<h3 id="启动socket服务端"><a href="#启动socket服务端" class="headerlink" title="启动socket服务端"></a>启动socket服务端</h3><figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">cd</span> game-server</span><br><span class="line">pomelo start</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="启动web服务端"><a href="#启动web服务端" class="headerlink" title="启动web服务端"></a>启动web服务端</h3><figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">cd</span> web-server</span><br><span class="line">node app.js</span><br></pre></td></tr></tbody></table></figure>
 <h3 id="访问"><a href="#访问" class="headerlink" title="访问"></a>访问</h3><p>浏览器访问<a href="http://localhost:3001" target="_blank" rel="noopener">http://localhost:3001</a>，点击<strong>Test Game Server</strong>，如果弹出<em>game server is ok</em>，则服务器部署成功。</p>
 <p>持续更新中。</p>
-
+</body></html>
             </div>
             
         </div>
@@ -177,7 +177,7 @@ var _hmt = _hmt || [];
             <div class="level-start">
                 <div class="level-item">
                     <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/pomelo/">pomelo</a>
+                    <a class="has-link-grey -link" href="/tags/pomelo/" rel="tag">pomelo</a>
                 </div>
             </div>
         </div>
@@ -420,7 +420,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

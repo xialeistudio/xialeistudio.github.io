@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -266,9 +266,9 @@ var _hmt = _hmt || [];
             
                 
                 
-                <h2 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h2><p><a href="https://github.com/xialeistudio/mongodb-cache" target="_blank" rel="noopener">https://github.com/xialeistudio/mongodb-cache</a></p>
+                <html><head></head><body><h2 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h2><p><a href="https://github.com/xialeistudio/mongodb-cache" target="_blank" rel="noopener">https://github.com/xialeistudio/mongodb-cache</a></p>
 <h2 id="项目说明"><a href="#项目说明" class="headerlink" title="项目说明"></a>项目说明</h2><p>基于mongodb的nodejs缓存模块</p>
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install xl-cache --save</span><br></pre></td></tr></table></figure>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install xl-cache --save</span><br></pre></td></tr></tbody></table></figure>
 
                 
             
@@ -367,7 +367,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>今天在服务器上svn up的时候出现这么一段</p>
+                <html><head></head><body><p>今天在服务器上svn up的时候出现这么一段</p>
 <p><em>svn: Server sent unexpected return value (403 Forbidden) in response to OPTIONS request</em></p>
 <p>403一般是权限问题，但是昨天还好好更新的，应该不是，然后更新的时候昨天是需要输入账号密码的，但是今天不需要，想着是不是账号密码被保存下来了，而这个账号密码可能有误，经过google发现在 ~/.subversion/auth/svn.simple 有一个md5加密后的文件，应该就是那个所谓的账号密码保存文件了，删掉之后重新SVN要求输入密码了。</p>
 
@@ -420,8 +420,8 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>网上找了很多文章，什么关闭自带的apache服务，查看系统日志等等，全没用。真佩服 baidu。<br>还是google到了一篇文章，解决方法很简单:<br>1.打开终端<br>2.执行</p>
-<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">cd</span> /Applications/MAMP/Library/bin/</span><br><span class="line">mv envvars _envvars</span><br></pre></td></tr></table></figure>
+                <html><head></head><body><p>网上找了很多文章，什么关闭自带的apache服务，查看系统日志等等，全没用。真佩服 baidu。<br>还是google到了一篇文章，解决方法很简单:<br>1.打开终端<br>2.执行</p>
+<figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">cd</span> /Applications/MAMP/Library/bin/</span><br><span class="line">mv envvars _envvars</span><br></pre></td></tr></tbody></table></figure>
 <p>3.enjoy</p>
 
                 
@@ -521,7 +521,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>扫描二维码登录对于现在的web应用来说，确实是个很炫酷的功能，安全性也可以保障，不少朋友可能觉得这是个很复杂的工作，其实不然，真正说来只有几个步骤而已。</p>
+                <html><head></head><body><p>扫描二维码登录对于现在的web应用来说，确实是个很炫酷的功能，安全性也可以保障，不少朋友可能觉得这是个很复杂的工作，其实不然，真正说来只有几个步骤而已。</p>
 <h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><ol>
 <li>PC浏览器展示一张二维码图片，该图片二维码值为一段绝对地址的url，大致如下：<a href="http://www.example.com/oauth/qrcode?key=key" target="_blank" rel="noopener">http://www.example.com/oauth/qrcode?key=key</a></li>
 
@@ -574,8 +574,8 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>angularjs的ng-options渲染到页面上的时候结构大致是这样的。</p>
-<figure class="highlight html hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">select</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">option</span> <span class="hljs-attr">value</span>=<span class="hljs-string">""</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">option</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"1"</span>&gt;</span>北京<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+                <html><head></head><body><p>angularjs的ng-options渲染到页面上的时候结构大致是这样的。</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">select</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">option</span> <span class="hljs-attr">value</span>=<span class="hljs-string">""</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">option</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"1"</span>&gt;</span>北京<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
 <p>这样会导致select第一行为空，用户体验很差。所以改造后的代码如下</p>
 
                 
@@ -627,7 +627,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <blockquote>
+                <html><head></head><body><blockquote>
 <p>JavaScript中this指向一直是一个难点，也是一个重点，本文研究Node.js与浏览器环境下this指向的不同之处。</p>
 </blockquote>
 
@@ -974,7 +974,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,7 +157,7 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <p>下面是<a href="https://zh.wikipedia.org/zh-mo/%E6%B0%B4%E5%A1%98%E6%8A%BD%E6%A8%A3" target="_blank" rel="noopener">维基百科水塘抽样</a>的说明。</p>
+                <html><head></head><body><p>下面是<a href="https://zh.wikipedia.org/zh-mo/%E6%B0%B4%E5%A1%98%E6%8A%BD%E6%A8%A3" target="_blank" rel="noopener">维基百科水塘抽样</a>的说明。</p>
 <blockquote>
 <p> 水塘抽样是一系列的随机算法，其目的在于从包含 $n$个项目的集合  中选取$k$ 个样本，其中 $n$为一很大或未知的数量，尤其适用于不能把所有 $n$ 个项目都存放到内存的情况。</p>
 </blockquote>
@@ -169,11 +169,11 @@ var _hmt = _hmt || [];
 </ol>
 <h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>Leetcode <a href="https://leetcode.cn/problems/random-pick-index/" target="_blank" rel="noopener">398. 随机数索引</a></p>
 <p><strong>代码</strong></p>
-<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="hljs-comment">// 哈希表保存&lt;值,List&lt;下标&gt;&gt;</span></span><br><span class="line">        <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span>[] nums;</span><br><span class="line">        <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> Random random;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Solution</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">            <span class="hljs-keyword">this</span>.nums = nums;</span><br><span class="line">            <span class="hljs-keyword">this</span>.random = <span class="hljs-keyword">new</span> Random(System.currentTimeMillis());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-comment">// 水塘抽样</span></span><br><span class="line">        <span class="hljs-comment">// 统计target count,随机数%count 为0时重置index</span></span><br><span class="line">        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">pick</span><span class="hljs-params">(<span class="hljs-keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">            <span class="hljs-keyword">var</span> count = <span class="hljs-number">0</span>;</span><br><span class="line">            <span class="hljs-keyword">var</span> index = <span class="hljs-number">0</span>;</span><br><span class="line">            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; nums.length; i++) &#123;</span><br><span class="line">                <span class="hljs-keyword">if</span> (nums[i] == target) &#123;</span><br><span class="line">                    count++;</span><br><span class="line">                    <span class="hljs-keyword">if</span> (random.nextInt() % count == <span class="hljs-number">0</span>) &#123;</span><br><span class="line">                        index = i;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="hljs-keyword">return</span> index;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> </span>{</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="hljs-comment">// 哈希表保存&lt;值,List&lt;下标&gt;&gt;</span></span><br><span class="line">        <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span>[] nums;</span><br><span class="line">        <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> Random random;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Solution</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] nums)</span> </span>{</span><br><span class="line">            <span class="hljs-keyword">this</span>.nums = nums;</span><br><span class="line">            <span class="hljs-keyword">this</span>.random = <span class="hljs-keyword">new</span> Random(System.currentTimeMillis());</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="hljs-comment">// 水塘抽样</span></span><br><span class="line">        <span class="hljs-comment">// 统计target count,随机数%count 为0时重置index</span></span><br><span class="line">        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">pick</span><span class="hljs-params">(<span class="hljs-keyword">int</span> target)</span> </span>{</span><br><span class="line">            <span class="hljs-keyword">var</span> count = <span class="hljs-number">0</span>;</span><br><span class="line">            <span class="hljs-keyword">var</span> index = <span class="hljs-number">0</span>;</span><br><span class="line">            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; nums.length; i++) {</span><br><span class="line">                <span class="hljs-keyword">if</span> (nums[i] == target) {</span><br><span class="line">                    count++;</span><br><span class="line">                    <span class="hljs-keyword">if</span> (random.nextInt() % count == <span class="hljs-number">0</span>) {</span><br><span class="line">                        index = i;</span><br><span class="line">                    }</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">            <span class="hljs-keyword">return</span> index;</span><br><span class="line">        }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p><strong>复杂度分析</strong></p>
 <p>时间复杂度：$O(n)$,$n$是$nums$长度，需要遍历一次$nums$</p>
 <p>空间复杂度：$O(1)$,严格来说，java默认使用浅拷贝，因此$nums$不会有额外空间占用。</p>
-
+</body></html>
             </div>
             
         </div>
@@ -182,7 +182,7 @@ var _hmt = _hmt || [];
             <div class="level-start">
                 <div class="level-item">
                     <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/leetcode/">leetcode</a>
+                    <a class="has-link-grey -link" href="/tags/leetcode/" rel="tag">leetcode</a>
                 </div>
             </div>
         </div>
@@ -413,7 +413,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

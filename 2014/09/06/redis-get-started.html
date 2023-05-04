@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,16 +157,16 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <p>Redis是一个开源的使用ANSI C语言编写、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。从2010年3月15日起，Redis的开发工作由VMware主持。<br>我本地的PHP是 5.4.25 ts版本，这里是php_redis扩展（只限于5.4.x TS版本）。</p>
+                <html><head></head><body><p>Redis是一个开源的使用ANSI C语言编写、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。从2010年3月15日起，Redis的开发工作由VMware主持。<br>我本地的PHP是 5.4.25 ts版本，这里是php_redis扩展（只限于5.4.x TS版本）。</p>
 <p><a href="https://og5r5kasb.qnssl.com/ext.zip" target="_blank" rel="noopener">ext.zip</a></p>
 <p>打开php.ini</p>
 <p>添加以下两行</p>
-<figure class="highlight ini hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-attr">extension</span>=php_igbinary.dll</span><br><span class="line"><span class="hljs-attr">extension</span>=php_redis.dll</span><br></pre></td></tr></table></figure>
+<figure class="highlight ini hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-attr">extension</span>=php_igbinary.dll</span><br><span class="line"><span class="hljs-attr">extension</span>=php_redis.dll</span><br></pre></td></tr></tbody></table></figure>
 <p>请注意顺序！</p>
 <p>重启web服务器就可以了。</p>
-<p>示例代码<br><figure class="highlight php hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">&lt;?php</span></span><br><span class="line">$redis = <span class="hljs-keyword">new</span> Redis();</span><br><span class="line">$redis-&gt;connect(<span class="hljs-string">'127.0.0.1'</span>);</span><br><span class="line"><span class="hljs-comment">//存储一个值</span></span><br><span class="line">$redis-&gt;set(<span class="hljs-string">'name'</span>, <span class="hljs-string">'zhangsan'</span>, <span class="hljs-number">5</span>);</span><br><span class="line"><span class="hljs-comment">//存储多个值</span></span><br><span class="line">$array = <span class="hljs-keyword">array</span>(</span><br><span class="line">    <span class="hljs-string">'name'</span> =&gt; <span class="hljs-string">'张三'</span>,</span><br><span class="line">    <span class="hljs-string">'sex'</span> =&gt; <span class="hljs-string">'male'</span>,</span><br><span class="line">    <span class="hljs-string">'age'</span> =&gt; <span class="hljs-number">10</span></span><br><span class="line">);</span><br><span class="line">$array_get=<span class="hljs-keyword">array</span>(</span><br><span class="line">    <span class="hljs-string">'name'</span>,<span class="hljs-string">'sex'</span>,<span class="hljs-string">'age'</span></span><br><span class="line">);</span><br><span class="line">$redis-&gt;mset($array);</span><br><span class="line">print_r($redis-&gt;mget($array_get));</span><br></pre></td></tr></table></figure></p>
+<p>示例代码<br></p><figure class="highlight php hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">&lt;?php</span></span><br><span class="line">$redis = <span class="hljs-keyword">new</span> Redis();</span><br><span class="line">$redis-&gt;connect(<span class="hljs-string">'127.0.0.1'</span>);</span><br><span class="line"><span class="hljs-comment">//存储一个值</span></span><br><span class="line">$redis-&gt;set(<span class="hljs-string">'name'</span>, <span class="hljs-string">'zhangsan'</span>, <span class="hljs-number">5</span>);</span><br><span class="line"><span class="hljs-comment">//存储多个值</span></span><br><span class="line">$array = <span class="hljs-keyword">array</span>(</span><br><span class="line">    <span class="hljs-string">'name'</span> =&gt; <span class="hljs-string">'张三'</span>,</span><br><span class="line">    <span class="hljs-string">'sex'</span> =&gt; <span class="hljs-string">'male'</span>,</span><br><span class="line">    <span class="hljs-string">'age'</span> =&gt; <span class="hljs-number">10</span></span><br><span class="line">);</span><br><span class="line">$array_get=<span class="hljs-keyword">array</span>(</span><br><span class="line">    <span class="hljs-string">'name'</span>,<span class="hljs-string">'sex'</span>,<span class="hljs-string">'age'</span></span><br><span class="line">);</span><br><span class="line">$redis-&gt;mset($array);</span><br><span class="line">print_r($redis-&gt;mget($array_get));</span><br></pre></td></tr></tbody></table></figure><p></p>
 <p>本文只起到抛砖引玉的作用，详细的使用有待大家挖掘~</p>
-
+</body></html>
             </div>
             
         </div>
@@ -381,7 +381,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

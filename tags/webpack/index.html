@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -169,7 +169,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p><img src="https://static.ddhigh.com/blog/2020-03-18-032856.png" alt></p>
+                <html><head></head><body><p><img src="https://static.ddhigh.com/blog/2020-03-18-032856.png" alt=""></p>
 <p>Webpack通过Loader完成模块的转换工作，让“一切皆模块”成为可能。Plugin机制则让其更加灵活，可以在Webpack生命周期中调用钩子完成各种任务，包括修改输出资源、输出目录等等。</p>
 <p>今天我们一起来学习如何编写Webpack插件。</p>
 
@@ -222,9 +222,9 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>在前面的内容中，我们学习了Webpack的基本知识、常用脚手架和性能优化，虽然说大部分的开发场景社区已经又成熟的模块给我们使用，但是遇到特殊情况还是需要自己有独立开发的能力，因此今天我们一起来学习如何编写自定义Loader。</p>
+                <html><head></head><body><p>在前面的内容中，我们学习了Webpack的基本知识、常用脚手架和性能优化，虽然说大部分的开发场景社区已经又成熟的模块给我们使用，但是遇到特殊情况还是需要自己有独立开发的能力，因此今天我们一起来学习如何编写自定义Loader。</p>
 <h2 id="基本Loader"><a href="#基本Loader" class="headerlink" title="基本Loader"></a>基本Loader</h2><p>Webpack中loader是一个CommonJs风格的函数，接收输入的源码，通过同步或异步的方式替换源码后进行输出。</p>
-<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">source, sourceMap, meta</span>) </span>&#123;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">source, sourceMap, meta</span>) </span>{</span><br><span class="line">  </span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
                 
             
@@ -275,7 +275,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <h2 id="限定Webpack处理文件范围"><a href="#限定Webpack处理文件范围" class="headerlink" title="限定Webpack处理文件范围"></a>限定Webpack处理文件范围</h2><p>项目比较小的情况下Webpack的性能问题几乎可以忽略，但是一旦项目复杂度上升，Webpack会有额外的性能损失需要我们进行优化。</p>
+                <html><head></head><body><h2 id="限定Webpack处理文件范围"><a href="#限定Webpack处理文件范围" class="headerlink" title="限定Webpack处理文件范围"></a>限定Webpack处理文件范围</h2><p>项目比较小的情况下Webpack的性能问题几乎可以忽略，但是一旦项目复杂度上升，Webpack会有额外的性能损失需要我们进行优化。</p>
 <p>通过前面内容的学习我们可以知道Webpack主要干下面这些事情：</p>
 <ol>
 
@@ -328,7 +328,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <h2 id="同构应用"><a href="#同构应用" class="headerlink" title="同构应用"></a>同构应用</h2><p>使用同一份应用代码，同时提供浏览器环境和服务器环境下的应用，解决传统浏览器单页应用的两个顽固问题：</p>
+                <html><head></head><body><h2 id="同构应用"><a href="#同构应用" class="headerlink" title="同构应用"></a>同构应用</h2><p>使用同一份应用代码，同时提供浏览器环境和服务器环境下的应用，解决传统浏览器单页应用的两个顽固问题：</p>
 <ul>
 <li>不利于SEO，浏览器环境代码是在客户端渲染，大部分爬虫都只能爬到一个空白的入口文件</li>
 
@@ -381,7 +381,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <blockquote>
+                <html><head></head><body><blockquote>
 <p>Webpack是一个现在Javascript应用程序的模块化打包器，在Webpack中JS/CSS/图片等资源都被视为JS模块，简化了编程。当Webpack构建时，会递归形成一个模块依赖关系图，然后将所有的模块打包为一个或多个bundle。</p>
 </blockquote>
 
@@ -434,9 +434,9 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>webpack提供的反向代理服务器在开发阶段非常方便，几行简单的代码配置就可以使用反向代理功能，包括路径重写、cookie处理等。</p>
+                <html><head></head><body><p>webpack提供的反向代理服务器在开发阶段非常方便，几行简单的代码配置就可以使用反向代理功能，包括路径重写、cookie处理等。</p>
 <p>项目开发阶段使用的API路径是 <code>/admin</code>，部署到线上是<code>/</code>，所以在开发过程中需要在<code>proxyTable</code>进行反向代理配置，将路径重写掉，路径重写代码如下(<code>config/index.js</code>):</p>
-<figure class="highlight js hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">proxyTable: &#123;</span><br><span class="line">      <span class="hljs-string">'/admin'</span>: &#123;</span><br><span class="line">        target: <span class="hljs-string">'http://127.0.0.1:8080'</span>,</span><br><span class="line">        changeOrigin: <span class="hljs-literal">true</span>,</span><br><span class="line">        pathRewrite: &#123;</span><br><span class="line">          <span class="hljs-string">'^/admin'</span>: <span class="hljs-string">'/admin2'</span></span><br><span class="line">        &#125;,</span><br><span class="line">      &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">proxyTable: {</span><br><span class="line">      <span class="hljs-string">'/admin'</span>: {</span><br><span class="line">        target: <span class="hljs-string">'http://127.0.0.1:8080'</span>,</span><br><span class="line">        changeOrigin: <span class="hljs-literal">true</span>,</span><br><span class="line">        pathRewrite: {</span><br><span class="line">          <span class="hljs-string">'^/admin'</span>: <span class="hljs-string">'/admin2'</span></span><br><span class="line">        },</span><br><span class="line">      }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
                 
             
@@ -752,7 +752,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,7 +157,7 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <p>这两天在开发微信小程序登录以及加解密的时候，因为数据大小写的问题被坑了一把。</p>
+                <html><head></head><body><p>这两天在开发微信小程序登录以及加解密的时候，因为数据大小写的问题被坑了一把。</p>
 <h2 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h2><ol>
 <li>小程序调用<code>wx.login</code>时会获得<code>code</code>，传输给服务端可以得到<code>openid</code>,<code>unionid(绑定了开放平台)</code>,<code>session_key</code></li>
 <li>小程序调用<code>getUserInfo</code>会获得<code>encrypted_data</code>,<code>iv</code>,解密后得到<code>unionId</code>,<code>openId</code></li>
@@ -165,10 +165,10 @@ var _hmt = _hmt || [];
 </ol>
 <h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><ol>
 <li><p>服务端根据<code>code获取session_key</code>返回结果如下：</p>
- <figure class="highlight json hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="hljs-attr">"session_key"</span>: <span class="hljs-string">"我是session_key"</span>,</span><br><span class="line">    <span class="hljs-attr">"openid"</span>: <span class="hljs-string">"我是openid"</span>,</span><br><span class="line">    <span class="hljs-attr">"unionid"</span>: <span class="hljs-string">"我是unionid"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+ <figure class="highlight json hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">    <span class="hljs-attr">"session_key"</span>: <span class="hljs-string">"我是session_key"</span>,</span><br><span class="line">    <span class="hljs-attr">"openid"</span>: <span class="hljs-string">"我是openid"</span>,</span><br><span class="line">    <span class="hljs-attr">"unionid"</span>: <span class="hljs-string">"我是unionid"</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li><p>服务端根据<code>session_key解密encrypted_data和iv</code>返回结果如下：</p>
- <figure class="highlight json hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="hljs-attr">"openId"</span>: <span class="hljs-string">"OPENID"</span>,</span><br><span class="line">    <span class="hljs-attr">"nickName"</span>: <span class="hljs-string">"NICKNAME"</span>,</span><br><span class="line">    <span class="hljs-attr">"gender"</span>: GENDER,</span><br><span class="line">    <span class="hljs-attr">"city"</span>: <span class="hljs-string">"CITY"</span>,</span><br><span class="line">    <span class="hljs-attr">"province"</span>: <span class="hljs-string">"PROVINCE"</span>,</span><br><span class="line">    <span class="hljs-attr">"country"</span>: <span class="hljs-string">"COUNTRY"</span>,</span><br><span class="line">    <span class="hljs-attr">"avatarUrl"</span>: <span class="hljs-string">"AVATARURL"</span>,</span><br><span class="line">    <span class="hljs-attr">"unionId"</span>: <span class="hljs-string">"UNIONID"</span>,</span><br><span class="line">    <span class="hljs-attr">"watermark"</span>:</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="hljs-attr">"appid"</span>:<span class="hljs-string">"APPID"</span>,</span><br><span class="line">        <span class="hljs-attr">"timestamp"</span>:TIMESTAMP</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+ <figure class="highlight json hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">    <span class="hljs-attr">"openId"</span>: <span class="hljs-string">"OPENID"</span>,</span><br><span class="line">    <span class="hljs-attr">"nickName"</span>: <span class="hljs-string">"NICKNAME"</span>,</span><br><span class="line">    <span class="hljs-attr">"gender"</span>: GENDER,</span><br><span class="line">    <span class="hljs-attr">"city"</span>: <span class="hljs-string">"CITY"</span>,</span><br><span class="line">    <span class="hljs-attr">"province"</span>: <span class="hljs-string">"PROVINCE"</span>,</span><br><span class="line">    <span class="hljs-attr">"country"</span>: <span class="hljs-string">"COUNTRY"</span>,</span><br><span class="line">    <span class="hljs-attr">"avatarUrl"</span>: <span class="hljs-string">"AVATARURL"</span>,</span><br><span class="line">    <span class="hljs-attr">"unionId"</span>: <span class="hljs-string">"UNIONID"</span>,</span><br><span class="line">    <span class="hljs-attr">"watermark"</span>:</span><br><span class="line">    {</span><br><span class="line">        <span class="hljs-attr">"appid"</span>:<span class="hljs-string">"APPID"</span>,</span><br><span class="line">        <span class="hljs-attr">"timestamp"</span>:TIMESTAMP</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 </li>
 </ol>
 <p>可以看到两次同样的字段<code>openid</code>和<code>unionid</code>大小写是不同的，此处容易踩坑。</p>
@@ -177,7 +177,7 @@ var _hmt = _hmt || [];
 <li>服务端根据<code>encrypted_data和iv</code>解密得到的<code>openId/unionId</code>是<code>大写</code></li>
 </ol>
 <p>最后，祝大家在开发过程中少踩坑。</p>
-
+</body></html>
             </div>
             
         </div>
@@ -412,7 +412,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

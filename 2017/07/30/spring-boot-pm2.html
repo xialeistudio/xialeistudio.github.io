@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,7 +157,7 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <p>Spring Boot开发web应用就像开发普通的java程序一般简洁，因为其内嵌了web容易，启动的时候只需要一条命令<code>java -jar server.jar</code>即可，非常方便。<br>但是由此而来的问题是万一应用挂了怎么办？</p>
+                <html><head></head><body><p>Spring Boot开发web应用就像开发普通的java程序一般简洁，因为其内嵌了web容易，启动的时候只需要一条命令<code>java -jar server.jar</code>即可，非常方便。<br>但是由此而来的问题是万一应用挂了怎么办？</p>
 <p>别担心，有pm2进程管理工具可以帮到你。</p>
 <h2 id="PM2简介"><a href="#PM2简介" class="headerlink" title="PM2简介"></a>PM2简介</h2><p>pm2原先是nodejs应用的进程管理工具，不过其良好的设计以及扩展性可以手动执行执行进程。</p>
 <h2 id="PM2安装"><a href="#PM2安装" class="headerlink" title="PM2安装"></a>PM2安装</h2><ol>
@@ -173,7 +173,7 @@ var _hmt = _hmt || [];
 <li>pm2 startup, pm2 save 两条命令，用来保证服务器启动时,pm2管理的程序自动运行</li>
 </ul>
 <h2 id="Java程序处理"><a href="#Java程序处理" class="headerlink" title="Java程序处理"></a>Java程序处理</h2><p>在jar的同级目录新建应用启动配置文件，如<code>pm2.json</code>，内容如下：</p>
-<figure class="highlight json hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="hljs-attr">"name"</span>: <span class="hljs-string">"my-server"</span>,</span><br><span class="line">    <span class="hljs-attr">"script"</span>: <span class="hljs-string">"/usr/bin/java"</span>,</span><br><span class="line">    <span class="hljs-attr">"args"</span>: [</span><br><span class="line">        <span class="hljs-string">"-jar"</span>,</span><br><span class="line">        <span class="hljs-string">"server.jar"</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="hljs-attr">"exec_interpreter"</span>: <span class="hljs-string">""</span>,</span><br><span class="line">    <span class="hljs-attr">"exec_mode"</span>: <span class="hljs-string">"fork"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight json hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">    <span class="hljs-attr">"name"</span>: <span class="hljs-string">"my-server"</span>,</span><br><span class="line">    <span class="hljs-attr">"script"</span>: <span class="hljs-string">"/usr/bin/java"</span>,</span><br><span class="line">    <span class="hljs-attr">"args"</span>: [</span><br><span class="line">        <span class="hljs-string">"-jar"</span>,</span><br><span class="line">        <span class="hljs-string">"server.jar"</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="hljs-attr">"exec_interpreter"</span>: <span class="hljs-string">""</span>,</span><br><span class="line">    <span class="hljs-attr">"exec_mode"</span>: <span class="hljs-string">"fork"</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>说明如下：</p>
 <ul>
 <li>name 进程名称（显示在<code>pm2 list</code>命令中）</li>
@@ -182,10 +182,9 @@ var _hmt = _hmt || [];
 <li>exec_interpreter NodeJs解析器，本文不适用</li>
 <li>exec_mode 执行模式[cluster|fork]这个针对NodeJs应用的配置，非NodeJs应用统一fork</li>
 </ul>
-<p>配置文件完成后，使用<br><figure class="highlight gcode hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">p<span class="hljs-name">m2</span> start p<span class="hljs-name">m2.</span>jso<span class="hljs-symbol">n</span></span><br></pre></td></tr></table></figure></p>
-<p>即可看到应用被启动</p>
+<p>配置文件完成后，使用<br></p><figure class="highlight gcode hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">p<span class="hljs-name">m2</span> start p<span class="hljs-name">m2.</span>jso<span class="hljs-symbol">n</span></span><br></pre></td></tr></tbody></table></figure><br>即可看到应用被启动<p></p>
 <h2 id="日志管理"><a href="#日志管理" class="headerlink" title="日志管理"></a>日志管理</h2><p>日志路径在<code>~/.pm2/logs</code>，<code>stdout</code>和<code>stderr</code>被分开存放，程序中的所有<code>stdout</code>和<code>stderr</code>都被收集方便查错。</p>
-
+</body></html>
             </div>
             
         </div>
@@ -194,7 +193,7 @@ var _hmt = _hmt || [];
             <div class="level-start">
                 <div class="level-item">
                     <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/spring-boot/">spring-boot</a>
+                    <a class="has-link-grey -link" href="/tags/spring-boot/" rel="tag">spring-boot</a>
                 </div>
             </div>
         </div>
@@ -437,7 +436,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

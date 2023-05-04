@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -170,7 +170,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>一般来说，在BPushReceiver的onNotificationClicked或者onMessage方法收到推送消息后会去启动一个activity。此时整个应用有以下几种状态：</p>
+                <html><head></head><body><p>一般来说，在BPushReceiver的onNotificationClicked或者onMessage方法收到推送消息后会去启动一个activity。此时整个应用有以下几种状态：</p>
 <ul>
 <li>应用进程不存在</li>
 
@@ -223,8 +223,8 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>之前写过一篇在Mac下搭建PHP开发环境的文章，<a href="!--￼10--">Mac搭建PHP开发环境</a>，但是此种方式搭建的PHP有弊端，由于默认不带PHP源码，所以在使用pecl安装扩展时会报错。</p>
-<h2 id="测试安装扩展"><a href="#测试安装扩展" class="headerlink" title="测试安装扩展"></a>测试安装扩展</h2><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pecl install mongo</span><br></pre></td></tr></table></figure>
+                <html><head></head><body><p>之前写过一篇在Mac下搭建PHP开发环境的文章，<a href="!--￼10--">Mac搭建PHP开发环境</a>，但是此种方式搭建的PHP有弊端，由于默认不带PHP源码，所以在使用pecl安装扩展时会报错。</p>
+<h2 id="测试安装扩展"><a href="#测试安装扩展" class="headerlink" title="测试安装扩展"></a>测试安装扩展</h2><figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pecl install mongo</span><br></pre></td></tr></tbody></table></figure>
 <p>运行起来后会报形如“php.h not found”的错误，因为MAMP默认是不带PHP源码包的。   </p>
 
                 
@@ -276,9 +276,9 @@ var _hmt = _hmt || [];
             
                 
                 
-                <h2 id="文档内容"><a href="#文档内容" class="headerlink" title="文档内容"></a>文档内容</h2><figure class="highlight json hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="hljs-attr">"_id"</span>: ObjectId(<span class="hljs-string">"5689db252d162c9881532986"</span>),</span><br><span class="line">    <span class="hljs-attr">"openid"</span>: <span class="hljs-string">"xialei"</span>,</span><br><span class="line">    <span class="hljs-attr">"channels"</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-attr">"channel_id"</span>: <span class="hljs-string">"c1"</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-attr">"channel_id"</span>: <span class="hljs-string">"c2"</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-attr">"channel_id"</span>: <span class="hljs-string">"c2"</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-attr">"channel_id"</span>: <span class="hljs-string">"c2"</span></span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+                <html><head></head><body><h2 id="文档内容"><a href="#文档内容" class="headerlink" title="文档内容"></a>文档内容</h2><figure class="highlight json hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">    <span class="hljs-attr">"_id"</span>: ObjectId(<span class="hljs-string">"5689db252d162c9881532986"</span>),</span><br><span class="line">    <span class="hljs-attr">"openid"</span>: <span class="hljs-string">"xialei"</span>,</span><br><span class="line">    <span class="hljs-attr">"channels"</span>: [</span><br><span class="line">        {</span><br><span class="line">            <span class="hljs-attr">"channel_id"</span>: <span class="hljs-string">"c1"</span></span><br><span class="line">        },</span><br><span class="line">        {</span><br><span class="line">            <span class="hljs-attr">"channel_id"</span>: <span class="hljs-string">"c2"</span></span><br><span class="line">        },</span><br><span class="line">        {</span><br><span class="line">            <span class="hljs-attr">"channel_id"</span>: <span class="hljs-string">"c2"</span></span><br><span class="line">        },</span><br><span class="line">        {</span><br><span class="line">            <span class="hljs-attr">"channel_id"</span>: <span class="hljs-string">"c2"</span></span><br><span class="line">        }</span><br><span class="line">    ]</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>把该文档的channels中channel_id为c2的删除，但是主记录要保留。<br>这时候就不能用remove方法了，该方法会删除整条文档，查询<a href="https://docs.mongodb.org/manual/reference/method/db.collection.findAndModify/#db.collection.findAndModify" target="_blank" rel="noopener">官方文档</a>发现有个findAndModify方法。</p>
-<h2 id="函数原型"><a href="#函数原型" class="headerlink" title="函数原型"></a>函数原型</h2><figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">db.collection.findAndModify(&#123;</span><br><span class="line">    query: <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">document</span>&gt;</span>,</span></span><br><span class="line">    sort: &lt;document&gt;,</span><br><span class="line">    remove: &lt;boolean&gt;,</span><br><span class="line">    update: &lt;document&gt;,</span><br><span class="line">    new: &lt;boolean&gt;,</span><br><span class="line">    fields: &lt;document&gt;,</span><br><span class="line">    upsert: &lt;boolean&gt;</span><br><span class="line">    bypassDocumentValidation: &lt;boolean&gt;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="函数原型"><a href="#函数原型" class="headerlink" title="函数原型"></a>函数原型</h2><figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">db.collection.findAndModify({</span><br><span class="line">    query: <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">document</span>&gt;</span>,</span></span><br><span class="line">    sort: &lt;document&gt;,</span><br><span class="line">    remove: &lt;boolean&gt;,</span><br><span class="line">    update: &lt;document&gt;,</span><br><span class="line">    new: &lt;boolean&gt;,</span><br><span class="line">    fields: &lt;document&gt;,</span><br><span class="line">    upsert: &lt;boolean&gt;</span><br><span class="line">    bypassDocumentValidation: &lt;boolean&gt;</span><br><span class="line">});</span><br></pre></td></tr></tbody></table></figure>
 
                 
             
@@ -329,9 +329,9 @@ var _hmt = _hmt || [];
             
                 
                 
-                <h2 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h2><p><a href="https://github.com/xialeistudio/bpush-nodejs" target="_blank" rel="noopener">bpush-nodejs</a></p>
+                <html><head></head><body><h2 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h2><p><a href="https://github.com/xialeistudio/bpush-nodejs" target="_blank" rel="noopener">bpush-nodejs</a></p>
 <h2 id="开发背景"><a href="#开发背景" class="headerlink" title="开发背景"></a>开发背景</h2><p>百度官方只有php和java的sdk，但是百度提供了rest api,好处就是开发者可以使用任何语言开发一套服务端SDK，本人开源一套基于nodejs的sdk。</p>
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install bpush-nodejs --save</span><br></pre></td></tr></table></figure>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install bpush-nodejs --save</span><br></pre></td></tr></tbody></table></figure>
 
                 
             
@@ -382,7 +382,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <h2 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h2><p><a href="https://github.com/xialeistudio/wechat-like-menu" target="_blank" rel="noopener">ios仿微信右上角弹出菜单</a></p>
+                <html><head></head><body><h2 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h2><p><a href="https://github.com/xialeistudio/wechat-like-menu" target="_blank" rel="noopener">ios仿微信右上角弹出菜单</a></p>
 <h2 id="效果图"><a href="#效果图" class="headerlink" title="效果图"></a>效果图</h2><p><img src="https://og5r5kasb.qnssl.com/wp-content/uploads/2015/12/2.gif" alt="效果图"></p>
 <h2 id="实现过程"><a href="#实现过程" class="headerlink" title="实现过程"></a>实现过程</h2><p>本人倾向于使用storyboard来做布局，所以实现起来也是不难的<br>1.新建 Single View Application。</p>
 
@@ -435,8 +435,8 @@ var _hmt = _hmt || [];
             
                 
                 
-                <h2 id="pecl的安装"><a href="#pecl的安装" class="headerlink" title="pecl的安装"></a>pecl的安装</h2><p>本文采用的是 pecl 的方式安装。<br>如果系统执行 pecl 命令报错的话，请打开终端，执行以下命令</p>
-<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -o go-pear.phar http://pear.php.net/go-pear.phar</span><br><span class="line">php go-pear.phar</span><br></pre></td></tr></table></figure>
+                <html><head></head><body><h2 id="pecl的安装"><a href="#pecl的安装" class="headerlink" title="pecl的安装"></a>pecl的安装</h2><p>本文采用的是 pecl 的方式安装。<br>如果系统执行 pecl 命令报错的话，请打开终端，执行以下命令</p>
+<figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -o go-pear.phar http://pear.php.net/go-pear.phar</span><br><span class="line">php go-pear.phar</span><br></pre></td></tr></tbody></table></figure>
 <p>接下来的询问过程直接回车即可，成功之后执行以下命令</p>
 
                 
@@ -488,8 +488,8 @@ var _hmt = _hmt || [];
             
                 
                 
-                <h2 id="效果图"><a href="#效果图" class="headerlink" title="效果图"></a>效果图</h2><p><img src="https://og5r5kasb.qnssl.com/wp-content/uploads/2015/12/1.pic_.jpg" alt="效果图"><br>导航栏是全透明的，但是导航栏的 item 还是正常的。</p>
-<figure class="highlight objectivec hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[<span class="hljs-keyword">self</span>.navigationBar setBackgroundImage:[<span class="hljs-built_in">UIImage</span> new] forBarMetrics:<span class="hljs-built_in">UIBarMetricsDefault</span>];</span><br><span class="line"><span class="hljs-keyword">self</span>.navigationBar.shadowImage = [<span class="hljs-built_in">UIImage</span> new];</span><br><span class="line"><span class="hljs-keyword">self</span>.navigationBar.translucent = <span class="hljs-literal">YES</span>;</span><br></pre></td></tr></table></figure>
+                <html><head></head><body><h2 id="效果图"><a href="#效果图" class="headerlink" title="效果图"></a>效果图</h2><p><img src="https://og5r5kasb.qnssl.com/wp-content/uploads/2015/12/1.pic_.jpg" alt="效果图"><br>导航栏是全透明的，但是导航栏的 item 还是正常的。</p>
+<figure class="highlight objectivec hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[<span class="hljs-keyword">self</span>.navigationBar setBackgroundImage:[<span class="hljs-built_in">UIImage</span> new] forBarMetrics:<span class="hljs-built_in">UIBarMetricsDefault</span>];</span><br><span class="line"><span class="hljs-keyword">self</span>.navigationBar.shadowImage = [<span class="hljs-built_in">UIImage</span> new];</span><br><span class="line"><span class="hljs-keyword">self</span>.navigationBar.translucent = <span class="hljs-literal">YES</span>;</span><br></pre></td></tr></tbody></table></figure>
 <p>如果你的当前<strong>viewController</strong>不是<strong>navigationController</strong>navigationController，请把<strong>self.navigationBar</strong>改为<strong>self.navigationController.navigationBar</strong>。</p>
 
                 
@@ -541,7 +541,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><ul>
+                <html><head></head><body><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><ul>
 <li>delegate是一种设计模式，不是object-c特有</li>
 <li>object-c通过protocol实现delegat</li>
 
@@ -594,7 +594,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>此现象只出现在新增或者编辑邮箱密码的时候出现，发送邮箱时服务端会返回501，此时是由于QQ企业邮箱强制要求第一次登录必须修改密码。<br>解决方案是：</p>
+                <html><head></head><body><p>此现象只出现在新增或者编辑邮箱密码的时候出现，发送邮箱时服务端会返回501，此时是由于QQ企业邮箱强制要求第一次登录必须修改密码。<br>解决方案是：</p>
 <ol>
 <li>登录QQ企业邮箱</li>
 
@@ -989,7 +989,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

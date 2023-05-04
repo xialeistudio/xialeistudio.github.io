@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -159,8 +159,8 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>log4php是apache基金会下的一个开源项目，灵活、强大，已经有几个项目使用了log4php处理日志，目前遇到的问题是服务器太多的时候日志如何统一管理，本来想使用数据库存储。但是日志格式成了一个问题，而且不利于扩展，如果临时需要保存到文件，又要更改log4php的配置。<br>好在log4php提供了syslog的一个appender，可以将日志写入syslog;</p>
-<h2 id="log4php配置"><a href="#log4php配置" class="headerlink" title="log4php配置"></a>log4php配置</h2><figure class="highlight roboconf hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">log4php.rootLogger=INFO, stdout, stderr</span><br><span class="line">log4php.appender.stdout=LoggerAppenderConsole</span><br><span class="line">log4php.appender.stdout.layout=LoggerLayoutPattern</span><br><span class="line">log4php.appender.stdout.layout.ConversionPattern=%date&#123;<span class="hljs-attribute">Y-m-d H</span>:i:s&#125; [%-5p] %m%n</span><br><span class="line">log4php<span class="hljs-variable">.appender</span><span class="hljs-variable">.stdout</span><span class="hljs-variable">.threshold</span>=INFO</span><br><span class="line"></span><br><span class="line">log4php<span class="hljs-variable">.appender</span><span class="hljs-variable">.stderr</span>=LoggerAppenderSyslog</span><br><span class="line">log4php<span class="hljs-variable">.appender</span><span class="hljs-variable">.stderr</span><span class="hljs-variable">.ident</span>=qun<span class="hljs-variable">.hk-task</span></span><br><span class="line">log4php<span class="hljs-variable">.appender</span><span class="hljs-variable">.stderr</span><span class="hljs-variable">.priority</span>=ERR</span><br><span class="line">log4php<span class="hljs-variable">.appender</span><span class="hljs-variable">.stderr</span><span class="hljs-variable">.facility</span>=LOCAL0</span><br><span class="line">log4php<span class="hljs-variable">.appender</span><span class="hljs-variable">.stderr</span><span class="hljs-variable">.layout</span>=LoggerLayoutPattern</span><br><span class="line">log4php<span class="hljs-variable">.appender</span><span class="hljs-variable">.stderr</span><span class="hljs-variable">.layout</span><span class="hljs-variable">.ConversionPattern</span>=%date&#123;Y-m-d H:i:s&#125; %m%n</span><br><span class="line">log4php<span class="hljs-variable">.appender</span><span class="hljs-variable">.stderr</span><span class="hljs-variable">.threshold</span>=WARN</span><br></pre></td></tr></table></figure>
+                <html><head></head><body><p>log4php是apache基金会下的一个开源项目，灵活、强大，已经有几个项目使用了log4php处理日志，目前遇到的问题是服务器太多的时候日志如何统一管理，本来想使用数据库存储。但是日志格式成了一个问题，而且不利于扩展，如果临时需要保存到文件，又要更改log4php的配置。<br>好在log4php提供了syslog的一个appender，可以将日志写入syslog;</p>
+<h2 id="log4php配置"><a href="#log4php配置" class="headerlink" title="log4php配置"></a>log4php配置</h2><figure class="highlight roboconf hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">log4php.rootLogger=INFO, stdout, stderr</span><br><span class="line">log4php.appender.stdout=LoggerAppenderConsole</span><br><span class="line">log4php.appender.stdout.layout=LoggerLayoutPattern</span><br><span class="line">log4php.appender.stdout.layout.ConversionPattern=%date{<span class="hljs-attribute">Y-m-d H</span>:i:s} [%-5p] %m%n</span><br><span class="line">log4php<span class="hljs-variable">.appender</span><span class="hljs-variable">.stdout</span><span class="hljs-variable">.threshold</span>=INFO</span><br><span class="line"></span><br><span class="line">log4php<span class="hljs-variable">.appender</span><span class="hljs-variable">.stderr</span>=LoggerAppenderSyslog</span><br><span class="line">log4php<span class="hljs-variable">.appender</span><span class="hljs-variable">.stderr</span><span class="hljs-variable">.ident</span>=qun<span class="hljs-variable">.hk-task</span></span><br><span class="line">log4php<span class="hljs-variable">.appender</span><span class="hljs-variable">.stderr</span><span class="hljs-variable">.priority</span>=ERR</span><br><span class="line">log4php<span class="hljs-variable">.appender</span><span class="hljs-variable">.stderr</span><span class="hljs-variable">.facility</span>=LOCAL0</span><br><span class="line">log4php<span class="hljs-variable">.appender</span><span class="hljs-variable">.stderr</span><span class="hljs-variable">.layout</span>=LoggerLayoutPattern</span><br><span class="line">log4php<span class="hljs-variable">.appender</span><span class="hljs-variable">.stderr</span><span class="hljs-variable">.layout</span><span class="hljs-variable">.ConversionPattern</span>=%date{Y-m-d H:i:s} %m%n</span><br><span class="line">log4php<span class="hljs-variable">.appender</span><span class="hljs-variable">.stderr</span><span class="hljs-variable">.threshold</span>=WARN</span><br></pre></td></tr></tbody></table></figure>
 <p>这里使用两个输出目的地,stdout输出到终端，stderr输出到syslod，log4php配置对应rsyslog的配置关系为：</p>
 
                 
@@ -212,7 +212,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>syslog作为Linux发行版一个重要组件，相信大家都不陌生，而如果每台服务器都独立使用一份的话，不能做到日志统一管理，对于以后的日志查询不太方便。<br>syslog有标准的协议格式，这里不做讨论，有兴趣的可以基于协议的报文结构使用socket编程实现。</p>
+                <html><head></head><body><p>syslog作为Linux发行版一个重要组件，相信大家都不陌生，而如果每台服务器都独立使用一份的话，不能做到日志统一管理，对于以后的日志查询不太方便。<br>syslog有标准的协议格式，这里不做讨论，有兴趣的可以基于协议的报文结构使用socket编程实现。</p>
 <h2 id="部署服务端"><a href="#部署服务端" class="headerlink" title="部署服务端"></a>部署服务端</h2><p>本文使用Nodejs来部署一台syslog服务端。</p>
 <ol>
 
@@ -313,7 +313,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>ReactNative常用的一种布局是TabBar+Navigator布局，底部几个固定的标签，顶部有个导航栏，如果进入子页面的话，底部TabBar是需要隐藏起来的。</p>
+                <html><head></head><body><p>ReactNative常用的一种布局是TabBar+Navigator布局，底部几个固定的标签，顶部有个导航栏，如果进入子页面的话，底部TabBar是需要隐藏起来的。</p>
 <p>不过官方没有提供这个属性，github和StackOverflow上的答案有个bug，平时没什么问题，如果手指左滑一点然后松开，这时候路由没切换，但是TarBar会显示，然后不消失。</p>
 <p>目前能够完美解决这个问题的方案如下：</p>
 
@@ -414,9 +414,9 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>最近在做基于sphinx的全文搜索引擎，使用PHP进行数据读取，但是服务器使用的PHP版本是PHP7，pecl.php.net中没有提供PHP7的版本。手痒点到source code中看了一下。<br>看到源代码中有的<strong>headers</strong>中有个<strong>php7</strong>的，点击<strong>shortlog</strong>进去看了一下，最新更新日期是2017-02-10，挺新的，应该是针对PHP7开发的版本，只不过未发布编译版本，想着linux下的软件有源代码基本都能自行编译。故选择了最新的PHP7快照下载。</p>
-<h2 id="开始安装"><a href="#开始安装" class="headerlink" title="开始安装"></a>开始安装</h2><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">wget http://git.php.net/?p=pecl/search_engine/sphinx.git;a=snapshot;h=339e123acb0ce7beb2d9d4f9094d6f8bcf15fb54;sf=tgz</span><br><span class="line">tar xvfz sphinx-339e123.tar.gz</span><br><span class="line"><span class="hljs-built_in">cd</span> sphinx-339e123</span><br><span class="line">phpize</span><br><span class="line">./configure</span><br><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
-<p>安装完毕后会在PHP的配置文件目录多出sphinx.ini，在扩展目录多出sphinx.so文件。终端执行<br><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">phpenmod sphinx</span><br></pre></td></tr></table></figure></p>
+                <html><head></head><body><p>最近在做基于sphinx的全文搜索引擎，使用PHP进行数据读取，但是服务器使用的PHP版本是PHP7，pecl.php.net中没有提供PHP7的版本。手痒点到source code中看了一下。<br>看到源代码中有的<strong>headers</strong>中有个<strong>php7</strong>的，点击<strong>shortlog</strong>进去看了一下，最新更新日期是2017-02-10，挺新的，应该是针对PHP7开发的版本，只不过未发布编译版本，想着linux下的软件有源代码基本都能自行编译。故选择了最新的PHP7快照下载。</p>
+<h2 id="开始安装"><a href="#开始安装" class="headerlink" title="开始安装"></a>开始安装</h2><figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">wget http://git.php.net/?p=pecl/search_engine/sphinx.git;a=snapshot;h=339e123acb0ce7beb2d9d4f9094d6f8bcf15fb54;sf=tgz</span><br><span class="line">tar xvfz sphinx-339e123.tar.gz</span><br><span class="line"><span class="hljs-built_in">cd</span> sphinx-339e123</span><br><span class="line">phpize</span><br><span class="line">./configure</span><br><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></tbody></table></figure>
+<p>安装完毕后会在PHP的配置文件目录多出sphinx.ini，在扩展目录多出sphinx.so文件。终端执行<br></p><figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">phpenmod sphinx</span><br></pre></td></tr></tbody></table></figure><p></p>
 
                 
             
@@ -467,9 +467,9 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>socket.io一般会配合<strong>room</strong>进行消息转发，目前我的做法如下:</p>
+                <html><head></head><body><p>socket.io一般会配合<strong>room</strong>进行消息转发，目前我的做法如下:</p>
 <ul>
-<li><p>服务端</p>
+<li>服务端<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">io.on(<span class="hljs-string">'connection'</span>,<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">socket</span>)</span>{</span><br><span class="line">    socket.on(<span class="hljs-string">'join'</span>,<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">roomId</span>)</span>{</span><br><span class="line">        socket.join(roomId);</span><br><span class="line">    });</span><br><span class="line">});</span><br></pre></td></tr></tbody></table></figure></li>
 
                 
             
@@ -520,7 +520,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>服务器密码往往是随机字符串，难以记忆，通过配置公钥登录的方式来进行登录。</p>
+                <html><head></head><body><p>服务器密码往往是随机字符串，难以记忆，通过配置公钥登录的方式来进行登录。</p>
 <h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><ul>
 <li>服务器A 192.168.1.2 客户机</li>
 
@@ -573,7 +573,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>早些时候用的ubuntu，安装jekyll确实挺简单，可能是终端强大吧。最近工作环境切换到windows，无奈想写博文的时候却发现需要切换到ubuntu，不是那么方便。打算在windows上部署一下jekyll。</p>
+                <html><head></head><body><p>早些时候用的ubuntu，安装jekyll确实挺简单，可能是终端强大吧。最近工作环境切换到windows，无奈想写博文的时候却发现需要切换到ubuntu，不是那么方便。打算在windows上部署一下jekyll。</p>
 <h2 id="软件环境"><a href="#软件环境" class="headerlink" title="软件环境"></a>软件环境</h2><ul>
 <li>Windows 10 企业版</li>
 
@@ -626,9 +626,9 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>试想一个很简单的场景，在使用Yii2开发时，如果对已经有数据的数据表结构进行编辑的话，需要同步数据结构需要在本地导出一份SQL，放到线上去执行SQL，非常的不方便。<br>而有了Yii2 migrate工具之后，这个问题简直不是问题。以下对常用的表结构操作进行演示。</p>
+                <html><head></head><body><p>试想一个很简单的场景，在使用Yii2开发时，如果对已经有数据的数据表结构进行编辑的话，需要同步数据结构需要在本地导出一份SQL，放到线上去执行SQL，非常的不方便。<br>而有了Yii2 migrate工具之后，这个问题简直不是问题。以下对常用的表结构操作进行演示。</p>
 <h2 id="关键命令"><a href="#关键命令" class="headerlink" title="关键命令"></a>关键命令</h2><ul>
-<li><p>创建migrate</p>
+<li>创建migrate<figure class="highlight apache hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-attribute">yii</span> migrate/create<span class="hljs-meta"> [名称]</span></span><br></pre></td></tr></tbody></table></figure></li>
 
                 
             
@@ -973,7 +973,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

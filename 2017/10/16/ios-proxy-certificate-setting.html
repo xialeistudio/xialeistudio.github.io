@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,9 +157,9 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>系统是iOS11，电脑端用的charles代理，目前需要查看一些https网站返回的数据，还是使用老方法把charles的根证书设为信任，手机也打开<strong>chls.pro/ssl</strong>把证书添加到系统了。<br>但是抓包的时候依旧无法访问，safari直接提示“该网站提供的证书不可信任”，查看详情发现charles证书虽然安装，但是没生效。</p>
+                <html><head></head><body><h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>系统是iOS11，电脑端用的charles代理，目前需要查看一些https网站返回的数据，还是使用老方法把charles的根证书设为信任，手机也打开<strong>chls.pro/ssl</strong>把证书添加到系统了。<br>但是抓包的时候依旧无法访问，safari直接提示“该网站提供的证书不可信任”，查看详情发现charles证书虽然安装，但是没生效。</p>
 <h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><p>可能是iOS加强了安全性以及用户体验，往常的时候一旦我们加入证书，除非卸载，该证书是一直生效的（排除掉被吊销或者过期情况），而iOS11在<strong>设置-通用-关于手机-证书信任设置</strong>中可以方便开关证书。<br>之前在iOS10.3也出现过问题，解决方法应该也是一致的。</p>
-
+</body></html>
             </div>
             
         </div>
@@ -390,7 +390,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

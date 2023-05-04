@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,7 +157,7 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>数据表如下：</p>
+                <html><head></head><body><h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>数据表如下：</p>
 <p>department表</p>
 <table>
 <thead>
@@ -191,18 +191,18 @@ var _hmt = _hmt || [];
 </tbody>
 </table>
 <p>需求是得到以下结构的数据:</p>
-<figure class="highlight json hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="hljs-attr">"id"</span>:<span class="hljs-number">1</span>,</span><br><span class="line">        <span class="hljs-attr">"name"</span>:<span class="hljs-string">"test"</span>,</span><br><span class="line">        <span class="hljs-attr">"department_id"</span>:<span class="hljs-number">1</span>,</span><br><span class="line">        <span class="hljs-attr">"department"</span>:&#123;</span><br><span class="line">            <span class="hljs-attr">"id"</span>:<span class="hljs-number">1</span>,</span><br><span class="line">            <span class="hljs-attr">"name"</span>:<span class="hljs-string">"测试部门"</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<figure class="highlight json hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">    {</span><br><span class="line">        <span class="hljs-attr">"id"</span>:<span class="hljs-number">1</span>,</span><br><span class="line">        <span class="hljs-attr">"name"</span>:<span class="hljs-string">"test"</span>,</span><br><span class="line">        <span class="hljs-attr">"department_id"</span>:<span class="hljs-number">1</span>,</span><br><span class="line">        <span class="hljs-attr">"department"</span>:{</span><br><span class="line">            <span class="hljs-attr">"id"</span>:<span class="hljs-number">1</span>,</span><br><span class="line">            <span class="hljs-attr">"name"</span>:<span class="hljs-string">"测试部门"</span></span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">]</span><br></pre></td></tr></tbody></table></figure>
 <h2 id="方法一-循环查询"><a href="#方法一-循环查询" class="headerlink" title="方法一:循环查询"></a>方法一:循环查询</h2><ol>
 <li>查询用户列表</li>
 <li>循环用户列表查询对应的部门信息</li>
 </ol>
-<figure class="highlight php hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$users = $db-&gt;query(<span class="hljs-string">'SELECT * FROM `user`'</span>);</span><br><span class="line"><span class="hljs-keyword">foreach</span>($users <span class="hljs-keyword">as</span> &amp;$user) &#123;</span><br><span class="line">    $users[<span class="hljs-string">'department'</span>] = $db-&gt;query(<span class="hljs-string">'SELECT * FROM `department` WHERE `id` = '</span>.$user[<span class="hljs-string">'department_id'</span>]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight php hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$users = $db-&gt;query(<span class="hljs-string">'SELECT * FROM `user`'</span>);</span><br><span class="line"><span class="hljs-keyword">foreach</span>($users <span class="hljs-keyword">as</span> &amp;$user) {</span><br><span class="line">    $users[<span class="hljs-string">'department'</span>] = $db-&gt;query(<span class="hljs-string">'SELECT * FROM `department` WHERE `id` = '</span>.$user[<span class="hljs-string">'department_id'</span>]);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>该方法查询次数为：1+N(1次查询列表，N次查询部门)，性能最低，不可取。</p>
 <h2 id="方法二：连表"><a href="#方法二：连表" class="headerlink" title="方法二：连表"></a>方法二：连表</h2><ol>
 <li>通过连表查询用户和部门数据</li>
 <li>处理返回数据</li>
 </ol>
-<figure class="highlight php hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$users = $db-&gt;query(<span class="hljs-string">'SELECT * FROM `user` INNER JOIN `department` ON `department`.`id` = `user`.`department_id`'</span>);</span><br><span class="line"><span class="hljs-comment">// 手动处理返回结果为需求结构</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight php hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$users = $db-&gt;query(<span class="hljs-string">'SELECT * FROM `user` INNER JOIN `department` ON `department`.`id` = `user`.`department_id`'</span>);</span><br><span class="line"><span class="hljs-comment">// 手动处理返回结果为需求结构</span></span><br></pre></td></tr></tbody></table></figure>
 <p>该方法其实也有局限性，如果 <em>user</em> 和 <em>department</em> 不在同一个服务器是不可以连表的。</p>
 <h2 id="方法三：1-1查询"><a href="#方法三：1-1查询" class="headerlink" title="方法三：1+1查询"></a>方法三：1+1查询</h2><ol>
 <li>该方法先查询1次用户列表</li>
@@ -211,9 +211,9 @@ var _hmt = _hmt || [];
 <li>合并最终数据</li>
 </ol>
 <p>代码大致如下：</p>
-<figure class="highlight php hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$users = $db-&gt;query(<span class="hljs-string">'SELECT * FROM `user`'</span>);</span><br><span class="line">$departmentIds =[ ];</span><br><span class="line"><span class="hljs-keyword">foreach</span>($users <span class="hljs-keyword">as</span> $user) &#123;</span><br><span class="line">    <span class="hljs-keyword">if</span>(!in_array($user[<span class="hljs-string">'department_id'</span>], $departmentIds)) &#123;</span><br><span class="line">        $departmentIds[] = $user[<span class="hljs-string">'department_id'</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">$departments = $db-&gt;query(<span class="hljs-string">'SELECT * FROM `department` WHERE id in ('</span>.join(<span class="hljs-string">','</span>,$department_id).<span class="hljs-string">')'</span>);</span><br><span class="line">$map = []; <span class="hljs-comment">// [部门ID =&gt; 部门item]</span></span><br><span class="line"><span class="hljs-keyword">foreach</span>($departments <span class="hljs-keyword">as</span> $department) &#123;</span><br><span class="line">    $map[$department[<span class="hljs-string">'id'</span>]] = $department;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">foreach</span>($users <span class="hljs-keyword">as</span> $user) &#123;</span><br><span class="line">    $user[<span class="hljs-string">'department'</span>] = $map[$user[<span class="hljs-string">'department_id'</span>]] ?? <span class="hljs-keyword">null</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight php hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$users = $db-&gt;query(<span class="hljs-string">'SELECT * FROM `user`'</span>);</span><br><span class="line">$departmentIds =[ ];</span><br><span class="line"><span class="hljs-keyword">foreach</span>($users <span class="hljs-keyword">as</span> $user) {</span><br><span class="line">    <span class="hljs-keyword">if</span>(!in_array($user[<span class="hljs-string">'department_id'</span>], $departmentIds)) {</span><br><span class="line">        $departmentIds[] = $user[<span class="hljs-string">'department_id'</span>];</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line">$departments = $db-&gt;query(<span class="hljs-string">'SELECT * FROM `department` WHERE id in ('</span>.join(<span class="hljs-string">','</span>,$department_id).<span class="hljs-string">')'</span>);</span><br><span class="line">$map = []; <span class="hljs-comment">// [部门ID =&gt; 部门item]</span></span><br><span class="line"><span class="hljs-keyword">foreach</span>($departments <span class="hljs-keyword">as</span> $department) {</span><br><span class="line">    $map[$department[<span class="hljs-string">'id'</span>]] = $department;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">foreach</span>($users <span class="hljs-keyword">as</span> $user) {</span><br><span class="line">    $user[<span class="hljs-string">'department'</span>] = $map[$user[<span class="hljs-string">'department_id'</span>]] ?? <span class="hljs-keyword">null</span>;</span><br><span class="line"> }</span><br></pre></td></tr></tbody></table></figure>
 <p>该方法对两个表没有限制，在目前微服务盛行的情况下是比较好的一种做法。</p>
-
+</body></html>
             </div>
             
         </div>
@@ -452,7 +452,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

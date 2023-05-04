@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,21 +157,21 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <p>一般来说，在BPushReceiver的onNotificationClicked或者onMessage方法收到推送消息后会去启动一个activity。此时整个应用有以下几种状态：</p>
+                <html><head></head><body><p>一般来说，在BPushReceiver的onNotificationClicked或者onMessage方法收到推送消息后会去启动一个activity。此时整个应用有以下几种状态：</p>
 <ul>
 <li>应用进程不存在</li>
 <li>应用进程存在，但是不在前台</li>
 <li>应用进程存在，在前台</li>
 </ul>
 <p>在BPushReceiver的onNotificationClicked或者onMessage方法中使用Intent来启动activity：</p>
-<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Intent intent = <span class="hljs-keyword">new</span> Intent();</span><br><span class="line">intent.setClass(context.getApplicationContext(), MainActivity<span class="hljs-class">.<span class="hljs-keyword">class</span>)</span>;</span><br><span class="line">intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);</span><br><span class="line"><span class="hljs-keyword">if</span> (url != <span class="hljs-keyword">null</span> &amp;&amp; !url.isEmpty()) &#123;</span><br><span class="line">    Bundle bundle = <span class="hljs-keyword">new</span> Bundle();</span><br><span class="line">    bundle.putString(<span class="hljs-string">"url"</span>, url);</span><br><span class="line">    intent.putExtras(bundle);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Log.d(TAG, <span class="hljs-string">"start app"</span>);</span><br><span class="line">context.getApplicationContext().startActivity(intent);</span><br></pre></td></tr></table></figure>
+<figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Intent intent = <span class="hljs-keyword">new</span> Intent();</span><br><span class="line">intent.setClass(context.getApplicationContext(), MainActivity<span class="hljs-class">.<span class="hljs-keyword">class</span>)</span>;</span><br><span class="line">intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);</span><br><span class="line"><span class="hljs-keyword">if</span> (url != <span class="hljs-keyword">null</span> &amp;&amp; !url.isEmpty()) {</span><br><span class="line">    Bundle bundle = <span class="hljs-keyword">new</span> Bundle();</span><br><span class="line">    bundle.putString(<span class="hljs-string">"url"</span>, url);</span><br><span class="line">    intent.putExtras(bundle);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">Log.d(TAG, <span class="hljs-string">"start app"</span>);</span><br><span class="line">context.getApplicationContext().startActivity(intent);</span><br></pre></td></tr></tbody></table></figure>
 <p>需要注意的是，针对不同的应用状态，MainActivity中触发的方法也不同：</p>
 <ul>
 <li>应用进程不存在时,onCreate被调用</li>
 <li>应用进程存在，不管是不是在前台，onNewIntent被调用</li>
 </ul>
 <p>针对以上状态，合理的使用onCreate和onNewIntent就可以在任何时候呆参数启动APP了。</p>
-
+</body></html>
             </div>
             
         </div>
@@ -394,7 +394,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

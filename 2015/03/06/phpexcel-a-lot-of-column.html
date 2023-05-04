@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,10 +157,10 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <p>今天导出Excel的时候，列不是固定的，而且有差不多几十个，横轴由’A’变为了’AA’，给导出时增加了难度，因为要去算列名称，不过换个方式想一下，发现是很有规律的26进制数。 发现秘诀后就好办了，发一个10进制转26进制的方法。</p>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight php hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">private</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">numberToStr26</span><span class="hljs-params">($n)</span></span></span><br><span class="line"><span class="hljs-function"></span>&#123;</span><br><span class="line">    $s = <span class="hljs-string">''</span>;</span><br><span class="line">    <span class="hljs-keyword">while</span> ($n &gt; <span class="hljs-number">0</span>) &#123;</span><br><span class="line">        $m = $n % <span class="hljs-number">26</span>;</span><br><span class="line">        <span class="hljs-keyword">if</span> ($m == <span class="hljs-number">0</span>) $m = <span class="hljs-number">26</span>;</span><br><span class="line">        $s = chr($m + <span class="hljs-number">64</span>) . $s;</span><br><span class="line">        $n = ($n - $m) / <span class="hljs-number">26</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-keyword">return</span> $s;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+                <html><head></head><body><p>今天导出Excel的时候，列不是固定的，而且有差不多几十个，横轴由’A’变为了’AA’，给导出时增加了难度，因为要去算列名称，不过换个方式想一下，发现是很有规律的26进制数。 发现秘诀后就好办了，发一个10进制转26进制的方法。</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight php hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">private</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">numberToStr26</span><span class="hljs-params">($n)</span></span></span><br><span class="line"><span class="hljs-function"></span>{</span><br><span class="line">    $s = <span class="hljs-string">''</span>;</span><br><span class="line">    <span class="hljs-keyword">while</span> ($n &gt; <span class="hljs-number">0</span>) {</span><br><span class="line">        $m = $n % <span class="hljs-number">26</span>;</span><br><span class="line">        <span class="hljs-keyword">if</span> ($m == <span class="hljs-number">0</span>) $m = <span class="hljs-number">26</span>;</span><br><span class="line">        $s = chr($m + <span class="hljs-number">64</span>) . $s;</span><br><span class="line">        $n = ($n - $m) / <span class="hljs-number">26</span>;</span><br><span class="line">    }</span><br><span class="line">    <span class="hljs-keyword">return</span> $s;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <h2 id="效果图"><a href="#效果图" class="headerlink" title="效果图"></a>效果图</h2><p><img src="https://og5r5kasb.qnssl.com/wp-content/uploads/2015/03/QQ%E6%88%AA%E5%9B%BE20150307113935.png" alt="效果图"></p>
-
+</body></html>
             </div>
             
         </div>
@@ -391,7 +391,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,14 +157,14 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <p>highchats是什么就不介绍了。一个JS绘图工具库，基于JQ，使用简单方便，但是不注意的话会坑人。</p>
+                <html><head></head><body><p>highchats是什么就不介绍了。一个JS绘图工具库，基于JQ，使用简单方便，但是不注意的话会坑人。</p>
 <p>今天兴致满满的去绘图，后端数据也返回了。可是一个纠结的问题困扰了我一下午！</p>
 <p>后端数据返回的JSON是</p>
-<figure class="highlight json hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="hljs-string">"0"</span>,<span class="hljs-string">"0"</span>,<span class="hljs-string">"0"</span>]</span><br></pre></td></tr></table></figure>
+<figure class="highlight json hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="hljs-string">"0"</span>,<span class="hljs-string">"0"</span>,<span class="hljs-string">"0"</span>]</span><br></pre></td></tr></tbody></table></figure>
 <p>这种形式，JSON.parse解析之后返回的是一个字符数组，而不是数字数组，解决方案是利用JS做一次类型转换</p>
-<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i <span class="hljs-keyword">in</span> data)&#123;</span><br><span class="line">    data[i]=<span class="hljs-built_in">parseInt</span>(data[i]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i <span class="hljs-keyword">in</span> data){</span><br><span class="line">    data[i]=<span class="hljs-built_in">parseInt</span>(data[i]);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>for(var i in data){<br>    data[i]=parseInt(data[i]);<br>}<br>图形就可以正常显示了。</p>
-
+</body></html>
             </div>
             
         </div>
@@ -387,7 +387,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

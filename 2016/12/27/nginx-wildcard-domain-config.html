@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,12 +157,12 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <p>最近一个项目需要承载高并发请求，所以在后端语言上选择了<strong>NodeJs</strong>，但是nodejs有时候读取不到请求的主机名，所以想到使用<strong>nginx+nodejs</strong>的方式进行处理。</p>
-<h2 id="Nginx-配置"><a href="#Nginx-配置" class="headerlink" title="Nginx 配置"></a>Nginx 配置</h2><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">upstream io_nodes &#123;</span><br><span class="line">        server 127.0.0.1:8081;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">        listen 80;</span><br><span class="line">        listen [::]:80;</span><br><span class="line">        root /var/www/html;</span><br><span class="line">        server_name ~^(?&lt;subdomain&gt;.+).example.com;</span><br><span class="line"></span><br><span class="line">        location / &#123;</span><br><span class="line">	    proxy_set_header Host $host;</span><br><span class="line">            proxy_set_header X-AppId $subdomain;</span><br><span class="line">            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">            proxy_pass http://io_nodes;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+                <html><head></head><body><p>最近一个项目需要承载高并发请求，所以在后端语言上选择了<strong>NodeJs</strong>，但是nodejs有时候读取不到请求的主机名，所以想到使用<strong>nginx+nodejs</strong>的方式进行处理。</p>
+<h2 id="Nginx-配置"><a href="#Nginx-配置" class="headerlink" title="Nginx 配置"></a>Nginx 配置</h2><figure class="highlight plain hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">upstream io_nodes {</span><br><span class="line">        server 127.0.0.1:8081;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">server {</span><br><span class="line">        listen 80;</span><br><span class="line">        listen [::]:80;</span><br><span class="line">        root /var/www/html;</span><br><span class="line">        server_name ~^(?&lt;subdomain&gt;.+).example.com;</span><br><span class="line"></span><br><span class="line">        location / {</span><br><span class="line">	    proxy_set_header Host $host;</span><br><span class="line">            proxy_set_header X-AppId $subdomain;</span><br><span class="line">            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">            proxy_pass http://io_nodes;</span><br><span class="line">        }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>重启nginx服务器即可。nginx会将所有的 <strong><subdomain>.example.com</subdomain></strong> 格式的域名反向代理到本机的<strong>8081</strong>端口，该端口为<strong>nodejs</strong>监听端口。</p>
 <h2 id="NodeJs-读取请求域名以及子域名名称"><a href="#NodeJs-读取请求域名以及子域名名称" class="headerlink" title="NodeJs 读取请求域名以及子域名名称"></a>NodeJs 读取请求域名以及子域名名称</h2><p>使用express</p>
-<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">var</span> host = req.headers.host;</span><br><span class="line"><span class="hljs-keyword">var</span> appid = req.headers[<span class="hljs-string">'x-appid'</span>];</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">var</span> host = req.headers.host;</span><br><span class="line"><span class="hljs-keyword">var</span> appid = req.headers[<span class="hljs-string">'x-appid'</span>];</span><br></pre></td></tr></tbody></table></figure>
+</body></html>
             </div>
             
         </div>
@@ -393,7 +393,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

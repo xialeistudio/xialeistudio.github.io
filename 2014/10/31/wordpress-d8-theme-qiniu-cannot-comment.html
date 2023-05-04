@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,15 +157,15 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <p>上午有热心的网友给我反映说评论功能出bug了，初步查看是七牛出了问题，利用chrome的开发者工具可以查看请求。<br><img src="https://og5r5kasb.qnssl.com/wp-content/uploads/2014/11/blob3.png" alt="示意图"><br>PS：这张图是今天截的，所以域名是正常的，昨天实际上请求的是 static.ddhigh.com (本站的CDN域名)。<br>查看HTTP请求发现整站就请求了一个jquery文件，但是这个文件比较大有140K，查看源代码发现评论的代码已经合并在里面了。<br><img src="https://og5r5kasb.qnssl.com/wp-content/uploads/2014/11/blob4.png" alt="示意图"><br>按照以上步骤可以查看到评论时执行的脚本，当然这里的域名已经修复了。</p>
+                <html><head></head><body><p>上午有热心的网友给我反映说评论功能出bug了，初步查看是七牛出了问题，利用chrome的开发者工具可以查看请求。<br><img src="https://og5r5kasb.qnssl.com/wp-content/uploads/2014/11/blob3.png" alt="示意图"><br>PS：这张图是今天截的，所以域名是正常的，昨天实际上请求的是 static.ddhigh.com (本站的CDN域名)。<br>查看HTTP请求发现整站就请求了一个jquery文件，但是这个文件比较大有140K，查看源代码发现评论的代码已经合并在里面了。<br><img src="https://og5r5kasb.qnssl.com/wp-content/uploads/2014/11/blob4.png" alt="示意图"><br>按照以上步骤可以查看到评论时执行的脚本，当然这里的域名已经修复了。</p>
 <p>278行，昨天的是 </p>
-<figure class="highlight avrasm hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-symbol">url:</span>window._deel.url+<span class="hljs-string">"/ajax/comment.php"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight reasonml hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">url:window.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">_deel</span>.</span></span>url+<span class="hljs-string">"/ajax/comment.php"</span></span><br></pre></td></tr></tbody></table></figure>
 <p>在控制台输入</p>
-<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">console</span>.log(_deel);</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">console</span>.log(_deel);</span><br></pre></td></tr></tbody></table></figure>
 <p><img src="https://og5r5kasb.qnssl.com/wp-content/uploads/2014/11/blob5.png" alt="示意图"></p>
 <p>域名是CDN域名，所以ajax请求实际上被提交到<strong>七牛</strong>去了。</p>
 <h2 id="修正方法"><a href="#修正方法" class="headerlink" title="修正方法"></a>修正方法</h2><p>利用ssh工具连接你的服务器（不是七牛），找到对应的jquery文件278行，改成你的站点域名（如本站的<a href="http://www.ddhigh.com）,更新下缓存即可。" target="_blank" rel="noopener">www.ddhigh.com）,更新下缓存即可。</a></p>
-
+</body></html>
             </div>
             
         </div>
@@ -392,7 +392,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

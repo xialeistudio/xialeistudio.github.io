@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -169,7 +169,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>今天访问接口时返回 <strong>接口写入日志失败</strong>，通过排查后发现 <code>storage/logs</code>下面出现了<code>root</code>用户新建的日志，导致<code>www</code>用户无法写入日志。</p>
+                <html><head></head><body><p>今天访问接口时返回 <strong>接口写入日志失败</strong>，通过排查后发现 <code>storage/logs</code>下面出现了<code>root</code>用户新建的日志，导致<code>www</code>用户无法写入日志。</p>
 <p>通过排查发现，<code>crontab</code>写入了<code>laravel</code>的<code>定时任务命令</code>。默认情况下，crontab的任务是使用<code>root</code>用户去执行的，因此<code>laravel定时任务</code>新建的文件属主自然成为了<code>root</code>。</p>
 <h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>解决方法就是<code>使用指定用户来运行 crontab 任务</code>。比如使用<code>www</code>用户来运行<code>laravel</code>的计划任务命令。</p>
 
@@ -487,7 +487,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,17 +157,17 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <p>Yii是基于组件的PHP MVC框架，yii的用户组件调用很方便，但是如果有遇到一个站点有多种用户的时候，如前台用户，后台用户，就需要增加User组件了。</p>
+                <html><head></head><body><p>Yii是基于组件的PHP MVC框架，yii的用户组件调用很方便，但是如果有遇到一个站点有多种用户的时候，如前台用户，后台用户，就需要增加User组件了。</p>
 <p>简单来说，就是新建一个用户类去继承 CWebUser类，比如</p>
 <p>WebUser继承CWebUser，配置文件在components中增加</p>
-<figure class="highlight php hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-string">'user'</span>=&gt;<span class="hljs-keyword">array</span>(</span><br><span class="line">    <span class="hljs-string">'class'</span>=&gt;<span class="hljs-string">'WebUser'</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<figure class="highlight php hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-string">'user'</span>=&gt;<span class="hljs-keyword">array</span>(</span><br><span class="line">    <span class="hljs-string">'class'</span>=&gt;<span class="hljs-string">'WebUser'</span></span><br><span class="line">)</span><br></pre></td></tr></tbody></table></figure>
 <p>以上就创建了一个前台用户,调用方式 Yii::app()-&gt;user</p>
 <p>后台用户可以这么写</p>
 <p>AdminUser继承CWebUser,配置文件在components中增加</p>
-<figure class="highlight php hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-string">'admin'</span>=&gt;<span class="hljs-keyword">array</span>(</span><br><span class="line">    <span class="hljs-string">'class'</span>=&gt;<span class="hljs-string">'AdminUser'</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<figure class="highlight php hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-string">'admin'</span>=&gt;<span class="hljs-keyword">array</span>(</span><br><span class="line">    <span class="hljs-string">'class'</span>=&gt;<span class="hljs-string">'AdminUser'</span></span><br><span class="line">)</span><br></pre></td></tr></tbody></table></figure>
 <p>这样就创建了一个后台用户，调用方式 Yii::app()-&gt;admin</p>
 <p>这种方法是本人所知最科学的，比用session来区分好多了。毕竟很多时候，能用框架现有的方法就用框架的方法。</p>
-
+</body></html>
             </div>
             
         </div>
@@ -176,7 +176,7 @@ var _hmt = _hmt || [];
             <div class="level-start">
                 <div class="level-item">
                     <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/yii/">yii</a>
+                    <a class="has-link-grey -link" href="/tags/yii/" rel="tag">yii</a>
                 </div>
             </div>
         </div>
@@ -399,7 +399,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

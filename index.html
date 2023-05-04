@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,7 +157,7 @@ var _hmt = _hmt || [];
         </h1>
         <div class="content">
             
-            <p>本文分享一下五一期间的读书感悟，包括MySQL、Redis、Aurora。</p>
+            <html><head></head><body><p>本文分享一下五一期间的读书感悟，包括MySQL、Redis、Aurora。</p></body></html>
             
         </div>
         
@@ -215,9 +215,9 @@ var _hmt = _hmt || [];
             
                 
                 
-                <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>Go单元测试在M1上使用<code>github.com/agiledragon/gomonkey/v2 v2.9.0</code>包提示<code>permission defined</code>。<br>网上查阅消息得知是由于内存安全导致，不能同时对内存进行写和执行</p>
+                <html><head></head><body><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>Go单元测试在M1上使用<code>github.com/agiledragon/gomonkey/v2 v2.9.0</code>包提示<code>permission defined</code>。<br>网上查阅消息得知是由于内存安全导致，不能同时对内存进行写和执行</p>
 <h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>下面分享一种比较简单的方法，需要修改本地的go源码。</p>
-<p>修改<a href="mailto:`go/pkg/mod/github.com/agiledragon/gomonkey/v2@v2.9.0" target="_blank" rel="noopener">`go/pkg/mod/github.com/agiledragon/gomonkey/v2@v2.9.0</a>/modify_binary_darwin.go<code>的</code>modifyBinary`方法。<br>将<br><figure class="highlight go hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">err := mprotectCrossPage(target, <span class="hljs-built_in">len</span>(bytes), syscall.PROT_READ|syscall.PROT_WRITE|syscall.PROT_EXEC)</span><br></pre></td></tr></table></figure></p>
+<p>修改<a href="mailto:`go/pkg/mod/github.com/agiledragon/gomonkey/v2@v2.9.0">`go/pkg/mod/github.com/agiledragon/gomonkey/v2@v2.9.0</a>/modify_binary_darwin.go<code>的</code>modifyBinary`方法。<br>将<br></p><figure class="highlight go hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">err := mprotectCrossPage(target, <span class="hljs-built_in">len</span>(bytes), syscall.PROT_READ|syscall.PROT_WRITE|syscall.PROT_EXEC)</span><br></pre></td></tr></tbody></table></figure><br>修改为<br><figure class="highlight go hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">err := mprotectCrossPage(target, <span class="hljs-built_in">len</span>(bytes), syscall.PROT_READ|syscall.PROT_WRITE)</span><br></pre></td></tr></tbody></table></figure><p></p>
 
                 
             
@@ -268,7 +268,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <blockquote>
+                <html><head></head><body><blockquote>
 <p> 在计算机科学领域，有向图的拓扑排序或拓扑测序是对其顶点的一种线性排序，使得对于从顶点$u$到顶点$v$的每个有向边$uv$, $u$在排序中都在$v$之前。</p>
 <p>例如，图形的顶点可以表示要执行的任务，并且边可以表示一个任务必须在另一个任务之前执行的约束；在这个应用中，拓扑排序只是一个有效的任务顺序。</p>
 
@@ -321,7 +321,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>下面是<a href="https://zh.wikipedia.org/zh-mo/%E6%B0%B4%E5%A1%98%E6%8A%BD%E6%A8%A3" target="_blank" rel="noopener">维基百科水塘抽样</a>的说明。</p>
+                <html><head></head><body><p>下面是<a href="https://zh.wikipedia.org/zh-mo/%E6%B0%B4%E5%A1%98%E6%8A%BD%E6%A8%A3" target="_blank" rel="noopener">维基百科水塘抽样</a>的说明。</p>
 <blockquote>
 <p> 水塘抽样是一系列的随机算法，其目的在于从包含 $n$个项目的集合  中选取$k$ 个样本，其中 $n$为一很大或未知的数量，尤其适用于不能把所有 $n$ 个项目都存放到内存的情况。</p>
 
@@ -374,7 +374,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>本文分享如何解决计算时间差类的问题。</p>
+                <html><head></head><body><p>本文分享如何解决计算时间差类的问题。</p>
 <h2 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h2><ol>
 <li>首先需要将时间转化为数字，比如23:59，可以转化为23*60+59</li>
 
@@ -427,7 +427,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>滑动窗口算法是查找连续区间常用的算法之一。</p>
+                <html><head></head><body><p>滑动窗口算法是查找连续区间常用的算法之一。</p>
 <p>本文分享滑动窗口算法的通用框架。</p>
 <h2 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h2><ol>
 
@@ -480,7 +480,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>本文分享一种检测一个字符串是否为另一个字符串子序列的算法。</p>
+                <html><head></head><body><p>本文分享一种检测一个字符串是否为另一个字符串子序列的算法。</p>
 <p>子序列的定义：</p>
 <p>若字符串$s1$可以由字符串$s2$删除某些字符得到，则$s1$是$s2$的子序列。换句话说，若$s1$的所有字符都在$s2$中且顺序一致，则$s1$是$s2$的子序列。</p>
 
@@ -533,7 +533,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>本文分享一种计算给定数字二进制表示中有多少个1的算法。</p>
+                <html><head></head><body><p>本文分享一种计算给定数字二进制表示中有多少个1的算法。</p>
 <p>位运算对于非硬件相关的开发者来说可能用的比较少，朴素做法是将数字转换为二进制字符串，然后遍历该字符串得到1的个数。</p>
 <h2 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h2><ol>
 
@@ -586,7 +586,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>本文分享一种如何在字符串中解析数字的算法。</p>
+                <html><head></head><body><p>本文分享一种如何在字符串中解析数字的算法。</p>
 <h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>解析字符串中的数字需要判断当前是否是数字字符，以及如何处理连续的数字字符。</p>
 <p>本文使用while循环来解析数字，之所以不使用for循环，是笔者认为while循环操控力比for循环要好。</p>
 
@@ -639,7 +639,7 @@ var _hmt = _hmt || [];
             
                 
                 
-                <p>在给定的序列中查找第N大的数，朴素做法是对序列排序，然后根据索引直接查询，时间复杂度为$O(nlogn)$。</p>
+                <html><head></head><body><p>在给定的序列中查找第N大的数，朴素做法是对序列排序，然后根据索引直接查询，时间复杂度为$O(nlogn)$。</p>
 <p>本文介绍一种在$O(n)$的时间复杂度查询第N大的数的算法。</p>
 <h2 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h2><p>算法思路就是定义标志变量，然后遍历数组，根据标志变量和当前数组变量的大小更新标志变量，最后根据情况返回标志变量。</p>
 
@@ -980,7 +980,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

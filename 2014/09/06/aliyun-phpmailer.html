@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,7 +157,7 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <p>phpmailer之前一直在用，一般都是采用smtp登录服务器的方式进行发信，今天在本地windows主机测试也能发信成功，但是到线上去就不行了，提示“连接smtp服务器失败”。<br>首先可以排除的是代码方面的错误，那么剩下就知道服务器的问题了。</p>
+                <html><head></head><body><p>phpmailer之前一直在用，一般都是采用smtp登录服务器的方式进行发信，今天在本地windows主机测试也能发信成功，但是到线上去就不行了，提示“连接smtp服务器失败”。<br>首先可以排除的是代码方面的错误，那么剩下就知道服务器的问题了。</p>
 <p>根据这个错误，可以想到有几种问题:</p>
 <ol>
 <li>服务器ping不通，做Ping测试的时候是通的   </li>
@@ -169,11 +169,11 @@ var _hmt = _hmt || [];
 <li>执行 phpize 这个会自动配置</li>
 <li>然后执行 </li>
 </ol>
-<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">./configure --with-openssl -with-php-config=/usr/<span class="hljs-built_in">local</span>/php/bin/php-config</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">./configure --with-openssl -with-php-config=/usr/<span class="hljs-built_in">local</span>/php/bin/php-config</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></tbody></table></figure>
 <p>这里模块安装就完成了，但是需要编辑 <strong>/etc/php.ini</strong>加上</p>
-<figure class="highlight ini hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-attr">extension</span>=openssl.so</span><br></pre></td></tr></table></figure>
+<figure class="highlight ini hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-attr">extension</span>=openssl.so</span><br></pre></td></tr></tbody></table></figure>
 <p>重启 web 服务器就可以了。经过测试，服务器上SSL发信也能成功进行</p>
-
+</body></html>
             </div>
             
         </div>
@@ -182,7 +182,7 @@ var _hmt = _hmt || [];
             <div class="level-start">
                 <div class="level-item">
                     <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/openssl/">openssl</a>
+                    <a class="has-link-grey -link" href="/tags/openssl/" rel="tag">openssl</a>
                 </div>
             </div>
         </div>
@@ -405,7 +405,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

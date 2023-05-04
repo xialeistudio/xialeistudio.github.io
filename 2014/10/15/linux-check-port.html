@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,14 +157,14 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <p>Linux启动服务时如果遇到端口占用问题时，一般有以下两种解决方案：</p>
+                <html><head></head><body><p>Linux启动服务时如果遇到端口占用问题时，一般有以下两种解决方案：</p>
 <ol>
 <li>新启动的服务更改端口号启动</li>
 <li>杀掉老的进程</li>
 </ol>
-<h2 id="Linux检查端口占用命令"><a href="#Linux检查端口占用命令" class="headerlink" title="Linux检查端口占用命令"></a>Linux检查端口占用命令</h2><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -lnp | grep 80</span><br></pre></td></tr></table></figure>
+<h2 id="Linux检查端口占用命令"><a href="#Linux检查端口占用命令" class="headerlink" title="Linux检查端口占用命令"></a>Linux检查端口占用命令</h2><figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -lnp | grep 80</span><br></pre></td></tr></tbody></table></figure>
 <p>80为端口号，查找到占用端口的进程ID后用kill杀掉即可。</p>
-
+</body></html>
             </div>
             
         </div>
@@ -391,7 +391,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

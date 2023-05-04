@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,16 +157,16 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <p>PHP定义字符串有三种形式</p>
+                <html><head></head><body><p>PHP定义字符串有三种形式</p>
 <ul>
 <li>双引号</li>
 <li>单引号</li>
 <li>heredoc定界符</li>
 </ul>
 <p>前面两种大家都很熟悉了，第三种大家用的少。一般在输出大段HTML的时候很方便，不多说，上代码！</p>
-<figure class="highlight php hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">&lt;?php</span></span><br><span class="line">$link = <span class="hljs-string">'https://www.google.com.hk'</span>;</span><br><span class="line"><span class="hljs-keyword">print</span> &lt;&lt;&lt;DOGS </span><br><span class="line">&lt;a href=<span class="hljs-string">"&#123;$link&#125;"</span>&#125;Google&lt;/a&gt;</span><br><span class="line">DOGS;</span><br></pre></td></tr></table></figure>
+<figure class="highlight php hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">&lt;?php</span></span><br><span class="line">$link = <span class="hljs-string">'https://www.google.com.hk'</span>;</span><br><span class="line"><span class="hljs-keyword">print</span> &lt;&lt;&lt;DOGS </span><br><span class="line">&lt;a href=<span class="hljs-string">"{$link}"</span>}Google&lt;/a&gt;</span><br><span class="line">DOGS;</span><br></pre></td></tr></tbody></table></figure>
 <p>DOGS可以自己定义。</p>
-
+</body></html>
             </div>
             
         </div>
@@ -389,7 +389,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

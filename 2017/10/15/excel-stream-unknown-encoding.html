@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,19 +157,19 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <p>项目上线有半年多了，一直没有出过问题，但是前几天升级过一次NodeJs到8.x的时候就出现过这个问题了。因为采用了消息队列，但是一到这里就挂，导致进程重复启动几百次。</p>
-<h1 id="报错信息"><a href="#报错信息" class="headerlink" title="报错信息"></a>报错信息</h1><figure class="highlight glsl hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">excel-<span class="hljs-keyword">stream</span>/csv-<span class="hljs-keyword">stream</span>/<span class="hljs-keyword">index</span>.js <span class="hljs-number">59</span> Buffer unknow encoding</span><br></pre></td></tr></table></figure>
+                <html><head></head><body><p>项目上线有半年多了，一直没有出过问题，但是前几天升级过一次NodeJs到8.x的时候就出现过这个问题了。因为采用了消息队列，但是一到这里就挂，导致进程重复启动几百次。</p>
+<h1 id="报错信息"><a href="#报错信息" class="headerlink" title="报错信息"></a>报错信息</h1><figure class="highlight glsl hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">excel-<span class="hljs-keyword">stream</span>/csv-<span class="hljs-keyword">stream</span>/<span class="hljs-keyword">index</span>.js <span class="hljs-number">59</span> Buffer unknow encoding</span><br></pre></td></tr></tbody></table></figure>
 <h1 id="问题排查"><a href="#问题排查" class="headerlink" title="问题排查"></a>问题排查</h1><p>google了一下无果，后面发现反正源码反正自己有，倒不如自己改改，直接定位到相关代码即可。</p>
-<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">CSVStream.prototype.write = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">buffer,encoding</span>)</span>&#123;</span><br><span class="line">	<span class="hljs-keyword">this</span>._encoding = encoding || <span class="hljs-keyword">this</span>._encoding;</span><br><span class="line">	<span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>._ended) <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Cannot write after end has been called.'</span>);</span><br><span class="line">	<span class="hljs-keyword">if</span>(buffer) <span class="hljs-keyword">this</span>._buffer = Buffer.concat([<span class="hljs-keyword">this</span>._buffer, buffer], <span class="hljs-keyword">this</span>._buffer.length + buffer.length);</span><br><span class="line">	<span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>._paused) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;</span><br><span class="line">	<span class="hljs-keyword">this</span>._parser.parse(<span class="hljs-keyword">this</span>._buffer.toString(<span class="hljs-keyword">this</span>._encoding));</span><br><span class="line">	<span class="hljs-keyword">this</span>._buffer = <span class="hljs-keyword">new</span> Buffer(<span class="hljs-number">0</span>);</span><br><span class="line">	<span class="hljs-keyword">return</span> !<span class="hljs-keyword">this</span>._paused;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">CSVStream.prototype.write = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">buffer,encoding</span>)</span>{</span><br><span class="line">	<span class="hljs-keyword">this</span>._encoding = encoding || <span class="hljs-keyword">this</span>._encoding;</span><br><span class="line">	<span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>._ended) <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Cannot write after end has been called.'</span>);</span><br><span class="line">	<span class="hljs-keyword">if</span>(buffer) <span class="hljs-keyword">this</span>._buffer = Buffer.concat([<span class="hljs-keyword">this</span>._buffer, buffer], <span class="hljs-keyword">this</span>._buffer.length + buffer.length);</span><br><span class="line">	<span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>._paused) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;</span><br><span class="line">	<span class="hljs-keyword">this</span>._parser.parse(<span class="hljs-keyword">this</span>._buffer.toString(<span class="hljs-keyword">this</span>._encoding));</span><br><span class="line">	<span class="hljs-keyword">this</span>._buffer = <span class="hljs-keyword">new</span> Buffer(<span class="hljs-number">0</span>);</span><br><span class="line">	<span class="hljs-keyword">return</span> !<span class="hljs-keyword">this</span>._paused;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>报错具体行数是<strong>this._parser.parse(this._buffer.toString(this._encoding));</strong>，错误很明显了，提示encoding错误。</p>
 <p>那直接往上面找，发现<strong>this._encoding = encoding || this._encoding</strong>，这里就有可能传入的encoding导致了错误。</p>
 <h1 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h1><p>这个项目已经3年没维护了，所以要修正问题的话，只能手动改了。</p>
 <p>修改办法如下</p>
-<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">this</span>._parser.parse(<span class="hljs-keyword">this</span>._buffer.toString(<span class="hljs-keyword">this</span>._encoding));</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">this</span>._parser.parse(<span class="hljs-keyword">this</span>._buffer.toString(<span class="hljs-keyword">this</span>._encoding));</span><br></pre></td></tr></tbody></table></figure>
 <p>改为</p>
-<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">this</span>._parser.parse(<span class="hljs-keyword">this</span>._buffer.toString());</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">this</span>._parser.parse(<span class="hljs-keyword">this</span>._buffer.toString());</span><br></pre></td></tr></tbody></table></figure>
 <p>重新运行之后没有发现问题。</p>
-
+</body></html>
             </div>
             
         </div>
@@ -404,7 +404,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

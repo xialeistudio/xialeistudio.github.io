@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,10 +157,10 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <p>今天使用Fragment的时候，出现了这个错误 IllegalStateException: Can not perform this action after onSaveInstanceState。查看一下控制台，发现是FragmentManager的commit()方法报错的，看字面意思应该是</p>
+                <html><head></head><body><p>今天使用Fragment的时候，出现了这个错误 IllegalStateException: Can not perform this action after onSaveInstanceState。查看一下控制台，发现是FragmentManager的commit()方法报错的，看字面意思应该是</p>
 <p><em>onSaveInstanceState这个方法之后不能处理这个操作（指commit()）。</em></p>
 <p>因为onSaveInstanceState<br>方法是在该Activity即将被销毁前调用，来保存Activity数据的，如果在保存完状态后再给它添加Fragment就会出错。解决办法就是把commit（）方法替换成 commitAllowingStateLoss()就行了，其效果是一样的。</p>
-
+</body></html>
             </div>
             
         </div>
@@ -383,7 +383,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

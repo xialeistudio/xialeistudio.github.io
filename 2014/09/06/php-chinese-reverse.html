@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,8 +157,8 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <p>php <strong>strrev()</strong> 函数能实现字符串反转，但是不支持中文，利用mb_系列函数可以进行中文字符串反转。</p>
-<figure class="highlight php hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 中文字符串反转</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> $str</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> string $charset</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@return</span> string</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">reverse</span><span class="hljs-params">($str, $charset = <span class="hljs-string">'UTF-8'</span>)</span></span></span><br><span class="line"><span class="hljs-function"></span>&#123;</span><br><span class="line">    $ret = <span class="hljs-string">''</span>;</span><br><span class="line">    $len = mb_strlen($str, $charset);</span><br><span class="line">    <span class="hljs-keyword">for</span> ($i = <span class="hljs-number">0</span>; $i &lt; $len; $i++) &#123;</span><br><span class="line">        $ret[] = mb_substr($str, $i, <span class="hljs-number">1</span>, $charset);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">return</span> implode(<span class="hljs-string">''</span>, array_reverse($ret));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+                <html><head></head><body><p>php <strong>strrev()</strong> 函数能实现字符串反转，但是不支持中文，利用mb_系列函数可以进行中文字符串反转。</p>
+<figure class="highlight php hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 中文字符串反转</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> $str</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> string $charset</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@return</span> string</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">reverse</span><span class="hljs-params">($str, $charset = <span class="hljs-string">'UTF-8'</span>)</span></span></span><br><span class="line"><span class="hljs-function"></span>{</span><br><span class="line">    $ret = <span class="hljs-string">''</span>;</span><br><span class="line">    $len = mb_strlen($str, $charset);</span><br><span class="line">    <span class="hljs-keyword">for</span> ($i = <span class="hljs-number">0</span>; $i &lt; $len; $i++) {</span><br><span class="line">        $ret[] = mb_substr($str, $i, <span class="hljs-number">1</span>, $charset);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">return</span> implode(<span class="hljs-string">''</span>, array_reverse($ret));</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure></body></html>
             </div>
             
         </div>
@@ -381,7 +381,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>

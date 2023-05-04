@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 3.9.0" />
+<meta name="generator" content="Hexo 4.2.1" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -157,14 +157,14 @@ var _hmt = _hmt || [];
         <div class="content">
             
             <div id="container">
-                <p>本文分享一下五一期间的读书感悟，包括MySQL、Redis、Aurora。</p>
+                <html><head></head><body><p>本文分享一下五一期间的读书感悟，包括MySQL、Redis、Aurora。</p>
 <a id="more"></a>
 <h2 id="优化Redis主线程负载"><a href="#优化Redis主线程负载" class="headerlink" title="优化Redis主线程负载"></a>优化Redis主线程负载</h2><ol>
 <li><p>网络IO可以多线程处理，将请求包体和文件描述符投递到一个<strong>request</strong>队列，参考结构如下</p>
-<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Request</span> </span>&#123;</span><br><span class="line">  <span class="hljs-keyword">byte</span>[] req;</span><br><span class="line">  <span class="hljs-keyword">int</span> fd;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Request</span> </span>{</span><br><span class="line">  <span class="hljs-keyword">byte</span>[] req;</span><br><span class="line">  <span class="hljs-keyword">int</span> fd;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li><p>主线程轮询<strong>request</strong>队列，取出<strong>req</strong>数据并按照以往方式准备响应<strong>resp</strong>，再次投递到一个<strong>response</strong>队列，参考结构如下</p>
-<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Response</span> </span>&#123;</span><br><span class="line">  <span class="hljs-keyword">byte</span>[] req;</span><br><span class="line">  <span class="hljs-keyword">int</span> fd;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Response</span> </span>{</span><br><span class="line">  <span class="hljs-keyword">byte</span>[] req;</span><br><span class="line">  <span class="hljs-keyword">int</span> fd;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 </li>
 <li><p>网络IO线程轮询<strong>response</strong>队列，将数据发往指定<strong>fd</strong></p>
 </li>
@@ -262,7 +262,7 @@ var _hmt = _hmt || [];
 <li><a href="https://hotlinkqiu.github.io/2019/08/15/%E5%88%86%E5%B8%83%E5%BC%8F%E5%AD%98%E5%82%A8%E7%A0%94%E7%A9%B6%E2%80%94%E2%80%94Aurora/" target="_blank" rel="noopener">分布式存储研究——Aurora</a></li>
 <li><a href="https://www.cnblogs.com/geaozhang/p/7241744.html" target="_blank" rel="noopener">InnoDB关键特性之double write</a></li>
 </ul>
-
+</body></html>
             </div>
             
         </div>
@@ -533,7 +533,7 @@ var _hmt = _hmt || [];
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>
