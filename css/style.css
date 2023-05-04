@@ -400,7 +400,7 @@ img.thumbnail {
 .content code,
 .content pre {
   font-size: 0.85em;
-  font-family: 'trebuchet ms', verdana, arial !important;
+  font-family: Ubuntu, 'PingFang SC', 'Microsoft YaHei', sans-serif !important;
 }
 .content code {
   color: #ff3860;
@@ -454,7 +454,7 @@ figure.highlight figcaption:after {
 }
 figure.highlight figcaption span {
   font-weight: 500;
-  font-family: 'trebuchet ms', verdana, arial;
+  font-family: Ubuntu, 'PingFang SC', 'Microsoft YaHei', sans-serif;
 }
 figure.highlight figcaption .fold,
 figure.highlight figcaption a {
