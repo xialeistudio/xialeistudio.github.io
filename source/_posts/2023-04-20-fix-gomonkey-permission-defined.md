@@ -7,6 +7,7 @@ categories:
 ---
 
 ## 问题
+
 Go单元测试在M1上使用`github.com/agiledragon/gomonkey/v2 v2.9.0`包提示`permission defined`。
 网上查阅消息得知是由于内存安全导致，不能同时对内存进行写和执行
 

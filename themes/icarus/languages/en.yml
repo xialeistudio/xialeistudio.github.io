@@ -19,6 +19,7 @@ widget:
     links: 'Links'
     tag_cloud: 'Tag Cloud'
     catalogue: 'Catalogue'
+    books: 'Books'
 article:
     more: 'Read More'
     comments: 'Comments'

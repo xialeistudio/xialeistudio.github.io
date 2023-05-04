@@ -11,7 +11,7 @@ module.exports = {
     fontcdn: {
         [type]: 'string',
         [doc]: 'Name or URL of the webfont CDN provider',
-        [defaultValue]: 'google'
+        [defaultValue]: 'static'
     },
     iconcdn: {
         [type]: 'string',

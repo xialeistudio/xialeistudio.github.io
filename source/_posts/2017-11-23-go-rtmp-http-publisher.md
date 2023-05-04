@@ -15,7 +15,7 @@ tags:
 1. 客户端上传base64编码后的音频数据
 2. 服务端接收后解码为**[]byte**
 3. 将**[]byte**写入本地文件
-4. golang调用ffmpeg命令将第3步写入的文件推流到RTMP服务端({% post_link nginx-rtmp-server 从零开始打造自己的直播服务器-Nginx安装 %})
+4. golang调用ffmpeg命令将第3步写入的文件推流到RTMP服务端
 5. golang输出JSON响应，如果出错则返回错误JSON响应
     ```json
     {

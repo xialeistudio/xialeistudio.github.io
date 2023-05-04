@@ -7,7 +7,8 @@ meta: []
 # Path or URL to RSS atom.xml
 rss: /
 # Path or URL to the website's logo to be shown on the left of the navigation bar or footer
-logo: /images/logo.svg
+logo: 
+  text: "Learning & Sharing"
 # Open Graph metadata
 # https://hexo.io/docs/helpers.html#open-graph
 open_graph:
@@ -25,12 +26,12 @@ open_graph:
 navbar:
     # Navigation bar menu links
     menu:
-        主页: /
-        归档: /archives
-        分类: /categories
-        标签: /tags
-        建议: /suggestion
-        关于: /about
+        Home: /
+        Archives: /archives
+        Categories: /categories
+        #标签: /tags
+        #建议: /suggestion
+        About: /about
     # Navigation bar links to be shown on the right
     links:
         GitHub:
@@ -39,7 +40,7 @@ navbar:
 # Footer section link settings
 footer:
     # Links to be shown on the right of the footer section
-    custom_text: <a target="_blank" href="https://beian.miit.gov.cn/">粤ICP备14062481号-1</a>
+    # custom_text: <a target="_blank" href="https://beian.miit.gov.cn/">粤ICP备14062481号-1</a>
     links:
         Creative Commons:
             icon: fab fa-creative-commons
@@ -82,15 +83,15 @@ comment:
     admin: xialeistudio
 # Donation entries
 # https://ppoffice.github.io/hexo-theme-icarus/categories/Donation/
-donate:
-     - # Donation entry name
-       type: alipay
-    #   # Qrcode image URL
-       qrcode: "https://static.ddhigh.com/image/alipay-qrcode2.png"
-     - # Donation entry name
-       type: wechat
-    #   # Qrcode image URL
-       qrcode: "https://static.ddhigh.com/image/wechatpay-qrcode2.png"
+# donate:
+#      - # Donation entry name
+#        type: alipay
+#     #   # Qrcode image URL
+#        qrcode: "https://static.ddhigh.com/image/alipay-qrcode2.png"
+#      - # Donation entry name
+#        type: wechat
+#     #   # Qrcode image URL
+#        qrcode: "https://static.ddhigh.com/image/wechatpay-qrcode2.png"
     # - # Donation entry name
     #   type: paypal
     #   # Paypal business ID or email address
@@ -125,13 +126,13 @@ widgets:
     - # Widget name
       type: profile
       # Where should the widget be placed, left or right
-      position: left
+      position: right
       # Author name to be shown in the profile widget
-      author: 夏磊
+      author: Xia Lei
       # Title of the author to be shown in the profile widget
-      author_title: Senior Software Engineer
+      author_title: Software Engineer
       # Author's current location to be shown in the profile widget
-      location: China
+      location: Tencent
       # Path or URL to the avatar to be shown in the profile widget
       avatar: https://static.ddhigh.com/blog/2019-09-18-094336.jpg
       # Email address for the Gravatar to be shown in the profile widget
@@ -148,9 +149,12 @@ widgets:
           RSS:
               icon: fas fa-rss
               url: /atom.xml
+          LinkedIn:
+              icon: fab fa-linkedin
+              url: https://linkedin.com/in/xialeidoc
     - 
       type: books
-      position: left
+      position: right
       books:
           - title: ThinkPHP5实战
             thumbnail: https://static.ddhigh.com/blog/2019-09-18-095311.jpg?imageView2/2/w/200/h/200
@@ -169,18 +173,18 @@ widgets:
             buyLink: https://item.jd.com/12933234.html
             detailLink: http://www.tup.tsinghua.edu.cn/booksCenter/book_07638401.html
             pubdate: 2020.08
-    -
-      type: images
-      position: left
-      images:    
-        - 
-          title: 微信公众号
-          slogan: 欢迎关注我的公众号<br>学习最新、最热的JS/TS知识！
-          src: https://static.ddhigh.com/blog/2019-09-19-115314.jpg
+    # -
+    #   type: images
+    #   position: left
+    #   images:    
+    #     - 
+    #       title: 微信公众号
+    #       slogan: 欢迎关注我的公众号<br>学习最新、最热的JS/TS知识！
+    #       src: https://static.ddhigh.com/blog/2019-09-19-115314.jpg
     - # Widget name
       type: toc
       # Where should the widget be placed, left or right
-      position: left
+      position: right
     # - # Widget name
     #   type: links
     #   # Where should the widget be placed, left or right
@@ -220,20 +224,19 @@ plugins:
     #     # Hotjar site id
     #     site_id:
     # Show a loading progress bar at top of the page
-    progressbar: true
+    #progressbar: true
     # BuSuanZi site/page view counter
     # https://busuanzi.ibruce.info
-    busuanzi: false
+    #busuanzi: false
 # CDN provider settings
 # https://ppoffice.github.io/hexo-theme-icarus/Configuration/Theme/speed-up-your-site-with-custom-cdn/
 providers:
     # Name or URL of the JavaScript and/or stylesheet CDN provider
     cdn: jsdelivr
     # Name or URL of the webfont CDN provider
-    fontcdn: google
+    fontcdn: static
     # Name or URL of the webfont Icon CDN provider
-    iconcdn: https://cdn.bootcdn.net/ajax/libs/font-awesome/5.4.1/css/all.css
-
+    iconcdn: fontawesome
 # 自动摘要
 auto_excerpt:
     enabled: true

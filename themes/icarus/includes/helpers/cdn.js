@@ -13,7 +13,8 @@ const cdn_providers = {
 };
 
 const font_providers = {
-    google: 'https://fonts.geekzu.org/${ type }?family=${ fontname }'
+    google: 'https://fonts.geekzu.org/${ type }?family=${ fontname }',
+    static: 'https://static.ddhigh.com/font/${ fontname }'
 };
 
 const icon_providers = {
