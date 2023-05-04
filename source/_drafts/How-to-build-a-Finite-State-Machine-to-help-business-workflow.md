@@ -1,11 +1,9 @@
 ---
 title: How to build a Finite State Machine to help business workflow
-categories:
-  - engineering
 date: 2023-05-04 17:16:00
-tags:
+categories:
+- engineering
 ---
-
 
 This is the first article written in English. In this article, I'll share how to build a Finite State Machine(FSM) to help business workflow transition, such as auditing.
 
