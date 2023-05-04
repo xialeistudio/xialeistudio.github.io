@@ -6,8 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- backend
-- nodejs
+- engineering
 ---
 ## 项目地址
 [bpush-nodejs](https://github.com/xialeistudio/bpush-nodejs)

@@ -6,8 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- frontend
-- angularjs
+- engineering
 ---
 + 本文所有内容仅代表个人观点
 

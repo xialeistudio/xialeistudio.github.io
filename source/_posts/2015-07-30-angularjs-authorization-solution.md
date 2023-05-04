@@ -6,8 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- frontend
-- angularjs
+- engineering
 ---
 作为一个全栈ajax的mvvm框架，angularjs可谓如火如荼，可真正做到全栈ajax，首要面对的问题就是用户身份验证。   
 本文的身份验证不采用cookie,而采用基于http Authorize 请求头的方式验证用户，此方式能做到永远只有一个用户同时在线（服务端同一时间只会接受一个合法的token请求，其他的请求返回401）。   

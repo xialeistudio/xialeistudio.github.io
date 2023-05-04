@@ -1,9 +1,8 @@
 ---
 title: log4php使用syslog记录日志
 layout: post
-category: 
-- backend
-- php
+categories:
+- engineering
 ---
 log4php是apache基金会下的一个开源项目，灵活、强大，已经有几个项目使用了log4php处理日志，目前遇到的问题是服务器太多的时候日志如何统一管理，本来想使用数据库存储。但是日志格式成了一个问题，而且不利于扩展，如果临时需要保存到文件，又要更改log4php的配置。
 好在log4php提供了syslog的一个appender，可以将日志写入syslog;

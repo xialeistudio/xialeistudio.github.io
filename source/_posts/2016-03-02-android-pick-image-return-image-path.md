@@ -6,7 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- android
+- engineering
 ---
 android从选择图片有两种方法，但是返回值确不同，本文将指导大家如何统一这两种方式的返回值。
 

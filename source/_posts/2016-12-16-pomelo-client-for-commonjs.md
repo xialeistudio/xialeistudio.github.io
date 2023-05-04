@@ -2,8 +2,7 @@
 layout: post
 title: 基于CommonJs的pomelo客户端
 categories:
-- backend
-- nodejs
+- engineering
 tags:
 - pomelo
 ---

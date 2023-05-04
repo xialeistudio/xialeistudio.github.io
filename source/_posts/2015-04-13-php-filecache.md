@@ -6,8 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- backend
-- php
+- engineering
 ---
 缓存有很多方法，memcache,databse,file,redis等等，原理都差不多，简要介绍一下，写入缓存就不多说了，主要是读取缓存。
 1. 检测指定key是否存在，如不存在则返回false。

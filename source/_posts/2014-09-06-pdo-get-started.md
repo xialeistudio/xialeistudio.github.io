@@ -6,8 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- backend
-- php
+- engineering
 ---
 mysql_*系列函数我一之前一直在用，基于性能、安全性等原因，再加上PHP面向对象的增强，是时候使用PDO来处理数据了。PDO一个很重要的特点是该类与数据库无关，不同的数据库只是在实例化时传入的参数不同，但是操作方法是一样的。
 

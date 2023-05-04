@@ -6,8 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- frontend
-- angularjs
+- engineering
 ---
 去年写过一篇[摆脱jquery!angularjs利用指令简单实现滚动翻页](/2014/09/06/angularjs-lazy-load.html)，但是用了一段时间之后发现很多浏览器有问题，移动端下滚动事件只有**body**才会触发，其他元素是不会触发的，经过改进后的指令代码如下（仅限移动端）:
 

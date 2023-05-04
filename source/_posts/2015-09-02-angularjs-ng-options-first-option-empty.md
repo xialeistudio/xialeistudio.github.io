@@ -6,8 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- frontend
-- angularjs
+- engineering
 ---
 angularjs的ng-options渲染到页面上的时候结构大致是这样的。
 

@@ -2,8 +2,7 @@
 title: NodeJs简明教程(8)
 date: 2019-07-23 10:52:47
 categories:
-- backend
-- nodejs
+- engineering
 ---
 
 本文是NodeJs简明教程的第八篇，将介绍NodeJs **子进程** 模块相关的基本操作。

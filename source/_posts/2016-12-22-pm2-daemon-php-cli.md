@@ -2,8 +2,7 @@
 layout: post
 title: 使用PM2守护PHP命令行程序
 categories:
-- backend
-- php
+- engineering
 ---
 pm2是nodejs的一个模块，用来进行进程管理，刚开始以为只能做nodejs脚本的管理，后来发现通过配置之后也可以实现**任意进程**的守护。
 ## 安装

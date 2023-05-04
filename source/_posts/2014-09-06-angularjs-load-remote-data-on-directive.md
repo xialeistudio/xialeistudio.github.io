@@ -6,8 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- frontend
-- angularjs
+- engineering
 ---
 假设有一个指令用来根据IP地址进行地位，获取实际地址。
 

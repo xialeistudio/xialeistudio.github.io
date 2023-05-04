@@ -6,7 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- android
+- engineering
 ---
 缓存和异步是两个极大提升用户体验的好东西，android加载图片时的开销还是挺大的，要是不做缓存同步加载，网速不给力的情况下，等个十几秒是有可能的。
 

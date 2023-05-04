@@ -6,8 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- backend
-- php
+- engineering
 ---
 笔者在写Restful API的时候需要取得原始请求体，读了若干次输入流（将读取操作封装成了函数），发现就第一个参数有值，以后的读取都没有值。
 

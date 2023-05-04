@@ -6,8 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- frontend
-- css
+- engineering
 ---
 css3的优点就不多说了，一个很重要的，节约了带宽，以往需要使用图片的地方很多时候都可以使用CSS3来实现。 本文将带来一个利用CSS3制作loading的教程，这里直接上代码了。
 

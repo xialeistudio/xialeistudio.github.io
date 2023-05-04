@@ -2,8 +2,7 @@
 layout: post
 title: pomelo-global-channel-plugin的使用
 categories:
-- backend
-- nodejs
+- engineering
 tags:
 - pomelo
 ---

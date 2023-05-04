@@ -6,7 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- android
+- engineering
 ---
 老版本app版本号是2.0.13，Build是20160719。新版本app版本号是2.0.14，Build是2016101301。   
 初略看来应该是可以覆盖升级的，但是安装新版本的时候提示“应用未安装”。   

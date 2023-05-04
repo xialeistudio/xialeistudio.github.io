@@ -6,8 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- backend
-- java
+- engineering
 tags:
 - mybatis
 ---

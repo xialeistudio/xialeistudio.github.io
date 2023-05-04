@@ -2,8 +2,7 @@
 title: Golang程序设计——函数
 date: 2021-03-17 10:22:36
 categories:
-- backend
-- go
+- engineering
 ---
 
 本文学习Go语言函数知识。函数是基本的代码块，用于执行一个任务。在Go语言中，函数可以接收数量不固定的参数，也可以返回多个结果。

@@ -6,7 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- frontend
+- engineering
 ---
 PC浏览器的话由于有blur和focus事件，可以在失去焦点时进行一次验证，但是移动端有点麻烦，点击其他地方才可以，这种的话体验不是很好。
 利用input事件可以解决这个问题。

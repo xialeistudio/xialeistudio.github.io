@@ -1,16 +1,40 @@
 ---
-title: 关于
+title: About
 date: 2017-10-15 05:16:05
 ---
+Xia Lei
 
-## Profile
+Software Engineer @Tencent
 
-Reading & Learning & Sharing
+***Reading & Learning & Sharing***
 
 ## Skill Stack
 
-+ Web Development
-+ Microservices/Serverless
-+ Distributed Services
+### General
++ Design Pattern
++ OOP
++ UML
 
+### Cloud-Native
++ AWS
++ Alibaba Cloud
++ Microservices
++ Docker
++ Kubernetes
 
+### BackEnd
++ Java/JVM/Spring Boot
++ Golang
++ PHP/Yii2
++ Node.js/koa/express/Nest.js
+
+### Database
++ MySQL
++ Redis
++ ElasticSearch
++ HBase
+
+### FrontEnd
++ Javascript/Typescript
++ CSS3/HTML5
++ Vue/React/Cordova/React Native/Flutter

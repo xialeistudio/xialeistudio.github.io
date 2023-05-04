@@ -2,8 +2,7 @@
 title: NodeJs简明教程(9)
 date: 2019-07-24 10:23:56
 categories:
-- backend
-- nodejs
+- engineering
 ---
 
 本文是NodeJs简明教程的第九篇，将介绍NodeJs **net** 模块(`TCP服务端/客户端`)相关的基本操作。

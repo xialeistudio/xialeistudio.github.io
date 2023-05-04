@@ -81,6 +81,7 @@ comment:
     client_id: 1ae09f5aa5dcce937e94
     client_secret: 55c4032692dbcb0ee13771da7dc95f22cf9ae8e1
     admin: xialeistudio
+    language: en
 # Donation entries
 # https://ppoffice.github.io/hexo-theme-icarus/categories/Donation/
 # donate:
@@ -152,6 +153,9 @@ widgets:
           LinkedIn:
               icon: fab fa-linkedin
               url: https://linkedin.com/in/xialeidoc
+    -
+      type: category
+      position: right
     - 
       type: books
       position: right

@@ -6,7 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- android
+- engineering
 ---
 
 android实现异步的方法有很多种，本文只介绍用的比较多的AsyncTask。从类名就可以看出来该类是专为异步而生，API也很简单。

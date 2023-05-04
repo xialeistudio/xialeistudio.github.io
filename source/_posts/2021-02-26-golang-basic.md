@@ -2,8 +2,7 @@
 title: Golang程序设计——基本语法
 date: 2021-02-26 16:04:33
 categories:
-- backend
-- go
+- engineering
 ---
 
 本文学习Go语言基本语法，例如变量和常量、数据类型、运算符、条件语句、循环语句。

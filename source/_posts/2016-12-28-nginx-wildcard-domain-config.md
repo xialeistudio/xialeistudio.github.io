@@ -2,8 +2,7 @@
 title: nginx泛域名解析配置
 layout: post
 categories:
-- backend
-- nginx
+- engineering
 ---
 最近一个项目需要承载高并发请求，所以在后端语言上选择了**NodeJs**，但是nodejs有时候读取不到请求的主机名，所以想到使用**nginx+nodejs**的方式进行处理。
 

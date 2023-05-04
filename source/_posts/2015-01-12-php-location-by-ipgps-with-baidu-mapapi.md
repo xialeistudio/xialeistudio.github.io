@@ -6,8 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- backend
-- php
+- engineering
 ---
 最近在做一个手机端的webapp地图应用，而核心内容当然是定位了，但是定位的话有几种方式，IP定位,GPS定位，基站定位（这个貌似webapp用不了），
 

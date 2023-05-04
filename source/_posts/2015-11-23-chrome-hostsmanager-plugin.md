@@ -6,8 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- frontend
-- angularjs
+- engineering
 ---
 ## 项目地址
 [https://github.com/xialeistudio/hostManager](https://github.com/xialeistudio/hostManager)

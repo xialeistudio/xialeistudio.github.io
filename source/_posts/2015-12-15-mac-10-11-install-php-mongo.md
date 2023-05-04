@@ -6,8 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- backend
-- php
+- engineering
 ---
 ## pecl的安装
 本文采用的是 pecl 的方式安装。   

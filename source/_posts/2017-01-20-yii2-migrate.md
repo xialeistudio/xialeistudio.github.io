@@ -2,8 +2,7 @@
 title: Yii2 migrate使用
 layout: post
 categories:
-- backend
-- php
+- engineering
 tags:
 - yii
 ---

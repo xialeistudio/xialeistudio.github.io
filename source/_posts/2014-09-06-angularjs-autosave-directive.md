@@ -6,8 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- frontend
-- angularjs
+- engineering
 ---
 angularjs的指令真是好东西，也是精髓。刚才群里面有朋友在问如何在用户离开编辑区域时提醒保存，其实用指令实现很简单的。
 

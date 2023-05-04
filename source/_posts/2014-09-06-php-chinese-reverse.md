@@ -6,8 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- backend
-- php
+- engineering
 ---
 
 php **strrev()** 函数能实现字符串反转，但是不支持中文，利用mb_系列函数可以进行中文字符串反转。

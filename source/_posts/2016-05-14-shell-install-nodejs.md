@@ -6,8 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- backend
-- linux
+- engineering
 ---
 ## 脚本定义
 

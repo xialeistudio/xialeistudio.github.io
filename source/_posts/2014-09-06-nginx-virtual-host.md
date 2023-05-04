@@ -6,8 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- backend
-- nginx
+- engineering
 ---
 
 最近服务器上用的环境是lnmp，之前一直在用apache，配置虚拟主机也是很方便的。今天查资料发现Nginx的虚拟主机配置更加简单。

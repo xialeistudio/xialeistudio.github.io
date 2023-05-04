@@ -6,8 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- frontend
-- angularjs
+- engineering
 ---
 angularjs的指令系统其实也是很强大的东西，扩展了HTML的表现力。本文讲的是如何用angularjs指令实现radioGroup，自带的radio只能控制ngModel的两种状态: true/false。
 ## 指令代码

@@ -6,7 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- android
+- engineering
 ---
 最近在写一个用来发短信的机器人（android),当然需要屏蔽所有来电了。多的话不说了，直接看步骤。（IDE为android studio）：
 1.在 src/main下新建 aidl 目录。

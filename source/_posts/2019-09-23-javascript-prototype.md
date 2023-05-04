@@ -2,8 +2,7 @@
 title: Javavscript基础——原型和原型链
 date: 2019-09-23 12:00:00
 categories:
-- frontend
-- javascript
+- engineering
 ---
 
 本文研究一下Javascript的核心基础——原型链和继承。

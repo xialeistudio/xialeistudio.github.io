@@ -6,8 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- backend
-- nginx
+- engineering
 ---
 ## HTTP和HTTPS的区别
 1. https协议需要到ca申请证书，一般免费证书很少，需要交费。 　

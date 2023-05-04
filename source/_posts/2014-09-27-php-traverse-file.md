@@ -6,8 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- backend
-- php
+- engineering
 ---
 遍历文件夹主要用到 opendir readdir closedir 三个函数，有两个要注意的地方
 

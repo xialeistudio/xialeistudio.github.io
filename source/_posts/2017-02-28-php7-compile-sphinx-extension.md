@@ -2,8 +2,7 @@
 layout: post
 title: PHP7编译sphinx扩展
 categories:
-- backend
-- php
+- engineering
 ---
 最近在做基于sphinx的全文搜索引擎，使用PHP进行数据读取，但是服务器使用的PHP版本是PHP7，pecl.php.net中没有提供PHP7的版本。手痒点到source code中看了一下。
 看到源代码中有的**headers**中有个**php7**的，点击**shortlog**进去看了一下，最新更新日期是2017-02-10，挺新的，应该是针对PHP7开发的版本，只不过未发布编译版本，想着linux下的软件有源代码基本都能自行编译。故选择了最新的PHP7快照下载。

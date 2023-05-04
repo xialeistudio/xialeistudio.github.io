@@ -2,8 +2,7 @@
 title: Golang程序设计——数据容器
 date: 2021-03-09 16:21:34
 categories:
-- backend
-- go
+- engineering
 ---
 
 本文学习Go语言数据容器、包括数组、切片和映射。

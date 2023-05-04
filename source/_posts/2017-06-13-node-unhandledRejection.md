@@ -1,9 +1,8 @@
 ---
 title: nodejs unhandledRejection问题解决
 layout: post
-category: 
-- backend
-- nodejs
+categories: 
+- engineering
 ---
 今天在使用promise的时候没有catch掉错误，导致报错，类似于
 ```

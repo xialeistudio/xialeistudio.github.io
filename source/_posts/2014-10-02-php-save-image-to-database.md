@@ -6,8 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- backend
-- php
+- engineering
 ---
 大部分人的图片上传都是保存一个路径到数据库，这样在插入时确实快，也符合web的特点，但是在删除时就很麻烦，需要找到文件并删除，该代码能够把代码直接存入数据库，删除时一并删除。   
 请注意：这样的话数据库大小会激增，请酌情使用,且RDBMS对于二进制数据的处理并不是很理想。

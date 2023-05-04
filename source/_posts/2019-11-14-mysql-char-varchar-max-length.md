@@ -2,8 +2,7 @@
 title: MySQL中的CHAR和VARCHAR到底支持多长?
 date: 2019-11-14 17:00:00
 categories:
-- backend
-- mysql
+- engineering
 ---
 
 最近在研究MySQL的数据类型，我们知道，选择合适的数据类型和数据长度对MySQL的性能影响是不可忽视的，小字段意味着可以MySQL可以读取更多的记录，从而加快查询速度。

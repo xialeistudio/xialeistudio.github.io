@@ -2,8 +2,7 @@
 title: 深入浅出ES6的迭代器
 date: 2019-11-14 11:00:00
 categories:
-- frontend
-- javascript
+- engineering
 tags:
 - es6
 ---

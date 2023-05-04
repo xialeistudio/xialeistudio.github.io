@@ -2,8 +2,7 @@
 layout: post
 title: pomelo Hello World
 categories:
-- backend
-- nodejs
+- engineering
 tags:
 - pomelo
 ---

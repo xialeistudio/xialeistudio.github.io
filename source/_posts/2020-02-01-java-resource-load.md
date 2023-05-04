@@ -2,8 +2,7 @@
 title: Java中加载文件的几种方式
 date: 2020-02-01 12:00:00
 categories:
-- backend
-- java
+- engineering
 ---
 
 在Java程序中加载外部文件有多中方式，每种方式也存在区别，本文将理清这些加载方式之间的区别。

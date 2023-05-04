@@ -2,8 +2,7 @@
 title: NodeJs简明教程(11) - 完结篇
 date: 2019-07-25 11:26:30
 categories:
-- backend
-- nodejs
+- engineering
 ---
 
 本文是NodeJs简明教程的完结篇，将对以往文章进行归档。

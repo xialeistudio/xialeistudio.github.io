@@ -6,8 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- frontend
-- angularjs
+- engineering
 ---
 angularjs自带的模块话机制对于业务逻辑的组织确实起到了规范化的作用，但是对于大型web项目，弊端也出来了，一次性加载所有的资源会导致进入应用的时间变长，而实际上，首页需要加载的并不多，所以，本文将介绍如何使用requireJs与angularJs集成。
 ## 依赖

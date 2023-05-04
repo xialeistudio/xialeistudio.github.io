@@ -6,8 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- backend
-- nodejs
+- engineering
 ---
 ## 背景
 Nodejs读取Excel时如果不使用stream处理的话，会导致内存溢出，毕竟要一次性加载excel的全部行数到内存中，而Nodejs单进程是有内存限制的，所以在读取超大excel的时候需要使用到stream，如果自己使用Nodejs自带的stream模块去解析excel的话，我想这个过程会很麻烦，本文使用npm提供的*excel-stream*，该模块使用**stream+event**方式读取excel，所以不用担心内存溢出问题。

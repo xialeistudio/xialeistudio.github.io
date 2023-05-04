@@ -2,8 +2,7 @@
 title: mac下php-imagick扩展library not loaded问题
 date: 2017-10-17 17:26:30
 categories:
-- backend
-- php
+- engineering
 ---
 最近在使用imagick开发图像合成功能，和往常一样，终端执行
 

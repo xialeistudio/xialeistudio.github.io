@@ -2,8 +2,7 @@
 title: 解决数据库N+1查询问题
 date: 2019-06-18 15:50:28
 categories:
-- backend
-- php
+- engineering
 ---
 
 ## 需求

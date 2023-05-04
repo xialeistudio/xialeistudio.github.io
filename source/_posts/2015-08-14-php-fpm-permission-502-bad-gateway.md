@@ -6,8 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- backend
-- php
+- engineering
 ---
 今天升级完PHP出现了502 Bad Gateway错误，根据经验是php-fpm的问题，但是看到网上那些什么访问量，子进程设置什么的，但是我这太服务器压根没啥流量。所以只能从配置文件下手看看。
 

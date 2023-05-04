@@ -2,8 +2,7 @@
 layout: post
 title: 免费SSL证书申请
 categories: 
-- backend
-- nginx
+- engineering
 tags:
 - openssl
 ---

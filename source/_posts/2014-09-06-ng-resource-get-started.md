@@ -6,8 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- frontend
-- angularjs
+- engineering
 ---
 废话不多说，本文的目的就是看过之后就会使用ngResource了。
 1. 引入angular-resource.min.js

@@ -2,8 +2,7 @@
 title: 不只是块级作用域，你不知道的let和const
 date: 2019-10-22 12:00:00
 categories:
-- frontend
-- javascript
+- engineering
 tags:
 - es6
 ---

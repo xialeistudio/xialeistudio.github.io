@@ -6,8 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- frontend
-- css
+- engineering
 ---
 水平居中还是比较好弄的
 

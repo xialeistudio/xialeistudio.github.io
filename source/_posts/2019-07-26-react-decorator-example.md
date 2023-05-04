@@ -2,8 +2,7 @@
 title: 使用Typescript装饰器来劫持React组件
 date: 2019-07-26 19:31:15
 categories:
-- frontend
-- react
+- engineering
 ---
 最近在捣鼓Typescript的装饰器，NodeJs项目的装饰器比较好理解，但是React项目的装饰器由于有JSX，走了一点弯路，但是总之来说是`新技能get`
 

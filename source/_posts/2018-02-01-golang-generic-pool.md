@@ -2,8 +2,7 @@
 title: golang通用连接池的实现
 date: 2018-02-01 20:04:00
 categories:
-- backend
-- go
+- engineering
 ---
 
 golang的channel除了goroutine通信之外还有很多其他的功能，本文将实现一种基于channel的通用连接池。

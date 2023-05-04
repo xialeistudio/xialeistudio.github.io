@@ -2,8 +2,7 @@
 title: ReactNative在NavigatorIOS中隐藏TabBar
 layout: post
 categories:
-- frontend
-- react
+- engineering
 tag:
 - react-native
 ---

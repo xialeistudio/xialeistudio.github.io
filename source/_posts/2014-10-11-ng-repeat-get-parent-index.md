@@ -6,8 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- frontend
-- angularjs
+- engineering
 ---
 angularjs的循环嵌套我就不多说了，无非是ng-repeat的嵌套而已，如果需要获取索引请使用$index。
 

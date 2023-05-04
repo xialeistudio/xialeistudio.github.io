@@ -6,7 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- frontend
+- engineering
 ---
 highchats是什么就不介绍了。一个JS绘图工具库，基于JQ，使用简单方便，但是不注意的话会坑人。
 

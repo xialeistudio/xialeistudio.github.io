@@ -6,7 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- android
+- engineering
 ---
 android加载图片免不了使用加载进度显示，而android自带的progressBar有局限.
 1. 圆型的progressBar不能显示进度条，只能无限制转圈圈

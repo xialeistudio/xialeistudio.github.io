@@ -6,8 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- backend
-- php
+- engineering
 ---
 js跨域的解决方法，一百度一大堆，不过都是jsonp为主，这种解决方法只适用于GET请求。POST跨域的话需要在HTTP协议上下功夫。
 ## 基础知识

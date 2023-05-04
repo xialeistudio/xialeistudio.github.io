@@ -6,8 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- backend
-- linux
+- engineering
 ---
 ## 背景
 阿里云的使用门槛降低，直接导致了很多人优先使用VPS而不是以前的虚拟主机，毕竟虚拟主机存在诸多限制。阿里云犹如一台全新的服务器，所有软件都要自己安装。作为一个写PHP的，代码部署就略麻烦了，以前使用FTP的时候很方便部署，但是不适合长期开发（因为没有版本控制），所以使用GIT会很方便。

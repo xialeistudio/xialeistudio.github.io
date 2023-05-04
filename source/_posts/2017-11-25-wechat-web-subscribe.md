@@ -2,7 +2,7 @@
 title: 微信H5点击跳转到关注页
 date: 2017-11-25 15:19:59
 categories:
-- frontend
+- engineering
 ---
 # 背景
 微信诱导关注接口在早两年已经被微信关停，但是一般的H5目的都是要关注公众号。

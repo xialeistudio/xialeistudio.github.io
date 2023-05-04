@@ -6,7 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- android
+- engineering
 ---
 最近做的一个项目的HTTP模块使用了loopj的asynchttpclient ([https://github.com/loopj/android-async-http](https://github.com/loopj/android-async-http)）。
 

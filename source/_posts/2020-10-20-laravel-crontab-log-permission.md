@@ -4,8 +4,7 @@ date: 2020-10-20 11:17:09
 tags:
 - laravel
 categories:
-- backend
-- php
+- engineering
 ---
 
 今天访问接口时返回 **接口写入日志失败**，通过排查后发现 `storage/logs`下面出现了`root`用户新建的日志，导致`www`用户无法写入日志。

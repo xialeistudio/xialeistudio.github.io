@@ -2,8 +2,7 @@
 title: Spring Boot JPA 返回json时排除Null字段
 layout: post
 categories:
-- backend
-- java
+- engineering
 tags:
 - spring-boot
 ---

@@ -6,8 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- frontend
-- angularjs
+- engineering
 ---
 几乎所有的编程入门都是以"Hello World"开始的，这里也不例外。
 ## HTML代码

@@ -6,8 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- backend
-- nodejs
+- engineering
 ---
 ES6发布有一段时间了。但是Nodejs对此支持度还有待加强，就像前端可以使用babel+webpack构建基于ES6的工作流，其实Nodejs也是可以的（不需要手动编译）。当然，最终部署到生产服务器时要记得部署编译后的版本，否则运行时编译对性能是一种损失。
 ## 实践

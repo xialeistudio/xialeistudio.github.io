@@ -6,8 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- frontend
-- angularjs
+- engineering
 ---
 后台业务系统中有很多CURD操作，一个很简单的例子是OA系统中为员工添加帐号信息，传统的做法是添加完一个就跳转并提示“成功”,后来高级一点的做法是利用jquery来做。
 
