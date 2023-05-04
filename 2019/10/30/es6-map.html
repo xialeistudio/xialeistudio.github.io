@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html  lang="en">
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 3.9.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>ES6的Map类型 - Xia Lei</title>
+
+
+
+
+
+
+<link rel="alternative" href="/" title="ES6的Map类型" type="application/atom+xml">
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://static.ddhigh.com/font/ubuntu.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+<script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?78141f99bbb49f1564a7af89344f5add";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                Learning &amp; Sharing
+                
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                    href="/">Home</a>
+                
+                <a class="navbar-item"
+                    href="/archives">Archives</a>
+                
+                <a class="navbar-item"
+                    href="/categories">Categories</a>
+                
+                <a class="navbar-item"
+                    href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                
+                
+                <a class="navbar-item" target="_blank" title="GitHub"
+                    href="https://github.com/xialeistudio">
+                    
+                    <i class="fab fa-github"></i>
+                    
+                </a>
+                
+                
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2019-10-30T04:00:00.000Z">2019-10-30</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/engineering/">engineering</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    8 minutes read (About 1270 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            ES6的Map类型
+            
+        </h1>
+        <div class="content">
+            
+            <div id="container">
+                <p>本文内容</p>
+<ul>
+<li>Map的基本使用</li>
+<li>Map支持的数据类型</li>
+<li>Map的迭代</li>
+<li>Map与其他对象的转化</li>
+</ul>
+<p>在Map出现之前，要实现类似需求，只能使用Object，但是Object还是存在一些问题的。</p>
+<ul>
+<li>如果使用Object作为key存储在{}中，key最终是当做<code>[object Object]</code>来使用的</li>
+<li>Object的keys是无序的</li>
+<li>无法安全遍历Object</li>
+<li>无法直接获取Object大小</li>
+</ul>
+<blockquote>
+<p>Map 对象保存键值对。任何值(对象或者原始值) 都可以作为一个键或一个值。</p>
+</blockquote>
+<h2 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h2><figure class="highlight js hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>([iterator])</span><br></pre></td></tr></table></figure>
+<ul>
+<li>iterator <iterator> 可以是一个数组或者其他iterator对象，其元素为键值对(如<code>[&#39;key&#39;, &#39;value&#39;]</code>)。</iterator></li>
+<li>null或undefined不会生效，返回一个空的Map</li>
+<li>非iterator会抛出错误 <code>TypeError: object is not iterable</code></li>
+</ul>
+<figure class="highlight js hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> map = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>();</span><br><span class="line"><span class="hljs-comment">// Create</span></span><br><span class="line">map.set(<span class="hljs-string">'name'</span>,<span class="hljs-string">'xialei'</span>);</span><br><span class="line">map.set(<span class="hljs-string">'site'</span>, <span class="hljs-string">'https://www.ddhigh.com'</span>);</span><br><span class="line"><span class="hljs-comment">// Update</span></span><br><span class="line">map.set(<span class="hljs-string">'name'</span>, <span class="hljs-string">'xialeistudio'</span>);</span><br><span class="line"><span class="hljs-comment">// Read</span></span><br><span class="line">map.get(<span class="hljs-string">'name'</span>);</span><br><span class="line"><span class="hljs-comment">// Delete</span></span><br><span class="line">map.delete(<span class="hljs-string">'name'</span>);</span><br><span class="line"><span class="hljs-comment">// 清空</span></span><br><span class="line">map.clear();</span><br><span class="line"><span class="hljs-comment">// map大小</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(map.size);</span><br></pre></td></tr></table></figure>
+<h2 id="数据类型测试"><a href="#数据类型测试" class="headerlink" title="数据类型测试"></a>数据类型测试</h2><p>JS中基本数据类型有string、number、boolean、null、undefined、symbol，复杂数据类型有object(包括object,array,function等)，还有个特殊的NaN(typeof结果是number)，分别对这些类型进行测试</p>
+<figure class="highlight js hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> map = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>();</span><br><span class="line"><span class="hljs-keyword">const</span> sKey = <span class="hljs-string">'key'</span>,</span><br><span class="line">    nKey = <span class="hljs-number">1</span>,</span><br><span class="line">    bKey = <span class="hljs-literal">true</span>,</span><br><span class="line">    nullKey = <span class="hljs-literal">null</span>,</span><br><span class="line">    uKey = <span class="hljs-literal">undefined</span>,</span><br><span class="line">    symbolKey = <span class="hljs-built_in">Symbol</span>(<span class="hljs-string">"key"</span>),</span><br><span class="line">    oKey = &#123;&#125;,</span><br><span class="line">    ooKey = oKey,</span><br><span class="line">    aKey = [],</span><br><span class="line">    fKey = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123; &#125;,</span><br><span class="line">    nanKey = <span class="hljs-literal">NaN</span>;</span><br><span class="line"></span><br><span class="line">map.set(sKey, <span class="hljs-string">"string"</span>)</span><br><span class="line">    .set(nKey, <span class="hljs-string">"number"</span>)</span><br><span class="line">    .set(bKey, <span class="hljs-string">"boolean"</span>)</span><br><span class="line">    .set(nullKey, <span class="hljs-string">"null"</span>)</span><br><span class="line">    .set(uKey, <span class="hljs-string">"undefined"</span>)</span><br><span class="line">    .set(symbolKey, <span class="hljs-string">"symbol"</span>)</span><br><span class="line">    .set(oKey, <span class="hljs-string">"object"</span>)</span><br><span class="line">    .set(aKey, <span class="hljs-string">"array"</span>)</span><br><span class="line">    .set(fKey, <span class="hljs-string">"function"</span>)</span><br><span class="line">    .set(nanKey, <span class="hljs-string">"NaN"</span>);</span><br><span class="line"></span><br><span class="line"><span class="hljs-built_in">console</span>.log(map);</span><br><span class="line"><span class="hljs-built_in">console</span>.log(map.get(sKey) === <span class="hljs-string">"string"</span>, map.get(<span class="hljs-string">"key"</span>) === <span class="hljs-string">"string"</span>);</span><br><span class="line"><span class="hljs-built_in">console</span>.log(map.get(nKey) === <span class="hljs-string">"number"</span>, map.get(<span class="hljs-number">1</span>) === <span class="hljs-string">"number"</span>);</span><br><span class="line"><span class="hljs-built_in">console</span>.log(map.get(bKey) === <span class="hljs-string">"boolean"</span>, map.get(<span class="hljs-literal">true</span>) === <span class="hljs-string">"boolean"</span>);</span><br><span class="line"><span class="hljs-built_in">console</span>.log(map.get(nullKey) === <span class="hljs-string">"null"</span>, map.get(<span class="hljs-literal">null</span>) === <span class="hljs-string">"null"</span>);</span><br><span class="line"><span class="hljs-built_in">console</span>.log(map.get(uKey) === <span class="hljs-string">"undefined"</span>, map.get(<span class="hljs-literal">undefined</span>) === <span class="hljs-string">"undefined"</span>);</span><br><span class="line"><span class="hljs-built_in">console</span>.log(map.get(symbolKey) === <span class="hljs-string">"symbol"</span>);</span><br><span class="line"><span class="hljs-built_in">console</span>.log(map.get(oKey) === <span class="hljs-string">"object"</span>, map.get(&#123;&#125;) === <span class="hljs-string">"object"</span>, map.get(oKey) === map.get(ooKey));</span><br><span class="line"><span class="hljs-built_in">console</span>.log(map.get(aKey) === <span class="hljs-string">"array"</span>, map.get([]) === <span class="hljs-string">"array"</span>);</span><br><span class="line"><span class="hljs-built_in">console</span>.log(map.get(fKey) === <span class="hljs-string">"function"</span>, map.get(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123; &#125;) === <span class="hljs-string">"function"</span>);</span><br><span class="line"><span class="hljs-built_in">console</span>.log(map.get(nanKey) === <span class="hljs-string">"NaN"</span>, map.get(<span class="hljs-literal">NaN</span>) === <span class="hljs-string">"NaN"</span>);</span><br></pre></td></tr></table></figure>
+<p>输出如下</p>
+<figure class="highlight dart hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">Map</span> &#123;</span><br><span class="line">  <span class="hljs-string">'key'</span> =&gt; <span class="hljs-string">'string'</span>,</span><br><span class="line">  <span class="hljs-number">1</span> =&gt; <span class="hljs-string">'number'</span>,</span><br><span class="line">  <span class="hljs-keyword">true</span> =&gt; <span class="hljs-string">'boolean'</span>,</span><br><span class="line">  <span class="hljs-keyword">null</span> =&gt; <span class="hljs-string">'null'</span>,</span><br><span class="line">  undefined =&gt; <span class="hljs-string">'undefined'</span>,</span><br><span class="line">  <span class="hljs-built_in">Symbol</span>(key) =&gt; <span class="hljs-string">'symbol'</span>,</span><br><span class="line">  &#123;&#125; =&gt; <span class="hljs-string">'object'</span>,</span><br><span class="line">  [] =&gt; <span class="hljs-string">'array'</span>,</span><br><span class="line">  [<span class="hljs-built_in">Function</span>: fKey] =&gt; <span class="hljs-string">'function'</span>,</span><br><span class="line">  NaN =&gt; <span class="hljs-string">'NaN'</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="hljs-keyword">true</span> <span class="hljs-keyword">true</span></span><br><span class="line"><span class="hljs-keyword">true</span> <span class="hljs-keyword">true</span></span><br><span class="line"><span class="hljs-keyword">true</span> <span class="hljs-keyword">true</span></span><br><span class="line"><span class="hljs-keyword">true</span> <span class="hljs-keyword">true</span></span><br><span class="line"><span class="hljs-keyword">true</span> <span class="hljs-keyword">true</span></span><br><span class="line"><span class="hljs-keyword">true</span></span><br><span class="line"><span class="hljs-keyword">true</span> <span class="hljs-keyword">false</span> <span class="hljs-keyword">true</span></span><br><span class="line"><span class="hljs-keyword">true</span> <span class="hljs-keyword">false</span></span><br><span class="line"><span class="hljs-keyword">true</span> <span class="hljs-keyword">false</span></span><br><span class="line"><span class="hljs-keyword">true</span> <span class="hljs-keyword">true</span></span><br></pre></td></tr></table></figure>
+<p>结论</p>
+<ul>
+<li>string/number/boolean/null/undefined/NaN 按值存储，值一致即可访问</li>
+<li>symbol必须是同一个Symbol才能访问，详见<a href="https://www.ddhigh.com/2019/10/28/symbol.html">深入浅出ES6的Symbol类型</a></li>
+<li>object/array/function等Object类型按照引用访问，必须是同一个引用才可以访问</li>
+<li>Map是<code>有序</code>的，按照插入顺序</li>
+<li>Map.set方法支持链式操作</li>
+</ul>
+<h2 id="Map的迭代"><a href="#Map的迭代" class="headerlink" title="Map的迭代"></a>Map的迭代</h2><h4 id="for…of"><a href="#for…of" class="headerlink" title="for…of"></a>for…of</h4><p>同时迭代键值</p>
+<figure class="highlight js hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 普通版本</span></span><br><span class="line"><span class="hljs-keyword">const</span> map = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>();</span><br><span class="line">map.set(<span class="hljs-string">"1"</span>, <span class="hljs-number">1</span>);</span><br><span class="line">map.set(<span class="hljs-string">"2"</span>, <span class="hljs-number">2</span>);</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> [k, v] <span class="hljs-keyword">of</span> map) &#123;</span><br><span class="line">    <span class="hljs-built_in">console</span>.log(k, v);</span><br><span class="line">&#125;</span><br><span class="line"><span class="hljs-comment">// 迭代器版本</span></span><br><span class="line"><span class="hljs-keyword">const</span> map = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>();</span><br><span class="line">map.set(<span class="hljs-string">"1"</span>, <span class="hljs-number">1</span>);</span><br><span class="line">map.set(<span class="hljs-string">"2"</span>, <span class="hljs-number">2</span>);</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> [k, v] <span class="hljs-keyword">of</span> map.entries()) &#123;</span><br><span class="line">    <span class="hljs-built_in">console</span>.log(k, v);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>迭代键</p>
+<figure class="highlight js hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 普通版本</span></span><br><span class="line"><span class="hljs-keyword">const</span> map = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>();</span><br><span class="line">map.set(<span class="hljs-string">"1"</span>, <span class="hljs-number">1</span>);</span><br><span class="line">map.set(<span class="hljs-string">"2"</span>, <span class="hljs-number">2</span>);</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> k <span class="hljs-keyword">of</span> map.keys()) &#123;</span><br><span class="line">    <span class="hljs-built_in">console</span>.log(k, map.get(k));</span><br><span class="line">&#125;</span><br><span class="line"><span class="hljs-comment">// 迭代器版本</span></span><br><span class="line"><span class="hljs-keyword">const</span> map = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>();</span><br><span class="line">map.set(<span class="hljs-string">"1"</span>, <span class="hljs-number">1</span>);</span><br><span class="line">map.set(<span class="hljs-string">"2"</span>, <span class="hljs-number">2</span>);</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> [k] <span class="hljs-keyword">of</span> map.entries()) &#123; <span class="hljs-comment">// 解构赋值</span></span><br><span class="line">    <span class="hljs-built_in">console</span>.log(k, map.get(k));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>迭代值</p>
+<figure class="highlight js hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 普通版本</span></span><br><span class="line"><span class="hljs-keyword">const</span> map = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>();</span><br><span class="line">map.set(<span class="hljs-string">"1"</span>, <span class="hljs-number">1</span>);</span><br><span class="line">map.set(<span class="hljs-string">"2"</span>, <span class="hljs-number">2</span>);</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> v <span class="hljs-keyword">of</span> map.values()) &#123;</span><br><span class="line">    <span class="hljs-built_in">console</span>.log(v);</span><br><span class="line">&#125;</span><br><span class="line"><span class="hljs-comment">// 迭代器版本</span></span><br><span class="line"><span class="hljs-keyword">const</span> map = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>();</span><br><span class="line">map.set(<span class="hljs-string">"1"</span>, <span class="hljs-number">1</span>);</span><br><span class="line">map.set(<span class="hljs-string">"2"</span>, <span class="hljs-number">2</span>);</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> [,v] <span class="hljs-keyword">of</span> map.entries()) &#123;</span><br><span class="line">    <span class="hljs-built_in">console</span>.log(v);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>forEach()</p>
+<blockquote>
+<p>forEach方法的顺序是value, key，不是key, value!</p>
+</blockquote>
+<figure class="highlight js hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> map = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>();</span><br><span class="line">map.set(<span class="hljs-string">"1"</span>, <span class="hljs-number">1</span>);</span><br><span class="line">map.set(<span class="hljs-string">"2"</span>, <span class="hljs-number">2</span>);</span><br><span class="line"></span><br><span class="line">map.forEach(<span class="hljs-function">(<span class="hljs-params">value, key</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="hljs-built_in">console</span>.log(value, key);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="Map与其他类型的转换"><a href="#Map与其他类型的转换" class="headerlink" title="Map与其他类型的转换"></a>Map与其他类型的转换</h2><h3 id="Map与Object"><a href="#Map与Object" class="headerlink" title="Map与Object"></a>Map与Object</h3><figure class="highlight js hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> obj = &#123;</span><br><span class="line">    name: <span class="hljs-string">'xialei'</span>,</span><br><span class="line">    site: <span class="hljs-string">'https://www.ddhigh.com'</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="hljs-keyword">const</span> map = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>(obj);</span><br><span class="line"><span class="hljs-built_in">console</span>.log(map);</span><br></pre></td></tr></table></figure>
+<p>执行报错<code>TypeError: object is not iterable</code>，因为Object不是可迭代对象。</p>
+<blockquote>
+<p>可迭代对象：ES6新出的语法，对象或对象的原型链实现了Symbol.iterator方法，关于迭代器的内容将在下一篇文章中详细介绍</p>
+</blockquote>
+<p>我们给Object.prototype添加属性方法来支持迭代：</p>
+<blockquote>
+<p>warning: 正式代码请谨慎修改原型链!</p>
+</blockquote>
+<figure class="highlight js hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> obj = &#123;</span><br><span class="line">    name: <span class="hljs-string">'xialei'</span>,</span><br><span class="line">    site: <span class="hljs-string">'https://www.ddhigh.com'</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="hljs-built_in">Object</span>.prototype[<span class="hljs-built_in">Symbol</span>.iterator] = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123; <span class="hljs-comment">// Symbol.iterator可以理解为全局唯一的标识</span></span><br><span class="line">    <span class="hljs-keyword">const</span> keys = <span class="hljs-built_in">Object</span>.keys(<span class="hljs-keyword">this</span>);</span><br><span class="line">    <span class="hljs-keyword">let</span> keyIndex = <span class="hljs-number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">return</span> &#123;</span><br><span class="line">        next() &#123;</span><br><span class="line">            <span class="hljs-keyword">if</span> (keyIndex &lt; keys.length) &#123;</span><br><span class="line">                <span class="hljs-keyword">const</span> key = keys[keyIndex++];</span><br><span class="line">                <span class="hljs-keyword">return</span> &#123; <span class="hljs-attr">value</span>: [key, obj[key]] &#125;; <span class="hljs-comment">// 迭代值</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="hljs-keyword">return</span> &#123; <span class="hljs-attr">done</span>: <span class="hljs-literal">true</span> &#125;; <span class="hljs-comment">// 迭代结束</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> map = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>(obj);</span><br><span class="line"><span class="hljs-built_in">console</span>.log(map);</span><br></pre></td></tr></table></figure>
+<h3 id="Map与数组"><a href="#Map与数组" class="headerlink" title="Map与数组"></a>Map与数组</h3><blockquote>
+<p>只支持[[key, value]]这种二维数组。二维数组的每一个元素包含key和value两个子元素</p>
+</blockquote>
+<figure class="highlight js hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> map = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>([[<span class="hljs-string">'name'</span>, <span class="hljs-string">'xialeistudio'</span>], [<span class="hljs-string">'site'</span>, <span class="hljs-string">'https://www.ddhigh.com'</span>]]);</span><br></pre></td></tr></table></figure>
+<h3 id="Map与Map"><a href="#Map与Map" class="headerlink" title="Map与Map"></a>Map与Map</h3><blockquote>
+<p>由于Map是可迭代对象，因此可以作为参数传给Map构造函数</p>
+<p>两个Map的元素是一样的，不是Map不相等，因为不是同一个对象</p>
+</blockquote>
+<figure class="highlight js hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> map = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>([[<span class="hljs-string">'name'</span>, <span class="hljs-string">'xialeistudio'</span>], [<span class="hljs-string">'site'</span>, <span class="hljs-string">'https://www.ddhigh.com'</span>]]);</span><br><span class="line"><span class="hljs-keyword">const</span> map2 = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>(map);</span><br><span class="line"></span><br><span class="line"><span class="hljs-built_in">console</span>.log(map === map2); <span class="hljs-comment">// false</span></span><br></pre></td></tr></table></figure>
+<h3 id="Map的合并"><a href="#Map的合并" class="headerlink" title="Map的合并"></a>Map的合并</h3><blockquote>
+<p>多个Map可以合并，相同key会被覆盖，规则为后面的覆盖前面的</p>
+</blockquote>
+<figure class="highlight js hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> map = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>([</span><br><span class="line">    [<span class="hljs-number">1</span>, <span class="hljs-number">1</span>],</span><br><span class="line">    [<span class="hljs-number">2</span>, <span class="hljs-number">2</span>]</span><br><span class="line">]);</span><br><span class="line"><span class="hljs-keyword">const</span> map2 = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>([</span><br><span class="line">    [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>]</span><br><span class="line">]);</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> map3 = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>([...map, ...map2]);</span><br><span class="line"><span class="hljs-built_in">console</span>.log(map3); <span class="hljs-comment">// Map &#123; 1 =&gt; 2, 2 =&gt; 2 &#125;</span></span><br></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Map的出现解决了传统object无法直接解决的问题，更好地向标准编程语言靠近(标准编程语言一般会提供Map集合)，使用的坑也比较少（比如没有object作为key时转换为[object Object]的问题）。</p>
+<p><img src="https://static.ddhigh.com/blog/2019-10-22-102654.jpg" alt="0.jpeg"></p>
+
+            </div>
+            
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/es6/">es6</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <div class="social-share" data-disabled="qzone,facebook,twitter,tencent,linkedin,douban,diandian,google"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev"
+                href="/2019/10/31/es6-set.html">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">ES6的Set类型</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next"
+                href="/2019/10/30/twblog.html">
+                <span class="level-item">我是如何发现我的文章被侵权以及如何得到侵权网站的联系方式的?</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '1ae09f5aa5dcce937e94',
+        clientSecret: '55c4032692dbcb0ee13771da7dc95f22cf9ae8e1',
+        id: '3820dc554ae1256c421074dfcd806be2',
+        repo: 'xialeistudio.github.io',
+        owner: 'xialeistudio',
+        language: 'en',
+        admin: "xialeistudio",
+        createIssueManually: false,
+        distractionFreeMode: false,
+        proxy: '/github/login/oauth/access_token'
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-3 column-right ">
+    
+        
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Categories
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/algorithm/">
+            <span class="level-start">
+                <span class="level-item">algorithm</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">33</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/engineering/">
+            <span class="level-start">
+                <span class="level-item">engineering</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">273</span>
+            </span>
+        </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+        
+    
+        
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Catalogue
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#基本操作">
+        <span class="has-mr-6">1</span>
+        <span>基本操作</span>
+        </a></li><li>
+        <a class="is-flex" href="#数据类型测试">
+        <span class="has-mr-6">2</span>
+        <span>数据类型测试</span>
+        </a></li><li>
+        <a class="is-flex" href="#Map的迭代">
+        <span class="has-mr-6">3</span>
+        <span>Map的迭代</span>
+        </a><ul class="menu-list"><ul class="menu-list"><li>
+        <a class="is-flex" href="#for…of">
+        <span class="has-mr-6">3.1.1</span>
+        <span>for…of</span>
+        </a></li></ul></ul></li><li>
+        <a class="is-flex" href="#Map与其他类型的转换">
+        <span class="has-mr-6">4</span>
+        <span>Map与其他类型的转换</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#Map与Object">
+        <span class="has-mr-6">4.1</span>
+        <span>Map与Object</span>
+        </a></li><li>
+        <a class="is-flex" href="#Map与数组">
+        <span class="has-mr-6">4.2</span>
+        <span>Map与数组</span>
+        </a></li><li>
+        <a class="is-flex" href="#Map与Map">
+        <span class="has-mr-6">4.3</span>
+        <span>Map与Map</span>
+        </a></li><li>
+        <a class="is-flex" href="#Map的合并">
+        <span class="has-mr-6">4.4</span>
+        <span>Map的合并</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#总结">
+        <span class="has-mr-6">5</span>
+        <span>总结</span>
+        </a></li></ul>
+        </div>
+    </div>
+</div>
+
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    Learning &amp; Sharing
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2023 xialeistudio&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                
+                </p>
+                <p class="is-size-7">
+                    
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="GitHub" href="https://github.com/xialeistudio">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+<script>
+    var IcarusThemeSettings = {
+        article: {
+            highlight: {
+                clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+    
+    <script src="/js/animation.js"></script>
+    
+
+
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

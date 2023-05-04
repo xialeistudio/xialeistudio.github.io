@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html  lang="en">
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 3.9.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>Tlv编码在NodeJs中的应用 - Xia Lei</title>
+
+
+
+
+
+
+<link rel="alternative" href="/" title="Tlv编码在NodeJs中的应用" type="application/atom+xml">
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://static.ddhigh.com/font/ubuntu.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+<script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?78141f99bbb49f1564a7af89344f5add";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                Learning &amp; Sharing
+                
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                    href="/">Home</a>
+                
+                <a class="navbar-item"
+                    href="/archives">Archives</a>
+                
+                <a class="navbar-item"
+                    href="/categories">Categories</a>
+                
+                <a class="navbar-item"
+                    href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                
+                
+                <a class="navbar-item" target="_blank" title="GitHub"
+                    href="https://github.com/xialeistudio">
+                    
+                    <i class="fab fa-github"></i>
+                    
+                </a>
+                
+                
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2017-11-17T07:36:27.000Z">2017-11-17</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/engineering/">engineering</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    5 minutes read (About 732 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            Tlv编码在NodeJs中的应用
+            
+        </h1>
+        <div class="content">
+            
+            <div id="container">
+                <p>最近在接入腾讯云的天御业务安全系统时接触到了TLV编码协议，好在TLV协议理解起来比较简单。故简要介绍一下该编码。</p>
+<h2 id="TLV编码是什么？"><a href="#TLV编码是什么？" class="headerlink" title="TLV编码是什么？"></a>TLV编码是什么？</h2><figure class="highlight routeros hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">TLV是一种编码格式，编码如下：</span><br><span class="line">[1-4字节] TYPE</span><br><span class="line">[5-8字节] Value的Length</span><br><span class="line">[9字节+] Value数据</span><br></pre></td></tr></table></figure>
+<p>本文只探讨无嵌套数据的情况。NodeJs操作二进制数据主要依赖于<strong>Buffer</strong></p>
+<h2 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h2><ol>
+<li><p>编码Ascii数据，由于ascii编码的数据，一个字节就是一个字符，所以比较简单</p>
+<figure class="highlight yaml hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-attr">TYPE:</span> <span class="hljs-number">1</span></span><br><span class="line"><span class="hljs-attr">Value:</span> <span class="hljs-string">test</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>根据编码规则，可以得出以下数据组装格式</p>
+<figure class="highlight lsl hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[<span class="hljs-number">1</span><span class="hljs-number">-4</span>字节] <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">01</span></span><br><span class="line">[<span class="hljs-number">5</span><span class="hljs-number">-8</span>字节] <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">04</span></span><br><span class="line">[<span class="hljs-number">9</span><span class="hljs-number">-12</span>字节] <span class="hljs-number">74</span> <span class="hljs-number">65</span> <span class="hljs-number">73</span> <span class="hljs-number">74</span> </span><br><span class="line"><span class="hljs-comment">// 74 对应字符*t*ascii编码*116*的16进制形式，其他以此类推</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>javascript代码</p>
+<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// buf总长度为4字节TYPE+4字节VALUE长度+test的字节数为12</span></span><br><span class="line"><span class="hljs-keyword">const</span> buf = Buffer.alloc(<span class="hljs-number">12</span>);</span><br><span class="line"><span class="hljs-comment">// 写入TYPE</span></span><br><span class="line">buf.writeIntBE(<span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">4</span>);</span><br><span class="line"><span class="hljs-comment">// 写入LENGTH</span></span><br><span class="line">buf.writeIntBE(<span class="hljs-string">'test'</span>.length, <span class="hljs-number">4</span>, <span class="hljs-number">4</span>);</span><br><span class="line"><span class="hljs-comment">// 写入test</span></span><br><span class="line">buf.write(<span class="hljs-string">'test'</span>, <span class="hljs-number">8</span>, <span class="hljs-string">'test'</span>.length);</span><br><span class="line"><span class="hljs-comment">// 此时buf就是编码结果，由于是二进制的，如果走TCP协议的话已经可以了，但是腾讯云要求base64编码。所以最终结果为</span></span><br><span class="line">buf.toString(<span class="hljs-string">'base64'</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用NodeJs交互式环境测试</p>
+<figure class="highlight lsl hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ node</span><br><span class="line">&gt; const buf = Buffer.alloc(<span class="hljs-number">12</span>);</span><br><span class="line">undefined</span><br><span class="line">&gt; buf</span><br><span class="line">&lt;Buffer <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span>&gt;</span><br><span class="line">&gt; buf.writeIntBE(<span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">4</span>)</span><br><span class="line"><span class="hljs-number">4</span></span><br><span class="line">&gt; buf.writeIntBE(<span class="hljs-number">4</span>,<span class="hljs-number">4</span>,<span class="hljs-number">4</span>)</span><br><span class="line"><span class="hljs-number">8</span></span><br><span class="line">&gt; buf.write('test',<span class="hljs-number">8</span>,<span class="hljs-number">4</span>)</span><br><span class="line"><span class="hljs-number">4</span></span><br><span class="line">&gt; buf</span><br><span class="line">&lt;Buffer <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">01</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">04</span> <span class="hljs-number">74</span> <span class="hljs-number">65</span> <span class="hljs-number">73</span> <span class="hljs-number">74</span>&gt;</span><br><span class="line">&gt; buf.toString()</span><br><span class="line">'\u0000\u0000\u0000\u0001\u0000\u0000\u0000\u0004test'</span><br><span class="line">&gt; buf.toString('base64')</span><br><span class="line">'AAAAAQAAAAR0ZXN0'</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="非Ascii编码问题"><a href="#非Ascii编码问题" class="headerlink" title="非Ascii编码问题"></a>非Ascii编码问题</h2><p>如果发送的数据是Ascii编码表之外的数据，就会用到多字节编码，此时以上方法会有问题。<br>得意与Buffer完善的API，<em>Buffer.from</em>方法可以接收一个字符串和一个编码得到一个Buffer数组。</p>
+<p>上例可以改为使用<em>Buffer.from</em>的版本:</p>
+<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> valueBuf = Buffer.from(value, <span class="hljs-string">'utf8'</span>);</span><br><span class="line"><span class="hljs-keyword">const</span> buf = Buffer.alloc(<span class="hljs-number">8</span> + valueBuf.length);</span><br><span class="line">buf.writeIntBE(type, <span class="hljs-number">0</span>, <span class="hljs-number">4</span>);</span><br><span class="line">buf.writeIntBE(valueBuf.length, <span class="hljs-number">4</span>, <span class="hljs-number">4</span>);</span><br><span class="line">buf.write(value, <span class="hljs-number">8</span>, valueBuf.length);</span><br><span class="line">buf.toString(<span class="hljs-string">'base64'</span>);</span><br></pre></td></tr></table></figure>
+<p>由于value使用的utf8编码，所以utf8编码表中的数据该方法都可以成功编码，经过腾讯云接口调用测试也是OK的。</p>
+<h2 id="解码"><a href="#解码" class="headerlink" title="解码"></a>解码</h2><p>说到编码就会有解码。解码是编码的逆运算，根据一样的规则还原数据而已。</p>
+<ol>
+<li><p>javascript代码</p>
+<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 假设str为base64编码之后Tlv数据</span></span><br><span class="line"><span class="hljs-keyword">const</span> buf = <span class="hljs-keyword">new</span> Buffer(str, <span class="hljs-string">'base64'</span>); <span class="hljs-comment">// 还原为Buffer</span></span><br><span class="line"><span class="hljs-comment">// 读取TYPE</span></span><br><span class="line"><span class="hljs-keyword">const</span> type = buf.readIntBE(<span class="hljs-number">0</span>, <span class="hljs-number">4</span>)</span><br><span class="line"><span class="hljs-comment">// 读取VALUE长度</span></span><br><span class="line"><span class="hljs-keyword">const</span> length = buf.readIntBE(<span class="hljs-number">4</span>, <span class="hljs-number">4</span>)</span><br><span class="line"><span class="hljs-comment">// 读取VALUE</span></span><br><span class="line"><span class="hljs-keyword">const</span> valueBuf = Buffer.alloc(length);</span><br><span class="line"><span class="hljs-comment">// 写入VALUE</span></span><br><span class="line">buf.copy(valueBuf, <span class="hljs-number">0</span>, <span class="hljs-number">8</span>, <span class="hljs-number">8</span> + length);</span><br><span class="line"><span class="hljs-comment">// 得到原始数据</span></span><br><span class="line">valueBuf.toString(<span class="hljs-string">'utf8'</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用NodeJs交互式环境测试</p>
+<figure class="highlight delphi hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ node</span><br><span class="line">&gt; <span class="hljs-keyword">const</span> str = <span class="hljs-string">'AAAAAQAAAAR0ZXN0'</span>;</span><br><span class="line">undefined</span><br><span class="line">&gt; <span class="hljs-keyword">const</span> buf = new Buffer(str, <span class="hljs-string">'base64'</span>);</span><br><span class="line">undefined</span><br><span class="line">&gt; <span class="hljs-keyword">const</span> <span class="hljs-keyword">type</span> = buf.readIntBE(<span class="hljs-number">0</span>,<span class="hljs-number">4</span>);</span><br><span class="line">undefined</span><br><span class="line">&gt; <span class="hljs-keyword">const</span> length = buf.readIntBE(<span class="hljs-number">4</span>,<span class="hljs-number">4</span>);</span><br><span class="line">undefined</span><br><span class="line">&gt; <span class="hljs-keyword">const</span> value = Buffer.alloc(length);</span><br><span class="line">undefined</span><br><span class="line">&gt; valueOf</span><br><span class="line">[<span class="hljs-function"><span class="hljs-keyword">Function</span>:</span> valueOf]</span><br><span class="line">&gt; value</span><br><span class="line">&lt;Buffer <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span>&gt;</span><br><span class="line">&gt; buf.co</span><br><span class="line">buf<span class="hljs-function">.<span class="hljs-keyword">constructor</span>  </span></span><br><span class="line"><span class="hljs-function"></span></span><br><span class="line"><span class="hljs-function"><span class="hljs-title">buf</span>.<span class="hljs-title">copyWithin</span>   </span></span><br><span class="line"><span class="hljs-function"></span></span><br><span class="line"><span class="hljs-function"><span class="hljs-title">buf</span>.<span class="hljs-title">compare</span>      <span class="hljs-title">buf</span>.<span class="hljs-title">copy</span>         </span></span><br><span class="line"><span class="hljs-function"></span></span><br><span class="line"><span class="hljs-function">&gt; <span class="hljs-title">buf</span>.<span class="hljs-title">copy</span><span class="hljs-params">(value,0,8,8+length)</span>;</span></span><br><span class="line"><span class="hljs-number">4</span></span><br><span class="line">&gt; value.<span class="hljs-keyword">to</span></span><br><span class="line">value.toLocaleString  value.toString        </span><br><span class="line"></span><br><span class="line">value.toJSON          </span><br><span class="line"></span><br><span class="line">&gt; value.toString()</span><br><span class="line"><span class="hljs-string">'test'</span></span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="腾讯云天御业务安全系统"><a href="#腾讯云天御业务安全系统" class="headerlink" title="腾讯云天御业务安全系统"></a>腾讯云天御业务安全系统</h2><p>socket.io中如果需要接入该系统进行垃圾发言的过滤时，可以使用我开发的SDK<br><a href="https://www.npmjs.com/package/tencent-cloud-defend" target="_blank" rel="noopener">tencent-cloud-defend</a></p>
+
+            </div>
+            
+        </div>
+        
+        
+        
+        <div class="social-share" data-disabled="qzone,facebook,twitter,tencent,linkedin,douban,diandian,google"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev"
+                href="/2017/11/17/go-tlv.html">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">golang实现TLV编码</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next"
+                href="/2017/11/01/docker-composer-nodejs.html">
+                <span class="level-item">使用docker-composer部署nodejs应用</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '1ae09f5aa5dcce937e94',
+        clientSecret: '55c4032692dbcb0ee13771da7dc95f22cf9ae8e1',
+        id: 'e66cd644d32cb58dee5b3ac1ca4c8e34',
+        repo: 'xialeistudio.github.io',
+        owner: 'xialeistudio',
+        language: 'en',
+        admin: "xialeistudio",
+        createIssueManually: false,
+        distractionFreeMode: false,
+        proxy: '/github/login/oauth/access_token'
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-3 column-right ">
+    
+        
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Categories
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/algorithm/">
+            <span class="level-start">
+                <span class="level-item">algorithm</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">33</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/engineering/">
+            <span class="level-start">
+                <span class="level-item">engineering</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">273</span>
+            </span>
+        </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+        
+    
+        
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Catalogue
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#TLV编码是什么？">
+        <span class="has-mr-6">1</span>
+        <span>TLV编码是什么？</span>
+        </a></li><li>
+        <a class="is-flex" href="#编码">
+        <span class="has-mr-6">2</span>
+        <span>编码</span>
+        </a></li><li>
+        <a class="is-flex" href="#非Ascii编码问题">
+        <span class="has-mr-6">3</span>
+        <span>非Ascii编码问题</span>
+        </a></li><li>
+        <a class="is-flex" href="#解码">
+        <span class="has-mr-6">4</span>
+        <span>解码</span>
+        </a></li><li>
+        <a class="is-flex" href="#腾讯云天御业务安全系统">
+        <span class="has-mr-6">5</span>
+        <span>腾讯云天御业务安全系统</span>
+        </a></li></ul>
+        </div>
+    </div>
+</div>
+
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    Learning &amp; Sharing
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2023 xialeistudio&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                
+                </p>
+                <p class="is-size-7">
+                    
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="GitHub" href="https://github.com/xialeistudio">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+<script>
+    var IcarusThemeSettings = {
+        article: {
+            highlight: {
+                clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+    
+    <script src="/js/animation.js"></script>
+    
+
+
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

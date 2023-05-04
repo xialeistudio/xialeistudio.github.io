@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html  lang="en">
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 3.9.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>解析字符串中的数字 - Xia Lei</title>
+
+
+
+
+
+
+<link rel="alternative" href="/" title="解析字符串中的数字" type="application/atom+xml">
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://static.ddhigh.com/font/ubuntu.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+<script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?78141f99bbb49f1564a7af89344f5add";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                Learning &amp; Sharing
+                
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                    href="/">Home</a>
+                
+                <a class="navbar-item"
+                    href="/archives">Archives</a>
+                
+                <a class="navbar-item"
+                    href="/categories">Categories</a>
+                
+                <a class="navbar-item"
+                    href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                
+                
+                <a class="navbar-item" target="_blank" title="GitHub"
+                    href="https://github.com/xialeistudio">
+                    
+                    <i class="fab fa-github"></i>
+                    
+                </a>
+                
+                
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2023-01-03T14:36:49.000Z">2023-01-03</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    4 minutes read (About 527 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            解析字符串中的数字
+            
+        </h1>
+        <div class="content">
+            
+            <div id="container">
+                <p>本文分享一种如何在字符串中解析数字的算法。</p>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>解析字符串中的数字需要判断当前是否是数字字符，以及如何处理连续的数字字符。</p>
+<p>本文使用while循环来解析数字，之所以不使用for循环，是笔者认为while循环操控力比for循环要好。</p>
+<p>while循环解析方法如下：</p>
+<ol>
+<li>如果当前字符是数字，则开启内部while循环</li>
+<li>内部while循环退出条件为当前字符不是数字</li>
+<li>内部循环操作为读取当前数字，然后加上一个数字乘以10</li>
+<li>内部循环退出后，我们就得到一个连续的数字</li>
+</ol>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>Leetcode <a href="https://leetcode.cn/problems/check-if-numbers-are-ascending-in-a-sentence/" target="_blank" rel="noopener">2042. 检查句子中的数字是否递增</a></p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-comment">// 提取字符串中的数字，判断是否严格递增</span></span><br><span class="line">        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">areNumbersAscending</span><span class="hljs-params">(String s)</span> </span>&#123;</span><br><span class="line">            <span class="hljs-comment">// 定义上一个数字，初始化为最小的数字</span></span><br><span class="line">            <span class="hljs-keyword">var</span> lastNumber = Integer.MIN_VALUE;</span><br><span class="line">            <span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>;</span><br><span class="line">            <span class="hljs-keyword">while</span> (i &lt; s.length()) &#123;</span><br><span class="line">                <span class="hljs-keyword">if</span> (Character.isDigit(s.charAt(i))) &#123; <span class="hljs-comment">// 当前是数字，继续处理</span></span><br><span class="line">                    <span class="hljs-keyword">var</span> number = <span class="hljs-number">0</span>;</span><br><span class="line">                    <span class="hljs-comment">// 核心代码</span></span><br><span class="line">                    <span class="hljs-keyword">while</span> (i &lt; s.length() &amp;&amp; Character.isDigit(s.charAt(i))) &#123; <span class="hljs-comment">// 字符串没越界而且当前字符是数字字符</span></span><br><span class="line">                        number = number * <span class="hljs-number">10</span> + (s.charAt(i) - <span class="hljs-string">'0'</span>); <span class="hljs-comment">// (s.charAt(i) - '0') 就是利用ASCII码表直接得到数字值，不需要再做parseInt</span></span><br><span class="line">                        i++; <span class="hljs-comment">// 坐标后移</span></span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="hljs-keyword">if</span> (number &lt;= lastNumber) &#123; <span class="hljs-comment">// 如果当前数字&lt;=上一个数字，证明不是严格递增，return false</span></span><br><span class="line">                        <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="hljs-comment">// number &gt; lastNumber，更新lastNumber</span></span><br><span class="line">                    lastNumber = number;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="hljs-comment">// i后移</span></span><br><span class="line">                i++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p><strong>复杂度分析</strong></p>
+<p>时间复杂度：$O(n)$，每个字符访问一次。<br>空间复杂度:$O(1)$，仅需常数项额外变量。</p>
+<p><strong>注意</strong></p>
+<p>时间复杂度就是分析随着数据量增大，算法执行次数的变化。本题虽然有两重循环，有些同学可能无脑以为时间复杂度是$O(n^2)$，实际上是不对的。可以发现每个字符串最多访问一次，所以复杂度是$O(n)$。</p>
+
+            </div>
+            
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/leetcode/">leetcode</a>, <a class="has-link-grey -link" href="/tags/string/">string</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <div class="social-share" data-disabled="qzone,facebook,twitter,tencent,linkedin,douban,diandian,google"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev"
+                href="/2023/01/05/counting-bit1-of-binary-number.html">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">计算数字二进制位中1的个数</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next"
+                href="/2023/01/03/nth-maximum-number.html">
+                <span class="level-item">查找第N大的数</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '1ae09f5aa5dcce937e94',
+        clientSecret: '55c4032692dbcb0ee13771da7dc95f22cf9ae8e1',
+        id: '57013a4153d02d164ef88f6cb30f1c69',
+        repo: 'xialeistudio.github.io',
+        owner: 'xialeistudio',
+        language: 'en',
+        admin: "xialeistudio",
+        createIssueManually: false,
+        distractionFreeMode: false,
+        proxy: '/github/login/oauth/access_token'
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-3 column-right ">
+    
+        
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Categories
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/algorithm/">
+            <span class="level-start">
+                <span class="level-item">algorithm</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">33</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/engineering/">
+            <span class="level-start">
+                <span class="level-item">engineering</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">273</span>
+            </span>
+        </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+        
+    
+        
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Catalogue
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#思路">
+        <span class="has-mr-6">1</span>
+        <span>思路</span>
+        </a></li><li>
+        <a class="is-flex" href="#示例">
+        <span class="has-mr-6">2</span>
+        <span>示例</span>
+        </a></li></ul>
+        </div>
+    </div>
+</div>
+
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    Learning &amp; Sharing
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2023 xialeistudio&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                
+                </p>
+                <p class="is-size-7">
+                    
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="GitHub" href="https://github.com/xialeistudio">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+<script>
+    var IcarusThemeSettings = {
+        article: {
+            highlight: {
+                clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+    
+    <script src="/js/animation.js"></script>
+    
+
+
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

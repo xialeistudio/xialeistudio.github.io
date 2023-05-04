@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html  lang="en">
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 3.9.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>Webpack4不求人(4)——编写自定义Loader - Xia Lei</title>
+
+
+
+
+
+
+<link rel="alternative" href="/" title="Webpack4不求人(4)——编写自定义Loader" type="application/atom+xml">
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://static.ddhigh.com/font/ubuntu.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+<script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?78141f99bbb49f1564a7af89344f5add";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                Learning &amp; Sharing
+                
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                    href="/">Home</a>
+                
+                <a class="navbar-item"
+                    href="/archives">Archives</a>
+                
+                <a class="navbar-item"
+                    href="/categories">Categories</a>
+                
+                <a class="navbar-item"
+                    href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                
+                
+                <a class="navbar-item" target="_blank" title="GitHub"
+                    href="https://github.com/xialeistudio">
+                    
+                    <i class="fab fa-github"></i>
+                    
+                </a>
+                
+                
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2020-03-11T04:00:00.000Z">2020-03-11</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/engineering/">engineering</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    10 minutes read (About 1428 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            Webpack4不求人(4)——编写自定义Loader
+            
+        </h1>
+        <div class="content">
+            
+            <div id="container">
+                <p>在前面的内容中，我们学习了Webpack的基本知识、常用脚手架和性能优化，虽然说大部分的开发场景社区已经又成熟的模块给我们使用，但是遇到特殊情况还是需要自己有独立开发的能力，因此今天我们一起来学习如何编写自定义Loader。</p>
+<h2 id="基本Loader"><a href="#基本Loader" class="headerlink" title="基本Loader"></a>基本Loader</h2><p>Webpack中loader是一个CommonJs风格的函数，接收输入的源码，通过同步或异步的方式替换源码后进行输出。</p>
+<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">source, sourceMap, meta</span>) </span>&#123;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>source是输入的内容</li>
+<li>sourceMap是可选的</li>
+<li>meta是模块的元数据，也是可选的</li>
+</ul>
+<p>需要注意的是，该导出函数必须使用function，不能使用箭头函数，因为loader编写过程中会经常使用到<code>this</code>访问选项和其他方法。</p>
+<p>我们先编写一个基本的Loader，完成的工作很简单，那就是把输出的字符串进行替换。</p>
+<p>1.新建loader-example目录，执行npm初始化，并安装webpack</p>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mkdir loader-example</span><br><span class="line"><span class="hljs-built_in">cd</span> loadeer-example</span><br><span class="line">npm init -y</span><br><span class="line">npm install webpack webpack-cli</span><br></pre></td></tr></table></figure>
+<p>2.构建项目目录</p>
+<figure class="highlight jboss-cli hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">|<span class="hljs-params">----loader</span> <span class="hljs-comment"># loader目录</span></span><br><span class="line">		|<span class="hljs-params">----replace-loader</span>.js <span class="hljs-comment"># 替换字符串的Loader</span></span><br><span class="line">|<span class="hljs-params">----src</span>   <span class="hljs-comment"># 应用源码</span></span><br><span class="line">		|<span class="hljs-params">----index</span>.js <span class="hljs-comment"># 首页</span></span><br><span class="line">|<span class="hljs-params">----package</span>.json</span><br><span class="line">|<span class="hljs-params">----webpack</span>.config.js</span><br></pre></td></tr></table></figure>
+<p>3.编写loader/replace-loader.js</p>
+<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">source</span>) </span>&#123;</span><br><span class="line">  <span class="hljs-keyword">return</span> source.replace(<span class="hljs-regexp">/World/g</span>, <span class="hljs-string">'Loader'</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>本例中我们Loader只是简单的将源码中的”World“替换成了”Loader“。</p>
+<p>4.编写src/index.js</p>
+<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Hello World'</span>);</span><br></pre></td></tr></table></figure>
+<p>5.编写webpack.config.js</p>
+<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="hljs-built_in">module</span>.exports = &#123;</span><br><span class="line">  entry: <span class="hljs-string">'./src/index'</span>,</span><br><span class="line">  target: <span class="hljs-string">'node'</span>, <span class="hljs-comment">// 我们编译为Node.js环境下的JS，等下直接使用Node.js执行编译完成的文件</span></span><br><span class="line">  output:&#123;</span><br><span class="line">    path: path.resolve(__dirname, <span class="hljs-string">'build'</span>),</span><br><span class="line">    filename: <span class="hljs-string">'[name].js'</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="hljs-built_in">module</span>:&#123;</span><br><span class="line">    rules:[</span><br><span class="line">      &#123;</span><br><span class="line">        test:<span class="hljs-regexp">/\.js$/</span>,</span><br><span class="line">        use: <span class="hljs-string">'replace-loader'</span></span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  resolveLoader: &#123;</span><br><span class="line">  	modules: [<span class="hljs-string">'./node_modules'</span>, <span class="hljs-string">'./loader'</span>] <span class="hljs-comment">// 配置loader的查找目录</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>6.编写package.json</p>
+<figure class="highlight json hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="hljs-attr">"scripts"</span>:&#123;</span><br><span class="line">    <span class="hljs-attr">"build"</span>:<span class="hljs-string">"webpack"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>7.执行构建</p>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run build</span><br></pre></td></tr></table></figure>
+<p>8.构建完成后，执行build/main.js</p>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node build/main.js</span><br></pre></td></tr></table></figure>
+<p>此时终端输出如下，我们编写的Loader工作正常。</p>
+<figure class="highlight ebnf hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-attribute">Hello Loader</span></span><br></pre></td></tr></table></figure>
+<h2 id="Loader选项"><a href="#Loader选项" class="headerlink" title="Loader选项"></a>Loader选项</h2><p>我们使用第三方loader时经常可以看到传递选项的情况：</p>
+<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  test:<span class="hljs-regexp">/\.js$/</span>,</span><br><span class="line">  use:[</span><br><span class="line">    &#123;</span><br><span class="line">      loader:<span class="hljs-string">'babel-loader'</span>,</span><br><span class="line">      options:&#123;</span><br><span class="line">        plugins:[<span class="hljs-string">'@babel/transform-runtime'</span>],</span><br><span class="line">        presets:[<span class="hljs-string">'@babel/env'</span>]</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在Loader编写时，Webpack中官方推荐通过loader-utils来读取配置选项，我们需要先安装。</p>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install loader-utils</span><br></pre></td></tr></table></figure>
+<p>我们给刚才编写的replace-loader传递一个选项，允许自定义替换结果。</p>
+<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> loaderUtils = <span class="hljs-built_in">require</span>(<span class="hljs-string">'loader-utils'</span>);</span><br><span class="line"></span><br><span class="line"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">source</span>) </span>&#123;</span><br><span class="line">	<span class="hljs-keyword">const</span> options = loaderUtils.getOptions(<span class="hljs-keyword">this</span>);</span><br><span class="line">  <span class="hljs-keyword">return</span> source.replace(<span class="hljs-regexp">/World/g</span>, options.text);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>接下来编辑webpack.config.js，给replace-loader传递选项。</p>
+<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="hljs-built_in">module</span>:&#123;</span><br><span class="line">    rules:[</span><br><span class="line">      &#123;</span><br><span class="line">        test:<span class="hljs-regexp">/\.js$/</span>,</span><br><span class="line">        use:[</span><br><span class="line">          &#123;</span><br><span class="line">            loader:<span class="hljs-string">'replace-loader'</span>,</span><br><span class="line">            options:&#123;</span><br><span class="line">              text: <span class="hljs-string">'Webpack4'</span></span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">        ]</span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  resolveLoader:&#123;</span><br><span class="line">    modules: [<span class="hljs-string">'./node_modules'</span>, <span class="hljs-string">'./loader'</span>]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>执行构建之后用Node.js执行build/main.js，可以看到输出的内容已经发生变化了。</p>
+<figure class="highlight nginx hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-attribute">Hello</span> Webpack4</span><br></pre></td></tr></table></figure>
+<h2 id="异步Loader"><a href="#异步Loader" class="headerlink" title="异步Loader"></a>异步Loader</h2><p>在Loader中，如果存在异步调用，那么就无法直接通过return返回构建后的结果了，此时需要使用到Webpack提供的回调函数将数据进行回调。</p>
+<p>Webpack4给Loader提供了<code>this.async()</code>函数，调用之后返回一个callback，callback的签名如下:</p>
+<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">callback</span>(<span class="hljs-params"></span></span></span><br><span class="line"><span class="hljs-function"><span class="hljs-params">  err: Error|null,</span></span></span><br><span class="line"><span class="hljs-function"><span class="hljs-params">  content: string|Buffer,</span></span></span><br><span class="line"><span class="hljs-function"><span class="hljs-params">  sourceMap?:SourceMap,</span></span></span><br><span class="line"><span class="hljs-function"><span class="hljs-params">  meta?: any</span></span></span><br><span class="line"><span class="hljs-function"><span class="hljs-params"></span>)</span></span><br></pre></td></tr></table></figure>
+<p>例如我们需要在loader中调用setTimeout进行等待，则相应的代码如下：</p>
+<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">source</span>) </span>&#123;</span><br><span class="line">  <span class="hljs-keyword">const</span> callback = <span class="hljs-keyword">this</span>.async();</span><br><span class="line">  setTimeout(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="hljs-keyword">const</span> output = source.replace(<span class="hljs-regexp">/World/g</span>, <span class="hljs-string">'Webpack4'</span>);</span><br><span class="line">    callback(<span class="hljs-literal">null</span>, output);</span><br><span class="line">  &#125;, <span class="hljs-number">1000</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行构建，Webpack会等待一秒，然后再输出构建内容，通过Node.js执行构建后的文件，输出如下</p>
+<figure class="highlight nginx hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-attribute">Hello</span> Webpack4</span><br></pre></td></tr></table></figure>
+<h2 id="“Raw”-Loader"><a href="#“Raw”-Loader" class="headerlink" title="“Raw” Loader"></a>“Raw” Loader</h2><p>默认情况下，资源文件会被转化为 UTF-8 字符串，然后传给 loader。通过设置 <code>raw</code>，loader 可以接收原始的 <code>Buffer</code>。比如处理非文本文件时(如图片等等)。</p>
+<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">source</span>) </span>&#123;</span><br><span class="line">  assert(source <span class="hljs-keyword">instanceof</span> Buffer);</span><br><span class="line">  <span class="hljs-keyword">return</span> someSyncOperation(source);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="hljs-built_in">module</span>.exports.raw = <span class="hljs-literal">true</span>; <span class="hljs-comment">// 设置当前Loader为raw loader, webpack会将原始的Buffer对象传入</span></span><br></pre></td></tr></table></figure>
+<h2 id="读取loader配置文件"><a href="#读取loader配置文件" class="headerlink" title="读取loader配置文件"></a>读取loader配置文件</h2><p>babel-loader在使用时可以加载.babelrc配置文件来配置plugins和presets，减少了webpack.config.js的代码量，便于维护。接下来我们编写一个i18n-loader，通过读取语言配置文件完成语言转换。</p>
+<h3 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h3><figure class="highlight jboss-cli hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">|<span class="hljs-params">----loader</span></span><br><span class="line">		|<span class="hljs-params">----i18n-loader</span>.js <span class="hljs-comment"># loader</span></span><br><span class="line">|<span class="hljs-params">----i18n</span></span><br><span class="line">		|<span class="hljs-params">----zh</span>.json <span class="hljs-comment"># 中文语言包</span></span><br><span class="line">|<span class="hljs-params">----src</span></span><br><span class="line">		|<span class="hljs-params">----index</span>.js <span class="hljs-comment"># 入口文件</span></span><br><span class="line">|<span class="hljs-params">----webpack</span>.config.js</span><br></pre></td></tr></table></figure>
+<p>i18n/zh.json</p>
+<figure class="highlight json hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="hljs-attr">"hello"</span>: <span class="hljs-string">"你好"</span>,</span><br><span class="line">    <span class="hljs-attr">"today"</span>: <span class="hljs-string">"今天"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>loader/i18n-loader.js</p>
+<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> loaderUtils = <span class="hljs-built_in">require</span>(<span class="hljs-string">'loader-utils'</span>);</span><br><span class="line"><span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">source</span>) </span>&#123;</span><br><span class="line">    <span class="hljs-keyword">const</span> options = loaderUtils.getOptions(<span class="hljs-keyword">this</span>);</span><br><span class="line">    <span class="hljs-keyword">const</span> locale = options ? options.locale : <span class="hljs-literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">// 读取语言配置文件</span></span><br><span class="line">    <span class="hljs-keyword">let</span> json = <span class="hljs-literal">null</span>;</span><br><span class="line">    <span class="hljs-keyword">if</span> (locale) &#123;</span><br><span class="line">        <span class="hljs-keyword">const</span> filename = path.resolve(__dirname, <span class="hljs-string">'..'</span>, <span class="hljs-string">'i18n'</span>, <span class="hljs-string">`<span class="hljs-subst">$&#123;locale&#125;</span>.json`</span>);</span><br><span class="line">        json = <span class="hljs-built_in">require</span>(filename);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">// 读取语言标记 &#123;&#123;&#125;&#125;</span></span><br><span class="line">    <span class="hljs-keyword">const</span> matches = source.match(<span class="hljs-regexp">/\&#123;\&#123;\w+\&#125;\&#125;/g</span>); </span><br><span class="line">    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> match <span class="hljs-keyword">of</span> matches) &#123;</span><br><span class="line">        <span class="hljs-keyword">const</span> name = match.match(<span class="hljs-regexp">/\&#123;\&#123;(\w+)\&#125;\&#125;/</span>)[<span class="hljs-number">1</span>].toLowerCase();</span><br><span class="line">        <span class="hljs-keyword">if</span> (json !== <span class="hljs-literal">null</span> &amp;&amp; json[name] !== <span class="hljs-literal">undefined</span>) &#123;</span><br><span class="line">            source = source.replace(match, json[name]);</span><br><span class="line">        &#125; <span class="hljs-keyword">else</span> &#123;</span><br><span class="line">            source = source.replace(match, name);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-keyword">return</span> source;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>src/index.js</p>
+<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">console</span>.log(<span class="hljs-string">'&#123;&#123;Hello&#125;&#125;, &#123;&#123;Today&#125;&#125; is a good day.'</span>);</span><br></pre></td></tr></table></figure>
+<p>webpack.config.js</p>
+<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="hljs-built_in">module</span>.exports = &#123;</span><br><span class="line">    entry: <span class="hljs-string">'./src/index'</span>,</span><br><span class="line">    output: &#123;</span><br><span class="line">        path: path.resolve(__dirname, <span class="hljs-string">'build'</span>),</span><br><span class="line">        filename: <span class="hljs-string">'[name].js'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    target: <span class="hljs-string">'node'</span>,</span><br><span class="line">    <span class="hljs-built_in">module</span>: &#123;</span><br><span class="line">        rules: [</span><br><span class="line">            &#123;</span><br><span class="line">                test: <span class="hljs-regexp">/\.js$/</span>,</span><br><span class="line">                use: [</span><br><span class="line">                    &#123;</span><br><span class="line">                        loader: <span class="hljs-string">'i18n-loader'</span>,</span><br><span class="line">                        options: &#123; <span class="hljs-comment">// 传递选项</span></span><br><span class="line">                            locale: <span class="hljs-string">'zh'</span></span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                ]</span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;,</span><br><span class="line">    resolveLoader: &#123;</span><br><span class="line">        modules: [<span class="hljs-string">'./node_modules'</span>, <span class="hljs-string">'./loader'</span>]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>package.json</p>
+<figure class="highlight json hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="hljs-attr">"scripts"</span>:&#123;</span><br><span class="line">    <span class="hljs-attr">"build"</span>:<span class="hljs-string">"webpack"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="执行构建"><a href="#执行构建" class="headerlink" title="执行构建"></a>执行构建</h3><figure class="highlight dockerfile hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm <span class="hljs-keyword">run</span><span class="hljs-bash"> build</span></span><br></pre></td></tr></table></figure>
+<p>构建完毕后使用Node.js执行build/main.js输出如下：</p>
+<figure class="highlight applescript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">你好, 今天 <span class="hljs-keyword">is</span> a good <span class="hljs-built_in">day</span>.</span><br></pre></td></tr></table></figure>
+<p>可以看到i18n-loader成功读取了配置文件。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>本文简要介绍了Webpack中如何编写一个自定义的loader，权当抛砖引玉，更多的用法等待读者在实际工作中去挖掘，要想掌握Webpack的高级知识，Loader是必不可少的技能，有时候如果社区找不到合适的Loader，大家可以根据需要自己进行开发。</p>
+<p><img src="https://static.ddhigh.com/blog/2020-03-11-060831.png" alt="0"></p>
+
+            </div>
+            
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/webpack/">webpack</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <div class="social-share" data-disabled="qzone,facebook,twitter,tencent,linkedin,douban,diandian,google"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev"
+                href="/2020/03/18/webpack-plugin-development.html">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">Webpack4不求人(5)——编写自定义插件</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next"
+                href="/2020/03/06/webpack-optimize.html">
+                <span class="level-item">Webpack4不求人(3) ——性能优化</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '1ae09f5aa5dcce937e94',
+        clientSecret: '55c4032692dbcb0ee13771da7dc95f22cf9ae8e1',
+        id: 'f9f8403143e330fbda2879bf80ae86da',
+        repo: 'xialeistudio.github.io',
+        owner: 'xialeistudio',
+        language: 'en',
+        admin: "xialeistudio",
+        createIssueManually: false,
+        distractionFreeMode: false,
+        proxy: '/github/login/oauth/access_token'
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-3 column-right ">
+    
+        
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Categories
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/algorithm/">
+            <span class="level-start">
+                <span class="level-item">algorithm</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">33</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/engineering/">
+            <span class="level-start">
+                <span class="level-item">engineering</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">273</span>
+            </span>
+        </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+        
+    
+        
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Catalogue
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#基本Loader">
+        <span class="has-mr-6">1</span>
+        <span>基本Loader</span>
+        </a></li><li>
+        <a class="is-flex" href="#Loader选项">
+        <span class="has-mr-6">2</span>
+        <span>Loader选项</span>
+        </a></li><li>
+        <a class="is-flex" href="#异步Loader">
+        <span class="has-mr-6">3</span>
+        <span>异步Loader</span>
+        </a></li><li>
+        <a class="is-flex" href="#“Raw”-Loader">
+        <span class="has-mr-6">4</span>
+        <span>“Raw” Loader</span>
+        </a></li><li>
+        <a class="is-flex" href="#读取loader配置文件">
+        <span class="has-mr-6">5</span>
+        <span>读取loader配置文件</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#项目结构">
+        <span class="has-mr-6">5.1</span>
+        <span>项目结构</span>
+        </a></li><li>
+        <a class="is-flex" href="#执行构建">
+        <span class="has-mr-6">5.2</span>
+        <span>执行构建</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#小结">
+        <span class="has-mr-6">6</span>
+        <span>小结</span>
+        </a></li></ul>
+        </div>
+    </div>
+</div>
+
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    Learning &amp; Sharing
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2023 xialeistudio&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                
+                </p>
+                <p class="is-size-7">
+                    
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="GitHub" href="https://github.com/xialeistudio">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+<script>
+    var IcarusThemeSettings = {
+        article: {
+            highlight: {
+                clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+    
+    <script src="/js/animation.js"></script>
+    
+
+
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

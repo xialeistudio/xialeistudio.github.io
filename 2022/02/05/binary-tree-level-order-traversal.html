@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html  lang="en">
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 3.9.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>LeetCode102--二叉树的层序遍历 - Xia Lei</title>
+
+
+
+
+
+
+<link rel="alternative" href="/" title="LeetCode102--二叉树的层序遍历" type="application/atom+xml">
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://static.ddhigh.com/font/ubuntu.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+<script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?78141f99bbb49f1564a7af89344f5add";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                Learning &amp; Sharing
+                
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                    href="/">Home</a>
+                
+                <a class="navbar-item"
+                    href="/archives">Archives</a>
+                
+                <a class="navbar-item"
+                    href="/categories">Categories</a>
+                
+                <a class="navbar-item"
+                    href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                
+                
+                <a class="navbar-item" target="_blank" title="GitHub"
+                    href="https://github.com/xialeistudio">
+                    
+                    <i class="fab fa-github"></i>
+                    
+                </a>
+                
+                
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2022-02-05T16:00:00.000Z">2022-02-06</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    3 minutes read (About 387 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            LeetCode102--二叉树的层序遍历
+            
+        </h1>
+        <div class="content">
+            
+            <div id="container">
+                <h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给你二叉树的根节点 <code>root</code> ，返回其节点值的 <strong>层序遍历</strong> 。 （即逐层地，从左到右访问所有节点）。    </p>
+<p><strong>示例 1：</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2021/02/19/tree1.jpg" alt="img"></p>
+<figure class="highlight lsl hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：root = [<span class="hljs-number">3</span>,<span class="hljs-number">9</span>,<span class="hljs-number">20</span>,null,null,<span class="hljs-number">15</span>,<span class="hljs-number">7</span>]</span><br><span class="line">输出：[[<span class="hljs-number">3</span>],[<span class="hljs-number">9</span>,<span class="hljs-number">20</span>],[<span class="hljs-number">15</span>,<span class="hljs-number">7</span>]]</span><br></pre></td></tr></table></figure>
+<p><strong>示例 2：</strong></p>
+<figure class="highlight lua hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：root = [<span class="hljs-number">1</span>]</span><br><span class="line">输出：<span class="hljs-string">[[1]]</span></span><br></pre></td></tr></table></figure>
+<p><strong>示例 3：</strong></p>
+<figure class="highlight inform7 hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：root = <span class="hljs-comment">[]</span></span><br><span class="line">输出：<span class="hljs-comment">[]</span></span><br></pre></td></tr></table></figure>
+<p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/binary-tree-level-order-traversal" target="_blank" rel="noopener">https://leetcode-cn.com/problems/binary-tree-level-order-traversal</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>层序遍历直接用广度有限遍历即可。</p>
+<ol>
+<li>用两个队列存储本层节点<code>tmp</code>和下一层节点<code>queue</code>（可以简化处理清理，避免一个队列操作时即弹出又插入的问题）</li>
+<li>获取队列长度，将<code>queue</code>复制到<code>tmp</code>,清空本层节点变量(<code>queue</code>)</li>
+<li>tmp不断出队即可，出队时把后代节点插入<code>queue</code></li>
+</ol>
+<figure class="highlight go hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// BFS遍历即可</span></span><br><span class="line"><span class="hljs-comment">// 用队列处理，需要注意的是，每次处理一层，每层的大小就是队列的大小，可以准备两个队列，一个用来存储本层，一个用来存储下一层</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">levelOrder</span><span class="hljs-params">(root *TreeNode)</span> [][]<span class="hljs-title">int</span></span> &#123;</span><br><span class="line">	<span class="hljs-keyword">if</span> root == <span class="hljs-literal">nil</span> &#123;</span><br><span class="line">		<span class="hljs-keyword">return</span> [][]<span class="hljs-keyword">int</span>&#123;&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	answers := [][]<span class="hljs-keyword">int</span>&#123;&#125;</span><br><span class="line">	queue := []*TreeNode&#123;root&#125;</span><br><span class="line">	<span class="hljs-keyword">for</span> <span class="hljs-built_in">len</span>(queue) &gt; <span class="hljs-number">0</span> &#123;</span><br><span class="line">		size := <span class="hljs-built_in">len</span>(queue)</span><br><span class="line">		tmp := queue</span><br><span class="line">		queue = []*TreeNode&#123;&#125; <span class="hljs-comment">// 清空，存储下一层的节点</span></span><br><span class="line">		level := []<span class="hljs-keyword">int</span>&#123;&#125;</span><br><span class="line">		<span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; size; i++ &#123;</span><br><span class="line">			node := tmp[<span class="hljs-number">0</span>]</span><br><span class="line">			tmp = tmp[<span class="hljs-number">1</span>:]</span><br><span class="line">			level = <span class="hljs-built_in">append</span>(level, node.Val)</span><br><span class="line">			<span class="hljs-keyword">if</span> node.Left != <span class="hljs-literal">nil</span> &#123;</span><br><span class="line">				queue = <span class="hljs-built_in">append</span>(queue, node.Left)</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="hljs-keyword">if</span> node.Right != <span class="hljs-literal">nil</span> &#123;</span><br><span class="line">				queue = <span class="hljs-built_in">append</span>(queue, node.Right)</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		answers = <span class="hljs-built_in">append</span>(answers, level)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="hljs-keyword">return</span> answers</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+            </div>
+            
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/leetcode/">leetcode</a>, <a class="has-link-grey -link" href="/tags/tree/">tree</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <div class="social-share" data-disabled="qzone,facebook,twitter,tencent,linkedin,douban,diandian,google"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev"
+                href="/2022/02/06/validate-binary-search-tree.html">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">LeetCode98——验证二叉搜索树</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next"
+                href="/2022/02/05/odd-even-linked-list.html">
+                <span class="level-item">LeetCode328——奇偶链表</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '1ae09f5aa5dcce937e94',
+        clientSecret: '55c4032692dbcb0ee13771da7dc95f22cf9ae8e1',
+        id: '6dcc8ff5fcdf8f44dc16b447378bbc58',
+        repo: 'xialeistudio.github.io',
+        owner: 'xialeistudio',
+        language: 'en',
+        admin: "xialeistudio",
+        createIssueManually: false,
+        distractionFreeMode: false,
+        proxy: '/github/login/oauth/access_token'
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-3 column-right ">
+    
+        
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Categories
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/algorithm/">
+            <span class="level-start">
+                <span class="level-item">algorithm</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">33</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/engineering/">
+            <span class="level-start">
+                <span class="level-item">engineering</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">273</span>
+            </span>
+        </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+        
+    
+        
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Catalogue
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#题目">
+        <span class="has-mr-6">1</span>
+        <span>题目</span>
+        </a></li><li>
+        <a class="is-flex" href="#思路">
+        <span class="has-mr-6">2</span>
+        <span>思路</span>
+        </a></li></ul>
+        </div>
+    </div>
+</div>
+
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    Learning &amp; Sharing
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2023 xialeistudio&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                
+                </p>
+                <p class="is-size-7">
+                    
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="GitHub" href="https://github.com/xialeistudio">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+<script>
+    var IcarusThemeSettings = {
+        article: {
+            highlight: {
+                clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+    
+    <script src="/js/animation.js"></script>
+    
+
+
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

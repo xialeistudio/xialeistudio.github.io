@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html  lang="en">
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 3.9.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>php利用百度地图API进行IP定位和GPS定位 - Xia Lei</title>
+
+
+
+
+
+
+<link rel="alternative" href="/" title="php利用百度地图API进行IP定位和GPS定位" type="application/atom+xml">
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://static.ddhigh.com/font/ubuntu.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+<script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?78141f99bbb49f1564a7af89344f5add";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                Learning &amp; Sharing
+                
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                    href="/">Home</a>
+                
+                <a class="navbar-item"
+                    href="/archives">Archives</a>
+                
+                <a class="navbar-item"
+                    href="/categories">Categories</a>
+                
+                <a class="navbar-item"
+                    href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                
+                
+                <a class="navbar-item" target="_blank" title="GitHub"
+                    href="https://github.com/xialeistudio">
+                    
+                    <i class="fab fa-github"></i>
+                    
+                </a>
+                
+                
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2015-01-11T09:12:57.000Z">2015-01-11</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/engineering/">engineering</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    4 minutes read (About 565 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            php利用百度地图API进行IP定位和GPS定位
+            
+        </h1>
+        <div class="content">
+            
+            <div id="container">
+                <p>最近在做一个手机端的webapp地图应用，而核心内容当然是定位了，但是定位的话有几种方式，IP定位,GPS定位，基站定位（这个貌似webapp用不了），</p>
+<p>那么剩下核心的gps定位和ip定位了，我们知道，html5有定位API，但是该API拿到的GPS数据是硬件坐标，无法直接显示在地图上。</p>
+<p>后来上百度LBS云看到有地图IP定位API和GPS坐标转换API，地址：<a href="http://developer.baidu.com/map/" target="_blank" rel="noopener">http://developer.baidu.com/map/</a></p>
+<p>百度地图API的调用需要申请KEY，这里就不具体介绍了，直接贴上本人写了两个关键方法，为了方便前台调用，返回数据采用以下格式：</p>
+<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    address: <span class="hljs-string">"北京市海淀区西二旗北路"</span>,</span><br><span class="line">    province: <span class="hljs-string">"北京市"</span>,</span><br><span class="line">    city: <span class="hljs-string">"北京市"</span>,</span><br><span class="line">    street: <span class="hljs-string">"西二旗北路"</span>,</span><br><span class="line">    street_number: <span class="hljs-string">""</span>,</span><br><span class="line">    city_code: <span class="hljs-number">131</span>,</span><br><span class="line">    lng: <span class="hljs-number">116.3207676804</span>,</span><br><span class="line">    lat: <span class="hljs-number">40.064084055578</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="PHP代码"><a href="#PHP代码" class="headerlink" title="PHP代码"></a>PHP代码</h2><figure class="highlight php hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> xialei &lt;xialeistudio<span class="hljs-doctag">@gmail</span>.com&gt;</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">map</span></span></span><br><span class="line"><span class="hljs-class"></span>&#123;</span><br><span class="line"> <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> $_instance;</span><br><span class="line"></span><br><span class="line"> <span class="hljs-keyword">const</span> REQ_GET = <span class="hljs-number">1</span>;</span><br><span class="line"> <span class="hljs-keyword">const</span> REQ_POST = <span class="hljs-number">2</span>;</span><br><span class="line"></span><br><span class="line"> <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">  * 单例模式</span></span><br><span class="line"><span class="hljs-comment">  * <span class="hljs-doctag">@return</span> map</span></span><br><span class="line"><span class="hljs-comment">  */</span></span><br><span class="line"> <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">instance</span><span class="hljs-params">()</span></span></span><br><span class="line"><span class="hljs-function"> </span>&#123;</span><br><span class="line">  <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">self</span>::$_instance <span class="hljs-keyword">instanceof</span> <span class="hljs-keyword">self</span>)</span><br><span class="line">  &#123;</span><br><span class="line">   <span class="hljs-keyword">self</span>::$_instance = <span class="hljs-keyword">new</span> <span class="hljs-keyword">self</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="hljs-keyword">return</span> <span class="hljs-keyword">self</span>::$_instance;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">  * 执行CURL请求</span></span><br><span class="line"><span class="hljs-comment">  */</span></span><br><span class="line">  <span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">async</span><span class="hljs-params">($api,array $params)</span></span></span><br><span class="line"><span class="hljs-function">  </span>&#123;</span><br><span class="line">    $ch = curl_init($api.<span class="hljs-string">'?'</span>.http_build_query($params));</span><br><span class="line">    curl_setopt($ch, CURLOPT_RETURNTRANSFER, <span class="hljs-number">1</span>);</span><br><span class="line">    $resp = curl_exec($ch);</span><br><span class="line">    curl_close($ch);</span><br><span class="line">    <span class="hljs-keyword">return</span> $resp;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">  * ip定位</span></span><br><span class="line"><span class="hljs-comment">  * <span class="hljs-doctag">@param</span> string $ip</span></span><br><span class="line"><span class="hljs-comment">  * <span class="hljs-doctag">@return</span> array</span></span><br><span class="line"><span class="hljs-comment">  * <span class="hljs-doctag">@throws</span> Exception</span></span><br><span class="line"><span class="hljs-comment">  */</span></span><br><span class="line"> <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">locationByIP</span><span class="hljs-params">($ip)</span></span></span><br><span class="line"><span class="hljs-function"> </span>&#123;</span><br><span class="line">  <span class="hljs-comment">//检查是否合法IP</span></span><br><span class="line">  <span class="hljs-keyword">if</span> (!filter_var($ip, FILTER_VALIDATE_IP))</span><br><span class="line">  &#123;</span><br><span class="line">   <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-keyword">Exception</span>(<span class="hljs-string">'ip地址不合法'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  $params = <span class="hljs-keyword">array</span>(</span><br><span class="line">    <span class="hljs-string">'ak'</span> =&gt; <span class="hljs-string">'百度地图API KEY'</span>,</span><br><span class="line">    <span class="hljs-string">'ip'</span> =&gt; $ip,</span><br><span class="line">    <span class="hljs-string">'coor'</span> =&gt; <span class="hljs-string">'bd09ll'</span><span class="hljs-comment">//百度地图GPS坐标</span></span><br><span class="line">  );</span><br><span class="line">  $api = <span class="hljs-string">'http://api.map.baidu.com/location/ip'</span>;</span><br><span class="line">  $resp = <span class="hljs-keyword">$this</span>-&gt;async($api, $params);</span><br><span class="line">  $data = json_decode($resp, <span class="hljs-keyword">true</span>);</span><br><span class="line">  <span class="hljs-comment">//有错误</span></span><br><span class="line">  <span class="hljs-keyword">if</span> ($data[<span class="hljs-string">'status'</span>] != <span class="hljs-number">0</span>)</span><br><span class="line">  &#123;</span><br><span class="line">   <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-keyword">Exception</span>($data[<span class="hljs-string">'message'</span>]);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="hljs-comment">//返回地址信息</span></span><br><span class="line">  <span class="hljs-keyword">return</span> <span class="hljs-keyword">array</span>(</span><br><span class="line">    <span class="hljs-string">'address'</span> =&gt; $data[<span class="hljs-string">'content'</span>][<span class="hljs-string">'address'</span>],</span><br><span class="line">    <span class="hljs-string">'province'</span> =&gt; $data[<span class="hljs-string">'content'</span>][<span class="hljs-string">'address_detail'</span>][<span class="hljs-string">'province'</span>],</span><br><span class="line">    <span class="hljs-string">'city'</span> =&gt; $data[<span class="hljs-string">'content'</span>][<span class="hljs-string">'address_detail'</span>][<span class="hljs-string">'city'</span>],</span><br><span class="line">    <span class="hljs-string">'district'</span> =&gt; $data[<span class="hljs-string">'content'</span>][<span class="hljs-string">'address_detail'</span>][<span class="hljs-string">'district'</span>],</span><br><span class="line">    <span class="hljs-string">'street'</span> =&gt; $data[<span class="hljs-string">'content'</span>][<span class="hljs-string">'address_detail'</span>][<span class="hljs-string">'street'</span>],</span><br><span class="line">    <span class="hljs-string">'street_number'</span> =&gt; $data[<span class="hljs-string">'content'</span>][<span class="hljs-string">'address_detail'</span>][<span class="hljs-string">'street_number'</span>],</span><br><span class="line">    <span class="hljs-string">'city_code'</span> =&gt; $data[<span class="hljs-string">'content'</span>][<span class="hljs-string">'address_detail'</span>][<span class="hljs-string">'city_code'</span>],</span><br><span class="line">    <span class="hljs-string">'lng'</span> =&gt; $data[<span class="hljs-string">'content'</span>][<span class="hljs-string">'point'</span>][<span class="hljs-string">'x'</span>],</span><br><span class="line">    <span class="hljs-string">'lat'</span> =&gt; $data[<span class="hljs-string">'content'</span>][<span class="hljs-string">'point'</span>][<span class="hljs-string">'y'</span>]</span><br><span class="line">  );</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">  * GPS定位</span></span><br><span class="line"><span class="hljs-comment">  * <span class="hljs-doctag">@param</span> $lng</span></span><br><span class="line"><span class="hljs-comment">  * <span class="hljs-doctag">@param</span> $lat</span></span><br><span class="line"><span class="hljs-comment">  * <span class="hljs-doctag">@return</span> array</span></span><br><span class="line"><span class="hljs-comment">  * <span class="hljs-doctag">@throws</span> Exception</span></span><br><span class="line"><span class="hljs-comment">  */</span></span><br><span class="line"> <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">locationByGPS</span><span class="hljs-params">($lng, $lat)</span></span></span><br><span class="line"><span class="hljs-function"> </span>&#123;</span><br><span class="line">  $params = <span class="hljs-keyword">array</span>(</span><br><span class="line">    <span class="hljs-string">'coordtype'</span> =&gt; <span class="hljs-string">'wgs84ll'</span>,</span><br><span class="line">    <span class="hljs-string">'location'</span> =&gt; $lat . <span class="hljs-string">','</span> . $lng,</span><br><span class="line">    <span class="hljs-string">'ak'</span> =&gt; <span class="hljs-string">'百度地图API KEY'</span>,</span><br><span class="line">    <span class="hljs-string">'output'</span> =&gt; <span class="hljs-string">'json'</span>,</span><br><span class="line">    <span class="hljs-string">'pois'</span> =&gt; <span class="hljs-number">0</span></span><br><span class="line">  );</span><br><span class="line">  $resp = <span class="hljs-keyword">$this</span>-&gt;async(<span class="hljs-string">'http://api.map.baidu.com/geocoder/v2/'</span>, $params, <span class="hljs-keyword">false</span>);</span><br><span class="line">  $data = json_decode($resp, <span class="hljs-keyword">true</span>);</span><br><span class="line">  <span class="hljs-keyword">if</span> ($data[<span class="hljs-string">'status'</span>] != <span class="hljs-number">0</span>)</span><br><span class="line">  &#123;</span><br><span class="line">   <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-keyword">Exception</span>($data[<span class="hljs-string">'message'</span>]);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="hljs-keyword">return</span> <span class="hljs-keyword">array</span>(</span><br><span class="line">    <span class="hljs-string">'address'</span> =&gt; $data[<span class="hljs-string">'result'</span>][<span class="hljs-string">'formatted_address'</span>],</span><br><span class="line">    <span class="hljs-string">'province'</span> =&gt; $data[<span class="hljs-string">'result'</span>][<span class="hljs-string">'addressComponent'</span>][<span class="hljs-string">'province'</span>],</span><br><span class="line">    <span class="hljs-string">'city'</span> =&gt; $data[<span class="hljs-string">'result'</span>][<span class="hljs-string">'addressComponent'</span>][<span class="hljs-string">'city'</span>],</span><br><span class="line">    <span class="hljs-string">'street'</span> =&gt; $data[<span class="hljs-string">'result'</span>][<span class="hljs-string">'addressComponent'</span>][<span class="hljs-string">'street'</span>],</span><br><span class="line">    <span class="hljs-string">'street_number'</span> =&gt; $data[<span class="hljs-string">'result'</span>][<span class="hljs-string">'addressComponent'</span>][<span class="hljs-string">'street_number'</span>],</span><br><span class="line">    <span class="hljs-string">'city_code'</span>=&gt;$data[<span class="hljs-string">'result'</span>][<span class="hljs-string">'cityCode'</span>],</span><br><span class="line">    <span class="hljs-string">'lng'</span>=&gt;$data[<span class="hljs-string">'result'</span>][<span class="hljs-string">'location'</span>][<span class="hljs-string">'lng'</span>],</span><br><span class="line">    <span class="hljs-string">'lat'</span>=&gt;$data[<span class="hljs-string">'result'</span>][<span class="hljs-string">'location'</span>][<span class="hljs-string">'lat'</span>]</span><br><span class="line">  );</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+            </div>
+            
+        </div>
+        
+        
+        
+        <div class="social-share" data-disabled="qzone,facebook,twitter,tencent,linkedin,douban,diandian,google"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev"
+                href="/2015/01/20/css3-loading.html">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">css3打造炫酷loading</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next"
+                href="/2015/01/08/mobile-swipe.html">
+                <span class="level-item">移动端滑动的实现</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '1ae09f5aa5dcce937e94',
+        clientSecret: '55c4032692dbcb0ee13771da7dc95f22cf9ae8e1',
+        id: '04960e72f9552085b9c4f280955c5e2f',
+        repo: 'xialeistudio.github.io',
+        owner: 'xialeistudio',
+        language: 'en',
+        admin: "xialeistudio",
+        createIssueManually: false,
+        distractionFreeMode: false,
+        proxy: '/github/login/oauth/access_token'
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-3 column-right ">
+    
+        
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Categories
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/algorithm/">
+            <span class="level-start">
+                <span class="level-item">algorithm</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">33</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/engineering/">
+            <span class="level-start">
+                <span class="level-item">engineering</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">273</span>
+            </span>
+        </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+        
+    
+        
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Catalogue
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#PHP代码">
+        <span class="has-mr-6">1</span>
+        <span>PHP代码</span>
+        </a></li></ul>
+        </div>
+    </div>
+</div>
+
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    Learning &amp; Sharing
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2023 xialeistudio&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                
+                </p>
+                <p class="is-size-7">
+                    
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="GitHub" href="https://github.com/xialeistudio">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+<script>
+    var IcarusThemeSettings = {
+        article: {
+            highlight: {
+                clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+    
+    <script src="/js/animation.js"></script>
+    
+
+
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

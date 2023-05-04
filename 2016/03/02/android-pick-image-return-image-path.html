@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html  lang="en">
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 3.9.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>android选择图片返回统一图片地址 - Xia Lei</title>
+
+
+
+
+
+
+<link rel="alternative" href="/" title="android选择图片返回统一图片地址" type="application/atom+xml">
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://static.ddhigh.com/font/ubuntu.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+<script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?78141f99bbb49f1564a7af89344f5add";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                Learning &amp; Sharing
+                
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                    href="/">Home</a>
+                
+                <a class="navbar-item"
+                    href="/archives">Archives</a>
+                
+                <a class="navbar-item"
+                    href="/categories">Categories</a>
+                
+                <a class="navbar-item"
+                    href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                
+                
+                <a class="navbar-item" target="_blank" title="GitHub"
+                    href="https://github.com/xialeistudio">
+                    
+                    <i class="fab fa-github"></i>
+                    
+                </a>
+                
+                
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2016-03-02T02:43:34.000Z">2016-03-02</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/engineering/">engineering</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    2 minutes read (About 353 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            android选择图片返回统一图片地址
+            
+        </h1>
+        <div class="content">
+            
+            <div id="container">
+                <p>android从选择图片有两种方法，但是返回值确不同，本文将指导大家如何统一这两种方式的返回值。</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">//关键代码</span></span><br><span class="line"><span class="hljs-meta">@Event</span>(R.id.btnPhoto)</span><br><span class="line">   <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onBtnPhotoClicked</span><span class="hljs-params">(View view)</span> </span>&#123;</span><br><span class="line">       Intent intent = <span class="hljs-keyword">new</span> Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);</span><br><span class="line">       startActivityForResult(intent, Config.Constants.CODE_PICK_IMAGE_FROM_PHOTO);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="hljs-meta">@Event</span>(R.id.btnCamera)</span><br><span class="line">   <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onBtnCameraClicked</span><span class="hljs-params">(View view)</span> </span>&#123;</span><br><span class="line">       Intent intent = <span class="hljs-keyword">new</span> Intent(MediaStore.ACTION_IMAGE_CAPTURE);</span><br><span class="line">       startActivityForResult(intent, Config.Constants.CODE_PICK_IMAGE_FROM_CAMERA);</span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">   <span class="hljs-meta">@Override</span></span><br><span class="line">   <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onActivityResult</span><span class="hljs-params">(<span class="hljs-keyword">int</span> requestCode, <span class="hljs-keyword">int</span> resultCode, Intent data)</span> </span>&#123;</span><br><span class="line">       <span class="hljs-keyword">switch</span> (requestCode) &#123;</span><br><span class="line">           <span class="hljs-keyword">case</span> Config.Constants.CODE_PICK_IMAGE_FROM_CAMERA:</span><br><span class="line">               <span class="hljs-keyword">if</span> (data != <span class="hljs-keyword">null</span> &amp;&amp; data.hasExtra(<span class="hljs-string">"data"</span>)) &#123;</span><br><span class="line">                   Bitmap bitmap = data.getParcelableExtra(<span class="hljs-string">"data"</span>);</span><br><span class="line">                   bitmap = BitmapUtil.scale(bitmap, <span class="hljs-number">640.0f</span> / bitmap.getWidth());</span><br><span class="line">                   <span class="hljs-keyword">try</span> &#123;</span><br><span class="line">                       File path = <span class="hljs-keyword">new</span> File(((MyApplication) getApplication()).appPath, DateUtil.format(<span class="hljs-keyword">new</span> Date(), <span class="hljs-string">"yyyyMMddHHmmss"</span>) + <span class="hljs-string">".jpg"</span>);</span><br><span class="line">                       FileOutputStream outputStream = <span class="hljs-keyword">new</span> FileOutputStream(path);</span><br><span class="line">                       bitmap.compress(Bitmap.CompressFormat.JPEG, <span class="hljs-number">100</span>, outputStream);</span><br><span class="line">                       outputStream.close();</span><br><span class="line">                       Intent intent = <span class="hljs-keyword">new</span> Intent();</span><br><span class="line">                       intent.putExtra(<span class="hljs-string">"path"</span>, path.getAbsolutePath());</span><br><span class="line">                       setResult(RESULT_OK, intent);</span><br><span class="line">                   &#125; <span class="hljs-keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                        e.printStackTrace();</span><br><span class="line">                   &#125;</span><br><span class="line">               &#125;</span><br><span class="line">               finish();</span><br><span class="line">               <span class="hljs-keyword">break</span>;</span><br><span class="line">           <span class="hljs-keyword">case</span> Config.Constants.CODE_PICK_IMAGE_FROM_PHOTO:</span><br><span class="line">               <span class="hljs-keyword">if</span>(data != <span class="hljs-keyword">null</span>)&#123;</span><br><span class="line">                   Uri uri = data.getData();</span><br><span class="line">                   Bitmap bitmap;</span><br><span class="line">                   ContentResolver contentResolver = getContentResolver();</span><br><span class="line">                   <span class="hljs-keyword">try</span> &#123;</span><br><span class="line">                       bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri);</span><br><span class="line">                       bitmap = BitmapUtil.scale(bitmap, <span class="hljs-number">640.0f</span> / bitmap.getWidth());</span><br><span class="line">                       File path = <span class="hljs-keyword">new</span> File(((MyApplication) getApplication()).appPath, DateUtil.format(<span class="hljs-keyword">new</span> Date(), <span class="hljs-string">"yyyyMMddHHmmss"</span>) + <span class="hljs-string">".jpg"</span>);</span><br><span class="line">                       FileOutputStream outputStream = <span class="hljs-keyword">new</span> FileOutputStream(path);</span><br><span class="line">                       bitmap.compress(Bitmap.CompressFormat.JPEG, <span class="hljs-number">100</span>, outputStream);</span><br><span class="line">                       outputStream.close();</span><br><span class="line">                       Intent intent = <span class="hljs-keyword">new</span> Intent();</span><br><span class="line">                       intent.putExtra(<span class="hljs-string">"path"</span>, path.getAbsolutePath());</span><br><span class="line">                       setResult(RESULT_OK, intent);</span><br><span class="line">                   &#125; <span class="hljs-keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                       e.printStackTrace();</span><br><span class="line">                   &#125;</span><br><span class="line">               &#125;</span><br><span class="line">               finish();</span><br><span class="line">               <span class="hljs-keyword">break</span>;</span><br><span class="line">           <span class="hljs-keyword">default</span>:</span><br><span class="line">               <span class="hljs-keyword">super</span>.onActivityResult(requestCode, resultCode, data);</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line"><span class="hljs-comment">//BitmapUtil.java</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Bitmap <span class="hljs-title">scale</span><span class="hljs-params">(Bitmap bitmap, <span class="hljs-keyword">float</span> scale)</span> </span>&#123;</span><br><span class="line">    Matrix matrix = <span class="hljs-keyword">new</span> Matrix();</span><br><span class="line">    matrix.postScale(scale, scale);</span><br><span class="line">    <span class="hljs-keyword">return</span> Bitmap.createBitmap(bitmap, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, bitmap.getWidth(), bitmap.getHeight(), matrix, <span class="hljs-keyword">true</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">//MyApplication</span></span><br><span class="line"><span class="hljs-keyword">public</span> File appPath;</span><br><span class="line"></span><br><span class="line"><span class="hljs-meta">@Override</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onCreate</span><span class="hljs-params">()</span> </span>&#123;</span><br><span class="line">    <span class="hljs-keyword">super</span>.onCreate();</span><br><span class="line">    <span class="hljs-comment">//创建目录</span></span><br><span class="line">    appPath = <span class="hljs-keyword">new</span> File(Environment.getExternalStorageDirectory(), getPackageName());</span><br><span class="line">    <span class="hljs-keyword">if</span> (!appPath.isDirectory()) &#123;</span><br><span class="line">        appPath.mkdir();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>经过统一处理之后，返回值均为图片的绝对路径地址。</p>
+
+            </div>
+            
+        </div>
+        
+        
+        
+        <div class="social-share" data-disabled="qzone,facebook,twitter,tencent,linkedin,douban,diandian,google"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev"
+                href="/2016/03/23/react-flux-es6-note-app.html">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">React Flux ES6记事本应用</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next"
+                href="/2016/02/19/baidu-push-launch-app-with-params.html">
+                <span class="level-item">百度推送收到消息时带参数启动activity</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '1ae09f5aa5dcce937e94',
+        clientSecret: '55c4032692dbcb0ee13771da7dc95f22cf9ae8e1',
+        id: '61183bd8029c0dbb8b4577d34b5427d7',
+        repo: 'xialeistudio.github.io',
+        owner: 'xialeistudio',
+        language: 'en',
+        admin: "xialeistudio",
+        createIssueManually: false,
+        distractionFreeMode: false,
+        proxy: '/github/login/oauth/access_token'
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-3 column-right ">
+    
+        
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Categories
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/algorithm/">
+            <span class="level-start">
+                <span class="level-item">algorithm</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">33</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/engineering/">
+            <span class="level-start">
+                <span class="level-item">engineering</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">273</span>
+            </span>
+        </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+        
+    
+        
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Catalogue
+            </h3>
+            
+        </div>
+    </div>
+</div>
+
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    Learning &amp; Sharing
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2023 xialeistudio&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                
+                </p>
+                <p class="is-size-7">
+                    
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="GitHub" href="https://github.com/xialeistudio">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+<script>
+    var IcarusThemeSettings = {
+        article: {
+            highlight: {
+                clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+    
+    <script src="/js/animation.js"></script>
+    
+
+
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>
