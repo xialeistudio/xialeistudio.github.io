@@ -28,11 +28,11 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-    
 
-      - name: Install pnpm
-        run: npm install -g pnpm
+      - name: Install yarn
+        run: npm install -g yarn
 
       - name: Install dependencies
-        run: pnpm install
+        run: yarn
       
       - name: Build
         run: npm run publish
