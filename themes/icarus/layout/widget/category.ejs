@@ -1,1 +1,3 @@
-<%- partial('categories') %>
+<% if (post.layout === undefined) { %>
+    <%- partial('categories') %>
+<% } %>
