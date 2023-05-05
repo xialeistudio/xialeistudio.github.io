@@ -2,7 +2,7 @@
  *       Override CSS Framework
  * --------------------------------- */
 html {
-  font-size: 14px;
+  font-size: 18px;
 }
 body {
   background-color: #f7f7f7;
@@ -12,31 +12,31 @@ button,
 input,
 select,
 textarea {
-  font-family: Ubuntu, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-family: source-serif-pro, Georgia, Cambria, "Times New Roman", "PingFang SC", "Microsoft Yahei", Times, serif;
 }
 @media screen and (min-width: 1280px) {
   .is-1-column .container,
   .is-2-column .container {
-    max-width: 952px;
-    width: 952px;
+    max-width: 1016px;
+    width: 1016px;
   }
   .is-3-column .container {
-    max-width: 1216px;
-    width: 1216px;
+    max-width: 1248px;
+    width: 1248px;
   }
 }
 @media screen and (min-width: 1472px) {
   .is-3-column .container {
-    max-width: 1344px;
-    width: 1344px;
+    max-width: 1408px;
+    width: 1408px;
   }
   .is-2-column .container {
-    max-width: 1152px;
-    width: 1152px;
+    max-width: 1216px;
+    width: 1216px;
   }
   .is-1-column .container {
-    max-width: 952px;
-    width: 952px;
+    max-width: 1016px;
+    width: 1016px;
   }
 }
 @media screen and (max-width: 768px) {
@@ -400,7 +400,7 @@ img.thumbnail {
 .content code,
 .content pre {
   font-size: 0.85em;
-  font-family: Ubuntu, 'PingFang SC', 'Microsoft YaHei', sans-serif !important;
+  font-family: source-serif-pro, Georgia, Cambria, "Times New Roman", "PingFang SC", "Microsoft Yahei", Times, serif !important;
 }
 .content code {
   color: #ff3860;
@@ -454,7 +454,7 @@ figure.highlight figcaption:after {
 }
 figure.highlight figcaption span {
   font-weight: 500;
-  font-family: Ubuntu, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-family: source-serif-pro, Georgia, Cambria, "Times New Roman", "PingFang SC", "Microsoft Yahei", Times, serif;
 }
 figure.highlight figcaption .fold,
 figure.highlight figcaption a {
@@ -530,5 +530,5 @@ figure.highlight .section {
   all: initial;
 }
 .markdown-body {
-  font-family: Ubuntu, 'PingFang SC', 'Microsoft YaHei', sans-serif !important;
+  font-family: source-serif-pro, Georgia, Cambria, "Times New Roman", "PingFang SC", "Microsoft Yahei", Times, serif !important;
 }
