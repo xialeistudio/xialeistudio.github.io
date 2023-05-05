@@ -14,6 +14,9 @@ Software Engineer @Tencent
 + Design Pattern
 + OOP
 + UML
++ Jenkins/CI/CD
++ TDD
++ Code Review
 
 ### Cloud-Native
 + AWS
@@ -29,7 +32,7 @@ Software Engineer @Tencent
 + Node.js/koa/express/Nest.js
 
 ### Database
-+ MySQL
++ MySQL/Aurora
 + Redis
 + ElasticSearch
 + HBase
