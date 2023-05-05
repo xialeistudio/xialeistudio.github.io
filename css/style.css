@@ -14,34 +14,37 @@ select,
 textarea {
   font-family: source-serif-pro, Georgia, Cambria, "Times New Roman", "PingFang SC", "Microsoft Yahei", Times, serif;
 }
-@media screen and (min-width: 1280px) {
-  .is-1-column .container,
-  .is-2-column .container {
-    max-width: 1016px;
-    width: 1016px;
-  }
-  .is-3-column .container {
-    max-width: 1248px;
-    width: 1248px;
-  }
-}
 @media screen and (min-width: 1472px) {
-  .is-3-column .container {
-    max-width: 1408px;
-    width: 1408px;
-  }
+  .is-1-column .container,
   .is-2-column .container {
     max-width: 1216px;
     width: 1216px;
   }
+  .is-3-column .container {
+    max-width: 1440px;
+    width: 1440px;
+  }
+}
+@media screen and (min-width: 1680px) {
+  .is-3-column .container {
+    max-width: 1616px;
+    width: 1616px;
+  }
+  .is-2-column .container {
+    max-width: 1408px;
+    width: 1408px;
+  }
   .is-1-column .container {
-    max-width: 1016px;
-    width: 1016px;
+    max-width: 1216px;
+    width: 1216px;
   }
 }
 @media screen and (max-width: 768px) {
   .section {
     padding: 1.5rem 1rem;
+  }
+  body {
+    font-size: 14px;
   }
 }
 @media screen and (min-width: 769px) {
@@ -56,6 +59,9 @@ textarea {
   }
   .column-right-shadow.is-sticky {
     top: 1.5rem;
+  }
+  body {
+    font-size: 14px;
   }
 }
 .tag.is-grey {
@@ -120,7 +126,7 @@ img.thumbnail {
   color: #3273dc;
   background-color: transparent;
 }
-@media screen and (max-width: 1079px) {
+@media screen and (max-width: 1279px) {
   .navbar-main .navbar-menu {
     justify-content: center;
     box-shadow: none;
