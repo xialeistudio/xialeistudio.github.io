@@ -144,6 +144,59 @@ var _hmt = _hmt || [];
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
                 <time class="level-item has-text-grey"
+                    datetime="2019-02-26T09:32:16.000Z">2019-02-26</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/engineering/">engineering</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    4 minutes read (About 555 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2019/02/26/c-php-simple-z-val-example.html">c语言实现简单版的php z_val结构体</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <html><head></head><body><h2 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h2><p>学习过PHP的人都知道PHP是基于C语言开发的，但是C语言是强类型的，PHP如何实现弱类型呢？答案在于这个</p>
+<figure class="highlight c hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">union</span> _zvalue_value {</span><br><span class="line">	<span class="hljs-keyword">long</span> lval;					<span class="hljs-comment">/* long value */</span></span><br><span class="line">	<span class="hljs-keyword">double</span> dval;				<span class="hljs-comment">/* double value */</span></span><br><span class="line">	<span class="hljs-class"><span class="hljs-keyword">struct</span> {</span></span><br><span class="line">		<span class="hljs-keyword">char</span> *val;</span><br><span class="line">		<span class="hljs-keyword">int</span> len;</span><br><span class="line">	} str;</span><br><span class="line">	HashTable *ht;				<span class="hljs-comment">/* hash table value */</span></span><br><span class="line">	zend_object_value obj;</span><br><span class="line">	zend_ast *ast;</span><br><span class="line">} zvalue_value;</span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">struct</span> _<span class="hljs-title">zval_struct</span> {</span></span><br><span class="line">	<span class="hljs-comment">/* Variable information */</span></span><br><span class="line">	zvalue_value value;		<span class="hljs-comment">/* value */</span></span><br><span class="line">	zend_uint refcount__gc;</span><br><span class="line">	zend_uchar type;	<span class="hljs-comment">/* active type */</span></span><br><span class="line">	zend_uchar is_ref__gc;</span><br><span class="line">};</span><br></pre></td></tr></tbody></table></figure>
+<p><strong>type</strong>保存了实际的类型，而<strong>value</strong>这个共用体保存了具体的值，我们使用到变量的时候需要根据变量类型来取出<strong>_zvalue_value</strong>中保存的具体值。<br>采用union能够避免内存浪费，同一时刻，一个<strong>_zval_struct</strong>中的共用体<strong>zvalue_value</strong>只有一个成员会分配内存，避免了无谓的内存分配。</p>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
                     datetime="2019-01-11T02:53:02.000Z">2019-01-11</time>
                 
                 <div class="level-item">
@@ -614,59 +667,6 @@ var _hmt = _hmt || [];
 
 
 
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2018-04-24T14:18:04.000Z">2018-04-24</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/engineering/">engineering</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    6 minutes read (About 971 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2018/04/24/yii2-dependency-inject.html">使用yii2依赖注入规范业务开发</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <html><head></head><body><h2 id="本文代码"><a href="#本文代码" class="headerlink" title="本文代码"></a>本文代码</h2><p><a href="https://github.com/xialeistudio/yii2-di-demo" target="_blank" rel="noopener">https://github.com/xialeistudio/yii2-di-demo</a></p>
-<h2 id="什么是依赖注入-DI"><a href="#什么是依赖注入-DI" class="headerlink" title="什么是依赖注入(DI)?"></a>什么是依赖注入(DI)?</h2><p>对象由框架来创建而不是程序员通过 <strong>new</strong> 创建。跟IoC差不多一个意思。</p>
-<h2 id="为什么要有依赖注入"><a href="#为什么要有依赖注入" class="headerlink" title="为什么要有依赖注入?"></a>为什么要有依赖注入?</h2><ol>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -743,7 +743,7 @@ var _hmt = _hmt || [];
                             Posts
                         </p>
                         <p class="title has-text-weight-normal">
-                            307
+                            308
                         </p>
                     </div>
                 </div>
@@ -763,7 +763,7 @@ var _hmt = _hmt || [];
                             Tags
                         </p>
                         <p class="title has-text-weight-normal">
-                            38
+                            39
                         </p>
                     </div>
                 </div>
@@ -826,7 +826,7 @@ var _hmt = _hmt || [];
                 <span class="level-item">engineering</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">274</span>
+                <span class="level-item tag">275</span>
             </span>
         </a></li>
             </ul>

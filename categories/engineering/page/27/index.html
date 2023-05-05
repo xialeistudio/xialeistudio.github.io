@@ -144,6 +144,59 @@ var _hmt = _hmt || [];
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
                 <time class="level-item has-text-grey"
+                    datetime="2014-09-06T04:14:13.000Z">2014-09-06</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/engineering/">engineering</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    a minute read (About 195 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2014/09/06/angularjs-lazy-load.html">摆脱jquery!angularjs利用指令简单实现滚动翻页</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <html><head></head><body><p>移动开发一个很重要的问题是翻页操作，而现在的主流都是滚动翻页，以往都是用jquery的插件进行实现。用了angularjs之后，要逐步减轻对jquery的依赖。   </p>
+<p><em>滚动翻页基本原理就是判断scrollTop和offsetHeight之和 大于等于 scrollHeight</em>   </p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><h3 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h3><figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">app.directive(<span class="hljs-string">'whenScrolled'</span>,&nbsp;<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&nbsp;</span>{&nbsp;</span><br><span class="line">&nbsp;&nbsp;<span class="hljs-keyword">return</span>&nbsp;<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">scope,&nbsp;elm,&nbsp;attr</span>)&nbsp;</span>{&nbsp;</span><br><span class="line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-keyword">var</span>&nbsp;raw&nbsp;=&nbsp;elm[<span class="hljs-number">0</span>];&nbsp;</span><br><span class="line">&nbsp;&nbsp;&nbsp;&nbsp;elm.bind(<span class="hljs-string">'scroll'</span>,&nbsp;<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&nbsp;</span>{&nbsp;</span><br><span class="line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-keyword">if</span>&nbsp;(raw.scrollTop+raw.offsetHeight&nbsp;&amp;gt;=&nbsp;raw.scrollHeight)&nbsp;{&nbsp;</span><br><span class="line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope.$apply(attr.whenScrolled);&nbsp;</span><br><span class="line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;</span><br><span class="line">&nbsp;&nbsp;&nbsp;&nbsp;});&nbsp;</span><br><span class="line">&nbsp;&nbsp;};&nbsp;</span><br><span class="line">});</span><br></pre></td></tr></tbody></table></figure>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
                     datetime="2014-09-06T04:11:56.000Z">2014-09-06</time>
                 
                 <div class="level-item">
@@ -609,59 +662,6 @@ var _hmt = _hmt || [];
 
 
 
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2014-09-06T04:01:03.000Z">2014-09-06</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/engineering/">engineering</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    a minute read (About 221 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2014/09/06/angularjs-load-remote-data-on-directive.html">Angularjs指令数据远程请求的处理</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <html><head></head><body><p>假设有一个指令用来根据IP地址进行地位，获取实际地址。</p>
-<p>首先，我们的IP地址是由后台PHP程序返回的，这里需要一个Http请求，使用了Http请求就会有类似回调的问题，之前想了各种办法，死活拿不到数据，后来去ng官网看了下，需要使用ngModel，这个是双向绑定。</p>
-<h2 id="指令代码"><a href="#指令代码" class="headerlink" title="指令代码"></a>指令代码</h2><figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">app.directive(<span class="hljs-string">'location'</span>, [<span class="hljs-string">'ApiService'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">ApiService</span>) </span>{</span><br><span class="line">    <span class="hljs-keyword">return</span> {</span><br><span class="line">        restrict: <span class="hljs-string">'A'</span>,</span><br><span class="line">        <span class="hljs-built_in">require</span>:<span class="hljs-string">'ngModel'</span>,</span><br><span class="line">        link: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">scope, ele, attrs,ngModel</span>) </span>{</span><br><span class="line">            ele.addClass(<span class="hljs-string">'opt'</span>);</span><br><span class="line">            ele.bind(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{</span><br><span class="line">                ele.text(<span class="hljs-string">'定位中...'</span>);</span><br><span class="line">                ApiService.location(ngModel.$viewValue).success(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">data</span>) </span>{</span><br><span class="line">                    ele.text(data.country + <span class="hljs-string">' '</span> + data.region + <span class="hljs-string">' '</span> + data.city + <span class="hljs-string">' '</span> + data.isp);</span><br><span class="line">                });</span><br><span class="line">            });</span><br><span class="line">        }</span><br><span class="line">    };</span><br><span class="line">}]);</span><br></pre></td></tr></tbody></table></figure>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -734,7 +734,7 @@ var _hmt = _hmt || [];
                             Posts
                         </p>
                         <p class="title has-text-weight-normal">
-                            307
+                            308
                         </p>
                     </div>
                 </div>
@@ -754,7 +754,7 @@ var _hmt = _hmt || [];
                             Tags
                         </p>
                         <p class="title has-text-weight-normal">
-                            38
+                            39
                         </p>
                     </div>
                 </div>
@@ -817,7 +817,7 @@ var _hmt = _hmt || [];
                 <span class="level-item">engineering</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">274</span>
+                <span class="level-item tag">275</span>
             </span>
         </a></li>
             </ul>

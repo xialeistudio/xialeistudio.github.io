@@ -133,6 +133,59 @@ var _hmt = _hmt || [];
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
                 <time class="level-item has-text-grey"
+                    datetime="2015-03-06T01:08:26.000Z">2015-03-06</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/engineering/">engineering</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    a minute read (About 119 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2015/03/06/wechat-reply-messy-code.html">微信公众平台回复乱码问题</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <html><head></head><body><p>很多微信公众平台的自动回复程序都是 ThinkWechat.class.php 这个类开发的，今天碰到一个莫名其妙的乱码问题，查问题发现是GB2312编码导致，所以要修改源码。</p>
+<p>先增加一个方法:</p>
+<figure class="highlight php hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 检测是否UTF-8</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> $str</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@return</span> bool</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-keyword">private</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">is_utf8</span><span class="hljs-params">($str)</span></span></span><br><span class="line"><span class="hljs-function"></span>{</span><br><span class="line">    <span class="hljs-keyword">return</span> preg_match(<span class="hljs-string">'//u'</span>, $str);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
                     datetime="2015-02-05T03:20:43.000Z">2015-02-05</time>
                 
                 <div class="level-item">
@@ -598,59 +651,6 @@ var _hmt = _hmt || [];
 
 
 
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2014-12-27T08:07:50.000Z">2014-12-27</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/engineering/">engineering</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    a minute read (About 195 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2014/12/27/wordpress-prettify.html">wordpress使用prettify插件实现代码高亮</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <html><head></head><body><p>最近百度感冒的太严重了，统计代码严重拖慢网页打开速度，不得已，只得暂时关闭JS统计代码。而另一个重灾区–ueditor也是太大了。我着实受不了。也关掉了。那么问题来了。之前用ueditor有配套的代码高亮插件，取消ueditor之后，代码不亮了。<br>别急，wordpress的插件多着呢!</p>
-<h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><p>1.插件-&gt;安装插件，搜索 “prettify” ，排名第一的插件就是他了，直接启用吧</p>
-<p>2.wordpress这边就配置完了，以后写代码时，像这样</p>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -727,7 +727,7 @@ var _hmt = _hmt || [];
                             Posts
                         </p>
                         <p class="title has-text-weight-normal">
-                            307
+                            308
                         </p>
                     </div>
                 </div>
@@ -747,7 +747,7 @@ var _hmt = _hmt || [];
                             Tags
                         </p>
                         <p class="title has-text-weight-normal">
-                            38
+                            39
                         </p>
                     </div>
                 </div>
@@ -810,7 +810,7 @@ var _hmt = _hmt || [];
                 <span class="level-item">engineering</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">274</span>
+                <span class="level-item tag">275</span>
             </span>
         </a></li>
             </ul>

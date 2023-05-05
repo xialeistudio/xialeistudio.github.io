@@ -133,6 +133,59 @@ var _hmt = _hmt || [];
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
                 <time class="level-item has-text-grey"
+                    datetime="2017-10-15T13:28:45.000Z">2017-10-15</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/engineering/">engineering</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    2 minutes read (About 324 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2017/10/15/excel-stream-unknown-encoding.html">excel-stream Unknown Encoding错误问题</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <html><head></head><body><p>项目上线有半年多了，一直没有出过问题，但是前几天升级过一次NodeJs到8.x的时候就出现过这个问题了。因为采用了消息队列，但是一到这里就挂，导致进程重复启动几百次。</p>
+<h1 id="报错信息"><a href="#报错信息" class="headerlink" title="报错信息"></a>报错信息</h1><figure class="highlight glsl hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">excel-<span class="hljs-keyword">stream</span>/csv-<span class="hljs-keyword">stream</span>/<span class="hljs-keyword">index</span>.js <span class="hljs-number">59</span> Buffer unknow encoding</span><br></pre></td></tr></tbody></table></figure>
+<h1 id="问题排查"><a href="#问题排查" class="headerlink" title="问题排查"></a>问题排查</h1><p>google了一下无果，后面发现反正源码反正自己有，倒不如自己改改，直接定位到相关代码即可。</p>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
                     datetime="2017-10-14T16:00:00.000Z">2017-10-15</time>
                 
                 <div class="level-item">
@@ -593,59 +646,6 @@ var _hmt = _hmt || [];
 
 
 
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2017-05-23T16:00:00.000Z">2017-05-24</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/engineering/">engineering</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    2 minutes read (About 263 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2017/05/23/nginx-proxy-websocket-cors.html">nginx反向代理websocket支持跨域</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <html><head></head><body><p>今天在调试远程websocket的时候发现控制台提示跨域错误，看到浏览器<code>Network</code>中方向响应头没有跨域方面的数据。</p>
-<p>nginx做websocket反向代理挺简单的</p>
-<figure class="highlight nginx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-attribute">proxy_set_header</span> Upgrade <span class="hljs-variable">$http_upgrade</span>;</span><br><span class="line"><span class="hljs-attribute">proxy_set_header</span> Connection <span class="hljs-string">"upgrade"</span>;</span><br><span class="line"><span class="hljs-attribute">proxy_set_header</span> X-Forwarded-For <span class="hljs-variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line"><span class="hljs-attribute">proxy_set_header</span> Host <span class="hljs-variable">$host</span>;</span><br><span class="line"><span class="hljs-attribute">proxy_http_version</span> <span class="hljs-number">1</span>.<span class="hljs-number">1</span>;</span><br><span class="line"><span class="hljs-attribute">proxy_pass</span> http://socket服务器地址;</span><br></pre></td></tr></tbody></table></figure>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -722,7 +722,7 @@ var _hmt = _hmt || [];
                             Posts
                         </p>
                         <p class="title has-text-weight-normal">
-                            307
+                            308
                         </p>
                     </div>
                 </div>
@@ -742,7 +742,7 @@ var _hmt = _hmt || [];
                             Tags
                         </p>
                         <p class="title has-text-weight-normal">
-                            38
+                            39
                         </p>
                     </div>
                 </div>
@@ -805,7 +805,7 @@ var _hmt = _hmt || [];
                 <span class="level-item">engineering</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">274</span>
+                <span class="level-item tag">275</span>
             </span>
         </a></li>
             </ul>

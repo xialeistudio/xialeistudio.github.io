@@ -144,6 +144,59 @@ var _hmt = _hmt || [];
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
                 <time class="level-item has-text-grey"
+                    datetime="2018-04-24T14:18:04.000Z">2018-04-24</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/engineering/">engineering</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    6 minutes read (About 971 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2018/04/24/yii2-dependency-inject.html">使用yii2依赖注入规范业务开发</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <html><head></head><body><h2 id="本文代码"><a href="#本文代码" class="headerlink" title="本文代码"></a>本文代码</h2><p><a href="https://github.com/xialeistudio/yii2-di-demo" target="_blank" rel="noopener">https://github.com/xialeistudio/yii2-di-demo</a></p>
+<h2 id="什么是依赖注入-DI"><a href="#什么是依赖注入-DI" class="headerlink" title="什么是依赖注入(DI)?"></a>什么是依赖注入(DI)?</h2><p>对象由框架来创建而不是程序员通过 <strong>new</strong> 创建。跟IoC差不多一个意思。</p>
+<h2 id="为什么要有依赖注入"><a href="#为什么要有依赖注入" class="headerlink" title="为什么要有依赖注入?"></a>为什么要有依赖注入?</h2><ol>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
                     datetime="2018-04-08T09:40:37.000Z">2018-04-08</time>
                 
                 <div class="level-item">
@@ -609,59 +662,6 @@ var _hmt = _hmt || [];
 
 
 
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2018-01-31T14:23:09.000Z">2018-01-31</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/engineering/">engineering</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    2 minutes read (About 323 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2018/01/31/goroutine-limit-demo.html">golang限制协程数量</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <html><head></head><body><h2 id="为什么要限制协程数量"><a href="#为什么要限制协程数量" class="headerlink" title="为什么要限制协程数量"></a>为什么要限制协程数量</h2><p>golang的go关键字并发实在是太简单，但是带来的问题是由于硬件和网络状况的限制，不受控制的增加协程是非常危险的做法，甚至有可能搞垮数据库之类的应用! 而并发控制在go中是非常常用的技巧，以此文来记录一下学习历程。</p>
-<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>由于channel的阻塞机制，通过设置缓冲channel的缓冲大小来控制同时执行的协程数量。</p>
-<h2 id="demo代码"><a href="#demo代码" class="headerlink" title="demo代码"></a>demo代码</h2><figure class="highlight go hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">import</span> (</span><br><span class="line">	<span class="hljs-string">"log"</span></span><br><span class="line">	<span class="hljs-string">"time"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {</span><br><span class="line">	start := time.Now()</span><br><span class="line">	ch := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-keyword">int</span>, <span class="hljs-number">2</span>)</span><br><span class="line">	<span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt;= <span class="hljs-number">10</span>; i++ {</span><br><span class="line">		ch &lt;- <span class="hljs-number">1</span></span><br><span class="line">		<span class="hljs-keyword">go</span> worker(i, ch)</span><br><span class="line">	}</span><br><span class="line">	<span class="hljs-built_in">close</span>(ch)</span><br><span class="line">	log.Println(<span class="hljs-string">"complete"</span>, time.Since(start).Seconds())</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 模拟耗时操作</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">worker</span><span class="hljs-params">(i <span class="hljs-keyword">int</span>, ch <span class="hljs-keyword">chan</span> <span class="hljs-keyword">int</span>)</span></span> {</span><br><span class="line">	log.Println(<span class="hljs-string">"worker"</span>, i)</span><br><span class="line">	time.Sleep(time.Second)</span><br><span class="line">	&lt;-ch</span><br></pre></td></tr></tbody></table></figure>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -738,7 +738,7 @@ var _hmt = _hmt || [];
                             Posts
                         </p>
                         <p class="title has-text-weight-normal">
-                            307
+                            308
                         </p>
                     </div>
                 </div>
@@ -758,7 +758,7 @@ var _hmt = _hmt || [];
                             Tags
                         </p>
                         <p class="title has-text-weight-normal">
-                            38
+                            39
                         </p>
                     </div>
                 </div>
@@ -821,7 +821,7 @@ var _hmt = _hmt || [];
                 <span class="level-item">engineering</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">274</span>
+                <span class="level-item tag">275</span>
             </span>
         </a></li>
             </ul>
