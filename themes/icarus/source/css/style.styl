@@ -2,9 +2,9 @@ family-sans = source-serif-pro, Georgia, Cambria, "Times New Roman","PingFang SC
 family-mono =  source-serif-pro, Georgia, Cambria, "Times New Roman","PingFang SC","Microsoft Yahei", Times, serif;
 gap = 32px
 screen-tablet = 769px
-screen-desktop = 1080px
-screen-widescreen = 1280px
-screen-fullhd = 1472px
+screen-desktop = 1280px
+screen-widescreen = 1472px
+screen-fullhd = 1680px
 
 /* ---------------------------------
  *       Override CSS Framework
@@ -36,10 +36,13 @@ body, button, input, select, textarea
     .is-1-column .container
         max-width: screen-desktop - 2 * gap
         width: screen-desktop - 2 * gap
+        
 
 @media screen and (max-width: screen-tablet - 1)
     .section
         padding: 1.5rem 1rem
+    body
+        font-size: 14px
 
 @media screen and (min-width: screen-tablet)
     .column-main,
@@ -54,6 +57,8 @@ body, button, input, select, textarea
     .column-right-shadow
         &.is-sticky
             top: 1.5rem
+    body
+        font-size: 14px
 
 .tag
     &.is-grey
