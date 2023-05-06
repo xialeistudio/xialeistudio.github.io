@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html  lang="en">
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 4.2.1" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<meta name="description" content="Learning & Sharing Java/JVM/Spring Boot/Node.js/Golang/Javascript/CSS/HTML/OOP/Design Pattern/AWS/Microservices/Docker/Kubernetes/PHP/Yii2/koa/express/Nest.js/MySQL/Redis/Vue/React/Swift/Kotlin/Cordova/iOS/anroid Knowledge" />
+<meta name="keywords" content="Java/JVM/Spring Boot/Node.js/Golang/Javascript/CSS/HTML/OOP/Design Pattern/AWS/Microservices/Docker/Kubernetes/PHP/Yii2/koa/express/Nest.js/MySQL/Redis/Vue/React/Swift/Kotlin/Cordova/iOS/anroid" />
+
+<title>Category: Engineering - Xia Lei</title>
+
+
+
+
+
+
+<link rel="alternative" href="/" title="Xia Lei" type="application/atom+xml">
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://static.ddhigh.com/font/ubuntu.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+<script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?78141f99bbb49f1564a7af89344f5add";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                Learning &amp; Sharing
+                
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                    href="/">Home</a>
+                
+                <a class="navbar-item"
+                    href="/archives">Archives</a>
+                
+                <a class="navbar-item"
+                    href="/categories">Categories</a>
+                
+                <a class="navbar-item"
+                    href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                
+                
+                <a class="navbar-item" target="_blank" title="GitHub"
+                    href="https://github.com/xialeistudio">
+                    
+                    <i class="fab fa-github"></i>
+                    
+                </a>
+                
+                
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-9-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    <div class="card-content">
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+        <ul>
+            <li><a href="/categories">Categories</a></li>
+            
+            <li class="is-active"><a href="#" aria-current="page">Engineering</a></li>
+        </ul>
+        </nav>
+    </div>
+</div>
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2016-11-12T21:16:59.000Z">2016-11-13</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/Engineering/">Engineering</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    2 minutes read (About 328 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2016/11/12/nodejs-export-large-excel.html">Nodejs导出大数据到Excel</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <html><head></head><body><p>在实际开发中，数据导出使用频率比数据导入高得多，而数据导出时来源一般是数据库，会有上万的数据导出，如果不做特殊处理的话，会导致NodeJs进程直接被killed。<br>今天要提到的npm包是 <strong>xlsx-writestream</strong>，话不多说，进入正题。</p>
+<figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm init -y</span><br><span class="line">npm install xlsx-writestream --save</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="hljs-comment">//编辑executor.js</span></span><br><span class="line"><span class="hljs-keyword">import</span> Writer <span class="hljs-keyword">from</span> <span class="hljs-string">'xlsx-writestream'</span>;</span><br><span class="line"><span class="hljs-keyword">import</span> fs <span class="hljs-keyword">from</span> <span class="hljs-string">'fs'</span>;</span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ExcelWriteExecutor</span></span>{</span><br><span class="line"> <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 构造方法</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@param </span>path 路径</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@param <span class="hljs-variable">options</span></span></span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-keyword">constructor</span>(path, options = {}) {</span><br><span class="line">  <span class="hljs-keyword">this</span>.path = path;</span><br><span class="line">  options.out = path;</span><br><span class="line">  <span class="hljs-keyword">this</span>.options = options;</span><br><span class="line">  <span class="hljs-keyword">this</span>.writer = <span class="hljs-keyword">new</span> Writer(<span class="hljs-keyword">this</span>.path, <span class="hljs-keyword">this</span>.options);</span><br><span class="line">  <span class="hljs-keyword">this</span>.writer.getReadStream().pipe(fs.createWriteStream(<span class="hljs-keyword">this</span>.path));</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">addRow(row) {</span><br><span class="line">  <span class="hljs-keyword">this</span>.writer.addRow(row);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">addRows(rows) {</span><br><span class="line">  <span class="hljs-keyword">this</span>.writer.addRows(rows);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"> <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 输出</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line">execute() {</span><br><span class="line">  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve</span>)=&gt;</span> {</span><br><span class="line">    <span class="hljs-keyword">this</span>.writer.finalize();</span><br><span class="line">      setTimeout(resolve, <span class="hljs-number">50</span>);<span class="hljs-comment">//延迟50毫秒是因为 finalize 调用结束之后，excel打开会报错，可能是没写入完成的原因，加了延迟之后正常，延迟值根据需要自己测试可以更改</span></span><br><span class="line">    });</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"><span class="hljs-comment">//测试代码</span></span><br><span class="line"><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">test</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> executor = <span class="hljs-keyword">new</span> ExcelWriteExecutor(<span class="hljs-string">`<span class="hljs-subst">${__dirname}</span>/test-write.xlsx`</span>);</span><br><span class="line">  executor.addRow({</span><br><span class="line">  <span class="hljs-string">'姓名'</span>: <span class="hljs-string">'fff'</span>,</span><br><span class="line">  <span class="hljs-string">'电话'</span>: <span class="hljs-string">'15911111111'</span>,</span><br><span class="line">  <span class="hljs-string">'公司'</span>: <span class="hljs-string">'ddaaa'</span>,</span><br><span class="line">  <span class="hljs-string">'职位'</span>: <span class="hljs-string">'ddaaaxxxx'</span>,</span><br><span class="line">  <span class="hljs-string">'生日'</span>: <span class="hljs-string">''</span>,</span><br><span class="line">  <span class="hljs-string">'邮箱'</span>: <span class="hljs-string">''</span>,</span><br><span class="line">  <span class="hljs-string">'选择城市'</span>: <span class="hljs-string">''</span>,</span><br><span class="line">  <span class="hljs-string">'单位/公司'</span>: <span class="hljs-string">''</span>,</span><br><span class="line">  <span class="hljs-string">'职务'</span>: <span class="hljs-string">''</span>,</span><br><span class="line">  <span class="hljs-string">'具体地址'</span>: <span class="hljs-string">''</span>,</span><br><span class="line">  <span class="hljs-string">'院系班级'</span>: <span class="hljs-string">''</span>,</span><br><span class="line">  <span class="hljs-string">'常住住址'</span>: <span class="hljs-string">''</span></span><br><span class="line">});</span><br><span class="line">  <span class="hljs-keyword">await</span> executor.execute();</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2016-11-12T03:18:46.000Z">2016-11-12</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/Engineering/">Engineering</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    3 minutes read (About 422 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2016/11/12/develop-nodejs-with-es6.html">使用ES6开发Nodejs程序</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <html><head></head><body><p>ES6发布有一段时间了。但是Nodejs对此支持度还有待加强，就像前端可以使用babel+webpack构建基于ES6的工作流，其实Nodejs也是可以的（不需要手动编译）。当然，最终部署到生产服务器时要记得部署编译后的版本，否则运行时编译对性能是一种损失。</p>
+<h2 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h2><figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm init -y</span><br><span class="line">npm install babel-core babel-register babel-polyfill --save</span><br><span class="line">npm install babel-preset-es2015 babel-preset-stage-3  babel-plugin-transform-class-properties --save</span><br></pre></td></tr></tbody></table></figure>
+<p><em>有个需要注意的问题是，nodejs直接执行的那个js文件还是得用原生JS语法（具体取决于Nodejs支持ES6的程度），比如在Nodejs v4.2.6下，可以使用 const 关键字，这个是不需要babel的。</em></p>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2016-11-12T03:08:06.000Z">2016-11-12</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/Engineering/">Engineering</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    3 minutes read (About 393 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2016/11/12/nodejs-read-large-excel.html">Nodejs读取大excel</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <html><head></head><body><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>Nodejs读取Excel时如果不使用stream处理的话，会导致内存溢出，毕竟要一次性加载excel的全部行数到内存中，而Nodejs单进程是有内存限制的，所以在读取超大excel的时候需要使用到stream，如果自己使用Nodejs自带的stream模块去解析excel的话，我想这个过程会很麻烦，本文使用npm提供的<em>excel-stream</em>，该模块使用<strong>stream+event</strong>方式读取excel，所以不用担心内存溢出问题。</p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>打开终端执行：</p>
+<figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm init -y</span><br><span class="line">npm install excel-stream --save</span><br></pre></td></tr></tbody></table></figure>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2016-10-31T02:18:09.000Z">2016-10-31</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/Engineering/">Engineering</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    a minute read (About 197 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2016/10/31/php-openssl-rsa-sign.html">PHP利用openssl实现RSA非对称加密签名</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <html><head></head><body><p><strong>阅读本文前请确认启用了php_openssl扩展</strong></p>
+<h3 id="生成密钥"><a href="#生成密钥" class="headerlink" title="生成密钥"></a>生成密钥</h3><figure class="highlight php hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$res = openssl_pkey_new();</span><br><span class="line">openssl_pkey_export_to_file($res,<span class="hljs-keyword">__DIR__</span>.<span class="hljs-string">'/private.key'</span>);</span><br><span class="line">$d = openssl_pkey_get_details($res);</span><br><span class="line">file_put_contents(<span class="hljs-keyword">__DIR__</span>.<span class="hljs-string">'/public.key'</span>,$d[<span class="hljs-string">'key'</span>]);</span><br></pre></td></tr></tbody></table></figure>
+<p>程序运行后会在当前目录生成 private.key 以及 public.key文件，你可以将你的public.key公开出去，请勿公开private.key</p>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2016-10-13T02:40:30.000Z">2016-10-13</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/Engineering/">Engineering</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    2 minutes read (About 261 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2016/10/13/android_install_failed_uid_changed.html">解决shareUserId导致的app无法升级的问题</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <html><head></head><body><p>老版本app版本号是2.0.13，Build是20160719。新版本app版本号是2.0.14，Build是2016101301。<br>初略看来应该是可以覆盖升级的，但是安装新版本的时候提示“应用未安装”。<br>网上找了一下，大致原因有以下几种：</p>
+<ul>
+<li>签名冲突</li>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2016-09-18T01:56:46.000Z">2016-09-18</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/Engineering/">Engineering</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    3 minutes read (About 390 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2016/09/18/repeat-call-file-get-contents.html">重复调用file_get_contents的问题</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <html><head></head><body><p>笔者在写Restful API的时候需要取得原始请求体，读了若干次输入流（将读取操作封装成了函数），发现就第一个参数有值，以后的读取都没有值。</p>
+<p>起初以为是参数名写错导致读取失败，检查发现不是这个问题。</p>
+<p>单步调试发现php://input只有第一次读取有值，以后的调用都是空。遇到这种问题往往需要查PHP的官方文档。</p>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2016-08-09T00:07:22.000Z">2016-08-09</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/Engineering/">Engineering</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    6 minutes read (About 874 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2016/08/09/wechat-media-platform-nodejs-sdk.html">微信公众平台开发NodeJs SDK</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <html><head></head><body><p><em>本SDK要求NodeJs &gt;= 4.x，欢迎大家在issues提问。</em></p>
+<h2 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h2><p><a href="https://github.com/xialeistudio/wechat-nodejs/" target="_blank" rel="noopener">wechat-nodejs</a></p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install wechat-nodejs ---save</span><br></pre></td></tr></tbody></table></figure>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2016-07-27T06:37:54.000Z">2016-07-27</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/Engineering/">Engineering</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    3 minutes read (About 405 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2016/07/27/node-sass-install-mirror.html">node-sass安装镜像</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <html><head></head><body><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>npm安装node-sass模块的时候，会卡在 node scripts/install.js这里，因为要去github.com上下载源码，众所周知的原因，国内的网络上github.com速度太不稳定了，所以安装很慢。</p>
+<p>这里推荐一种极速安装的方法，当然还是使用万能的淘宝镜像源。</p>
+<p>打开~/.npmrc（windows用户打开 c:\Users\当前用户名.npmrc）增加一行</p>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2016-06-26T01:56:03.000Z">2016-06-26</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/Engineering/">Engineering</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    a few seconds read (About 66 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2016/06/26/mybatis-generator-gui-tool.html">mybatis-generator-gui工具</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2016-06-23T07:12:24.000Z">2016-06-23</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/Engineering/">Engineering</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    4 minutes read (About 673 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2016/06/23/android-asynctask-demo.html">android AsyncTask示例</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <html><head></head><body><p>android实现异步的方法有很多种，本文只介绍用的比较多的AsyncTask。从类名就可以看出来该类是专为异步而生，API也很简单。</p>
+<h2 id="AsyncTask接口原型"><a href="#AsyncTask接口原型" class="headerlink" title="AsyncTask接口原型"></a>AsyncTask接口原型</h2><figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AsyncTask</span>&lt;<span class="hljs-title">Params</span>, <span class="hljs-title">Progress</span>, <span class="hljs-title">Result</span>&gt; </span>{</span><br><span class="line">...</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>该类是个抽象类，有三个泛型参数，说明如下：</p>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    
+<div class="card card-transparent">
+    <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+        <div class="pagination-previous">
+            <a class="is-flex-grow has-text-black-ter" href="/categories/Engineering/page/15/">Previous</a>
+        </div>
+        <div class="pagination-next">
+            <a class="is-flex-grow has-text-black-ter" href="/categories/Engineering/page/17/">Next</a>
+        </div>
+        <ul class="pagination-list is-hidden-mobile">
+            
+            <li><a class="pagination-link has-text-black-ter" href="/categories/Engineering/">1</a></li>
+            
+            <li><span class="pagination-ellipsis has-text-black-ter">&hellip;</span></li>
+            
+            <li><a class="pagination-link has-text-black-ter" href="/categories/Engineering/page/15/">15</a></li>
+            
+            <li><a class="pagination-link is-current" href="/categories/Engineering/page/16/">16</a></li>
+            
+            <li><a class="pagination-link has-text-black-ter" href="/categories/Engineering/page/17/">17</a></li>
+            
+            <li><span class="pagination-ellipsis has-text-black-ter">&hellip;</span></li>
+            
+            <li><a class="pagination-link has-text-black-ter" href="/categories/Engineering/page/28/">28</a></li>
+            
+        </ul>
+    </nav>
+</div>
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-3-desktop is-3-widescreen  has-order-3 column-right ">
+    
+        
+    
+    <div class="card widget">
+        <div class="card-content">
+            <nav class="level">
+                <div class="level-item has-text-centered" style="flex-shrink: 1">
+                    <div>
+                        
+                        <figure class="image is-128x128 has-mb-6">
+                            <img class="is-rounded" src="https://static.ddhigh.com/blog/2019-09-18-094336.jpg"
+                                alt="Xia Lei">
+                        </figure>
+                        
+                        <p class="is-size-4 is-block">
+                            Xia Lei
+                        </p>
+                        
+                        
+                        <p class="is-size-6 is-block">
+                            Software Engineer
+                        </p>
+                        
+                        
+                        <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                            <i class="fas fa-map-marker-alt has-mr-7"></i>
+                            <span>Tencent</span>
+                        </p>
+                        
+                    </div>
+                </div>
+            </nav>
+            <nav class="level is-mobile">
+                <div class="level-item has-text-centered is-marginless">
+                    <div>
+                        <p class="heading">
+                            Posts
+                        </p>
+                        <p class="title has-text-weight-normal">
+                            309
+                        </p>
+                    </div>
+                </div>
+                <div class="level-item has-text-centered is-marginless">
+                    <div>
+                        <p class="heading">
+                            Categories
+                        </p>
+                        <p class="title has-text-weight-normal">
+                            2
+                        </p>
+                    </div>
+                </div>
+                <div class="level-item has-text-centered is-marginless">
+                    <div>
+                        <p class="heading">
+                            Tags
+                        </p>
+                        <p class="title has-text-weight-normal">
+                            40
+                        </p>
+                    </div>
+                </div>
+            </nav>
+            <div class="level">
+                <a class="level-item button is-link is-rounded" href="https://github.com/xialeistudio" target="_blank">
+                    Follow</a>
+            </div>
+            
+            
+            <div class="level is-mobile">
+                
+                <a class="level-item button is-white is-marginless" target="_blank" title="Github"
+                    href="https://github.com/xialeistudio">
+                    
+                    <i class="fab fa-github"></i>
+                    
+                </a>
+                
+                <a class="level-item button is-white is-marginless" target="_blank" title="RSS"
+                    href="/atom.xml">
+                    
+                    <i class="fas fa-rss"></i>
+                    
+                </a>
+                
+                <a class="level-item button is-white is-marginless" target="_blank" title="LinkedIn"
+                    href="https://linkedin.com/in/xialeidoc">
+                    
+                    <i class="fab fa-linkedin"></i>
+                    
+                </a>
+                
+            </div>
+            
+        </div>
+    </div>
+
+    
+        
+    
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Categories
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/Algorithm/">
+            <span class="level-start">
+                <span class="level-item">Algorithm</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">33</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Engineering/">
+            <span class="level-start">
+                <span class="level-item">Engineering</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">276</span>
+            </span>
+        </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+    
+        
+    
+    
+    <div class="card widget">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    Books
+                </h3>
+                <ul class="menu-list" style="display: flex;flex-wrap:wrap">
+                    
+                    <li style="margin:0 10px 10px 0">
+                        <div style="display: flex;">
+                            <img src="https://static.ddhigh.com/blog/2019-09-18-095311.jpg?imageView2/2/w/200/h/200" width="100" alt="ThinkPHP5实战" />
+                            <div style="flex:1;margin-left:8px;line-height: 2;">
+                                <div style="font-weight: bold;">ThinkPHP5实战</div>
+                                <div style="font-size: 12px;color: #666;">Publish: <time>2019.1</time></div>
+                                <div>
+                                    <a style="display: inline-block;color: white;background: #dc3545;border-radius: 4px;" href="https://item.jd.com/12699110.html" target="_blank">Buy</a>
+                                    <a style="display: inline-block;color: white;background: #007bff;border-radius: 4px;" href="http://www.tup.tsinghua.edu.cn/booksCenter/book_08079501.html" target="_blank">Detail</a>
+                                </div>
+                            </div>
+                            </a>
+                    </li>
+                    
+                    <li style="margin:0 10px 10px 0">
+                        <div style="display: flex;">
+                            <img src="https://static.ddhigh.com/blog/2019-09-18-095415.jpg?imageView2/2/w/200/h/200" width="100" alt="ThinkPHP实战" />
+                            <div style="flex:1;margin-left:8px;line-height: 2;">
+                                <div style="font-weight: bold;">ThinkPHP实战</div>
+                                <div style="font-size: 12px;color: #666;">Publish: <time>2017.04</time></div>
+                                <div>
+                                    <a style="display: inline-block;color: white;background: #dc3545;border-radius: 4px;" href="https://item.jd.com/12173050.html" target="_blank">Buy</a>
+                                    <a style="display: inline-block;color: white;background: #007bff;border-radius: 4px;" href="http://www.tup.tsinghua.edu.cn/booksCenter/book_06867701.html" target="_blank">Detail</a>
+                                </div>
+                            </div>
+                            </a>
+                    </li>
+                    
+                    <li style="margin:0 10px 10px 0">
+                        <div style="display: flex;">
+                            <img src="https://static.ddhigh.com/blog/2020-08-20-064537.jpg?imageView2/2/w/200/h/200" width="100" alt="Node.js+Webpack 开发实战" />
+                            <div style="flex:1;margin-left:8px;line-height: 2;">
+                                <div style="font-weight: bold;">Node.js+Webpack 开发实战</div>
+                                <div style="font-size: 12px;color: #666;">Publish: <time>2020.08</time></div>
+                                <div>
+                                    <a style="display: inline-block;color: white;background: #dc3545;border-radius: 4px;" href="https://item.jd.com/12933234.html" target="_blank">Buy</a>
+                                    <a style="display: inline-block;color: white;background: #007bff;border-radius: 4px;" href="http://www.tup.tsinghua.edu.cn/booksCenter/book_07638401.html" target="_blank">Detail</a>
+                                </div>
+                            </div>
+                            </a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+
+    
+        
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                    
+                        Learning &amp; Sharing
+                            
+                </a>
+                <p class="is-size-7">
+                    &copy; 2023
+                        xialeistudio&nbsp;
+                            Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                                href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                            
+                </p>
+                <p class="is-size-7">
+                    
+                        <a target="_blank" href="https://beian.miit.gov.cn/">粤ICP备14062481号-1</a>
+                            
+                </p>
+            </div>
+            <div class="level-end">
+                
+                    <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                        
+                            
+                                <p class="control">
+                                    <a class="button is-white is-large"
+                                        target="_blank" title="Creative Commons"
+                                        href="https://creativecommons.org/">
+                                        
+                                                    <i class="fab fa-creative-commons"></i>
+                                                    
+                                    </a>
+                                </p>
+                                
+                                <p class="control">
+                                    <a class="button is-white is-large"
+                                        target="_blank" title="Attribution 4.0 International"
+                                        href="https://creativecommons.org/licenses/by/4.0/">
+                                        
+                                                    <i class="fab fa-creative-commons-by"></i>
+                                                    
+                                    </a>
+                                </p>
+                                
+                                <p class="control">
+                                    <a class="button is-white is-large"
+                                        target="_blank" title="GitHub"
+                                        href="https://github.com/xialeistudio">
+                                        
+                                                    <i class="fab fa-github"></i>
+                                                    
+                                    </a>
+                                </p>
+                                
+                    </div>
+                    
+            </div>
+        </div>
+    </div>
+</footer>
+
+        <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        const config = {
+                startOnLoad: true,
+                theme: 'forest',
+                securityLevel: 'loose',
+            };
+            mermaid.initialize(config);
+      </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+<script>
+    var IcarusThemeSettings = {
+        article: {
+            highlight: {
+                clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+    
+    <script src="/js/animation.js"></script>
+    
+
+
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>
