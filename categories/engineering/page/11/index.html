@@ -146,6 +146,59 @@ var _hmt = _hmt || [];
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
                 <time class="level-item has-text-grey"
+                    datetime="2018-02-01T12:04:00.000Z">2018-02-01</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/engineering/">engineering</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    4 minutes read (About 663 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2018/02/01/golang-generic-pool.html">golang通用连接池的实现</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <html><head></head><body><p>golang的channel除了goroutine通信之外还有很多其他的功能，本文将实现一种基于channel的通用连接池。</p>
+<h2 id="何为通用？"><a href="#何为通用？" class="headerlink" title="何为通用？"></a>何为通用？</h2><p>连接池的实现不依赖具体的实例，而依赖某个接口，本文的连接池选用的是<code>io.Closer</code>接口，只要是实现了该接口的对象都可以被池管理。<br>当然，你可以实现基于<code>interface{}</code>的连接池，这样任何对象都可以被管理。</p>
+<h2 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h2><p>将连接句柄存入channel中，由于缓存channel的特性，获取连接时如果池中有连接，将直接返回，如果池中没有连接，将阻塞或者新建连接（没超过最大限制的情况下）。<br>由于面向接口编程，所有创建连接的逻辑是不清楚的，这里需要传入一个函数，该函数返回一个<code>io.Closer</code>对象。</p>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
                     datetime="2018-01-31T14:23:09.000Z">2018-01-31</time>
                 
                 <div class="level-item">
@@ -616,59 +669,6 @@ var _hmt = _hmt || [];
 
 
 
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2017-11-17T07:36:27.000Z">2017-11-17</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/engineering/">engineering</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    5 minutes read (About 732 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2017/11/17/node-tlv.html">Tlv编码在NodeJs中的应用</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <html><head></head><body><p>最近在接入腾讯云的天御业务安全系统时接触到了TLV编码协议，好在TLV协议理解起来比较简单。故简要介绍一下该编码。</p>
-<h2 id="TLV编码是什么？"><a href="#TLV编码是什么？" class="headerlink" title="TLV编码是什么？"></a>TLV编码是什么？</h2><figure class="highlight routeros hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">TLV是一种编码格式，编码如下：</span><br><span class="line">[1-4字节] TYPE</span><br><span class="line">[5-8字节] Value的Length</span><br><span class="line">[9字节+] Value数据</span><br></pre></td></tr></tbody></table></figure>
-<p>本文只探讨无嵌套数据的情况。NodeJs操作二进制数据主要依赖于<strong>Buffer</strong></p>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -745,7 +745,7 @@ var _hmt = _hmt || [];
                             Posts
                         </p>
                         <p class="title has-text-weight-normal">
-                            308
+                            309
                         </p>
                     </div>
                 </div>
@@ -765,7 +765,7 @@ var _hmt = _hmt || [];
                             Tags
                         </p>
                         <p class="title has-text-weight-normal">
-                            39
+                            40
                         </p>
                     </div>
                 </div>
@@ -828,7 +828,7 @@ var _hmt = _hmt || [];
                 <span class="level-item">engineering</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">275</span>
+                <span class="level-item tag">276</span>
             </span>
         </a></li>
             </ul>
@@ -923,6 +923,8 @@ var _hmt = _hmt || [];
                 </p>
                 <p class="is-size-7">
                     
+                        <a target="_blank" href="https://beian.miit.gov.cn/">粤ICP备14062481号-1</a>
+                            
                 </p>
             </div>
             <div class="level-end">

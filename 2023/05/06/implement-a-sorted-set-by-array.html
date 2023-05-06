@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html  lang="en">
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 4.2.1" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<meta name="description" content="Learning & Sharing Java/JVM/Spring Boot/Node.js/Golang/Javascript/CSS/HTML/OOP/Design Pattern/AWS/Microservices/Docker/Kubernetes/PHP/Yii2/koa/express/Nest.js/MySQL/Redis/Vue/React/Swift/Kotlin/Cordova/iOS/anroid Knowledge" />
+<meta name="keywords" content="Java/JVM/Spring Boot/Node.js/Golang/Javascript/CSS/HTML/OOP/Design Pattern/AWS/Microservices/Docker/Kubernetes/PHP/Yii2/koa/express/Nest.js/MySQL/Redis/Vue/React/Swift/Kotlin/Cordova/iOS/anroid" />
+
+<title>Implementing a sorted set by ordered array - Xia Lei</title>
+
+
+
+
+
+
+<link rel="alternative" href="/" title="Implementing a sorted set by ordered array" type="application/atom+xml">
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://static.ddhigh.com/font/ubuntu.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+<script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?78141f99bbb49f1564a7af89344f5add";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                Learning &amp; Sharing
+                
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                    href="/">Home</a>
+                
+                <a class="navbar-item"
+                    href="/archives">Archives</a>
+                
+                <a class="navbar-item"
+                    href="/categories">Categories</a>
+                
+                <a class="navbar-item"
+                    href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                
+                
+                <a class="navbar-item" target="_blank" title="GitHub"
+                    href="https://github.com/xialeistudio">
+                    
+                    <i class="fab fa-github"></i>
+                    
+                </a>
+                
+                
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-9-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2023-05-06T07:41:52.000Z">2023-05-06</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/engineering/">engineering</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    8 minutes read (About 1158 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            Implementing a sorted set by ordered array
+            
+        </h1>
+        <div class="content">
+            
+            <div id="container">
+                <html><head></head><body><blockquote>
+<p>A <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Set.html" target="_blank" rel="noopener"><code>Set</code></a> that further provides a <em>total ordering</em> on its elements. The elements are ordered using their <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html" target="_blank" rel="noopener">natural ordering</a>, or by a <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Comparator.html" target="_blank" rel="noopener"><code>Comparator</code></a> typically provided at sorted set creation time. The set’s iterator will traverse the set in ascending element order. Several additional operations are provided to take advantage of the ordering. (This interface is the set analogue of <a href="https://docs.oracle.com/javase/8/docs/api/java/util/SortedMap.html" target="_blank" rel="noopener"><code>SortedMap</code></a>.)</p>
+<p><strong><em>Oracle</em></strong> - <a href="https://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html" target="_blank" rel="noopener">SortedSet</a></p>
+</blockquote>
+<p>Java provides a built-in <code>SortedSet</code> implementation, known as <code>TreeSet</code>. In this article, I’ll show how to implement a <code>SortedSet</code> by <code>Ordered Array</code>.</p>
+<a id="more"></a>
+<h2 id="Prerequisite"><a href="#Prerequisite" class="headerlink" title="Prerequisite"></a>Prerequisite</h2><p>To implement a <code>SortSet</code>, you need to know about the following concepts and algorithms.</p>
+<h3 id="Binary-Search-Algorithm"><a href="#Binary-Search-Algorithm" class="headerlink" title="Binary Search Algorithm"></a>Binary Search Algorithm</h3><blockquote>
+<p>In <a href="https://en.wikipedia.org/wiki/Computer_science" target="_blank" rel="noopener">computer science</a>, <strong>binary search</strong>, also known as <strong>half-interval search</strong>,<a href="https://en.wikipedia.org/wiki/Binary_search_algorithm#cite_note-Williams1976-1" target="_blank" rel="noopener">[1]</a> <strong>logarithmic search</strong>,<a href="https://en.wikipedia.org/wiki/Binary_search_algorithm#cite_note-FOOTNOTEKnuth1998§6.2.1_(&quot;Searching_an_ordered_table&quot;" target="_blank" rel="noopener">[2]</a>,<em>subsection</em>“Binary_search”-2) or <strong>binary chop</strong>,<a href="https://en.wikipedia.org/wiki/Binary_search_algorithm#cite_note-FOOTNOTEButterfieldNgondi201646-3" target="_blank" rel="noopener">[3]</a> is a <a href="https://en.wikipedia.org/wiki/Search_algorithm" target="_blank" rel="noopener">search algorithm</a> that finds the position of a target value within a <a href="https://en.wikipedia.org/wiki/Sorted_array" target="_blank" rel="noopener">sorted array</a>.<a href="https://en.wikipedia.org/wiki/Binary_search_algorithm#cite_note-FOOTNOTECormenLeisersonRivestStein200939-4" target="_blank" rel="noopener">[4]</a><a href="https://en.wikipedia.org/wiki/Binary_search_algorithm#cite_note-5" target="_blank" rel="noopener">[5]</a> Binary search compares the target value to the middle element of the array. If they are not equal, the half in which the target cannot lie is eliminated and the search continues on the remaining half, again taking the middle element to compare to the target value, and repeating this until the target value is found. If the search ends with the remaining half being empty, the target is not in the array.</p>
+<p><strong><em>Wikipedia</em></strong> - <a href="https://en.wikipedia.org/wiki/Binary_search_algorithm" target="_blank" rel="noopener">Binary search algorithm</a></p>
+</blockquote>
+<p>Binary Search can also search for ceil and floor key to a specific key.</p>
+<p>In my implementation, I use Binary Search to find a specific key or the first key greater than the specific key.</p>
+<h3 id="Automatic-expansion-algorithm"><a href="#Automatic-expansion-algorithm" class="headerlink" title="Automatic expansion algorithm"></a>Automatic expansion algorithm</h3><p>In Java,<code>Array</code> can’t be automatically expanded, so we need to expand manually, a simple way is to double the array size and copy the element to the new array.</p>
+<p>Here is an example.</p>
+<figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// Automatic expansion</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ensureCapacity</span><span class="hljs-params">(<span class="hljs-keyword">int</span> newCapacity)</span> </span>{</span><br><span class="line">  <span class="hljs-comment">// keys is enough for newCapacity</span></span><br><span class="line">  <span class="hljs-keyword">if</span> (newCapacity &lt; keys.length) {</span><br><span class="line">  	<span class="hljs-keyword">return</span>;</span><br><span class="line">  }</span><br><span class="line">  <span class="hljs-comment">// increase by double</span></span><br><span class="line">  <span class="hljs-keyword">var</span> newKeys = (K[]) Array.newInstance(Comparable<span class="hljs-class">.<span class="hljs-keyword">class</span>, <span class="hljs-title">keys</span>.<span class="hljs-title">length</span> * 2)</span>;</span><br><span class="line">  <span class="hljs-keyword">var</span> newValues = (V[]) Array.newInstance(Comparable<span class="hljs-class">.<span class="hljs-keyword">class</span>, <span class="hljs-title">values</span>.<span class="hljs-title">length</span> * 2)</span>;</span><br><span class="line">  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; keys.length; i++) {</span><br><span class="line">  	<span class="hljs-keyword">if</span> (keys[i] != <span class="hljs-keyword">null</span>) {</span><br><span class="line">    	newKeys[i] = keys[i];</span><br><span class="line">    	newValues[i] = values[i];</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">  keys = newKeys;</span><br><span class="line">  values = newValues;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="Implementation"><a href="#Implementation" class="headerlink" title="Implementation"></a>Implementation</h2><h3 id="How-to-find-ceil-floor-key"><a href="#How-to-find-ceil-floor-key" class="headerlink" title="How to find ceil/floor key?"></a>How to find ceil/floor key?</h3><p>Well, for examle, there is a sorted array.</p>
+<figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">7</span>,<span class="hljs-number">8</span>]</span><br></pre></td></tr></tbody></table></figure>
+<p>If we want to find $ceil(5)$, what’s the step? Here is the binary search procedure.</p>
+<p><strong>Step 1</strong><br>$$<br>left = 0, right = 5, middle = (0+5)/2=2, nums[middle] = 3, \because 3 &lt; 5, \therefore left = middle + 1 = 4<br>$$<br><strong>Step 2</strong><br>$$<br>left = 4, right = 5, middle = (4+5)/2=4, nums[middle] = 7, \because 7 &gt; 5, \therefore right = middle-1=3<br>$$<br><strong>Step3</strong><br>$$<br>left=4,right=3, exit loop<br>$$<br>so finally $ceil(5) = 7$.</p>
+<h3 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h3><p>First, we need to declare a interface, so if we have some new implementations, we can easily expand our algorithm.</p>
+<figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> java.lang.reflect.Array;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// A simple SortSet implementation by Array</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">SortSet</span>&lt;<span class="hljs-title">K</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Comparable</span>&lt;<span class="hljs-title">K</span>&gt;, <span class="hljs-title">V</span>&gt; </span>{</span><br><span class="line">    <span class="hljs-comment">// Retrieve for the value of specific key</span></span><br><span class="line">    <span class="hljs-function">V <span class="hljs-title">get</span><span class="hljs-params">(K key)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">// Put a new value</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">put</span><span class="hljs-params">(K key, V value)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">// Remove a specific key</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">remove</span><span class="hljs-params">(K key)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">// Retrieve the first key greater than the specific key</span></span><br><span class="line">    <span class="hljs-function">K <span class="hljs-title">ceil</span><span class="hljs-params">(K key)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">// Get the rank of the specific key</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">rank</span><span class="hljs-params">(K key)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">// Retrieve the last key less than the specific key</span></span><br><span class="line">    <span class="hljs-function">K <span class="hljs-title">floor</span><span class="hljs-params">(K key)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">// Check whether the key is exists</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">containsKey</span><span class="hljs-params">(K key)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ArraySortedSet</span>&lt;<span class="hljs-title">K</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Comparable</span>&lt;<span class="hljs-title">K</span>&gt;, <span class="hljs-title">V</span>&gt; <span class="hljs-keyword">implements</span> <span class="hljs-title">SortSet</span>&lt;<span class="hljs-title">K</span>, <span class="hljs-title">V</span>&gt; </span>{</span><br><span class="line">        <span class="hljs-keyword">private</span> K[] keys;</span><br><span class="line">        <span class="hljs-keyword">private</span> V[] values;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> size;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ArraySortedSet</span><span class="hljs-params">(<span class="hljs-keyword">int</span> capacity)</span> </span>{</span><br><span class="line">            keys = (K[]) Array.newInstance(Comparable<span class="hljs-class">.<span class="hljs-keyword">class</span>, <span class="hljs-title">capacity</span>)</span>;</span><br><span class="line">            values = (V[]) Array.newInstance(Object<span class="hljs-class">.<span class="hljs-keyword">class</span>, <span class="hljs-title">capacity</span>)</span>;</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ArraySortedSet</span><span class="hljs-params">()</span> </span>{</span><br><span class="line">            <span class="hljs-keyword">this</span>(<span class="hljs-number">8</span>);</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="hljs-meta">@Override</span></span><br><span class="line">        <span class="hljs-function"><span class="hljs-keyword">public</span> V <span class="hljs-title">get</span><span class="hljs-params">(K key)</span> </span>{</span><br><span class="line">            <span class="hljs-keyword">var</span> rank = rank(key);</span><br><span class="line">            <span class="hljs-keyword">if</span> (rank &lt; size &amp;&amp; keys[rank].compareTo(key) == <span class="hljs-number">0</span>) {</span><br><span class="line">                <span class="hljs-keyword">return</span> values[rank];</span><br><span class="line">            }</span><br><span class="line">            <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="hljs-meta">@Override</span></span><br><span class="line">        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">put</span><span class="hljs-params">(K key, V value)</span> </span>{</span><br><span class="line">            <span class="hljs-keyword">var</span> rank = rank(key);</span><br><span class="line">            <span class="hljs-keyword">if</span> (rank &lt; size &amp;&amp; keys[rank].compareTo(key) == <span class="hljs-number">0</span>) {</span><br><span class="line">                values[rank] = value;</span><br><span class="line">                <span class="hljs-keyword">return</span>;</span><br><span class="line">            }</span><br><span class="line">            ensureCapacity(size + <span class="hljs-number">1</span>);</span><br><span class="line">            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = size; j &gt; rank; j--) {</span><br><span class="line">                <span class="hljs-comment">// move the prev element forward to make an empty to save new element</span></span><br><span class="line">                keys[j] = keys[j - <span class="hljs-number">1</span>];</span><br><span class="line">                values[j] = values[j - <span class="hljs-number">1</span>];</span><br><span class="line">            }</span><br><span class="line">            keys[rank] = key;</span><br><span class="line">            values[rank] = value;</span><br><span class="line">            size++;</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="hljs-comment">// Automatic expansion</span></span><br><span class="line">        <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ensureCapacity</span><span class="hljs-params">(<span class="hljs-keyword">int</span> newCapacity)</span> </span>{</span><br><span class="line">            <span class="hljs-comment">// keys is enough for newCapacity</span></span><br><span class="line">            <span class="hljs-keyword">if</span> (newCapacity &lt; keys.length) {</span><br><span class="line">                <span class="hljs-keyword">return</span>;</span><br><span class="line">            }</span><br><span class="line">            <span class="hljs-comment">// increase by double</span></span><br><span class="line">            <span class="hljs-keyword">var</span> newKeys = (K[]) Array.newInstance(Comparable<span class="hljs-class">.<span class="hljs-keyword">class</span>, <span class="hljs-title">keys</span>.<span class="hljs-title">length</span> * 2)</span>;</span><br><span class="line">            <span class="hljs-keyword">var</span> newValues = (V[]) Array.newInstance(Comparable<span class="hljs-class">.<span class="hljs-keyword">class</span>, <span class="hljs-title">values</span>.<span class="hljs-title">length</span> * 2)</span>;</span><br><span class="line">            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; keys.length; i++) {</span><br><span class="line">                <span class="hljs-keyword">if</span> (keys[i] != <span class="hljs-keyword">null</span>) {</span><br><span class="line">                    newKeys[i] = keys[i];</span><br><span class="line">                    newValues[i] = values[i];</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">            keys = newKeys;</span><br><span class="line">            values = newValues;</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="hljs-meta">@Override</span></span><br><span class="line">        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">remove</span><span class="hljs-params">(K key)</span> </span>{</span><br><span class="line">            <span class="hljs-keyword">var</span> rank = rank(key);</span><br><span class="line">            <span class="hljs-keyword">if</span> (rank &lt; size &amp;&amp; keys[rank].equals(key)) {</span><br><span class="line">                <span class="hljs-comment">// move the next element forward</span></span><br><span class="line">                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = rank + <span class="hljs-number">1</span>; i &lt; size; i++) {</span><br><span class="line">                    keys[i - <span class="hljs-number">1</span>] = keys[i];</span><br><span class="line">                    values[i - <span class="hljs-number">1</span>] = values[i];</span><br><span class="line">                }</span><br><span class="line">                size--;</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="hljs-meta">@Override</span></span><br><span class="line">        <span class="hljs-function"><span class="hljs-keyword">public</span> K <span class="hljs-title">ceil</span><span class="hljs-params">(K key)</span> </span>{</span><br><span class="line">            <span class="hljs-keyword">var</span> rank = rank(key);</span><br><span class="line">            <span class="hljs-keyword">if</span> (rank &lt; size &amp;&amp; keys[rank].compareTo(key) == <span class="hljs-number">0</span>) {</span><br><span class="line">                <span class="hljs-keyword">return</span> keys[rank];</span><br><span class="line">            }</span><br><span class="line">            <span class="hljs-keyword">return</span> rank &gt;= size ? <span class="hljs-keyword">null</span> : keys[rank];</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="hljs-meta">@Override</span></span><br><span class="line">        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">rank</span><span class="hljs-params">(K key)</span> </span>{</span><br><span class="line">            <span class="hljs-keyword">var</span> start = <span class="hljs-number">0</span>;</span><br><span class="line">            <span class="hljs-keyword">var</span> end = size;</span><br><span class="line">            <span class="hljs-keyword">while</span> (start &lt;= end) {</span><br><span class="line">                <span class="hljs-keyword">var</span> middle = start + (end - start) / <span class="hljs-number">2</span>;</span><br><span class="line">                <span class="hljs-keyword">if</span> (keys[middle] == <span class="hljs-keyword">null</span>) {</span><br><span class="line">                    end = middle - <span class="hljs-number">1</span>;</span><br><span class="line">                    <span class="hljs-keyword">continue</span>;</span><br><span class="line">                }</span><br><span class="line">                <span class="hljs-keyword">var</span> compare = key.compareTo(keys[middle]);</span><br><span class="line">                <span class="hljs-keyword">if</span> (compare == <span class="hljs-number">0</span>) {</span><br><span class="line">                    <span class="hljs-keyword">return</span> middle;</span><br><span class="line">                }</span><br><span class="line">                <span class="hljs-keyword">if</span> (compare &gt; <span class="hljs-number">0</span>) {</span><br><span class="line">                    start = middle + <span class="hljs-number">1</span>;</span><br><span class="line">                } <span class="hljs-keyword">else</span> {</span><br><span class="line">                    end = middle - <span class="hljs-number">1</span>;</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">            <span class="hljs-keyword">return</span> start;</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="hljs-meta">@Override</span></span><br><span class="line">        <span class="hljs-function"><span class="hljs-keyword">public</span> K <span class="hljs-title">floor</span><span class="hljs-params">(K key)</span> </span>{</span><br><span class="line">            <span class="hljs-keyword">var</span> left = <span class="hljs-number">0</span>;</span><br><span class="line">            <span class="hljs-keyword">var</span> right = size - <span class="hljs-number">1</span>;</span><br><span class="line">            <span class="hljs-keyword">while</span> (left &lt;= right) {</span><br><span class="line">                <span class="hljs-keyword">var</span> middle = left + (right - left) / <span class="hljs-number">2</span>;</span><br><span class="line">                <span class="hljs-keyword">var</span> compare = keys[middle].compareTo(key);</span><br><span class="line">                <span class="hljs-keyword">if</span> (compare == <span class="hljs-number">0</span>) {</span><br><span class="line">                    <span class="hljs-keyword">return</span> keys[middle];</span><br><span class="line">                } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (compare &gt; <span class="hljs-number">0</span>) {</span><br><span class="line">                    right = middle - <span class="hljs-number">1</span>;</span><br><span class="line">                } <span class="hljs-keyword">else</span> {</span><br><span class="line">                    left = middle + <span class="hljs-number">1</span>;</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">            <span class="hljs-comment">// target is left than minimal value of keys</span></span><br><span class="line">            <span class="hljs-keyword">if</span> (right &lt; <span class="hljs-number">0</span>) {</span><br><span class="line">                <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;</span><br><span class="line">            }</span><br><span class="line">            <span class="hljs-keyword">if</span> (left &gt;= size) { <span class="hljs-comment">// left is greater than the max keys</span></span><br><span class="line">                <span class="hljs-keyword">return</span> keys[size - <span class="hljs-number">1</span>];</span><br><span class="line">            }</span><br><span class="line">            <span class="hljs-keyword">return</span> keys[right];</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="hljs-meta">@Override</span></span><br><span class="line">        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">containsKey</span><span class="hljs-params">(K key)</span> </span>{</span><br><span class="line">            <span class="hljs-keyword">return</span> get(key) != <span class="hljs-keyword">null</span>;</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="hljs-meta">@Override</span></span><br><span class="line">        <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">toString</span><span class="hljs-params">()</span> </span>{</span><br><span class="line">            <span class="hljs-keyword">var</span> sb = <span class="hljs-keyword">new</span> StringBuilder();</span><br><span class="line">            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; size; i++) {</span><br><span class="line">                <span class="hljs-keyword">if</span> (keys[i] != <span class="hljs-keyword">null</span>) {</span><br><span class="line">                    sb.append(keys[i]).append(<span class="hljs-string">'='</span>).append(values[i]);</span><br><span class="line">                    <span class="hljs-keyword">if</span> (i &lt; size - <span class="hljs-number">1</span>) {</span><br><span class="line">                        sb.append(<span class="hljs-string">','</span>);</span><br><span class="line">                    }</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">            <span class="hljs-keyword">return</span> sb.toString();</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{</span><br><span class="line">        <span class="hljs-keyword">var</span> set = <span class="hljs-keyword">new</span> ArraySortedSet&lt;Integer, Integer&gt;();</span><br><span class="line">        set.put(<span class="hljs-number">2</span>, <span class="hljs-number">2</span>);</span><br><span class="line">        set.put(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>);</span><br><span class="line">        set.put(<span class="hljs-number">3</span>, <span class="hljs-number">3</span>);</span><br><span class="line">        set.put(<span class="hljs-number">4</span>, <span class="hljs-number">4</span>);</span><br><span class="line">        set.put(<span class="hljs-number">5</span>, <span class="hljs-number">5</span>);</span><br><span class="line">        set.put(<span class="hljs-number">6</span>, <span class="hljs-number">6</span>);</span><br><span class="line">        set.put(<span class="hljs-number">7</span>, <span class="hljs-number">7</span>);</span><br><span class="line">        set.put(<span class="hljs-number">8</span>, <span class="hljs-number">8</span>);</span><br><span class="line">        set.put(<span class="hljs-number">9</span>, <span class="hljs-number">9</span>);</span><br><span class="line">        System.out.println(set);</span><br><span class="line">        System.out.println(set.get(<span class="hljs-number">3</span>));</span><br><span class="line">        System.out.println(set.get(-<span class="hljs-number">1</span>));</span><br><span class="line">        System.out.println(set.get(<span class="hljs-number">2</span>));</span><br><span class="line">        System.out.println(set.ceil(<span class="hljs-number">2</span>));</span><br><span class="line">        System.out.println(set.ceil(-<span class="hljs-number">1</span>));</span><br><span class="line">        set.put(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>);</span><br><span class="line">        System.out.println(set.ceil(-<span class="hljs-number">1</span>));</span><br><span class="line">        System.out.println(set);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><strong><em>Oracle</em></strong> - <a href="https://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html" target="_blank" rel="noopener">SortedSet</a></li>
+<li><strong><em>Wikipedia</em></strong> - <a href="https://en.wikipedia.org/wiki/Binary_search_algorithm" target="_blank" rel="noopener">Binary search algorithm</a></li>
+</ul>
+</body></html>
+            </div>
+            
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/algorithm/" rel="tag">algorithm</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <div class="social-share" data-disabled="qzone,facebook,twitter,tencent,linkedin,douban,diandian,google"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next"
+                href="/2023/05/05/how-to-retry-requests-correctly.html">
+                <span class="level-item">How to retry requests correctly with Feign</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '1ae09f5aa5dcce937e94',
+        clientSecret: '55c4032692dbcb0ee13771da7dc95f22cf9ae8e1',
+        id: '9da174be8738f7d3c3e2ebe1568d7d43',
+        repo: 'xialeistudio.github.io',
+        owner: 'xialeistudio',
+        language: 'en',
+        admin: "xialeistudio",
+        createIssueManually: false,
+        distractionFreeMode: false,
+        proxy: '/github/login/oauth/access_token'
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-3-desktop is-3-widescreen  has-order-3 column-right ">
+    
+        
+    
+        
+    
+        
+    
+        
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Catalogue
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#Prerequisite">
+        <span class="has-mr-6">1</span>
+        <span>Prerequisite</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#Binary-Search-Algorithm">
+        <span class="has-mr-6">1.1</span>
+        <span>Binary Search Algorithm</span>
+        </a></li><li>
+        <a class="is-flex" href="#Automatic-expansion-algorithm">
+        <span class="has-mr-6">1.2</span>
+        <span>Automatic expansion algorithm</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#Implementation">
+        <span class="has-mr-6">2</span>
+        <span>Implementation</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#How-to-find-ceil-floor-key">
+        <span class="has-mr-6">2.1</span>
+        <span>How to find ceil/floor key?</span>
+        </a></li><li>
+        <a class="is-flex" href="#Code">
+        <span class="has-mr-6">2.2</span>
+        <span>Code</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#Reference">
+        <span class="has-mr-6">3</span>
+        <span>Reference</span>
+        </a></li></ul>
+        </div>
+    </div>
+</div>
+
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                    
+                        Learning &amp; Sharing
+                            
+                </a>
+                <p class="is-size-7">
+                    &copy; 2023
+                        xialeistudio&nbsp;
+                            Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                                href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                            
+                </p>
+                <p class="is-size-7">
+                    
+                        <a target="_blank" href="https://beian.miit.gov.cn/">粤ICP备14062481号-1</a>
+                            
+                </p>
+            </div>
+            <div class="level-end">
+                
+                    <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                        
+                            
+                                <p class="control">
+                                    <a class="button is-white is-large"
+                                        target="_blank" title="Creative Commons"
+                                        href="https://creativecommons.org/">
+                                        
+                                                    <i class="fab fa-creative-commons"></i>
+                                                    
+                                    </a>
+                                </p>
+                                
+                                <p class="control">
+                                    <a class="button is-white is-large"
+                                        target="_blank" title="Attribution 4.0 International"
+                                        href="https://creativecommons.org/licenses/by/4.0/">
+                                        
+                                                    <i class="fab fa-creative-commons-by"></i>
+                                                    
+                                    </a>
+                                </p>
+                                
+                                <p class="control">
+                                    <a class="button is-white is-large"
+                                        target="_blank" title="GitHub"
+                                        href="https://github.com/xialeistudio">
+                                        
+                                                    <i class="fab fa-github"></i>
+                                                    
+                                    </a>
+                                </p>
+                                
+                    </div>
+                    
+            </div>
+        </div>
+    </div>
+</footer>
+
+        <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        const config = {
+                startOnLoad: true,
+                theme: 'forest',
+                securityLevel: 'loose',
+            };
+            mermaid.initialize(config);
+      </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+<script>
+    var IcarusThemeSettings = {
+        article: {
+            highlight: {
+                clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+    
+    <script src="/js/animation.js"></script>
+    
+
+
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>
