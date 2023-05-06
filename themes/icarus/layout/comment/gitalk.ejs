@@ -18,8 +18,7 @@
         language: '<%= get_config('comment.language') %>',
         admin: <%- JSON.stringify(get_config('comment.admin'))%>,
         createIssueManually: <%= get_config('comment.create_issue_manually', false) %>,
-        distractionFreeMode: <%= get_config('comment.distraction_free_mode', false) %>,
-        proxy: '/github/login/oauth/access_token'
+        distractionFreeMode: <%= get_config('comment.distraction_free_mode', false) %>
     })
     gitalk.render('comment-container')
 </script>
