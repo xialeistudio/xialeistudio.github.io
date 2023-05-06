@@ -135,4 +135,4 @@ By modify `e.request().requestTemplate()`, you can do anything you want to modif
 
 ## Reference
 
-1. [Feign](https://github.com/OpenFeign/feign)
+1. [***[Feign](https://github.com/OpenFeign/feign/#error-handling)*** - Introduction](https://github.com/OpenFeign/feign)

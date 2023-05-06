@@ -40,7 +40,7 @@ navbar:
 # Footer section link settings
 footer:
     # Links to be shown on the right of the footer section
-    # custom_text: <a target="_blank" href="https://beian.miit.gov.cn/">粤ICP备14062481号-1</a>
+    custom_text: <a target="_blank" href="https://beian.miit.gov.cn/">粤ICP备14062481号-1</a>
     links:
         Creative Commons:
             icon: fab fa-creative-commons
