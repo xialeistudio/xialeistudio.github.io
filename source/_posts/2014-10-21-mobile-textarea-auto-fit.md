@@ -6,7 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- engineering
+- Engineering
 ---
 PC端网页的textarea内容多了会出现滚动条，这个没什么，鼠标么，滚动方便。但是移动端是没鼠标的，出现滚动条是很不友好的行为。
 

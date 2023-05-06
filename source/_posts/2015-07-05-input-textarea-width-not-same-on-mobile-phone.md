@@ -6,7 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- engineering
+- Engineering
 ---
 今天在做写一个IOS端的表单时，尽管input,textarea设置了宽度，结果发现真机浏览的时候发现宽度不一致，有图为证   
 ![图片](https://og5r5kasb.qnssl.com/wp-content/uploads/2015/07/IMG_0839.png)

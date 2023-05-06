@@ -2,7 +2,7 @@
 title: How to retry requests correctly with Feign
 date: 2023-05-05 11:46:27
 categories:
-- engineering
+- Engineering
 tags:
 - java
 ---

@@ -6,7 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- engineering
+- Engineering
 ---
 在开发爬虫的时候，文章的图片往往是有防盗链措施的，一个比较好的解决办法是通过PHP下载图片到本地并且替换URL实现。
 

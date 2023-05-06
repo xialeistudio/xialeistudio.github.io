@@ -2,7 +2,7 @@
 title: TS简明教程(2)
 date: 2019-07-29 10:11:30
 categories:
-- engineering
+- Engineering
 ---
 本文是TS简明教程的第二篇，讲解面向对象相关的知识。
 

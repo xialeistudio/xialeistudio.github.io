@@ -6,7 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- engineering
+- Engineering
 ---
 
 Linux启动服务时如果遇到端口占用问题时，一般有以下两种解决方案：

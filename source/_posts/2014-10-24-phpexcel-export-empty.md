@@ -6,7 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- engineering
+- Engineering
 ---
 今天在做数据导出的时候遇到个麻烦事情，SQL查询是有数据的，但是写入excel的时候为空的。
 

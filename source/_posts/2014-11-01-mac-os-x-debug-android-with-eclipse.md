@@ -6,7 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- engineering
+- Engineering
 ---
 这两天心血来潮装了个mac os x 10.10系统，折腾的过程就不说了。   
 Mac OS X 10.10的环境下，Eclipse+ADT，进行真机调试时，会出现一个问题。   

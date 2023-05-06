@@ -4,7 +4,7 @@ date: 2023-01-19 23:34:44
 tags:
 - leetcode
 categories:
-- algorithm
+- Algorithm
 ---
 
 下面是[维基百科水塘抽样](https://zh.wikipedia.org/zh-mo/%E6%B0%B4%E5%A1%98%E6%8A%BD%E6%A8%A3)的说明。

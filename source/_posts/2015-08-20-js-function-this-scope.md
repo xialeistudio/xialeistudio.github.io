@@ -6,7 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- engineering
+- Engineering
 ---
 > JavaScript中this指向一直是一个难点，也是一个重点，本文研究Node.js与浏览器环境下this指向的不同之处。
 

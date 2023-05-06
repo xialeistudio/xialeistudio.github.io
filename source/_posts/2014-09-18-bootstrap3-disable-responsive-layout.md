@@ -6,7 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- engineering
+- Engineering
 ---
 IE8及以下版本的浏览器确实是心中的痛,不支持媒体查询和CSS3，导致bootstrap样式怪怪的。没办法，只能采取折中的办法--禁用响应式布局
 1. 移除 viewport 标签

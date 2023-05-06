@@ -4,7 +4,7 @@ date: 2021-12-29 18:32:50
 tags:
 - binarysearch
 categories:
-- algorithm
+- Algorithm
 ---
 
 本系列文章将学习/复习常用算法和数据结构。希望能够深入浅出的将复杂的知识讲清楚、说明白。

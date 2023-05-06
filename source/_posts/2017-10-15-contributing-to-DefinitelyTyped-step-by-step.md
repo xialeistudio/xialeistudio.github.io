@@ -2,7 +2,7 @@
 title: 从零开始向DefinitelyTyped贡献代码
 layout: post
 categories:
-- engineering
+- Engineering
 ---
 
 # 什么是DefinitelyTyped?

@@ -4,7 +4,7 @@ date: 2022-12-31 14:16:32
 tags:
 - leetcode
 categories:
-- algorithm
+- Algorithm
 ---
 
 原地哈希算法(Cyclic Sort)主要应用在值都在$[0,n]$的数组$nums$中，此时可以将$nums[i]$作为索引，放回原数组，当然，由于程序上索引是从0开始，因此可以将$nums[i]$放到$nums[nums[i]-1]$的位置上。

@@ -5,7 +5,7 @@ tags:
 - leetcode
 - string
 categories:
-- algorithm
+- Algorithm
 ---
 
 本文分享一种如何在字符串中解析数字的算法。

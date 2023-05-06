@@ -6,7 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- engineering
+- Engineering
 ---
 ## 项目地址
 [https://git.coding.net/xialei/xl-angular-upload.git](https://git.coding.net/xialei/xl-angular-upload.git)

@@ -6,7 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- engineering
+- Engineering
 ---
 nodejs是单进程的，如果应用中发生未捕获的异常，进程就会退出，一个比较笨的办法在系统中使用计划任务检查进程是否存在，如果不存在启动该程序，但是该方式会造成系统资源的浪费，而且不是及时的。
 

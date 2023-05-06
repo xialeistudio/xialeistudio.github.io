@@ -6,7 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- engineering
+- Engineering
 ---
 今天导出Excel的时候，列不是固定的，而且有差不多几十个，横轴由'A'变为了'AA'，给导出时增加了难度，因为要去算列名称，不过换个方式想一下，发现是很有规律的26进制数。 发现秘诀后就好办了，发一个10进制转26进制的方法。
 ## 代码

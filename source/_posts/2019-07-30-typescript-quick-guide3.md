@@ -2,7 +2,7 @@
 title: TS简明教程(3)
 date: 2019-07-30 10:12:29
 categories:
-- engineering
+- Engineering
 ---
 
 本文是TS简明教程的第三篇，讲解泛型。

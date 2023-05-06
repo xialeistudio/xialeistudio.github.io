@@ -6,7 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- engineering
+- Engineering
 ---
 __get,__set光看前面两个下划线就知道是魔术方法了，而且还是PHP OOP中比较重要的方法。
 

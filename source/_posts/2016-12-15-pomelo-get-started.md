@@ -2,7 +2,7 @@
 layout: post
 title: pomelo Hello World
 categories:
-- engineering
+- Engineering
 tags:
 - pomelo
 ---

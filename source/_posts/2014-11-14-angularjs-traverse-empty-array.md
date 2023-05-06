@@ -6,7 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- engineering
+- Engineering
 ---
 今天做开发时发现控制老是报错，虽然不影响使用，但是作为有那么一点“强迫症”的我来说，无法忍受。通过调试发现是ng-repeat对一个空数组遍历出错，另外，['ab','cd','ad']这样只有值没有键的数组也会遍历出错。
 

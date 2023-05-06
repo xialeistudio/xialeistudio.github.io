@@ -4,7 +4,7 @@ date: 2023-01-19 23:27:14
 tags:
 - leetcode
 categories:
-- algorithm
+- Algorithm
 ---
 
 本文分享如何解决计算时间差类的问题。

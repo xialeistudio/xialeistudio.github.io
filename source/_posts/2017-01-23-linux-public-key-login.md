@@ -2,7 +2,7 @@
 title: 使用公钥登录Linux
 layout: post
 categories:
-- engineering
+- Engineering
 ---
 服务器密码往往是随机字符串，难以记忆，通过配置公钥登录的方式来进行登录。
 ## 准备

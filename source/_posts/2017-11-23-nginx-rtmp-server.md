@@ -2,7 +2,7 @@
 title: 从零开始打造自己的直播服务器-Nginx安装
 date: 2017-11-23 14:54:08
 categories:
-- engineering
+- Engineering
 tags:
 - rtmp
 ---

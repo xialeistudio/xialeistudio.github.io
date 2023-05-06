@@ -2,9 +2,9 @@
 title: Implementing a sorted set by ordered array
 date: 2023-05-06 15:41:52
 categories:
-- engineering
+- Engineering
 tags:
-- algorithm
+- Algorithm
 ---
 
 > A [`Set`](https://docs.oracle.com/javase/8/docs/api/java/util/Set.html) that further provides a *total ordering* on its elements. The elements are ordered using their [natural ordering](https://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html), or by a [`Comparator`](https://docs.oracle.com/javase/8/docs/api/java/util/Comparator.html) typically provided at sorted set creation time. The set's iterator will traverse the set in ascending element order. Several additional operations are provided to take advantage of the ordering. (This interface is the set analogue of [`SortedMap`](https://docs.oracle.com/javase/8/docs/api/java/util/SortedMap.html).)

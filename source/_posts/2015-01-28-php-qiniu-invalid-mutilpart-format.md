@@ -6,7 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- engineering
+- Engineering
 ---
 今天用umeditor编辑文章上传图片的时候发现一直卡在"loading..."，打开控制台发现出现了500错误，进一步调试发现是七牛上传报错了。
 

@@ -4,7 +4,7 @@ date: 2022-12-31 14:13:06
 tags:
 - leetcode
 categories:
-- algorithm
+- Algorithm
 ---
 
 来自[维基百科](https://zh.m.wikipedia.org/zh-hans/%E5%A4%9A%E6%95%B0%E6%8A%95%E7%A5%A8%E7%AE%97%E6%B3%95)的解释：

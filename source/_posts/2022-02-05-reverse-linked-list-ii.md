@@ -5,7 +5,7 @@ tags:
 - linklist
 - leetcode
 categories:
-- algorithm
+- Algorithm
 ---
 
 ## 题目

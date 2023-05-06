@@ -6,7 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- engineering
+- Engineering
 ---
 nginx近年来的上涨趋势确实挺快的，但是apache作为老牌HTTP服务器，拥有的生态圈是nginx比不上的。一个最简单的例子，URL重写，apache的话利用无所不能的.htaccess文件就可以了。nginx还要改主配置文件。
 

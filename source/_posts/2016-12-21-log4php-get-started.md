@@ -2,7 +2,7 @@
 layout: post
 title: apache log4php简单使用
 categories:
-- engineering
+- Engineering
 ---
 log4j在JAVA中可算是大名鼎鼎的日志开发包了,它为apache组织维护项目，log4php是log4xx的系列之一，主要用来记录日志信息，功能强大，配置灵活。
 

@@ -2,7 +2,7 @@
 title: 在Swoole环境下运行注入Yii2框架的thrift应用
 date: 2019-05-19 16:10:47
 categories:
-- engineering
+- Engineering
 tags:
 - swoole
 - thrift

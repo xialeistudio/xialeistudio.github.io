@@ -2,7 +2,7 @@
 title: log4go尝鲜
 date: 2017-11-21 17:06:16
 categories:
-- engineering
+- Engineering
 ---
 # 序言
 日志系统对于软件是必不可少的，可以帮助我们记录关键信息，后期处理问题的时候会很方便。业界有很多出名的日志库，log4日志库相信每个人都不陌生，像log4j之于Java，log4php之于PHP等等。其实golang也有很多的log4实现，本文要使用的是**alecthomas**实现的版本。

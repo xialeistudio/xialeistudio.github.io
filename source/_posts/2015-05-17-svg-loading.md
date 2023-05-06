@@ -2,7 +2,7 @@
 title: svg制作loading
 date: 2015-05-17 05:58:35
 categories:
-- engineering
+- Engineering
 ---
 还在使用gif做loading效果吗？你确实out了，再不济也得用css3动画是不是--。无奈，css3旋转动画需要一张png图片来做，也没什么问题，现在，有更炫酷的方案了。   
 没错!就是SVG。svg其实不是什么新东西。SVG 于 2003 年 1 月 14 日成为 W3C 推荐标准。现在浏览器越来越强大，所以，尽情使用吧！   

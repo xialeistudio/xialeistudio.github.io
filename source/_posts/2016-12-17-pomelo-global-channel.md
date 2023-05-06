@@ -2,7 +2,7 @@
 layout: post
 title: pomelo-global-channel-plugin的使用
 categories:
-- engineering
+- Engineering
 tags:
 - pomelo
 ---

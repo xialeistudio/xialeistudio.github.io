@@ -5,7 +5,7 @@ tags:
 - sort
 - leetcode
 categories:
-- algorithm
+- Algorithm
 ---
 
 基数排序又叫桶排序，是一种时间复杂度为$O(n)$的排序算法，但是相比于其他排序算法有$O(n)$的空间复杂度。

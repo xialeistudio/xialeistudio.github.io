@@ -2,7 +2,7 @@
 title: golang使用CSV导出大量数据
 date: 2018-02-28 16:43:13
 categories:
-- engineering
+- Engineering
 ---
 
 最近在做一个导出功能，最初是使用[https://github.com/tealeg/xlsx](https://github.com/tealeg/xlsx)做的，但是发现导出有个30W行的excel时，这玩意内存彪到700M+，后来发现只是导出数据为表格，并没有其他东西，于是打算使用CSV导出。

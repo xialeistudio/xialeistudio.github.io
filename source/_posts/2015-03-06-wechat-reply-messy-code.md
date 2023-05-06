@@ -6,7 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- engineering
+- Engineering
 ---
 很多微信公众平台的自动回复程序都是 ThinkWechat.class.php 这个类开发的，今天碰到一个莫名其妙的乱码问题，查问题发现是GB2312编码导致，所以要修改源码。
 

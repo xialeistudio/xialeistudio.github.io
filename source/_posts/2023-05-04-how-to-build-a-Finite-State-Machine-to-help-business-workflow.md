@@ -1,7 +1,7 @@
 ---
 title: How to build a Finite State Machine to help business workflow
 categories:
-  - engineering
+  - Engineering
 date: 2023-05-04 17:16:00
 tags:
 ---

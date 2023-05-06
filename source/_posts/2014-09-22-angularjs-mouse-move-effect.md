@@ -6,7 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- engineering
+- Engineering
 ---
 用JQ来做的话很简单的，(通过toggleClass函数就可以了),但是既然提到了angularjs，当然要用angularjs的解决方案来做啦!
 

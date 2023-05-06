@@ -6,7 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- engineering
+- Engineering
 ---
 ## 简介
 bower是twitter的又一个开源项目，使用nodejs开发，用于web包管理。如果越来越多得开源项目都托管在github上，bower只需要将github上项目加上一个配置文件既可以使用bower方式使用安装包。作为包管理，bower能提供添加新web包，更新web包，删除web包，发布web包功能，管理包依赖。web包通常认为由html+css+javascript构成。

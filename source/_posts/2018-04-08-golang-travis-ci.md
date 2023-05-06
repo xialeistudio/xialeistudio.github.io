@@ -2,7 +2,7 @@
 title: golang使用travis进行持续集成
 date: 2018-04-08 17:40:37
 categories:
-- engineering
+- Engineering
 tags:
 - ci
 ---

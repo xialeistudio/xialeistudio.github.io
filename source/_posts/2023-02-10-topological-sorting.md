@@ -4,7 +4,7 @@ date: 2023-02-10 12:00:00
 tags:
 - leetcode
 categories:
-- algorithm
+- Algorithm
 ---
 
 >  在计算机科学领域，有向图的拓扑排序或拓扑测序是对其顶点的一种线性排序，使得对于从顶点$u$到顶点$v$的每个有向边$uv$, $u$在排序中都在$v$之前。

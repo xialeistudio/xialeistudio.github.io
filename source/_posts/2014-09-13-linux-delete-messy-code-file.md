@@ -6,7 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- engineering
+- Engineering
 ---
 shell终端中有时候中文文件名会出现乱码，导致很多操作都不能进行，一个最简单的就是删除了。
 

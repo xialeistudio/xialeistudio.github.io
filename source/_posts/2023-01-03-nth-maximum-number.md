@@ -4,7 +4,7 @@ date: 2023-01-03 12:22:08
 tags:
 - leetcode
 categories:
-- algorithm
+- Algorithm
 ---
 
 在给定的序列中查找第N大的数，朴素做法是对序列排序，然后根据索引直接查询，时间复杂度为$O(nlogn)$。

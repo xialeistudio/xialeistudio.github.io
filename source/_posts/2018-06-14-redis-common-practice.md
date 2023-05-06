@@ -2,7 +2,7 @@
 title: redis常用实践
 date: 2018-06-14 21:49:52
 categories: 
-- engineering
+- Engineering
 ---
 
 Redis相信大家都不陌生，而如果只是用来取代memcached做缓存的话，实在是大材小用了。一起来看看生产环境下的常用用法。

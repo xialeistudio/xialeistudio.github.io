@@ -4,7 +4,7 @@ date: 2023-01-03 12:05:44
 tags:
 - leetcode
 categories:
-- algorithm
+- Algorithm
 ---
 
 洗牌算法用来将给定的序列打乱，可以认为是排序的反操作。

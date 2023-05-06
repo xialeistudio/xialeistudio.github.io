@@ -2,7 +2,7 @@
 title: 微信开放平台公众号第三方平台网页开发域名问题
 layout: post
 categories:
-- engineering
+- Engineering
 ---
 先来看一下微信官方定义:
 

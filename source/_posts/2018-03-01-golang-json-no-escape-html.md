@@ -2,7 +2,7 @@
 title: golang JSON编码时保留HTML标签
 date: 2018-03-01 11:40:51
 categories:
-- engineering
+- Engineering
 ---
 
 golang默认编码JSON时会将HTML标签中的尖括号编码为`\u003c`这种unicode字符。而最近在开发的微信客服消息推送就会出现以下结果

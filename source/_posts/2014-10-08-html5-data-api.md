@@ -6,7 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- engineering
+- Engineering
 ---
 以往在做列表程序的时候，需要做类似“删除”功能的时候，往往是组装一个URL，类似于这个
 

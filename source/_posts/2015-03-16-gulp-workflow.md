@@ -6,7 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- engineering
+- Engineering
 ---
 之前用的Grunt，不过有时候Grunt确实用起来不爽，进来找到一款叫gulp.js的前端构建工具，当然，也是基于node.js的。
 ## 安装

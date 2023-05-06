@@ -6,7 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- engineering
+- Engineering
 ---
 今天遇到了一个奇葩的问题UCenter后台通知列表空白并且500，通过xdebug调试发现是**uc_server/control/admin/note.php 第68行代码有问题!**IDE都报错了
 

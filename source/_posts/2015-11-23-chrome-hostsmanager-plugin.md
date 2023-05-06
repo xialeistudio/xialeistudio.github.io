@@ -6,7 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- engineering
+- Engineering
 ---
 ## 项目地址
 [https://github.com/xialeistudio/hostManager](https://github.com/xialeistudio/hostManager)

@@ -6,7 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- engineering
+- Engineering
 ---
 今天群里有位朋友问到直接返回$http说读不到数据，原因在于$http是异步请求，而且是“不可期”的，你不知道什么时候这个请求完成了。
 

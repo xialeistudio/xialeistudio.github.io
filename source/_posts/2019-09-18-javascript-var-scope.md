@@ -2,7 +2,7 @@
 title: 搞懂JS变量提升
 date: 2019-09-17 12:30:00
 categories:
-- engineering
+- Engineering
 ---
 
 本文讲解Javascript变量提升引起的问题以及如何规避。

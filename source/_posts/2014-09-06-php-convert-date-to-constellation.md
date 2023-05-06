@@ -6,7 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- engineering
+- Engineering
 ---
 这几日在做的一个项目发现一个很有意思的东西，就是PHP将指定日期输出为星座
 

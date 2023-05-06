@@ -2,7 +2,7 @@
 title: 移动端rem和PSD单位换算问题
 layout: post
 categories:
-- engineering
+- Engineering
 ---
 
 设计图尺寸一般750宽度，而需要兼容640宽度手机的话，需要调整缩放比率，之前使用`写死viewport`的做法来实现，不过这个方法有点取巧，而且有些场景并不适用。

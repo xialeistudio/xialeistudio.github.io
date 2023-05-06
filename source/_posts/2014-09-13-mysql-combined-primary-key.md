@@ -6,7 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- engineering
+- Engineering
 ---
 ## 单字段主键
 MySQL单字段主键相信大家都熟悉了。就是以一个字段主要数据行的主键，比如下面这个表

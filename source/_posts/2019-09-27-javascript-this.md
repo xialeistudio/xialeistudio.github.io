@@ -2,7 +2,7 @@
 title: Javavscript基础——this指向
 date: 2019-09-27 12:00:00
 categories:
-- engineering
+- Engineering
 ---
 
 本文研究一下Javascript的this指向。

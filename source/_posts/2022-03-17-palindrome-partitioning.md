@@ -5,7 +5,7 @@ tags:
 - binarysearch
 - leetcode
 categories:
-- algorithm
+- Algorithm
 ---
 
 ## 题目

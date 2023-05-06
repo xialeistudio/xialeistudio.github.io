@@ -2,7 +2,7 @@
 title: TS简明教程(4)
 date: 2019-08-06 15:37:39
 categories:
-- engineering
+- Engineering
 ---
 本文是TS简明教程的第四篇，讲解装饰器。
 

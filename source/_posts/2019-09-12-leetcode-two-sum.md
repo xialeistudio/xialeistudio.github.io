@@ -2,7 +2,7 @@
 title: leetcode(1) —— 两数之和
 date: 2019-09-12 19:32:13
 categories:
-- algorithm
+- Algorithm
 tags:
 - leetcode
 ---

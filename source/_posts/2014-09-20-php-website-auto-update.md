@@ -6,7 +6,7 @@ type: post
 published: true
 status: publish
 categories:
-- engineering
+- Engineering
 ---
 目前软件开发主流越来越倾向于B/S模式，不同于C/S模式的软件，B/S模式下的WEB程序自动更新是个麻烦问题。
 
