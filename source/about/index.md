@@ -12,6 +12,7 @@ Software Engineer @Tencent
 
 ### General
 + Design Pattern
++ Architecture
 + OOP
 + UML
 + Jenkins/CI/CD
@@ -30,6 +31,7 @@ Software Engineer @Tencent
 + Golang
 + PHP/Yii2
 + Node.js/koa/express/Nest.js
++ OpenResty/Lua
 
 ### Database
 + MySQL/Aurora
@@ -41,3 +43,4 @@ Software Engineer @Tencent
 + Javascript/Typescript
 + CSS3/HTML5
 + Vue/React/Cordova/React Native/Flutter
++ iOS/Android/Swift/Object-C/Kotlin
