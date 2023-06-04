@@ -135,6 +135,59 @@ var _hmt = _hmt || [];
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
                 <time class="level-item has-text-grey"
+                    datetime="2017-11-25T07:19:59.000Z">2017-11-25</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/Engineering/">Engineering</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    3 minutes read (About 460 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2017/11/25/wechat-web-subscribe.html">微信H5点击跳转到关注页</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <html><head></head><body><h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>微信诱导关注接口在早两年已经被微信关停，但是一般的H5目的都是要关注公众号。<br>目前用的多的方法是用公众号发表一篇文章，文章里面一般是一个GIF的箭头图片指向公众号关注。<br>这种方法有点取巧。</p>
+<p>今天要介绍的是另一种方法，感觉应该不会被微信封号。</p>
+<h1 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h1><p>有个朋友在segmentfault上发了一个链接出来，微信打开可以直接到关注页<br></p><figure class="highlight awk hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:<span class="hljs-regexp">//m</span>p.weixin.qq.com<span class="hljs-regexp">/mp/</span>profile_ext?action=home&amp;__biz=MzUzMDM3MjMyNQ==<span class="hljs-comment">#wechat_redirect</span></span><br></pre></td></tr></tbody></table></figure><br>条件反射发现<code>MzUzMDM3MjMyNQ==</code>是Base64编码后的参数，解码后是一段数字，然后我改了下数字，重新编码，再发送到微信，发现可以打开另外一个公众号的关注页<br><figure class="highlight awk hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:<span class="hljs-regexp">//m</span>p.weixin.qq.com<span class="hljs-regexp">/mp/</span>profile_ext?action=home&amp;__biz=MzUzMDM3MjMyNA==<span class="hljs-comment">#wechat_redirect</span></span><br></pre></td></tr></tbody></table></figure><br>所以只要知道那个公众号数字就可以构造链接进行关注，想着这种ID一般在公众平台有，果然被我找到了。<p></p>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
                     datetime="2017-11-23T07:19:58.000Z">2017-11-23</time>
                 
                 <div class="level-item">
@@ -605,59 +658,6 @@ var _hmt = _hmt || [];
 
 
 
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2017-10-17T09:13:44.000Z">2017-10-17</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/Engineering/">Engineering</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    a minute read (About 165 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2017/10/17/koa-cookie-use-maxage.html">koa-cooke使用maxAge代替expires来设置过期时间</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <html><head></head><body><h1 id="expires"><a href="#expires" class="headerlink" title="expires"></a>expires</h1><p>原来设置cookie使用的以下代码</p>
-<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> cookieOptions = {</span><br><span class="line">  expires: moment().add(<span class="hljs-number">6</span>,<span class="hljs-string">'day'</span>).toDate(),</span><br><span class="line">};</span><br></pre></td></tr></tbody></table></figure>
-<p>但是查看network的时候，cookie虽然设置了，但是过期时间比现在还早，导致一设置就过期，所以expires貌似没作用。</p>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -682,7 +682,7 @@ var _hmt = _hmt || [];
             
             <li><span class="pagination-ellipsis has-text-black-ter">&hellip;</span></li>
             
-            <li><a class="pagination-link has-text-black-ter" href="/page/31/">31</a></li>
+            <li><a class="pagination-link has-text-black-ter" href="/page/32/">32</a></li>
             
         </ul>
     </nav>
@@ -734,7 +734,7 @@ var _hmt = _hmt || [];
                             Posts
                         </p>
                         <p class="title has-text-weight-normal">
-                            310
+                            311
                         </p>
                     </div>
                 </div>
@@ -744,7 +744,7 @@ var _hmt = _hmt || [];
                             Categories
                         </p>
                         <p class="title has-text-weight-normal">
-                            2
+                            3
                         </p>
                     </div>
                 </div>
@@ -754,7 +754,7 @@ var _hmt = _hmt || [];
                             Tags
                         </p>
                         <p class="title has-text-weight-normal">
-                            41
+                            42
                         </p>
                     </div>
                 </div>
@@ -818,6 +818,14 @@ var _hmt = _hmt || [];
             </span>
             <span class="level-end">
                 <span class="level-item tag">276</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/engineering/">
+            <span class="level-start">
+                <span class="level-item">engineering</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
             </span>
         </a></li>
             </ul>

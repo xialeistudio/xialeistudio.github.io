@@ -135,6 +135,59 @@ var _hmt = _hmt || [];
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
                 <time class="level-item has-text-grey"
+                    datetime="2019-05-19T08:10:47.000Z">2019-05-19</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/Engineering/">Engineering</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    a minute read (About 180 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2019/05/19/running-thrift-on-swoole-with-yii2.html">在Swoole环境下运行注入Yii2框架的thrift应用</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <html><head></head><body><p>前两天发布了<a href="/2019/05/16/running-thrift-on-swoole.html">使用swoole来运行thrift应用</a>，项目虽然可以运行起来，但是周边的生态（如缓存，ORM，日志等等）并没有跟上，实际上开发体验比较差。周末研究了一下，把Yii2框架集成到了thrift应用上。</p>
+<p>项目地址：<a href="https://github.com/swoole-foundation/yii2-swoole-thrift" target="_blank" rel="noopener">https://github.com/swoole-foundation/yii2-swoole-thrift</a></p>
+<p>Yii2优势：</p>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
                     datetime="2019-05-19T08:02:07.000Z">2019-05-19</time>
                 
                 <div class="level-item">
@@ -605,59 +658,6 @@ var _hmt = _hmt || [];
 
 
 
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2018-10-17T13:32:03.000Z">2018-10-17</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/Engineering/">Engineering</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    3 minutes read (About 509 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2018/10/17/go-io-reader-panic.html">io.Reader游标引发的血案</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <html><head></head><body><p>#背景<br>线上运行了一个图片合成程序，默认的小程序二维码中奖是小程序LOGO，不满足需求，所以将微信小程序二维码和用户头像合成在一张图片。<br>由于微信图片有时候返回的Content-Type不对应（比如内容是PNG的，头确是image/jpeg）所以使用jpeg/png/gif的顺序进行图片数据解析，哪个成功就返回解析结果。</p>
-<p>#问题<br>总是出现诸如<code>invalid JPEG format: missing SOI marker</code></p>
-<p>#解决过程<br>我去查看jpeg.Decode的源码，如下：<br></p><figure class="highlight golang hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(d *decoder)</span> <span class="hljs-title">decode</span><span class="hljs-params">(r io.Reader, configOnly <span class="hljs-keyword">bool</span>)</span> <span class="hljs-params">(image.Image, error)</span></span> {</span><br><span class="line">	d.r = r</span><br><span class="line"></span><br><span class="line">	<span class="hljs-comment">// Check for the Start Of Image marker.</span></span><br><span class="line">	<span class="hljs-keyword">if</span> err := d.readFull(d.tmp[:<span class="hljs-number">2</span>]); err != <span class="hljs-literal">nil</span> {</span><br><span class="line">		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, err</span><br><span class="line">	}</span><br><span class="line">	<span class="hljs-keyword">if</span> d.tmp[<span class="hljs-number">0</span>] != <span class="hljs-number">0xff</span> || d.tmp[<span class="hljs-number">1</span>] != soiMarker {</span><br><span class="line">		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, FormatError(<span class="hljs-string">"missing SOI marker"</span>)</span><br><span class="line">	}</span><br><span class="line">...</span><br></pre></td></tr></tbody></table></figure><br>soiMarker常量<br><figure class="highlight angelscript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">soiMarker  = <span class="hljs-number">0xd8</span> <span class="hljs-comment">// Start Of Image.</span></span><br></pre></td></tr></tbody></table></figure><br>可以看到判断了第1个字节如果不是<code>0xff</code>或者第2个字节不是<code>0xd8</code>就报错。打印图片的bytes前几个字节如下：<br><figure class="highlight angelscript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[]byte{<span class="hljs-number">0xff</span>, <span class="hljs-number">0xd8</span>, <span class="hljs-number">0xff</span>, <span class="hljs-number">0xe0</span>, <span class="hljs-number">0x0</span>, <span class="hljs-number">0x10</span>}</span><br></pre></td></tr></tbody></table></figure><br>可以看到第1个字节和第2个字节满足要求，按理说不会出现这个问题，无奈只能求助于Google,搜索了<br><code>invalid JPEG format: missing SOI marker</code>关键字出现一篇<a href="https://stackoverflow.com/questions/46022262/covert-base64-string-to-jpg" target="_blank" rel="noopener">Covert base64 string to JPG</a>引起了我的注意。<br>打开看到答案<p></p>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -682,7 +682,7 @@ var _hmt = _hmt || [];
             
             <li><span class="pagination-ellipsis has-text-black-ter">&hellip;</span></li>
             
-            <li><a class="pagination-link has-text-black-ter" href="/page/31/">31</a></li>
+            <li><a class="pagination-link has-text-black-ter" href="/page/32/">32</a></li>
             
         </ul>
     </nav>
@@ -734,7 +734,7 @@ var _hmt = _hmt || [];
                             Posts
                         </p>
                         <p class="title has-text-weight-normal">
-                            310
+                            311
                         </p>
                     </div>
                 </div>
@@ -744,7 +744,7 @@ var _hmt = _hmt || [];
                             Categories
                         </p>
                         <p class="title has-text-weight-normal">
-                            2
+                            3
                         </p>
                     </div>
                 </div>
@@ -754,7 +754,7 @@ var _hmt = _hmt || [];
                             Tags
                         </p>
                         <p class="title has-text-weight-normal">
-                            41
+                            42
                         </p>
                     </div>
                 </div>
@@ -818,6 +818,14 @@ var _hmt = _hmt || [];
             </span>
             <span class="level-end">
                 <span class="level-item tag">276</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/engineering/">
+            <span class="level-start">
+                <span class="level-item">engineering</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
             </span>
         </a></li>
             </ul>

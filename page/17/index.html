@@ -135,6 +135,59 @@ var _hmt = _hmt || [];
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
                 <time class="level-item has-text-grey"
+                    datetime="2017-07-17T16:00:00.000Z">2017-07-18</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/Engineering/">Engineering</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    a minute read (About 218 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2017/07/17/spring-boot-druid-sql.html">druid spring boot 统计SQL问题</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <html><head></head><body><h2 id="spring-boot配置"><a href="#spring-boot配置" class="headerlink" title="spring-boot配置"></a>spring-boot配置</h2><figure class="highlight ini hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-attr">spring.jpa.hibernate.ddl-auto</span>=validate</span><br><span class="line"><span class="hljs-attr">spring.datasource.type</span>=com.alibaba.druid.pool.DruidDataSource</span><br><span class="line"><span class="hljs-attr">spring.datasource.driver-class-name</span>=com.mysql.jdbc.Driver</span><br><span class="line"><span class="hljs-attr">spring.datasource.initialize</span>=<span class="hljs-literal">true</span></span><br><span class="line"><span class="hljs-attr">spring.datasource.initialSize</span>=<span class="hljs-number">5</span></span><br><span class="line"><span class="hljs-attr">spring.datasource.minIdle</span>=<span class="hljs-number">5</span></span><br><span class="line"><span class="hljs-attr">spring.datasource.maxActive</span>=<span class="hljs-number">10</span></span><br><span class="line"><span class="hljs-attr">spring.datasource.maxWait</span>=<span class="hljs-number">60000</span></span><br><span class="line"><span class="hljs-attr">spring.datasource.timeBetweenEvictionRunsMillis</span>=<span class="hljs-number">60000</span></span><br><span class="line"><span class="hljs-attr">spring.datasource.minEvictableIdleTimeMillis</span>=<span class="hljs-number">300000</span></span><br><span class="line"><span class="hljs-attr">spring.datasource.validationQuery</span>=SELECT <span class="hljs-string">'x'</span></span><br><span class="line"><span class="hljs-attr">spring.datasource.testWhileIdle</span>=<span class="hljs-literal">true</span></span><br><span class="line"><span class="hljs-attr">spring.datasource.testOnBorrow</span>=<span class="hljs-literal">false</span></span><br><span class="line"><span class="hljs-attr">spring.datasource.testOnReturn</span>=<span class="hljs-literal">false</span></span><br><span class="line"><span class="hljs-attr">spring.datasource.poolPreparedStatements</span>=<span class="hljs-literal">false</span></span><br><span class="line"><span class="hljs-attr">spring.datasource.maxPoolPreparedStatementPerConnectionSize</span>=<span class="hljs-number">20</span></span><br><span class="line"><span class="hljs-attr">spring.datasource.filters</span>=stat,wall,slf4j</span><br><span class="line"><span class="hljs-attr">spring.datasource.connectionProperties</span>=druid.stat.mergeSql=<span class="hljs-literal">true</span><span class="hljs-comment">;druid.stat.slowSqlMillis=5000</span></span><br><span class="line"><span class="hljs-attr">spring.datasource.useGlobalDataSourceStat</span>=<span class="hljs-literal">true</span></span><br></pre></td></tr></tbody></table></figure>
+<p>这个配置没有什么好说的，网上很多，可能关键在</p>
+<figure class="highlight ini hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-attr">spring.datasource.filters</span>=stat,wall,slf4j</span><br><span class="line"><span class="hljs-attr">spring.datasource.connectionProperties</span>=druid.stat.mergeSql=<span class="hljs-literal">true</span><span class="hljs-comment">;druid.stat.slowSqlMillis=5000</span></span><br><span class="line"><span class="hljs-attr">spring.datasource.useGlobalDataSourceStat</span>=<span class="hljs-literal">true</span></span><br></pre></td></tr></tbody></table></figure>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
                     datetime="2017-06-23T16:00:00.000Z">2017-06-24</time>
                 
                 <div class="level-item">
@@ -590,59 +643,6 @@ var _hmt = _hmt || [];
 
 
 
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2017-02-27T16:00:00.000Z">2017-02-28</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/Engineering/">Engineering</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    2 minutes read (About 264 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2017/02/27/php7-compile-sphinx-extension.html">PHP7编译sphinx扩展</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <html><head></head><body><p>最近在做基于sphinx的全文搜索引擎，使用PHP进行数据读取，但是服务器使用的PHP版本是PHP7，pecl.php.net中没有提供PHP7的版本。手痒点到source code中看了一下。<br>看到源代码中有的<strong>headers</strong>中有个<strong>php7</strong>的，点击<strong>shortlog</strong>进去看了一下，最新更新日期是2017-02-10，挺新的，应该是针对PHP7开发的版本，只不过未发布编译版本，想着linux下的软件有源代码基本都能自行编译。故选择了最新的PHP7快照下载。</p>
-<h2 id="开始安装"><a href="#开始安装" class="headerlink" title="开始安装"></a>开始安装</h2><figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">wget http://git.php.net/?p=pecl/search_engine/sphinx.git;a=snapshot;h=339e123acb0ce7beb2d9d4f9094d6f8bcf15fb54;sf=tgz</span><br><span class="line">tar xvfz sphinx-339e123.tar.gz</span><br><span class="line"><span class="hljs-built_in">cd</span> sphinx-339e123</span><br><span class="line">phpize</span><br><span class="line">./configure</span><br><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></tbody></table></figure>
-<p>安装完毕后会在PHP的配置文件目录多出sphinx.ini，在扩展目录多出sphinx.so文件。终端执行<br></p><figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">phpenmod sphinx</span><br></pre></td></tr></tbody></table></figure><p></p>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -667,7 +667,7 @@ var _hmt = _hmt || [];
             
             <li><span class="pagination-ellipsis has-text-black-ter">&hellip;</span></li>
             
-            <li><a class="pagination-link has-text-black-ter" href="/page/31/">31</a></li>
+            <li><a class="pagination-link has-text-black-ter" href="/page/32/">32</a></li>
             
         </ul>
     </nav>
@@ -719,7 +719,7 @@ var _hmt = _hmt || [];
                             Posts
                         </p>
                         <p class="title has-text-weight-normal">
-                            310
+                            311
                         </p>
                     </div>
                 </div>
@@ -729,7 +729,7 @@ var _hmt = _hmt || [];
                             Categories
                         </p>
                         <p class="title has-text-weight-normal">
-                            2
+                            3
                         </p>
                     </div>
                 </div>
@@ -739,7 +739,7 @@ var _hmt = _hmt || [];
                             Tags
                         </p>
                         <p class="title has-text-weight-normal">
-                            41
+                            42
                         </p>
                     </div>
                 </div>
@@ -803,6 +803,14 @@ var _hmt = _hmt || [];
             </span>
             <span class="level-end">
                 <span class="level-item tag">276</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/engineering/">
+            <span class="level-start">
+                <span class="level-item">engineering</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
             </span>
         </a></li>
             </ul>
