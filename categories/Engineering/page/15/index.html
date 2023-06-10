@@ -156,59 +156,6 @@ var _hmt = _hmt || [];
                 <span class="level-item has-text-grey">
                     
                     
-                    a minute read (About 181 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2016/12/27/nginx-wildcard-domain-config.html">nginx泛域名解析配置</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <html><head></head><body><p>最近一个项目需要承载高并发请求，所以在后端语言上选择了<strong>NodeJs</strong>，但是nodejs有时候读取不到请求的主机名，所以想到使用<strong>nginx+nodejs</strong>的方式进行处理。</p>
-<h2 id="Nginx-配置"><a href="#Nginx-配置" class="headerlink" title="Nginx 配置"></a>Nginx 配置</h2><figure class="highlight plain hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">upstream io_nodes {</span><br><span class="line">        server 127.0.0.1:8081;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">server {</span><br><span class="line">        listen 80;</span><br><span class="line">        listen [::]:80;</span><br><span class="line">        root /var/www/html;</span><br><span class="line">        server_name ~^(?&lt;subdomain&gt;.+).example.com;</span><br><span class="line"></span><br><span class="line">        location / {</span><br><span class="line">	    proxy_set_header Host $host;</span><br><span class="line">            proxy_set_header X-AppId $subdomain;</span><br><span class="line">            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">            proxy_pass http://io_nodes;</span><br><span class="line">        }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>重启nginx服务器即可。nginx会将所有的 <strong><subdomain>.example.com</subdomain></strong> 格式的域名反向代理到本机的<strong>8081</strong>端口，该端口为<strong>nodejs</strong>监听端口。</p>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2016-12-27T16:00:00.000Z">2016-12-28</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/Engineering/">Engineering</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
                     a minute read (About 207 words)
                 </span>
                 
@@ -669,6 +616,59 @@ var _hmt = _hmt || [];
 
 
 
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2016-11-12T21:16:59.000Z">2016-11-13</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/Engineering/">Engineering</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    2 minutes read (About 328 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2016/11/12/nodejs-export-large-excel.html">Nodejs导出大数据到Excel</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <html><head></head><body><p>在实际开发中，数据导出使用频率比数据导入高得多，而数据导出时来源一般是数据库，会有上万的数据导出，如果不做特殊处理的话，会导致NodeJs进程直接被killed。<br>今天要提到的npm包是 <strong>xlsx-writestream</strong>，话不多说，进入正题。</p>
+<figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm init -y</span><br><span class="line">npm install xlsx-writestream --save</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="hljs-comment">//编辑executor.js</span></span><br><span class="line"><span class="hljs-keyword">import</span> Writer <span class="hljs-keyword">from</span> <span class="hljs-string">'xlsx-writestream'</span>;</span><br><span class="line"><span class="hljs-keyword">import</span> fs <span class="hljs-keyword">from</span> <span class="hljs-string">'fs'</span>;</span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ExcelWriteExecutor</span></span>{</span><br><span class="line"> <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 构造方法</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@param </span>path 路径</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@param <span class="hljs-variable">options</span></span></span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-keyword">constructor</span>(path, options = {}) {</span><br><span class="line">  <span class="hljs-keyword">this</span>.path = path;</span><br><span class="line">  options.out = path;</span><br><span class="line">  <span class="hljs-keyword">this</span>.options = options;</span><br><span class="line">  <span class="hljs-keyword">this</span>.writer = <span class="hljs-keyword">new</span> Writer(<span class="hljs-keyword">this</span>.path, <span class="hljs-keyword">this</span>.options);</span><br><span class="line">  <span class="hljs-keyword">this</span>.writer.getReadStream().pipe(fs.createWriteStream(<span class="hljs-keyword">this</span>.path));</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">addRow(row) {</span><br><span class="line">  <span class="hljs-keyword">this</span>.writer.addRow(row);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">addRows(rows) {</span><br><span class="line">  <span class="hljs-keyword">this</span>.writer.addRows(rows);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"> <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 输出</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line">execute() {</span><br><span class="line">  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve</span>)=&gt;</span> {</span><br><span class="line">    <span class="hljs-keyword">this</span>.writer.finalize();</span><br><span class="line">      setTimeout(resolve, <span class="hljs-number">50</span>);<span class="hljs-comment">//延迟50毫秒是因为 finalize 调用结束之后，excel打开会报错，可能是没写入完成的原因，加了延迟之后正常，延迟值根据需要自己测试可以更改</span></span><br><span class="line">    });</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"><span class="hljs-comment">//测试代码</span></span><br><span class="line"><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">test</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> executor = <span class="hljs-keyword">new</span> ExcelWriteExecutor(<span class="hljs-string">`<span class="hljs-subst">${__dirname}</span>/test-write.xlsx`</span>);</span><br><span class="line">  executor.addRow({</span><br><span class="line">  <span class="hljs-string">'姓名'</span>: <span class="hljs-string">'fff'</span>,</span><br><span class="line">  <span class="hljs-string">'电话'</span>: <span class="hljs-string">'15911111111'</span>,</span><br><span class="line">  <span class="hljs-string">'公司'</span>: <span class="hljs-string">'ddaaa'</span>,</span><br><span class="line">  <span class="hljs-string">'职位'</span>: <span class="hljs-string">'ddaaaxxxx'</span>,</span><br><span class="line">  <span class="hljs-string">'生日'</span>: <span class="hljs-string">''</span>,</span><br><span class="line">  <span class="hljs-string">'邮箱'</span>: <span class="hljs-string">''</span>,</span><br><span class="line">  <span class="hljs-string">'选择城市'</span>: <span class="hljs-string">''</span>,</span><br><span class="line">  <span class="hljs-string">'单位/公司'</span>: <span class="hljs-string">''</span>,</span><br><span class="line">  <span class="hljs-string">'职务'</span>: <span class="hljs-string">''</span>,</span><br><span class="line">  <span class="hljs-string">'具体地址'</span>: <span class="hljs-string">''</span>,</span><br><span class="line">  <span class="hljs-string">'院系班级'</span>: <span class="hljs-string">''</span>,</span><br><span class="line">  <span class="hljs-string">'常住住址'</span>: <span class="hljs-string">''</span></span><br><span class="line">});</span><br><span class="line">  <span class="hljs-keyword">await</span> executor.execute();</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
 
     
 <div class="card card-transparent">
@@ -716,7 +716,7 @@ var _hmt = _hmt || [];
                     <div>
                         
                         <figure class="image is-128x128 has-mb-6">
-                            <img class="is-rounded" src="https://static.ddhigh.com/blog/2019-09-18-094336.jpg"
+                            <img class="is-rounded" src="/images/avatar.png"
                                 alt="Xia Lei">
                         </figure>
                         
@@ -745,7 +745,7 @@ var _hmt = _hmt || [];
                             Posts
                         </p>
                         <p class="title has-text-weight-normal">
-                            311
+                            312
                         </p>
                     </div>
                 </div>
@@ -765,7 +765,7 @@ var _hmt = _hmt || [];
                             Tags
                         </p>
                         <p class="title has-text-weight-normal">
-                            42
+                            41
                         </p>
                     </div>
                 </div>
@@ -820,7 +820,7 @@ var _hmt = _hmt || [];
                 <span class="level-item">Algorithm</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">34</span>
+                <span class="level-item tag">35</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/Engineering/">
@@ -828,7 +828,7 @@ var _hmt = _hmt || [];
                 <span class="level-item">Engineering</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">276</span>
+                <span class="level-item tag">275</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/engineering/">
@@ -931,8 +931,6 @@ var _hmt = _hmt || [];
                 </p>
                 <p class="is-size-7">
                     
-                        <a target="_blank" href="https://beian.miit.gov.cn/">粤ICP备14062481号-1</a>
-                            
                 </p>
             </div>
             <div class="level-end">

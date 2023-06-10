@@ -146,59 +146,6 @@ var _hmt = _hmt || [];
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
                 <time class="level-item has-text-grey"
-                    datetime="2017-11-17T07:36:27.000Z">2017-11-17</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/Engineering/">Engineering</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    5 minutes read (About 732 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2017/11/17/node-tlv.html">Tlv编码在NodeJs中的应用</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <html><head></head><body><p>最近在接入腾讯云的天御业务安全系统时接触到了TLV编码协议，好在TLV协议理解起来比较简单。故简要介绍一下该编码。</p>
-<h2 id="TLV编码是什么？"><a href="#TLV编码是什么？" class="headerlink" title="TLV编码是什么？"></a>TLV编码是什么？</h2><figure class="highlight routeros hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">TLV是一种编码格式，编码如下：</span><br><span class="line">[1-4字节] TYPE</span><br><span class="line">[5-8字节] Value的Length</span><br><span class="line">[9字节+] Value数据</span><br></pre></td></tr></tbody></table></figure>
-<p>本文只探讨无嵌套数据的情况。NodeJs操作二进制数据主要依赖于<strong>Buffer</strong></p>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
                     datetime="2017-11-01T08:28:23.000Z">2017-11-01</time>
                 
                 <div class="level-item">
@@ -664,6 +611,59 @@ var _hmt = _hmt || [];
 
 
 
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2017-10-09T16:00:00.000Z">2017-10-10</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/Engineering/">Engineering</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    3 minutes read (About 522 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2017/10/09/docker-publish-nodejs.html">使用Docker来部署NodeJs应用</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <html><head></head><body><p>Docker的环境无关性以及自动化特性实在是令人称赞，最近遇到的一个问题是，NodeJs使用8.x版本开发，但是线上服务器是7.x的，这时候又不能动线上的应用。<br>于是想到了使用Docker来部署NodeJs，服务器是Ubuntu的。</p>
+<h2 id="安装Docker"><a href="#安装Docker" class="headerlink" title="安装Docker"></a>安装Docker</h2><figure class="highlight cmake hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt <span class="hljs-keyword">install</span> docker.io</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="Dockerfile编写"><a href="#Dockerfile编写" class="headerlink" title="Dockerfile编写"></a>Dockerfile编写</h2><p>由于默认的dockhub速度非常慢导致下载镜像慢，而且镜像下来的Ubuntu apt源又是国外的，简直是慢上加慢，本文使用<a href="https://www.daocloud.io/" target="_blank" rel="noopener">daocloud.io的Ubuntu镜像</a>以及<a href="http://mirrors.aliyun.com/" target="_blank" rel="noopener">阿里云的Ubuntu源</a></p>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
 
     
 <div class="card card-transparent">
@@ -711,7 +711,7 @@ var _hmt = _hmt || [];
                     <div>
                         
                         <figure class="image is-128x128 has-mb-6">
-                            <img class="is-rounded" src="https://static.ddhigh.com/blog/2019-09-18-094336.jpg"
+                            <img class="is-rounded" src="/images/avatar.png"
                                 alt="Xia Lei">
                         </figure>
                         
@@ -740,7 +740,7 @@ var _hmt = _hmt || [];
                             Posts
                         </p>
                         <p class="title has-text-weight-normal">
-                            311
+                            312
                         </p>
                     </div>
                 </div>
@@ -760,7 +760,7 @@ var _hmt = _hmt || [];
                             Tags
                         </p>
                         <p class="title has-text-weight-normal">
-                            42
+                            41
                         </p>
                     </div>
                 </div>
@@ -815,7 +815,7 @@ var _hmt = _hmt || [];
                 <span class="level-item">Algorithm</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">34</span>
+                <span class="level-item tag">35</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/Engineering/">
@@ -823,7 +823,7 @@ var _hmt = _hmt || [];
                 <span class="level-item">Engineering</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">276</span>
+                <span class="level-item tag">275</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/engineering/">
@@ -926,8 +926,6 @@ var _hmt = _hmt || [];
                 </p>
                 <p class="is-size-7">
                     
-                        <a target="_blank" href="https://beian.miit.gov.cn/">粤ICP备14062481号-1</a>
-                            
                 </p>
             </div>
             <div class="level-end">
