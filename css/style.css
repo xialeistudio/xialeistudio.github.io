@@ -12,7 +12,7 @@ button,
 input,
 select,
 textarea {
-  font-family: source-serif-pro, Georgia, Cambria, "Times New Roman", "PingFang SC", "Microsoft Yahei", Times, serif;
+  font-family: 'Amazon Ember', "PingFang SC", "Microsoft Yahei", Times, serif;
 }
 @media screen and (min-width: 1472px) {
   .is-1-column .container,
@@ -406,7 +406,7 @@ img.thumbnail {
 .content code,
 .content pre {
   font-size: 0.85em;
-  font-family: source-serif-pro, Georgia, Cambria, "Times New Roman", "PingFang SC", "Microsoft Yahei", Times, serif !important;
+  font-family: 'Amazon Ember', "PingFang SC", "Microsoft Yahei", Times, serif !important;
 }
 .content code {
   color: #ff3860;
@@ -460,7 +460,7 @@ figure.highlight figcaption:after {
 }
 figure.highlight figcaption span {
   font-weight: 500;
-  font-family: source-serif-pro, Georgia, Cambria, "Times New Roman", "PingFang SC", "Microsoft Yahei", Times, serif;
+  font-family: 'Amazon Ember', "PingFang SC", "Microsoft Yahei", Times, serif;
 }
 figure.highlight figcaption .fold,
 figure.highlight figcaption a {
@@ -536,5 +536,5 @@ figure.highlight .section {
   all: initial;
 }
 .markdown-body {
-  font-family: source-serif-pro, Georgia, Cambria, "Times New Roman", "PingFang SC", "Microsoft Yahei", Times, serif !important;
+  font-family: 'Amazon Ember', "PingFang SC", "Microsoft Yahei", Times, serif !important;
 }
