@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html  lang="en">
+<head>
+    <meta charset="utf-8" />
+
+    <meta name="generator" content="Hexo 4.2.1" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<meta name="description" content="Learning & Sharing Java/JVM/Spring Boot/Node.js/Golang/Javascript/CSS/HTML/OOP/Design Pattern/AWS/Microservices/Docker/Kubernetes/PHP/Yii2/koa/express/Nest.js/MySQL/Redis/Vue/React/Swift/Kotlin/Cordova/iOS/anroid Knowledge" />
+<meta name="keywords" content="Java/JVM/Spring Boot/Node.js/Golang/Javascript/CSS/HTML/OOP/Design Pattern/AWS/Microservices/Docker/Kubernetes/PHP/Yii2/koa/express/Nest.js/MySQL/Redis/Vue/React/Swift/Kotlin/Cordova/iOS/anroid" />
+
+<title>
+    在coding上部署Yii1.x应用 - Xia Lei
+</title>
+
+
+
+
+
+
+    <link rel="alternative" href="/"
+          title="在coding上部署Yii1.x应用" type="application/atom+xml">
+
+
+
+    <link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link href="https://fonts.cdnfonts.com/css/amazon-ember" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+        
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+        
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+        
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+        
+    
+        
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+        
+<script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?78141f99bbb49f1564a7af89344f5add";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                Learning &amp; Sharing
+                
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                    href="/">Home</a>
+                
+                <a class="navbar-item"
+                    href="/archives">Archives</a>
+                
+                <a class="navbar-item"
+                    href="/categories">Categories</a>
+                
+                <a class="navbar-item"
+                    href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                
+                
+                <a class="navbar-item" target="_blank" title="GitHub"
+                    href="https://github.com/xialeistudio">
+                    
+                    <i class="fab fa-github"></i>
+                    
+                </a>
+                
+                
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-9-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2014-12-04T17:33:19.000Z">2014-12-05</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/Engineering/">Engineering</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    5 minutes read (About 777 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            在coding上部署Yii1.x应用
+            
+        </h1>
+        <div class="content">
+            
+            <div id="container">
+                <html><head></head><body><p>总的来说，由于没有成熟的资料可以参考，部署过程话费了将近一个小时才成功，现在来分享一下经验。</p>
+<h2 id="目录配置"><a href="#目录配置" class="headerlink" title="目录配置"></a>目录配置</h2><p>由于Paas禁止了本地写功能，所以，如果不加任何处理的话，Yii会尝试在 protected/runtime 目录下写私有文件，结果是肯定没权限的。</p>
+<p>经过查找官方文档发现CApplication有个方法叫<strong>setRuntimePath</strong>，可以设置运行时目录，那么最重要的一点，这个目录的配置肯定要在入口文件中配置，更改之后的入口文件代码如下：</p>
+<figure class="highlight php hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">defined(<span class="hljs-string">'YII_DEBUG'</span>) <span class="hljs-keyword">or</span> define(<span class="hljs-string">'YII_DEBUG'</span>,<span class="hljs-keyword">false</span>);</span><br><span class="line"><span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>($_GET[<span class="hljs-string">'_d'</span>]))</span><br><span class="line">    setcookie(<span class="hljs-string">'_d'</span>,<span class="hljs-number">1</span>,<span class="hljs-number">7</span>*<span class="hljs-number">25</span>*<span class="hljs-number">3600</span>);</span><br><span class="line"><span class="hljs-comment">// change the following paths if necessary</span></span><br><span class="line">$yii=dirname(<span class="hljs-keyword">__FILE__</span>).<span class="hljs-string">'/framework/yii.php'</span>;</span><br><span class="line">$config=dirname(<span class="hljs-keyword">__FILE__</span>).<span class="hljs-string">'/protected/config/main.php'</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// remove the following lines when in production mode</span></span><br><span class="line"><span class="hljs-comment">// specify how many levels of call stack should be shown in each log message</span></span><br><span class="line">defined(<span class="hljs-string">'YII_TRACE_LEVEL'</span>) <span class="hljs-keyword">or</span> define(<span class="hljs-string">'YII_TRACE_LEVEL'</span>,<span class="hljs-number">3</span>);</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">require_once</span>($yii);</span><br><span class="line">$app = Yii::createWebApplication($config);</span><br><span class="line">$app-&gt;setRuntimePath(<span class="hljs-string">'/home/vcap/fs/*****'</span>);</span><br><span class="line">$app-&gt;run();</span><br></pre></td></tr></tbody></table></figure>
+<p>可以看到，倒数一二行，重新设置了 runtimepath，所以，第一个问题解决。</p>
+<h2 id="数据库配置"><a href="#数据库配置" class="headerlink" title="数据库配置"></a>数据库配置</h2><p>数据库这边没什么好说的，自己更改下连接信息就可以了。</p>
+<h2 id="缓存配置"><a href="#缓存配置" class="headerlink" title="缓存配置"></a>缓存配置</h2><p>本地开发采用的缓存，默认是File的，如果你解决了上一个问题之后，在线上，缓存是没有问题了，这里探讨下服务器缓存的设置（Coding.NET提供的缓存为Redis的，PHP操作Redis需要扩展，这里先不探讨），本站现在的缓存驱动为DB方法，配置方法为:</p>
+<figure class="highlight php hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-string">'cache'</span> =&gt; <span class="hljs-keyword">array</span>(</span><br><span class="line">  <span class="hljs-string">'class'</span> =&gt; <span class="hljs-string">'system.caching.CDbCache'</span>,</span><br><span class="line">  <span class="hljs-string">'connectionID'</span> =&gt; <span class="hljs-string">'db'</span>,</span><br><span class="line">  <span class="hljs-string">'cacheTableName'</span>=&gt;<span class="hljs-string">'t_cache'</span></span><br><span class="line">),</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="日志配置"><a href="#日志配置" class="headerlink" title="日志配置"></a>日志配置</h2><p>默认情况下，日志是写入runtime path的，不过在Paas上，我们一般是没有本地文件权限的，就算写入了，查看起来比较麻烦，这里也采用数据库方法记录：</p>
+<figure class="highlight php hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-string">'log'</span> =&gt; <span class="hljs-keyword">array</span>(<span class="hljs-string">'class'</span> =&gt; <span class="hljs-string">'CLogRouter'</span>,</span><br><span class="line"><span class="hljs-string">'routes'</span> =&gt; <span class="hljs-keyword">array</span>(</span><br><span class="line">    <span class="hljs-keyword">array</span>(<span class="hljs-string">'class'</span>=&gt;<span class="hljs-string">'CDbLogRoute'</span>,</span><br><span class="line">    <span class="hljs-string">'connectionID'</span>=&gt;<span class="hljs-string">'db'</span>,</span><br><span class="line">    <span class="hljs-string">'logTableName'</span>=&gt;<span class="hljs-string">'t_log'</span>)</span><br><span class="line">))</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>经过以上处理，大家应该发现很多任务都交给数据库了，连缓存也是，缓存不就是为了减少直接从数据库读取数据吗，为什么还要用数据库缓存呢？</p>
+<p>这里本人简单分析下（仅代表本人观点）</p>
+<p><em>WEB应用程序的瓶颈在于数据库，比如InnoDB方法进行事务操作时，会锁行，或者锁表，这样下一个请求对同一条记录进行事务操作时会有“锁等待”，会浪费大部分的时间。还有一种是复杂的大数据查询，就算做了很多优化，查询速度依旧不快，毕竟连表的开销很大。</em></p>
+<p>而数据库缓存的核心就是，数据只需要一次单表查询即可，没有连表，没有加锁，这个速度还是很快的。所以数据库缓存的存在性就是在此。</p>
+</body></html>
+            </div>
+            
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/yii/" rel="tag">yii</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <div class="social-share" data-disabled="qzone,facebook,twitter,tencent,linkedin,douban,diandian,google"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev"
+                href="/2014/12/05/android-circle-progressbar.html">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">android实现圆形带进度条的ProgressBar</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next"
+                href="/2014/11/19/android-datepickertimepicker-display-inline.html">
+                <span class="level-item">android datepicker和timepicker显示在一行</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '1ae09f5aa5dcce937e94',
+        clientSecret: '55c4032692dbcb0ee13771da7dc95f22cf9ae8e1',
+        id: '0970178fad274861fe13bf6432c0fbfb',
+        repo: 'xialeistudio.github.io',
+        owner: 'xialeistudio',
+        language: 'en',
+        admin: "xialeistudio",
+        createIssueManually: false,
+        distractionFreeMode: false
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-3-desktop is-3-widescreen  has-order-3 column-right ">
+    
+        
+    
+        
+    
+        
+
+    
+        
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Catalogue
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#目录配置">
+        <span class="has-mr-6">1</span>
+        <span>目录配置</span>
+        </a></li><li>
+        <a class="is-flex" href="#数据库配置">
+        <span class="has-mr-6">2</span>
+        <span>数据库配置</span>
+        </a></li><li>
+        <a class="is-flex" href="#缓存配置">
+        <span class="has-mr-6">3</span>
+        <span>缓存配置</span>
+        </a></li><li>
+        <a class="is-flex" href="#日志配置">
+        <span class="has-mr-6">4</span>
+        <span>日志配置</span>
+        </a></li><li>
+        <a class="is-flex" href="#总结">
+        <span class="has-mr-6">5</span>
+        <span>总结</span>
+        </a></li></ul>
+        </div>
+    </div>
+</div>
+
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                    
+                        Learning &amp; Sharing
+                            
+                </a>
+                <p class="is-size-7">
+                    &copy; 2023
+                        xialeistudio&nbsp;
+                            Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                                href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                            
+                </p>
+                <p class="is-size-7">
+                    
+                </p>
+            </div>
+            <div class="level-end">
+                
+                    <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                        
+                            
+                                <p class="control">
+                                    <a class="button is-white is-large"
+                                        target="_blank" title="Creative Commons"
+                                        href="https://creativecommons.org/">
+                                        
+                                                    <i class="fab fa-creative-commons"></i>
+                                                    
+                                    </a>
+                                </p>
+                                
+                                <p class="control">
+                                    <a class="button is-white is-large"
+                                        target="_blank" title="Attribution 4.0 International"
+                                        href="https://creativecommons.org/licenses/by/4.0/">
+                                        
+                                                    <i class="fab fa-creative-commons-by"></i>
+                                                    
+                                    </a>
+                                </p>
+                                
+                                <p class="control">
+                                    <a class="button is-white is-large"
+                                        target="_blank" title="GitHub"
+                                        href="https://github.com/xialeistudio">
+                                        
+                                                    <i class="fab fa-github"></i>
+                                                    
+                                    </a>
+                                </p>
+                                
+                    </div>
+                    
+            </div>
+        </div>
+    </div>
+</footer>
+
+        <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        const config = {
+                startOnLoad: true,
+                theme: 'forest',
+                securityLevel: 'loose',
+            };
+            mermaid.initialize(config);
+      </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+<script>
+    var IcarusThemeSettings = {
+        article: {
+            highlight: {
+                clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+    
+    <script src="/js/animation.js"></script>
+    
+
+
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

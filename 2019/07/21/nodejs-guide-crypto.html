@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html  lang="en">
+<head>
+    <meta charset="utf-8" />
+
+    <meta name="generator" content="Hexo 4.2.1" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<meta name="description" content="Learning & Sharing Java/JVM/Spring Boot/Node.js/Golang/Javascript/CSS/HTML/OOP/Design Pattern/AWS/Microservices/Docker/Kubernetes/PHP/Yii2/koa/express/Nest.js/MySQL/Redis/Vue/React/Swift/Kotlin/Cordova/iOS/anroid Knowledge" />
+<meta name="keywords" content="Java/JVM/Spring Boot/Node.js/Golang/Javascript/CSS/HTML/OOP/Design Pattern/AWS/Microservices/Docker/Kubernetes/PHP/Yii2/koa/express/Nest.js/MySQL/Redis/Vue/React/Swift/Kotlin/Cordova/iOS/anroid" />
+
+<title>
+    NodeJs简明教程(6) - Xia Lei
+</title>
+
+
+
+
+
+
+    <link rel="alternative" href="/"
+          title="NodeJs简明教程(6)" type="application/atom+xml">
+
+
+
+    <link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link href="https://fonts.cdnfonts.com/css/amazon-ember" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+        
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+        
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+        
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+        
+    
+        
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+        
+<script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?78141f99bbb49f1564a7af89344f5add";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                Learning &amp; Sharing
+                
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                    href="/">Home</a>
+                
+                <a class="navbar-item"
+                    href="/archives">Archives</a>
+                
+                <a class="navbar-item"
+                    href="/categories">Categories</a>
+                
+                <a class="navbar-item"
+                    href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                
+                
+                <a class="navbar-item" target="_blank" title="GitHub"
+                    href="https://github.com/xialeistudio">
+                    
+                    <i class="fab fa-github"></i>
+                    
+                </a>
+                
+                
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-9-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2019-07-21T02:25:22.000Z">2019-07-21</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/Engineering/">Engineering</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    8 minutes read (About 1271 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            NodeJs简明教程(6)
+            
+        </h1>
+        <div class="content">
+            
+            <div id="container">
+                <html><head></head><body><p>本文是NodeJs简明教程的第六篇，将介绍NodeJs crypto模块相关的基本操作。</p>
+<blockquote>
+<p>crypto 模块提供了加密功能，包括对 OpenSSL 的哈希、HMAC、加密、解密、签名、以及验证功能的一整套封装。</p>
+</blockquote>
+<h2 id="Hash"><a href="#Hash" class="headerlink" title="Hash"></a>Hash</h2><blockquote>
+<p>Hash类是用于创建数据哈希值的工具类。</p>
+</blockquote>
+<p>哈希算法严格来说并不属于加密算法，传统意义上的 <strong>加密</strong> 是与 <strong>解密</strong> 相配对的。哈希算法能够保证被哈希的内容不被篡改。针对任意长度的输入数据都可以产生固定位数的哈希值。</p>
+<p>crypto模块对hash的操作是一致的，除了算法名不一致之外，本文以 <strong>md5</strong> 和 <strong>sha1</strong> 作为示例。</p>
+<h3 id="MD5"><a href="#MD5" class="headerlink" title="MD5"></a>MD5</h3><figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> crypto = <span class="hljs-built_in">require</span>(<span class="hljs-string">'crypto'</span>);</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> hash = crypto.createHash(<span class="hljs-string">'md5'</span>); <span class="hljs-comment">// 创建MD5 hash示例</span></span><br><span class="line"></span><br><span class="line">hash.update(<span class="hljs-string">'111111'</span>); <span class="hljs-comment">// 待计算hash的数据</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(hash.digest(<span class="hljs-string">'hex'</span>));</span><br></pre></td></tr></tbody></table></figure>
+<p>以上例程输出 <code>96e79218965eb72c92a549dd5a330112</code></p>
+<h3 id="SHA1"><a href="#SHA1" class="headerlink" title="SHA1"></a>SHA1</h3><figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> crypto = <span class="hljs-built_in">require</span>(<span class="hljs-string">'crypto'</span>);</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> hash = crypto.createHash(<span class="hljs-string">'sha1'</span>); <span class="hljs-comment">// 创建MD5 hash示例</span></span><br><span class="line"></span><br><span class="line">hash.update(<span class="hljs-string">'111111'</span>); <span class="hljs-comment">// 待计算hash的数据</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(hash.digest(<span class="hljs-string">'hex'</span>));</span><br></pre></td></tr></tbody></table></figure>
+<p>以上例程输出 <code>3d4f2bf07dc1be38b20cd6e46949a1071f9d0e3d</code></p>
+<h2 id="Base64"><a href="#Base64" class="headerlink" title="Base64"></a>Base64</h2><p><code>Base64</code>并不是<code>crypto</code>模块的成员，但是跟本节内容比较相近，所以放过来了。Base64是一套编码算法，常用在二进制数据编码上。</p>
+<h3 id="Base64编码"><a href="#Base64编码" class="headerlink" title="Base64编码"></a>Base64编码</h3><figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> data = <span class="hljs-string">'111111'</span>;</span><br><span class="line"><span class="hljs-keyword">const</span> encodedData = Buffer.from(data, <span class="hljs-string">'utf8'</span>).toString(<span class="hljs-string">'base64'</span>); <span class="hljs-comment">// 输入编码为utf8,输出为base64</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(encodedData);</span><br></pre></td></tr></tbody></table></figure>
+<p>以上例程输出 <code>MTExMTEx</code></p>
+<h3 id="Base64解码"><a href="#Base64解码" class="headerlink" title="Base64解码"></a>Base64解码</h3><figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> data = <span class="hljs-string">'MTExMTEx'</span>;</span><br><span class="line"><span class="hljs-keyword">const</span> decodedData = Buffer.from(data, <span class="hljs-string">'base64'</span>).toString(<span class="hljs-string">'utf8'</span>); <span class="hljs-comment">// 输入编码为base64,输出编码为utf8</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(decodedData);</span><br></pre></td></tr></tbody></table></figure>
+<p>以上例程输出<code>111111</code></p>
+<h2 id="Hmac"><a href="#Hmac" class="headerlink" title="Hmac"></a>Hmac</h2><blockquote>
+<p>Hmac类是用于创建加密Hmac摘要的工具。</p>
+</blockquote>
+<p>Hmac算法也是一种hash算法，但是它需要一个密钥，针对同样的输入，传统的hash算法输出是固定的。<br>但是Hmac的输出会随着密钥的不同而不同。</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> crypto = <span class="hljs-built_in">require</span>(<span class="hljs-string">'crypto'</span>);</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> hmac = crypto.createHmac(<span class="hljs-string">'sha256'</span>, <span class="hljs-string">'secret-key'</span>);</span><br><span class="line"></span><br><span class="line">hmac.update(<span class="hljs-string">'Hello, world!'</span>);</span><br><span class="line"></span><br><span class="line"><span class="hljs-built_in">console</span>.log(hmac.digest(<span class="hljs-string">'hex'</span>));</span><br></pre></td></tr></tbody></table></figure>
+<p>以上例程输出 <code>f4d850b1017eb4e20e0c58443919033c90cc9f4fe889b4d6b4572a4a0ec2d08a</code></p>
+<h2 id="AES"><a href="#AES" class="headerlink" title="AES"></a>AES</h2><blockquote>
+<p>AES是一种常用的对称加密算法，加解密都用同一个密钥。</p>
+</blockquote>
+<h3 id="AES加密"><a href="#AES加密" class="headerlink" title="AES加密"></a>AES加密</h3><figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> crypto = <span class="hljs-built_in">require</span>(<span class="hljs-string">'crypto'</span>);</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> cipher = crypto.createCipheriv(<span class="hljs-string">'aes192'</span>, <span class="hljs-string">'111111111111111111111111'</span>, <span class="hljs-string">'1111111111111111'</span>)</span><br><span class="line"><span class="hljs-keyword">var</span> crypted = cipher.update(<span class="hljs-string">'1'</span>, <span class="hljs-string">'utf8'</span>, <span class="hljs-string">'hex'</span>); </span><br><span class="line">crypted += cipher.final(<span class="hljs-string">'hex'</span>);</span><br><span class="line"><span class="hljs-built_in">console</span>.log(crypted);</span><br></pre></td></tr></tbody></table></figure>
+<p>以上例程输出 <code>5bb3e6eb39e502b5fa74d93796087efa</code></p>
+<p><strong>说明：</strong></p>
+<p><code>createCipheriv</code>原型如下：</p>
+<p><code>crypto.createCipheriv（algorithm，key，iv [，options]）</code></p>
+<ol>
+<li><code>iv</code>是初始化向量，可以 <strong>为空</strong> 或者 <strong>16</strong> 字节的字符串</li>
+<li><code>key</code>是加密密钥，根据选用的算法不同，密钥长度也不同，对应关系如下：<ol>
+<li><code>aes128</code>对应<code>16位</code>长度密钥</li>
+<li><code>aes192</code>对应<code>24位</code>长度秘钥</li>
+<li><code>aes256</code>对应<code>32位</code>长度密钥</li>
+</ol>
+</li>
+</ol>
+<h3 id="AES解密"><a href="#AES解密" class="headerlink" title="AES解密"></a>AES解密</h3><figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> crypto = <span class="hljs-built_in">require</span>(<span class="hljs-string">'crypto'</span>);</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> cipher = crypto.createDecipheriv(<span class="hljs-string">'aes192'</span>, <span class="hljs-string">'111111111111111111111111'</span>, <span class="hljs-string">'1111111111111111'</span>)</span><br><span class="line"><span class="hljs-keyword">var</span> data = cipher.update(<span class="hljs-string">'5bb3e6eb39e502b5fa74d93796087efa'</span>, <span class="hljs-string">'hex'</span>, <span class="hljs-string">'utf8'</span>); <span class="hljs-comment">// 输入数据编码为hex(16进制)，输出为utf8</span></span><br><span class="line">data += cipher.final(<span class="hljs-string">'utf8'</span>);</span><br><span class="line"><span class="hljs-built_in">console</span>.log(data);</span><br></pre></td></tr></tbody></table></figure>
+<p>以上例程输出<code>1</code></p>
+<p><code>crypto.createDecipheriv</code>方法原型与<code>crypto.createCipher</code>一致，这里不在赘述。</p>
+<h2 id="RSA"><a href="#RSA" class="headerlink" title="RSA"></a>RSA</h2><blockquote>
+<p>RSA算法是一种非对称加密算法，即由一个私钥和一个公钥构成的密钥对，通过私钥加密，公钥解密，或者通过公钥加密，私钥解密。其中，公钥可以公开，私钥必须保密。</p>
+</blockquote>
+<h3 id="生成密钥对"><a href="#生成密钥对" class="headerlink" title="生成密钥对"></a>生成密钥对</h3><p>使用RSA算法前必须提供密钥对，本文使用<code>openssl</code>命令进行生成。</p>
+<ol>
+<li><code>openssl genrsa -out private.pem 2048</code> 生成<code>2048位</code>长度的<code>私钥</code></li>
+<li><code>openssl rsa -in private.pem -pubout -out public.pem</code> 导出公钥</li>
+</ol>
+<p>这样在当前目录我们就得到了<code>private.pem</code>和<code>public.pem</code></p>
+<h3 id="RSA加密"><a href="#RSA加密" class="headerlink" title="RSA加密"></a>RSA加密</h3><figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> crypto = <span class="hljs-built_in">require</span>(<span class="hljs-string">'crypto'</span>);</span><br><span class="line"><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> privateKey = fs.readFileSync(<span class="hljs-string">'./private.pem'</span>, { <span class="hljs-attr">encoding</span>: <span class="hljs-string">'utf8'</span> });</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> encodedData = crypto.privateEncrypt(privateKey, Buffer.from(<span class="hljs-string">'111111'</span>,<span class="hljs-string">'utf8'</span>)); <span class="hljs-comment">// 传入utf8编码的数据</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(encodedData.toString(<span class="hljs-string">'hex'</span>));</span><br></pre></td></tr></tbody></table></figure>
+<p>以上例程输出</p>
+<figure class="highlight plain hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">44a1b50b9639e4cbe17d55ca57dcb041387acadae3d3721fd9803a3a33091a36d59977feaa6caad990e58b9542c26297de6014e20819f0a71eadd0793bfe0fac834f30d2a05f8b329a3b2409e9f8b7fbd7de3734ada00228b84027568be58a2a34ccf0c4a8b2d02c58eef510931423ed5f40c696361b606df11609248b271aebcd17f9a113f98a8fa86c9c45bd609256f4779ce01ea3027171fffb35e695f1c38553aecafb72a2f46a9012246fde0f2934eacba8932bca38e228f4f4294873ed75d9acf79ab854897ebaab2375384b2da682c1b2e2b49b0592929067b3d5a11971d912629a178691345f7f88137343588b5c51d60643e5c00998484727b8c4a8</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="RSA解密"><a href="#RSA解密" class="headerlink" title="RSA解密"></a>RSA解密</h3><figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> crypto = <span class="hljs-built_in">require</span>(<span class="hljs-string">'crypto'</span>);</span><br><span class="line"><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> publicKey = fs.readFileSync(<span class="hljs-string">'./public.pem'</span>, { <span class="hljs-attr">encoding</span>: <span class="hljs-string">'utf8'</span> });</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> encodedData = <span class="hljs-string">'44a1b50b9639e4cbe17d55ca57dcb041387acadae3d3721fd9803a3a33091a36d59977feaa6caad990e58b9542c26297de6014e20819f0a71eadd0793bfe0fac834f30d2a05f8b329a3b2409e9f8b7fbd7de3734ada00228b84027568be58a2a34ccf0c4a8b2d02c58eef510931423ed5f40c696361b606df11609248b271aebcd17f9a113f98a8fa86c9c45bd609256f4779ce01ea3027171fffb35e695f1c38553aecafb72a2f46a9012246fde0f2934eacba8932bca38e228f4f4294873ed75d9acf79ab854897ebaab2375384b2da682c1b2e2b49b0592929067b3d5a11971d912629a178691345f7f88137343588b5c51d60643e5c00998484727b8c4a8'</span>;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> rawData = crypto.publicDecrypt(publicKey, Buffer.from(encodedData, <span class="hljs-string">'hex'</span>)); <span class="hljs-comment">// 传入hex(16进制)数据</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(rawData.toString(<span class="hljs-string">'utf8'</span>));</span><br></pre></td></tr></tbody></table></figure>
+<p>以上例程输出</p>
+<figure class="highlight plain hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">111111</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>常用的加解密、哈希、编解码用法已经介绍完毕。</p>
+</body></html>
+            </div>
+            
+        </div>
+        
+        
+        
+        <div class="social-share" data-disabled="qzone,facebook,twitter,tencent,linkedin,douban,diandian,google"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev"
+                href="/2019/07/22/nodejs-guide-events.html">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">NodeJs简明教程(7)</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next"
+                href="/2019/07/20/nodejs-guide-path.html">
+                <span class="level-item">NodeJs简明教程(5)</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '1ae09f5aa5dcce937e94',
+        clientSecret: '55c4032692dbcb0ee13771da7dc95f22cf9ae8e1',
+        id: '06bbca733c7cfc7b12d9495e2d0de65b',
+        repo: 'xialeistudio.github.io',
+        owner: 'xialeistudio',
+        language: 'en',
+        admin: "xialeistudio",
+        createIssueManually: false,
+        distractionFreeMode: false
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-3-desktop is-3-widescreen  has-order-3 column-right ">
+    
+        
+    
+        
+    
+        
+
+    
+        
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Catalogue
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#Hash">
+        <span class="has-mr-6">1</span>
+        <span>Hash</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#MD5">
+        <span class="has-mr-6">1.1</span>
+        <span>MD5</span>
+        </a></li><li>
+        <a class="is-flex" href="#SHA1">
+        <span class="has-mr-6">1.2</span>
+        <span>SHA1</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#Base64">
+        <span class="has-mr-6">2</span>
+        <span>Base64</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#Base64编码">
+        <span class="has-mr-6">2.1</span>
+        <span>Base64编码</span>
+        </a></li><li>
+        <a class="is-flex" href="#Base64解码">
+        <span class="has-mr-6">2.2</span>
+        <span>Base64解码</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#Hmac">
+        <span class="has-mr-6">3</span>
+        <span>Hmac</span>
+        </a></li><li>
+        <a class="is-flex" href="#AES">
+        <span class="has-mr-6">4</span>
+        <span>AES</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#AES加密">
+        <span class="has-mr-6">4.1</span>
+        <span>AES加密</span>
+        </a></li><li>
+        <a class="is-flex" href="#AES解密">
+        <span class="has-mr-6">4.2</span>
+        <span>AES解密</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#RSA">
+        <span class="has-mr-6">5</span>
+        <span>RSA</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#生成密钥对">
+        <span class="has-mr-6">5.1</span>
+        <span>生成密钥对</span>
+        </a></li><li>
+        <a class="is-flex" href="#RSA加密">
+        <span class="has-mr-6">5.2</span>
+        <span>RSA加密</span>
+        </a></li><li>
+        <a class="is-flex" href="#RSA解密">
+        <span class="has-mr-6">5.3</span>
+        <span>RSA解密</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#结语">
+        <span class="has-mr-6">6</span>
+        <span>结语</span>
+        </a></li></ul>
+        </div>
+    </div>
+</div>
+
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                    
+                        Learning &amp; Sharing
+                            
+                </a>
+                <p class="is-size-7">
+                    &copy; 2023
+                        xialeistudio&nbsp;
+                            Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                                href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                            
+                </p>
+                <p class="is-size-7">
+                    
+                </p>
+            </div>
+            <div class="level-end">
+                
+                    <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                        
+                            
+                                <p class="control">
+                                    <a class="button is-white is-large"
+                                        target="_blank" title="Creative Commons"
+                                        href="https://creativecommons.org/">
+                                        
+                                                    <i class="fab fa-creative-commons"></i>
+                                                    
+                                    </a>
+                                </p>
+                                
+                                <p class="control">
+                                    <a class="button is-white is-large"
+                                        target="_blank" title="Attribution 4.0 International"
+                                        href="https://creativecommons.org/licenses/by/4.0/">
+                                        
+                                                    <i class="fab fa-creative-commons-by"></i>
+                                                    
+                                    </a>
+                                </p>
+                                
+                                <p class="control">
+                                    <a class="button is-white is-large"
+                                        target="_blank" title="GitHub"
+                                        href="https://github.com/xialeistudio">
+                                        
+                                                    <i class="fab fa-github"></i>
+                                                    
+                                    </a>
+                                </p>
+                                
+                    </div>
+                    
+            </div>
+        </div>
+    </div>
+</footer>
+
+        <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        const config = {
+                startOnLoad: true,
+                theme: 'forest',
+                securityLevel: 'loose',
+            };
+            mermaid.initialize(config);
+      </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+<script>
+    var IcarusThemeSettings = {
+        article: {
+            highlight: {
+                clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+    
+    <script src="/js/animation.js"></script>
+    
+
+
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

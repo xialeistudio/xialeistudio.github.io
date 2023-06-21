@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html  lang="en">
+<head>
+    <meta charset="utf-8" />
+
+    <meta name="generator" content="Hexo 4.2.1" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<meta name="description" content="Learning & Sharing Java/JVM/Spring Boot/Node.js/Golang/Javascript/CSS/HTML/OOP/Design Pattern/AWS/Microservices/Docker/Kubernetes/PHP/Yii2/koa/express/Nest.js/MySQL/Redis/Vue/React/Swift/Kotlin/Cordova/iOS/anroid Knowledge" />
+<meta name="keywords" content="Java/JVM/Spring Boot/Node.js/Golang/Javascript/CSS/HTML/OOP/Design Pattern/AWS/Microservices/Docker/Kubernetes/PHP/Yii2/koa/express/Nest.js/MySQL/Redis/Vue/React/Swift/Kotlin/Cordova/iOS/anroid" />
+
+<title>
+    React Flux ES6记事本应用 - Xia Lei
+</title>
+
+
+
+
+
+
+    <link rel="alternative" href="/"
+          title="React Flux ES6记事本应用" type="application/atom+xml">
+
+
+
+    <link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link href="https://fonts.cdnfonts.com/css/amazon-ember" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+        
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+        
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+        
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+        
+    
+        
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+        
+<script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?78141f99bbb49f1564a7af89344f5add";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                Learning &amp; Sharing
+                
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                    href="/">Home</a>
+                
+                <a class="navbar-item"
+                    href="/archives">Archives</a>
+                
+                <a class="navbar-item"
+                    href="/categories">Categories</a>
+                
+                <a class="navbar-item"
+                    href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                
+                
+                <a class="navbar-item" target="_blank" title="GitHub"
+                    href="https://github.com/xialeistudio">
+                    
+                    <i class="fab fa-github"></i>
+                    
+                </a>
+                
+                
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-9-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2016-03-23T23:20:00.000Z">2016-03-24</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/Engineering/">Engineering</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    11 minutes read (About 1718 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            React Flux ES6记事本应用
+            
+        </h1>
+        <div class="content">
+            
+            <div id="container">
+                <html><head></head><body><h2 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h2><p><a href="https://github.com/xialeistudio/react-notepad-es6.git" target="_blank" rel="noopener">react-notepad-es6</a></p>
+<p>React出来有很久了，与angularjs最大的不同在于React只是一个处理UI层面的库，可以认为是“V”，而angularjs则是一整套解决方案。   </p>
+<p>随着前端开发的组件化思想越来越浓烈，angularjs很多场合已经显得力不从心了。而这时候，核心为“模块化、组件化”的React可以派上永用场。真正用来开发项目的话，React肯定是不足的，缺少C和M模块。   </p>
+<p>Facebook官方推荐的Flux可以认为是一个简单的解决方案，Flux没什么特别含义，就是一个facebook随便找的一个词而已。至于什么是Flux，本文不做解释，本文以Flux来开发一个记事本应用。</p>
+<h2 id="项目目录"><a href="#项目目录" class="headerlink" title="项目目录"></a>项目目录</h2><figure class="highlight 1c hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-string">|----action    Action Creator</span></span><br><span class="line"></span><br><span class="line">    <span class="hljs-string">|---- NoteAction.js    记事本应用需要的动作</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-string">|----css    样式文件目录</span></span><br><span class="line"></span><br><span class="line">    <span class="hljs-string">|---- style.scss    样式文件</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-string">|----dispatcher    分发器目录</span></span><br><span class="line"></span><br><span class="line">    <span class="hljs-string">|---- AppDispatcher.js    分发器</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-string">|----store    Store目录</span></span><br><span class="line"></span><br><span class="line">    <span class="hljs-string">|---- NoteStore.js     存储日记数据以及处理AppDispatcher派发事件</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-string">|----view    视图&amp;组件目录</span></span><br><span class="line"></span><br><span class="line">    <span class="hljs-string">|---- Note.jsx    单条日记</span></span><br><span class="line"></span><br><span class="line">    <span class="hljs-string">|---- NoteBox.jsx    整个日记组件的父容器</span></span><br><span class="line"></span><br><span class="line">    <span class="hljs-string">|---- NoteForm.jsx    日记创建/编辑表单</span></span><br><span class="line"></span><br><span class="line">    <span class="hljs-string">|----NoteList.jsx    日记列表组件</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-string">|----entry.js    webpack入口文件</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-string">|----index.html    项目页面</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-string">|----webpack.config.js    webpack配置文件</span></span><br></pre></td></tr></tbody></table></figure>
+<h2 id="项目思路"><a href="#项目思路" class="headerlink" title="项目思路"></a>项目思路</h2><ol>
+<li>NoteList.jsx组件包含多个Note.jsx，NoteList.jsx的数据来源于NoteStore.js。</li>
+<li>创建日记时，NoteForm.jsx需要调用NoteAction的add方法最终触发AppDispatcher.dispatch方法</li>
+<li>NoteStore注册AppDispatcher的监听器实现对dispatch事件的监听</li>
+<li>编辑日记时，Note.jsx调用NoteAction的setNote方法设置需要编辑的日记，通过AppDispatcher的调度之后最终将日记数据显示在NoteForm.jsx组件中。</li>
+</ol>
+<h2 id="项目实现"><a href="#项目实现" class="headerlink" title="项目实现"></a>项目实现</h2><h3 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h3><p>本文采用ES6语法进行开发， 所以需要安装babel编译器，打开终端执行以下命令：</p>
+<figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">npm init -y</span><br><span class="line">npm install webpack webpack-dev-server -g</span><br><span class="line">npm install flux microevent react react-dom --save</span><br><span class="line">npm install babel-loader css-loader jsx-loader sass-loader style-loader --save-dev</span><br><span class="line">npm instlal babel-preset-es2015 babel-preset-react --save-dev</span><br><span class="line">npm install microevent --save</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="webpack-config-js"><a href="#webpack-config-js" class="headerlink" title="webpack.config.js"></a>webpack.config.js</h3><figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * Created by xialei on 2016/3/23 0023.</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-built_in">module</span>.exports = {</span><br><span class="line">  entry: <span class="hljs-string">'./entry.jsx'</span>,</span><br><span class="line">  output: {</span><br><span class="line">    publicPath: <span class="hljs-string">'http://localhost:8000/assets'</span>,</span><br><span class="line">    filename: <span class="hljs-string">'bundle.js'</span>,</span><br><span class="line">    path: <span class="hljs-string">'./assets'</span></span><br><span class="line">  },</span><br><span class="line">  <span class="hljs-built_in">module</span>: {</span><br><span class="line">    loaders: [</span><br><span class="line">    {<span class="hljs-attr">test</span>: <span class="hljs-regexp">/\.js$/</span>, <span class="hljs-attr">loader</span>: <span class="hljs-string">'babel'</span>},</span><br><span class="line">    {</span><br><span class="line">      test: <span class="hljs-regexp">/.jsx?$/</span>,</span><br><span class="line">      loader: <span class="hljs-string">'babel-loader'</span>,</span><br><span class="line">      exclude: <span class="hljs-regexp">/node_modules/</span>,</span><br><span class="line">      query: {</span><br><span class="line">        presets: [<span class="hljs-string">'es2015'</span>, <span class="hljs-string">'react'</span>]</span><br><span class="line">      }</span><br><span class="line">    },</span><br><span class="line">    {<span class="hljs-attr">test</span>: <span class="hljs-regexp">/\.css$/</span>, <span class="hljs-attr">loader</span>: <span class="hljs-string">'style!css'</span>},</span><br><span class="line">    {<span class="hljs-attr">test</span>: <span class="hljs-regexp">/\.scss$/</span>, <span class="hljs-attr">loader</span>: <span class="hljs-string">'style!css!sass'</span>}</span><br><span class="line">    ]</span><br><span class="line">  },</span><br><span class="line">  resolve: {</span><br><span class="line">    extensions: [<span class="hljs-string">''</span>, <span class="hljs-string">'.js'</span>, <span class="hljs-string">'.jsx'</span>]</span><br><span class="line">  }</span><br><span class="line">};</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="dispatcher-AppDispatcher-js"><a href="#dispatcher-AppDispatcher-js" class="headerlink" title="dispatcher/AppDispatcher.js"></a>dispatcher/AppDispatcher.js</h3><figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> Flux <span class="hljs-keyword">from</span> <span class="hljs-string">'flux'</span>;</span><br><span class="line"><span class="hljs-keyword">let</span> AppDispatcher = <span class="hljs-keyword">new</span> Flux.Dispatcher();</span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> AppDispatcher;</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="action-NoteAction-js"><a href="#action-NoteAction-js" class="headerlink" title="action/NoteAction.js"></a>action/NoteAction.js</h3><p>ActionCreator主要是为了简化代码量，不然每次需要触发动作的时候都需要调用AppDispatcher.dispatch方法。<br>根据项目实际情况，可以总结出需要以下动作：</p>
+<ul>
+<li>创建日记</li>
+<li>更新日记</li>
+<li>删除日记</li>
+<li>编辑日记</li>
+</ul>
+<p>由于ActionCreator是为了简化AppDispatcher.dispatch的方法调用，所以需要引入该模块。   </p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * Created by xialei on 2016/3/23 0023.</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-keyword">import</span> AppDispatcher <span class="hljs-keyword">from</span> <span class="hljs-string">'../dispatcher/AppDispatcher'</span>;</span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">NoteAction</span> </span>{</span><br><span class="line">  <span class="hljs-keyword">static</span> create(item) {</span><br><span class="line">    AppDispatcher.dispatch({</span><br><span class="line">      eventName: <span class="hljs-string">'create-note'</span>,</span><br><span class="line">      item: item</span><br><span class="line">    });</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">static</span> update(item) {</span><br><span class="line">    AppDispatcher.dispatch({</span><br><span class="line">      eventName: <span class="hljs-string">'update-note'</span>,</span><br><span class="line">      item: item</span><br><span class="line">    });</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">static</span> remove(item) {</span><br><span class="line">    AppDispatcher.dispatch({</span><br><span class="line">      eventName: <span class="hljs-string">'remove-note'</span>,</span><br><span class="line">      item: item</span><br><span class="line">    });</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">static</span> setNote(item) {</span><br><span class="line">    AppDispatcher.dispatch({</span><br><span class="line">      eventName: <span class="hljs-string">'set-note'</span>,</span><br><span class="line">      item: item</span><br><span class="line">    });</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="store-NoteScore-js"><a href="#store-NoteScore-js" class="headerlink" title="store/NoteScore.js"></a>store/NoteScore.js</h3><p>有了分发，就要有接收，所以接下来编辑 store/NoteScore.js文件，这里需要注意的是由于V中不要直接调用AppDispatcher.dispatch，但是V是肯定需要监听事件的，所以这里使用<strong>MicroEvent</strong>库来进行事件处理。</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * Created by xialei on 2016/3/23 0023.</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-keyword">import</span> AppDispatcher <span class="hljs-keyword">from</span> <span class="hljs-string">'../dispatcher/AppDispatcher'</span>;</span><br><span class="line"><span class="hljs-keyword">import</span> MicroEvent <span class="hljs-keyword">from</span> <span class="hljs-string">'microevent'</span>;</span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">NoteStore</span> </span>{</span><br><span class="line">  <span class="hljs-keyword">constructor</span>() {</span><br><span class="line">    <span class="hljs-keyword">this</span>.items = [];</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">MicroEvent.mixin(NoteStore);</span><br><span class="line"><span class="hljs-keyword">let</span> store = <span class="hljs-keyword">new</span> NoteStore();</span><br><span class="line"></span><br><span class="line">AppDispatcher.register(<span class="hljs-function">(<span class="hljs-params">payload</span>)=&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">switch</span> (payload.eventName) {</span><br><span class="line">    <span class="hljs-keyword">case</span> <span class="hljs-string">'create-note'</span>:</span><br><span class="line">      store.items.push(payload.item);</span><br><span class="line">      store.trigger(<span class="hljs-string">'change'</span>);</span><br><span class="line">      <span class="hljs-keyword">break</span>;</span><br><span class="line">    <span class="hljs-keyword">case</span> <span class="hljs-string">'update-note'</span>:</span><br><span class="line">      store.items.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">i, index2</span>) </span>{</span><br><span class="line">        <span class="hljs-keyword">if</span> (i.id == payload.item.id) {</span><br><span class="line">          store.items[index2] = payload.item;</span><br><span class="line">          store.trigger(<span class="hljs-string">'change'</span>);</span><br><span class="line">        }</span><br><span class="line">      });</span><br><span class="line">      <span class="hljs-keyword">break</span>;</span><br><span class="line">    <span class="hljs-keyword">case</span> <span class="hljs-string">'remove-note'</span>:</span><br><span class="line">      store.items.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">i, index2</span>) </span>{</span><br><span class="line">        <span class="hljs-keyword">if</span> (i.id == payload.item.id) {</span><br><span class="line">          store.items.splice(index2, <span class="hljs-number">1</span>);</span><br><span class="line">          store.trigger(<span class="hljs-string">'change'</span>);</span><br><span class="line">        }</span><br><span class="line">      });</span><br><span class="line">      <span class="hljs-keyword">break</span>;</span><br><span class="line">    <span class="hljs-keyword">case</span> <span class="hljs-string">'set-note'</span>:</span><br><span class="line">      store.trigger(<span class="hljs-string">'set'</span>, payload.item);</span><br><span class="line">      <span class="hljs-keyword">break</span>;</span><br><span class="line">  }</span><br><span class="line">  <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;</span><br><span class="line">});</span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> store;</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="view-Note-jsx"><a href="#view-Note-jsx" class="headerlink" title="view/Note.jsx"></a>view/Note.jsx</h3><p>该组件主要负责单条日记的显示和操作，所以该组件需要有一个初始属性以及编辑/删除方法，由于编辑日记最终会放在NoteForm.jsx组件进行，所以此处使用props而不是state。</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * Created by xialei on 2016/3/23 0023.</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;</span><br><span class="line"><span class="hljs-keyword">import</span> NoteAction <span class="hljs-keyword">from</span> <span class="hljs-string">'../action/NoteAction'</span>;</span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Note</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{</span><br><span class="line">  <span class="hljs-keyword">constructor</span>() {</span><br><span class="line">    <span class="hljs-keyword">super</span>();</span><br><span class="line">    <span class="hljs-keyword">this</span>.handleDelete = <span class="hljs-keyword">this</span>.handleDelete.bind(<span class="hljs-keyword">this</span>);</span><br><span class="line">    <span class="hljs-keyword">this</span>.handleUpdate = <span class="hljs-keyword">this</span>.handleUpdate.bind(<span class="hljs-keyword">this</span>);</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  handleUpdate() {</span><br><span class="line">    NoteAction.setNote(<span class="hljs-keyword">this</span>.props.note);</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  handleDelete() {</span><br><span class="line">    <span class="hljs-keyword">if</span> (confirm(<span class="hljs-string">'确定删除吗?'</span>)) {</span><br><span class="line">      NoteAction.remove(<span class="hljs-keyword">this</span>.props.note);</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  render() {</span><br><span class="line">    <span class="hljs-keyword">return</span> (</span><br><span class="line">      &lt;div className=<span class="hljs-string">"note-item"</span>&gt;</span><br><span class="line">        &lt;div className=<span class="hljs-string">"id"</span>&gt;{<span class="hljs-keyword">this</span>.props.note.id}&lt;<span class="hljs-regexp">/div&gt;</span></span><br><span class="line"><span class="hljs-regexp">        &lt;div className="text"&gt;{this.props.note.text}&lt;/</span>div&gt;</span><br><span class="line">        &lt;div className=<span class="hljs-string">"operation"</span>&gt;</span><br><span class="line">          &lt;button type=<span class="hljs-string">"button"</span> onClick={<span class="hljs-keyword">this</span>.handleUpdate}&gt;编辑&lt;<span class="hljs-regexp">/button&gt;</span></span><br><span class="line"><span class="hljs-regexp">          &lt;button type="button" onClick={this.handleDelete}&gt;删除&lt;/</span>button&gt;</span><br><span class="line">        &lt;<span class="hljs-regexp">/div&gt;</span></span><br><span class="line"><span class="hljs-regexp">      &lt;/</span>div&gt;</span><br><span class="line">    );</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>由于采用了ES6语法，所以此处需要对this做特殊处理，否则会提示props undefined之类的错误。</p>
+<h3 id="view-NoteBox-jsx"><a href="#view-NoteBox-jsx" class="headerlink" title="view/NoteBox.jsx"></a>view/NoteBox.jsx</h3><p>该组件的作用是将日记列表和日记表单显示出来，所以该组件只有一个构造方法和render方法。</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * Created by xialei on 2016/3/23 0023.</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-keyword">import</span> NoteList <span class="hljs-keyword">from</span> <span class="hljs-string">'./NoteList'</span>;</span><br><span class="line"><span class="hljs-keyword">import</span> NoteForm <span class="hljs-keyword">from</span> <span class="hljs-string">'./NoteForm'</span>;</span><br><span class="line"><span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;</span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">NoteBox</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{</span><br><span class="line">  render() {</span><br><span class="line">    <span class="hljs-keyword">return</span> (</span><br><span class="line">      &lt;div className=<span class="hljs-string">"note-box"</span>&gt;</span><br><span class="line">        &lt;NoteList/&gt;</span><br><span class="line">        &lt;NoteForm/&gt;</span><br><span class="line">      &lt;<span class="hljs-regexp">/div&gt;</span></span><br><span class="line"><span class="hljs-regexp">    );</span></span><br><span class="line"><span class="hljs-regexp">  }</span></span><br><span class="line"><span class="hljs-regexp">}</span></span><br></pre></td></tr></tbody></table></figure>
+<h3 id="view-NoteForm-jsx"><a href="#view-NoteForm-jsx" class="headerlink" title="view/NoteForm.jsx"></a>view/NoteForm.jsx</h3><p>该组件需要完成的事情比较多：</p>
+<ol>
+<li>需要对编辑和创建进行分别处理</li>
+<li>需要监听Note.jsx组件触发的编辑事件</li>
+<li>可编辑的文本域</li>
+</ol>
+<p>根据以上要求，可以得出以下结论：</p>
+<ol>
+<li>需要使用state，以及设置一个初始的state</li>
+<li>在textarea的onChange事件中，将值设置到state中去</li>
+<li>需要监听NoteStore触发的“set”事件，将需要编辑的日记显示在textarea中</li>
+</ol>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * Created by xialei on 2016/3/23 0023.</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;</span><br><span class="line"><span class="hljs-keyword">import</span> NoteAction <span class="hljs-keyword">from</span> <span class="hljs-string">'../action/NoteAction'</span>;</span><br><span class="line"><span class="hljs-keyword">import</span> NoteStore <span class="hljs-keyword">from</span> <span class="hljs-string">'../store/NoteStore'</span>;</span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">NoteForm</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{</span><br><span class="line">  <span class="hljs-keyword">constructor</span>() {</span><br><span class="line">    <span class="hljs-keyword">super</span>();</span><br><span class="line">    <span class="hljs-keyword">this</span>.handleClick = <span class="hljs-keyword">this</span>.handleClick.bind(<span class="hljs-keyword">this</span>);</span><br><span class="line">    <span class="hljs-keyword">this</span>.handleSetNote = <span class="hljs-keyword">this</span>.handleSetNote.bind(<span class="hljs-keyword">this</span>);</span><br><span class="line">    <span class="hljs-keyword">this</span>.handleChange = <span class="hljs-keyword">this</span>.handleChange.bind(<span class="hljs-keyword">this</span>);</span><br><span class="line">    <span class="hljs-keyword">this</span>.resetForm = <span class="hljs-keyword">this</span>.resetForm.bind(<span class="hljs-keyword">this</span>);</span><br><span class="line">    <span class="hljs-keyword">this</span>.state = {</span><br><span class="line">      note: {</span><br><span class="line">        id: <span class="hljs-number">0</span>,</span><br><span class="line">        text: <span class="hljs-string">''</span></span><br><span class="line">      }</span><br><span class="line">    };</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  componentDidMount() {</span><br><span class="line">    NoteStore.bind(<span class="hljs-string">'set'</span>, <span class="hljs-keyword">this</span>.handleSetNote);</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  componentWillUnmount() {</span><br><span class="line">    NoteStore.unbind(<span class="hljs-string">'set'</span>, <span class="hljs-keyword">this</span>.handleSetNote);</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  isCreate() {</span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.state.note.id == <span class="hljs-number">0</span>;</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  handleClick() {</span><br><span class="line">  <span class="hljs-keyword">let</span> text = <span class="hljs-keyword">this</span>.refs.input.value;</span><br><span class="line">  <span class="hljs-keyword">if</span> (text.length == <span class="hljs-number">0</span>) {</span><br><span class="line">    alert(<span class="hljs-string">'请输入日记内容'</span>);</span><br><span class="line">    <span class="hljs-keyword">this</span>.refs.input.focus();</span><br><span class="line">    <span class="hljs-keyword">return</span>;</span><br><span class="line">  }</span><br><span class="line">  <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.isCreate()) {</span><br><span class="line">    <span class="hljs-keyword">let</span> id = <span class="hljs-number">1</span>;</span><br><span class="line">    <span class="hljs-keyword">if</span> (NoteStore.items.length &gt; <span class="hljs-number">0</span>) {</span><br><span class="line">      id = NoteStore.items[NoteStore.items.length - <span class="hljs-number">1</span>].id + <span class="hljs-number">1</span>;</span><br><span class="line">    }</span><br><span class="line">    NoteAction.create({</span><br><span class="line">      id: id,</span><br><span class="line">      text: text</span><br><span class="line">    });</span><br><span class="line">   }</span><br><span class="line">  <span class="hljs-keyword">else</span> {</span><br><span class="line">    <span class="hljs-keyword">let</span> note = <span class="hljs-keyword">this</span>.state.note;</span><br><span class="line">    note.text = text;</span><br><span class="line">    NoteAction.update(note);</span><br><span class="line">  }</span><br><span class="line">    <span class="hljs-keyword">this</span>.resetForm();</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  render() {</span><br><span class="line">  <span class="hljs-keyword">let</span> note = <span class="hljs-keyword">this</span>.state.note.text;</span><br><span class="line">  <span class="hljs-keyword">let</span> btnText = <span class="hljs-keyword">this</span>.isCreate() ? <span class="hljs-string">'创建'</span> : <span class="hljs-string">'编辑'</span>;</span><br><span class="line">  <span class="hljs-keyword">let</span> tips = <span class="hljs-keyword">this</span>.isCreate() ? <span class="hljs-string">''</span> : <span class="hljs-string">'当前编辑 ['</span> + <span class="hljs-keyword">this</span>.state.note.id + <span class="hljs-string">'] 号日记'</span>;</span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    &lt;div className=<span class="hljs-string">"note-form"</span>&gt;</span><br><span class="line">    &lt;div&gt;{tips}&lt;<span class="hljs-regexp">/div&gt;</span></span><br><span class="line"><span class="hljs-regexp">    &lt;textarea ref="input" rows="8" placeholder="日记内容" value={note} onChange={this.handleChange}/</span>&gt;</span><br><span class="line">      &lt;button type=<span class="hljs-string">"button"</span> onClick={<span class="hljs-keyword">this</span>.handleClick}&gt;{btnText}&lt;<span class="hljs-regexp">/button&gt;</span></span><br><span class="line"><span class="hljs-regexp">      &lt;button type="button" onClick={this.resetForm}&gt;重置&lt;/</span>button&gt;</span><br><span class="line">    &lt;<span class="hljs-regexp">/div&gt;</span></span><br><span class="line"><span class="hljs-regexp">  );</span></span><br><span class="line"><span class="hljs-regexp"> }</span></span><br><span class="line"><span class="hljs-regexp"></span></span><br><span class="line"><span class="hljs-regexp">  handleChange(e) {</span></span><br><span class="line"><span class="hljs-regexp">  let id = this.state.note.id || 0;</span></span><br><span class="line"><span class="hljs-regexp">  this.setState({</span></span><br><span class="line"><span class="hljs-regexp">    note: {</span></span><br><span class="line"><span class="hljs-regexp">      id: id,</span></span><br><span class="line"><span class="hljs-regexp">      text: e.target.value</span></span><br><span class="line"><span class="hljs-regexp">    }</span></span><br><span class="line"><span class="hljs-regexp">  });</span></span><br><span class="line"><span class="hljs-regexp"> }</span></span><br><span class="line"><span class="hljs-regexp"></span></span><br><span class="line"><span class="hljs-regexp">  handleSetNote(note) {</span></span><br><span class="line"><span class="hljs-regexp">    this.setState({note: note});</span></span><br><span class="line"><span class="hljs-regexp">    console.log('set ', this.state.note);</span></span><br><span class="line"><span class="hljs-regexp">  }</span></span><br><span class="line"><span class="hljs-regexp"></span></span><br><span class="line"><span class="hljs-regexp">  resetForm() {</span></span><br><span class="line"><span class="hljs-regexp">    this.setState({</span></span><br><span class="line"><span class="hljs-regexp">      note: {</span></span><br><span class="line"><span class="hljs-regexp">        id: 0,</span></span><br><span class="line"><span class="hljs-regexp">        text: ''</span></span><br><span class="line"><span class="hljs-regexp">      }</span></span><br><span class="line"><span class="hljs-regexp">    });</span></span><br><span class="line"><span class="hljs-regexp">  }</span></span><br><span class="line"><span class="hljs-regexp">}</span></span><br></pre></td></tr></tbody></table></figure>
+<h3 id="view-NoteList-jsx"><a href="#view-NoteList-jsx" class="headerlink" title="view/NoteList.jsx"></a>view/NoteList.jsx</h3><p>该组件负责渲染NoteStore中的日记列表以及对NoteStore触发的change事件作出相应，实时显示最新数据。</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * Created by xialei on 2016/3/23 0023.</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;</span><br><span class="line"><span class="hljs-keyword">import</span> NoteStore <span class="hljs-keyword">from</span> <span class="hljs-string">'../store/NoteStore'</span>;</span><br><span class="line"><span class="hljs-keyword">import</span> Note <span class="hljs-keyword">from</span> <span class="hljs-string">'./Note'</span>;</span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">NoteList</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{</span><br><span class="line">  <span class="hljs-keyword">constructor</span>() {</span><br><span class="line">    <span class="hljs-keyword">super</span>();</span><br><span class="line">    <span class="hljs-keyword">this</span>.handleChanged = <span class="hljs-keyword">this</span>.handleChanged.bind(<span class="hljs-keyword">this</span>);</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  componentDidMount() {</span><br><span class="line">    NoteStore.bind(<span class="hljs-string">'change'</span>, <span class="hljs-keyword">this</span>.handleChanged);</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  componentWillUnmount() {</span><br><span class="line">    NoteStore.unbind(<span class="hljs-string">'change'</span>, <span class="hljs-keyword">this</span>.handleChanged);</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  handleChanged() {</span><br><span class="line">    <span class="hljs-keyword">this</span>.forceUpdate();</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  render() {</span><br><span class="line">    <span class="hljs-keyword">const</span> notes = NoteStore.items.map(<span class="hljs-function">(<span class="hljs-params">item</span>)=&gt;</span> {</span><br><span class="line">      <span class="hljs-keyword">return</span> <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Note</span> <span class="hljs-attr">note</span>=<span class="hljs-string">{item}</span> <span class="hljs-attr">key</span>=<span class="hljs-string">{item.id}/</span>&gt;</span></span>;</span><br><span class="line">    });</span><br><span class="line">    <span class="hljs-keyword">return</span> (</span><br><span class="line">      &lt;div className=<span class="hljs-string">"note-list"</span>&gt;{notes}&lt;<span class="hljs-regexp">/div&gt;</span></span><br><span class="line"><span class="hljs-regexp">    );</span></span><br><span class="line"><span class="hljs-regexp">  }</span></span><br><span class="line"><span class="hljs-regexp">}</span></span><br></pre></td></tr></tbody></table></figure>
+<h2 id="entry-jsx"><a href="#entry-jsx" class="headerlink" title="entry.jsx"></a>entry.jsx</h2><p>该文件主要将NoteBox.jsx组件渲染到html容器中。</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * Created by xialei on 2016/3/23 0023.</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-keyword">import</span> ReactDOM <span class="hljs-keyword">from</span> <span class="hljs-string">'react-dom'</span>;</span><br><span class="line"><span class="hljs-keyword">import</span> NoteBox <span class="hljs-keyword">from</span> <span class="hljs-string">'./view/NoteBox'</span>;</span><br><span class="line"><span class="hljs-keyword">import</span> <span class="hljs-string">'./css/style.scss'</span>;</span><br><span class="line">ReactDOM.render(<span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">NoteBox</span>/&gt;</span></span>, <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'#content'</span>));</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="index-html"><a href="#index-html" class="headerlink" title="index.html"></a>index.html</h2><figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">"en"</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">"UTF-8"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Title<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"./node_modules/react/dist/react-with-addons.js"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"content"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"http://localhost:8000/webpack-dev-server.js"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"http://localhost:8000/assets/bundle.js"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+<h2 id="项目运行"><a href="#项目运行" class="headerlink" title="项目运行"></a>项目运行</h2><figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">webpack-dev-server --progress --colors --port 8000</span><br></pre></td></tr></tbody></table></figure>
+<p><a href="http://ngdemo.sinaapp.com/react-notepad" target="_blank" rel="noopener">demo</a></p>
+</body></html>
+            </div>
+            
+        </div>
+        
+        
+        
+        <div class="social-share" data-disabled="qzone,facebook,twitter,tencent,linkedin,douban,diandian,google"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev"
+                href="/2016/03/29/angularjs-display-html.html">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">angularjs显示html文本</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next"
+                href="/2016/03/02/android-pick-image-return-image-path.html">
+                <span class="level-item">android选择图片返回统一图片地址</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '1ae09f5aa5dcce937e94',
+        clientSecret: '55c4032692dbcb0ee13771da7dc95f22cf9ae8e1',
+        id: '42707301f961438a3cee0b4f98a23b35',
+        repo: 'xialeistudio.github.io',
+        owner: 'xialeistudio',
+        language: 'en',
+        admin: "xialeistudio",
+        createIssueManually: false,
+        distractionFreeMode: false
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-3-desktop is-3-widescreen  has-order-3 column-right ">
+    
+        
+    
+        
+    
+        
+
+    
+        
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Catalogue
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#项目地址">
+        <span class="has-mr-6">1</span>
+        <span>项目地址</span>
+        </a></li><li>
+        <a class="is-flex" href="#项目目录">
+        <span class="has-mr-6">2</span>
+        <span>项目目录</span>
+        </a></li><li>
+        <a class="is-flex" href="#项目思路">
+        <span class="has-mr-6">3</span>
+        <span>项目思路</span>
+        </a></li><li>
+        <a class="is-flex" href="#项目实现">
+        <span class="has-mr-6">4</span>
+        <span>项目实现</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#安装依赖">
+        <span class="has-mr-6">4.1</span>
+        <span>安装依赖</span>
+        </a></li><li>
+        <a class="is-flex" href="#webpack-config-js">
+        <span class="has-mr-6">4.2</span>
+        <span>webpack.config.js</span>
+        </a></li><li>
+        <a class="is-flex" href="#dispatcher-AppDispatcher-js">
+        <span class="has-mr-6">4.3</span>
+        <span>dispatcher/AppDispatcher.js</span>
+        </a></li><li>
+        <a class="is-flex" href="#action-NoteAction-js">
+        <span class="has-mr-6">4.4</span>
+        <span>action/NoteAction.js</span>
+        </a></li><li>
+        <a class="is-flex" href="#store-NoteScore-js">
+        <span class="has-mr-6">4.5</span>
+        <span>store/NoteScore.js</span>
+        </a></li><li>
+        <a class="is-flex" href="#view-Note-jsx">
+        <span class="has-mr-6">4.6</span>
+        <span>view/Note.jsx</span>
+        </a></li><li>
+        <a class="is-flex" href="#view-NoteBox-jsx">
+        <span class="has-mr-6">4.7</span>
+        <span>view/NoteBox.jsx</span>
+        </a></li><li>
+        <a class="is-flex" href="#view-NoteForm-jsx">
+        <span class="has-mr-6">4.8</span>
+        <span>view/NoteForm.jsx</span>
+        </a></li><li>
+        <a class="is-flex" href="#view-NoteList-jsx">
+        <span class="has-mr-6">4.9</span>
+        <span>view/NoteList.jsx</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#entry-jsx">
+        <span class="has-mr-6">5</span>
+        <span>entry.jsx</span>
+        </a></li><li>
+        <a class="is-flex" href="#index-html">
+        <span class="has-mr-6">6</span>
+        <span>index.html</span>
+        </a></li><li>
+        <a class="is-flex" href="#项目运行">
+        <span class="has-mr-6">7</span>
+        <span>项目运行</span>
+        </a></li></ul>
+        </div>
+    </div>
+</div>
+
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                    
+                        Learning &amp; Sharing
+                            
+                </a>
+                <p class="is-size-7">
+                    &copy; 2023
+                        xialeistudio&nbsp;
+                            Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                                href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                            
+                </p>
+                <p class="is-size-7">
+                    
+                </p>
+            </div>
+            <div class="level-end">
+                
+                    <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                        
+                            
+                                <p class="control">
+                                    <a class="button is-white is-large"
+                                        target="_blank" title="Creative Commons"
+                                        href="https://creativecommons.org/">
+                                        
+                                                    <i class="fab fa-creative-commons"></i>
+                                                    
+                                    </a>
+                                </p>
+                                
+                                <p class="control">
+                                    <a class="button is-white is-large"
+                                        target="_blank" title="Attribution 4.0 International"
+                                        href="https://creativecommons.org/licenses/by/4.0/">
+                                        
+                                                    <i class="fab fa-creative-commons-by"></i>
+                                                    
+                                    </a>
+                                </p>
+                                
+                                <p class="control">
+                                    <a class="button is-white is-large"
+                                        target="_blank" title="GitHub"
+                                        href="https://github.com/xialeistudio">
+                                        
+                                                    <i class="fab fa-github"></i>
+                                                    
+                                    </a>
+                                </p>
+                                
+                    </div>
+                    
+            </div>
+        </div>
+    </div>
+</footer>
+
+        <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        const config = {
+                startOnLoad: true,
+                theme: 'forest',
+                securityLevel: 'loose',
+            };
+            mermaid.initialize(config);
+      </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+<script>
+    var IcarusThemeSettings = {
+        article: {
+            highlight: {
+                clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+    
+    <script src="/js/animation.js"></script>
+    
+
+
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html  lang="en">
+<head>
+    <meta charset="utf-8" />
+
+    <meta name="generator" content="Hexo 4.2.1" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<meta name="description" content="Learning & Sharing Java/JVM/Spring Boot/Node.js/Golang/Javascript/CSS/HTML/OOP/Design Pattern/AWS/Microservices/Docker/Kubernetes/PHP/Yii2/koa/express/Nest.js/MySQL/Redis/Vue/React/Swift/Kotlin/Cordova/iOS/anroid Knowledge" />
+<meta name="keywords" content="Java/JVM/Spring Boot/Node.js/Golang/Javascript/CSS/HTML/OOP/Design Pattern/AWS/Microservices/Docker/Kubernetes/PHP/Yii2/koa/express/Nest.js/MySQL/Redis/Vue/React/Swift/Kotlin/Cordova/iOS/anroid" />
+
+<title>
+    算法篇——二分查找 - Xia Lei
+</title>
+
+
+
+
+
+
+    <link rel="alternative" href="/"
+          title="算法篇——二分查找" type="application/atom+xml">
+
+
+
+    <link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link href="https://fonts.cdnfonts.com/css/amazon-ember" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+        
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+        
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+        
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+        
+    
+        
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+        
+<script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?78141f99bbb49f1564a7af89344f5add";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                Learning &amp; Sharing
+                
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                    href="/">Home</a>
+                
+                <a class="navbar-item"
+                    href="/archives">Archives</a>
+                
+                <a class="navbar-item"
+                    href="/categories">Categories</a>
+                
+                <a class="navbar-item"
+                    href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                
+                
+                <a class="navbar-item" target="_blank" title="GitHub"
+                    href="https://github.com/xialeistudio">
+                    
+                    <i class="fab fa-github"></i>
+                    
+                </a>
+                
+                
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-9-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2021-12-29T10:32:50.000Z">2021-12-29</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/Algorithm/">Algorithm</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    6 minutes read (About 851 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            算法篇——二分查找
+            
+        </h1>
+        <div class="content">
+            
+            <div id="container">
+                <html><head></head><body><p>本系列文章将学习/复习常用算法和数据结构。希望能够深入浅出的将复杂的知识讲清楚、说明白。</p>
+<p>本文介绍第一个基础算法：二分查找。二分查找算法可以在<code>有序</code>的数组中快速查询指定值。</p>
+<ul>
+<li>要求：有序数组</li>
+<li>时间复杂度：O(logN)</li>
+<li>空间复杂度：O(1)</li>
+</ul>
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><p>大家应该玩过数字猜大小的游戏，接下来看看实际过程。</p>
+<p>主持人从1~10选择1个数字，参与者每次猜1个数字，主持人给出提示正确/大了/小了。次数最少的获胜。</p>
+<h3 id="线性查找"><a href="#线性查找" class="headerlink" title="线性查找"></a>线性查找</h3><blockquote>
+<ul>
+<li>主持人选定数字5。</li>
+<li>参与者：10</li>
+<li>主持人：大了</li>
+<li>参与者：9</li>
+<li>主持人：大了</li>
+<li>参与者：8</li>
+<li>主持人：大了</li>
+<li>…</li>
+<li>参与者：5</li>
+<li>主持人：正确</li>
+</ul>
+</blockquote>
+<p>参与者采用线性报数方式，从最大的数字开始报，每次减1直到猜中。上面的例子主持人选的数字是5，参与者猜了6次（10,9,8,7,6,5)。效率是O(N)。</p>
+<p>主持人的<code>大了/小了</code>提示没有利用上，这肯定不是效率最高的方法。</p>
+<h3 id="二分查找"><a href="#二分查找" class="headerlink" title="二分查找"></a>二分查找</h3><blockquote>
+<ul>
+<li>主持人选定数字8。</li>
+<li>参与者：5</li>
+<li>主持人：小了</li>
+<li>参与者：7</li>
+<li>主持人：小了</li>
+<li>参与者：8</li>
+<li>主持人：正确</li>
+</ul>
+</blockquote>
+<p>参与者根据主持人的<code>大了/小了</code>提示每次调整猜测范围直到猜中。上面的例子中主持人选的数字是8，参与者猜了3次：</p>
+<ol>
+<li>(0+10)/2 =&gt; 5，小了，所以下一次应该猜 比5大的数字，从 5 ~ 10继续猜</li>
+<li>(5+10)/2 =&gt; 7(8也可以)，小了，所以下一次继续猜比7大的数字，从7~10继续猜</li>
+<li>(7+10)/2 =&gt; 8(9也可以)，正确</li>
+</ol>
+<p>可以看到二分查找法每次都能过滤掉1半的数据，达到了O(logN)的时间复杂度</p>
+<h2 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h2><p>给定一个有序数组，返回指定值的索引，如果有序数组不存在该值，返回-1。</p>
+<p>思路：</p>
+<ol>
+<li>找中间值，(0 + 数组最后一位的所以)/2得到中间值的位置，然后对比中间值和目标值大小</li>
+<li>如果目标值比中间值小，那么目标值在数组前半部分，应该继续查找 0 ~ 数组中间索引-1的这部分</li>
+<li>如果目标值比中间值大，那么目标值在数组后半部分，应该继续查找 数组中间索引+1 ~ 数组结尾的这部分</li>
+</ol>
+<blockquote>
+<p>为什么继续查找时中间索引要+1或者-1移动？</p>
+<p>因为中间值已经比对过了，不满足条件，所以可以直接跳过中间值往前面后者后面一个位置继续查找</p>
+</blockquote>
+<figure class="highlight go hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">import</span> <span class="hljs-string">"fmt"</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {</span><br><span class="line">	fmt.Println(search([]<span class="hljs-keyword">int</span>{<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>}, <span class="hljs-number">5</span>))</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">search</span><span class="hljs-params">(nums []<span class="hljs-keyword">int</span>, target <span class="hljs-keyword">int</span>)</span> <span class="hljs-title">int</span></span> {</span><br><span class="line">	begin := <span class="hljs-number">0</span></span><br><span class="line">	end := <span class="hljs-built_in">len</span>(nums) - <span class="hljs-number">1</span></span><br><span class="line">	<span class="hljs-keyword">for</span> begin &lt;= end { <span class="hljs-comment">// 开始位置不能超过结束位置，超过证明所以数据都查过了</span></span><br><span class="line">		midIndex := (begin + end) / <span class="hljs-number">2</span> <span class="hljs-comment">// 中间索引</span></span><br><span class="line">		midValue := nums[midIndex]    <span class="hljs-comment">// 中间值</span></span><br><span class="line">		fmt.Printf(<span class="hljs-string">"check pos(%v) value(%v)\n"</span>, midIndex, midValue)</span><br><span class="line">		<span class="hljs-keyword">if</span> target &lt; midValue { <span class="hljs-comment">// 目标值比中间值小，所以在左边，将end移动到中间索引-1</span></span><br><span class="line">			end = midIndex - <span class="hljs-number">1</span></span><br><span class="line">			<span class="hljs-keyword">continue</span></span><br><span class="line">		}</span><br><span class="line">		<span class="hljs-keyword">if</span> target &gt; midValue { <span class="hljs-comment">// 右半边，begin移动到中间索引+1</span></span><br><span class="line">			begin = midIndex + <span class="hljs-number">1</span></span><br><span class="line">			<span class="hljs-keyword">continue</span></span><br><span class="line">		}</span><br><span class="line">		<span class="hljs-comment">// 相等</span></span><br><span class="line">		<span class="hljs-keyword">return</span> midIndex</span><br><span class="line">	}</span><br><span class="line">	<span class="hljs-keyword">return</span> <span class="hljs-number">-1</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>输出如下</p>
+<figure class="highlight smali hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">check pos(3) value(4)</span><br><span class="line">check pos(5) value(6)</span><br><span class="line">check pos(4) value(5)</span><br><span class="line">4</span><br></pre></td></tr></tbody></table></figure>
+</body></html>
+            </div>
+            
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/binarysearch/" rel="tag">binarysearch</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <div class="social-share" data-disabled="qzone,facebook,twitter,tencent,linkedin,douban,diandian,google"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev"
+                href="/2022/02/05/reverse-linked-list-ii.html">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">LeetCode92——反转链表 II</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next"
+                href="/2021/09/18/gomonkey-private-method-stub.html">
+                <span class="level-item">gomonkey私有方法打桩</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '1ae09f5aa5dcce937e94',
+        clientSecret: '55c4032692dbcb0ee13771da7dc95f22cf9ae8e1',
+        id: 'da171dd98949acdd4f6e99d3eb2693d6',
+        repo: 'xialeistudio.github.io',
+        owner: 'xialeistudio',
+        language: 'en',
+        admin: "xialeistudio",
+        createIssueManually: false,
+        distractionFreeMode: false
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-3-desktop is-3-widescreen  has-order-3 column-right ">
+    
+        
+    
+        
+    
+        
+
+    
+        
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Catalogue
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#例子">
+        <span class="has-mr-6">1</span>
+        <span>例子</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#线性查找">
+        <span class="has-mr-6">1.1</span>
+        <span>线性查找</span>
+        </a></li><li>
+        <a class="is-flex" href="#二分查找">
+        <span class="has-mr-6">1.2</span>
+        <span>二分查找</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#代码示例">
+        <span class="has-mr-6">2</span>
+        <span>代码示例</span>
+        </a></li></ul>
+        </div>
+    </div>
+</div>
+
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                    
+                        Learning &amp; Sharing
+                            
+                </a>
+                <p class="is-size-7">
+                    &copy; 2023
+                        xialeistudio&nbsp;
+                            Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                                href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                            
+                </p>
+                <p class="is-size-7">
+                    
+                </p>
+            </div>
+            <div class="level-end">
+                
+                    <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                        
+                            
+                                <p class="control">
+                                    <a class="button is-white is-large"
+                                        target="_blank" title="Creative Commons"
+                                        href="https://creativecommons.org/">
+                                        
+                                                    <i class="fab fa-creative-commons"></i>
+                                                    
+                                    </a>
+                                </p>
+                                
+                                <p class="control">
+                                    <a class="button is-white is-large"
+                                        target="_blank" title="Attribution 4.0 International"
+                                        href="https://creativecommons.org/licenses/by/4.0/">
+                                        
+                                                    <i class="fab fa-creative-commons-by"></i>
+                                                    
+                                    </a>
+                                </p>
+                                
+                                <p class="control">
+                                    <a class="button is-white is-large"
+                                        target="_blank" title="GitHub"
+                                        href="https://github.com/xialeistudio">
+                                        
+                                                    <i class="fab fa-github"></i>
+                                                    
+                                    </a>
+                                </p>
+                                
+                    </div>
+                    
+            </div>
+        </div>
+    </div>
+</footer>
+
+        <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        const config = {
+                startOnLoad: true,
+                theme: 'forest',
+                securityLevel: 'loose',
+            };
+            mermaid.initialize(config);
+      </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+<script>
+    var IcarusThemeSettings = {
+        article: {
+            highlight: {
+                clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+    
+    <script src="/js/animation.js"></script>
+    
+
+
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

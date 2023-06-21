@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html  lang="en">
+<head>
+    <meta charset="utf-8" />
+
+    <meta name="generator" content="Hexo 4.2.1" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<meta name="description" content="Learning & Sharing Java/JVM/Spring Boot/Node.js/Golang/Javascript/CSS/HTML/OOP/Design Pattern/AWS/Microservices/Docker/Kubernetes/PHP/Yii2/koa/express/Nest.js/MySQL/Redis/Vue/React/Swift/Kotlin/Cordova/iOS/anroid Knowledge" />
+<meta name="keywords" content="Java/JVM/Spring Boot/Node.js/Golang/Javascript/CSS/HTML/OOP/Design Pattern/AWS/Microservices/Docker/Kubernetes/PHP/Yii2/koa/express/Nest.js/MySQL/Redis/Vue/React/Swift/Kotlin/Cordova/iOS/anroid" />
+
+<title>
+    Yii2框架MemCache在腾讯云部署时不过期问题 - Xia Lei
+</title>
+
+
+
+
+
+
+    <link rel="alternative" href="/"
+          title="Yii2框架MemCache在腾讯云部署时不过期问题" type="application/atom+xml">
+
+
+
+    <link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link href="https://fonts.cdnfonts.com/css/amazon-ember" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+        
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+        
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+        
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+        
+    
+        
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+        
+<script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?78141f99bbb49f1564a7af89344f5add";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                Learning &amp; Sharing
+                
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                    href="/">Home</a>
+                
+                <a class="navbar-item"
+                    href="/archives">Archives</a>
+                
+                <a class="navbar-item"
+                    href="/categories">Categories</a>
+                
+                <a class="navbar-item"
+                    href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                
+                
+                <a class="navbar-item" target="_blank" title="GitHub"
+                    href="https://github.com/xialeistudio">
+                    
+                    <i class="fab fa-github"></i>
+                    
+                </a>
+                
+                
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-9-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2017-05-11T16:00:00.000Z">2017-05-12</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/Engineering/">Engineering</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    9 minutes read (About 1420 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            Yii2框架MemCache在腾讯云部署时不过期问题
+            
+        </h1>
+        <div class="content">
+            
+            <div id="container">
+                <html><head></head><body><p>之前部署在阿里云时一直memcache没有问题，部署到腾讯云发现缓存永不过期。查看yii2的MemCache类源码后，发现在设置缓存时，Yii2添加了<code>$expire = $duration &gt; 0 ? $duration + time() :0;</code>这样的代码，会导致强制使用时间戳来标记过期时间，而阿里云是过期时间和时间戳都支持的，腾讯云只支持前者。</p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>重写组件即可<br>在<code>app\components</code>中加添加<code>MemCache</code>集成Yii2的<code>MemCache</code>，由于Yii2的MemCache中<code>$_cache</code>成员变量为<code>private</code>，子类无法访问，所以需要直接copy源码：<br></p><figure class="highlight php hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">&lt;?php</span></span><br><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * Created by PhpStorm.</span></span><br><span class="line"><span class="hljs-comment"> * User: xialei</span></span><br><span class="line"><span class="hljs-comment"> * Date: 2017/5/12</span></span><br><span class="line"><span class="hljs-comment"> * Time: 下午5:55</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">namespace</span> <span class="hljs-title">app</span>\<span class="hljs-title">components</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">use</span> <span class="hljs-title">yii</span>\<span class="hljs-title">base</span>\<span class="hljs-title">InvalidConfigException</span>;</span><br><span class="line"><span class="hljs-keyword">use</span> <span class="hljs-title">yii</span>\<span class="hljs-title">caching</span>\<span class="hljs-title">MemCacheServer</span>;</span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MemCache</span> <span class="hljs-keyword">extends</span> \<span class="hljs-title">yii</span>\<span class="hljs-title">caching</span>\<span class="hljs-title">MemCache</span></span></span><br><span class="line"><span class="hljs-class"></span>{</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@var</span> bool whether to use memcached or memcache as the underlying caching extension.</span></span><br><span class="line"><span class="hljs-comment">     * If true, [memcached](http://pecl.php.net/package/memcached) will be used.</span></span><br><span class="line"><span class="hljs-comment">     * If false, [memcache](http://pecl.php.net/package/memcache) will be used.</span></span><br><span class="line"><span class="hljs-comment">     * Defaults to false.</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-keyword">public</span> $useMemcached = <span class="hljs-keyword">false</span>;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@var</span> string an ID that identifies a Memcached instance. This property is used only when [[useMemcached]] is true.</span></span><br><span class="line"><span class="hljs-comment">     * By default the Memcached instances are destroyed at the end of the request. To create an instance that</span></span><br><span class="line"><span class="hljs-comment">     * persists between requests, you may specify a unique ID for the instance. All instances created with the</span></span><br><span class="line"><span class="hljs-comment">     * same ID will share the same connection.</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@see</span> http://ca2.php.net/manual/en/memcached.construct.php</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-keyword">public</span> $persistentId;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@var</span> array options for Memcached. This property is used only when [[useMemcached]] is true.</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@see</span> http://ca2.php.net/manual/en/memcached.setoptions.php</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-keyword">public</span> $options;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@var</span> string memcached sasl username. This property is used only when [[useMemcached]] is true.</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@see</span> http://php.net/manual/en/memcached.setsaslauthdata.php</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-keyword">public</span> $username;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@var</span> string memcached sasl password. This property is used only when [[useMemcached]] is true.</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@see</span> http://php.net/manual/en/memcached.setsaslauthdata.php</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-keyword">public</span> $password;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@var</span> \Memcache|\Memcached the Memcache instance</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-keyword">private</span> $_cache;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@var</span> array list of memcache server configurations</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-keyword">private</span> $_servers = [];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * Initializes this application component.</span></span><br><span class="line"><span class="hljs-comment">     * It creates the memcache instance and adds memcache servers.</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">init</span><span class="hljs-params">()</span></span></span><br><span class="line"><span class="hljs-function">    </span>{</span><br><span class="line">        <span class="hljs-keyword">parent</span>::init();</span><br><span class="line">        <span class="hljs-keyword">$this</span>-&gt;addServers(<span class="hljs-keyword">$this</span>-&gt;getMemcache(), <span class="hljs-keyword">$this</span>-&gt;getServers());</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * Add servers to the server pool of the cache specified</span></span><br><span class="line"><span class="hljs-comment">     *</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> \Memcache|\Memcached $cache</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> MemCacheServer[] $servers</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@throws</span> InvalidConfigException</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">addServers</span><span class="hljs-params">($cache, $servers)</span></span></span><br><span class="line"><span class="hljs-function">    </span>{</span><br><span class="line">        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>($servers)) {</span><br><span class="line">            $servers = [<span class="hljs-keyword">new</span> MemCacheServer([</span><br><span class="line">                <span class="hljs-string">'host'</span> =&gt; <span class="hljs-string">'127.0.0.1'</span>,</span><br><span class="line">                <span class="hljs-string">'port'</span> =&gt; <span class="hljs-number">11211</span>,</span><br><span class="line">            ])];</span><br><span class="line">        } <span class="hljs-keyword">else</span> {</span><br><span class="line">            <span class="hljs-keyword">foreach</span> ($servers <span class="hljs-keyword">as</span> $server) {</span><br><span class="line">                <span class="hljs-keyword">if</span> ($server-&gt;host === <span class="hljs-keyword">null</span>) {</span><br><span class="line">                    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> InvalidConfigException(<span class="hljs-string">"The 'host' property must be specified for every memcache server."</span>);</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;useMemcached) {</span><br><span class="line">            <span class="hljs-keyword">$this</span>-&gt;addMemcachedServers($cache, $servers);</span><br><span class="line">        } <span class="hljs-keyword">else</span> {</span><br><span class="line">            <span class="hljs-keyword">$this</span>-&gt;addMemcacheServers($cache, $servers);</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * Add servers to the server pool of the cache specified</span></span><br><span class="line"><span class="hljs-comment">     * Used for memcached PECL extension.</span></span><br><span class="line"><span class="hljs-comment">     *</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> \Memcached $cache</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> MemCacheServer[] $servers</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">addMemcachedServers</span><span class="hljs-params">($cache, $servers)</span></span></span><br><span class="line"><span class="hljs-function">    </span>{</span><br><span class="line">        $existingServers = [];</span><br><span class="line">        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;persistentId !== <span class="hljs-keyword">null</span>) {</span><br><span class="line">            <span class="hljs-keyword">foreach</span> ($cache-&gt;getServerList() <span class="hljs-keyword">as</span> $s) {</span><br><span class="line">                $existingServers[$s[<span class="hljs-string">'host'</span>] . <span class="hljs-string">':'</span> . $s[<span class="hljs-string">'port'</span>]] = <span class="hljs-keyword">true</span>;</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        <span class="hljs-keyword">foreach</span> ($servers <span class="hljs-keyword">as</span> $server) {</span><br><span class="line">            <span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>($existingServers) || !<span class="hljs-keyword">isset</span>($existingServers[$server-&gt;host . <span class="hljs-string">':'</span> . $server-&gt;port])) {</span><br><span class="line">                $cache-&gt;addServer($server-&gt;host, $server-&gt;port, $server-&gt;weight);</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * Add servers to the server pool of the cache specified</span></span><br><span class="line"><span class="hljs-comment">     * Used for memcache PECL extension.</span></span><br><span class="line"><span class="hljs-comment">     *</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> \Memcache $cache</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> MemCacheServer[] $servers</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">addMemcacheServers</span><span class="hljs-params">($cache, $servers)</span></span></span><br><span class="line"><span class="hljs-function">    </span>{</span><br><span class="line">        $class = <span class="hljs-keyword">new</span> \ReflectionClass($cache);</span><br><span class="line">        $paramCount = $class-&gt;getMethod(<span class="hljs-string">'addServer'</span>)-&gt;getNumberOfParameters();</span><br><span class="line">        <span class="hljs-keyword">foreach</span> ($servers <span class="hljs-keyword">as</span> $server) {</span><br><span class="line">            <span class="hljs-comment">// $timeout is used for memcache versions that do not have $timeoutms parameter</span></span><br><span class="line">            $timeout = (int)($server-&gt;timeout / <span class="hljs-number">1000</span>) + (($server-&gt;timeout % <span class="hljs-number">1000</span> &gt; <span class="hljs-number">0</span>) ? <span class="hljs-number">1</span> : <span class="hljs-number">0</span>);</span><br><span class="line">            <span class="hljs-keyword">if</span> ($paramCount === <span class="hljs-number">9</span>) {</span><br><span class="line">                $cache-&gt;addserver(</span><br><span class="line">                    $server-&gt;host,</span><br><span class="line">                    $server-&gt;port,</span><br><span class="line">                    $server-&gt;persistent,</span><br><span class="line">                    $server-&gt;weight,</span><br><span class="line">                    $timeout,</span><br><span class="line">                    $server-&gt;retryInterval,</span><br><span class="line">                    $server-&gt;status,</span><br><span class="line">                    $server-&gt;failureCallback,</span><br><span class="line">                    $server-&gt;timeout</span><br><span class="line">                );</span><br><span class="line">            } <span class="hljs-keyword">else</span> {</span><br><span class="line">                $cache-&gt;addserver(</span><br><span class="line">                    $server-&gt;host,</span><br><span class="line">                    $server-&gt;port,</span><br><span class="line">                    $server-&gt;persistent,</span><br><span class="line">                    $server-&gt;weight,</span><br><span class="line">                    $timeout,</span><br><span class="line">                    $server-&gt;retryInterval,</span><br><span class="line">                    $server-&gt;status,</span><br><span class="line">                    $server-&gt;failureCallback</span><br><span class="line">                );</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * Returns the underlying memcache (or memcached) object.</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span> \Memcache|\Memcached the memcache (or memcached) object used by this cache component.</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@throws</span> InvalidConfigException if memcache or memcached extension is not loaded</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getMemcache</span><span class="hljs-params">()</span></span></span><br><span class="line"><span class="hljs-function">    </span>{</span><br><span class="line">        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;_cache === <span class="hljs-keyword">null</span>) {</span><br><span class="line">            $extension = <span class="hljs-keyword">$this</span>-&gt;useMemcached ? <span class="hljs-string">'memcached'</span> : <span class="hljs-string">'memcache'</span>;</span><br><span class="line">            <span class="hljs-keyword">if</span> (!extension_loaded($extension)) {</span><br><span class="line">                <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> InvalidConfigException(<span class="hljs-string">"MemCache requires PHP $extension extension to be loaded."</span>);</span><br><span class="line">            }</span><br><span class="line"></span><br><span class="line">            <span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;useMemcached) {</span><br><span class="line">                <span class="hljs-keyword">$this</span>-&gt;_cache = <span class="hljs-keyword">$this</span>-&gt;persistentId !== <span class="hljs-keyword">null</span> ? <span class="hljs-keyword">new</span> \Memcached(<span class="hljs-keyword">$this</span>-&gt;persistentId) : <span class="hljs-keyword">new</span> \Memcached;</span><br><span class="line">                <span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;username !== <span class="hljs-keyword">null</span> || <span class="hljs-keyword">$this</span>-&gt;password !== <span class="hljs-keyword">null</span>) {</span><br><span class="line">                    <span class="hljs-keyword">$this</span>-&gt;_cache-&gt;setOption(\Memcached::OPT_BINARY_PROTOCOL, <span class="hljs-keyword">true</span>);</span><br><span class="line">                    <span class="hljs-keyword">$this</span>-&gt;_cache-&gt;setSaslAuthData(<span class="hljs-keyword">$this</span>-&gt;username, <span class="hljs-keyword">$this</span>-&gt;password);</span><br><span class="line">                }</span><br><span class="line">                <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">empty</span>(<span class="hljs-keyword">$this</span>-&gt;options)) {</span><br><span class="line">                    <span class="hljs-keyword">$this</span>-&gt;_cache-&gt;setOptions(<span class="hljs-keyword">$this</span>-&gt;options);</span><br><span class="line">                }</span><br><span class="line">            } <span class="hljs-keyword">else</span> {</span><br><span class="line">                <span class="hljs-keyword">$this</span>-&gt;_cache = <span class="hljs-keyword">new</span> \Memcache;</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_cache;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * Returns the memcache or memcached server configurations.</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span> MemCacheServer[] list of memcache server configurations.</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getServers</span><span class="hljs-params">()</span></span></span><br><span class="line"><span class="hljs-function">    </span>{</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_servers;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> array $config list of memcache or memcached server configurations. Each element must be an array</span></span><br><span class="line"><span class="hljs-comment">     * with the following keys: host, port, persistent, weight, timeout, retryInterval, status.</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@see</span> http://php.net/manual/en/memcache.addserver.php</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@see</span> http://php.net/manual/en/memcached.addserver.php</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">setServers</span><span class="hljs-params">($config)</span></span></span><br><span class="line"><span class="hljs-function">    </span>{</span><br><span class="line">        <span class="hljs-keyword">foreach</span> ($config <span class="hljs-keyword">as</span> $c) {</span><br><span class="line">            <span class="hljs-keyword">$this</span>-&gt;_servers[] = <span class="hljs-keyword">new</span> MemCacheServer($c);</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * Retrieves a value from cache with a specified key.</span></span><br><span class="line"><span class="hljs-comment">     * This is the implementation of the method declared in the parent class.</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> string $key a unique key identifying the cached value</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span> mixed|false the value stored in cache, false if the value is not in the cache or expired.</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getValue</span><span class="hljs-params">($key)</span></span></span><br><span class="line"><span class="hljs-function">    </span>{</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_cache-&gt;get($key);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * Retrieves multiple values from cache with the specified keys.</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> array $keys a list of keys identifying the cached values</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span> array a list of cached values indexed by the keys</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getValues</span><span class="hljs-params">($keys)</span></span></span><br><span class="line"><span class="hljs-function">    </span>{</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;useMemcached ? <span class="hljs-keyword">$this</span>-&gt;_cache-&gt;getMulti($keys) : <span class="hljs-keyword">$this</span>-&gt;_cache-&gt;get($keys);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * Stores a value identified by a key in cache.</span></span><br><span class="line"><span class="hljs-comment">     * This is the implementation of the method declared in the parent class.</span></span><br><span class="line"><span class="hljs-comment">     *</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> string $key the key identifying the value to be cached</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> mixed $value the value to be cached.</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@see</span> [Memcache::set()](http://php.net/manual/en/memcache.set.php)</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> int $duration the number of seconds in which the cached value will expire. 0 means never expire.</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span> bool true if the value is successfully stored into cache, false otherwise</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">setValue</span><span class="hljs-params">($key, $value, $duration)</span></span></span><br><span class="line"><span class="hljs-function">    </span>{</span><br><span class="line">        <span class="hljs-comment">// Use UNIX timestamp since it doesn't have any limitation</span></span><br><span class="line">        <span class="hljs-comment">// @see http://php.net/manual/en/memcache.set.php</span></span><br><span class="line">        <span class="hljs-comment">// @see http://php.net/manual/en/memcached.expiration.php</span></span><br><span class="line">        $expire = $duration;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;useMemcached ? <span class="hljs-keyword">$this</span>-&gt;_cache-&gt;set($key, $value, $expire) : <span class="hljs-keyword">$this</span>-&gt;_cache-&gt;set($key, $value, <span class="hljs-number">0</span>, $expire);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * Stores multiple key-value pairs in cache.</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> array $data array where key corresponds to cache key while value is the value stored</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> int $duration the number of seconds in which the cached values will expire. 0 means never expire.</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span> array array of failed keys. Always empty in case of using memcached.</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">setValues</span><span class="hljs-params">($data, $duration)</span></span></span><br><span class="line"><span class="hljs-function">    </span>{</span><br><span class="line">        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;useMemcached) {</span><br><span class="line">            <span class="hljs-comment">// Use UNIX timestamp since it doesn't have any limitation</span></span><br><span class="line">            <span class="hljs-comment">// @see http://php.net/manual/en/memcache.set.php</span></span><br><span class="line">            <span class="hljs-comment">// @see http://php.net/manual/en/memcached.expiration.php</span></span><br><span class="line">            $expire = $duration;</span><br><span class="line">            <span class="hljs-keyword">$this</span>-&gt;_cache-&gt;setMulti($data, $expire);</span><br><span class="line"></span><br><span class="line">            <span class="hljs-keyword">return</span> [];</span><br><span class="line">        } <span class="hljs-keyword">else</span> {</span><br><span class="line">            <span class="hljs-keyword">return</span> <span class="hljs-keyword">parent</span>::setValues($data, $duration);</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * Stores a value identified by a key into cache if the cache does not contain this key.</span></span><br><span class="line"><span class="hljs-comment">     * This is the implementation of the method declared in the parent class.</span></span><br><span class="line"><span class="hljs-comment">     *</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> string $key the key identifying the value to be cached</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> mixed $value the value to be cached</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@see</span> [Memcache::set()](http://php.net/manual/en/memcache.set.php)</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> int $duration the number of seconds in which the cached value will expire. 0 means never expire.</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span> bool true if the value is successfully stored into cache, false otherwise</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">addValue</span><span class="hljs-params">($key, $value, $duration)</span></span></span><br><span class="line"><span class="hljs-function">    </span>{</span><br><span class="line">        <span class="hljs-comment">// Use UNIX timestamp since it doesn't have any limitation</span></span><br><span class="line">        <span class="hljs-comment">// @see http://php.net/manual/en/memcache.set.php</span></span><br><span class="line">        <span class="hljs-comment">// @see http://php.net/manual/en/memcached.expiration.php</span></span><br><span class="line">        $expire = $duration;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;useMemcached ? <span class="hljs-keyword">$this</span>-&gt;_cache-&gt;add($key, $value, $expire) : <span class="hljs-keyword">$this</span>-&gt;_cache-&gt;add($key, $value, <span class="hljs-number">0</span>, $expire);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * Deletes a value with the specified key from cache</span></span><br><span class="line"><span class="hljs-comment">     * This is the implementation of the method declared in the parent class.</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> string $key the key of the value to be deleted</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span> bool if no error happens during deletion</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">deleteValue</span><span class="hljs-params">($key)</span></span></span><br><span class="line"><span class="hljs-function">    </span>{</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_cache-&gt;delete($key, <span class="hljs-number">0</span>);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * Deletes all values from cache.</span></span><br><span class="line"><span class="hljs-comment">     * This is the implementation of the method declared in the parent class.</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span> bool whether the flush operation was successful.</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">flushValues</span><span class="hljs-params">()</span></span></span><br><span class="line"><span class="hljs-function">    </span>{</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_cache-&gt;flush();</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+<p>配置缓存时使用以下代码</p>
+<figure class="highlight php hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-string">'class'</span> =&gt; <span class="hljs-string">'app\components\MemCache'</span>,</span><br><span class="line"><span class="hljs-string">'useMemcached'</span> =&gt; <span class="hljs-keyword">false</span>,</span><br><span class="line"><span class="hljs-string">'servers'</span> =&gt; [</span><br><span class="line">    [<span class="hljs-string">'host'</span> =&gt; <span class="hljs-string">'127.0.0.1'</span>, <span class="hljs-string">'port'</span> =&gt; <span class="hljs-number">11211</span>]</span><br><span class="line">]</span><br></pre></td></tr></tbody></table></figure></body></html>
+            </div>
+            
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/yii/" rel="tag">yii</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <div class="social-share" data-disabled="qzone,facebook,twitter,tencent,linkedin,douban,diandian,google"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev"
+                href="/2017/05/23/nginx-proxy-websocket-cors.html">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">nginx反向代理websocket支持跨域</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next"
+                href="/2017/04/26/log4php-syslog.html">
+                <span class="level-item">log4php使用syslog记录日志</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '1ae09f5aa5dcce937e94',
+        clientSecret: '55c4032692dbcb0ee13771da7dc95f22cf9ae8e1',
+        id: 'e86e915da71edf5b987fcc3a5d05d444',
+        repo: 'xialeistudio.github.io',
+        owner: 'xialeistudio',
+        language: 'en',
+        admin: "xialeistudio",
+        createIssueManually: false,
+        distractionFreeMode: false
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-3-desktop is-3-widescreen  has-order-3 column-right ">
+    
+        
+    
+        
+    
+        
+
+    
+        
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Catalogue
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#解决方案">
+        <span class="has-mr-6">1</span>
+        <span>解决方案</span>
+        </a></li></ul>
+        </div>
+    </div>
+</div>
+
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                    
+                        Learning &amp; Sharing
+                            
+                </a>
+                <p class="is-size-7">
+                    &copy; 2023
+                        xialeistudio&nbsp;
+                            Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                                href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                            
+                </p>
+                <p class="is-size-7">
+                    
+                </p>
+            </div>
+            <div class="level-end">
+                
+                    <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                        
+                            
+                                <p class="control">
+                                    <a class="button is-white is-large"
+                                        target="_blank" title="Creative Commons"
+                                        href="https://creativecommons.org/">
+                                        
+                                                    <i class="fab fa-creative-commons"></i>
+                                                    
+                                    </a>
+                                </p>
+                                
+                                <p class="control">
+                                    <a class="button is-white is-large"
+                                        target="_blank" title="Attribution 4.0 International"
+                                        href="https://creativecommons.org/licenses/by/4.0/">
+                                        
+                                                    <i class="fab fa-creative-commons-by"></i>
+                                                    
+                                    </a>
+                                </p>
+                                
+                                <p class="control">
+                                    <a class="button is-white is-large"
+                                        target="_blank" title="GitHub"
+                                        href="https://github.com/xialeistudio">
+                                        
+                                                    <i class="fab fa-github"></i>
+                                                    
+                                    </a>
+                                </p>
+                                
+                    </div>
+                    
+            </div>
+        </div>
+    </div>
+</footer>
+
+        <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        const config = {
+                startOnLoad: true,
+                theme: 'forest',
+                securityLevel: 'loose',
+            };
+            mermaid.initialize(config);
+      </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+<script>
+    var IcarusThemeSettings = {
+        article: {
+            highlight: {
+                clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+    
+    <script src="/js/animation.js"></script>
+    
+
+
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

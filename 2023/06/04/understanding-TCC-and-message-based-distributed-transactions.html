@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html  lang="en">
+<head>
+    <meta charset="utf-8" />
+
+    <meta name="generator" content="Hexo 4.2.1" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<meta name="description" content="Learning & Sharing Java/JVM/Spring Boot/Node.js/Golang/Javascript/CSS/HTML/OOP/Design Pattern/AWS/Microservices/Docker/Kubernetes/PHP/Yii2/koa/express/Nest.js/MySQL/Redis/Vue/React/Swift/Kotlin/Cordova/iOS/anroid Knowledge" />
+<meta name="keywords" content="Java/JVM/Spring Boot/Node.js/Golang/Javascript/CSS/HTML/OOP/Design Pattern/AWS/Microservices/Docker/Kubernetes/PHP/Yii2/koa/express/Nest.js/MySQL/Redis/Vue/React/Swift/Kotlin/Cordova/iOS/anroid" />
+
+<title>
+    Understanding TCC in distributed transactions - Xia Lei
+</title>
+
+
+
+
+
+
+    <link rel="alternative" href="/"
+          title="Understanding TCC in distributed transactions" type="application/atom+xml">
+
+
+
+    <link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link href="https://fonts.cdnfonts.com/css/amazon-ember" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+        
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+        
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+        
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+        
+    
+        
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+        
+<script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?78141f99bbb49f1564a7af89344f5add";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                Learning &amp; Sharing
+                
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                    href="/">Home</a>
+                
+                <a class="navbar-item"
+                    href="/archives">Archives</a>
+                
+                <a class="navbar-item"
+                    href="/categories">Categories</a>
+                
+                <a class="navbar-item"
+                    href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                
+                
+                <a class="navbar-item" target="_blank" title="GitHub"
+                    href="https://github.com/xialeistudio">
+                    
+                    <i class="fab fa-github"></i>
+                    
+                </a>
+                
+                
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-9-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2023-06-04T06:58:33.000Z">2023-06-04</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/engineering/">engineering</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    6 minutes read (About 974 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            Understanding TCC in distributed transactions
+            
+        </h1>
+        <div class="content">
+            
+            <div id="container">
+                <html><head></head><body><p>A <strong>distributed transaction</strong> is a <a href="https://en.wikipedia.org/wiki/Database_transaction" target="_blank" rel="noopener">database transaction</a> in which two or more network hosts are involved.  </p>
+<p>As we know, network and hosts may unreachable due to some reasons, like power failure, hardware malfunction, etc. </p>
+<p>In this article, I’ll share how to implement distributed transaction with TCC.</p>
+<a id="more"></a>
+<h2 id="Problem"><a href="#Problem" class="headerlink" title="Problem"></a>Problem</h2><p>Imaging you are developing an e-commercial application. Typically, there are many services, including OrderService, StockService, ProductService. If customer buys some product and create an order, we need to create an order and reduct the stock of these products.</p>
+<p>The following sequence diagram shows that if everything goes ok, it will create an order and ACID is ensured.</p>
+<pre class="mermaid">sequenceDiagram
+Customer-&gt;&gt;+OrderService: Create an order
+OrderService-&gt;&gt;+Order Database: Start transaction
+Order Database--&gt;&gt;-OrderService: Transaction started
+OrderService-&gt;&gt;+Order Database: Store order
+Order Database--&gt;&gt;-OrderService: Order stored
+OrderService-&gt;&gt;+StockService: Reduct stock of product
+StockService--&gt;&gt;-OrderService: Operation succeed
+OrderService-&gt;&gt;+Order Database: Commit transaction
+Order Database--&gt;&gt;-OrderService: Transaction committed
+OrderService--&gt;&gt;-Customer: Order created</pre>
+
+<p>If database or downstream service fails, we can do a simple rollback to database and OrderService, that seems good. But network and hosts maybe unreachable, our rollback maybe lost. So what will happen? Nobody knows, maybe there is no order created, but stock still reduced, this is a terrible thing!</p>
+<p>The following sequence diagram shows the transaction rollback but the stock reduced, which causes a inconsistency and breaks ACID. </p>
+<pre class="mermaid">sequenceDiagram
+Customer-&gt;&gt;+OrderService: Create an order
+OrderService-&gt;&gt;+Order Database: Start transaction
+Order Database--&gt;&gt;-OrderService: Transaction started
+OrderService-&gt;&gt;+Order Database: Store order
+Order Database--&gt;&gt;-OrderService: Order stored
+OrderService-&gt;&gt;+StockService: Reduct stock of product
+StockService--&gt;&gt;-OrderService: Operation succeed
+OrderService--&gt;&gt;OrderService: Internal operation failed
+OrderService-x StockService: Rollback
+OrderService-&gt;&gt;+Order Database: Rollback transaction
+Order Database--&gt;&gt;-OrderService: Transaction rollbacked
+OrderService--&gt;&gt;-Customer: Order creation failed</pre>
+
+<h2 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h2><p>TCC represents Try-Confirm-Cancel, any resource in distributed transaction should provide three stage:</p>
+<ul>
+<li>Try: Try to allocate resource for future use</li>
+<li>Confirm: All operation at stage <strong>Try</strong> are succeed, commit the distributed transaction</li>
+<li>Cancel: Something wrong, rollback</li>
+</ul>
+<p>Take the e-commerce order just now as an example, the following sequence diagram shows the whole process in TCC.</p>
+<pre class="mermaid">sequenceDiagram
+Customer-&gt;&gt;+OrderService: Create an order
+OrderService-&gt;&gt;+Order Database: Try: Store order<executing>
+Order Database--&gt;&gt;-OrderService: Order stored
+alt Successful path
+OrderService-&gt;&gt;+StockService: Try: Reserve some stock
+StockService--&gt;&gt;-OrderService: Stock reserved
+OrderService-&gt;&gt;+StockService: Confirm: Mark stock reduced
+StockService--&gt;&gt;-OrderService: Stock reduced
+OrderService-&gt;&gt;+Order Database: Confirm: Modify order status<succeed>
+Order Database--&gt;&gt;-OrderService: Order modified
+else Failure path
+OrderService-&gt;&gt;+StockService: Try: Reserve some stock
+StockService--&gt;&gt;-OrderService: Stock reserved
+OrderService-xStockService: Confirm: Mark stock reduced
+OrderService-&gt;&gt;+StockService: Cancel: Restore stock
+StockService--&gt;&gt;-OrderService: Stock restored
+OrderService-&gt;&gt;+Order Database: Cancel: Modify order status<failed>
+Order Database--&gt;&gt;-OrderService: Order modified
+end
+OrderService--&gt;&gt;-Customer: Order created or failed</failed></succeed></executing></pre>
+
+<p>If everything goes ok, our Try-Confirm will execute successfully, database is consistent, if something fails, our Try-Cancel will handle this situation, database is also consisten. But as mentioned above, network and hosts maybe unreachable, so our commit or rollback will lost.</p>
+<h3 id="General-Problems"><a href="#General-Problems" class="headerlink" title="General Problems"></a>General Problems</h3><p>I’ll show some general problems and associated solution with TCC.</p>
+<ol>
+<li><p>Order creation with EXECUTING state fails</p>
+<p>Local transaction will rollback, make sense!</p>
+</li>
+<li><p>Call StockService to reverse some stocks fails</p>
+<p>Local transaction will rollback, and a rollback also send to StockService, StockService can do rollback or do nothing</p>
+</li>
+<li><p>Call StockService to reverse some stocks successfully, but reply of StockService lost</p>
+<p>This will cause Try to timeout, local transaction will rollback and a following rollback will send to StockService, StockService can do rollback.</p>
+</li>
+</ol>
+<p>To solve some temporary problem, we can do retry. There are two points we need to considerate when do retry.</p>
+<p><strong>Idempotency</strong></p>
+<p>Idempotency means that no matter how many requests are made, the result is the same as the first successful request.</p>
+<p>For example, we want to reserve 10 units of a product,  no matter how many times we call Try to StockService, finally only 10 units are reserved.</p>
+<p>For every order, we create a unique id as idempotent key, and send to StockService, so if StockService processed current request, it will simply return the previous result.</p>
+<p><strong>Retry delay</strong></p>
+<p>There are many delay strategies:</p>
+<ul>
+<li>Immediately retry. Once previous request failed, do a retry immediately, this is not a good choice which may cause downstream service overload</li>
+<li>Fixed rate retry. Retry with a fixed rate like 10ms.</li>
+<li>Incremental retry. Every retry will increase delay sequentially, for example, sleep 10ms, 20ms, 30ms</li>
+<li>Expotential backoff retry.  Every retry will increase delay expotentially, for example, sleep 10ms, 20ms, 40ms</li>
+</ul>
+<h3 id="Special-Problems"><a href="#Special-Problems" class="headerlink" title="Special Problems"></a>Special Problems</h3><p>Due to network issue, there are some special problems.</p>
+<p><strong>Empty Rollback</strong></p>
+<p>Try did not execute, but Cancel executed. </p>
+<p>The following steps show how <strong>empty rollback</strong> occurs.</p>
+<ol>
+<li>Make a Try to downstream (packet lost)</li>
+<li>Transaction rollback, make a Cancel to downstream</li>
+<li>Downstream receives Cancel</li>
+</ol>
+<p>The Cancel operaiton of downstream will fail because of no cancellable record found, but if we responses fail to upstream, upstream will do a retry which is a useless operation. So in Empty Rollback situation, we need to response success to upstream and downstream service do nothing to avoid network and compute resource waste.</p>
+<p><strong>Hanging transaction</strong></p>
+<p>Handing transaction means because of network issues, Cancel is executed before Try, if not handled properly, may result in inconsistencies.</p>
+<p>The following steps show how <strong>Haning transaction</strong> occurs.</p>
+<ol>
+<li>Make a Try to downstream(congested network)</li>
+<li>Transaction rollback due to timeout of Try, make a Cancel to downstream</li>
+<li>Downstream receives Cancel, do nothing but respond success</li>
+<li>Downstream receives Congested Try, reserve resource</li>
+</ol>
+<p>To solve this problem, downstream service need to record that current transaction was handled(by record transactionId) before reply Cancel call to upstream. Once Try received, check whether the current transaction has been handled. </p>
+<h2 id="Wrap-Up"><a href="#Wrap-Up" class="headerlink" title="Wrap Up"></a>Wrap Up</h2><p>TCC is a good solution to implement distributed transaction in which there also are some problems. Idempotency and proper Retry make TCC better.</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li>[1] <a href="https://en.wikipedia.org/wiki/Distributed_transaction" target="_blank" rel="noopener">Distributed transaction</a></li>
+</ul>
+</body></html>
+            </div>
+            
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/distributing/" rel="tag">distributing</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <div class="social-share" data-disabled="qzone,facebook,twitter,tencent,linkedin,douban,diandian,google"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next"
+                href="/2023/05/16/minimum-difficulty-of-a-job-schedule.html">
+                <span class="level-item">Minimum difficulty of a job schedule</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '1ae09f5aa5dcce937e94',
+        clientSecret: '55c4032692dbcb0ee13771da7dc95f22cf9ae8e1',
+        id: 'ead92242bdbec052b22adef6d63cbf77',
+        repo: 'xialeistudio.github.io',
+        owner: 'xialeistudio',
+        language: 'en',
+        admin: "xialeistudio",
+        createIssueManually: false,
+        distractionFreeMode: false
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-3-desktop is-3-widescreen  has-order-3 column-right ">
+    
+        
+    
+        
+    
+        
+
+    
+        
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Catalogue
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#Problem">
+        <span class="has-mr-6">1</span>
+        <span>Problem</span>
+        </a></li><li>
+        <a class="is-flex" href="#Solution">
+        <span class="has-mr-6">2</span>
+        <span>Solution</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#General-Problems">
+        <span class="has-mr-6">2.1</span>
+        <span>General Problems</span>
+        </a></li><li>
+        <a class="is-flex" href="#Special-Problems">
+        <span class="has-mr-6">2.2</span>
+        <span>Special Problems</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#Wrap-Up">
+        <span class="has-mr-6">3</span>
+        <span>Wrap Up</span>
+        </a></li><li>
+        <a class="is-flex" href="#Reference">
+        <span class="has-mr-6">4</span>
+        <span>Reference</span>
+        </a></li></ul>
+        </div>
+    </div>
+</div>
+
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                    
+                        Learning &amp; Sharing
+                            
+                </a>
+                <p class="is-size-7">
+                    &copy; 2023
+                        xialeistudio&nbsp;
+                            Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                                href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                            
+                </p>
+                <p class="is-size-7">
+                    
+                </p>
+            </div>
+            <div class="level-end">
+                
+                    <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                        
+                            
+                                <p class="control">
+                                    <a class="button is-white is-large"
+                                        target="_blank" title="Creative Commons"
+                                        href="https://creativecommons.org/">
+                                        
+                                                    <i class="fab fa-creative-commons"></i>
+                                                    
+                                    </a>
+                                </p>
+                                
+                                <p class="control">
+                                    <a class="button is-white is-large"
+                                        target="_blank" title="Attribution 4.0 International"
+                                        href="https://creativecommons.org/licenses/by/4.0/">
+                                        
+                                                    <i class="fab fa-creative-commons-by"></i>
+                                                    
+                                    </a>
+                                </p>
+                                
+                                <p class="control">
+                                    <a class="button is-white is-large"
+                                        target="_blank" title="GitHub"
+                                        href="https://github.com/xialeistudio">
+                                        
+                                                    <i class="fab fa-github"></i>
+                                                    
+                                    </a>
+                                </p>
+                                
+                    </div>
+                    
+            </div>
+        </div>
+    </div>
+</footer>
+
+        <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        const config = {
+                startOnLoad: true,
+                theme: 'forest',
+                securityLevel: 'loose',
+            };
+            mermaid.initialize(config);
+      </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+<script>
+    var IcarusThemeSettings = {
+        article: {
+            highlight: {
+                clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+    
+    <script src="/js/animation.js"></script>
+    
+
+
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

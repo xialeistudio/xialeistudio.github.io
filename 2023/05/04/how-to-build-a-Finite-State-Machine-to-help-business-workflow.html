@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html  lang="en">
+<head>
+    <meta charset="utf-8" />
+
+    <meta name="generator" content="Hexo 4.2.1" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<meta name="description" content="Learning & Sharing Java/JVM/Spring Boot/Node.js/Golang/Javascript/CSS/HTML/OOP/Design Pattern/AWS/Microservices/Docker/Kubernetes/PHP/Yii2/koa/express/Nest.js/MySQL/Redis/Vue/React/Swift/Kotlin/Cordova/iOS/anroid Knowledge" />
+<meta name="keywords" content="Java/JVM/Spring Boot/Node.js/Golang/Javascript/CSS/HTML/OOP/Design Pattern/AWS/Microservices/Docker/Kubernetes/PHP/Yii2/koa/express/Nest.js/MySQL/Redis/Vue/React/Swift/Kotlin/Cordova/iOS/anroid" />
+
+<title>
+    How to build a Finite State Machine to help business workflow - Xia Lei
+</title>
+
+
+
+
+
+
+    <link rel="alternative" href="/"
+          title="How to build a Finite State Machine to help business workflow" type="application/atom+xml">
+
+
+
+    <link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link href="https://fonts.cdnfonts.com/css/amazon-ember" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+        
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+        
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+        
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+        
+    
+        
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+        
+<script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?78141f99bbb49f1564a7af89344f5add";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                Learning &amp; Sharing
+                
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                    href="/">Home</a>
+                
+                <a class="navbar-item"
+                    href="/archives">Archives</a>
+                
+                <a class="navbar-item"
+                    href="/categories">Categories</a>
+                
+                <a class="navbar-item"
+                    href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                
+                
+                <a class="navbar-item" target="_blank" title="GitHub"
+                    href="https://github.com/xialeistudio">
+                    
+                    <i class="fab fa-github"></i>
+                    
+                </a>
+                
+                
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-9-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2023-05-04T09:16:00.000Z">2023-05-04</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/Engineering/">Engineering</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    6 minutes read (About 848 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            How to build a Finite State Machine to help business workflow
+            
+        </h1>
+        <div class="content">
+            
+            <div id="container">
+                <html><head></head><body><p>This is the first article written in English. In this article, I’ll share how to build a Finite State Machine(FSM) to help business workflow transition, such as auditing.</p>
+<blockquote>
+<p>A <strong>finite-state machine</strong> (<strong>FSM</strong>) or <strong>finite-state automaton</strong> (<strong>FSA</strong>, plural: <em>automata</em>), <strong>finite automaton</strong>, or simply a <strong>state machine</strong>, is a mathematical <a href="https://en.wikipedia.org/wiki/Model_of_computation" target="_blank" rel="noopener">model of computation</a>. It is an <a href="https://en.wikipedia.org/wiki/Abstract_machine" target="_blank" rel="noopener">abstract machine</a> that can be in exactly one of a finite number of <em><a href="https://en.wikipedia.org/wiki/State_(computer_science" target="_blank" rel="noopener">states</a>)</em> at any given time. The FSM can change from one state to another in response to some <a href="https://en.wikipedia.org/wiki/Input_(computer_science" target="_blank" rel="noopener">inputs</a>); the change from one state to another is called a <em>transition</em></p>
+<p><strong><em>Wikipedia</em></strong> - <strong><a href="https://en.wikipedia.org/wiki/Finite-state_machine" target="_blank" rel="noopener">Finite-state machine</a></strong></p>
+</blockquote>
+<a id="more"></a>
+<h2 id="Situation"><a href="#Situation" class="headerlink" title="Situation"></a>Situation</h2><p>Imaging you are working at a E-Commercial company, if you want to publish a new product to production environment, you need to submit a <strong>AuditRequest</strong> first, then your manager will accept or reject this AuditRequest. If your manager accept, you can publish your product, so anyone can see it.</p>
+<p>In this case, the state of the product transited many times, show as the following graph.</p>
+<pre class="mermaid">stateDiagram
+direction LR
+[*] --&gt; Unpublished
+Unpublished --&gt; Auditing: Apply auditing
+Auditing --&gt; AuditAccepted: Accept
+Auditing --&gt; AuditRejected: Reject
+AuditAccepted --&gt; Published: Publish
+AuditRejected --&gt; [*]
+Published --&gt; [*]</pre>
+
+
+
+
+<h2 id="Definition-of-Terms"><a href="#Definition-of-Terms" class="headerlink" title="Definition of Terms"></a>Definition of Terms</h2><ul>
+<li>FromState: the current state of an entity. In the example above, at the beginning, the state is <strong>Unpublished</strong>.</li>
+<li>Event: the event to transit to next state. There is an <strong>Apply auditing</strong> event triggered by you.</li>
+<li>ToState: the next state.  There is an <strong>Auditing</strong> state.</li>
+<li>Action: action to execute. This action will change the state of the product from <strong>FromState</strong> and <strong>ToState</strong>, and action allows to do more things such as sending a HTTP request to an audit platform.</li>
+<li>Transition: A record represents from <strong>FromState</strong> to <strong>ToState</strong> through <strong>Event</strong> with <strong>Action</strong>.</li>
+</ul>
+<h2 id="Implementing"><a href="#Implementing" class="headerlink" title="Implementing"></a>Implementing</h2><p>How to implement this FSM? Essentially, we can think of it as a directed cyclic graph, each Node is a state, each edge is a event. So we can use some data structure and algorithm of graph to implement this. </p>
+<p>The following are the implementation steps:</p>
+<ol>
+<li>Config the state machine, usually we can query the all the transitions from database, so we can config it freely.</li>
+<li>Make a <code>Map&lt;FromState, Map&lt;Event, Pair&lt;ToState, List&lt;Action&gt;&gt;&gt;&gt;</code> map, it represents the graph.</li>
+<li>Query current state of product and event, we can get event name from <strong>requestURI</strong>.</li>
+<li>Find the next <code>Pair</code> in Map, by current state and event.</li>
+</ol>
+<p>The following is the implementation of the java language.</p>
+<figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br></pre></td><td class="code"><pre><span class="line">	<span class="hljs-comment">// Action.java</span></span><br><span class="line"><span class="hljs-keyword">package</span> org.example;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="hljs-meta">@FunctionalInterface</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Action</span> </span>{</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">run</span><span class="hljs-params">()</span></span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// ApplyAuditAction.java</span></span><br><span class="line"><span class="hljs-keyword">package</span> org.example.actions;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">import</span> org.example.Action;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// send http request to apply an audit</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ApplyAuditAction</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Action</span> </span>{</span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run</span><span class="hljs-params">()</span> </span>{</span><br><span class="line">        System.out.println(<span class="hljs-string">"mock send HTTP request"</span>);</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// AuditController.java</span></span><br><span class="line"><span class="hljs-keyword">package</span> org.example;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AuditController</span> </span>{</span><br><span class="line">    Repository repository;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">apply</span><span class="hljs-params">(<span class="hljs-keyword">int</span> productId)</span> </span>{</span><br><span class="line">        <span class="hljs-keyword">try</span> {</span><br><span class="line">            <span class="hljs-keyword">var</span> product = repository.findProduct(productId);</span><br><span class="line">            <span class="hljs-keyword">var</span> transitions = repository.findAllByTypeId(product.typeId);</span><br><span class="line">            <span class="hljs-keyword">var</span> stateMachine = <span class="hljs-keyword">new</span> StateMachine(transitions);</span><br><span class="line">            stateMachine.transit(product, Event.ApplyAudit);</span><br><span class="line">            <span class="hljs-keyword">return</span> <span class="hljs-string">"succeed"</span>;</span><br><span class="line">        } <span class="hljs-keyword">catch</span> (RuntimeException e) {</span><br><span class="line">            <span class="hljs-keyword">return</span> e.getMessage();</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// Event.java</span></span><br><span class="line"><span class="hljs-keyword">package</span> org.example;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">enum</span> Event {</span><br><span class="line">        ApplyAudit,</span><br><span class="line">        AcceptAudit,</span><br><span class="line">        RejectAudit,</span><br><span class="line">        Publish</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// Pair.java</span></span><br><span class="line"><span class="hljs-keyword">package</span> org.example;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Pair</span>&lt;<span class="hljs-title">F</span>, <span class="hljs-title">S</span>&gt; </span>{</span><br><span class="line">    <span class="hljs-keyword">public</span> F first;</span><br><span class="line">    <span class="hljs-keyword">public</span> S second;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Pair</span><span class="hljs-params">(F first, S second)</span> </span>{</span><br><span class="line">        <span class="hljs-keyword">this</span>.first = first;</span><br><span class="line">        <span class="hljs-keyword">this</span>.second = second;</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// Product.java</span></span><br><span class="line"><span class="hljs-keyword">package</span> org.example;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Product</span> </span>{</span><br><span class="line">    <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> id;</span><br><span class="line">    <span class="hljs-keyword">public</span> State state;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> typeId;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// Repository.java</span></span><br><span class="line"><span class="hljs-keyword">package</span> org.example;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// a simple definition of Repository, you need to implement</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Repository</span> </span>{</span><br><span class="line">    <span class="hljs-function">List&lt;Transition&gt; <span class="hljs-title">findAllByTypeId</span><span class="hljs-params">(<span class="hljs-keyword">int</span> typeId)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function">Product <span class="hljs-title">findProduct</span><span class="hljs-params">(<span class="hljs-keyword">int</span> productId)</span></span>;</span><br><span class="line">}</span><br><span class="line"><span class="hljs-comment">// State.java</span></span><br><span class="line"><span class="hljs-keyword">package</span> org.example;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">enum</span> State {</span><br><span class="line">    Unpublished,</span><br><span class="line">    Auditing,</span><br><span class="line">    AuditAccepted,</span><br><span class="line">    AuditRejected,</span><br><span class="line">    Published</span><br><span class="line">}</span><br><span class="line"><span class="hljs-comment">// StateMachine.java</span></span><br><span class="line"><span class="hljs-keyword">package</span> org.example;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">import</span> org.example.actions.ApplyAuditAction;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="hljs-keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="hljs-keyword">import</span> java.util.List;</span><br><span class="line"><span class="hljs-keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">StateMachine</span> </span>{</span><br><span class="line">    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> Map&lt;String, Action&gt; actionMap = <span class="hljs-keyword">new</span> HashMap&lt;&gt;() {{</span><br><span class="line">        put(<span class="hljs-string">"applyAudit"</span>, <span class="hljs-keyword">new</span> ApplyAuditAction());</span><br><span class="line">    }};</span><br><span class="line">    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> Map&lt;State, Map&lt;Event, Pair&lt;State, List&lt;Action&gt;&gt;&gt;&gt; graph;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">StateMachine</span><span class="hljs-params">(List&lt;Transition&gt; transitions)</span> </span>{</span><br><span class="line">        graph = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> transition : transitions) {</span><br><span class="line">            addTransition(transition);</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">addTransition</span><span class="hljs-params">(Transition transition)</span> </span>{</span><br><span class="line">        graph.putIfAbsent(transition.fromState, <span class="hljs-keyword">new</span> HashMap&lt;&gt;());</span><br><span class="line">        graph.get(transition.fromState).put(transition.event, <span class="hljs-keyword">new</span> Pair&lt;&gt;(transition.toState, makeActions(transition.actions)));</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">private</span> List&lt;Action&gt; <span class="hljs-title">makeActions</span><span class="hljs-params">(String action)</span> </span>{</span><br><span class="line">        <span class="hljs-keyword">var</span> actionNames = action.split(<span class="hljs-string">","</span>); <span class="hljs-comment">// use comma to split multi actions</span></span><br><span class="line">        <span class="hljs-keyword">return</span> Arrays.stream(actionNames).map(actionMap::get).toList();</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">transit</span><span class="hljs-params">(Product product, Event event)</span> </span>{</span><br><span class="line">        <span class="hljs-keyword">if</span> (!graph.containsKey(product.state)) {</span><br><span class="line">            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> RuntimeException(<span class="hljs-string">"Product state not found"</span>);</span><br><span class="line">        }</span><br><span class="line">        <span class="hljs-keyword">if</span> (!graph.get(product.state).containsKey(event)) {</span><br><span class="line">            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> RuntimeException(<span class="hljs-string">"Event not found"</span>);</span><br><span class="line">        }</span><br><span class="line">        <span class="hljs-keyword">var</span> next = graph.get(product.state).get(event);</span><br><span class="line">        <span class="hljs-comment">// modify product state</span></span><br><span class="line">        product.state = next.first;</span><br><span class="line">        <span class="hljs-comment">// execute actions</span></span><br><span class="line">        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> action : next.second) {</span><br><span class="line">            action.run();</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// Transition.java</span></span><br><span class="line"><span class="hljs-keyword">package</span> org.example;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Transition</span> </span>{</span><br><span class="line">    <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> id;</span><br><span class="line">    <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> typeId; <span class="hljs-comment">// represents the type of a product</span></span><br><span class="line">    <span class="hljs-keyword">public</span> State fromState;</span><br><span class="line">    <span class="hljs-keyword">public</span> Event event;</span><br><span class="line">    <span class="hljs-keyword">public</span> State toState;</span><br><span class="line">    <span class="hljs-keyword">public</span> String actions;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>By using a configurable FSM, you can easily modify the workflow by modifying database record, no code editing.</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><strong><em>Wikipedia</em></strong> - <strong><a href="https://en.wikipedia.org/wiki/Finite-state_machine" target="_blank" rel="noopener">Finite-state machine</a></strong></li>
+</ol>
+</body></html>
+            </div>
+            
+        </div>
+        
+        
+        
+        <div class="social-share" data-disabled="qzone,facebook,twitter,tencent,linkedin,douban,diandian,google"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev"
+                href="/2023/05/05/how-to-retry-requests-correctly.html">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">How to retry requests correctly with Feign</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next"
+                href="/2023/05/03/reading-note.html">
+                <span class="level-item">MySQL、Redis、Aurora读书笔记</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '1ae09f5aa5dcce937e94',
+        clientSecret: '55c4032692dbcb0ee13771da7dc95f22cf9ae8e1',
+        id: '8782d3d934cc20e19e4f53c76e4c6c48',
+        repo: 'xialeistudio.github.io',
+        owner: 'xialeistudio',
+        language: 'en',
+        admin: "xialeistudio",
+        createIssueManually: false,
+        distractionFreeMode: false
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-3-desktop is-3-widescreen  has-order-3 column-right ">
+    
+        
+    
+        
+    
+        
+
+    
+        
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Catalogue
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#Situation">
+        <span class="has-mr-6">1</span>
+        <span>Situation</span>
+        </a></li><li>
+        <a class="is-flex" href="#Definition-of-Terms">
+        <span class="has-mr-6">2</span>
+        <span>Definition of Terms</span>
+        </a></li><li>
+        <a class="is-flex" href="#Implementing">
+        <span class="has-mr-6">3</span>
+        <span>Implementing</span>
+        </a></li><li>
+        <a class="is-flex" href="#Conclusion">
+        <span class="has-mr-6">4</span>
+        <span>Conclusion</span>
+        </a></li><li>
+        <a class="is-flex" href="#Reference">
+        <span class="has-mr-6">5</span>
+        <span>Reference</span>
+        </a></li></ul>
+        </div>
+    </div>
+</div>
+
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                    
+                        Learning &amp; Sharing
+                            
+                </a>
+                <p class="is-size-7">
+                    &copy; 2023
+                        xialeistudio&nbsp;
+                            Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                                href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                            
+                </p>
+                <p class="is-size-7">
+                    
+                </p>
+            </div>
+            <div class="level-end">
+                
+                    <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                        
+                            
+                                <p class="control">
+                                    <a class="button is-white is-large"
+                                        target="_blank" title="Creative Commons"
+                                        href="https://creativecommons.org/">
+                                        
+                                                    <i class="fab fa-creative-commons"></i>
+                                                    
+                                    </a>
+                                </p>
+                                
+                                <p class="control">
+                                    <a class="button is-white is-large"
+                                        target="_blank" title="Attribution 4.0 International"
+                                        href="https://creativecommons.org/licenses/by/4.0/">
+                                        
+                                                    <i class="fab fa-creative-commons-by"></i>
+                                                    
+                                    </a>
+                                </p>
+                                
+                                <p class="control">
+                                    <a class="button is-white is-large"
+                                        target="_blank" title="GitHub"
+                                        href="https://github.com/xialeistudio">
+                                        
+                                                    <i class="fab fa-github"></i>
+                                                    
+                                    </a>
+                                </p>
+                                
+                    </div>
+                    
+            </div>
+        </div>
+    </div>
+</footer>
+
+        <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        const config = {
+                startOnLoad: true,
+                theme: 'forest',
+                securityLevel: 'loose',
+            };
+            mermaid.initialize(config);
+      </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+<script>
+    var IcarusThemeSettings = {
+        article: {
+            highlight: {
+                clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+    
+    <script src="/js/animation.js"></script>
+    
+
+
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

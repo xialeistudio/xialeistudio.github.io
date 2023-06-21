@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html  lang="en">
+<head>
+    <meta charset="utf-8" />
+
+    <meta name="generator" content="Hexo 4.2.1" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<meta name="description" content="Learning & Sharing Java/JVM/Spring Boot/Node.js/Golang/Javascript/CSS/HTML/OOP/Design Pattern/AWS/Microservices/Docker/Kubernetes/PHP/Yii2/koa/express/Nest.js/MySQL/Redis/Vue/React/Swift/Kotlin/Cordova/iOS/anroid Knowledge" />
+<meta name="keywords" content="Java/JVM/Spring Boot/Node.js/Golang/Javascript/CSS/HTML/OOP/Design Pattern/AWS/Microservices/Docker/Kubernetes/PHP/Yii2/koa/express/Nest.js/MySQL/Redis/Vue/React/Swift/Kotlin/Cordova/iOS/anroid" />
+
+<title>
+    NestJs学习之旅(3)——服务提供者 - Xia Lei
+</title>
+
+
+
+
+
+
+    <link rel="alternative" href="/"
+          title="NestJs学习之旅(3)——服务提供者" type="application/atom+xml">
+
+
+
+    <link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link href="https://fonts.cdnfonts.com/css/amazon-ember" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+        
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+        
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+        
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+        
+    
+        
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+        
+<script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?78141f99bbb49f1564a7af89344f5add";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                Learning &amp; Sharing
+                
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                    href="/">Home</a>
+                
+                <a class="navbar-item"
+                    href="/archives">Archives</a>
+                
+                <a class="navbar-item"
+                    href="/categories">Categories</a>
+                
+                <a class="navbar-item"
+                    href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                
+                
+                <a class="navbar-item" target="_blank" title="GitHub"
+                    href="https://github.com/xialeistudio">
+                    
+                    <i class="fab fa-github"></i>
+                    
+                </a>
+                
+                
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-9-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2019-08-21T02:27:42.000Z">2019-08-21</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/Engineering/">Engineering</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    10 minutes read (About 1525 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            NestJs学习之旅(3)——服务提供者
+            
+        </h1>
+        <div class="content">
+            
+            <div id="container">
+                <html><head></head><body><p>本文是NestJs学习之旅的第三篇，讲解服务提供者。</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>服务提供者是NestJs一个非常重要的概念，一般来说，被装饰器<code>@Injectable()</code>修饰的类都可以视为服务提供者。服务提供者一般包含以下几种：</p>
+<ul>
+<li>Services(业务逻辑)</li>
+<li>Factory(用来创建提供者)</li>
+<li>Repository(数据库访问使用)</li>
+<li>Utils(工具函数)</li>
+</ul>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>下文中将以Services来说明服务提供者的具体使用。</p>
+<p>典型的MVC架构中其实有一个问题，业务逻辑到底放哪里？</p>
+<ul>
+<li>放在控制器，代码复用成了问题，不可能去New一个控制器然后调用方法，控制器方法都是根据路由地址绑定的</li>
+<li>放在Model，导致Model层臃肿，Model应该是直接和数据库打交道的，业务逻辑跟数据库的关系并不是强制绑定的，只有业务逻辑涉及到数据查询/存储才会使用到Model层</li>
+</ul>
+<p>现阶段比较流行的架构是多添加一个Services层来写业务逻辑，分离Model层不应该做的事情。</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 业务类 user.service.ts</span></span><br><span class="line"><span class="hljs-meta">@Injectable</span>()</span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> UserServices {</span><br><span class="line">  <span class="hljs-keyword">private</span> readonly users: User[] = [];</span><br><span class="line"></span><br><span class="line">  create(user: User) {</span><br><span class="line">    <span class="hljs-keyword">this</span>.users.push(user);</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  findAll(): User[] {</span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.users;</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight ts hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 用户控制器</span></span><br><span class="line"><span class="hljs-meta">@Controller</span>(<span class="hljs-string">'users'</span>)</span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> UserController {</span><br><span class="line">    <span class="hljs-keyword">constructor</span>(<span class="hljs-params"><span class="hljs-keyword">private</span> readonly userService: UserService</span>) {} <span class="hljs-comment">// 注入UserService</span></span><br><span class="line"></span><br><span class="line">    <span class="hljs-meta">@Post</span>()</span><br><span class="line">    <span class="hljs-keyword">async</span> create(<span class="hljs-meta">@Body</span>() createUserDTO:CreateUserDTO) {</span><br><span class="line">        <span class="hljs-keyword">this</span>.userService.create(createUserDTO);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-meta">@Get</span>()</span><br><span class="line">    <span class="hljs-keyword">async</span> findAll() {</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.userService.findAll();</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="服务提供者的Scope"><a href="#服务提供者的Scope" class="headerlink" title="服务提供者的Scope"></a>服务提供者的Scope</h2><p>SpringBoot中提供了Scope注解来指明Bean的作用域，NestJs也提供了类似的<code>@Scope()</code>装饰器：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">scope名称</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">SINGLETON</td>
+<td style="text-align:left">单例模式，整个应用内只存在一份实例</td>
+</tr>
+<tr>
+<td style="text-align:left">REQUEST</td>
+<td style="text-align:left">每个请求初始化一次</td>
+</tr>
+<tr>
+<td style="text-align:left">TRANSIENT</td>
+<td style="text-align:left">每次注入都会实例化</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight ts hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">@Injectable</span>({scope: Scope.REQUEST})</span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> UserService {</span><br><span class="line"></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="可选的依赖项"><a href="#可选的依赖项" class="headerlink" title="可选的依赖项"></a>可选的依赖项</h2><p>默认情况下，如果依赖注入的对象不存在会提示错误，中断应用运行，此时可以使用<code>@Optional()</code>来指明选择性注入，但依赖注入的对象不存在时不会发生错误。</p>
+<figure class="highlight ts hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">@Controller</span>(<span class="hljs-string">'users'</span>)</span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> UserController {</span><br><span class="line">    <span class="hljs-keyword">constructor</span>(<span class="hljs-params"><span class="hljs-meta">@Optional</span>() <span class="hljs-keyword">private</span> readonly userService:UserService</span>){}</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="基于属性的注入"><a href="#基于属性的注入" class="headerlink" title="基于属性的注入"></a>基于属性的注入</h2><p>上文中的注入都是基于构造函数的，这样做有一个缺陷，如果涉及到继承的话，子类必须显示调用<code>super</code>来实例化父类。如果父类的构造函数参数过多的话反而成了子类的负担。</p>
+<p>针对这个问题，NestJs建议的方式是<code>基于属性</code>进行注入。</p>
+<figure class="highlight ts hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">@Controller</span>(<span class="hljs-string">'users'</span>)</span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> UserController {</span><br><span class="line">    <span class="hljs-meta">@Inject</span>()</span><br><span class="line">    <span class="hljs-keyword">private</span> readonly userService:UserService;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="服务提供者注册"><a href="#服务提供者注册" class="headerlink" title="服务提供者注册"></a>服务提供者注册</h2><p>只有被注册过的服务提供者才能被NestJs进行自动注入。</p>
+<figure class="highlight ts hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">@Module</span>({</span><br><span class="line">    controllers:[UserController], <span class="hljs-comment">// 注册控制器</span></span><br><span class="line">    providers: [UserServices], <span class="hljs-comment">// 注册服务提供者，可以是services,factory等等</span></span><br><span class="line">})</span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> UserModule {</span><br><span class="line"></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="自定义服务提供者"><a href="#自定义服务提供者" class="headerlink" title="自定义服务提供者"></a>自定义服务提供者</h2><h3 id="使用值"><a href="#使用值" class="headerlink" title="使用值"></a>使用值</h3><p>上文中提供的Services一般用在编写业务逻辑，结构基本是固定的，如果需要集成其他库作为注入对象的话，需要使用的自定义的服务提供者。</p>
+<p>比如我们使用sequelize创建了数据库连接，想把他注入到我们的Services中进行数据库操作。可以使用以下方式进行处理：</p>
+<figure class="highlight ts hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// sequelize.ts 数据库访问</span></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> sequelize = <span class="hljs-keyword">new</span> Sequelize({</span><br><span class="line">    <span class="hljs-comment">///</span></span><br><span class="line">});</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight ts hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// sequelize.provider.ts</span></span><br><span class="line"><span class="hljs-keyword">import</span> {sequelize} <span class="hljs-keyword">from</span> <span class="hljs-string">'./sequelize'</span>;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> sequelizeProvider = {</span><br><span class="line">    provide: <span class="hljs-string">'SEQUELIZE'</span>, <span class="hljs-comment">// 服务提供者标识</span></span><br><span class="line">    useValue: sequelize, <span class="hljs-comment">// 直接使用值</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight ts hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// user.module.ts</span></span><br><span class="line"><span class="hljs-meta">@Module</span>({</span><br><span class="line">    providers:[UserService, sequelizeProvider]</span><br><span class="line">})</span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> UserModule {}</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight ts hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// user.service.ts</span></span><br><span class="line"><span class="hljs-meta">@Injectable</span>()</span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> UserService {</span><br><span class="line">    <span class="hljs-keyword">constructor</span>(<span class="hljs-params"><span class="hljs-meta">@Inject</span>(<span class="hljs-string">'SEQUELIZE'</span>) <span class="hljs-keyword">private</span> readonly sequelize: Sequelize</span>) {}</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="使用类"><a href="#使用类" class="headerlink" title="使用类"></a>使用类</h3><p>OOP的一个重要思想就是<code>面向接口化</code>设计，比如我们开发了一个日志接口，有写入本地文件的实现，也有写入syslog的实现。依赖注入到时候我们希望使用接口进行注入，而不是具体的实现。</p>
+<figure class="highlight ts hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// logger.ts</span></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> Logger {</span><br><span class="line">    log(log:<span class="hljs-built_in">string</span>);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight ts hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// file.logger.ts</span></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> FileLogger <span class="hljs-keyword">implements</span> Logger {</span><br><span class="line">    log(log:<span class="hljs-built_in">string</span>) {</span><br><span class="line">        <span class="hljs-comment">// 写入本地文件</span></span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight ts hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// syslog.logger.ts</span></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> SyslogLogger <span class="hljs-keyword">implements</span> Logger {</span><br><span class="line">    log(log:<span class="hljs-built_in">string</span>) {</span><br><span class="line">        <span class="hljs-comment">// 写入Syslog</span></span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight ts hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// logger.provider.ts</span></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> loggerProvider = {</span><br><span class="line">    provide: Logger, <span class="hljs-comment">// 使用接口标识</span></span><br><span class="line">    useClass: process.env.NODE_ENV===<span class="hljs-string">'development'</span>?FileLogger:SyslogLogger, <span class="hljs-comment">// 开发日志写入本地，生产日志写入syslog</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight ts hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// user.module.ts</span></span><br><span class="line"><span class="hljs-meta">@Module</span>({</span><br><span class="line">    providers:[UserService,loggerProvider]</span><br><span class="line">})</span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> UserModule {</span><br><span class="line"></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight ts hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// user.service.ts</span></span><br><span class="line"><span class="hljs-meta">@Injectable</span>()</span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> UserService {</span><br><span class="line">    <span class="hljs-keyword">constructor</span>(<span class="hljs-params"><span class="hljs-meta">@Inject</span>(Logger) <span class="hljs-keyword">private</span> readonly logger: Logger</span>) {}</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="使用工厂"><a href="#使用工厂" class="headerlink" title="使用工厂"></a>使用工厂</h3><p>工厂模式相信大家都不陌生，工厂模式本质上是一个函数或者方法，返回我们需要的产品。</p>
+<p>传统的第三方库都是提供callback形式或者事件形式的进行连接，比如redis，如果需要使用该类型的注入对象，工厂模式是最佳方式。</p>
+<p>以下是使用工厂模式创建数据库连接的例子：</p>
+<figure class="highlight ts hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// database.provider.ts</span></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> databaseProvider = {</span><br><span class="line">    provide:<span class="hljs-string">'DATABASE'</span>,</span><br><span class="line">    useFactory: <span class="hljs-keyword">async</span>(optionsProvider: OptionsProvider) { <span class="hljs-comment">// 使用依赖，注入顺序和下面定义的顺序一致</span></span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> {</span><br><span class="line">            <span class="hljs-keyword">const</span> connection = createConnection(optionsProvider.getDatabaseConfig())</span><br><span class="line">            connection.on(<span class="hljs-string">'ready'</span>,<span class="hljs-function"><span class="hljs-params">()</span>=&gt;</span>resolve(connection));</span><br><span class="line">            connection.on(<span class="hljs-string">'error'</span>,<span class="hljs-function">(<span class="hljs-params">e</span>)=&gt;</span>reject(e));</span><br><span class="line">        });</span><br><span class="line">    },</span><br><span class="line">    inject:[OptionsProvider], <span class="hljs-comment">// 注入依赖</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight ts hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// user.module.ts</span></span><br><span class="line"><span class="hljs-meta">@Module</span>({</span><br><span class="line">    providers:[OptionsProvider, databaseProvider]</span><br><span class="line">})</span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> UserModule {</span><br><span class="line"></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight ts hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// user.service.ts</span></span><br><span class="line"><span class="hljs-meta">@Injectable</span>()</span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> UserService {</span><br><span class="line">    <span class="hljs-keyword">constructor</span>(<span class="hljs-params"><span class="hljs-meta">@Inject</span>(<span class="hljs-string">'DATABASE'</span>) <span class="hljs-keyword">private</span> readonly connection: Connection</span>) {}</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="别名方式"><a href="#别名方式" class="headerlink" title="别名方式"></a>别名方式</h3><p>别名方式可以基于现有的提供者进行创建。</p>
+<figure class="highlight ts hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> loggerAliasProvider = {</span><br><span class="line">  provide: <span class="hljs-string">'AliasedLoggerService'</span>,</span><br><span class="line">  useExisting: Logger,</span><br><span class="line">};</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="导出服务提供者到其他模块"><a href="#导出服务提供者到其他模块" class="headerlink" title="导出服务提供者到其他模块"></a>导出服务提供者到其他模块</h2><p>模块的详细知识将在后文提到，但是有一点需要提前知道，<code>只有被模块导出的服务提供者才能被其他模块导入</code></p>
+<h3 id="基于类型的导出"><a href="#基于类型的导出" class="headerlink" title="基于类型的导出"></a>基于类型的导出</h3><p>上文中的<code>UserService</code>是基于类型而不是进入名称进行注入的。</p>
+<figure class="highlight ts hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">@Module</span>({</span><br><span class="line">    providers: [UserService],</span><br><span class="line">    exports: [UserService], <span class="hljs-comment">// 重要</span></span><br><span class="line">})</span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> UserModule {}</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="基于名称的导出"><a href="#基于名称的导出" class="headerlink" title="基于名称的导出"></a>基于名称的导出</h3><p>上文中<code>DATABASE</code>和<code>SEQUELIZE</code>这种服务提供者都是自定义的，而且指定的标识符。</p>
+<figure class="highlight ts hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">@Module</span>({</span><br><span class="line">    providers: [sequelizeProvider],</span><br><span class="line">    exports: [<span class="hljs-string">'SEQUELIZE'</span>], <span class="hljs-comment">// 其他模块的组件直接使用@Inject('SEQUELIZE')即可</span></span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h2><p>服务提供者是NestJs的精华之一，提供了几种方式方便我们在各种环境下的服务提供者创建。</p>
+</body></html>
+            </div>
+            
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/nestjs/" rel="tag">nestjs</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <div class="social-share" data-disabled="qzone,facebook,twitter,tencent,linkedin,douban,diandian,google"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev"
+                href="/2019/08/22/nestjs-module.html">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">NestJs学习之旅(4)——模块系统</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next"
+                href="/2019/08/20/nestjs-controller.html">
+                <span class="level-item">NestJs学习之旅(2)——控制器</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '1ae09f5aa5dcce937e94',
+        clientSecret: '55c4032692dbcb0ee13771da7dc95f22cf9ae8e1',
+        id: '62ea11e0b5db36ce3285270ab1dd7beb',
+        repo: 'xialeistudio.github.io',
+        owner: 'xialeistudio',
+        language: 'en',
+        admin: "xialeistudio",
+        createIssueManually: false,
+        distractionFreeMode: false
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-3-desktop is-3-widescreen  has-order-3 column-right ">
+    
+        
+    
+        
+    
+        
+
+    
+        
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Catalogue
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#简介">
+        <span class="has-mr-6">1</span>
+        <span>简介</span>
+        </a></li><li>
+        <a class="is-flex" href="#使用">
+        <span class="has-mr-6">2</span>
+        <span>使用</span>
+        </a></li><li>
+        <a class="is-flex" href="#服务提供者的Scope">
+        <span class="has-mr-6">3</span>
+        <span>服务提供者的Scope</span>
+        </a></li><li>
+        <a class="is-flex" href="#可选的依赖项">
+        <span class="has-mr-6">4</span>
+        <span>可选的依赖项</span>
+        </a></li><li>
+        <a class="is-flex" href="#基于属性的注入">
+        <span class="has-mr-6">5</span>
+        <span>基于属性的注入</span>
+        </a></li><li>
+        <a class="is-flex" href="#服务提供者注册">
+        <span class="has-mr-6">6</span>
+        <span>服务提供者注册</span>
+        </a></li><li>
+        <a class="is-flex" href="#自定义服务提供者">
+        <span class="has-mr-6">7</span>
+        <span>自定义服务提供者</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#使用值">
+        <span class="has-mr-6">7.1</span>
+        <span>使用值</span>
+        </a></li><li>
+        <a class="is-flex" href="#使用类">
+        <span class="has-mr-6">7.2</span>
+        <span>使用类</span>
+        </a></li><li>
+        <a class="is-flex" href="#使用工厂">
+        <span class="has-mr-6">7.3</span>
+        <span>使用工厂</span>
+        </a></li><li>
+        <a class="is-flex" href="#别名方式">
+        <span class="has-mr-6">7.4</span>
+        <span>别名方式</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#导出服务提供者到其他模块">
+        <span class="has-mr-6">8</span>
+        <span>导出服务提供者到其他模块</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#基于类型的导出">
+        <span class="has-mr-6">8.1</span>
+        <span>基于类型的导出</span>
+        </a></li><li>
+        <a class="is-flex" href="#基于名称的导出">
+        <span class="has-mr-6">8.2</span>
+        <span>基于名称的导出</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#结尾">
+        <span class="has-mr-6">9</span>
+        <span>结尾</span>
+        </a></li></ul>
+        </div>
+    </div>
+</div>
+
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                    
+                        Learning &amp; Sharing
+                            
+                </a>
+                <p class="is-size-7">
+                    &copy; 2023
+                        xialeistudio&nbsp;
+                            Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                                href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                            
+                </p>
+                <p class="is-size-7">
+                    
+                </p>
+            </div>
+            <div class="level-end">
+                
+                    <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                        
+                            
+                                <p class="control">
+                                    <a class="button is-white is-large"
+                                        target="_blank" title="Creative Commons"
+                                        href="https://creativecommons.org/">
+                                        
+                                                    <i class="fab fa-creative-commons"></i>
+                                                    
+                                    </a>
+                                </p>
+                                
+                                <p class="control">
+                                    <a class="button is-white is-large"
+                                        target="_blank" title="Attribution 4.0 International"
+                                        href="https://creativecommons.org/licenses/by/4.0/">
+                                        
+                                                    <i class="fab fa-creative-commons-by"></i>
+                                                    
+                                    </a>
+                                </p>
+                                
+                                <p class="control">
+                                    <a class="button is-white is-large"
+                                        target="_blank" title="GitHub"
+                                        href="https://github.com/xialeistudio">
+                                        
+                                                    <i class="fab fa-github"></i>
+                                                    
+                                    </a>
+                                </p>
+                                
+                    </div>
+                    
+            </div>
+        </div>
+    </div>
+</footer>
+
+        <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        const config = {
+                startOnLoad: true,
+                theme: 'forest',
+                securityLevel: 'loose',
+            };
+            mermaid.initialize(config);
+      </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+<script>
+    var IcarusThemeSettings = {
+        article: {
+            highlight: {
+                clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+    
+    <script src="/js/animation.js"></script>
+    
+
+
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>
