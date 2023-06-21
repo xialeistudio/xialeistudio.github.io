@@ -138,59 +138,6 @@ var _hmt = _hmt || [];
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
                 <time class="level-item has-text-grey"
-                    datetime="2018-03-02T09:50:31.000Z">2018-03-02</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/Engineering/">Engineering</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    10 minutes read (About 1532 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2018/03/02/golang-tcp-stick-package.html">golang解决TCP粘包问题</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <html><head></head><body><p>什么是TCP粘包问题以及为什么会产生TCP粘包，本文不加讨论。本文使用golang的<code>bufio.Scanner</code>来实现自定义协议解包。</p>
-<h2 id="协议数据包定义"><a href="#协议数据包定义" class="headerlink" title="协议数据包定义"></a>协议数据包定义</h2><p>本文模拟一个日志服务器，该服务器接收客户端传到的数据包并显示出来</p>
-<figure class="highlight go hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> Package <span class="hljs-keyword">struct</span> {</span><br><span class="line">	Version        [<span class="hljs-number">2</span>]<span class="hljs-keyword">byte</span> <span class="hljs-comment">// 协议版本，暂定V1</span></span><br><span class="line">	Length         <span class="hljs-keyword">int16</span>   <span class="hljs-comment">// 数据部分长度</span></span><br><span class="line">	Timestamp      <span class="hljs-keyword">int64</span>   <span class="hljs-comment">// 时间戳</span></span><br><span class="line">	HostnameLength <span class="hljs-keyword">int16</span>   <span class="hljs-comment">// 主机名长度</span></span><br><span class="line">	Hostname       []<span class="hljs-keyword">byte</span>  <span class="hljs-comment">// 主机名</span></span><br><span class="line">	TagLength      <span class="hljs-keyword">int16</span>   <span class="hljs-comment">// 标签长度</span></span><br><span class="line">	Tag            []<span class="hljs-keyword">byte</span>  <span class="hljs-comment">// 标签</span></span><br><span class="line">	Msg            []<span class="hljs-keyword">byte</span>  <span class="hljs-comment">// 日志数据</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
                     datetime="2018-03-01T07:51:02.000Z">2018-03-01</time>
                 
                 <div class="level-item">
@@ -656,6 +603,59 @@ var _hmt = _hmt || [];
 
 
 
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2018-01-19T16:07:04.000Z">2018-01-20</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/Engineering/">Engineering</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    a minute read (About 182 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2018/01/19/php-async.html">PHP实现“异步”</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <html><head></head><body><p>众所周知，PHP不使用多线程扩展的情况下是不支持异步的(不算curl之类)。今天无意中看到一个函数<code>fastcgi_finish_request</code>;<br>这个方法是PHP5.3+开始提供。<br>注释写的很清楚，有耗时操作的时候使用该函数可以尽早结束fastcgi处理过程，提高页面响应速度。</p>
+<h2 id="代码说明"><a href="#代码说明" class="headerlink" title="代码说明"></a>代码说明</h2><figure class="highlight php hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">&lt;?php</span></span><br><span class="line"><span class="hljs-keyword">echo</span> <span class="hljs-number">1</span>;</span><br><span class="line">fastcgi_finish_request();</span><br><span class="line">sleep(<span class="hljs-number">3</span>);</span><br><span class="line"><span class="hljs-meta">?&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+<p>此时打开浏览器发现响应速度并没有受到<code>sleep</code>函数的影响，基于此点，可以在适当的时候使用该函数以提升用户体验!</p>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
 
     
 <div class="card card-transparent">
@@ -728,7 +728,7 @@ var _hmt = _hmt || [];
                             Posts
                         </p>
                         <p class="title has-text-weight-normal">
-                            312
+                            311
                         </p>
                     </div>
                 </div>
