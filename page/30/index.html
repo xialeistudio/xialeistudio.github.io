@@ -138,6 +138,59 @@ var _hmt = _hmt || [];
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
                 <time class="level-item has-text-grey"
+                    datetime="2014-09-18T00:24:11.000Z">2014-09-18</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/Engineering/">Engineering</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    2 minutes read (About 294 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2014/09/18/qiniu-custom-data.html">七牛云存储定义自定义变量返回数据</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <html><head></head><body><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>七牛云存储也使用了这么久了。一直一来都只用了它的图片上传和处理功能。用的是客户端直传API，七牛给我返回一个key（一串随机的hash值，对人类无可读性）。</p>
+<p>最近做的一个文件共享的项目，因为文件是客户端直传七牛的，那么我在后台PHP这边是拿不到原始文件名的，但是文件列表必须显示原始文件名，不能显示那个hash值。后来查找文件发现，七牛可以自定义返回的变量。</p>
+<h2 id="关键代码"><a href="#关键代码" class="headerlink" title="关键代码"></a>关键代码</h2><figure class="highlight php hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">&lt;?php</span></span><br><span class="line">Qiniu_SetKeys(<span class="hljs-keyword">$this</span>-&gt;accessKey, <span class="hljs-keyword">$this</span>-&gt;secretKey);</span><br><span class="line">$putPolicy = <span class="hljs-keyword">new</span> Qiniu_RS_PutPolicy(<span class="hljs-keyword">$this</span>-&gt;bucket);</span><br><span class="line">$putPolicy-&gt;Expires = $expires;</span><br><span class="line">$putPolicy-&gt;SaveKey = $filename;</span><br><span class="line">$putPolicy-&gt;FsizeLimit = <span class="hljs-number">20</span>*<span class="hljs-number">1024</span>*<span class="hljs-number">1024</span>;</span><br><span class="line"><span class="hljs-keyword">if</span>($returnUrl != <span class="hljs-string">''</span>)</span><br><span class="line">	putPolicy-&gt;ReturnUrl = $returnUrl;</span><br><span class="line">$upToken = $putPolicy-&gt;Token(<span class="hljs-keyword">null</span>);</span><br><span class="line"><span class="hljs-keyword">return</span> $upToken;</span><br></pre></td></tr></tbody></table></figure>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
                     datetime="2014-09-14T17:18:01.000Z">2014-09-15</time>
                 
                 <div class="level-item">
@@ -603,59 +656,6 @@ var _hmt = _hmt || [];
 
 
 
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2014-09-06T04:09:57.000Z">2014-09-06</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/Engineering/">Engineering</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    a few seconds read (About 83 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2014/09/06/php-heredoc.html">PHP heredoc 字符串定界符使用</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <html><head></head><body><p>PHP定义字符串有三种形式</p>
-<ul>
-<li>双引号</li>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -726,7 +726,7 @@ var _hmt = _hmt || [];
                             Posts
                         </p>
                         <p class="title has-text-weight-normal">
-                            311
+                            312
                         </p>
                     </div>
                 </div>
@@ -736,7 +736,7 @@ var _hmt = _hmt || [];
                             Categories
                         </p>
                         <p class="title has-text-weight-normal">
-                            2
+                            3
                         </p>
                     </div>
                 </div>
@@ -812,6 +812,14 @@ var _hmt = _hmt || [];
             </span>
             <span class="level-end">
                 <span class="level-item tag">276</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/engineering/">
+            <span class="level-start">
+                <span class="level-item">engineering</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
             </span>
         </a></li>
             </ul>

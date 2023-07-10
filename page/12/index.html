@@ -138,6 +138,59 @@ var _hmt = _hmt || [];
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
                 <time class="level-item has-text-grey"
+                    datetime="2019-06-18T07:50:28.000Z">2019-06-18</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/Engineering/">Engineering</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    2 minutes read (About 363 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2019/06/18/database-n-1-solution.html">解决数据库N+1查询问题</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <html><head></head><body><h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>数据表如下：</p>
+<p>department表</p>
+<table>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
                     datetime="2019-05-19T08:10:47.000Z">2019-05-19</time>
                 
                 <div class="level-item">
@@ -608,59 +661,6 @@ var _hmt = _hmt || [];
 
 
 
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2018-10-17T13:50:20.000Z">2018-10-17</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/Engineering/">Engineering</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    3 minutes read (About 521 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2018/10/17/golang-context-with-value.html">一起学context（一）——上下文值传递</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <html><head></head><body><h1 id="系列开篇"><a href="#系列开篇" class="headerlink" title="系列开篇"></a>系列开篇</h1><p>本文开始将针对context的用法进行系统化讨论，在这里你将能够在工作中合理使用context解决一些比较棘手的问题。</p>
-<p>context处理超时处理之外还可以用来保存数据，当你需要在多个上下文传递时传递数据，那么本文提到的知识可以排上用场。</p>
-<h1 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h1><p>示例代码为一个简单的http服务，流程是登录之后会跳转首页，首页通过guard中间件进行鉴权。当然，示例代码未做其他诸如连接数据库之类的处理，这不是本文的重点。<br>守卫函数读取cookie之后将cookie值写入context并向下传递，在整个请求中可以说是“透明”的。当访问到需要保护的接口时检测到没有提供cookie，则直接终端请求，否则通过r.WithContext将username的值存入cookie，避免的业务接口直接读取cookie的弊端。因为如果后期更改鉴权算法的话，业务代码可以不用更改，直接更改中间件即可。</p>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -733,7 +733,7 @@ var _hmt = _hmt || [];
                             Posts
                         </p>
                         <p class="title has-text-weight-normal">
-                            311
+                            312
                         </p>
                     </div>
                 </div>
@@ -743,7 +743,7 @@ var _hmt = _hmt || [];
                             Categories
                         </p>
                         <p class="title has-text-weight-normal">
-                            2
+                            3
                         </p>
                     </div>
                 </div>
@@ -819,6 +819,14 @@ var _hmt = _hmt || [];
             </span>
             <span class="level-end">
                 <span class="level-item tag">276</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/engineering/">
+            <span class="level-start">
+                <span class="level-item">engineering</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
             </span>
         </a></li>
             </ul>
