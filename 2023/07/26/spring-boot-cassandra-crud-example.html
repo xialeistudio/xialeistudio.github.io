@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html  lang="en">
+<head>
+    <meta charset="utf-8" />
+
+    <meta name="generator" content="Hexo 4.2.1" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<meta name="description" content="Learning & Sharing Java/JVM/Spring Boot/Node.js/Golang/Javascript/CSS/HTML/OOP/Design Pattern/AWS/Microservices/Docker/Kubernetes/PHP/Yii2/koa/express/Nest.js/MySQL/Redis/Vue/React/Swift/Kotlin/Cordova/iOS/anroid Knowledge" />
+<meta name="keywords" content="Java/JVM/Spring Boot/Node.js/Golang/Javascript/CSS/HTML/OOP/Design Pattern/AWS/Microservices/Docker/Kubernetes/PHP/Yii2/koa/express/Nest.js/MySQL/Redis/Vue/React/Swift/Kotlin/Cordova/iOS/anroid" />
+
+<title>
+    Spring Boot Cassandra CRUD Example - Xia Lei
+</title>
+
+
+
+
+
+
+    <link rel="alternative" href="/"
+          title="Spring Boot Cassandra CRUD Example" type="application/atom+xml">
+
+
+
+    <link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link href="https://fonts.cdnfonts.com/css/amazon-ember" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+        
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+        
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+        
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+        
+    
+        
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+        
+<script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?78141f99bbb49f1564a7af89344f5add";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                Learning &amp; Sharing
+                
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                    href="/">Home</a>
+                
+                <a class="navbar-item"
+                    href="/archives">Archives</a>
+                
+                <a class="navbar-item"
+                    href="/categories">Categories</a>
+                
+                <a class="navbar-item"
+                    href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                
+                
+                <a class="navbar-item" target="_blank" title="GitHub"
+                    href="https://github.com/xialeistudio">
+                    
+                    <i class="fab fa-github"></i>
+                    
+                </a>
+                
+                
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-9-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2023-07-26T04:00:18.000Z">2023-07-26</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/engineering/">engineering</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    7 minutes read (About 1015 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            Spring Boot Cassandra CRUD Example
+            
+        </h1>
+        <div class="content">
+            
+            <div id="container">
+                <html><head></head><body><p><a href="https://cassandra.apache.org/" target="_blank" rel="noopener">Apache Cassandra</a> is an <strong>open source</strong> NoSQL distributed database trusted by thousands of companies for <strong>scalability</strong> and <strong>high availability</strong> without compromising performance. <strong>Linear scalability</strong> and <strong>proven fault-tolerance</strong> on <strong>commodity hardware</strong> or <strong>cloud infrastructure</strong> make it the perfect platform for <strong>mission-critical</strong> data.</p>
+<p>In this article, I’ll share a whole project to demonstrate how to perform CRUD operation in Cassandra with Spring Boot.</p>
+<p><em>Note: Pagination in Cassandra is a little tricky, Cassandra don’t support offset-based limit, so we need to use cursor-based limit to implement pagination.</em></p>
+<h2 id="Project-Source-Code"><a href="#Project-Source-Code" class="headerlink" title="Project Source Code"></a>Project Source Code</h2><p><strong>database setup</strong></p>
+<p>Just following the <a href="https://cassandra.apache.org/_/quickstart.html" target="_blank" rel="noopener">Quick Start</a> of Cassandra official document to install a local Cassandra instance in Docker. Since we use Spring Data Cassandra to operate Cassandra, there is no DDL required. </p>
+<p><strong>pom.xml</strong></p>
+<p>I use the Spring Initializer to create a simple project with <strong>web and cassandra</strong> starter. This is the content of pom.xml.</p>
+<figure class="highlight xml hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">"http://maven.apache.org/POM/4.0.0"</span> <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="hljs-tag">        <span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">"http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd"</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">modelVersion</span>&gt;</span>4.0.0<span class="hljs-tag">&lt;/<span class="hljs-name">modelVersion</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">parent</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.1.2<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;<span class="hljs-name">relativePath</span>/&gt;</span> <span class="hljs-comment">&lt;!-- lookup parent from repository --&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;/<span class="hljs-name">parent</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.example<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>cassandra-timeline<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">name</span>&gt;</span>cassandra-timeline<span class="hljs-tag">&lt;/<span class="hljs-name">name</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">description</span>&gt;</span>cassandra-timeline<span class="hljs-tag">&lt;/<span class="hljs-name">description</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">properties</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;<span class="hljs-name">java.version</span>&gt;</span>17<span class="hljs-tag">&lt;/<span class="hljs-name">java.version</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;/<span class="hljs-name">properties</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">            <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">            <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-data-cassandra<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">            <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">            <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">            <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">            <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="hljs-tag">&lt;<span class="hljs-name">scope</span>&gt;</span>test<span class="hljs-tag">&lt;/<span class="hljs-name">scope</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">build</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;<span class="hljs-name">plugins</span>&gt;</span></span><br><span class="line">            <span class="hljs-tag">&lt;<span class="hljs-name">plugin</span>&gt;</span></span><br><span class="line">                <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">                <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="hljs-tag">&lt;/<span class="hljs-name">plugin</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;/<span class="hljs-name">plugins</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;/<span class="hljs-name">build</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">project</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+<p><strong>CassandraApplication.java</strong></p>
+<figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">package</span> com.example.cassandratimeline;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.boot.SpringApplication;</span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"></span><br><span class="line"><span class="hljs-meta">@SpringBootApplication</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CassandraApplication</span> </span>{</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{</span><br><span class="line">        SpringApplication.run(CassandraApplication<span class="hljs-class">.<span class="hljs-keyword">class</span>, <span class="hljs-title">args</span>)</span>;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p><strong>application.yml</strong></p>
+<figure class="highlight yaml hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-attr">spring:</span></span><br><span class="line">  <span class="hljs-attr">cassandra:</span></span><br><span class="line">    <span class="hljs-attr">schema-action:</span> <span class="hljs-string">CREATE_IF_NOT_EXISTS</span></span><br><span class="line">    <span class="hljs-attr">local-datacenter:</span> <span class="hljs-string">datacenter1</span></span><br><span class="line">    <span class="hljs-attr">keyspace-name:</span> <span class="hljs-string">spring_cassandra</span></span><br></pre></td></tr></tbody></table></figure>
+<p><strong>Vet.java</strong></p>
+<p><strong>Vet</strong> is our core model definition. In this example, I just set the partition key (id) to a fixed number to ensure that all data is in the same partition, so we can get automatically sorted data, which is not a best practice, it’s just for demonstration.</p>
+<figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">package</span> com.example.cassandratimeline;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">import</span> java.time.LocalDateTime;</span><br><span class="line"><span class="hljs-keyword">import</span> java.util.Set;</span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.data.cassandra.core.cql.Ordering;</span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.data.cassandra.core.cql.PrimaryKeyType;</span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;</span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.data.cassandra.core.mapping.Table;</span><br><span class="line"></span><br><span class="line"><span class="hljs-meta">@Table</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Vet</span> </span>{</span><br><span class="line"></span><br><span class="line">    <span class="hljs-meta">@PrimaryKeyColumn</span>(ordinal = <span class="hljs-number">0</span>, type = PrimaryKeyType.PARTITIONED)</span><br><span class="line">    <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> id;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">private</span> String firstName;</span><br><span class="line">    <span class="hljs-keyword">private</span> String lastName;</span><br><span class="line">    <span class="hljs-keyword">private</span> Set&lt;String&gt; specialties;</span><br><span class="line"></span><br><span class="line">  	<span class="hljs-comment">// cluster key, so we can get automatically sorted data</span></span><br><span class="line">    <span class="hljs-meta">@PrimaryKeyColumn</span>(ordinal = <span class="hljs-number">1</span>, type = PrimaryKeyType.CLUSTERED, ordering = Ordering.DESCENDING, value = <span class="hljs-string">"created_at"</span>)</span><br><span class="line">    <span class="hljs-keyword">private</span> LocalDateTime createdAt;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Vet</span><span class="hljs-params">(<span class="hljs-keyword">int</span> id, String firstName, String lastName, Set&lt;String&gt; specialties, LocalDateTime createdAt)</span> </span>{</span><br><span class="line">        <span class="hljs-keyword">this</span>.id = id;</span><br><span class="line">        <span class="hljs-keyword">this</span>.firstName = firstName;</span><br><span class="line">        <span class="hljs-keyword">this</span>.lastName = lastName;</span><br><span class="line">        <span class="hljs-keyword">this</span>.specialties = specialties;</span><br><span class="line">        <span class="hljs-keyword">this</span>.createdAt = createdAt;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> LocalDateTime <span class="hljs-title">getCreatedAt</span><span class="hljs-params">()</span> </span>{</span><br><span class="line">        <span class="hljs-keyword">return</span> createdAt;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setCreatedAt</span><span class="hljs-params">(LocalDateTime createdAt)</span> </span>{</span><br><span class="line">        <span class="hljs-keyword">this</span>.createdAt = createdAt;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">getId</span><span class="hljs-params">()</span> </span>{</span><br><span class="line">        <span class="hljs-keyword">return</span> id;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setId</span><span class="hljs-params">(<span class="hljs-keyword">int</span> id)</span> </span>{</span><br><span class="line">        <span class="hljs-keyword">this</span>.id = id;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getFirstName</span><span class="hljs-params">()</span> </span>{</span><br><span class="line">        <span class="hljs-keyword">return</span> firstName;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setFirstName</span><span class="hljs-params">(String firstName)</span> </span>{</span><br><span class="line">        <span class="hljs-keyword">this</span>.firstName = firstName;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getLastName</span><span class="hljs-params">()</span> </span>{</span><br><span class="line">        <span class="hljs-keyword">return</span> lastName;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setLastName</span><span class="hljs-params">(String lastName)</span> </span>{</span><br><span class="line">        <span class="hljs-keyword">this</span>.lastName = lastName;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> Set&lt;String&gt; <span class="hljs-title">getSpecialties</span><span class="hljs-params">()</span> </span>{</span><br><span class="line">        <span class="hljs-keyword">return</span> specialties;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setSpecialties</span><span class="hljs-params">(Set&lt;String&gt; specialties)</span> </span>{</span><br><span class="line">        <span class="hljs-keyword">this</span>.specialties = specialties;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p><strong>VetRepository.java</strong></p>
+<figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">package</span> com.example.cassandratimeline;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">import</span> java.util.UUID;</span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.data.domain.Pageable;</span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.data.domain.Slice;</span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.data.repository.CrudRepository;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">VetRepository</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">CrudRepository</span>&lt;<span class="hljs-title">Vet</span>, <span class="hljs-title">UUID</span>&gt; </span>{</span><br><span class="line">    <span class="hljs-function">Slice&lt;Vet&gt; <span class="hljs-title">findAll</span><span class="hljs-params">(Pageable pageable)</span></span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p><strong>VetController.java</strong></p>
+<p>Cassandra don’t support offset-based limit, so the following code uses a cursor-based limit to implement pagination.</p>
+<p>Cassandra returns a <code>PageState</code> of <code>ByteBuffer</code>, so we need to encode it to Base64 string to achive transimition in the URL.</p>
+<figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">package</span> com.example.cassandratimeline;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">import</span> java.nio.ByteBuffer;</span><br><span class="line"><span class="hljs-keyword">import</span> java.time.LocalDateTime;</span><br><span class="line"><span class="hljs-keyword">import</span> java.util.Base64;</span><br><span class="line"><span class="hljs-keyword">import</span> java.util.Map;</span><br><span class="line"><span class="hljs-keyword">import</span> java.util.Optional;</span><br><span class="line"><span class="hljs-keyword">import</span> java.util.UUID;</span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.data.cassandra.core.query.CassandraPageRequest;</span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.data.domain.Pageable;</span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.web.bind.annotation.PostMapping;</span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.web.bind.annotation.RequestBody;</span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.web.bind.annotation.RequestParam;</span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line"><span class="hljs-meta">@RestController</span></span><br><span class="line"><span class="hljs-meta">@RequestMapping</span>(<span class="hljs-string">"/vet"</span>)</span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">VetController</span> </span>{</span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> VecRepository repository;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">VetController</span><span class="hljs-params">(VecRepository repository)</span> </span>{</span><br><span class="line">        <span class="hljs-keyword">this</span>.repository = repository;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-meta">@PostMapping</span>(<span class="hljs-string">"/create"</span>)</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> Vet <span class="hljs-title">create</span><span class="hljs-params">(@RequestBody Vet vet)</span> </span>{</span><br><span class="line">        vet.setId(<span class="hljs-number">1</span>); <span class="hljs-comment">// Demonstration Only, Bad Practice</span></span><br><span class="line">        vet.setCreatedAt(LocalDateTime.now());</span><br><span class="line">        repository.save(vet);</span><br><span class="line">        <span class="hljs-keyword">return</span> vet;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-meta">@PostMapping</span>(<span class="hljs-string">"/update"</span>)</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> Vet <span class="hljs-title">update</span><span class="hljs-params">(@RequestBody Vet vet, @RequestParam(<span class="hljs-string">"id"</span>)</span> UUID id) </span>{</span><br><span class="line">        Optional&lt;Vet&gt; optionalVet = repository.findById(id);</span><br><span class="line">        <span class="hljs-keyword">if</span> (optionalVet.isEmpty()) {</span><br><span class="line">            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> RuntimeException(<span class="hljs-string">"not found"</span>);</span><br><span class="line">        }</span><br><span class="line">        Vet vet1 = optionalVet.get();</span><br><span class="line">        vet1.setFirstName(vet.getFirstName());</span><br><span class="line">        vet1.setLastName(vet.getLastName());</span><br><span class="line">        vet1.setSpecialties(vet.getSpecialties());</span><br><span class="line">        repository.save(vet1);</span><br><span class="line">        <span class="hljs-keyword">return</span> vet1;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-meta">@GetMapping</span>(<span class="hljs-string">"show"</span>)</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> Vet <span class="hljs-title">show</span><span class="hljs-params">(@RequestParam(<span class="hljs-string">"id"</span>)</span> UUID id) </span>{</span><br><span class="line">        Optional&lt;Vet&gt; optionalVet = repository.findById(id);</span><br><span class="line">        <span class="hljs-keyword">if</span> (optionalVet.isEmpty()) {</span><br><span class="line">            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> RuntimeException(<span class="hljs-string">"not found"</span>);</span><br><span class="line">        }</span><br><span class="line">        <span class="hljs-keyword">return</span> optionalVet.get();</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-meta">@GetMapping</span>(<span class="hljs-string">"list"</span>)</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> Map&lt;String, Object&gt; <span class="hljs-title">showAll</span><span class="hljs-params">(@RequestParam(value = <span class="hljs-string">"page_state"</span>, defaultValue = <span class="hljs-string">""</span>)</span> String pageState, @<span class="hljs-title">RequestParam</span><span class="hljs-params">(value = <span class="hljs-string">"size"</span>, defaultValue = <span class="hljs-string">"10"</span>)</span> <span class="hljs-keyword">int</span> size) </span>{</span><br><span class="line">        <span class="hljs-keyword">var</span> pagingState = pageState.isEmpty() ? <span class="hljs-keyword">null</span> : ByteBuffer.wrap(Base64.getUrlDecoder().decode(pageState));</span><br><span class="line">        <span class="hljs-keyword">var</span> pageable = CassandraPageRequest.of(Pageable.ofSize(size), pagingState);</span><br><span class="line">        <span class="hljs-keyword">var</span> result = repository.findAll(pageable);</span><br><span class="line">        <span class="hljs-keyword">var</span> nextPageState = ((CassandraPageRequest) result.getPageable()).getPagingState();</span><br><span class="line">        <span class="hljs-keyword">var</span> nextPageStateData = <span class="hljs-string">""</span>;</span><br><span class="line">        <span class="hljs-keyword">if</span> (nextPageState != <span class="hljs-keyword">null</span>) {</span><br><span class="line">            <span class="hljs-keyword">var</span> bytes = <span class="hljs-keyword">new</span> <span class="hljs-keyword">byte</span>[nextPageState.remaining()];</span><br><span class="line">            nextPageState.get(bytes, <span class="hljs-number">0</span>, bytes.length);</span><br><span class="line">            nextPageStateData = Base64.getUrlEncoder().encodeToString(bytes);</span><br><span class="line">        }</span><br><span class="line">        <span class="hljs-keyword">return</span> Map.of(<span class="hljs-string">"errcode"</span>, <span class="hljs-number">0</span>, <span class="hljs-string">"errmsg"</span>, <span class="hljs-string">"ok"</span>, <span class="hljs-string">"list"</span>, result.getContent(), <span class="hljs-string">"pageState"</span>, nextPageStateData);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-meta">@GetMapping</span>(<span class="hljs-string">"/delete-all"</span>)</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> Map&lt;String, Object&gt; <span class="hljs-title">deleteAll</span><span class="hljs-params">()</span> </span>{</span><br><span class="line">        repository.deleteAll();</span><br><span class="line">        <span class="hljs-keyword">return</span> Map.of(<span class="hljs-string">"errcode"</span>, <span class="hljs-number">0</span>, <span class="hljs-string">"errmsg"</span>, <span class="hljs-string">"ok"</span>);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="Testing"><a href="#Testing" class="headerlink" title="Testing"></a>Testing</h2><p>I use Postman and Chrome to test this project.</p>
+<p><strong>Create</strong></p>
+<figure class="highlight sql hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">---REQUEST---</span></span><br><span class="line">POST localhost:8080/vet/<span class="hljs-keyword">create</span></span><br><span class="line"><span class="hljs-keyword">Content</span>-<span class="hljs-keyword">Type</span>: application/<span class="hljs-keyword">json</span></span><br><span class="line"></span><br><span class="line">{</span><br><span class="line">    <span class="hljs-string">"firstName"</span>:<span class="hljs-string">"Foo"</span>,</span><br><span class="line">    <span class="hljs-string">"lastName"</span>:<span class="hljs-string">"Bar"</span>,</span><br><span class="line">    <span class="hljs-string">"specialties"</span>:[</span><br><span class="line">        <span class="hljs-string">"a"</span>,<span class="hljs-string">"b"</span>,<span class="hljs-string">"c"</span></span><br><span class="line">    ]</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">---RESPONSE---</span></span><br><span class="line">{</span><br><span class="line">    <span class="hljs-string">"id"</span>: <span class="hljs-number">1</span>,</span><br><span class="line">    <span class="hljs-string">"firstName"</span>: <span class="hljs-string">"Foo"</span>,</span><br><span class="line">    <span class="hljs-string">"lastName"</span>: <span class="hljs-string">"Bar"</span>,</span><br><span class="line">    <span class="hljs-string">"specialties"</span>: [</span><br><span class="line">        <span class="hljs-string">"a"</span>,</span><br><span class="line">        <span class="hljs-string">"b"</span>,</span><br><span class="line">        <span class="hljs-string">"c"</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="hljs-string">"createdAt"</span>: <span class="hljs-string">"2023-07-26T12:18:26.868478"</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p><strong>Pagination1</strong></p>
+<figure class="highlight plain hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">---REQUEST---</span><br><span class="line">GET http://localhost:8080/vet/list?size=2</span><br><span class="line"></span><br><span class="line">---RESPONSE---</span><br><span class="line">{</span><br><span class="line">    "pageState":"BAAAAAEKAAgAAAGJkGw-KPB____98H____0=",</span><br><span class="line">    "errmsg":"ok",</span><br><span class="line">    "list":[</span><br><span class="line">        {</span><br><span class="line">            "id":1,</span><br><span class="line">            "firstName":"Foo",</span><br><span class="line">            "lastName":"Bar",</span><br><span class="line">            "specialties":[</span><br><span class="line">                "a",</span><br><span class="line">                "b",</span><br><span class="line">                "c"</span><br><span class="line">            ],</span><br><span class="line">            "createdAt":"2023-07-26T12:19:20.985"</span><br><span class="line">        },</span><br><span class="line">        {</span><br><span class="line">            "id":1,</span><br><span class="line">            "firstName":"Foo",</span><br><span class="line">            "lastName":"Bar",</span><br><span class="line">            "specialties":[</span><br><span class="line">                "a",</span><br><span class="line">                "b",</span><br><span class="line">                "c"</span><br><span class="line">            ],</span><br><span class="line">            "createdAt":"2023-07-26T12:19:20.232"</span><br><span class="line">        }</span><br><span class="line">    ],</span><br><span class="line">    "errcode":0</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p><strong>Pagination2</strong></p>
+<figure class="highlight plain hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">---REQUEST---</span><br><span class="line">GET http://localhost:8080/vet/list?size=2&amp;page_state=BAAAAAEKAAgAAAGJkGw-KPB____98H____0=</span><br><span class="line"></span><br><span class="line">---RESPONSE---</span><br><span class="line">{</span><br><span class="line">    "pageState":"BAAAAAEKAAgAAAGJkGw3nfB____78H____s=",</span><br><span class="line">    "errmsg":"ok",</span><br><span class="line">    "list":[</span><br><span class="line">        {</span><br><span class="line">            "id":1,</span><br><span class="line">            "firstName":"Foo",</span><br><span class="line">            "lastName":"Bar",</span><br><span class="line">            "specialties":[</span><br><span class="line">                "a",</span><br><span class="line">                "b",</span><br><span class="line">                "c"</span><br><span class="line">            ],</span><br><span class="line">            "createdAt":"2023-07-26T12:19:19.457"</span><br><span class="line">        },</span><br><span class="line">        {</span><br><span class="line">            "id":1,</span><br><span class="line">            "firstName":"Foo",</span><br><span class="line">            "lastName":"Bar",</span><br><span class="line">            "specialties":[</span><br><span class="line">                "a",</span><br><span class="line">                "b",</span><br><span class="line">                "c"</span><br><span class="line">            ],</span><br><span class="line">            "createdAt":"2023-07-26T12:19:18.557"</span><br><span class="line">        }</span><br><span class="line">    ],</span><br><span class="line">    "errcode":0</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>As you can see, the page_state works as expected.</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="https://cassandra.apache.org/_/quickstart.html" target="_blank" rel="noopener">Get Started with Apache Cassandra</a></li>
+</ul>
+</body></html>
+            </div>
+            
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/cassandra/" rel="tag">cassandra</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <div class="social-share" data-disabled="qzone,facebook,twitter,tencent,linkedin,douban,diandian,google"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next"
+                href="/2023/07/10/wasp.html">
+                <span class="level-item">[Reproduce] Web Application Security Problems</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '1ae09f5aa5dcce937e94',
+        clientSecret: '55c4032692dbcb0ee13771da7dc95f22cf9ae8e1',
+        id: '476f34b111f263c406411ad6c901f0fd',
+        repo: 'xialeistudio.github.io',
+        owner: 'xialeistudio',
+        language: 'en',
+        admin: "xialeistudio",
+        createIssueManually: false,
+        distractionFreeMode: false
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-3-desktop is-3-widescreen  has-order-3 column-right ">
+    
+        
+    
+        
+    
+        
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">Visitors</h3>
+        </div>
+        <script type="text/javascript" id="clustrmaps"
+            src="//clustrmaps.com/map_v2.js?d=etnes5oHb0IQKGeRUQF6UNvpYHpBwLczCwT0w7thwQM&cl=ffffff&w=a"></script>
+    </div>
+</div>
+    
+        
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Catalogue
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#Project-Source-Code">
+        <span class="has-mr-6">1</span>
+        <span>Project Source Code</span>
+        </a></li><li>
+        <a class="is-flex" href="#Testing">
+        <span class="has-mr-6">2</span>
+        <span>Testing</span>
+        </a></li><li>
+        <a class="is-flex" href="#Reference">
+        <span class="has-mr-6">3</span>
+        <span>Reference</span>
+        </a></li></ul>
+        </div>
+    </div>
+</div>
+
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                    
+                        Learning &amp; Sharing
+                            
+                </a>
+                <p class="is-size-7">
+                    &copy; 2023
+                        xialeistudio&nbsp;
+                            Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                                href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                            
+                </p>
+                <p class="is-size-7">
+                    
+                </p>
+            </div>
+            <div class="level-end">
+                
+                    <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                        
+                            
+                                <p class="control">
+                                    <a class="button is-white is-large"
+                                        target="_blank" title="Creative Commons"
+                                        href="https://creativecommons.org/">
+                                        
+                                                    <i class="fab fa-creative-commons"></i>
+                                                    
+                                    </a>
+                                </p>
+                                
+                                <p class="control">
+                                    <a class="button is-white is-large"
+                                        target="_blank" title="Attribution 4.0 International"
+                                        href="https://creativecommons.org/licenses/by/4.0/">
+                                        
+                                                    <i class="fab fa-creative-commons-by"></i>
+                                                    
+                                    </a>
+                                </p>
+                                
+                                <p class="control">
+                                    <a class="button is-white is-large"
+                                        target="_blank" title="GitHub"
+                                        href="https://github.com/xialeistudio">
+                                        
+                                                    <i class="fab fa-github"></i>
+                                                    
+                                    </a>
+                                </p>
+                                
+                    </div>
+                    
+            </div>
+        </div>
+    </div>
+</footer>
+
+        <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        const config = {
+                startOnLoad: true,
+                theme: 'forest',
+                securityLevel: 'loose',
+            };
+            mermaid.initialize(config);
+      </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+<script>
+    var IcarusThemeSettings = {
+        article: {
+            highlight: {
+                clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+    
+    <script src="/js/animation.js"></script>
+    
+
+
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

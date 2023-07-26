@@ -138,6 +138,59 @@ var _hmt = _hmt || [];
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
                 <time class="level-item has-text-grey"
+                    datetime="2019-01-02T09:54:59.000Z">2019-01-02</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/Engineering/">Engineering</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    2 minutes read (About 337 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2019/01/02/golang-timeout-context.html">一起学context（二）——超时控制</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <html><head></head><body><p>上一篇文章讲到如何使用context来传值，实际上context还有另外一个重要功能——goroutine的超时控制。<br>很多时候goroutine如果不设超时，一旦发生阻塞将无限等待，协程数会越来越多，导致耗尽服务器内存。</p>
+<h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><p>拥有超时控制的context有以下几种：</p>
+<ol>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
                     datetime="2018-10-17T13:50:20.000Z">2018-10-17</time>
                 
                 <div class="level-item">
@@ -608,59 +661,6 @@ var _hmt = _hmt || [];
 
 
 
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2018-04-05T10:45:31.000Z">2018-04-05</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/Engineering/">Engineering</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    4 minutes read (About 532 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2018/04/05/golang-for-over-channels.html">golang for遍历channel时需要注意的问题</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <html><head></head><body><p>最近在做一个基于RabbitMQ的应用，由于官方的qos没有golang的版本，所以出了一点问题。问题代码如下：</p>
-<figure class="highlight go hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">_, ch, err := component.NewRabbitMQ()</span><br><span class="line"><span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {</span><br><span class="line">	<span class="hljs-built_in">panic</span>(err)</span><br><span class="line">}</span><br><span class="line"><span class="hljs-keyword">if</span> err := ch.Qos(<span class="hljs-number">10</span>, <span class="hljs-number">0</span>, <span class="hljs-literal">true</span>); err != <span class="hljs-literal">nil</span> {</span><br><span class="line">	<span class="hljs-built_in">panic</span>(err)</span><br><span class="line">}</span><br><span class="line">msgs, err := ch.Consume(<span class="hljs-string">"push"</span>, <span class="hljs-string">""</span>, <span class="hljs-literal">false</span>, <span class="hljs-literal">false</span>, <span class="hljs-literal">false</span>, <span class="hljs-literal">false</span>, <span class="hljs-literal">nil</span>)</span><br><span class="line"><span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {</span><br><span class="line">	<span class="hljs-built_in">panic</span>(err)</span><br><span class="line">}</span><br><span class="line"><span class="hljs-keyword">for</span> m := <span class="hljs-keyword">range</span> msgs {</span><br><span class="line">	<span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(d *amqp.Delivery)</span></span> {</span><br><span class="line">           <span class="hljs-keyword">defer</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> { d.Ack(<span class="hljs-literal">false</span>) }</span><br><span class="line">           <span class="hljs-comment">// 处理消息</span></span><br><span class="line">       }(&amp;m)</span><br><span class="line">   }</span><br></pre></td></tr></tbody></table></figure>
-<p>发现消费到10条消息，进程就退出了，但是exit code为0，表示系统是正常退出，由于做了日志记录可以确定消费了10条，所以初步确定是qos相关问题。</p>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -733,7 +733,7 @@ var _hmt = _hmt || [];
                             Posts
                         </p>
                         <p class="title has-text-weight-normal">
-                            312
+                            313
                         </p>
                     </div>
                 </div>
@@ -753,7 +753,7 @@ var _hmt = _hmt || [];
                             Tags
                         </p>
                         <p class="title has-text-weight-normal">
-                            41
+                            42
                         </p>
                     </div>
                 </div>
@@ -826,7 +826,7 @@ var _hmt = _hmt || [];
                 <span class="level-item">engineering</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">1</span>
+                <span class="level-item tag">2</span>
             </span>
         </a></li>
             </ul>
