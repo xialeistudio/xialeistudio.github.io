@@ -138,6 +138,59 @@ var _hmt = _hmt || [];
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
                 <time class="level-item has-text-grey"
+                    datetime="2014-09-06T03:59:23.000Z">2014-09-06</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/Engineering/">Engineering</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    a minute read (About 213 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2014/09/06/angularjs-autosave-directive.html">Angularjs自动保存指令</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <html><head></head><body><p>angularjs的指令真是好东西，也是精髓。刚才群里面有朋友在问如何在用户离开编辑区域时提醒保存，其实用指令实现很简单的。</p>
+<p>请注意，这里使用的指令标签为<strong>ajax-submit</strong></p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">app.directive(<span class="hljs-string">'ajaxSubmit'</span>, [</span><br><span class="line">	<span class="hljs-string">'$http'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">$http</span>) </span>{</span><br><span class="line">		<span class="hljs-keyword">return</span> {</span><br><span class="line">			link: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">scope, ele, attrs</span>) </span>{</span><br><span class="line">				<span class="hljs-keyword">var</span> old = ele.val();</span><br><span class="line">				ele.bind(<span class="hljs-string">'blur'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">					<span class="hljs-keyword">var</span> url = ele.data(<span class="hljs-string">'url'</span>);</span><br><span class="line">					<span class="hljs-keyword">var</span> val = ele.val();</span><br><span class="line"></span><br><span class="line">					ele.prop(<span class="hljs-string">'disabled'</span>, <span class="hljs-literal">true</span>);</span><br><span class="line">					<span class="hljs-comment">//发送http</span></span><br><span class="line">					$http.post(url, {</span><br><span class="line">						data: val</span><br><span class="line">					}).success(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">data</span>) </span>{</span><br><span class="line">						ele.prop(<span class="hljs-string">'disabled'</span>, <span class="hljs-literal">false</span>);</span><br><span class="line">						<span class="hljs-keyword">if</span> (data.msg != <span class="hljs-literal">undefined</span>) {</span><br><span class="line">							old = val;</span><br><span class="line">							ele.after(<span class="hljs-string">'操作成功'</span>);</span><br><span class="line">							setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">								ele.next().remove();</span><br><span class="line">							}, <span class="hljs-number">1000</span>);</span><br><span class="line">						}</span><br><span class="line">						<span class="hljs-keyword">else</span> {</span><br><span class="line">							alert(data.error);</span><br><span class="line">						}</span><br><span class="line">					});</span><br><span class="line">				});</span><br><span class="line">			}</span><br><span class="line">		}</span><br><span class="line">	}</span><br><span class="line">]);</span><br></pre></td></tr></tbody></table></figure>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
                     datetime="2014-09-06T03:58:25.000Z">2014-09-06</time>
                 
                 <div class="level-item">
@@ -351,7 +404,7 @@ var _hmt = _hmt || [];
                             Posts
                         </p>
                         <p class="title has-text-weight-normal">
-                            313
+                            314
                         </p>
                     </div>
                 </div>
@@ -371,7 +424,7 @@ var _hmt = _hmt || [];
                             Tags
                         </p>
                         <p class="title has-text-weight-normal">
-                            42
+                            43
                         </p>
                     </div>
                 </div>
@@ -444,7 +497,7 @@ var _hmt = _hmt || [];
                 <span class="level-item">engineering</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">2</span>
+                <span class="level-item tag">3</span>
             </span>
         </a></li>
             </ul>

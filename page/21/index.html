@@ -138,6 +138,59 @@ var _hmt = _hmt || [];
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
                 <time class="level-item has-text-grey"
+                    datetime="2016-06-07T20:25:21.000Z">2016-06-08</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/Engineering/">Engineering</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    4 minutes read (About 535 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2016/06/07/phpstorm-xdebug-remote-debug.html">phpstorm+xdebug远程调试服务器PHP代码</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <html><head></head><body><p>phpstorm+xdebug如何调试本地代码应该都熟悉了。本文说的是如何调试线上服务器的代码。本文写作时服务器的PHP环境是lnmp1.2。</p>
+<h2 id="服务器配置"><a href="#服务器配置" class="headerlink" title="服务器配置"></a>服务器配置</h2><h3 id="安装debug"><a href="#安装debug" class="headerlink" title="安装debug"></a>安装debug</h3><figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pecl install xdebug</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="编辑php-ini"><a href="#编辑php-ini" class="headerlink" title="编辑php.ini"></a>编辑php.ini</h3><p>编辑 <strong>/usr/local/php/etc/php.ini</strong>，在末尾加上以下代码：</p>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
                     datetime="2016-06-01T16:13:49.000Z">2016-06-02</time>
                 
                 <div class="level-item">
@@ -608,59 +661,6 @@ var _hmt = _hmt || [];
 
 
 
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2016-03-02T02:43:34.000Z">2016-03-02</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/Engineering/">Engineering</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    2 minutes read (About 353 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2016/03/02/android-pick-image-return-image-path.html">android选择图片返回统一图片地址</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <html><head></head><body><p>android从选择图片有两种方法，但是返回值确不同，本文将指导大家如何统一这两种方式的返回值。</p>
-<figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">//关键代码</span></span><br><span class="line"><span class="hljs-meta">@Event</span>(R.id.btnPhoto)</span><br><span class="line">   <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onBtnPhotoClicked</span><span class="hljs-params">(View view)</span> </span>{</span><br><span class="line">       Intent intent = <span class="hljs-keyword">new</span> Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);</span><br><span class="line">       startActivityForResult(intent, Config.Constants.CODE_PICK_IMAGE_FROM_PHOTO);</span><br><span class="line">   }</span><br><span class="line"></span><br><span class="line">   <span class="hljs-meta">@Event</span>(R.id.btnCamera)</span><br><span class="line">   <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onBtnCameraClicked</span><span class="hljs-params">(View view)</span> </span>{</span><br><span class="line">       Intent intent = <span class="hljs-keyword">new</span> Intent(MediaStore.ACTION_IMAGE_CAPTURE);</span><br><span class="line">       startActivityForResult(intent, Config.Constants.CODE_PICK_IMAGE_FROM_CAMERA);</span><br><span class="line">   }</span><br><span class="line">   </span><br><span class="line">   <span class="hljs-meta">@Override</span></span><br><span class="line">   <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onActivityResult</span><span class="hljs-params">(<span class="hljs-keyword">int</span> requestCode, <span class="hljs-keyword">int</span> resultCode, Intent data)</span> </span>{</span><br><span class="line">       <span class="hljs-keyword">switch</span> (requestCode) {</span><br><span class="line">           <span class="hljs-keyword">case</span> Config.Constants.CODE_PICK_IMAGE_FROM_CAMERA:</span><br><span class="line">               <span class="hljs-keyword">if</span> (data != <span class="hljs-keyword">null</span> &amp;&amp; data.hasExtra(<span class="hljs-string">"data"</span>)) {</span><br><span class="line">                   Bitmap bitmap = data.getParcelableExtra(<span class="hljs-string">"data"</span>);</span><br><span class="line">                   bitmap = BitmapUtil.scale(bitmap, <span class="hljs-number">640.0f</span> / bitmap.getWidth());</span><br><span class="line">                   <span class="hljs-keyword">try</span> {</span><br><span class="line">                       File path = <span class="hljs-keyword">new</span> File(((MyApplication) getApplication()).appPath, DateUtil.format(<span class="hljs-keyword">new</span> Date(), <span class="hljs-string">"yyyyMMddHHmmss"</span>) + <span class="hljs-string">".jpg"</span>);</span><br><span class="line">                       FileOutputStream outputStream = <span class="hljs-keyword">new</span> FileOutputStream(path);</span><br><span class="line">                       bitmap.compress(Bitmap.CompressFormat.JPEG, <span class="hljs-number">100</span>, outputStream);</span><br><span class="line">                       outputStream.close();</span><br><span class="line">                       Intent intent = <span class="hljs-keyword">new</span> Intent();</span><br><span class="line">                       intent.putExtra(<span class="hljs-string">"path"</span>, path.getAbsolutePath());</span><br><span class="line">                       setResult(RESULT_OK, intent);</span><br><span class="line">                   } <span class="hljs-keyword">catch</span> (IOException e) {</span><br><span class="line">                        e.printStackTrace();</span><br><span class="line">                   }</span><br><span class="line">               }</span><br><span class="line">               finish();</span><br><span class="line">               <span class="hljs-keyword">break</span>;</span><br><span class="line">           <span class="hljs-keyword">case</span> Config.Constants.CODE_PICK_IMAGE_FROM_PHOTO:</span><br><span class="line">               <span class="hljs-keyword">if</span>(data != <span class="hljs-keyword">null</span>){</span><br><span class="line">                   Uri uri = data.getData();</span><br><span class="line">                   Bitmap bitmap;</span><br><span class="line">                   ContentResolver contentResolver = getContentResolver();</span><br><span class="line">                   <span class="hljs-keyword">try</span> {</span><br><span class="line">                       bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri);</span><br><span class="line">                       bitmap = BitmapUtil.scale(bitmap, <span class="hljs-number">640.0f</span> / bitmap.getWidth());</span><br><span class="line">                       File path = <span class="hljs-keyword">new</span> File(((MyApplication) getApplication()).appPath, DateUtil.format(<span class="hljs-keyword">new</span> Date(), <span class="hljs-string">"yyyyMMddHHmmss"</span>) + <span class="hljs-string">".jpg"</span>);</span><br><span class="line">                       FileOutputStream outputStream = <span class="hljs-keyword">new</span> FileOutputStream(path);</span><br><span class="line">                       bitmap.compress(Bitmap.CompressFormat.JPEG, <span class="hljs-number">100</span>, outputStream);</span><br><span class="line">                       outputStream.close();</span><br><span class="line">                       Intent intent = <span class="hljs-keyword">new</span> Intent();</span><br><span class="line">                       intent.putExtra(<span class="hljs-string">"path"</span>, path.getAbsolutePath());</span><br><span class="line">                       setResult(RESULT_OK, intent);</span><br><span class="line">                   } <span class="hljs-keyword">catch</span> (IOException e) {</span><br><span class="line">                       e.printStackTrace();</span><br><span class="line">                   }</span><br><span class="line">               }</span><br><span class="line">               finish();</span><br><span class="line">               <span class="hljs-keyword">break</span>;</span><br><span class="line">           <span class="hljs-keyword">default</span>:</span><br><span class="line">               <span class="hljs-keyword">super</span>.onActivityResult(requestCode, resultCode, data);</span><br><span class="line">       }</span><br><span class="line">   }</span><br><span class="line"><span class="hljs-comment">//BitmapUtil.java</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Bitmap <span class="hljs-title">scale</span><span class="hljs-params">(Bitmap bitmap, <span class="hljs-keyword">float</span> scale)</span> </span>{</span><br><span class="line">    Matrix matrix = <span class="hljs-keyword">new</span> Matrix();</span><br><span class="line">    matrix.postScale(scale, scale);</span><br><span class="line">    <span class="hljs-keyword">return</span> Bitmap.createBitmap(bitmap, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, bitmap.getWidth(), bitmap.getHeight(), matrix, <span class="hljs-keyword">true</span>);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">//MyApplication</span></span><br><span class="line"><span class="hljs-keyword">public</span> File appPath;</span><br><span class="line"></span><br><span class="line"><span class="hljs-meta">@Override</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onCreate</span><span class="hljs-params">()</span> </span>{</span><br><span class="line">    <span class="hljs-keyword">super</span>.onCreate();</span><br><span class="line">    <span class="hljs-comment">//创建目录</span></span><br><span class="line">    appPath = <span class="hljs-keyword">new</span> File(Environment.getExternalStorageDirectory(), getPackageName());</span><br><span class="line">    <span class="hljs-keyword">if</span> (!appPath.isDirectory()) {</span><br><span class="line">        appPath.mkdir();</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>经过统一处理之后，返回值均为图片的绝对路径地址。</p>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -733,7 +733,7 @@ var _hmt = _hmt || [];
                             Posts
                         </p>
                         <p class="title has-text-weight-normal">
-                            313
+                            314
                         </p>
                     </div>
                 </div>
@@ -753,7 +753,7 @@ var _hmt = _hmt || [];
                             Tags
                         </p>
                         <p class="title has-text-weight-normal">
-                            42
+                            43
                         </p>
                     </div>
                 </div>
@@ -826,7 +826,7 @@ var _hmt = _hmt || [];
                 <span class="level-item">engineering</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">2</span>
+                <span class="level-item tag">3</span>
             </span>
         </a></li>
             </ul>
