@@ -138,6 +138,62 @@ var _hmt = _hmt || [];
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
                 <time class="level-item has-text-grey"
+                    datetime="2023-10-20T12:52:05.000Z">2023-10-20</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/Engineering/">Engineering</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    4 minutes read (About 610 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2023/10/20/Build-a-linux-c-development-environment-based-on-docker-vscode.html">Build a linux/c++ development environment based on docker/vscode step-by-step</a>
+            
+        </h1>
+        <div class="content">
+            
+            <html><head></head><body><p>Sometimes we want to develop some high-performance c++ application on Linux(like epoll/ioturing), installing a virtual machine is a solution, but I think it’s not the most convenient solution, today I’ll share how to build a linux/c++ development environment based on docker/vscode.</p></body></html>
+            
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                    <a class="button is-size-7 is-light"
+                        href="/2023/10/20/Build-a-linux-c-development-environment-based-on-docker-vscode.html#more">Read More</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
                     datetime="2023-09-25T03:22:17.000Z">2023-09-25</time>
                 
                 <div class="level-item">
@@ -649,59 +705,6 @@ var _hmt = _hmt || [];
 
 
 
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2023-04-20T04:00:00.000Z">2023-04-20</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/Engineering/">Engineering</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    a minute read (About 135 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2023/04/20/fix-gomonkey-permission-defined.html">修复M1使用gomonkey提示permission defined错误</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-                <html><head></head><body><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>Go单元测试在M1上使用<code>github.com/agiledragon/gomonkey/v2 v2.9.0</code>包提示<code>permission defined</code>。<br>网上查阅消息得知是由于内存安全导致，不能同时对内存进行写和执行</p>
-<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>下面分享一种比较简单的方法，需要修改本地的go源码。</p>
-<p>修改<a href="mailto:`go/pkg/mod/github.com/agiledragon/gomonkey/v2@v2.9.0">`go/pkg/mod/github.com/agiledragon/gomonkey/v2@v2.9.0</a>/modify_binary_darwin.go<code>的</code>modifyBinary`方法。<br>将<br></p><figure class="highlight go hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">err := mprotectCrossPage(target, <span class="hljs-built_in">len</span>(bytes), syscall.PROT_READ|syscall.PROT_WRITE|syscall.PROT_EXEC)</span><br></pre></td></tr></tbody></table></figure><br>修改为<br><figure class="highlight go hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">err := mprotectCrossPage(target, <span class="hljs-built_in">len</span>(bytes), syscall.PROT_READ|syscall.PROT_WRITE)</span><br></pre></td></tr></tbody></table></figure><p></p>
-
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -768,7 +771,7 @@ var _hmt = _hmt || [];
                             Posts
                         </p>
                         <p class="title has-text-weight-normal">
-                            314
+                            315
                         </p>
                     </div>
                 </div>
@@ -788,7 +791,7 @@ var _hmt = _hmt || [];
                             Tags
                         </p>
                         <p class="title has-text-weight-normal">
-                            43
+                            44
                         </p>
                     </div>
                 </div>
@@ -853,7 +856,7 @@ var _hmt = _hmt || [];
                 <span class="level-item">Engineering</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">276</span>
+                <span class="level-item tag">277</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/engineering/">

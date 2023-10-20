@@ -138,6 +138,59 @@ var _hmt = _hmt || [];
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
                 <time class="level-item has-text-grey"
+                    datetime="2017-11-01T08:28:23.000Z">2017-11-01</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/Engineering/">Engineering</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    a minute read (About 186 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2017/11/01/docker-composer-nodejs.html">使用docker-composer部署nodejs应用</a>
+            
+        </h1>
+        <div class="content">
+            
+                
+                
+                <html><head></head><body><h2 id="新建Dockerfile"><a href="#新建Dockerfile" class="headerlink" title="新建Dockerfile"></a>新建Dockerfile</h2><p>在应用目录下新建<strong>Dockerfile</strong><br></p><figure class="highlight dockerfile hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">FROM</span> node:<span class="hljs-number">8</span></span><br><span class="line"><span class="hljs-keyword">WORKDIR</span><span class="hljs-bash"> /usr/src/app</span></span><br><span class="line"><span class="hljs-keyword">ADD</span><span class="hljs-bash"> . /usr/src/app</span></span><br><span class="line"><span class="hljs-keyword">RUN</span><span class="hljs-bash"> npm install --registry=https://registry.npm.taobao.org</span></span><br><span class="line"><span class="hljs-keyword">USER</span> node</span><br><span class="line"><span class="hljs-keyword">EXPOSE</span> <span class="hljs-number">8080</span></span><br></pre></td></tr></tbody></table></figure><br>8080 端口请根据实际情况调整。建议大于1024，否则使用<strong>node</strong>用户启动应用时可能权限不足<p></p>
+<h2 id="新建docker-compose-yml"><a href="#新建docker-compose-yml" class="headerlink" title="新建docker-compose.yml"></a>新建docker-compose.yml</h2><p>在应用目录下新建<strong>docker-compose.yml</strong><br></p><figure class="highlight yaml hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-attr">version:</span> <span class="hljs-string">"2"</span></span><br><span class="line"><span class="hljs-attr">services:</span></span><br><span class="line">  <span class="hljs-attr">jsconsole:</span></span><br><span class="line">    <span class="hljs-attr">build:</span> <span class="hljs-string">.</span></span><br><span class="line">    <span class="hljs-attr">volumes:</span></span><br><span class="line">      <span class="hljs-bullet">-</span> <span class="hljs-string">.:/usr/src/app</span></span><br><span class="line">      <span class="hljs-bullet">-</span> <span class="hljs-string">/usr/src/app/node_modules</span></span><br><span class="line">    <span class="hljs-attr">ports:</span></span><br><span class="line">      <span class="hljs-bullet">-</span> <span class="hljs-string">"127.0.0.1:8081:8080"</span></span><br><span class="line">    <span class="hljs-attr">command:</span> <span class="hljs-string">"npm start"</span></span><br><span class="line">    <span class="hljs-attr">restart:</span> <span class="hljs-string">always</span></span><br></pre></td></tr></tbody></table></figure><br><strong>127.0.0.1:8081</strong>是<strong>宿主机IP和端口</strong>，我前端采用了<strong>nginx</strong>做反向代理。如果是直接提供公网服务的话把<strong>127.0.0.1</strong>去掉<p></p>
+<h2 id="构建镜像"><a href="#构建镜像" class="headerlink" title="构建镜像"></a>构建镜像</h2><p>在应用根目录下执行<br></p><figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose build</span><br></pre></td></tr></tbody></table></figure><p></p>
+
+                
+            
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
                     datetime="2017-10-17T11:26:21.000Z">2017-10-17</time>
                 
                 <div class="level-item">
@@ -603,54 +656,6 @@ var _hmt = _hmt || [];
 
 
 
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2017-09-13T16:00:00.000Z">2017-09-14</time>
-                
-                <div class="level-item">
-                    <a class="has-link-grey -link" href="/categories/Engineering/">Engineering</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    a minute read (About 152 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2017/09/13/nginx-alias-root.html">Nginx alias和root指令</a>
-            
-        </h1>
-        <div class="content">
-            
-                
-                
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -723,7 +728,7 @@ var _hmt = _hmt || [];
                             Posts
                         </p>
                         <p class="title has-text-weight-normal">
-                            314
+                            315
                         </p>
                     </div>
                 </div>
@@ -743,7 +748,7 @@ var _hmt = _hmt || [];
                             Tags
                         </p>
                         <p class="title has-text-weight-normal">
-                            43
+                            44
                         </p>
                     </div>
                 </div>
@@ -808,7 +813,7 @@ var _hmt = _hmt || [];
                 <span class="level-item">Engineering</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">276</span>
+                <span class="level-item tag">277</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/engineering/">
