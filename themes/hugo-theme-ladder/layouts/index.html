@@ -1,9 +1,11 @@
 {{ define "content" }}
 {{ partial "home/profile.html" . }}
 <div class="blog-wrapper">
+    <h2>{{- i18n "featured_posts" -}}</h2>
     <div>
         <div class="blog-list">
-            {{ range .Paginator.Pages }}
+            {{ $paginator := .Paginate (where site.RegularPages "Type" "in" site.Params.mainSections) }}
+            {{ range $paginator.Pages }}
             <article>
                 <div class="blog-card">
                     <h3><a href="{{ .RelPermalink }}">{{ .Params.title }}</a></h3>
@@ -13,13 +15,13 @@
             </article>
             {{ end -}}
         </div>
-        {{ if gt .Paginator.TotalPages 1 }}
+        {{ if gt $paginator.TotalPages 1 }}
         <div class="paginator">
-            {{ if .Paginator.HasPrev }}
-            <a class="prev" href="{{ .Paginator.Prev.URL }}">&larr;&nbsp;&nbsp;Pre Page</a>
+            {{ if $paginator.HasPrev }}
+            <a class="prev" href="{{ $paginator.Prev.URL }}">&larr;&nbsp;&nbsp;Pre Page</a>
             {{ end }}
-            {{ if .Paginator.HasNext }}
-            <a class="next" href="{{ .Paginator.Next.URL }}">Next Page&nbsp;&nbsp;&rarr;</a>
+            {{ if $paginator.HasNext }}
+            <a class="next" href="{{ $paginator.Next.URL }}">Next Page&nbsp;&nbsp;&rarr;</a>
             {{ end }}
         </div>
         {{ end }}
