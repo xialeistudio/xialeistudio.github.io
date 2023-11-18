@@ -75,9 +75,6 @@ languages:
         - name: Guestbook
           url: /guestbook
           weight: 4
-        - name: Dashboard
-          url: https://umami-beta-peach.vercel.app/
-          weight: 5
   zh:
     disabled: true
     languageName: 中
@@ -98,9 +95,6 @@ languages:
         - name: 留言板
           url: /zh/guestbook
           weight: 5
-        - name: 网站统计
-          url: https://umami-beta-peach.vercel.app
-          weight: 6
     permalinks:
       page:
         posts: /zh/:year/:month/:day/:slug
