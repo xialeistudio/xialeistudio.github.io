@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>gittalk on Lei Xia</title><link>https://www.ddhigh.com/tags/gittalk/</link><description>Recent content in gittalk on Lei Xia</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Thu, 25 Feb 2021 12:00:23 +0000</lastBuildDate><atom:link href="https://www.ddhigh.com/tags/gittalk/atom.xml" rel="self" type="application/rss+xml"/><item><title>修复GitTalk出现Forbidden问题</title><link>https://www.ddhigh.com/2021/02/25/fix-gittalk-github/</link><pubDate>Thu, 25 Feb 2021 12:00:23 +0000</pubDate><guid>https://www.ddhigh.com/2021/02/25/fix-gittalk-github/</guid><description>&lt;h2 id="gittalk失效原因">GitTalk失效原因&lt;/h2>
+&lt;p>对于所有自建博客的博主来书，GitTalk应该不陌生。GitTalk通过Github的OpenAPI以及issues功能实现社区评论，确实是一大亮点。&lt;/p>
+&lt;p>今天在查看文章的时候发现评论区出现了Forbidden错误，通过检查网络请求发现获取Github Token时请求了以下链接&lt;/p>
+&lt;pre tabindex="0">&lt;code>https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token
+&lt;/code>&lt;/pre>&lt;p>通过查询GitTalk官方文档发现github.com的oauth是不允许跨域请求的，cors-anywhere.herokuapp.com是一个第三方提供的CORS代理服务，会默认放行所有CORS请求。目前由于该CORS代理服务遭到滥用，因此做了限制，导致GitTalk失效。&lt;/p>
+&lt;h2 id="解决方案">解决方案&lt;/h2>
+&lt;blockquote>
+&lt;p>通过自己的nginx进行反向代理转发即可。&lt;/p>
+&lt;/blockquote>
+&lt;h3 id="修改gitalk初始化参数">修改gitalk初始化参数&lt;/h3>
+&lt;p>笔者使用的是hexo+icarus主题，其他主题或者博客系统也是类似做法。&lt;/p>
+&lt;p>编辑themes/icarus/layout/comment/gitalk.ejs&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-javascript" data-lang="javascript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">&amp;lt;&lt;/span>&lt;span style="color:#a6e22e">script&lt;/span>&lt;span style="color:#f92672">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">var&lt;/span> &lt;span style="color:#a6e22e">gitalk&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">Gitalk&lt;/span>({
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">clientID&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#e6db74">&amp;#39;&amp;lt;%= get_config(&amp;#39;&lt;/span>&lt;span style="color:#a6e22e">comment&lt;/span>.&lt;span style="color:#a6e22e">client_id&lt;/span>&lt;span style="color:#e6db74">&amp;#39;) %&amp;gt;&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">clientSecret&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#e6db74">&amp;#39;&amp;lt;%= get_config(&amp;#39;&lt;/span>&lt;span style="color:#a6e22e">comment&lt;/span>.&lt;span style="color:#a6e22e">client_secret&lt;/span>&lt;span style="color:#e6db74">&amp;#39;) %&amp;gt;&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">id&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#e6db74">&amp;#39;&amp;lt;%= md5(page.path) %&amp;gt;&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">repo&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#e6db74">&amp;#39;&amp;lt;%= get_config(&amp;#39;&lt;/span>&lt;span style="color:#a6e22e">comment&lt;/span>.&lt;span style="color:#a6e22e">repo&lt;/span>&lt;span style="color:#e6db74">&amp;#39;) %&amp;gt;&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">owner&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#e6db74">&amp;#39;&amp;lt;%= get_config(&amp;#39;&lt;/span>&lt;span style="color:#a6e22e">comment&lt;/span>.&lt;span style="color:#a6e22e">owner&lt;/span>&lt;span style="color:#e6db74">&amp;#39;) %&amp;gt;&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">admin&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#f92672">&amp;lt;%-&lt;/span> &lt;span style="color:#a6e22e">JSON&lt;/span>.&lt;span style="color:#a6e22e">stringify&lt;/span>(&lt;span style="color:#a6e22e">get_config&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;comment.admin&amp;#39;&lt;/span>))&lt;span style="color:#f92672">%&amp;gt;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">createIssueManually&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#f92672">&amp;lt;%=&lt;/span> &lt;span style="color:#a6e22e">get_config&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;comment.create_issue_manually&amp;#39;&lt;/span>, &lt;span style="color:#66d9ef">false&lt;/span>) &lt;span style="color:#f92672">%&amp;gt;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">distractionFreeMode&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#f92672">&amp;lt;%=&lt;/span> &lt;span style="color:#a6e22e">get_config&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;comment.distraction_free_mode&amp;#39;&lt;/span>, &lt;span style="color:#66d9ef">false&lt;/span>) &lt;span style="color:#f92672">%&amp;gt;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">proxy&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#e6db74">&amp;#39;/github/login/oauth/access_token&amp;#39;&lt;/span> &lt;span style="color:#75715e">// 新添加的
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> })
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">gitalk&lt;/span>.&lt;span style="color:#a6e22e">render&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;comment-container&amp;#39;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">&amp;lt;&lt;/span>&lt;span style="color:#960050;background-color:#1e0010">/script&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="nginx配置">nginx配置&lt;/h3>
+&lt;p>编辑nginx配置，笔者的博客域名为www.ddhigh.com，因此需要限制CORS来源域名，否则将有盗用风险!&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-nginx" data-lang="nginx">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">location&lt;/span> &lt;span style="color:#e6db74">/github&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">add_header&lt;/span> &lt;span style="color:#e6db74">Access-Control-Allow-Origin&lt;/span> &lt;span style="color:#e6db74">www.ddhigh.com&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">add_header&lt;/span> &lt;span style="color:#e6db74">Access-Control-Allow-Methods&lt;/span> &lt;span style="color:#e6db74">&amp;#39;GET,&lt;/span> &lt;span style="color:#e6db74">POST,&lt;/span> &lt;span style="color:#e6db74">OPTIONS&amp;#39;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">add_header&lt;/span> &lt;span style="color:#e6db74">Access-Control-Allow-Headers&lt;/span> &lt;span style="color:#e6db74">&amp;#39;DNT,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization&amp;#39;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">if&lt;/span> &lt;span style="color:#e6db74">(&lt;/span>$request_method = &lt;span style="color:#e6db74">&amp;#39;OPTIONS&amp;#39;)&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">return&lt;/span> &lt;span style="color:#ae81ff">204&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">proxy_pass&lt;/span> &lt;span style="color:#e6db74">https://github.com/&lt;/span>; &lt;span style="color:#75715e"># 尾部斜杠不能少
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>执行nginx -s reload配置。&lt;/p>
+&lt;h3 id="访问测试">访问测试&lt;/h3>
+&lt;p>访问新写的文章https://www.ddhigh.com/2021/02/25/golang-get-started.html，可以看到界面上已经正常了。&lt;/p>
+&lt;p>&lt;img src="https://static.ddhigh.com/blog/2021-02-25-121050-2.png" alt="image-20210225121050348">&lt;/p>
+&lt;p>查看Chrome网络状况，可以看到已经走了自己配置的CORS跨域了。&lt;/p>
+&lt;pre tabindex="0">&lt;code>Request URL: https://www.ddhigh.com/github/login/oauth/access_token
+Request Method: POST
+Status Code: 200
+Remote Address: 106.52.24.199:443
+Referrer Policy: strict-origin-when-cross-origin
+&lt;/code>&lt;/pre></description></item></channel></rss>

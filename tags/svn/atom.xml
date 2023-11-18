@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>svn on Lei Xia</title><link>https://www.ddhigh.com/tags/svn/</link><description>Recent content in svn on Lei Xia</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sat, 14 Nov 2015 15:59:20 +0800</lastBuildDate><atom:link href="https://www.ddhigh.com/tags/svn/atom.xml" rel="self" type="application/rss+xml"/><item><title>svn更新时403的解决</title><link>https://www.ddhigh.com/2015/11/14/svn-update-403/</link><pubDate>Sat, 14 Nov 2015 15:59:20 +0800</pubDate><guid>https://www.ddhigh.com/2015/11/14/svn-update-403/</guid><description>&lt;p>今天在服务器上svn up的时候出现这么一段&lt;/p>
+&lt;p>&lt;em>svn: Server sent unexpected return value (403 Forbidden) in response to OPTIONS request&lt;/em>&lt;/p>
+&lt;p>403一般是权限问题，但是昨天还好好更新的，应该不是，然后更新的时候昨天是需要输入账号密码的，但是今天不需要，想着是不是账号密码被保存下来了，而这个账号密码可能有误，经过google发现在 ~/.subversion/auth/svn.simple 有一个md5加密后的文件，应该就是那个所谓的账号密码保存文件了，删掉之后重新SVN要求输入密码了。&lt;/p></description></item><item><title>SVN命令行提交“--This line, and those below, will be ignored--”</title><link>https://www.ddhigh.com/2014/12/29/svn-commit-error/</link><pubDate>Mon, 29 Dec 2014 17:35:47 +0800</pubDate><guid>https://www.ddhigh.com/2014/12/29/svn-commit-error/</guid><description>&lt;p>今天phpstorm突然抽风，导致svn不能用，无奈只好用svn命令来提交。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>svn commit -m &lt;span style="color:#e6db74">&amp;#34;init&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>结果报错&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>--This line, and those below, will be ignored--
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>M webroot/thatyear/js/main.js
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>~
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>~
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>~
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>~
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>~
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>~
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>~
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>~
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>~
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">&amp;#34;svn-commit.2.tmp&amp;#34;&lt;/span> 4L, 83C
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>直接保存发现会出现以下结果&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>Log message unchanged or not specified
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">(&lt;/span>a&lt;span style="color:#f92672">)&lt;/span>bort, &lt;span style="color:#f92672">(&lt;/span>c&lt;span style="color:#f92672">)&lt;/span>ontinue, &lt;span style="color:#f92672">(&lt;/span>e&lt;span style="color:#f92672">)&lt;/span>dit:
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>输入&lt;strong>c&lt;/strong>提交&lt;br>
+*我这是设置了SVN提交默认编辑器的时候才会这样，默认是不会设置的。*按以下操作设置提交的编辑器&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>vi ~/.subversion/config
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>找到[helpers]下的 editor-cmd 节，更改为vi即可&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">[&lt;/span>helpers&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>editor-cmd &lt;span style="color:#f92672">=&lt;/span> /usr/bin/vi
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item></channel></rss>

@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>rtmp on Lei Xia</title><link>https://www.ddhigh.com/tags/rtmp/</link><description>Recent content in rtmp on Lei Xia</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Thu, 23 Nov 2017 15:19:58 +0000</lastBuildDate><atom:link href="https://www.ddhigh.com/tags/rtmp/atom.xml" rel="self" type="application/rss+xml"/><item><title>从零开始打造自己的直播服务器-golang开发HTTP推流服务</title><link>https://www.ddhigh.com/2017/11/23/go-rtmp-http-publisher/</link><pubDate>Thu, 23 Nov 2017 15:19:58 +0000</pubDate><guid>https://www.ddhigh.com/2017/11/23/go-rtmp-http-publisher/</guid><description>&lt;p>目前笔者只知道ffmpeg命令行推流到RTMP服务器，是没有HTTP接口的，像iOS和Android这种Native应用应该有RTMP SDK封装推流逻辑。但是像微信小程序这种录制音频只有原始&lt;strong>ArrayBuffer&lt;/strong>的数据，则必须在服务端提供接口来进行推流。&lt;/p>
+&lt;p>本文将基于golang标准库以及ffmpeg命令来实现。&lt;/p>
+&lt;h2 id="服务端原理">服务端原理&lt;/h2>
+&lt;ol>
+&lt;li>客户端上传base64编码后的音频数据&lt;/li>
+&lt;li>服务端接收后解码为**[]byte**&lt;/li>
+&lt;li>将**[]byte**写入本地文件&lt;/li>
+&lt;li>golang调用ffmpeg命令将第3步写入的文件推流到RTMP服务端&lt;/li>
+&lt;li>golang输出JSON响应，如果出错则返回错误JSON响应
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-json" data-lang="json">&lt;span style="display:flex;">&lt;span>{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;errmsg&amp;#34;&lt;/span>:&lt;span style="color:#e6db74">&amp;#34;ok&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;errcode&amp;#34;&lt;/span>:&lt;span style="color:#ae81ff">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;/ol>
+&lt;h2 id="开始开发">开始开发&lt;/h2>
+&lt;p>由于采用了log4go日志库&lt;a href="https://github.com/alecthomas/log4go">https://github.com/alecthomas/log4go&lt;/a>，故需要先安装&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>go get github.com/alecthomas/log4go
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>完整服务端源代码：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">package&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> (
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;github.com/alecthomas/log4go&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;flag&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;net/http&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;time&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;encoding/json&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;io/ioutil&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;encoding/base64&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;os&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;os/exec&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;strings&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">var&lt;/span> (
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">rtmp&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span> &lt;span style="color:#75715e">// rtmp 服务端地址
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">ffmpeg&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span> &lt;span style="color:#75715e">// ffmpeg命令地址
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">listen&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span> &lt;span style="color:#75715e">// 监听地址
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">uploadKey&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span> &lt;span style="color:#75715e">// 上传key
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">uploadDirectory&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span> &lt;span style="color:#75715e">// 本地上传目录
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">start&lt;/span> = &lt;span style="color:#a6e22e">time&lt;/span>.&lt;span style="color:#a6e22e">Now&lt;/span>()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> (
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">VERSION&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;1.0.0&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">init&lt;/span>() {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">flag&lt;/span>.&lt;span style="color:#a6e22e">StringVar&lt;/span>(&lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">rtmp&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;rtmp&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;rtmp://localhost:1935/hls&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;rtmp upstream address&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">flag&lt;/span>.&lt;span style="color:#a6e22e">StringVar&lt;/span>(&lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">ffmpeg&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;ffmpeg&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;ffmpeg&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;ffmpeg executable&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">flag&lt;/span>.&lt;span style="color:#a6e22e">StringVar&lt;/span>(&lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">listen&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;listen&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;:8081&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;http server address&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">flag&lt;/span>.&lt;span style="color:#a6e22e">StringVar&lt;/span>(&lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">uploadKey&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;key&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;testkey&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;http upload key&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">flag&lt;/span>.&lt;span style="color:#a6e22e">StringVar&lt;/span>(&lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">uploadDirectory&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;upload-directory&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;upload&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;local upload directory&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>() {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">flag&lt;/span>.&lt;span style="color:#a6e22e">Parse&lt;/span>()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">log4go&lt;/span>.&lt;span style="color:#a6e22e">LoadConfiguration&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;log4go.xml&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">rtmp&lt;/span> &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> panic(&lt;span style="color:#e6db74">&amp;#34;rtmp upstream not set!&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 创建目录
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">os&lt;/span>.&lt;span style="color:#a6e22e">Mkdir&lt;/span>(&lt;span style="color:#a6e22e">uploadDirectory&lt;/span>, &lt;span style="color:#a6e22e">os&lt;/span>.&lt;span style="color:#a6e22e">ModePerm&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">log4go&lt;/span>.&lt;span style="color:#a6e22e">Info&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;start ffmpeg-publisher, version %s&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">VERSION&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">log4go&lt;/span>.&lt;span style="color:#a6e22e">Info&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;RTMP UpStream %s&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">rtmp&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">log4go&lt;/span>.&lt;span style="color:#a6e22e">Info&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;HTTP Upload Directory %s&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">uploadDirectory&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">log4go&lt;/span>.&lt;span style="color:#a6e22e">Info&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;HTTP Listen ON %s&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">listen&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">log4go&lt;/span>.&lt;span style="color:#a6e22e">Info&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;HTTP Upload Key %s&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">uploadKey&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">http&lt;/span>.&lt;span style="color:#a6e22e">HandleFunc&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;/&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">handleIndex&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">http&lt;/span>.&lt;span style="color:#a6e22e">HandleFunc&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;/base64&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">handleBase64Publish&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> panic(&lt;span style="color:#a6e22e">http&lt;/span>.&lt;span style="color:#a6e22e">ListenAndServe&lt;/span>(&lt;span style="color:#a6e22e">listen&lt;/span>, &lt;span style="color:#66d9ef">nil&lt;/span>))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">sendResponse&lt;/span>(&lt;span style="color:#a6e22e">errmsg&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>, &lt;span style="color:#a6e22e">statusCode&lt;/span> &lt;span style="color:#66d9ef">int&lt;/span>, &lt;span style="color:#a6e22e">w&lt;/span> &lt;span style="color:#a6e22e">http&lt;/span>.&lt;span style="color:#a6e22e">ResponseWriter&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">w&lt;/span>.&lt;span style="color:#a6e22e">Header&lt;/span>().&lt;span style="color:#a6e22e">Set&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Content-Type&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;application/json;charset=utf-8&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">statusCode&lt;/span> &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">statusCode&lt;/span> = &lt;span style="color:#ae81ff">200&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">w&lt;/span>.&lt;span style="color:#a6e22e">WriteHeader&lt;/span>(&lt;span style="color:#a6e22e">statusCode&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">ret&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#66d9ef">map&lt;/span>[&lt;span style="color:#66d9ef">string&lt;/span>]&lt;span style="color:#66d9ef">interface&lt;/span>{}{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;errmsg&amp;#34;&lt;/span>: &lt;span style="color:#a6e22e">errmsg&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;errcode&amp;#34;&lt;/span>: &lt;span style="color:#a6e22e">statusCode&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">json&lt;/span>.&lt;span style="color:#a6e22e">NewEncoder&lt;/span>(&lt;span style="color:#a6e22e">w&lt;/span>).&lt;span style="color:#a6e22e">Encode&lt;/span>(&lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">ret&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">statusCode&lt;/span> &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#ae81ff">500&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">log4go&lt;/span>.&lt;span style="color:#a6e22e">Error&lt;/span>(&lt;span style="color:#a6e22e">errmsg&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">handleIndex&lt;/span>(&lt;span style="color:#a6e22e">w&lt;/span> &lt;span style="color:#a6e22e">http&lt;/span>.&lt;span style="color:#a6e22e">ResponseWriter&lt;/span>, &lt;span style="color:#a6e22e">_&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">http&lt;/span>.&lt;span style="color:#a6e22e">Request&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">ret&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#66d9ef">map&lt;/span>[&lt;span style="color:#66d9ef">string&lt;/span>]&lt;span style="color:#66d9ef">interface&lt;/span>{}{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;name&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;ffpmeg-publisher&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;version&amp;#34;&lt;/span>: &lt;span style="color:#a6e22e">VERSION&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;uptime&amp;#34;&lt;/span>: &lt;span style="color:#a6e22e">time&lt;/span>.&lt;span style="color:#a6e22e">Since&lt;/span>(&lt;span style="color:#a6e22e">start&lt;/span>).&lt;span style="color:#a6e22e">String&lt;/span>(),
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">w&lt;/span>.&lt;span style="color:#a6e22e">Header&lt;/span>().&lt;span style="color:#a6e22e">Set&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Content-Type&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;application/json;charset=utf-8&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">json&lt;/span>.&lt;span style="color:#a6e22e">NewEncoder&lt;/span>(&lt;span style="color:#a6e22e">w&lt;/span>).&lt;span style="color:#a6e22e">Encode&lt;/span>(&lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">ret&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">handleBase64Publish&lt;/span>(&lt;span style="color:#a6e22e">w&lt;/span> &lt;span style="color:#a6e22e">http&lt;/span>.&lt;span style="color:#a6e22e">ResponseWriter&lt;/span>, &lt;span style="color:#a6e22e">r&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">http&lt;/span>.&lt;span style="color:#a6e22e">Request&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">r&lt;/span>.&lt;span style="color:#a6e22e">Method&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;POST&amp;#34;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">sendResponse&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Method Not Allowed&amp;#34;&lt;/span>, &lt;span style="color:#ae81ff">405&lt;/span>, &lt;span style="color:#a6e22e">w&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 获取直播ID和key
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">r&lt;/span>.&lt;span style="color:#a6e22e">ParseForm&lt;/span>(); &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">sendResponse&lt;/span>(&lt;span style="color:#a6e22e">err&lt;/span>.&lt;span style="color:#a6e22e">Error&lt;/span>(), &lt;span style="color:#ae81ff">500&lt;/span>, &lt;span style="color:#a6e22e">w&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 检测直播Key
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">key&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">r&lt;/span>.&lt;span style="color:#a6e22e">Form&lt;/span>.&lt;span style="color:#a6e22e">Get&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;key&amp;#34;&lt;/span>); &lt;span style="color:#a6e22e">key&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#a6e22e">uploadKey&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">sendResponse&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Forbidden&amp;#34;&lt;/span>, &lt;span style="color:#ae81ff">403&lt;/span>, &lt;span style="color:#a6e22e">w&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 检测直播ID
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">id&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">r&lt;/span>.&lt;span style="color:#a6e22e">Form&lt;/span>.&lt;span style="color:#a6e22e">Get&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;id&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">id&lt;/span> &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">sendResponse&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Bad Request&amp;#34;&lt;/span>, &lt;span style="color:#ae81ff">400&lt;/span>, &lt;span style="color:#a6e22e">w&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 读取base64
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">base64Buf&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">ioutil&lt;/span>.&lt;span style="color:#a6e22e">ReadAll&lt;/span>(&lt;span style="color:#a6e22e">r&lt;/span>.&lt;span style="color:#a6e22e">Body&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">sendResponse&lt;/span>(&lt;span style="color:#a6e22e">err&lt;/span>.&lt;span style="color:#a6e22e">Error&lt;/span>(), &lt;span style="color:#ae81ff">500&lt;/span>, &lt;span style="color:#a6e22e">w&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">buf&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">base64&lt;/span>.&lt;span style="color:#a6e22e">StdEncoding&lt;/span>.&lt;span style="color:#a6e22e">DecodeString&lt;/span>(string(&lt;span style="color:#a6e22e">base64Buf&lt;/span>))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">sendResponse&lt;/span>(&lt;span style="color:#a6e22e">err&lt;/span>.&lt;span style="color:#a6e22e">Error&lt;/span>(), &lt;span style="color:#ae81ff">500&lt;/span>, &lt;span style="color:#a6e22e">w&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">log4go&lt;/span>.&lt;span style="color:#a6e22e">Trace&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;live %s receive %d bytes&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">id&lt;/span>, len(&lt;span style="color:#a6e22e">buf&lt;/span>))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">publishVoice&lt;/span>(&lt;span style="color:#a6e22e">buf&lt;/span>, &lt;span style="color:#a6e22e">id&lt;/span>); &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">sendResponse&lt;/span>(&lt;span style="color:#a6e22e">err&lt;/span>.&lt;span style="color:#a6e22e">Error&lt;/span>(), &lt;span style="color:#ae81ff">500&lt;/span>, &lt;span style="color:#a6e22e">w&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> } &lt;span style="color:#66d9ef">else&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">sendResponse&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;ok&amp;#34;&lt;/span>, &lt;span style="color:#ae81ff">0&lt;/span>, &lt;span style="color:#a6e22e">w&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// 保存音频到临时文件目录,1个直播一个目录
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">saveVoice&lt;/span>(&lt;span style="color:#a6e22e">buf&lt;/span> []&lt;span style="color:#66d9ef">byte&lt;/span>, &lt;span style="color:#a6e22e">id&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>) (&lt;span style="color:#66d9ef">string&lt;/span>, &lt;span style="color:#66d9ef">error&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">directory&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">uploadDirectory&lt;/span> &lt;span style="color:#f92672">+&lt;/span> &lt;span style="color:#e6db74">&amp;#34;/&amp;#34;&lt;/span> &lt;span style="color:#f92672">+&lt;/span> &lt;span style="color:#a6e22e">id&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">os&lt;/span>.&lt;span style="color:#a6e22e">Mkdir&lt;/span>(&lt;span style="color:#a6e22e">directory&lt;/span>, &lt;span style="color:#a6e22e">os&lt;/span>.&lt;span style="color:#a6e22e">ModePerm&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">name&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">time&lt;/span>.&lt;span style="color:#a6e22e">Now&lt;/span>().&lt;span style="color:#a6e22e">Format&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;2006-01-02-15-04-05&amp;#34;&lt;/span>) &lt;span style="color:#f92672">+&lt;/span> &lt;span style="color:#e6db74">&amp;#34;.mp3&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">filename&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">directory&lt;/span> &lt;span style="color:#f92672">+&lt;/span> &lt;span style="color:#e6db74">&amp;#34;/&amp;#34;&lt;/span> &lt;span style="color:#f92672">+&lt;/span> &lt;span style="color:#a6e22e">name&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">log4go&lt;/span>.&lt;span style="color:#a6e22e">Trace&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;live %s save chunk %s&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">id&lt;/span>, &lt;span style="color:#a6e22e">filename&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">ioutil&lt;/span>.&lt;span style="color:#a6e22e">WriteFile&lt;/span>(&lt;span style="color:#a6e22e">filename&lt;/span>, &lt;span style="color:#a6e22e">buf&lt;/span>, &lt;span style="color:#a6e22e">os&lt;/span>.&lt;span style="color:#a6e22e">ModePerm&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">filename&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// 发布音频至rtmp
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">publishVoice&lt;/span>(&lt;span style="color:#a6e22e">buf&lt;/span> []&lt;span style="color:#66d9ef">byte&lt;/span>, &lt;span style="color:#a6e22e">id&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>) &lt;span style="color:#66d9ef">error&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">mp3filename&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">saveVoice&lt;/span>(&lt;span style="color:#a6e22e">buf&lt;/span>, &lt;span style="color:#a6e22e">id&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">log4go&lt;/span>.&lt;span style="color:#a6e22e">Error&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;live %s %q&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">id&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 执行系统命令
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">cmd&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">exec&lt;/span>.&lt;span style="color:#a6e22e">Command&lt;/span>(&lt;span style="color:#a6e22e">ffmpeg&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;-i&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">mp3filename&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;-acodec&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;aac&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;-f&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;flv&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">rtmp&lt;/span>&lt;span style="color:#f92672">+&lt;/span>&lt;span style="color:#e6db74">&amp;#34;/&amp;#34;&lt;/span>&lt;span style="color:#f92672">+&lt;/span>&lt;span style="color:#a6e22e">id&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">log4go&lt;/span>.&lt;span style="color:#a6e22e">Trace&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;live %s execute %s&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">id&lt;/span>, &lt;span style="color:#a6e22e">strings&lt;/span>.&lt;span style="color:#a6e22e">Join&lt;/span>(&lt;span style="color:#a6e22e">cmd&lt;/span>.&lt;span style="color:#a6e22e">Args&lt;/span>, &lt;span style="color:#e6db74">&amp;#34; &amp;#34;&lt;/span>))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">cmd&lt;/span>.&lt;span style="color:#a6e22e">Stderr&lt;/span> = &lt;span style="color:#a6e22e">os&lt;/span>.&lt;span style="color:#a6e22e">Stderr&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">cmd&lt;/span>.&lt;span style="color:#a6e22e">Stdout&lt;/span> = &lt;span style="color:#a6e22e">os&lt;/span>.&lt;span style="color:#a6e22e">Stdout&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">cmd&lt;/span>.&lt;span style="color:#a6e22e">Run&lt;/span>(); &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">log4go&lt;/span>.&lt;span style="color:#a6e22e">Error&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;live %s execute %q&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">id&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="github地址">github地址&lt;/h3>
+&lt;p>&lt;a href="https://github.com/xialeistudio/go-rtmp-http-publisher">https://github.com/xialeistudio/go-rtmp-http-publisher&lt;/a>&lt;/p></description></item><item><title>从零开始打造自己的直播服务器-Nginx安装</title><link>https://www.ddhigh.com/2017/11/23/nginx-rtmp-server/</link><pubDate>Thu, 23 Nov 2017 14:54:08 +0000</pubDate><guid>https://www.ddhigh.com/2017/11/23/nginx-rtmp-server/</guid><description>&lt;p>直播行业火了很长一段时间了，抛开那些复杂的实现，本系列将从零开始实现一个直播服务器。&lt;/p>
+&lt;h2 id="功能">功能&lt;/h2>
+&lt;ol>
+&lt;li>RTMP拉流(基于HLS)&lt;/li>
+&lt;li>RTMP推流(基于ffmpeg)&lt;/li>
+&lt;li>RTMP推流(基于HTTP)&lt;/li>
+&lt;/ol>
+&lt;h2 id="安装nginx">安装Nginx&lt;/h2>
+&lt;p>本文使用docker的ubuntu镜像作为种子机，非常干净!&lt;/p>
+&lt;p>文章最后会放出我写的Dockerfile，不想折腾的朋友可以直接拿过去build一个自己的镜像&lt;/p>
+&lt;p>以下操作在物理机ubuntu也可以进行。&lt;/p>
+&lt;ol>
+&lt;li>更新软件仓库
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>apt-get update
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;li>安装必要软件
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>apt-get install git gcc make wget libpcre3 libpcre3-dev openssl libssl-dev -y -q
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;li>下载并解压nginx源码
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>cd /usr/local/src
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>wget http://nginx.org/download/nginx-1.12.2.tar.gz
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>tar xf nginx-1.12.2.tar.gz
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;li>下载nginx-rtmp-module源码
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>git clone https://github.com/arut/nginx-rtmp-module.git
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;li>开始编译安装(其他参数不是必须的，故本文略去，只添加以下参数对于一个RTMP服务器已足够)
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>cd /usr/local/src/nginx-1.12.2
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>./configure --add-module&lt;span style="color:#f92672">=&lt;/span>../nginx-rtmp-module --with-http_flv_module --with-http_mp4_module
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>make
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>make install
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;li>修改配置文件 &lt;strong>/usr/local/nginx/nginx.conf&lt;/strong>
+&lt;pre tabindex="0">&lt;code>worker_processes auto;
+daemon off;
+error_log logs/error.log;
+pid logs/nginx.pid;
+events {
+multi_accept on;
+worker_connections 65535;
+use epoll;
+}
+http {
+include mime.types;
+log_format main &amp;#39;$remote_addr - $remote_user [$time_local] &amp;#34;$request&amp;#34; &amp;#39;
+&amp;#39;$status $body_bytes_sent &amp;#34;$http_referer&amp;#34; &amp;#39;
+&amp;#39;&amp;#34;$http_user_agent&amp;#34; &amp;#34;$http_x_forwarded_for&amp;#34;&amp;#39;;
+access_log logs/access.log main;
+sendfile on;
+#tcp_nopush on;
+#keepalive_timeout 0;
+keepalive_timeout 30;
+gzip on;
+server {
+listen 80;
+server_name localhost;
+location /stat {
+rtmp_stat all;
+rtmp_stat_stylesheet stat.xsl;
+}
+location /stat.xsl {
+root /usr/local/src/nginx-rtmp-module;
+}
+location /control {
+rtmp_control all;
+}
+location /hls {
+types {
+application/vnd.apple.mpegurl m3u8;
+video/mp2t ts;
+}
+root html;
+expires -1;
+}
+location ~\.flv {
+flv;
+}
+location ~\.mp4 {
+mp4;
+}
+}
+}
+rtmp {
+server {
+listen 1935;
+chunk_size 4096;
+application hls {
+allow publish 127.0.0.1;
+live on;
+hls on;
+hls_path /usr/local/nginx/html/hls;
+hls_fragment 5s;
+}
+}
+}
+&lt;/code>&lt;/pre>nginx在docker运行需要关闭daemon选项.
+&lt;strong>rtmp-&amp;gt;server-&amp;gt;application&lt;/strong>为具体的直播应用,&lt;strong>hls&lt;/strong>是我的直播应用名称，可以根据实际情况修改。&lt;/li>
+&lt;li>启动服务器
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>/usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;/ol>
+&lt;h2 id="安装ffmpeg">安装ffmpeg&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>apt-get install ffmpeg
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="推流测试">推流测试&lt;/h2>
+&lt;h3 id="推流地址">推流地址&lt;/h3>
+&lt;pre tabindex="0">&lt;code>rtmp://localhost:1935/hls/demo
+&lt;/code>&lt;/pre>&lt;p>&lt;strong>hls&lt;/strong>为上面配置的&lt;strong>application&lt;/strong>名称，&lt;strong>demo&lt;/strong>是直播名称，客户端使用&lt;strong>http://localhost/hls/demo.m3u8&lt;/strong>进行播放&lt;/p>
+&lt;h3 id="视频推流">视频推流&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>ffmpeg -re -i a.mp4 -vcodec copy -f flv rtmp://localhost:1935/hls/demo
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>web中播放&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-html" data-lang="html">&lt;span style="display:flex;">&lt;span>&amp;lt;&lt;span style="color:#f92672">video&lt;/span> &lt;span style="color:#a6e22e">src&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;http://localhost/hls/demo.m3u8&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">controls&lt;/span>&amp;gt;&amp;lt;/&lt;span style="color:#f92672">video&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="音频推流">音频推流&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>ffmpeg -re -i a.mp3 -acodec aac -f flv rtmp://localhost:1935/hls/demo
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>web中播放&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-html" data-lang="html">&lt;span style="display:flex;">&lt;span>&amp;lt;&lt;span style="color:#f92672">audio&lt;/span> &lt;span style="color:#a6e22e">src&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;http://localhost/hls/demo.m3u8&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">controls&lt;/span>&amp;gt;&amp;lt;/&lt;span style="color:#f92672">audio&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="推流与播放地址说明">推流与播放地址说明&lt;/h3>
+&lt;ol>
+&lt;li>假设nginx配置&lt;strong>http端口&lt;/strong>为&lt;strong>80&lt;/strong>,&lt;strong>http目录为hls&lt;/strong>,&lt;strong>rtmp端口&lt;/strong>为&lt;strong>1935&lt;/strong>,&lt;strong>application&lt;/strong>名称为&lt;strong>hls&lt;/strong>,需要播放的直播名称为&lt;strong>demo&lt;/strong>&lt;/li>
+&lt;li>推流地址&lt;strong>rtmp://localhost:1935/hls/demo&lt;/strong>&lt;/li>
+&lt;li>播放地址&lt;strong>http://localhost/hls/demo.m3u8&lt;/strong>&lt;/li>
+&lt;/ol>
+&lt;h3 id="重要说明">重要说明&lt;/h3>
+&lt;p>如果没有直播推流，nginx是不会产生m3u8文件的，这点需要注意!&lt;/p>
+&lt;h3 id="docker镜像地址">Docker镜像地址&lt;/h3>
+&lt;p>&lt;a href="https://github.com/xialeistudio/docker-nginx-rtmp">https://github.com/xialeistudio/docker-nginx-rtmp&lt;/a>&lt;/p></description></item></channel></rss>

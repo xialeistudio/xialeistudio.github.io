@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>string on Lei Xia</title><link>https://www.ddhigh.com/tags/string/</link><description>Recent content in string on Lei Xia</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Thu, 05 Jan 2023 12:36:10 +0000</lastBuildDate><atom:link href="https://www.ddhigh.com/tags/string/atom.xml" rel="self" type="application/rss+xml"/><item><title>字符串子序列检测算法</title><link>https://www.ddhigh.com/2023/01/05/subsequence-checking-algorithm/</link><pubDate>Thu, 05 Jan 2023 12:36:10 +0000</pubDate><guid>https://www.ddhigh.com/2023/01/05/subsequence-checking-algorithm/</guid><description>&lt;p>本文分享一种检测一个字符串是否为另一个字符串子序列的算法。&lt;/p>
+&lt;p>子序列的定义：&lt;/p>
+&lt;p>若字符串$s1$可以由字符串$s2$删除某些字符得到，则$s1$是$s2$的子序列。换句话说，若$s1$的所有字符都在$s2$中且顺序一致，则$s1$是$s2$的子序列。&lt;/p>
+&lt;p>例如：&lt;/p>
+&lt;p>a是aaa的子序列，adf是abcdef的子序列，但是cba不是abc的子序列（因为字符顺序变了）。&lt;/p>
+&lt;h2 id="算法">算法&lt;/h2>
+&lt;ol>
+&lt;li>声明$s1$的下标变量$strIndex$，若$s2$有$s1$的该字符，则$strIndex+1$&lt;/li>
+&lt;li>若遍历过程中$strIndex$和$s1$的长度相等，则证明$s1$所有字符都在$s2$中，返回$s1$是$s2$在子序列&lt;/li>
+&lt;li>遍历结束仍未返回，证明$s1$不是$s2$的子序列&lt;/li>
+&lt;/ol>
+&lt;h2 id="代码">代码&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">Solution&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">boolean&lt;/span> &lt;span style="color:#a6e22e">isSubsequent&lt;/span>(String str, String str1) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">var&lt;/span> strIndex &lt;span style="color:#f92672">=&lt;/span> 0;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 逐字符遍历&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 如果字符想通，则strIndex++&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 如果strIndex到达末尾，则证明str是子序列&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span> (&lt;span style="color:#66d9ef">var&lt;/span> i &lt;span style="color:#f92672">=&lt;/span> 0; i &lt;span style="color:#f92672">&amp;lt;&lt;/span> str1.&lt;span style="color:#a6e22e">length&lt;/span>(); i&lt;span style="color:#f92672">++&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> (str.&lt;span style="color:#a6e22e">charAt&lt;/span>(strIndex) &lt;span style="color:#f92672">==&lt;/span> str1.&lt;span style="color:#a6e22e">charAt&lt;/span>(i)) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> strIndex&lt;span style="color:#f92672">++&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> (strIndex &lt;span style="color:#f92672">==&lt;/span> str.&lt;span style="color:#a6e22e">length&lt;/span>()) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">true&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">false&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;strong>复杂度分析&lt;/strong>&lt;/p>
+&lt;p>时间复杂度：$O(n)$,$n$是$str1$的长度。&lt;/p>
+&lt;p>空间复杂度：$O(1)$。&lt;/p></description></item><item><title>解析字符串中的数字</title><link>https://www.ddhigh.com/2023/01/03/parse-number-in-string/</link><pubDate>Tue, 03 Jan 2023 22:36:49 +0000</pubDate><guid>https://www.ddhigh.com/2023/01/03/parse-number-in-string/</guid><description>&lt;p>本文分享一种如何在字符串中解析数字的算法。&lt;/p>
+&lt;h2 id="思路">思路&lt;/h2>
+&lt;p>解析字符串中的数字需要判断当前是否是数字字符，以及如何处理连续的数字字符。&lt;/p>
+&lt;p>本文使用while循环来解析数字，之所以不使用for循环，是笔者认为while循环操控力比for循环要好。&lt;/p>
+&lt;p>while循环解析方法如下：&lt;/p>
+&lt;ol>
+&lt;li>如果当前字符是数字，则开启内部while循环&lt;/li>
+&lt;li>内部while循环退出条件为当前字符不是数字&lt;/li>
+&lt;li>内部循环操作为读取当前数字，然后加上一个数字乘以10&lt;/li>
+&lt;li>内部循环退出后，我们就得到一个连续的数字&lt;/li>
+&lt;/ol>
+&lt;h2 id="示例">示例&lt;/h2>
+&lt;p>Leetcode &lt;a href="https://leetcode.cn/problems/check-if-numbers-are-ascending-in-a-sentence/">2042. 检查句子中的数字是否递增&lt;/a>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">Solution&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 提取字符串中的数字，判断是否严格递增&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">boolean&lt;/span> &lt;span style="color:#a6e22e">areNumbersAscending&lt;/span>(String s) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 定义上一个数字，初始化为最小的数字&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">var&lt;/span> lastNumber &lt;span style="color:#f92672">=&lt;/span> Integer.&lt;span style="color:#a6e22e">MIN_VALUE&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">var&lt;/span> i &lt;span style="color:#f92672">=&lt;/span> 0;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">while&lt;/span> (i &lt;span style="color:#f92672">&amp;lt;&lt;/span> s.&lt;span style="color:#a6e22e">length&lt;/span>()) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> (Character.&lt;span style="color:#a6e22e">isDigit&lt;/span>(s.&lt;span style="color:#a6e22e">charAt&lt;/span>(i))) { &lt;span style="color:#75715e">// 当前是数字，继续处理&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">var&lt;/span> number &lt;span style="color:#f92672">=&lt;/span> 0;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 核心代码&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">while&lt;/span> (i &lt;span style="color:#f92672">&amp;lt;&lt;/span> s.&lt;span style="color:#a6e22e">length&lt;/span>() &lt;span style="color:#f92672">&amp;amp;&amp;amp;&lt;/span> Character.&lt;span style="color:#a6e22e">isDigit&lt;/span>(s.&lt;span style="color:#a6e22e">charAt&lt;/span>(i))) { &lt;span style="color:#75715e">// 字符串没越界而且当前字符是数字字符&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> number &lt;span style="color:#f92672">=&lt;/span> number &lt;span style="color:#f92672">*&lt;/span> 10 &lt;span style="color:#f92672">+&lt;/span> (s.&lt;span style="color:#a6e22e">charAt&lt;/span>(i) &lt;span style="color:#f92672">-&lt;/span> &lt;span style="color:#e6db74">&amp;#39;0&amp;#39;&lt;/span>); &lt;span style="color:#75715e">// (s.charAt(i) - &amp;#39;0&amp;#39;) 就是利用ASCII码表直接得到数字值，不需要再做parseInt&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> i&lt;span style="color:#f92672">++&lt;/span>; &lt;span style="color:#75715e">// 坐标后移&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> (number &lt;span style="color:#f92672">&amp;lt;=&lt;/span> lastNumber) { &lt;span style="color:#75715e">// 如果当前数字&amp;lt;=上一个数字，证明不是严格递增，return false&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">false&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// number &amp;gt; lastNumber，更新lastNumber&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> lastNumber &lt;span style="color:#f92672">=&lt;/span> number;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// i后移&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> i&lt;span style="color:#f92672">++&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">true&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;strong>复杂度分析&lt;/strong>&lt;/p>
+&lt;p>时间复杂度：$O(n)$，每个字符访问一次。
+空间复杂度:$O(1)$，仅需常数项额外变量。&lt;/p>
+&lt;p>&lt;strong>注意&lt;/strong>&lt;/p>
+&lt;p>时间复杂度就是分析随着数据量增大，算法执行次数的变化。本题虽然有两重循环，有些同学可能无脑以为时间复杂度是$O(n^2)$，实际上是不对的。可以发现每个字符串最多访问一次，所以复杂度是$O(n)$。&lt;/p></description></item></channel></rss>

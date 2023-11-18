@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>test on Lei Xia</title><link>https://www.ddhigh.com/tags/test/</link><description>Recent content in test on Lei Xia</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sat, 27 Jul 2019 18:35:49 +0000</lastBuildDate><atom:link href="https://www.ddhigh.com/tags/test/atom.xml" rel="self" type="application/rss+xml"/><item><title>手把手从零开始小程序单元测试(附避坑指南以及源码跟踪)</title><link>https://www.ddhigh.com/2019/07/27/miniprogram-unit-test/</link><pubDate>Sat, 27 Jul 2019 18:35:49 +0000</pubDate><guid>https://www.ddhigh.com/2019/07/27/miniprogram-unit-test/</guid><description>&lt;p>单元测试是一个老生常谈的话题，基于Web/NodeJs环境的测试框架、测试教程数不胜数，也趋于成熟了。但是对于微信小程序的单元测试，目前还是处于起步状态，这两天在研究微信小程序的测试，也遇到了一些坑，在这里记录一下，希望给看到本文的小伙伴带来一点帮助，少走一些弯路。&lt;/p>
+&lt;h2 id="demo地址">demo地址&lt;/h2>
+&lt;p>&lt;a href="https://github.com/xialeistudio/miniprogram-unit-test-demo">https://github.com/xialeistudio/miniprogram-unit-test-demo&lt;/a>&lt;/p>
+&lt;h2 id="关键依赖版本">关键依赖版本&lt;/h2>
+&lt;p>本文写作时相关依赖版本如下(版本不同，源码行数可能不同)：&lt;/p>
+&lt;ol>
+&lt;li>miniprogram-simulate: 1.0.7&lt;/li>
+&lt;li>j-component: 1.1.6&lt;/li>
+&lt;li>miniprogram-exparser: 0.0.6&lt;/li>
+&lt;/ol>
+&lt;h2 id="测试流程">测试流程&lt;/h2>
+&lt;ol>
+&lt;li>初始化小程序项目，编写待测试组件&lt;/li>
+&lt;li>安装jest,miniprogram-simulate测试环境&lt;/li>
+&lt;li>编写测试用例&lt;/li>
+&lt;li>执行测试&lt;/li>
+&lt;/ol>
+&lt;h2 id="初始化小程序项目">初始化小程序项目&lt;/h2>
+&lt;ol>
+&lt;li>使用小程序开发者工具初始化新项目，APPID选择&lt;code>测试号&lt;/code>即可，语言选择&lt;code>Javascript&lt;/code>。&lt;/li>
+&lt;li>使用小程序开发者工具新建&lt;code>/components/user&lt;/code>组件&lt;/li>
+&lt;li>&lt;code>components/user.js&lt;/code>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// components/user.js
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#a6e22e">Component&lt;/span>({
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">data&lt;/span>&lt;span style="color:#f92672">:&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">nickname&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#e6db74">&amp;#39;&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> },
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">methods&lt;/span>&lt;span style="color:#f92672">:&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">handleUserInfo&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#66d9ef">function&lt;/span>(&lt;span style="color:#a6e22e">e&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">this&lt;/span>.&lt;span style="color:#a6e22e">setData&lt;/span>({ &lt;span style="color:#a6e22e">nickname&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#a6e22e">e&lt;/span>.&lt;span style="color:#a6e22e">detail&lt;/span>.&lt;span style="color:#a6e22e">userInfo&lt;/span>.&lt;span style="color:#a6e22e">nickName&lt;/span> })
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>})
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;li>&lt;code>components/user.wxml&lt;/code>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-xml" data-lang="xml">&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;lt;text&lt;/span> &lt;span style="color:#a6e22e">class=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;nickname&amp;#34;&lt;/span>&lt;span style="color:#f92672">&amp;gt;&lt;/span>{{nickname}}&lt;span style="color:#f92672">&amp;lt;/text&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;lt;button&lt;/span> &lt;span style="color:#a6e22e">class=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;button&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">open-type=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;getUserInfo&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">bindgetuserinfo=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;handleUserInfo&amp;#34;&lt;/span>&lt;span style="color:#f92672">&amp;gt;&lt;/span>Oauth&lt;span style="color:#f92672">&amp;lt;/button&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;li>&lt;code>pages/index/index.js&lt;/code>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">Page&lt;/span>({
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">data&lt;/span>&lt;span style="color:#f92672">:&lt;/span>{}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>})
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;li>&lt;code>pages/index/index.wxml&lt;/code>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-xml" data-lang="xml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">&amp;lt;view&lt;/span> &lt;span style="color:#a6e22e">class=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;container&amp;#34;&lt;/span>&lt;span style="color:#f92672">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;lt;user&amp;gt;&amp;lt;/user&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">&amp;lt;/view&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;li>打开小程序开发者工具，可以看到有一个&lt;code>Oauth&lt;/code>按钮，点击之后会在上面显示昵称。&lt;/li>
+&lt;li>由此可以得到测试用例&lt;code>点击授权按钮时上方显示为授权用户的昵称&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;h2 id="安装jestminiprogram-simulate测试环境">安装jest/miniprogram-simulate测试环境&lt;/h2>
+&lt;ol>
+&lt;li>由于JS项目的小程序根目录没有&lt;code>package.json&lt;/code>，需要手动生成一下&lt;/li>
+&lt;li>打开终端，在项目根目录执行&lt;code>npm init -y&lt;/code>生成&lt;code>package.json&lt;/code>&lt;/li>
+&lt;li>安装测试工具集&lt;code>npm install jest miniprogram-simulate --save-dev&lt;/code>&lt;/li>
+&lt;li>编辑&lt;code>package.json&lt;/code>，在&lt;code>scripts&lt;/code>新建&lt;code>test&lt;/code>命令
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-json" data-lang="json">&lt;span style="display:flex;">&lt;span>{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;name&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;unit-test-demo&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;version&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;1.0.0&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;description&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;main&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;app.js&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;scripts&amp;#34;&lt;/span>: {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;test&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;jest&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> },
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;keywords&amp;#34;&lt;/span>: [],
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;author&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;license&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;ISC&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;devDependencies&amp;#34;&lt;/span>: {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;jest&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;^24.8.0&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;miniprogram-simulate&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;^1.0.7&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;/ol>
+&lt;h2 id="编写测试用例">编写测试用例&lt;/h2>
+&lt;ol>
+&lt;li>在项目根目录新建&lt;code>tests/components/user.spec.js&lt;/code>文件(目录需要手动创建)&lt;/li>
+&lt;li>代码如下(参考微信官方单元测试文档编写):
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">simulate&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">require&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;miniprogram-simulate&amp;#39;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">path&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">require&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;path&amp;#39;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">test&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;components/user&amp;#39;&lt;/span>, (&lt;span style="color:#a6e22e">done&lt;/span>) =&amp;gt; { &lt;span style="color:#75715e">// 定义测试名称,传入done表示当前测试是异步测试，需要回调函数来告诉jest，我测试执行完毕
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">id&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">simulate&lt;/span>.&lt;span style="color:#a6e22e">load&lt;/span>(&lt;span style="color:#a6e22e">path&lt;/span>.&lt;span style="color:#a6e22e">join&lt;/span>(&lt;span style="color:#a6e22e">__dirname&lt;/span>, &lt;span style="color:#e6db74">&amp;#39;../../components/user&amp;#39;&lt;/span>)); &lt;span style="color:#75715e">// 加载组件
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">component&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">simulate&lt;/span>.&lt;span style="color:#a6e22e">render&lt;/span>(&lt;span style="color:#a6e22e">id&lt;/span>); &lt;span style="color:#75715e">// 渲染组件
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">text&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">component&lt;/span>.&lt;span style="color:#a6e22e">querySelector&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;.nickname&amp;#39;&lt;/span>); &lt;span style="color:#75715e">// 获取nickname节点
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">button&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">component&lt;/span>.&lt;span style="color:#a6e22e">querySelector&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;.button&amp;#39;&lt;/span>); &lt;span style="color:#75715e">// 获取button节点
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#a6e22e">button&lt;/span>.&lt;span style="color:#a6e22e">dispatchEvent&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;getuserinfo&amp;#39;&lt;/span>, { &lt;span style="color:#75715e">// 模拟触发事件
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">detail&lt;/span>&lt;span style="color:#f92672">:&lt;/span> { &lt;span style="color:#75715e">// 传递事件参数
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">userInfo&lt;/span>&lt;span style="color:#f92672">:&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">nickName&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#e6db74">&amp;#39;hello&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> },
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> },
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>});
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">setTimeout&lt;/span>(() =&amp;gt; { &lt;span style="color:#75715e">// 异步断言
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">expect&lt;/span>(&lt;span style="color:#a6e22e">text&lt;/span>.&lt;span style="color:#a6e22e">dom&lt;/span>.&lt;span style="color:#a6e22e">innerHTML&lt;/span>).&lt;span style="color:#a6e22e">toBe&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;hello&amp;#39;&lt;/span>); &lt;span style="color:#75715e">// 检测text节点的innerHTML等于模拟授权获取的昵称
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">done&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}, &lt;span style="color:#ae81ff">1000&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>});
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;/ol>
+&lt;h2 id="执行测试">执行测试&lt;/h2>
+&lt;ol>
+&lt;li>&lt;code>npm run test&lt;/code>，等待一秒后发现，&lt;code>不出意外的话，测试肯定过不去&lt;/code>&lt;/li>
+&lt;li>部分出错日志：
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-text" data-lang="text">&lt;span style="display:flex;">&lt;span>Expected: &amp;#34;hello&amp;#34;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Received: &amp;#34;&amp;#34;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> at toBe (/Users/xialeistudio/WeChatProjects/unit-test-demo/tests/components/user.spec.js:18:32)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> at Timeout.callback [as _onTimeout] (/Users/xialeistudio/WeChatProjects/unit-test-demo/node_modules/jsdom/lib/jsdom/browser/Window.js:678:19)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> at listOnTimeout (internal/timers.js:535:17)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> at processTimers (internal/timers.js:479:7)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;li>可以推测一下原因：
+&lt;ol>
+&lt;li>dispatchEvent的事件触发有问题，导致handleUserInfo未触发[1]&lt;/li>
+&lt;li>dispatchEvent的事件触发成功，但是触发参数有问题[2]&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ol>
+&lt;h2 id="错误分析源码跟踪过程">错误分析(源码跟踪过程)&lt;/h2>
+&lt;ol>
+&lt;li>针对第1点原因，可以写一下测试代码(&lt;code>components/user.js&lt;/code>)
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">Component&lt;/span>({
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">data&lt;/span>&lt;span style="color:#f92672">:&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">nickname&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#e6db74">&amp;#39;&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> },
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">methods&lt;/span>&lt;span style="color:#f92672">:&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">handleUserInfo&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#66d9ef">function&lt;/span>(&lt;span style="color:#a6e22e">e&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">e&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> })
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;li>&lt;code>npm run test&lt;/code>，可以看到事件还是成功触发了，不过&lt;code>detail&lt;/code>是&lt;code>{}&lt;/code>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-text" data-lang="text">&lt;span style="display:flex;">&lt;span> console.log components/user.js:21
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> { type: &amp;#39;getuserinfo&amp;#39;,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> timeStamp: 948,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> target: { id: &amp;#39;&amp;#39;, offsetLeft: 0, offsetTop: 0, dataset: {} },
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> currentTarget: { id: &amp;#39;&amp;#39;, offsetLeft: 0, offsetTop: 0, dataset: {} },
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> detail: {},
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> touches: {},
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> changedTouches: {} }
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;li>原因1排除，查原因2&lt;/li>
+&lt;li>&lt;code>dispatchEvent&lt;/code>方法是&lt;code>被测试组件的子组件&lt;/code>，&lt;code>被测试组件&lt;/code>由&lt;code>simulate.render&lt;/code>函数返回&lt;/li>
+&lt;li>浏览&lt;code>node_modules/miniprogram-simulate/src/index.js&lt;/code>，看到&lt;code>render函数(152行)&lt;/code>，可以看到返回的组件由&lt;code>jComponent.create&lt;/code>提供&lt;/li>
+&lt;li>浏览&lt;code>node_modules/j-component/src/index.js&lt;/code>的&lt;code>create&lt;/code>函数，可以看到其返回了&lt;code>RootComponent&lt;/code>实例，而&lt;code>RootComponent&lt;/code>是由&lt;code>./render/component.js&lt;/code>提供&lt;/li>
+&lt;li>浏览&lt;code>node_modules/j-component/src/render/component.js&lt;/code>的&lt;code>dispatchEvent&lt;/code>函数，在这里可以打下日志测试(本文就不打了，结果是这里的options就是&lt;code>user.spec.js&lt;/code> &lt;code>dispatchEvent&lt;/code>函数的&lt;code>第二个参数&lt;/code>，&lt;code>detail&lt;/code>是有值的)&lt;/li>
+&lt;li>继续跟踪源码，由于咱们的是&lt;code>自定义事件&lt;/code>，所以会走到&lt;code>91行&lt;/code>的代码，该代码块如下：
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// 自定义事件
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">customEvent&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">CustomEvent&lt;/span>(&lt;span style="color:#a6e22e">eventName&lt;/span>, &lt;span style="color:#a6e22e">options&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 模拟异步情况
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">setTimeout&lt;/span>(() =&amp;gt; {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">dom&lt;/span>.&lt;span style="color:#a6e22e">dispatchEvent&lt;/span>(&lt;span style="color:#a6e22e">customEvent&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">exparser&lt;/span>.&lt;span style="color:#a6e22e">Event&lt;/span>.&lt;span style="color:#a6e22e">dispatchEvent&lt;/span>(&lt;span style="color:#a6e22e">customEvent&lt;/span>.&lt;span style="color:#a6e22e">target&lt;/span>, &lt;span style="color:#a6e22e">exparser&lt;/span>.&lt;span style="color:#a6e22e">Event&lt;/span>.&lt;span style="color:#a6e22e">create&lt;/span>(&lt;span style="color:#a6e22e">eventName&lt;/span>, {}, {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">originalEvent&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#a6e22e">customEvent&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">bubbles&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#66d9ef">true&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">capturePhase&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#66d9ef">true&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">composed&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#66d9ef">true&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">extraFields&lt;/span>&lt;span style="color:#f92672">:&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">touches&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#a6e22e">options&lt;/span>.&lt;span style="color:#a6e22e">touches&lt;/span> &lt;span style="color:#f92672">||&lt;/span> {},
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">changedTouches&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#a6e22e">options&lt;/span>.&lt;span style="color:#a6e22e">changedTouches&lt;/span> &lt;span style="color:#f92672">||&lt;/span> {},
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> },
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }));
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }, &lt;span style="color:#ae81ff">0&lt;/span>);
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;li>可以看到调用了&lt;code>exparser.Event.dispatchEvent&lt;/code>函数，该函数的&lt;code>第二个参数&lt;/code>调用了&lt;code>exparser.Event.create&lt;/code>对自定义事件进行了包装，这里还没到最底层，需要继续跟踪&lt;/li>
+&lt;li>&lt;code>exparser&lt;/code>对象是&lt;code>miniprogram-exparser模块&lt;/code>提供的，浏览&lt;code>node_modules/miniprogram-exparser/exparser.min.js&lt;/code>，发现该文件被混淆了，不过没关系&lt;code>混淆后的代码逻辑是不变的，只不过变量名变得无意义，可读性变差&lt;/code>&lt;/li>
+&lt;li>使用webstorm格式化该文件，这里我传了一份格式化好的到github &lt;a href="https://github.com/xialeistudio/miniprogram-unit-test-demo/blob/master/extra/wxparser.jscc">wxparser.js，可在线观看&lt;/a>&lt;/li>
+&lt;li>需要在源码中搜索&lt;code>三个参数&lt;/code>的&lt;code>create&lt;/code>函数(&lt;code>Object.create不算&lt;/code>)，需要有耐心，经过排查后发现&lt;a href="https://github.com/xialeistudio/miniprogram-unit-test-demo/blob/master/extra/wxparser.js#L168">168行&lt;/a>代码应该是目标代码
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">i&lt;/span>.&lt;span style="color:#a6e22e">create&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">function&lt;/span>(&lt;span style="color:#a6e22e">e&lt;/span>, &lt;span style="color:#a6e22e">t&lt;/span>, &lt;span style="color:#a6e22e">r&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">r&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">r&lt;/span> &lt;span style="color:#f92672">||&lt;/span> {};
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">var&lt;/span> &lt;span style="color:#a6e22e">n&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">r&lt;/span>.&lt;span style="color:#a6e22e">originalEvent&lt;/span>, &lt;span style="color:#a6e22e">o&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">r&lt;/span>.&lt;span style="color:#a6e22e">extraFields&lt;/span> &lt;span style="color:#f92672">||&lt;/span> {}, &lt;span style="color:#a6e22e">a&lt;/span> &lt;span style="color:#f92672">=&lt;/span> Date.&lt;span style="color:#a6e22e">now&lt;/span>() &lt;span style="color:#f92672">-&lt;/span> &lt;span style="color:#a6e22e">l&lt;/span>, &lt;span style="color:#a6e22e">s&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">i&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">s&lt;/span>.&lt;span style="color:#a6e22e">currentTarget&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">null&lt;/span>, &lt;span style="color:#a6e22e">s&lt;/span>.&lt;span style="color:#a6e22e">type&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">e&lt;/span>, &lt;span style="color:#a6e22e">s&lt;/span>.&lt;span style="color:#a6e22e">timeStamp&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">a&lt;/span>, &lt;span style="color:#a6e22e">s&lt;/span>.&lt;span style="color:#a6e22e">mark&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">null&lt;/span>, &lt;span style="color:#a6e22e">s&lt;/span>.&lt;span style="color:#a6e22e">detail&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">t&lt;/span>, &lt;span style="color:#a6e22e">s&lt;/span>.&lt;span style="color:#a6e22e">bubbles&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">!!&lt;/span>&lt;span style="color:#a6e22e">r&lt;/span>.&lt;span style="color:#a6e22e">bubbles&lt;/span>, &lt;span style="color:#a6e22e">s&lt;/span>.&lt;span style="color:#a6e22e">composed&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">!!&lt;/span>&lt;span style="color:#a6e22e">r&lt;/span>.&lt;span style="color:#a6e22e">composed&lt;/span>, &lt;span style="color:#a6e22e">s&lt;/span>.&lt;span style="color:#a6e22e">__originalEvent&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">n&lt;/span>, &lt;span style="color:#a6e22e">s&lt;/span>.&lt;span style="color:#a6e22e">__hasCapture&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">!!&lt;/span>&lt;span style="color:#a6e22e">r&lt;/span>.&lt;span style="color:#a6e22e">capturePhase&lt;/span>, &lt;span style="color:#a6e22e">s&lt;/span>.&lt;span style="color:#a6e22e">__stopped&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">!&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span>, &lt;span style="color:#a6e22e">s&lt;/span>.&lt;span style="color:#a6e22e">__dispatched&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">!&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span> (&lt;span style="color:#66d9ef">var&lt;/span> &lt;span style="color:#a6e22e">u&lt;/span> &lt;span style="color:#66d9ef">in&lt;/span> &lt;span style="color:#a6e22e">o&lt;/span>) &lt;span style="color:#a6e22e">s&lt;/span>[&lt;span style="color:#a6e22e">u&lt;/span>] &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">o&lt;/span>[&lt;span style="color:#a6e22e">u&lt;/span>];
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">s&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;li>可以看到&lt;code>s.detail = t&lt;/code>这个赋值，&lt;code>t&lt;/code>是&lt;code>create&lt;/code>的&lt;code>第二个参数&lt;/code>，由&lt;code>node_modules/j-component/render/component.js&lt;/code>的&lt;code>wxparser.Event.create&lt;/code>传入，但是传入的&lt;code>第二个参数写死了{}&lt;/code>，所以咱们的组件获取&lt;code>detail&lt;/code>的时候&lt;code>永远为{}&lt;/code>，将其修改为&lt;code>options.detail||{}&lt;/code>即可，修改后代码如下：
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">exparser&lt;/span>.&lt;span style="color:#a6e22e">Event&lt;/span>.&lt;span style="color:#a6e22e">dispatchEvent&lt;/span>(&lt;span style="color:#a6e22e">customEvent&lt;/span>.&lt;span style="color:#a6e22e">target&lt;/span>, &lt;span style="color:#a6e22e">exparser&lt;/span>.&lt;span style="color:#a6e22e">Event&lt;/span>.&lt;span style="color:#a6e22e">create&lt;/span>(&lt;span style="color:#a6e22e">eventName&lt;/span>, &lt;span style="color:#a6e22e">options&lt;/span>.&lt;span style="color:#a6e22e">detail&lt;/span>&lt;span style="color:#f92672">||&lt;/span>{}, &lt;span style="color:#a6e22e">xxxxxx&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;li>重新测试
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-text" data-lang="text">&lt;span style="display:flex;">&lt;span> PASS tests/components/user.spec.js
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>✓ components/user (1099ms)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Test Suites: 1 passed, 1 total
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Tests: 1 passed, 1 total
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Snapshots: 0 total
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Time: 3.622s
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Ran all test suites.
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;/ol>
+&lt;h2 id="避坑指南">避坑指南&lt;/h2>
+&lt;ol>
+&lt;li>&lt;code>querySelector&lt;/code>用法同HTML，但是需要在&lt;code>组件&lt;/code>执行，而不是&lt;code>组件.dom&lt;/code>，HTML中实在&lt;code>DOMNode&lt;/code>执行的&lt;/li>
+&lt;li>&lt;code>dispatchEvent&lt;/code>是触发事件，需要在&lt;code>组件&lt;/code>执行，上述代码中是触发&lt;code>button组件&lt;/code>的&lt;code>自定义事件&lt;/code>&lt;/li>
+&lt;li>&lt;code>dispatchEvent&lt;/code>事件名规范: &lt;code>去掉前导bind剩余的字符串为事件名&lt;/code>，示例代码中&lt;code>bindgetuserinfo&lt;/code>，触发时就是&lt;code>getuserinfo&lt;/code>，如果是&lt;code>bindtap&lt;/code>，那触发时就是&lt;code>tap&lt;/code>&lt;/li>
+&lt;li>&lt;code>dispatchEvent&lt;/code>底层是&lt;code>j-component&lt;/code>这个&lt;code>npm模块实现&lt;/code>的，跟踪源码发现执行是异步的(代码文件&lt;code>node_modules/j-component/src/render/component.js&lt;/code>，函数名&lt;code>dispatchEvent&lt;/code>)
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// 自定义事件
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">customEvent&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">CustomEvent&lt;/span>(&lt;span style="color:#a6e22e">eventName&lt;/span>, &lt;span style="color:#a6e22e">options&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 模拟异步情况
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">setTimeout&lt;/span>(() =&amp;gt; {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">dom&lt;/span>.&lt;span style="color:#a6e22e">dispatchEvent&lt;/span>(&lt;span style="color:#a6e22e">customEvent&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">exparser&lt;/span>.&lt;span style="color:#a6e22e">Event&lt;/span>.&lt;span style="color:#a6e22e">dispatchEvent&lt;/span>(&lt;span style="color:#a6e22e">customEvent&lt;/span>.&lt;span style="color:#a6e22e">target&lt;/span>, &lt;span style="color:#a6e22e">exparser&lt;/span>.&lt;span style="color:#a6e22e">Event&lt;/span>.&lt;span style="color:#a6e22e">create&lt;/span>(&lt;span style="color:#a6e22e">eventName&lt;/span>, {}, {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">originalEvent&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#a6e22e">customEvent&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">bubbles&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#66d9ef">true&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">capturePhase&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#66d9ef">true&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">composed&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#66d9ef">true&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">extraFields&lt;/span>&lt;span style="color:#f92672">:&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">touches&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#a6e22e">options&lt;/span>.&lt;span style="color:#a6e22e">touches&lt;/span> &lt;span style="color:#f92672">||&lt;/span> {},
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">changedTouches&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#a6e22e">options&lt;/span>.&lt;span style="color:#a6e22e">changedTouches&lt;/span> &lt;span style="color:#f92672">||&lt;/span> {},
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> },
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }));
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }, &lt;span style="color:#ae81ff">0&lt;/span>);
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;li>由于&lt;code>setTimeout&lt;/code>的存在，触发事件为异步，所以写断言时需要加定时器&lt;/li>
+&lt;/ol>
+&lt;h2 id="结语">结语&lt;/h2>
+&lt;p>小程序单元测试基本是没什么经验扩借鉴，但是基于官网提供的工具，以及&lt;code>开源&lt;/code>，咱们遇到问题时细心排查然后修改一下，还是可以解决问题的。&lt;/p></description></item></channel></rss>

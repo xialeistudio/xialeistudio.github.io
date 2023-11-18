@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Dynamic programming on Lei Xia</title><link>https://www.ddhigh.com/tags/dynamic-programming/</link><description>Recent content in Dynamic programming on Lei Xia</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 16 May 2023 22:19:15 +0000</lastBuildDate><atom:link href="https://www.ddhigh.com/tags/dynamic-programming/atom.xml" rel="self" type="application/rss+xml"/><item><title>Minimum difficulty of a job schedule</title><link>https://www.ddhigh.com/2023/05/16/minimum-difficulty-of-a-job-schedule/</link><pubDate>Tue, 16 May 2023 22:19:15 +0000</pubDate><guid>https://www.ddhigh.com/2023/05/16/minimum-difficulty-of-a-job-schedule/</guid><description>&lt;p>Today I&amp;rsquo;ll share an article about &lt;code>Dynamic Programing&lt;/code> .&lt;/p>
+&lt;blockquote>
+&lt;p>&lt;strong>Dynamic programming&lt;/strong> is both a &lt;a href="https://en.wikipedia.org/wiki/Mathematical_optimization">mathematical optimization&lt;/a> method and a computer programming method. The method was developed by &lt;a href="https://en.wikipedia.org/wiki/Richard_Bellman">Richard Bellman&lt;/a> in the 1950s and has found applications in numerous fields, from &lt;a href="https://en.wikipedia.org/wiki/Aerospace_engineering">aerospace engineering&lt;/a> to &lt;a href="https://en.wikipedia.org/wiki/Economics">economics&lt;/a>.&lt;/p>
+&lt;p>&lt;em>&lt;strong>wikipedia&lt;/strong>&lt;/em> - &lt;a href="https://en.wikipedia.org/wiki/Dynamic_programming">Dynamic programming&lt;/a>&lt;/p>
+&lt;/blockquote>
+&lt;h2 id="question">Question&lt;/h2>
+&lt;p>You want to schedule a list of jobs in &lt;code>d&lt;/code> days. Jobs are dependent (i.e To work on the &lt;code>ith&lt;/code> job, you have to finish all the jobs &lt;code>j&lt;/code> where &lt;code>0 &amp;lt;= j &amp;lt; i&lt;/code>).&lt;/p>
+&lt;p>You have to finish &lt;strong>at least&lt;/strong> one task every day. The difficulty of a job schedule is the sum of difficulties of each day of the &lt;code>d&lt;/code> days. The difficulty of a day is the maximum difficulty of a job done on that day.&lt;/p>
+&lt;p>You are given an integer array &lt;code>jobDifficulty&lt;/code> and an integer &lt;code>d&lt;/code>. The difficulty of the &lt;code>ith&lt;/code> job is &lt;code>jobDifficulty[i]&lt;/code>.&lt;/p>
+&lt;p>Return &lt;em>the minimum difficulty of a job schedule&lt;/em>. If you cannot find a schedule for the jobs return &lt;code>-1&lt;/code>.&lt;/p>
+&lt;p>&lt;strong>Example 1:&lt;/strong>&lt;/p>
+&lt;p>&lt;img src="https://static.ddhigh.com/blog/2023/05/16/1684246842894993000.png" alt="img">&lt;/p>
+&lt;pre tabindex="0">&lt;code>Input: jobDifficulty = [6,5,4,3,2,1], d = 2
+Output: 7
+Explanation: First day you can finish the first 5 jobs, total difficulty = 6.
+Second day you can finish the last job, total difficulty = 1.
+The difficulty of the schedule = 6 + 1 = 7
+&lt;/code>&lt;/pre>&lt;p>&lt;strong>Example 2:&lt;/strong>&lt;/p>
+&lt;pre tabindex="0">&lt;code>Input: jobDifficulty = [9,9,9], d = 4
+Output: -1
+Explanation: If you finish a job per day you will still have a free day. you cannot find a schedule for the given jobs.
+&lt;/code>&lt;/pre>&lt;p>&lt;strong>Example 3:&lt;/strong>&lt;/p>
+&lt;pre tabindex="0">&lt;code>Input: jobDifficulty = [1,1,1], d = 3
+Output: 3
+Explanation: The schedule is one job per day. total difficulty will be 3.
+&lt;/code>&lt;/pre>&lt;p>&lt;strong>Constraints:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>1 &amp;lt;= jobDifficulty.length &amp;lt;= 300&lt;/code>&lt;/li>
+&lt;li>&lt;code>0 &amp;lt;= jobDifficulty[i] &amp;lt;= 1000&lt;/code>&lt;/li>
+&lt;li>&lt;code>1 &amp;lt;= d &amp;lt;= 10&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;h2 id="solution">Solution&lt;/h2>
+&lt;h3 id="thinking">Thinking&lt;/h3>
+&lt;p>We need to split $jobDifficulty$ to $d$ parts, and make the sum of the maximum of each parts be lowest.&lt;/p>
+&lt;p>If the $d$ equal &lt;code>1&lt;/code>, the answer is simple: $ \max_{i=0}^n jobDifficulty_i $, so what if $d$ is greater than $1$?&lt;/p>
+&lt;p>We can split at index $k$ , so we get $2$ parts, the first part $jobDifficulty[0,k]$ and the second part $jobDifficulty[k+1, n]$,&lt;/p>
+&lt;p>so we can calculate the maximum of the first part and the second part, and then we succeeded in reducing the scale of the problem, we can keep splitting the first part, for different $k$, we&amp;rsquo;ll get different parts and different maximum of each part.&lt;/p>
+&lt;p>Let&amp;rsquo;s start Dynamic programming. In this article, I&amp;rsquo;ll use &lt;strong>Recursion&lt;/strong> to implement Dynamic programming.&lt;/p>
+&lt;p>&lt;strong>DP Definition&lt;/strong>&lt;/p>
+&lt;p>We can declare a function as below, this function will return the &lt;strong>minimal&lt;/strong> sum of $count$ parts from $nums[0, index]$.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">int&lt;/span> &lt;span style="color:#a6e22e">dp&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span>&lt;span style="color:#f92672">[]&lt;/span> nums, &lt;span style="color:#66d9ef">int&lt;/span> index, &lt;span style="color:#66d9ef">int&lt;/span> count)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;strong>Base case&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>If the $length$ of $nums[0, index]$ is less than $count$, it&amp;rsquo;s impossible to split.&lt;/li>
+&lt;li>If the $count=1$ , just return $\max_{i=0}^n nums_i$&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>State transition equation&lt;/strong>&lt;/p>
+&lt;p>If the $count&amp;gt;1$, we will declare a split point $i$ iterates from $0&amp;hellip;index-1$, so we get a answer and a sub problem, to solve the sub problem, we can call &lt;code>dp&lt;/code> function again. So we can get a State transition equation.
+$$
+dp[index][count] = min(dp[index][count], current+subProblem)
+$$&lt;/p>
+&lt;h3 id="code">Code&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">Solution&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">int&lt;/span>&lt;span style="color:#f92672">[][]&lt;/span> memo;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// Human translate&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// split the `jobDifficulty` array to `d` parts, make the sum of the maximum of each parts be lowest&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">int&lt;/span> &lt;span style="color:#a6e22e">minDifficulty&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span>&lt;span style="color:#f92672">[]&lt;/span> jobDifficulty, &lt;span style="color:#66d9ef">int&lt;/span> d) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> (jobDifficulty.&lt;span style="color:#a6e22e">length&lt;/span> &lt;span style="color:#f92672">&amp;lt;&lt;/span> d) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#f92672">-&lt;/span>1;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> memo &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#66d9ef">int&lt;/span>&lt;span style="color:#f92672">[&lt;/span>jobDifficulty.&lt;span style="color:#a6e22e">length&lt;/span>&lt;span style="color:#f92672">][&lt;/span>d&lt;span style="color:#f92672">+&lt;/span>1&lt;span style="color:#f92672">]&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span>(&lt;span style="color:#66d9ef">var&lt;/span> i &lt;span style="color:#f92672">=&lt;/span> 0; i &lt;span style="color:#f92672">&amp;lt;&lt;/span> memo.&lt;span style="color:#a6e22e">length&lt;/span>; i&lt;span style="color:#f92672">++&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Arrays.&lt;span style="color:#a6e22e">fill&lt;/span>(memo&lt;span style="color:#f92672">[&lt;/span>i&lt;span style="color:#f92672">]&lt;/span>, &lt;span style="color:#f92672">-&lt;/span>2);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> dp(jobDifficulty, jobDifficulty.&lt;span style="color:#a6e22e">length&lt;/span> &lt;span style="color:#f92672">-&lt;/span> 1, d);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// split [0, index] to `count` parts&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">int&lt;/span> &lt;span style="color:#a6e22e">dp&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span>&lt;span style="color:#f92672">[]&lt;/span> nums, &lt;span style="color:#66d9ef">int&lt;/span> index, &lt;span style="color:#66d9ef">int&lt;/span> count) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// if [0, index] can&amp;#39;t split to `count` parts, return -1(impossible)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> (index &lt;span style="color:#f92672">+&lt;/span> 1 &lt;span style="color:#f92672">&amp;lt;&lt;/span> count) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#f92672">-&lt;/span>1;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> (memo&lt;span style="color:#f92672">[&lt;/span>index&lt;span style="color:#f92672">][&lt;/span>count&lt;span style="color:#f92672">]&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#f92672">-&lt;/span>2) { &lt;span style="color:#75715e">// if the memo store current value, return&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> memo&lt;span style="color:#f92672">[&lt;/span>index&lt;span style="color:#f92672">][&lt;/span>count&lt;span style="color:#f92672">]&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// split to one part, return the maximun&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> (count &lt;span style="color:#f92672">==&lt;/span> 1) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">var&lt;/span> max &lt;span style="color:#f92672">=&lt;/span> Integer.&lt;span style="color:#a6e22e">MIN_VALUE&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span> (&lt;span style="color:#66d9ef">int&lt;/span> i &lt;span style="color:#f92672">=&lt;/span> 0; i &lt;span style="color:#f92672">&amp;lt;=&lt;/span> index; i&lt;span style="color:#f92672">++&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> max &lt;span style="color:#f92672">=&lt;/span> Math.&lt;span style="color:#a6e22e">max&lt;/span>(max, nums&lt;span style="color:#f92672">[&lt;/span>i&lt;span style="color:#f92672">]&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> memo&lt;span style="color:#f92672">[&lt;/span>index&lt;span style="color:#f92672">][&lt;/span>count&lt;span style="color:#f92672">]&lt;/span> &lt;span style="color:#f92672">=&lt;/span> max;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> max;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">var&lt;/span> answer &lt;span style="color:#f92672">=&lt;/span> Integer.&lt;span style="color:#a6e22e">MAX_VALUE&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span> (&lt;span style="color:#66d9ef">int&lt;/span> i &lt;span style="color:#f92672">=&lt;/span> index &lt;span style="color:#f92672">-&lt;/span> 1; i &lt;span style="color:#f92672">&amp;gt;=&lt;/span> 0; i&lt;span style="color:#f92672">--&lt;/span>) { &lt;span style="color:#75715e">// i represents the split point&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">var&lt;/span> current &lt;span style="color:#f92672">=&lt;/span> max(nums, i &lt;span style="color:#f92672">+&lt;/span> 1, index); &lt;span style="color:#75715e">// get the maximum of right part&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// we have a sub problem that split nums[0, i] to `count-1` part&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">var&lt;/span> subProblem &lt;span style="color:#f92672">=&lt;/span> dp(nums, i, count &lt;span style="color:#f92672">-&lt;/span> 1);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> (subProblem &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#f92672">-&lt;/span>1) { &lt;span style="color:#75715e">// if the sub problem has answer, update&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> answer &lt;span style="color:#f92672">=&lt;/span> Math.&lt;span style="color:#a6e22e">min&lt;/span>(answer, current &lt;span style="color:#f92672">+&lt;/span> subProblem);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> answer &lt;span style="color:#f92672">=&lt;/span> answer &lt;span style="color:#f92672">==&lt;/span> Integer.&lt;span style="color:#a6e22e">MAX_VALUE&lt;/span> &lt;span style="color:#f92672">?&lt;/span> &lt;span style="color:#f92672">-&lt;/span>1 : answer;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> memo&lt;span style="color:#f92672">[&lt;/span>index&lt;span style="color:#f92672">][&lt;/span>count&lt;span style="color:#f92672">]&lt;/span> &lt;span style="color:#f92672">=&lt;/span> answer;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> answer;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">int&lt;/span> &lt;span style="color:#a6e22e">max&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span>&lt;span style="color:#f92672">[]&lt;/span> nums, &lt;span style="color:#66d9ef">int&lt;/span> i, &lt;span style="color:#66d9ef">int&lt;/span> j) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">var&lt;/span> max &lt;span style="color:#f92672">=&lt;/span> Integer.&lt;span style="color:#a6e22e">MIN_VALUE&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span> (&lt;span style="color:#66d9ef">int&lt;/span> k &lt;span style="color:#f92672">=&lt;/span> i; k &lt;span style="color:#f92672">&amp;lt;=&lt;/span> j; k&lt;span style="color:#f92672">++&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> max &lt;span style="color:#f92672">=&lt;/span> Math.&lt;span style="color:#a6e22e">max&lt;/span>(max, nums&lt;span style="color:#f92672">[&lt;/span>k&lt;span style="color:#f92672">]&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> max;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;strong>Complexity&lt;/strong>&lt;/p>
+&lt;p>Time Complexity: $O(n^2*d)$, $n$ is the length of $jobDiffculty$, we have a internal cycle to split the $nums$, whose time complexity is $d$, and the &lt;code>max&lt;/code> function has a time complexity $n$, and when $d=1$, we have a cycle to calculate maximum.&lt;/p>
+&lt;p>Space complexity: $O(n*d)$, we use a memo to store the result to prevent repeat call.&lt;/p></description></item></channel></rss>

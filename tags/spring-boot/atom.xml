@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>spring-boot on Lei Xia</title><link>https://www.ddhigh.com/tags/spring-boot/</link><description>Recent content in spring-boot on Lei Xia</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Mon, 08 Jul 2019 17:13:40 +0000</lastBuildDate><atom:link href="https://www.ddhigh.com/tags/spring-boot/atom.xml" rel="self" type="application/rss+xml"/><item><title>druid SQL监控不显示问题</title><link>https://www.ddhigh.com/2019/07/08/druid-sql-monitor/</link><pubDate>Mon, 08 Jul 2019 17:13:40 +0000</pubDate><guid>https://www.ddhigh.com/2019/07/08/druid-sql-monitor/</guid><description>&lt;p>新版druid数据源驱动的SQL监控如果用以前的老版本配置是无法监控到SQL的：&lt;/p>
+&lt;p>application.yml&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">spring&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">datasource&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">druid&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">filters&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">stat&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">wall&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">log4j&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>启动应用之后访问druid监控页面，除了SQL相关的页面都正常工作，但是访问SQL监控页面时没有看到SQL记录。
+查看监控页面 &lt;strong>数据源&lt;/strong> 菜单发现 &lt;strong>filter类名&lt;/strong> 显示的是空，估计是filter配置有问题导致。&lt;/p>
+&lt;p>查阅官方文档发现filter配置有变更，改成以下形式即可统计SQL，同时在数据源页面 &lt;strong>filter类名&lt;/strong> 会显示正常。&lt;/p>
+&lt;p>application.yml&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">spring&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">datasource&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">druid&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">initial-size&lt;/span>: &lt;span style="color:#ae81ff">5&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">min-idle&lt;/span>: &lt;span style="color:#ae81ff">5&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">max-active&lt;/span>: &lt;span style="color:#ae81ff">20&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">max-wait&lt;/span>: &lt;span style="color:#ae81ff">5000&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># 状态监控&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">filter&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">stat&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">enabled&lt;/span>: &lt;span style="color:#66d9ef">true&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">db-type&lt;/span>: &lt;span style="color:#ae81ff">mysql&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">log-slow-sql&lt;/span>: &lt;span style="color:#66d9ef">true&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">slow-sql-millis&lt;/span>: &lt;span style="color:#ae81ff">2000&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># 监控过滤器&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">web-stat-filter&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">enabled&lt;/span>: &lt;span style="color:#66d9ef">true&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">exclusions&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#e6db74">&amp;#34;*.js&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#e6db74">&amp;#34;*.gif&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#e6db74">&amp;#34;*.jpg&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#e6db74">&amp;#34;*.png&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#e6db74">&amp;#34;*.css&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#e6db74">&amp;#34;*.ico&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#e6db74">&amp;#34;/druid/*&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># druid 监控页面&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">stat-view-servlet&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">enabled&lt;/span>: &lt;span style="color:#66d9ef">true&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">url-pattern&lt;/span>: &lt;span style="color:#ae81ff">/druid/*&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">reset-enable&lt;/span>: &lt;span style="color:#66d9ef">false&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">login-username&lt;/span>: &lt;span style="color:#ae81ff">root&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">login-password&lt;/span>: &lt;span style="color:#ae81ff">root&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>数据源filter类名：&lt;strong>com.alibaba.druid.filter.stat.StatFilter&lt;/strong>&lt;/p></description></item><item><title>Spring Boot JPA 返回json时排除Null字段</title><link>https://www.ddhigh.com/2017/07/31/spring-boot-exclude-null/</link><pubDate>Mon, 31 Jul 2017 00:00:00 +0000</pubDate><guid>https://www.ddhigh.com/2017/07/31/spring-boot-exclude-null/</guid><description>&lt;p>Spring Boot在返回JSON的时候默认会返回null字段，这个对客户端一般没什么作用，还会增加服务器带宽压力。使用如下配置可以屏蔽。&lt;/p>
+&lt;p>在pojo对象上添加注解&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">@JsonInclude&lt;/span>(JsonInclude.&lt;span style="color:#a6e22e">Include&lt;/span>.&lt;span style="color:#a6e22e">NON_NULL&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">User&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>再使用&lt;code>@ResponseBody&lt;/code>的时候就不会返回Null字段了。&lt;/p></description></item><item><title>使用pm2来保证Spring Boot应用稳定运行</title><link>https://www.ddhigh.com/2017/07/31/spring-boot-pm2/</link><pubDate>Mon, 31 Jul 2017 00:00:00 +0000</pubDate><guid>https://www.ddhigh.com/2017/07/31/spring-boot-pm2/</guid><description>&lt;p>Spring Boot开发web应用就像开发普通的java程序一般简洁，因为其内嵌了web容易，启动的时候只需要一条命令&lt;code>java -jar server.jar&lt;/code>即可，非常方便。
+但是由此而来的问题是万一应用挂了怎么办？&lt;/p>
+&lt;p>别担心，有pm2进程管理工具可以帮到你。&lt;/p>
+&lt;h2 id="pm2简介">PM2简介&lt;/h2>
+&lt;p>pm2原先是nodejs应用的进程管理工具，不过其良好的设计以及扩展性可以手动执行执行进程。&lt;/p>
+&lt;h2 id="pm2安装">PM2安装&lt;/h2>
+&lt;ol>
+&lt;li>安装NodeJs&lt;/li>
+&lt;li>&lt;code>npm install pm2 -g&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;h2 id="pm2基本命令">PM2基本命令&lt;/h2>
+&lt;ul>
+&lt;li>pm2 list 查看所有被PM2管理的进程列表&lt;/li>
+&lt;li>pm2 start xxx 启动一个应用&lt;/li>
+&lt;li>pm2 stop xxx 停止一个应用&lt;/li>
+&lt;li>pm2 restart xxx 重启一个应用&lt;/li>
+&lt;li>pm2 describe xxx 查看应用详情&lt;/li>
+&lt;li>pm2 startup, pm2 save 两条命令，用来保证服务器启动时,pm2管理的程序自动运行&lt;/li>
+&lt;/ul>
+&lt;h2 id="java程序处理">Java程序处理&lt;/h2>
+&lt;p>在jar的同级目录新建应用启动配置文件，如&lt;code>pm2.json&lt;/code>，内容如下：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-json" data-lang="json">&lt;span style="display:flex;">&lt;span>{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;name&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;my-server&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;script&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;/usr/bin/java&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;args&amp;#34;&lt;/span>: [
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;-jar&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;server.jar&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ],
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;exec_interpreter&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;exec_mode&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;fork&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>说明如下：&lt;/p>
+&lt;ul>
+&lt;li>name 进程名称（显示在&lt;code>pm2 list&lt;/code>命令中）&lt;/li>
+&lt;li>script 执行进程名称，如果需要执行PHP脚本则填写php解释器的路径，本文为java&lt;/li>
+&lt;li>args 传给执行进程的参数，多个参数以数组单元分割&lt;/li>
+&lt;li>exec_interpreter NodeJs解析器，本文不适用&lt;/li>
+&lt;li>exec_mode 执行模式[cluster|fork]这个针对NodeJs应用的配置，非NodeJs应用统一fork&lt;/li>
+&lt;/ul>
+&lt;p>配置文件完成后，使用&lt;/p>
+&lt;pre tabindex="0">&lt;code>pm2 start pm2.json
+&lt;/code>&lt;/pre>&lt;p>即可看到应用被启动&lt;/p>
+&lt;h2 id="日志管理">日志管理&lt;/h2>
+&lt;p>日志路径在&lt;code>~/.pm2/logs&lt;/code>，&lt;code>stdout&lt;/code>和&lt;code>stderr&lt;/code>被分开存放，程序中的所有&lt;code>stdout&lt;/code>和&lt;code>stderr&lt;/code>都被收集方便查错。&lt;/p></description></item><item><title>druid spring boot 统计SQL问题</title><link>https://www.ddhigh.com/2017/07/18/spring-boot-druid-sql/</link><pubDate>Tue, 18 Jul 2017 00:00:00 +0000</pubDate><guid>https://www.ddhigh.com/2017/07/18/spring-boot-druid-sql/</guid><description>&lt;h2 id="spring-boot配置">spring-boot配置&lt;/h2>
+&lt;pre tabindex="0">&lt;code>spring.jpa.hibernate.ddl-auto=validate
+spring.datasource.type=com.alibaba.druid.pool.DruidDataSource
+spring.datasource.driver-class-name=com.mysql.jdbc.Driver
+spring.datasource.initialize=true
+spring.datasource.initialSize=5
+spring.datasource.minIdle=5
+spring.datasource.maxActive=10
+spring.datasource.maxWait=60000
+spring.datasource.timeBetweenEvictionRunsMillis=60000
+spring.datasource.minEvictableIdleTimeMillis=300000
+spring.datasource.validationQuery=SELECT &amp;#39;x&amp;#39;
+spring.datasource.testWhileIdle=true
+spring.datasource.testOnBorrow=false
+spring.datasource.testOnReturn=false
+spring.datasource.poolPreparedStatements=false
+spring.datasource.maxPoolPreparedStatementPerConnectionSize=20
+spring.datasource.filters=stat,wall,slf4j
+spring.datasource.connectionProperties=druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+spring.datasource.useGlobalDataSourceStat=true
+&lt;/code>&lt;/pre>&lt;p>这个配置没有什么好说的，网上很多，可能关键在&lt;/p>
+&lt;pre tabindex="0">&lt;code>spring.datasource.filters=stat,wall,slf4j
+spring.datasource.connectionProperties=druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+spring.datasource.useGlobalDataSourceStat=true
+&lt;/code>&lt;/pre>&lt;p>但是就算配置好这些后，返回&lt;code>/druid&lt;/code>也不显示SQL统计。
+其实问题在于&lt;/p>
+&lt;p>&lt;em>系统默认使用的数据库连接池没有使用你的配置&lt;/em>，所以需要我们手动实例化&lt;code>Bean&lt;/code>&lt;/p>
+&lt;h2 id="kotlin代码">kotlin代码&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-kotlin" data-lang="kotlin">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">@SpringBootApplication&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">open&lt;/span> &lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">Application&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">@Bean&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">@ConfigurationProperties&lt;/span>(prefix = &lt;span style="color:#e6db74">&amp;#34;spring.datasource&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">open&lt;/span> &lt;span style="color:#66d9ef">fun&lt;/span> &lt;span style="color:#a6e22e">druidDataSource&lt;/span>(): DataSource {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> DruidDataSource()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item></channel></rss>

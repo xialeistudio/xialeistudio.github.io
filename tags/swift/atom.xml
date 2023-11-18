@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>swift on Lei Xia</title><link>https://www.ddhigh.com/tags/swift/</link><description>Recent content in swift on Lei Xia</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Thu, 14 Jun 2018 21:41:15 +0000</lastBuildDate><atom:link href="https://www.ddhigh.com/tags/swift/atom.xml" rel="self" type="application/rss+xml"/><item><title>PermissionScope Swift4 兼容问题</title><link>https://www.ddhigh.com/2018/06/14/permissionscope-with-swift-4/</link><pubDate>Thu, 14 Jun 2018 21:41:15 +0000</pubDate><guid>https://www.ddhigh.com/2018/06/14/permissionscope-with-swift-4/</guid><description>&lt;p>&lt;a href="https://github.com/nickoneill/PermissionScope">PermissionScope&lt;/a>是iOS非常好用的权限处理库，界面效果也非常精美。不幸的是作者已经停止维护。&lt;/p>
+&lt;blockquote>
+&lt;p>PermissionScope is no longer supported. Please use an alternative if you need updates for newer iOS 10 and 11 APIs!&lt;/p>
+&lt;/blockquote>
+&lt;h2 id="问题的来源">问题的来源&lt;/h2>
+&lt;p>因为作者是基于Swift3开发的，而4.0的&lt;code>@selector&lt;/code>语法有一点调整，所以是不能通过编译的，处理办法是根据Xcode的提示一个个修正。&lt;/p>
+&lt;p>可是事情真的这么简单吗？Xcode处理过后虽然编译通过了，但是会触发运行时错误。错误内容大致是&lt;code>调用了不存在的方法&lt;/code>。&lt;/p>
+&lt;h2 id="解决方案">解决方案&lt;/h2>
+&lt;p>由于我们根据Xcode的提示给相关代码加了&lt;code>@objc&lt;/code>，但是有些方法是没有加的，而这些方法类似下面的代码：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-swift" data-lang="swift">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">requestCamera&lt;/span>() {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>由于没有&lt;code>@objc&lt;/code>修饰，&lt;code>@selector&lt;/code>指令找不到方法，所以就报错了。解决方案如下：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-swift" data-lang="swift">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">@objc&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">requestCamera&lt;/span>() {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item></channel></rss>

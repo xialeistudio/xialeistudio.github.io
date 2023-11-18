@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>java on Lei Xia</title><link>https://www.ddhigh.com/tags/java/</link><description>Recent content in java on Lei Xia</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Fri, 05 May 2023 11:46:27 +0000</lastBuildDate><atom:link href="https://www.ddhigh.com/tags/java/atom.xml" rel="self" type="application/rss+xml"/><item><title>How to retry requests correctly with Feign</title><link>https://www.ddhigh.com/2023/05/05/how-to-retry-requests-correctly/</link><pubDate>Fri, 05 May 2023 11:46:27 +0000</pubDate><guid>https://www.ddhigh.com/2023/05/05/how-to-retry-requests-correctly/</guid><description>&lt;p>Network is unstable, it can fail at any moment. In this article, I&amp;rsquo;ll share how to retry requests correctly with Feign.&lt;/p>
+&lt;blockquote>
+&lt;p>&lt;a href="https://github.com/OpenFeign/feign/">Feign&lt;/a> is a Java to HTTP client binder inspired by &lt;a href="https://github.com/square/retrofit">Retrofit&lt;/a>, &lt;a href="https://jax-rs-spec.java.net/nonav/2.0/apidocs/index.html">JAXRS-2.0&lt;/a>, and &lt;a href="http://www.oracle.com/technetwork/articles/java/jsr356-1937161.html">WebSocket&lt;/a>. Feign&amp;rsquo;s first goal was reducing the complexity of binding &lt;a href="https://github.com/Netflix/Denominator">Denominator&lt;/a> uniformly to HTTP APIs regardless of &lt;a href="http://www.slideshare.net/adrianfcole/99problems">ReSTfulness&lt;/a>.&lt;/p>
+&lt;p>&lt;em>&lt;strong>&lt;a href="https://github.com/OpenFeign/feign/#error-handling">Feign&lt;/a>&lt;/strong>&lt;/em> - Introduction&lt;/p>
+&lt;/blockquote>
+&lt;h2 id="terms">Terms&lt;/h2>
+&lt;h3 id="errordecoder">ErrorDecoder&lt;/h3>
+&lt;p>&lt;a href="https://github.com/OpenFeign/feign/#error-handling">ErrorDecoder&lt;/a> is a interface in Feign to decode an Exception, you can modify the return exception type of &lt;code>decode&lt;/code> method, we usually implement retry in conjunction with &lt;code>ErrorDecoder&lt;/code> with &lt;code>Retryer&lt;/code>.&lt;/p>
+&lt;p>The following code shows the definition of &lt;code>ErrorDecoder&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">interface&lt;/span> &lt;span style="color:#a6e22e">ErrorDecoder&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Exception &lt;span style="color:#a6e22e">decode&lt;/span>(String methodKey, Response response);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="retryer">Retryer&lt;/h3>
+&lt;blockquote>
+&lt;p>Feign, by default, will automatically retry &lt;code>IOException&lt;/code>s, regardless of HTTP method, treating them as transient network related exceptions, and any &lt;code>RetryableException&lt;/code> thrown from an &lt;code>ErrorDecoder&lt;/code>.&lt;/p>
+&lt;p>&lt;em>&lt;strong>&lt;a href="https://github.com/OpenFeign/feign/#error-handling">Feign&lt;/a>&lt;/strong>&lt;/em> - &lt;a href="https://github.com/OpenFeign/feign/#retry">Retryer&lt;/a>&lt;/p>
+&lt;/blockquote>
+&lt;p>In &lt;code>Retryer&lt;/code>, we need to override &lt;code>continueOrPropagate&lt;/code> method to do some retry work, there are 2 execution flows:&lt;/p>
+&lt;ol>
+&lt;li>If no exception thrown, Feign will retry a new request&lt;/li>
+&lt;li>If any exception thrown, Feign will stop to retry&lt;/li>
+&lt;/ol>
+&lt;h2 id="situation">Situation&lt;/h2>
+&lt;p>Imaging you are developing a feature: when we get a 401 response from server, we need to refresh our access_token and then request again. This is all transparent and has no impact on the end user.&lt;/p>
+&lt;p>How do we solve this problem?&lt;/p>
+&lt;p>Simply, we need to get a new access_token by a new request and then set the access_token to the header of the failed request, so the next request can be succeed.&lt;/p>
+&lt;h2 id="solution">Solution&lt;/h2>
+&lt;p>401 response usually throws a &lt;code>UnauthorizedException&lt;/code>, it&amp;rsquo;s not an &lt;code>IOException&lt;/code> so Feign will not retry.&lt;/p>
+&lt;p>We can implement &lt;code>ErrorDecoder&lt;/code> to return a &lt;code>RetryableException&lt;/code> so Feign will retry our request, and we need implement a &lt;code>Retryer&lt;/code>, modify the request parameters in &lt;code>continueOrPropagate&lt;/code> method.&lt;/p>
+&lt;p>Here is a full example.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">Example&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>(String&lt;span style="color:#f92672">[]&lt;/span> args) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">var&lt;/span> github &lt;span style="color:#f92672">=&lt;/span> Feign.&lt;span style="color:#a6e22e">builder&lt;/span>()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .&lt;span style="color:#a6e22e">decoder&lt;/span>(&lt;span style="color:#66d9ef">new&lt;/span> GsonDecoder())
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .&lt;span style="color:#a6e22e">retryer&lt;/span>(&lt;span style="color:#66d9ef">new&lt;/span> MyRetryer(100, 3))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .&lt;span style="color:#a6e22e">errorDecoder&lt;/span>(&lt;span style="color:#66d9ef">new&lt;/span> MyErrorDecoder())
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .&lt;span style="color:#a6e22e">target&lt;/span>(Github.&lt;span style="color:#a6e22e">class&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;https://api.github.com&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">var&lt;/span> contributors &lt;span style="color:#f92672">=&lt;/span> github.&lt;span style="color:#a6e22e">contributors&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;foo&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;bar&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;invalid_token&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span> (&lt;span style="color:#66d9ef">var&lt;/span> contributor : contributors) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> System.&lt;span style="color:#a6e22e">out&lt;/span>.&lt;span style="color:#a6e22e">println&lt;/span>(contributor.&lt;span style="color:#a6e22e">login&lt;/span> &lt;span style="color:#f92672">+&lt;/span> &lt;span style="color:#e6db74">&amp;#34; &amp;#34;&lt;/span> &lt;span style="color:#f92672">+&lt;/span> contributor.&lt;span style="color:#a6e22e">contributions&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">static&lt;/span> &lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">MyErrorDecoder&lt;/span> &lt;span style="color:#66d9ef">implements&lt;/span> ErrorDecoder {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">final&lt;/span> ErrorDecoder defaultErrorDecoder &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> Default();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">@Override&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> Exception &lt;span style="color:#a6e22e">decode&lt;/span>(String methodKey, Response response) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// wrapper 401 to RetryableException in order to retry&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> (response.&lt;span style="color:#a6e22e">status&lt;/span>() &lt;span style="color:#f92672">==&lt;/span> 401) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> RetryableException(response.&lt;span style="color:#a6e22e">status&lt;/span>(), response.&lt;span style="color:#a6e22e">reason&lt;/span>(), response.&lt;span style="color:#a6e22e">request&lt;/span>().&lt;span style="color:#a6e22e">httpMethod&lt;/span>(), &lt;span style="color:#66d9ef">null&lt;/span>, response.&lt;span style="color:#a6e22e">request&lt;/span>());
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> defaultErrorDecoder.&lt;span style="color:#a6e22e">decode&lt;/span>(methodKey, response);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">static&lt;/span> &lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">MyRetryer&lt;/span> &lt;span style="color:#66d9ef">implements&lt;/span> Retryer {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">final&lt;/span> &lt;span style="color:#66d9ef">long&lt;/span> period;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">final&lt;/span> &lt;span style="color:#66d9ef">int&lt;/span> maxAttempts;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">int&lt;/span> attempt &lt;span style="color:#f92672">=&lt;/span> 1;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#a6e22e">MyRetryer&lt;/span>(&lt;span style="color:#66d9ef">long&lt;/span> period, &lt;span style="color:#66d9ef">int&lt;/span> maxAttempts) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">this&lt;/span>.&lt;span style="color:#a6e22e">period&lt;/span> &lt;span style="color:#f92672">=&lt;/span> period;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">this&lt;/span>.&lt;span style="color:#a6e22e">maxAttempts&lt;/span> &lt;span style="color:#f92672">=&lt;/span> maxAttempts;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">@Override&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">continueOrPropagate&lt;/span>(RetryableException e) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> (&lt;span style="color:#f92672">++&lt;/span>attempt &lt;span style="color:#f92672">&amp;gt;&lt;/span> maxAttempts) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">throw&lt;/span> e;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> (e.&lt;span style="color:#a6e22e">status&lt;/span>() &lt;span style="color:#f92672">==&lt;/span> 401) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// remove Authorization first, otherwise Feign will add a new Authorization header&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// cause github responses a 400 bad request&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> e.&lt;span style="color:#a6e22e">request&lt;/span>().&lt;span style="color:#a6e22e">requestTemplate&lt;/span>().&lt;span style="color:#a6e22e">removeHeader&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Authorization&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> e.&lt;span style="color:#a6e22e">request&lt;/span>().&lt;span style="color:#a6e22e">requestTemplate&lt;/span>().&lt;span style="color:#a6e22e">header&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Authorization&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Bearer &amp;#34;&lt;/span> &lt;span style="color:#f92672">+&lt;/span> getNewToken());
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">try&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Thread.&lt;span style="color:#a6e22e">sleep&lt;/span>(period);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> } &lt;span style="color:#66d9ef">catch&lt;/span> (InterruptedException ex) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">throw&lt;/span> e;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> } &lt;span style="color:#66d9ef">else&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">throw&lt;/span> e;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// Access an external api to obtain new token&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// In this example, we can simply return a fixed token to demonstrate how Retryer works&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> String &lt;span style="color:#a6e22e">getNewToken&lt;/span>() {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#e6db74">&amp;#34;newToken&amp;#34;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">@Override&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> Retryer &lt;span style="color:#a6e22e">clone&lt;/span>() {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> MyRetryer(period, maxAttempts);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>By modify &lt;code>e.request().requestTemplate()&lt;/code>, you can do anything you want to modify a request.&lt;/p>
+&lt;p>&lt;em>This code example has been merged to Feign Project.&lt;/em>&lt;/p>
+&lt;h2 id="reference">Reference&lt;/h2>
+&lt;ol>
+&lt;li>[&lt;em>&lt;strong>&lt;a href="https://github.com/OpenFeign/feign/#error-handling">Feign&lt;/a>&lt;/strong>&lt;/em> - Introduction](&lt;a href="https://github.com/OpenFeign/feign">https://github.com/OpenFeign/feign&lt;/a>)&lt;/li>
+&lt;/ol></description></item></channel></rss>

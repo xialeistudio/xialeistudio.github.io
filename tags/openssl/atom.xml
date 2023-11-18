@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>openssl on Lei Xia</title><link>https://www.ddhigh.com/tags/openssl/</link><description>Recent content in openssl on Lei Xia</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sat, 24 Jun 2017 00:00:00 +0000</lastBuildDate><atom:link href="https://www.ddhigh.com/tags/openssl/atom.xml" rel="self" type="application/rss+xml"/><item><title>使用RSA在PHP和NodeJs中进行加密数据通信</title><link>https://www.ddhigh.com/2017/06/24/rsa-in-node-php/</link><pubDate>Sat, 24 Jun 2017 00:00:00 +0000</pubDate><guid>https://www.ddhigh.com/2017/06/24/rsa-in-node-php/</guid><description>&lt;p>RSA算法是目前用的最多的非对称加密算法，文本将基于openssl在nodejs和php中进行加密数据通信。&lt;/p>
+&lt;h2 id="生成密钥对">生成密钥对&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>openssl
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>genrsa -out private.key &lt;span style="color:#ae81ff">2048&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>rsa -in private.key -pubout -out public.key
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>执行完命令后，可以在当前目录看到:&lt;/p>
+&lt;ul>
+&lt;li>public.key 公钥&lt;/li>
+&lt;li>private.key 私钥&lt;/li>
+&lt;/ul>
+&lt;h2 id="nodejs服务器">NodeJs服务器&lt;/h2>
+&lt;p>本文使用koa2来构建一个基于openssl加密方案的http服务器。
+源码使用typescript进行开发。&lt;/p>
+&lt;h3 id="安装依赖">安装依赖&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>npm init -y
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>npm install typescript koa koa-router @types/node @types/koa @types/koa-router --save
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>最终的&lt;em>package.json&lt;/em>内容如下：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-json" data-lang="json">&lt;span style="display:flex;">&lt;span>{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;name&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;openssl-demo&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;version&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;1.0.0&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;description&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;main&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;index.js&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;scripts&amp;#34;&lt;/span>: {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;build&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;tsc -w&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;start&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;node index.js&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> },
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;keywords&amp;#34;&lt;/span>: [],
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;author&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;license&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;ISC&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;dependencies&amp;#34;&lt;/span>: {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;@types/koa&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;^2.0.39&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;@types/koa-router&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;^7.0.22&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;@types/node&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;^8.0.2&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;koa&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;^2.3.0&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;koa-router&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;^7.2.1&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;typescript&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;^2.3.4&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="开始编码indexts">开始编码&lt;em>index.ts&lt;/em>:&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-typescript" data-lang="typescript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">import&lt;/span> &lt;span style="color:#f92672">*&lt;/span> &lt;span style="color:#66d9ef">as&lt;/span> &lt;span style="color:#a6e22e">crypto&lt;/span> &lt;span style="color:#66d9ef">from&lt;/span> &lt;span style="color:#e6db74">&amp;#39;crypto&amp;#39;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">import&lt;/span> &lt;span style="color:#f92672">*&lt;/span> &lt;span style="color:#66d9ef">as&lt;/span> &lt;span style="color:#a6e22e">constants&lt;/span> &lt;span style="color:#66d9ef">from&lt;/span> &lt;span style="color:#e6db74">&amp;#39;constants&amp;#39;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">import&lt;/span> &lt;span style="color:#f92672">*&lt;/span> &lt;span style="color:#66d9ef">as&lt;/span> &lt;span style="color:#a6e22e">Koa&lt;/span> &lt;span style="color:#66d9ef">from&lt;/span> &lt;span style="color:#e6db74">&amp;#39;koa&amp;#39;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">import&lt;/span> &lt;span style="color:#f92672">*&lt;/span> &lt;span style="color:#66d9ef">as&lt;/span> &lt;span style="color:#a6e22e">KoaRouter&lt;/span> &lt;span style="color:#66d9ef">from&lt;/span> &lt;span style="color:#e6db74">&amp;#39;koa-router&amp;#39;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">import&lt;/span> &lt;span style="color:#f92672">*&lt;/span> &lt;span style="color:#66d9ef">as&lt;/span> &lt;span style="color:#a6e22e">fs&lt;/span> &lt;span style="color:#66d9ef">from&lt;/span> &lt;span style="color:#e6db74">&amp;#39;fs&amp;#39;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">Server&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">app&lt;/span>: &lt;span style="color:#66d9ef">Koa&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">static&lt;/span> &lt;span style="color:#a6e22e">bootstrap() {&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">Server&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">constructor&lt;/span>() {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">this&lt;/span>.&lt;span style="color:#a6e22e">app&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">Koa&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">this&lt;/span>.&lt;span style="color:#a6e22e">route&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">this&lt;/span>.&lt;span style="color:#a6e22e">app&lt;/span>.&lt;span style="color:#a6e22e">listen&lt;/span>(&lt;span style="color:#ae81ff">8081&lt;/span>, () &lt;span style="color:#f92672">=&amp;gt;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">info&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;listen on 8081&amp;#39;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> });
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">parsePostData&lt;/span>(&lt;span style="color:#a6e22e">ctx&lt;/span>)&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#a6e22e">Promise&lt;/span>&amp;lt;&lt;span style="color:#f92672">Buffer&lt;/span>&amp;gt; {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">Promise&lt;/span>((&lt;span style="color:#a6e22e">resolve&lt;/span>, &lt;span style="color:#a6e22e">reject&lt;/span>) &lt;span style="color:#f92672">=&amp;gt;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">try&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">let&lt;/span> &lt;span style="color:#a6e22e">postdata&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">Buffer&lt;/span>.&lt;span style="color:#a6e22e">alloc&lt;/span>(&lt;span style="color:#ae81ff">0&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">ctx&lt;/span>.&lt;span style="color:#a6e22e">req&lt;/span>.&lt;span style="color:#a6e22e">addListener&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;data&amp;#39;&lt;/span>, (&lt;span style="color:#a6e22e">data&lt;/span>) &lt;span style="color:#f92672">=&amp;gt;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">postdata&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">Buffer&lt;/span>.&lt;span style="color:#a6e22e">concat&lt;/span>([&lt;span style="color:#a6e22e">data&lt;/span>]);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> });
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">ctx&lt;/span>.&lt;span style="color:#a6e22e">req&lt;/span>.&lt;span style="color:#a6e22e">addListener&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;end&amp;#34;&lt;/span>, &lt;span style="color:#66d9ef">function&lt;/span> () {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">resolve&lt;/span>(&lt;span style="color:#a6e22e">postdata&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> })
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> } &lt;span style="color:#66d9ef">catch&lt;/span> (&lt;span style="color:#a6e22e">err&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">reject&lt;/span>(&lt;span style="color:#a6e22e">err&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> })
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#a6e22e">readFile&lt;/span>(&lt;span style="color:#a6e22e">path&lt;/span>)&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#a6e22e">Promise&lt;/span>&amp;lt;&lt;span style="color:#f92672">Buffer&lt;/span>&amp;gt; {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">Promise&lt;/span>((&lt;span style="color:#a6e22e">resolve&lt;/span>, &lt;span style="color:#a6e22e">reject&lt;/span>) &lt;span style="color:#f92672">=&amp;gt;&lt;/span> &lt;span style="color:#a6e22e">fs&lt;/span>.&lt;span style="color:#a6e22e">readFile&lt;/span>(&lt;span style="color:#a6e22e">path&lt;/span>, (&lt;span style="color:#a6e22e">e&lt;/span>, &lt;span style="color:#a6e22e">data&lt;/span>) &lt;span style="color:#f92672">=&amp;gt;&lt;/span> &lt;span style="color:#a6e22e">e&lt;/span> &lt;span style="color:#f92672">?&lt;/span> &lt;span style="color:#a6e22e">reject&lt;/span>(&lt;span style="color:#a6e22e">e&lt;/span>) &lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#a6e22e">resolve&lt;/span>(&lt;span style="color:#a6e22e">data&lt;/span>)));
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#a6e22e">route() {&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">router&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">KoaRouter&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">router&lt;/span>.&lt;span style="color:#a6e22e">post&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;/&amp;#39;&lt;/span>, &lt;span style="color:#66d9ef">async&lt;/span> (&lt;span style="color:#a6e22e">ctx&lt;/span>: &lt;span style="color:#66d9ef">Koa.Context&lt;/span>, &lt;span style="color:#a6e22e">next&lt;/span>) &lt;span style="color:#f92672">=&amp;gt;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">encrypted&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">await&lt;/span> &lt;span style="color:#66d9ef">this&lt;/span>.&lt;span style="color:#a6e22e">parsePostData&lt;/span>(&lt;span style="color:#a6e22e">ctx&lt;/span>); &lt;span style="color:#75715e">// 接收到的经过base64编码后的加密数据
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">key&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">await&lt;/span> &lt;span style="color:#66d9ef">this&lt;/span>.&lt;span style="color:#a6e22e">readFile&lt;/span>(&lt;span style="color:#a6e22e">__dirname&lt;/span> &lt;span style="color:#f92672">+&lt;/span> &lt;span style="color:#e6db74">&amp;#39;/private.key&amp;#39;&lt;/span>);&lt;span style="color:#75715e">//读取私钥
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">pkey&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">key&lt;/span>.&lt;span style="color:#a6e22e">toString&lt;/span>();&lt;span style="color:#75715e">// 字符串形式的私钥
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">data&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">crypto&lt;/span>.&lt;span style="color:#a6e22e">privateDecrypt&lt;/span>({&lt;span style="color:#a6e22e">key&lt;/span>: &lt;span style="color:#66d9ef">pkey&lt;/span>, &lt;span style="color:#a6e22e">padding&lt;/span>: &lt;span style="color:#66d9ef">constants.RSA_PKCS1_PADDING&lt;/span>}, &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">Buffer&lt;/span>(&lt;span style="color:#a6e22e">encrypted&lt;/span>.&lt;span style="color:#a6e22e">toString&lt;/span>(), &lt;span style="color:#e6db74">&amp;#39;base64&amp;#39;&lt;/span>)); &lt;span style="color:#75715e">// 使用私钥解密Buffer
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">json&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">JSON&lt;/span>.&lt;span style="color:#a6e22e">parse&lt;/span>(&lt;span style="color:#a6e22e">data&lt;/span>.&lt;span style="color:#a6e22e">toString&lt;/span>()); &lt;span style="color:#75715e">// 将解密后的信息解码为json对象
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">msg&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">JSON&lt;/span>.&lt;span style="color:#a6e22e">stringify&lt;/span>({&lt;span style="color:#a6e22e">errcode&lt;/span>: &lt;span style="color:#66d9ef">json.name&lt;/span> &lt;span style="color:#f92672">===&lt;/span> &lt;span style="color:#e6db74">&amp;#39;demo&amp;#39;&lt;/span> &lt;span style="color:#f92672">?&lt;/span> &lt;span style="color:#a6e22e">0&lt;/span> : &lt;span style="color:#66d9ef">1&lt;/span>, &lt;span style="color:#a6e22e">errmsg&lt;/span>: &lt;span style="color:#66d9ef">json.name&lt;/span> &lt;span style="color:#f92672">===&lt;/span> &lt;span style="color:#e6db74">&amp;#39;demo&amp;#39;&lt;/span> &lt;span style="color:#f92672">?&lt;/span> &lt;span style="color:#e6db74">&amp;#39;ok&amp;#39;&lt;/span> &lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#e6db74">&amp;#39;error&amp;#39;&lt;/span>}); &lt;span style="color:#75715e">// 需要返回的明文数据
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">e&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">crypto&lt;/span>.&lt;span style="color:#a6e22e">privateEncrypt&lt;/span>({&lt;span style="color:#a6e22e">key&lt;/span>: &lt;span style="color:#66d9ef">pkey&lt;/span>, &lt;span style="color:#a6e22e">padding&lt;/span>: &lt;span style="color:#66d9ef">constants.RSA_PKCS1_PADDING&lt;/span>}, &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">Buffer&lt;/span>(&lt;span style="color:#a6e22e">msg&lt;/span>)); &lt;span style="color:#75715e">// 使用私钥加密返回数据
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">ctx&lt;/span>.&lt;span style="color:#a6e22e">body&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">e&lt;/span>.&lt;span style="color:#a6e22e">toString&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;base64&amp;#39;&lt;/span>); &lt;span style="color:#75715e">// 将buffer编码为base64字符串后返回
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> });
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">this&lt;/span>.&lt;span style="color:#a6e22e">app&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .&lt;span style="color:#a6e22e">use&lt;/span>(&lt;span style="color:#a6e22e">router&lt;/span>.&lt;span style="color:#a6e22e">routes&lt;/span>())
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .&lt;span style="color:#a6e22e">use&lt;/span>(&lt;span style="color:#a6e22e">router&lt;/span>.&lt;span style="color:#a6e22e">allowedMethods&lt;/span>());
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">Server&lt;/span>.&lt;span style="color:#a6e22e">bootstrap&lt;/span>();
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="编译typescript">编译typescript&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>npm run build
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="启动服务器">启动服务器&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>npm run start
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>此时我们的服务器已经启动完成。&lt;/p>
+&lt;h2 id="php客户端">PHP客户端&lt;/h2>
+&lt;p>将2中的&lt;em>公钥&lt;/em>复制到php项目下。
+本文使用&lt;code>rmccue/requests&lt;/code>作为&lt;code>http客户端&lt;/code>发起请求。
+index.php关键代码如下:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-php" data-lang="php">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">&amp;lt;?&lt;/span>&lt;span style="color:#a6e22e">php&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$pubKey &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">openssl_pkey_get_public&lt;/span>(&lt;span style="color:#a6e22e">file_get_contents&lt;/span>(&lt;span style="color:#66d9ef">__DIR__&lt;/span> &lt;span style="color:#f92672">.&lt;/span> &lt;span style="color:#e6db74">&amp;#39;/public.key&amp;#39;&lt;/span>)); &lt;span style="color:#75715e">// 读取公钥
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>$data &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">Json&lt;/span>&lt;span style="color:#f92672">::&lt;/span>&lt;span style="color:#a6e22e">encode&lt;/span>([&lt;span style="color:#e6db74">&amp;#39;name&amp;#39;&lt;/span> &lt;span style="color:#f92672">=&amp;gt;&lt;/span> &lt;span style="color:#e6db74">&amp;#39;demo&amp;#39;&lt;/span>]); &lt;span style="color:#75715e">// 需要提交的明文数据
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#a6e22e">openssl_public_encrypt&lt;/span>($data, $encryped, $pubKey); &lt;span style="color:#75715e">// 使用公钥加密明文数据
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>$data &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">base64_encode&lt;/span>($encryped); &lt;span style="color:#75715e">// 将加密后的数据进行base64编码
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>$res &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">Requests&lt;/span>&lt;span style="color:#f92672">::&lt;/span>&lt;span style="color:#a6e22e">post&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;http://localhost:8081&amp;#39;&lt;/span>, [], $data); &lt;span style="color:#75715e">// 将base64数据提交到NodeJs
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>$data &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">base64_decode&lt;/span>($res&lt;span style="color:#f92672">-&amp;gt;&lt;/span>&lt;span style="color:#a6e22e">body&lt;/span>);&lt;span style="color:#75715e">// 接收NodeJs私钥加密后的响应并进行base64解码
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#a6e22e">openssl_public_decrypt&lt;/span>($data, $dd, $pubKey); &lt;span style="color:#75715e">// 使用公钥将密文解密
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">echo&lt;/span> $dd; &lt;span style="color:#75715e">// 打印数据
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="执行正常请求">执行正常请求&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>php index.php
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>输出如下&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-json" data-lang="json">&lt;span style="display:flex;">&lt;span>{&lt;span style="color:#f92672">&amp;#34;errcode&amp;#34;&lt;/span>:&lt;span style="color:#ae81ff">0&lt;/span>,&lt;span style="color:#f92672">&amp;#34;errmsg&amp;#34;&lt;/span>:&lt;span style="color:#e6db74">&amp;#34;ok&amp;#34;&lt;/span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="执行不正常请求">执行不正常请求&lt;/h2>
+&lt;p>将php中&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-php" data-lang="php">&lt;span style="display:flex;">&lt;span>$data &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">Json&lt;/span>&lt;span style="color:#f92672">::&lt;/span>&lt;span style="color:#a6e22e">encode&lt;/span>([&lt;span style="color:#e6db74">&amp;#39;name&amp;#39;&lt;/span> &lt;span style="color:#f92672">=&amp;gt;&lt;/span> &lt;span style="color:#e6db74">&amp;#39;demo&amp;#39;&lt;/span>]);
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>改为&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-php" data-lang="php">&lt;span style="display:flex;">&lt;span>$data &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">Json&lt;/span>&lt;span style="color:#f92672">::&lt;/span>&lt;span style="color:#a6e22e">encode&lt;/span>([&lt;span style="color:#e6db74">&amp;#39;name&amp;#39;&lt;/span> &lt;span style="color:#f92672">=&amp;gt;&lt;/span> &lt;span style="color:#e6db74">&amp;#39;demo1&amp;#39;&lt;/span>]);
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>发现收到的响应为&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-json" data-lang="json">&lt;span style="display:flex;">&lt;span>{&lt;span style="color:#f92672">&amp;#34;errcode&amp;#34;&lt;/span>:&lt;span style="color:#ae81ff">1&lt;/span>,&lt;span style="color:#f92672">&amp;#34;errmsg&amp;#34;&lt;/span>:&lt;span style="color:#e6db74">&amp;#34;error&amp;#34;&lt;/span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>证明提交的数据不能被nodejs接受。&lt;/p>
+&lt;h2 id="后记">后记&lt;/h2>
+&lt;p>本文简单使用了一下openssl相关功能函数，旨在起到一个抛砖引玉的作用，基于rsa算法可以开发出很多安全性很高的应用。&lt;/p></description></item><item><title>免费SSL证书申请</title><link>https://www.ddhigh.com/2016/12/13/apply-startssl-certificate/</link><pubDate>Tue, 13 Dec 2016 00:00:00 +0000</pubDate><guid>https://www.ddhigh.com/2016/12/13/apply-startssl-certificate/</guid><description>&lt;p>收费SSL证书对于个人来说还是略贵，本文将交大家申请免费的SSL证书。&lt;/p>
+&lt;h2 id="打开申请网站">打开申请网站&lt;/h2>
+&lt;p>&lt;a href="https://www.startssl.com/">startssl.com&lt;/a>&lt;/p>
+&lt;h2 id="点击sign-up注册">点击Sign-up注册&lt;/h2>
+&lt;ol>
+&lt;li>&lt;a href="https://www.startssl.com/SignUp">注册链接&lt;/a>&lt;/li>
+&lt;li>在打开的表单中填写自己的email&lt;/li>
+&lt;li>点击&lt;strong>Send vertification code&lt;/strong>按钮，等待系统发送注册邮件&lt;/li>
+&lt;li>将邮件收到的&lt;strong>code&lt;/strong>填入表单中&lt;/li>
+&lt;li>完成注册&lt;/li>
+&lt;/ol>
+&lt;h2 id="登录">登录&lt;/h2>
+&lt;ol>
+&lt;li>&lt;a href="https://www.startssl.com/Account">登录链接&lt;/a>&lt;/li>
+&lt;li>点击&lt;a href="https://auth.startssl.com/?f=73F6F71C5876489B8920905A3BA9D40FF05B29D983D24D3CA06982B296DAAA57">Client Certificate Login&lt;/a>&lt;/li>
+&lt;li>输入email地址，点击&lt;strong>Send One Time Password&lt;/strong>&lt;/li>
+&lt;li>登录邮箱，复制&lt;strong>code&lt;/strong>，填入表单中&lt;/li>
+&lt;li>点击&lt;strong>Login&lt;/strong>&lt;/li>
+&lt;/ol>
+&lt;h2 id="申请证书">申请证书&lt;/h2>
+&lt;h3 id="验证域名">验证域名&lt;/h3>
+&lt;ol>
+&lt;li>&lt;a href="https://www.startssl.com/Validate">验证地址&lt;/a>&lt;/li>
+&lt;li>选择**Domain Validation(for SSL certificate)&lt;/li>
+&lt;li>点击&lt;strong>Continue&lt;/strong>&lt;/li>
+&lt;li>输入您的域名(不带www)，点击&lt;strong>Continue&lt;/strong>&lt;/li>
+&lt;li>在接下来的域名中选择您的邮箱，点击&lt;strong>Send Vertification Code&lt;/strong>&lt;/li>
+&lt;li>将email收到的&lt;strong>code&lt;/strong>输入&lt;strong>Verification code&lt;/strong>表单项中，点击&lt;strong>Validation&lt;/strong>&lt;/li>
+&lt;li>Validation Success&lt;/li>
+&lt;/ol>
+&lt;h3 id="申请证书-1">申请证书&lt;/h3>
+&lt;ol>
+&lt;li>&lt;a href="https://www.startssl.com/Certificates/ApplySSLCert?level=1">申请链接&lt;/a>&lt;/li>
+&lt;li>在&lt;em>Please enter the full hostname for SSL certificate&lt;/em>下方的textarea中输入您的域名，可以输入多个，但是请注意，所有域名必须为您验证域名的子域名，每行一个，最多为10个！&lt;/li>
+&lt;li>在&lt;em>Please submit your Certificate Signing Request&lt;/em>中选择&lt;strong>Generated by Myself (.cer PEM format certificate)&lt;/strong>&lt;/li>
+&lt;li>打开您的终端，执行&lt;code>openssl req -newkey rsa:2048 -keyout yourname.key -out yourname.csr&lt;/code>，根据需求回答问题，其中CommonName请填写您的域名（不带www）&lt;/li>
+&lt;li>将生成的公钥(路径~/.ssh/id_rsa.pub)粘贴在textarea中&lt;/li>
+&lt;li>点击&lt;strong>Submit&lt;/strong>&lt;/li>
+&lt;li>申请完成&lt;/li>
+&lt;/ol>
+&lt;h3 id="下载证书">下载证书&lt;/h3>
+&lt;p>在右侧的&lt;strong>SSL/TLS Server&lt;/strong>点击您的证书即可开始下载&lt;/p>
+&lt;h2 id="nginx配置ssl">Nginx配置SSL&lt;/h2>
+&lt;p>[nginx启用SSL配置]({% post_url 2014-10-11-nginx-enable-ssl %})&lt;/p></description></item><item><title>PHP利用openssl实现RSA非对称加密签名</title><link>https://www.ddhigh.com/2016/10/31/php-openssl-rsa-sign/</link><pubDate>Mon, 31 Oct 2016 18:18:09 +0800</pubDate><guid>https://www.ddhigh.com/2016/10/31/php-openssl-rsa-sign/</guid><description>&lt;p>&lt;strong>阅读本文前请确认启用了php_openssl扩展&lt;/strong>&lt;/p>
+&lt;h3 id="生成密钥">生成密钥&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-php" data-lang="php">&lt;span style="display:flex;">&lt;span>$res &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">openssl_pkey_new&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">openssl_pkey_export_to_file&lt;/span>($res,&lt;span style="color:#66d9ef">__DIR__&lt;/span>&lt;span style="color:#f92672">.&lt;/span>&lt;span style="color:#e6db74">&amp;#39;/private.key&amp;#39;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$d &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">openssl_pkey_get_details&lt;/span>($res);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">file_put_contents&lt;/span>(&lt;span style="color:#66d9ef">__DIR__&lt;/span>&lt;span style="color:#f92672">.&lt;/span>&lt;span style="color:#e6db74">&amp;#39;/public.key&amp;#39;&lt;/span>,$d[&lt;span style="color:#e6db74">&amp;#39;key&amp;#39;&lt;/span>]);
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>程序运行后会在当前目录生成 private.key 以及 public.key文件，你可以将你的public.key公开出去，请勿公开private.key&lt;/p>
+&lt;h3 id="加密数据">加密数据&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-php" data-lang="php">&lt;span style="display:flex;">&lt;span>$data &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#39;xialei&amp;#39;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$res &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">openssl_pkey_get_private&lt;/span>(&lt;span style="color:#a6e22e">file_get_contents&lt;/span>(&lt;span style="color:#66d9ef">__DIR__&lt;/span> &lt;span style="color:#f92672">.&lt;/span> &lt;span style="color:#e6db74">&amp;#39;/private.key&amp;#39;&lt;/span>));
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">if&lt;/span> (&lt;span style="color:#a6e22e">openssl_sign&lt;/span>($data, $out, $res)) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> $data &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">base64_encode&lt;/span>($out);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">echo&lt;/span> $data;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>加密数据需要使用&lt;strong>private.key&lt;/strong>&lt;/p>
+&lt;h3 id="验证数据">验证数据&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-php" data-lang="php">&lt;span style="display:flex;">&lt;span>$sig &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">base64_decode&lt;/span>($data);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$res &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">openssl_pkey_get_public&lt;/span>(&lt;span style="color:#a6e22e">file_get_contents&lt;/span>(&lt;span style="color:#66d9ef">__DIR__&lt;/span> &lt;span style="color:#f92672">.&lt;/span> &lt;span style="color:#e6db74">&amp;#39;/public.key&amp;#39;&lt;/span>));
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">var_dump&lt;/span>(&lt;span style="color:#a6e22e">openssl_verify&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;xialei&amp;#39;&lt;/span>, $sig, $res));
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>解密数据需要使用&lt;strong>public.key&lt;/strong>，如果输出&amp;quot;int(1)&amp;ldquo;证明解密成功，可以确认该数据由第1步中的private.key加密而来。&lt;/p></description></item><item><title>阿里云ECS服务器phpmailer发信失败解决方法</title><link>https://www.ddhigh.com/2014/09/06/aliyun-phpmailer/</link><pubDate>Sat, 06 Sep 2014 20:03:24 +0800</pubDate><guid>https://www.ddhigh.com/2014/09/06/aliyun-phpmailer/</guid><description>&lt;p>phpmailer之前一直在用，一般都是采用smtp登录服务器的方式进行发信，今天在本地windows主机测试也能发信成功，但是到线上去就不行了，提示“连接smtp服务器失败”。
+首先可以排除的是代码方面的错误，那么剩下就知道服务器的问题了。&lt;/p>
+&lt;p>根据这个错误，可以想到有几种问题:&lt;/p>
+&lt;ol>
+&lt;li>服务器ping不通，做Ping测试的时候是通的&lt;/li>
+&lt;li>服务器端口没开，用telnet测试的时候也是这样的&lt;/li>
+&lt;/ol>
+&lt;p>后来在服务器上用php代码测试163邮箱发现可以发信，但是腾讯的就不行，看了下邮箱配置发现是SSL的问题，然后在服务器上输出phpinfo()发现没有openssl扩展。&lt;br>
+接下来就是安装扩展了。&lt;/p>
+&lt;ol>
+&lt;li>首先进到php的源码包，前往&lt;strong>ext/openssl&lt;/strong>目录&lt;/li>
+&lt;li>执行 phpize 这个会自动配置&lt;/li>
+&lt;li>然后执行&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>./configure --with-openssl -with-php-config&lt;span style="color:#f92672">=&lt;/span>/usr/local/php/bin/php-config
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>make
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>make install
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>这里模块安装就完成了，但是需要编辑 &lt;strong>/etc/php.ini&lt;/strong>加上&lt;/p>
+&lt;pre tabindex="0">&lt;code>extension=openssl.so
+&lt;/code>&lt;/pre>&lt;p>重启 web 服务器就可以了。经过测试，服务器上SSL发信也能成功进行&lt;/p></description></item></channel></rss>

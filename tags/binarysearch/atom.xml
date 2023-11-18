@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>binarysearch on Lei Xia</title><link>https://www.ddhigh.com/tags/binarysearch/</link><description>Recent content in binarysearch on Lei Xia</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Thu, 17 Mar 2022 12:00:14 +0000</lastBuildDate><atom:link href="https://www.ddhigh.com/tags/binarysearch/atom.xml" rel="self" type="application/rss+xml"/><item><title>算法篇-leetcode 131 分割回文串</title><link>https://www.ddhigh.com/2022/03/17/palindrome-partitioning/</link><pubDate>Thu, 17 Mar 2022 12:00:14 +0000</pubDate><guid>https://www.ddhigh.com/2022/03/17/palindrome-partitioning/</guid><description>&lt;h2 id="题目">题目&lt;/h2>
+&lt;p>给你一个字符串 &lt;code>s&lt;/code>，请你将 &lt;code>s&lt;/code> 分割成一些子串，使每个子串都是 &lt;strong>回文串&lt;/strong> 。返回 &lt;code>s&lt;/code> 所有可能的分割方案。&lt;/p>
+&lt;p>&lt;strong>回文串&lt;/strong> 是正着读和反着读都一样的字符串。&lt;/p>
+&lt;p>&lt;strong>示例1&lt;/strong>&lt;/p>
+&lt;pre tabindex="0">&lt;code>输入：s = &amp;#34;aab&amp;#34;
+输出：[[&amp;#34;a&amp;#34;,&amp;#34;a&amp;#34;,&amp;#34;b&amp;#34;],[&amp;#34;aa&amp;#34;,&amp;#34;b&amp;#34;]]
+&lt;/code>&lt;/pre>&lt;h2 id="解答">解答&lt;/h2>
+&lt;p>&lt;strong>题目要求&lt;/strong>&lt;/p>
+&lt;ol>
+&lt;li>将字符串字符打散后，将其中的回文串添加到一个单独的List&lt;/li>
+&lt;li>第1步的所有List构成最后的答案&lt;/li>
+&lt;/ol>
+&lt;p>可以看出，这是一个典型的回溯问题，考察有多少种方法可以组装最后的答案。&lt;/p>
+&lt;h4 id="方法一直接回溯">方法一：直接回溯&lt;/h4>
+&lt;p>&lt;strong>思路及算法&lt;/strong>&lt;/p>
+&lt;p>回溯需要回答以下3个问题：&lt;/p>
+&lt;ol>
+&lt;li>回溯终止条件是什么？&lt;/li>
+&lt;li>回溯有哪些选择?&lt;/li>
+&lt;li>如何进入下一个选择？&lt;/li>
+&lt;/ol>
+&lt;p>对于本题来说，我们需要将字符串打散，从中选择回文串添加到最终答案，因此，需要定义以下变量:&lt;/p>
+&lt;ol>
+&lt;li>$index$, 记录当前选择的字符索引&lt;/li>
+&lt;li>$path$, 记录本次回文串选择情况&lt;/li>
+&lt;li>$answer$, 记录最终答案&lt;/li>
+&lt;/ol>
+&lt;p>回答上面提出来的两个问题：&lt;/p>
+&lt;ol>
+&lt;li>回溯终止条件: $index==s.length()$，此时将$path$拷贝到$answer$，不可以直接添加，因为回溯存在撤回操作，必须断开$answer$和$path$的引用。&lt;/li>
+&lt;li>回溯有哪些选择：定义变量$right$, 遍历 $s[index,s.length())$，当$s[index,right]$是回文串时，将其加入$path$。&lt;/li>
+&lt;li>如何进入下一个选择：第2个问题满足条件的情况下，增加$index$然后再次递归即可。&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">Solution&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">/**
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * DFS回溯
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * 1. 回溯出口 index == s.length()
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * 2. 回溯递进 遍历[i,n) 如果s[i,j] 是回文串，则加入path，然后递归 s[i,j+1]
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> *
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * @param s
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * @return
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> */&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> List&lt;span style="color:#f92672">&amp;lt;&lt;/span>List&lt;span style="color:#f92672">&amp;lt;&lt;/span>String&lt;span style="color:#f92672">&amp;gt;&amp;gt;&lt;/span> &lt;span style="color:#a6e22e">partition&lt;/span>(String s) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> List&lt;span style="color:#f92672">&amp;lt;&lt;/span>List&lt;span style="color:#f92672">&amp;lt;&lt;/span>String&lt;span style="color:#f92672">&amp;gt;&amp;gt;&lt;/span> answer &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> ArrayList&lt;span style="color:#f92672">&amp;lt;&amp;gt;&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> List&lt;span style="color:#f92672">&amp;lt;&lt;/span>String&lt;span style="color:#f92672">&amp;gt;&lt;/span> path &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> ArrayList&lt;span style="color:#f92672">&amp;lt;&amp;gt;&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> dfs(answer, path, 0, s.&lt;span style="color:#a6e22e">length&lt;/span>(), s);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> answer;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">dfs&lt;/span>(List&lt;span style="color:#f92672">&amp;lt;&lt;/span>List&lt;span style="color:#f92672">&amp;lt;&lt;/span>String&lt;span style="color:#f92672">&amp;gt;&amp;gt;&lt;/span> answer, List&lt;span style="color:#f92672">&amp;lt;&lt;/span>String&lt;span style="color:#f92672">&amp;gt;&lt;/span> path, &lt;span style="color:#66d9ef">int&lt;/span> index, &lt;span style="color:#66d9ef">int&lt;/span> length, String s) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> (index &lt;span style="color:#f92672">==&lt;/span> length) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> answer.&lt;span style="color:#a6e22e">add&lt;/span>(&lt;span style="color:#66d9ef">new&lt;/span> ArrayList&lt;span style="color:#f92672">&amp;lt;&amp;gt;&lt;/span>(path));
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 本次有什么选择?&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// j =&amp;gt; [index,len)，检测s[index,j]是否回文，如果是，则加入path，最后撤销选择&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span> (&lt;span style="color:#66d9ef">int&lt;/span> i &lt;span style="color:#f92672">=&lt;/span> index; i &lt;span style="color:#f92672">&amp;lt;&lt;/span> length; i&lt;span style="color:#f92672">++&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> (&lt;span style="color:#f92672">!&lt;/span>isPalindrome(s, index, i)) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">continue&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> path.&lt;span style="color:#a6e22e">add&lt;/span>(s.&lt;span style="color:#a6e22e">substring&lt;/span>(index, i &lt;span style="color:#f92672">+&lt;/span> 1));
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> dfs(answer, path, i &lt;span style="color:#f92672">+&lt;/span> 1, length, s);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> path.&lt;span style="color:#a6e22e">remove&lt;/span>(path.&lt;span style="color:#a6e22e">size&lt;/span>() &lt;span style="color:#f92672">-&lt;/span> 1);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">boolean&lt;/span> &lt;span style="color:#a6e22e">isPalindrome&lt;/span>(String s, &lt;span style="color:#66d9ef">int&lt;/span> left, &lt;span style="color:#66d9ef">int&lt;/span> right) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">while&lt;/span> (left &lt;span style="color:#f92672">&amp;lt;&lt;/span> right) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> (s.&lt;span style="color:#a6e22e">charAt&lt;/span>(left) &lt;span style="color:#f92672">!=&lt;/span> s.&lt;span style="color:#a6e22e">charAt&lt;/span>(right)) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">false&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> left&lt;span style="color:#f92672">++&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> right&lt;span style="color:#f92672">--&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">true&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;strong>复杂度分析&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>时间复杂度：$O(N*2^n)$，每个位置的字符可以拆分也可以不拆分，因此时间复杂度是$O(2^n)$，判断每个子字符串是否为回文串需要$O(N)$的时间。&lt;/li>
+&lt;li>空间复杂度：$O(N*2^n)$，考虑$answer$，每个位置的字符可以拆分也可以不拆分，两种情况都需要占用空间，此部分空间是$O(2^n)$，而对于所有的答案都需要保存，此部分空间是$O(N)$.&lt;/li>
+&lt;/ul>
+&lt;h4 id="方法二记忆法回溯">方法二：记忆法回溯&lt;/h4>
+&lt;p>&lt;strong>思路及算法&lt;/strong>&lt;/p>
+&lt;p>在方法一的基础上添加$memo$保存$s[i,j]$是否为回文串，减少重复判断。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">Solution&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">/**
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * DFS回溯
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * 1. 回溯出口 index == s.length()
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * 2. 回溯递进 遍历[i,n) 如果s[i,j] 是回文串，则加入path，然后递归 s[i,j+1]
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> *
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * @param s
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * @return
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> */&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> List&lt;span style="color:#f92672">&amp;lt;&lt;/span>List&lt;span style="color:#f92672">&amp;lt;&lt;/span>String&lt;span style="color:#f92672">&amp;gt;&amp;gt;&lt;/span> &lt;span style="color:#a6e22e">partition&lt;/span>(String s) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> List&lt;span style="color:#f92672">&amp;lt;&lt;/span>List&lt;span style="color:#f92672">&amp;lt;&lt;/span>String&lt;span style="color:#f92672">&amp;gt;&amp;gt;&lt;/span> answer &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> ArrayList&lt;span style="color:#f92672">&amp;lt;&amp;gt;&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> List&lt;span style="color:#f92672">&amp;lt;&lt;/span>String&lt;span style="color:#f92672">&amp;gt;&lt;/span> path &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> ArrayList&lt;span style="color:#f92672">&amp;lt;&amp;gt;&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Boolean&lt;span style="color:#f92672">[][]&lt;/span> memo &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> Boolean&lt;span style="color:#f92672">[&lt;/span>s.&lt;span style="color:#a6e22e">length&lt;/span>()&lt;span style="color:#f92672">][&lt;/span>s.&lt;span style="color:#a6e22e">length&lt;/span>()&lt;span style="color:#f92672">]&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> dfs(memo, answer, path, 0, s.&lt;span style="color:#a6e22e">length&lt;/span>(), s);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> answer;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">dfs&lt;/span>(Boolean&lt;span style="color:#f92672">[][]&lt;/span> memo, List&lt;span style="color:#f92672">&amp;lt;&lt;/span>List&lt;span style="color:#f92672">&amp;lt;&lt;/span>String&lt;span style="color:#f92672">&amp;gt;&amp;gt;&lt;/span> answer, List&lt;span style="color:#f92672">&amp;lt;&lt;/span>String&lt;span style="color:#f92672">&amp;gt;&lt;/span> path, &lt;span style="color:#66d9ef">int&lt;/span> index, &lt;span style="color:#66d9ef">int&lt;/span> length, String s) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> (index &lt;span style="color:#f92672">==&lt;/span> length) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> answer.&lt;span style="color:#a6e22e">add&lt;/span>(&lt;span style="color:#66d9ef">new&lt;/span> ArrayList&lt;span style="color:#f92672">&amp;lt;&amp;gt;&lt;/span>(path));
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 本次有什么选择?&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// j =&amp;gt; [index,len)，检测s[index,j]是否回文，如果是，则加入path，最后撤销选择&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span> (&lt;span style="color:#66d9ef">int&lt;/span> i &lt;span style="color:#f92672">=&lt;/span> index; i &lt;span style="color:#f92672">&amp;lt;&lt;/span> length; i&lt;span style="color:#f92672">++&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> (&lt;span style="color:#f92672">!&lt;/span>isPalindrome(memo, s, index, i)) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">continue&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> path.&lt;span style="color:#a6e22e">add&lt;/span>(s.&lt;span style="color:#a6e22e">substring&lt;/span>(index, i &lt;span style="color:#f92672">+&lt;/span> 1));
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> dfs(memo, answer, path, i &lt;span style="color:#f92672">+&lt;/span> 1, length, s);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> path.&lt;span style="color:#a6e22e">remove&lt;/span>(path.&lt;span style="color:#a6e22e">size&lt;/span>() &lt;span style="color:#f92672">-&lt;/span> 1);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">boolean&lt;/span> &lt;span style="color:#a6e22e">isPalindrome&lt;/span>(Boolean&lt;span style="color:#f92672">[][]&lt;/span> memo, String s, &lt;span style="color:#66d9ef">int&lt;/span> left, &lt;span style="color:#66d9ef">int&lt;/span> right) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> (memo&lt;span style="color:#f92672">[&lt;/span>left&lt;span style="color:#f92672">][&lt;/span>right&lt;span style="color:#f92672">]&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">null&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> memo&lt;span style="color:#f92672">[&lt;/span>left&lt;span style="color:#f92672">][&lt;/span>right&lt;span style="color:#f92672">]&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">while&lt;/span> (left &lt;span style="color:#f92672">&amp;lt;&lt;/span> right) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> (s.&lt;span style="color:#a6e22e">charAt&lt;/span>(left) &lt;span style="color:#f92672">!=&lt;/span> s.&lt;span style="color:#a6e22e">charAt&lt;/span>(right)) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> memo&lt;span style="color:#f92672">[&lt;/span>left&lt;span style="color:#f92672">][&lt;/span>right&lt;span style="color:#f92672">]&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">false&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> left&lt;span style="color:#f92672">++&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> right&lt;span style="color:#f92672">--&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> memo&lt;span style="color:#f92672">[&lt;/span>left&lt;span style="color:#f92672">][&lt;/span>right&lt;span style="color:#f92672">]&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">true&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;strong>复杂度分析&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>时间复杂度：$O(N*2^n)$，每个位置的字符可以拆分也可以不拆分，因此时间复杂度是$O(2^n)$，判断每个子字符串是否为回文串需要$O(N)$的时间，但是添加了记忆化搜索，每个子串至多搜索一次。&lt;/li>
+&lt;li>空间复杂度：$O(N*2^n)$，考虑$answer$，每个位置的字符可以拆分也可以不拆分，两种情况都需要占用空间，此部分空间是$O(2^n)$，而对于所有的答案都需要保存，此部分空间是$O(N)$.&lt;/li>
+&lt;/ul>
+&lt;h4 id="方法三dp回溯">方法三：DP+回溯&lt;/h4>
+&lt;p>我们可以利用DP通过提前计算好字符串的回文信息。&lt;/p>
+&lt;p>&lt;strong>思路和算法&lt;/strong>&lt;/p>
+&lt;p>需要提前截取子字符串然后进行DP。那么问题来了，如何截取所有在子字符串？
+我们可以定义如下双重循环：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">for&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span> right &lt;span style="color:#f92672">=&lt;/span> 0;right &lt;span style="color:#f92672">&amp;lt;&lt;/span> s.&lt;span style="color:#a6e22e">length&lt;/span>(); right&lt;span style="color:#f92672">++&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span> left &lt;span style="color:#f92672">=&lt;/span> 0;left&lt;span style="color:#f92672">&amp;lt;=&lt;/span> right; right&lt;span style="color:#f92672">++&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// s[left,right] 就是所有的子字符串&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;strong>思考状态转移方程&lt;/strong>&lt;/p>
+&lt;ol>
+&lt;li>定义$dp[i][j]$代表$s[i, j]$是否为回文串&lt;/li>
+&lt;li>当$s[left] == s[right]$可知字符串两端是相等的，需要考虑$left和right$的距离，通过穷举(笨办法)可知：
+&lt;ol>
+&lt;li>$right - left = 0$时，$left$和$right$就是同一个字符，显然可以直接得到答案$true$&lt;/li>
+&lt;li>$right - left = 1$时，$left$和$right$是挨着的，比如$aa$，显然可以直接得到答案$true$&lt;/li>
+&lt;li>$right - right = 2$时，$left$和$right$中间夹了一个字符，比如$aba$，显然可以直接得到答案$true$&lt;/li>
+&lt;li>$right - right &amp;gt; 2$ 时，不能直接看不出来了，需要进行状态转移，比如$aabaa$，当$s[0] == s[4]$时，我们需要看看$s[1,3]$是不是回文串，在本例中，由于$s[1,3]$是回文串，因此$s[0,4]$也是。&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ol>
+&lt;p>综上，DP方程如下：&lt;/p>
+&lt;p>$$
+dp(i,j) = \begin{cases}
+false, &amp;amp; \text{if } s[i] \ne s[j] \
+true, &amp;amp; \text{if } s[i] = s[j] &amp;amp; j-i \le 2 \&lt;br>
+dp[i+1][j-1], &amp;amp; \text{if } j-i \gt 2
+\end{cases}
+$$&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">/**
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * DP+DFS回溯
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * 1. DP处理 dp[i][j]是否为回文
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * 1.1 dp[i][i] = true
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * 1.2 dp[i][j] = s[i] == s[j] &amp;amp;&amp;amp; (dp[i+1][j-1] || j-i&amp;lt;=2)
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * 2. 回溯
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * 2.1 回溯出口: index == s.length()
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * 2.2 回溯递进：j =&amp;gt; [i,s.length()) if(dp[i][j]) 添加子串，然后 dfs(index+1)
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> *
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * @param s
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * @return
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> */&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> List&lt;span style="color:#f92672">&amp;lt;&lt;/span>List&lt;span style="color:#f92672">&amp;lt;&lt;/span>String&lt;span style="color:#f92672">&amp;gt;&amp;gt;&lt;/span> &lt;span style="color:#a6e22e">partition&lt;/span>(String s) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">int&lt;/span> n &lt;span style="color:#f92672">=&lt;/span> s.&lt;span style="color:#a6e22e">length&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">boolean&lt;/span>&lt;span style="color:#f92672">[][]&lt;/span> dp &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#66d9ef">boolean&lt;/span>&lt;span style="color:#f92672">[&lt;/span>n&lt;span style="color:#f92672">][&lt;/span>n&lt;span style="color:#f92672">]&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span> (&lt;span style="color:#66d9ef">int&lt;/span> right &lt;span style="color:#f92672">=&lt;/span> 0; right &lt;span style="color:#f92672">&amp;lt;&lt;/span> n; right&lt;span style="color:#f92672">++&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span> (&lt;span style="color:#66d9ef">int&lt;/span> left &lt;span style="color:#f92672">=&lt;/span> 0; left &lt;span style="color:#f92672">&amp;lt;=&lt;/span> right; left&lt;span style="color:#f92672">++&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> (s.&lt;span style="color:#a6e22e">charAt&lt;/span>(left) &lt;span style="color:#f92672">==&lt;/span> s.&lt;span style="color:#a6e22e">charAt&lt;/span>(right)) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> (right &lt;span style="color:#f92672">-&lt;/span> left &lt;span style="color:#f92672">&amp;lt;=&lt;/span> 2) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> dp&lt;span style="color:#f92672">[&lt;/span>left&lt;span style="color:#f92672">][&lt;/span>right&lt;span style="color:#f92672">]&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">true&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> } &lt;span style="color:#66d9ef">else&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> dp&lt;span style="color:#f92672">[&lt;/span>left&lt;span style="color:#f92672">][&lt;/span>right&lt;span style="color:#f92672">]&lt;/span> &lt;span style="color:#f92672">=&lt;/span> dp&lt;span style="color:#f92672">[&lt;/span>left &lt;span style="color:#f92672">+&lt;/span> 1&lt;span style="color:#f92672">][&lt;/span>right &lt;span style="color:#f92672">-&lt;/span> 1&lt;span style="color:#f92672">]&lt;/span>; &lt;span style="color:#75715e">// 上一轮遍历过&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> List&lt;span style="color:#f92672">&amp;lt;&lt;/span>List&lt;span style="color:#f92672">&amp;lt;&lt;/span>String&lt;span style="color:#f92672">&amp;gt;&amp;gt;&lt;/span> answer &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> ArrayList&lt;span style="color:#f92672">&amp;lt;&amp;gt;&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> List&lt;span style="color:#f92672">&amp;lt;&lt;/span>String&lt;span style="color:#f92672">&amp;gt;&lt;/span> path &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> ArrayList&lt;span style="color:#f92672">&amp;lt;&amp;gt;&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> dfs(answer, path, dp, 0, n, s);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> answer;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">dfs&lt;/span>(List&lt;span style="color:#f92672">&amp;lt;&lt;/span>List&lt;span style="color:#f92672">&amp;lt;&lt;/span>String&lt;span style="color:#f92672">&amp;gt;&amp;gt;&lt;/span> answer, List&lt;span style="color:#f92672">&amp;lt;&lt;/span>String&lt;span style="color:#f92672">&amp;gt;&lt;/span> path, &lt;span style="color:#66d9ef">boolean&lt;/span>&lt;span style="color:#f92672">[][]&lt;/span> dp, &lt;span style="color:#66d9ef">int&lt;/span> index, &lt;span style="color:#66d9ef">int&lt;/span> n, String s) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> (index &lt;span style="color:#f92672">==&lt;/span> n) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> answer.&lt;span style="color:#a6e22e">add&lt;/span>(&lt;span style="color:#66d9ef">new&lt;/span> ArrayList&lt;span style="color:#f92672">&amp;lt;&amp;gt;&lt;/span>(path));
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span> (&lt;span style="color:#66d9ef">int&lt;/span> right &lt;span style="color:#f92672">=&lt;/span> index; right &lt;span style="color:#f92672">&amp;lt;&lt;/span> n; right&lt;span style="color:#f92672">++&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> (dp&lt;span style="color:#f92672">[&lt;/span>index&lt;span style="color:#f92672">][&lt;/span>right&lt;span style="color:#f92672">]&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> path.&lt;span style="color:#a6e22e">add&lt;/span>(s.&lt;span style="color:#a6e22e">substring&lt;/span>(index, right &lt;span style="color:#f92672">+&lt;/span> 1));
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> dfs(answer, path, dp, right &lt;span style="color:#f92672">+&lt;/span> 1, n, s);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> path.&lt;span style="color:#a6e22e">remove&lt;/span>(path.&lt;span style="color:#a6e22e">size&lt;/span>() &lt;span style="color:#f92672">-&lt;/span> 1);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;strong>复杂度分析&lt;/strong>
++时间复杂度：$O(2^n)$，计算$dp$需要$O(n^2)$,回溯需要$O(2^n)$。&lt;/p>
+&lt;ul>
+&lt;li>空间复杂度：$O(N*2^n)$，考虑$answer$，每个位置的字符可以拆分也可以不拆分，两种情况都需要占用空间，此部分空间是$O(2^n)$，而对于所有的答案都需要保存，此部分空间是$O(N)$;考虑$dp$，需要$O(n^2)$的空间&lt;/li>
+&lt;/ul></description></item><item><title>算法篇——二分查找</title><link>https://www.ddhigh.com/2021/12/29/algo-binarysearch/</link><pubDate>Wed, 29 Dec 2021 18:32:50 +0000</pubDate><guid>https://www.ddhigh.com/2021/12/29/algo-binarysearch/</guid><description>&lt;p>本系列文章将学习/复习常用算法和数据结构。希望能够深入浅出的将复杂的知识讲清楚、说明白。&lt;/p>
+&lt;p>本文介绍第一个基础算法：二分查找。二分查找算法可以在&lt;code>有序&lt;/code>的数组中快速查询指定值。&lt;/p>
+&lt;ul>
+&lt;li>要求：有序数组&lt;/li>
+&lt;li>时间复杂度：O(logN)&lt;/li>
+&lt;li>空间复杂度：O(1)&lt;/li>
+&lt;/ul>
+&lt;h2 id="例子">例子&lt;/h2>
+&lt;p>大家应该玩过数字猜大小的游戏，接下来看看实际过程。&lt;/p>
+&lt;p>主持人从1~10选择1个数字，参与者每次猜1个数字，主持人给出提示正确/大了/小了。次数最少的获胜。&lt;/p>
+&lt;h3 id="线性查找">线性查找&lt;/h3>
+&lt;blockquote>
+&lt;ul>
+&lt;li>主持人选定数字5。&lt;/li>
+&lt;li>参与者：10&lt;/li>
+&lt;li>主持人：大了&lt;/li>
+&lt;li>参与者：9&lt;/li>
+&lt;li>主持人：大了&lt;/li>
+&lt;li>参与者：8&lt;/li>
+&lt;li>主持人：大了&lt;/li>
+&lt;li>&amp;hellip;&lt;/li>
+&lt;li>参与者：5&lt;/li>
+&lt;li>主持人：正确&lt;/li>
+&lt;/ul>
+&lt;/blockquote>
+&lt;p>参与者采用线性报数方式，从最大的数字开始报，每次减1直到猜中。上面的例子主持人选的数字是5，参与者猜了6次（10,9,8,7,6,5)。效率是O(N)。&lt;/p>
+&lt;p>主持人的&lt;code>大了/小了&lt;/code>提示没有利用上，这肯定不是效率最高的方法。&lt;/p>
+&lt;h3 id="二分查找">二分查找&lt;/h3>
+&lt;blockquote>
+&lt;ul>
+&lt;li>主持人选定数字8。&lt;/li>
+&lt;li>参与者：5&lt;/li>
+&lt;li>主持人：小了&lt;/li>
+&lt;li>参与者：7&lt;/li>
+&lt;li>主持人：小了&lt;/li>
+&lt;li>参与者：8&lt;/li>
+&lt;li>主持人：正确&lt;/li>
+&lt;/ul>
+&lt;/blockquote>
+&lt;p>参与者根据主持人的&lt;code>大了/小了&lt;/code>提示每次调整猜测范围直到猜中。上面的例子中主持人选的数字是8，参与者猜了3次：&lt;/p>
+&lt;ol>
+&lt;li>(0+10)/2 =&amp;gt; 5，小了，所以下一次应该猜 比5大的数字，从 5 ~ 10继续猜&lt;/li>
+&lt;li>(5+10)/2 =&amp;gt; 7(8也可以)，小了，所以下一次继续猜比7大的数字，从7~10继续猜&lt;/li>
+&lt;li>(7+10)/2 =&amp;gt; 8(9也可以)，正确&lt;/li>
+&lt;/ol>
+&lt;p>可以看到二分查找法每次都能过滤掉1半的数据，达到了O(logN)的时间复杂度&lt;/p>
+&lt;h2 id="代码示例">代码示例&lt;/h2>
+&lt;p>给定一个有序数组，返回指定值的索引，如果有序数组不存在该值，返回-1。&lt;/p>
+&lt;p>思路：&lt;/p>
+&lt;ol>
+&lt;li>找中间值，(0 + 数组最后一位的所以)/2得到中间值的位置，然后对比中间值和目标值大小&lt;/li>
+&lt;li>如果目标值比中间值小，那么目标值在数组前半部分，应该继续查找 0 ~ 数组中间索引-1的这部分&lt;/li>
+&lt;li>如果目标值比中间值大，那么目标值在数组后半部分，应该继续查找 数组中间索引+1 ~ 数组结尾的这部分&lt;/li>
+&lt;/ol>
+&lt;blockquote>
+&lt;p>为什么继续查找时中间索引要+1或者-1移动？&lt;/p>
+&lt;p>因为中间值已经比对过了，不满足条件，所以可以直接跳过中间值往前面后者后面一个位置继续查找&lt;/p>
+&lt;/blockquote>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">package&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> &lt;span style="color:#e6db74">&amp;#34;fmt&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>() {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#a6e22e">search&lt;/span>([]&lt;span style="color:#66d9ef">int&lt;/span>{&lt;span style="color:#ae81ff">1&lt;/span>, &lt;span style="color:#ae81ff">2&lt;/span>, &lt;span style="color:#ae81ff">3&lt;/span>, &lt;span style="color:#ae81ff">4&lt;/span>, &lt;span style="color:#ae81ff">5&lt;/span>, &lt;span style="color:#ae81ff">6&lt;/span>, &lt;span style="color:#ae81ff">7&lt;/span>}, &lt;span style="color:#ae81ff">5&lt;/span>))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">search&lt;/span>(&lt;span style="color:#a6e22e">nums&lt;/span> []&lt;span style="color:#66d9ef">int&lt;/span>, &lt;span style="color:#a6e22e">target&lt;/span> &lt;span style="color:#66d9ef">int&lt;/span>) &lt;span style="color:#66d9ef">int&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">begin&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">end&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> len(&lt;span style="color:#a6e22e">nums&lt;/span>) &lt;span style="color:#f92672">-&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span> &lt;span style="color:#a6e22e">begin&lt;/span> &lt;span style="color:#f92672">&amp;lt;=&lt;/span> &lt;span style="color:#a6e22e">end&lt;/span> { &lt;span style="color:#75715e">// 开始位置不能超过结束位置，超过证明所以数据都查过了
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">midIndex&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> (&lt;span style="color:#a6e22e">begin&lt;/span> &lt;span style="color:#f92672">+&lt;/span> &lt;span style="color:#a6e22e">end&lt;/span>) &lt;span style="color:#f92672">/&lt;/span> &lt;span style="color:#ae81ff">2&lt;/span> &lt;span style="color:#75715e">// 中间索引
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">midValue&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">nums&lt;/span>[&lt;span style="color:#a6e22e">midIndex&lt;/span>] &lt;span style="color:#75715e">// 中间值
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Printf&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;check pos(%v) value(%v)\n&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">midIndex&lt;/span>, &lt;span style="color:#a6e22e">midValue&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">target&lt;/span> &amp;lt; &lt;span style="color:#a6e22e">midValue&lt;/span> { &lt;span style="color:#75715e">// 目标值比中间值小，所以在左边，将end移动到中间索引-1
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">end&lt;/span> = &lt;span style="color:#a6e22e">midIndex&lt;/span> &lt;span style="color:#f92672">-&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">continue&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">target&lt;/span> &amp;gt; &lt;span style="color:#a6e22e">midValue&lt;/span> { &lt;span style="color:#75715e">// 右半边，begin移动到中间索引+1
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">begin&lt;/span> = &lt;span style="color:#a6e22e">midIndex&lt;/span> &lt;span style="color:#f92672">+&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">continue&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 相等
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">midIndex&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#f92672">-&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>输出如下&lt;/p>
+&lt;pre tabindex="0">&lt;code>check pos(3) value(4)
+check pos(5) value(6)
+check pos(4) value(5)
+4
+&lt;/code>&lt;/pre></description></item></channel></rss>

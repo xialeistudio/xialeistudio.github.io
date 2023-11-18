@@ -1,0 +1,1094 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>es6 on Lei Xia</title><link>https://www.ddhigh.com/tags/es6/</link><description>Recent content in es6 on Lei Xia</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Thu, 14 Nov 2019 11:00:00 +0000</lastBuildDate><atom:link href="https://www.ddhigh.com/tags/es6/atom.xml" rel="self" type="application/rss+xml"/><item><title>深入浅出ES6的迭代器</title><link>https://www.ddhigh.com/2019/11/14/es6-iterator/</link><pubDate>Thu, 14 Nov 2019 11:00:00 +0000</pubDate><guid>https://www.ddhigh.com/2019/11/14/es6-iterator/</guid><description>&lt;p>迭代器是ES2015中新增的规范，与之相关的for&amp;hellip;of也是ES2015新增的。&lt;/p>
+&lt;p>本文来深入研究一下迭代器是什么，以及迭代器能够干什么？&lt;/p>
+&lt;p>或许你对for &amp;hellip; of的执行还不了解，比如什么情况下可以使用for &amp;hellip; of去遍历对象，什么情况下会报错等等，这篇文章应该能帮到你。&lt;/p>
+&lt;h2 id="迭代器协议">迭代器协议&lt;/h2>
+&lt;blockquote>
+&lt;p>for &amp;hellip; of只能迭代满足【迭代器协议】的对象&lt;/p>
+&lt;/blockquote>
+&lt;p>可迭代对象的必须存在[Symbol.iterator]方法，该方法一个无参函数，返回迭代器协议的对象。&lt;/p>
+&lt;p>迭代器对象包含一个&lt;code>next()&lt;/code>函数，该函数返回值有两种:&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>如果迭代未结束，返回如下&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-javascript" data-lang="javascript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">return&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">value&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#e6db74">&amp;#39;item&amp;#39;&lt;/span>, &lt;span style="color:#75715e">// item是本次迭代值，可以为任意对象
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">done&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#66d9ef">false&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;li>
+&lt;p>如果迭代已结束，返回如下&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-javascript" data-lang="javascript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">return&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">done&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#66d9ef">true&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;/ul>
+&lt;p>下面是未提供迭代器的示例。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-javascript" data-lang="javascript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">obj&lt;/span> &lt;span style="color:#f92672">=&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">name&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#e6db74">&amp;#39;xialei&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">id&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>};
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">for&lt;/span>(&lt;span style="color:#66d9ef">let&lt;/span> &lt;span style="color:#a6e22e">item&lt;/span> &lt;span style="color:#66d9ef">of&lt;/span> &lt;span style="color:#a6e22e">obj&lt;/span>) { &lt;span style="color:#75715e">// TypeError: obj is not iterable
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>下面是提供迭代器的示例。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-javascript" data-lang="javascript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">obj&lt;/span> &lt;span style="color:#f92672">=&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">name&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#e6db74">&amp;#39;xialei&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">id&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [&lt;span style="color:#a6e22e">Symbol&lt;/span>.&lt;span style="color:#a6e22e">iterator&lt;/span>]&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#66d9ef">function&lt;/span> () { &lt;span style="color:#75715e">// 迭代器属性
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">keys&lt;/span> &lt;span style="color:#f92672">=&lt;/span> Object.&lt;span style="color:#a6e22e">keys&lt;/span>(&lt;span style="color:#66d9ef">this&lt;/span>); &lt;span style="color:#75715e">// 读取对象键列表
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">let&lt;/span> &lt;span style="color:#a6e22e">keyIndex&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>; &lt;span style="color:#75715e">// 遍历未知
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">self&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">this&lt;/span>; &lt;span style="color:#75715e">// 保存this，next中的function会有自己的this
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">return&lt;/span> { &lt;span style="color:#75715e">// 返回带有next()的对象
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">next&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#66d9ef">function&lt;/span> () {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> (&lt;span style="color:#a6e22e">keyIndex&lt;/span> &lt;span style="color:#f92672">&amp;lt;&lt;/span> &lt;span style="color:#a6e22e">keys&lt;/span>.&lt;span style="color:#a6e22e">length&lt;/span>) { &lt;span style="color:#75715e">// 防止越界
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">key&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">keys&lt;/span>[&lt;span style="color:#a6e22e">keyIndex&lt;/span>];
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">keyIndex&lt;/span>&lt;span style="color:#f92672">++&lt;/span>; &lt;span style="color:#75715e">// 移动到下一个位置
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">return&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">value&lt;/span>&lt;span style="color:#f92672">:&lt;/span> [&lt;span style="color:#a6e22e">key&lt;/span>, &lt;span style="color:#a6e22e">self&lt;/span>[&lt;span style="color:#a6e22e">key&lt;/span>]], &lt;span style="color:#75715e">// 键值对数组
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">done&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#66d9ef">false&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> { &lt;span style="color:#75715e">// 遍历结束
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">done&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#66d9ef">true&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>};
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>通过给obj提供迭代器方法让obj也可以使用for&amp;hellip;of遍历。&lt;/p>
+&lt;p>直接去理解迭代器概念比较困难，用一个简单的例子去简化理解是一件很容易的事情。&lt;/p>
+&lt;h2 id="其他可迭代对象">其他可迭代对象&lt;/h2>
+&lt;p>&lt;code>String&lt;/code>,&lt;code>Array&lt;/code>,&lt;code>Map&lt;/code>,&lt;code>Set&lt;/code>,&lt;code>TypedArray&lt;/code>是所有内置的可迭代对象，他们的原型对象都有一个[Symbol.iterator]方法。&lt;/p>
+&lt;p>下面是两种方法迭代String对象的示例。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-javascript" data-lang="javascript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// for ... of
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">str&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#39;xialei&amp;#39;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">for&lt;/span>(&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#66d9ef">char&lt;/span> &lt;span style="color:#66d9ef">of&lt;/span> &lt;span style="color:#a6e22e">str&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#66d9ef">char&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// iterator
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">str&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#39;xialei&amp;#39;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">iterator&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">str&lt;/span>[&lt;span style="color:#a6e22e">Symbol&lt;/span>.&lt;span style="color:#a6e22e">iterator&lt;/span>](); &lt;span style="color:#75715e">// 返回一个{next:方法}对象
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">let&lt;/span> &lt;span style="color:#a6e22e">obj&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">null&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">do&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">obj&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">iterator&lt;/span>.&lt;span style="color:#a6e22e">next&lt;/span>(); &lt;span style="color:#75715e">// 返回的是对象，{value:任意对象,done:布尔型}
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">obj&lt;/span>.&lt;span style="color:#a6e22e">value&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}&lt;span style="color:#66d9ef">while&lt;/span>(&lt;span style="color:#f92672">!&lt;/span>&lt;span style="color:#a6e22e">obj&lt;/span>.&lt;span style="color:#a6e22e">done&lt;/span>);
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="结尾">结尾&lt;/h2>
+&lt;p>迭代器协议虽然一般用的比较少，但是了解其原理是非常有必要的，这样才可以才需要的实现定义自己的迭代器来遍历对象。&lt;/p>
+&lt;p>&lt;img src="https://static.ddhigh.com/blog/2019-10-22-102654.jpg" alt="0.jpeg">&lt;/p></description></item><item><title>深入浅出ES6的标准内置对象Proxy</title><link>https://www.ddhigh.com/2019/11/04/es6-proxy/</link><pubDate>Mon, 04 Nov 2019 12:00:00 +0000</pubDate><guid>https://www.ddhigh.com/2019/11/04/es6-proxy/</guid><description>&lt;p>Proxy是ES6规范定义的标准内置对象，可以对目标对象的读取、函数调用等操作进行拦截。一般来说，通过Proxy可以让目标对象“可控”，比如是否能调用对象的某个方法，能否往对象添加属性等等。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-javascript" data-lang="javascript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">originalObj&lt;/span> &lt;span style="color:#f92672">=&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">name&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#e6db74">&amp;#39;xialei&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>};
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">publicObj&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> Proxy(&lt;span style="color:#a6e22e">originalObj&lt;/span>, {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">set&lt;/span>(&lt;span style="color:#a6e22e">target&lt;/span>, &lt;span style="color:#a6e22e">prop&lt;/span>, &lt;span style="color:#a6e22e">value&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 将属性值转化为大写
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">target&lt;/span>[&lt;span style="color:#a6e22e">prop&lt;/span>] &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">value&lt;/span>.&lt;span style="color:#a6e22e">toString&lt;/span>().&lt;span style="color:#a6e22e">toUpperCase&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>});
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">publicObj&lt;/span>.&lt;span style="color:#a6e22e">name&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#39;xialei&amp;#39;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">publicObj&lt;/span>.&lt;span style="color:#a6e22e">name&lt;/span>); &lt;span style="color:#75715e">// XIALEI
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;blockquote>
+&lt;p>从上例可以看出Proxy不需要更改目标对象(也就是originalObj)，就可以对originalObj的行为进行拦截。&lt;/p>
+&lt;/blockquote>
+&lt;h2 id="语法">语法&lt;/h2>
+&lt;blockquote>
+&lt;p>let obj = new Proxy(target, handler);&lt;/p>
+&lt;/blockquote>
+&lt;ul>
+&lt;li>target &lt;code>Object&lt;/code> 目标对象。可以是任何类型的对象，甚至包括原生对象（比如数组，函数，另一个Proxy对象）&lt;/li>
+&lt;li>handler &lt;code>Object&lt;/code> 代理行为对象。访问目标对象时会自动触发该handler的对应属性。&lt;/li>
+&lt;/ul>
+&lt;p>和大多数开发者一样，刚开始学习Proxy的时候，这个handler不知道是个什么东西，什么时候能触发。&lt;/p>
+&lt;p>先看一个简单的例子，看看handler到底是什么东西。假设我们开发一个游戏脚本，由于内存修改器的盛行，我们需要对内存中的数据进行安全处理，但是不能影响外部使用，我们使用Proxy完成这个功能。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-javascript" data-lang="javascript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">gameObj&lt;/span> &lt;span style="color:#f92672">=&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">hp&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> };
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">publicGameObj&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> Proxy(&lt;span style="color:#a6e22e">gameObj&lt;/span>, {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">get&lt;/span>(&lt;span style="color:#a6e22e">target&lt;/span>, &lt;span style="color:#a6e22e">prop&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">target&lt;/span>[&lt;span style="color:#a6e22e">prop&lt;/span>]&lt;span style="color:#f92672">/&lt;/span>&lt;span style="color:#ae81ff">2&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> },
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">set&lt;/span>(&lt;span style="color:#a6e22e">target&lt;/span>, &lt;span style="color:#a6e22e">prop&lt;/span>, &lt;span style="color:#a6e22e">value&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">target&lt;/span>[&lt;span style="color:#a6e22e">prop&lt;/span>] &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">value&lt;/span>&lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#ae81ff">2&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> });
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">publicGameObj&lt;/span>.&lt;span style="color:#a6e22e">hp&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">10000&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">publicGameObj&lt;/span>.&lt;span style="color:#a6e22e">hp&lt;/span>, &lt;span style="color:#a6e22e">gameObj&lt;/span>); &lt;span style="color:#75715e">// 10000 {hp: 20000}
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>gameObj是我们在内存中真实存储数据的地方，可以看到HP是20000，但是publicGameObj.hp是10000，外部使用publicGameObj.hp即可(比如UI层展示HP为10000);&lt;/p>
+&lt;h3 id="例程handler使用到的属性">例程handler使用到的属性&lt;/h3>
+&lt;ul>
+&lt;li>get &lt;code>publicGameObj.hp&lt;/code>进行了读取操作，因此会自动触发handler的get方法&lt;/li>
+&lt;li>set &lt;code>publicGameObj.hp=10000&lt;/code>进行了赋值操作，因此为自动触发handler的set方法&lt;/li>
+&lt;/ul>
+&lt;h2 id="handler对象">handler对象&lt;/h2>
+&lt;p>handler对象是Proxy的核心基础，所有对目标对象的操作都需要通过handler来处理，虽然内容有点多，但是常用的不多。&lt;/p>
+&lt;h3 id="说明">说明&lt;/h3>
+&lt;ul>
+&lt;li>目标对象 被代理的对象。外部不能直接访问(当然语法上是可以访问的，你都用上Proxy了，还访问他干嘛?)&lt;/li>
+&lt;li>代理对象 new Proxy的返回值。外部直接访问。目标对象会作为handler对应函数的参数传入&lt;/li>
+&lt;li>带*号的是常用属性&lt;/li>
+&lt;/ul>
+&lt;blockquote>
+&lt;p>所有访问都是对代理对象访问才会触发，直接访问目标对象不会触发(代理对象压根没参与进来，如果触发那一定是出bug了)&lt;/p>
+&lt;/blockquote>
+&lt;h3 id="handlergetprototypeoftarget">handler.getPrototypeOf(target)&lt;/h3>
+&lt;p>说明：获取目标对象的原型&lt;/p>
+&lt;p>触发时机：Object.getPrototypeOf(代理对象)&lt;/p>
+&lt;p>参数：&lt;/p>
+&lt;ul>
+&lt;li>target &lt;code>Object&lt;/code> 目标对象&lt;/li>
+&lt;/ul>
+&lt;p>返回值：&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>Object&lt;/code> 对象的原型&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-javascript" data-lang="javascript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">array&lt;/span> &lt;span style="color:#f92672">=&lt;/span> [];
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">myArray&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> Proxy(&lt;span style="color:#a6e22e">array&lt;/span>, {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">getPrototypeOf&lt;/span>(&lt;span style="color:#a6e22e">target&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;读取对象原型&amp;#39;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> Object.&lt;span style="color:#a6e22e">getPrototypeOf&lt;/span>(&lt;span style="color:#a6e22e">array&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>});
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(Object.&lt;span style="color:#a6e22e">getPrototypeOf&lt;/span>(&lt;span style="color:#a6e22e">myArray&lt;/span>));
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// 输出
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// 读取对象原型
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// []
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="handlersetprototypeoftarget-prototype">handler.setPrototypeOf(target, prototype)&lt;/h3>
+&lt;p>说明：设置对象的原型&lt;/p>
+&lt;p>触发时机：Object.setPrototypeOf(代理对象, 原型)
+参数：&lt;/p>
+&lt;ul>
+&lt;li>target &lt;code>Object&lt;/code> 目标对象&lt;/li>
+&lt;li>prototype &lt;code>Object&lt;/code> 原型对象或null&lt;/li>
+&lt;/ul>
+&lt;p>返回值：&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>boolean&lt;/code> 设置成功返回true，否则返回false(比如不让设置)&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-javascript" data-lang="javascript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">array&lt;/span> &lt;span style="color:#f92672">=&lt;/span> [];
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">myArray&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> Proxy(&lt;span style="color:#a6e22e">array&lt;/span>, {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">setPrototypeOf&lt;/span>(&lt;span style="color:#a6e22e">target&lt;/span>, &lt;span style="color:#a6e22e">prototype&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Object.&lt;span style="color:#a6e22e">setPrototypeOf&lt;/span>(&lt;span style="color:#a6e22e">target&lt;/span>, &lt;span style="color:#a6e22e">prototype&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">true&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>});
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Object.&lt;span style="color:#a6e22e">setPrototypeOf&lt;/span>(&lt;span style="color:#a6e22e">myArray&lt;/span>, Object.&lt;span style="color:#a6e22e">prototype&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(Object.&lt;span style="color:#a6e22e">getPrototypeOf&lt;/span>(&lt;span style="color:#a6e22e">myArray&lt;/span>)); &lt;span style="color:#75715e">// {}
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="handlerisextensibletarget">handler.isExtensible(target)&lt;/h3>
+&lt;p>说明：检测对象是否可扩展(个人理解：也就是能否添加属性、函数)
+触发时机：Object.isExtensible(代理对象)
+参数：&lt;/p>
+&lt;ul>
+&lt;li>target &lt;code>Object&lt;/code> 目标对象&lt;/li>
+&lt;/ul>
+&lt;p>返回参数：&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>boolean&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;h3 id="handlerpreventextensionstarget">handler.preventExtensions(target)&lt;/h3>
+&lt;p>说明：设置目标对象为不可扩展
+触发时机：Object.preventExtensions(代理对象)
+参数：&lt;/p>
+&lt;ul>
+&lt;li>target &lt;code>Object&lt;/code> 目标对象&lt;/li>
+&lt;/ul>
+&lt;p>返回值：&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>boolean&lt;/code> 设置目标对象不可扩展后返回true，不管是否设置目标对象不可扩展，返回false都会报错&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-javascript" data-lang="javascript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">obj&lt;/span> &lt;span style="color:#f92672">=&lt;/span> {};
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">p&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> Proxy(&lt;span style="color:#a6e22e">obj&lt;/span>, {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">preventExtensions&lt;/span>(&lt;span style="color:#a6e22e">target&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Object.&lt;span style="color:#a6e22e">preventExtensions&lt;/span>(&lt;span style="color:#a6e22e">target&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">true&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>});
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Object.&lt;span style="color:#a6e22e">preventExtensions&lt;/span>(&lt;span style="color:#a6e22e">p&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">p&lt;/span>.&lt;span style="color:#a6e22e">a&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">p&lt;/span>); &lt;span style="color:#75715e">// {} 目标对象不可扩展，所以a属性设置不进去
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="handlergetownpropertydescriptortarget-prop">*handler.getOwnPropertyDescriptor(target, prop)&lt;/h3>
+&lt;p>说明：获取目标对象属性的描述符&lt;/p>
+&lt;p>触发时机：Object.getOwnPropertyDescriptor(代理对象)&lt;/p>
+&lt;p>参数：&lt;/p>
+&lt;ul>
+&lt;li>target &lt;code>Object&lt;/code> 目标对象&lt;/li>
+&lt;li>prop &lt;code>&amp;lt;string|Symbol|number&amp;gt;&lt;/code> 属性名&lt;/li>
+&lt;/ul>
+&lt;p>返回参数：&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>Object&lt;/code> 属性描述符&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-javascript" data-lang="javascript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">obj&lt;/span> &lt;span style="color:#f92672">=&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">a&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>};
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">p&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> Proxy(&lt;span style="color:#a6e22e">obj&lt;/span>, {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">getOwnPropertyDescriptor&lt;/span>(&lt;span style="color:#a6e22e">target&lt;/span>, &lt;span style="color:#a6e22e">prop&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">target&lt;/span>[&lt;span style="color:#a6e22e">prop&lt;/span>];
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>});
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(Object.&lt;span style="color:#a6e22e">getOwnPropertyDescriptor&lt;/span>(&lt;span style="color:#a6e22e">obj&lt;/span>, &lt;span style="color:#e6db74">&amp;#39;a&amp;#39;&lt;/span>)); &lt;span style="color:#75715e">// { value: 1, writable: true, enumerable: true, configurable: true }
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="handlerdefinepropertytargetpropproperties">*handler.defineProperty(target,prop,properties)&lt;/h3>
+&lt;p>说明：在对象上定义属性(添加新属性或修改现有属性)
+触发时机：Object.defineProperty(代理对象，属性名，属性描述对象)
+参数：&lt;/p>
+&lt;ul>
+&lt;li>target &lt;code>Object&lt;/code> 目标对象&lt;/li>
+&lt;li>prop &lt;code>string|number|Symbol&lt;/code> 属性名&lt;/li>
+&lt;li>properties &lt;code>Object&lt;/code> 属性描述对象&lt;/li>
+&lt;/ul>
+&lt;p>返回值：&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>boolean&lt;/code> 定义成功返回true，定义失败或不允许定义返回false&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-javascript" data-lang="javascript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">obj&lt;/span> &lt;span style="color:#f92672">=&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">name&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#e6db74">&amp;#39;xialei&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">name2&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#e6db74">&amp;#39;xx&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>};
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">p&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> Proxy(&lt;span style="color:#a6e22e">obj&lt;/span>, {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">defineProperty&lt;/span>(&lt;span style="color:#a6e22e">target&lt;/span>, &lt;span style="color:#a6e22e">prop&lt;/span>, &lt;span style="color:#a6e22e">properties&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> (&lt;span style="color:#a6e22e">prop&lt;/span> &lt;span style="color:#f92672">===&lt;/span> &lt;span style="color:#e6db74">&amp;#39;name&amp;#39;&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Object.&lt;span style="color:#a6e22e">defineProperty&lt;/span>(&lt;span style="color:#a6e22e">target&lt;/span>, &lt;span style="color:#a6e22e">prop&lt;/span>, &lt;span style="color:#a6e22e">properties&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">true&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">false&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>});
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Object.&lt;span style="color:#a6e22e">defineProperty&lt;/span>(&lt;span style="color:#a6e22e">p&lt;/span>, &lt;span style="color:#e6db74">&amp;#39;name&amp;#39;&lt;/span>, {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">value&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#e6db74">&amp;#39;aaa&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>});
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Object.&lt;span style="color:#a6e22e">defineProperty&lt;/span>(&lt;span style="color:#a6e22e">p&lt;/span>, &lt;span style="color:#e6db74">&amp;#39;name2&amp;#39;&lt;/span>, { &lt;span style="color:#75715e">// TypeError
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">value&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#e6db74">&amp;#39;aaa&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>});
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="handlerhastarget-prop">*handler.has(target, prop)&lt;/h3>
+&lt;p>说明：判断对象是否有指定属性
+触发时机：prop in 代理对象
+参数：&lt;/p>
+&lt;ul>
+&lt;li>target &lt;code>Object&lt;/code> 目标对象&lt;/li>
+&lt;li>prop &lt;code>string|number|Symbol&lt;/code> 属性名&lt;/li>
+&lt;/ul>
+&lt;p>返回值：&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>boolean&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;h3 id="handlergettarget-prop-receiver">*handler.get(target, prop, receiver)&lt;/h3>
+&lt;p>说明: 属性读取器
+触发时机：读取代理对象的属性时触发&lt;/p>
+&lt;p>参数：&lt;/p>
+&lt;ul>
+&lt;li>target &lt;code>Object&lt;/code> 目标对象&lt;/li>
+&lt;li>prop &lt;code>string|number|Symbol&lt;/code> 属性名&lt;/li>
+&lt;li>receiver &lt;code>Proxy&lt;/code> 代理对象或者原型链上的代理对象&lt;/li>
+&lt;/ul>
+&lt;p>返回值：&lt;/p>
+&lt;ul>
+&lt;li>任何值&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-javascript" data-lang="javascript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">obj&lt;/span> &lt;span style="color:#f92672">=&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">name&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#e6db74">&amp;#39;xialei&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>};
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">p&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> Proxy(&lt;span style="color:#a6e22e">obj&lt;/span>, {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">get&lt;/span>(&lt;span style="color:#a6e22e">target&lt;/span>, &lt;span style="color:#a6e22e">prop&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span>(&lt;span style="color:#a6e22e">prop&lt;/span> &lt;span style="color:#66d9ef">in&lt;/span> &lt;span style="color:#a6e22e">target&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">target&lt;/span>[&lt;span style="color:#a6e22e">prop&lt;/span>].&lt;span style="color:#a6e22e">toUpperCase&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">undefined&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>});
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">p&lt;/span>.&lt;span style="color:#a6e22e">name&lt;/span>); &lt;span style="color:#75715e">// XIALEI
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="handlersettarget-prop-value-receiver">*handler.set(target, prop, value, receiver)&lt;/h3>
+&lt;p>说明：属性写入访问器
+触发时机：对代理对象的属性进行赋值时触发&lt;/p>
+&lt;p>参数：&lt;/p>
+&lt;ul>
+&lt;li>target &lt;code>Object&lt;/code> 目标对象&lt;/li>
+&lt;li>prop &lt;code>string|number|Symbol&lt;/code> 属性名&lt;/li>
+&lt;li>value &lt;code>any&lt;/code> 属性值&lt;/li>
+&lt;li>receiver &lt;code>Proxy&lt;/code> 代理对象或原型链上的代理对象&lt;/li>
+&lt;/ul>
+&lt;p>返回值：&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>boolean&lt;/code> 赋值成功返回true，否则返回false。严格模式下返回false会抛出TypeError&lt;/li>
+&lt;/ul>
+&lt;h3 id="handlerdeletepropertytarget-prop">*handler.deleteProperty(target, prop)&lt;/h3>
+&lt;p>说明：删除对象属性
+触发时机：对代理对象的属性进行delete时触发&lt;/p>
+&lt;p>参数：&lt;/p>
+&lt;ul>
+&lt;li>target &lt;code>Object&lt;/code> 目标对象&lt;/li>
+&lt;li>prop &lt;code>string|number|Symbol&lt;/code> 属性名&lt;/li>
+&lt;/ul>
+&lt;p>返回值：&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>boolean&lt;/code> 删除成功返回true，否则返回false。严格模式下返回false会抛出TypeError&lt;/li>
+&lt;/ul>
+&lt;h3 id="handlerapplytarget-thisarg-args">*handler.apply(target, thisArg, args)&lt;/h3>
+&lt;p>说明：拦截函数调用，被代理对象必须是函数
+触发时机：&lt;/p>
+&lt;ul>
+&lt;li>直接调用函数 obj.xxx()或xxx()&lt;/li>
+&lt;li>apply/call&lt;/li>
+&lt;/ul>
+&lt;p>参数：&lt;/p>
+&lt;ul>
+&lt;li>target &lt;code>Object&lt;/code> 目标函数&lt;/li>
+&lt;li>thisArg &lt;code>Object&lt;/code> this对象&lt;/li>
+&lt;li>args &lt;code>Array&lt;/code> 参数列表&lt;/li>
+&lt;/ul>
+&lt;p>返回值：&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>any&lt;/code> 任何值&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-javascript" data-lang="javascript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">function&lt;/span> &lt;span style="color:#a6e22e">sum&lt;/span>(&lt;span style="color:#a6e22e">a&lt;/span>, &lt;span style="color:#a6e22e">b&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">a&lt;/span> &lt;span style="color:#f92672">+&lt;/span> &lt;span style="color:#a6e22e">b&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">absSum&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> Proxy(&lt;span style="color:#a6e22e">sum&lt;/span>, {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">apply&lt;/span>(&lt;span style="color:#a6e22e">target&lt;/span>, &lt;span style="color:#a6e22e">thisArg&lt;/span>, &lt;span style="color:#a6e22e">args&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">value&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">target&lt;/span>.&lt;span style="color:#a6e22e">apply&lt;/span>(&lt;span style="color:#a6e22e">thisArg&lt;/span>, &lt;span style="color:#a6e22e">args&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">value&lt;/span> &lt;span style="color:#f92672">&amp;lt;&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span> &lt;span style="color:#f92672">?&lt;/span> &lt;span style="color:#f92672">-&lt;/span>&lt;span style="color:#a6e22e">value&lt;/span> &lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#a6e22e">value&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>});
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">absSum&lt;/span>(&lt;span style="color:#f92672">-&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span>, &lt;span style="color:#f92672">-&lt;/span>&lt;span style="color:#ae81ff">2&lt;/span>)); &lt;span style="color:#75715e">// 3，因为被拦截了
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="handlerconstructtargetargs">*handler.construct(target,args)&lt;/h3>
+&lt;p>说明：拦截构造过程
+触发时机：new 目标构造函数(&amp;hellip;args)&lt;/p>
+&lt;p>参数：&lt;/p>
+&lt;ul>
+&lt;li>target &lt;code>Function&lt;/code> 构造函数&lt;/li>
+&lt;li>args &lt;code>Array&lt;/code> 构造函数的参数&lt;/li>
+&lt;/ul>
+&lt;p>返回值：&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>Object&lt;/code> 对象&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-javascript" data-lang="javascript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">function&lt;/span> &lt;span style="color:#a6e22e">Person&lt;/span>(&lt;span style="color:#a6e22e">name&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">this&lt;/span>.&lt;span style="color:#a6e22e">name&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">name&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">P&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> Proxy(&lt;span style="color:#a6e22e">Person&lt;/span>, {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">construct&lt;/span>(&lt;span style="color:#a6e22e">target&lt;/span>, &lt;span style="color:#a6e22e">args&lt;/span>, &lt;span style="color:#a6e22e">newTarget&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">newTarget&lt;/span>, &lt;span style="color:#a6e22e">newTarget&lt;/span> &lt;span style="color:#f92672">===&lt;/span> &lt;span style="color:#a6e22e">P&lt;/span>, &lt;span style="color:#a6e22e">newTarget&lt;/span> &lt;span style="color:#f92672">===&lt;/span> &lt;span style="color:#a6e22e">Person&lt;/span>); &lt;span style="color:#75715e">// [Function: Person] true false
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">target&lt;/span>(&lt;span style="color:#a6e22e">args&lt;/span>[&lt;span style="color:#ae81ff">0&lt;/span>].&lt;span style="color:#a6e22e">toUpperCase&lt;/span>());
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>});
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">p&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">P&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;xialei&amp;#39;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">p&lt;/span>); &lt;span style="color:#75715e">// Person { name: &amp;#39;XIALEI&amp;#39; }
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="使用场景">使用场景&lt;/h2>
+&lt;ul>
+&lt;li>
+&lt;p>保护目标对象(通过钩子方法进行拦截)&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>数据转换(上文有一个内存保护的例子)&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>数据验证(不符合规则的值不允许设置)&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-javascript" data-lang="javascript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">privateUser&lt;/span> &lt;span style="color:#f92672">=&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">name&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#e6db74">&amp;#39;xialei&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">phone&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#e6db74">&amp;#39;13888888888&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>};
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">user&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> Proxy(&lt;span style="color:#a6e22e">privateUser&lt;/span>, {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">set&lt;/span>(&lt;span style="color:#a6e22e">target&lt;/span>, &lt;span style="color:#a6e22e">prop&lt;/span>, &lt;span style="color:#a6e22e">value&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> (&lt;span style="color:#a6e22e">prop&lt;/span> &lt;span style="color:#f92672">===&lt;/span> &lt;span style="color:#e6db74">&amp;#39;phone&amp;#39;&lt;/span> &lt;span style="color:#f92672">&amp;amp;&amp;amp;&lt;/span> &lt;span style="color:#f92672">!&lt;/span>&lt;span style="color:#e6db74">/^(\+86)?1[\d]{10}$/&lt;/span>.&lt;span style="color:#a6e22e">test&lt;/span>(&lt;span style="color:#a6e22e">value&lt;/span>)) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">false&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">target&lt;/span>[&lt;span style="color:#a6e22e">prop&lt;/span>] &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">value&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">true&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>});
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">user&lt;/span>.&lt;span style="color:#a6e22e">phone&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#39;13666666666&amp;#39;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">user&lt;/span>.&lt;span style="color:#a6e22e">phone&lt;/span>); &lt;span style="color:#75715e">// 13666666666
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#a6e22e">user&lt;/span>.&lt;span style="color:#a6e22e">phone&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#39;+8613777777777&amp;#39;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">user&lt;/span>.&lt;span style="color:#a6e22e">phone&lt;/span>); &lt;span style="color:#75715e">// +8613777777777
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#a6e22e">user&lt;/span>.&lt;span style="color:#a6e22e">phone&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#39;1&amp;#39;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">user&lt;/span>.&lt;span style="color:#a6e22e">phone&lt;/span>); &lt;span style="color:#75715e">// +8613777777777
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;li>
+&lt;p>数据修正(也做数据标准化)&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-javascript" data-lang="javascript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">privateUser&lt;/span> &lt;span style="color:#f92672">=&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">name&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#e6db74">&amp;#39;xialei&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">phone&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#e6db74">&amp;#39;13888888888&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>};
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">user&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> Proxy(&lt;span style="color:#a6e22e">privateUser&lt;/span>, {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">set&lt;/span>(&lt;span style="color:#a6e22e">target&lt;/span>, &lt;span style="color:#a6e22e">prop&lt;/span>, &lt;span style="color:#a6e22e">value&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> (&lt;span style="color:#a6e22e">prop&lt;/span> &lt;span style="color:#f92672">===&lt;/span> &lt;span style="color:#e6db74">&amp;#39;phone&amp;#39;&lt;/span> &lt;span style="color:#f92672">&amp;amp;&amp;amp;&lt;/span> &lt;span style="color:#f92672">!&lt;/span>&lt;span style="color:#e6db74">/^(\+86)?1[\d]{10}$/&lt;/span>.&lt;span style="color:#a6e22e">test&lt;/span>(&lt;span style="color:#a6e22e">value&lt;/span>)) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">false&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">target&lt;/span>[&lt;span style="color:#a6e22e">prop&lt;/span>] &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">value&lt;/span>.&lt;span style="color:#a6e22e">replace&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;+86&amp;#39;&lt;/span>,&lt;span style="color:#e6db74">&amp;#39;&amp;#39;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">true&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>});
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">user&lt;/span>.&lt;span style="color:#a6e22e">phone&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#39;+8613666666666&amp;#39;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">user&lt;/span>.&lt;span style="color:#a6e22e">phone&lt;/span>); &lt;span style="color:#75715e">// 13666666666
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;li>
+&lt;p>添加实用方法&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-javascript" data-lang="javascript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">list&lt;/span> &lt;span style="color:#f92672">=&lt;/span> [
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> { &lt;span style="color:#a6e22e">name&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#e6db74">&amp;#39;xialei&amp;#39;&lt;/span>, &lt;span style="color:#a6e22e">phone&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#e6db74">&amp;#39;13888888888&amp;#39;&lt;/span> },
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> { &lt;span style="color:#a6e22e">name&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#e6db74">&amp;#39;xialei1&amp;#39;&lt;/span>, &lt;span style="color:#a6e22e">phone&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#e6db74">&amp;#39;13899999999&amp;#39;&lt;/span> },
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>];
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">mList&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> Proxy(&lt;span style="color:#a6e22e">list&lt;/span>, {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">get&lt;/span>(&lt;span style="color:#a6e22e">target&lt;/span>, &lt;span style="color:#a6e22e">prop&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> (&lt;span style="color:#a6e22e">prop&lt;/span> &lt;span style="color:#66d9ef">in&lt;/span> &lt;span style="color:#a6e22e">target&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">target&lt;/span>[&lt;span style="color:#a6e22e">prop&lt;/span>];
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span> (&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">item&lt;/span> &lt;span style="color:#66d9ef">of&lt;/span> &lt;span style="color:#a6e22e">target&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> (&lt;span style="color:#a6e22e">item&lt;/span>.&lt;span style="color:#a6e22e">name&lt;/span> &lt;span style="color:#f92672">===&lt;/span> &lt;span style="color:#a6e22e">prop&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">item&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">undefined&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>});
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">firstItem&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">mList&lt;/span>[&lt;span style="color:#ae81ff">0&lt;/span>];
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">itemXialei&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">mList&lt;/span>[&lt;span style="color:#e6db74">&amp;#34;xialei&amp;#34;&lt;/span>];
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">firstItem&lt;/span>); &lt;span style="color:#75715e">// { name: &amp;#39;xialei&amp;#39;, phone: &amp;#39;13888888888&amp;#39; }
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">itemXialei&lt;/span>);&lt;span style="color:#75715e">// { name: &amp;#39;xialei&amp;#39;, phone: &amp;#39;13888888888&amp;#39; }
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;li>
+&lt;p>提供易用API&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-javascript" data-lang="javascript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// 本例对localStorage做了封装，可以像普通对象一样操作localStorage,而不需要调用方法
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">storage&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> Proxy(&lt;span style="color:#a6e22e">localStorage&lt;/span>, {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">get&lt;/span>(&lt;span style="color:#a6e22e">target&lt;/span>, &lt;span style="color:#a6e22e">prop&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">localStorage&lt;/span>.&lt;span style="color:#a6e22e">getItem&lt;/span>(&lt;span style="color:#a6e22e">prop&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> },
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">set&lt;/span>(&lt;span style="color:#a6e22e">target&lt;/span>, &lt;span style="color:#a6e22e">prop&lt;/span>, &lt;span style="color:#a6e22e">value&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">localStorage&lt;/span>.&lt;span style="color:#a6e22e">setItem&lt;/span>(&lt;span style="color:#a6e22e">prop&lt;/span>, &lt;span style="color:#a6e22e">value&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">true&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> },
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">deleteProperty&lt;/span>(&lt;span style="color:#a6e22e">target&lt;/span>, &lt;span style="color:#a6e22e">prop&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">localStorage&lt;/span>.&lt;span style="color:#a6e22e">removeItem&lt;/span>(&lt;span style="color:#a6e22e">prop&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> },
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">has&lt;/span>(&lt;span style="color:#a6e22e">target&lt;/span>, &lt;span style="color:#a6e22e">prop&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">localStorage&lt;/span>.&lt;span style="color:#a6e22e">getItem&lt;/span>(&lt;span style="color:#a6e22e">prop&lt;/span>) &lt;span style="color:#f92672">!==&lt;/span> &lt;span style="color:#66d9ef">null&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>});
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">storage&lt;/span>.&lt;span style="color:#a6e22e">aaa&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#39;1&amp;#39;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">storage&lt;/span>.&lt;span style="color:#a6e22e">aaa&lt;/span>); &lt;span style="color:#75715e">// &amp;#39;1&amp;#39;
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">delete&lt;/span> &lt;span style="color:#a6e22e">storage&lt;/span>.&lt;span style="color:#a6e22e">aaa&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">storage&lt;/span>.&lt;span style="color:#a6e22e">aaa&lt;/span>); &lt;span style="color:#75715e">// undefined
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;/ul>
+&lt;h2 id="总结">总结&lt;/h2>
+&lt;p>Proxy的语法虽然简单，但是可谓前途无量，比如开了一个Virtual Dom框架也是可以的。&lt;/p>
+&lt;p>&lt;img src="https://static.ddhigh.com/blog/2019-10-22-102654.jpg" alt="0.jpeg">&lt;/p></description></item><item><title>ES6的Set类型</title><link>https://www.ddhigh.com/2019/10/31/es6-set/</link><pubDate>Thu, 31 Oct 2019 12:00:00 +0000</pubDate><guid>https://www.ddhigh.com/2019/10/31/es6-set/</guid><description>&lt;p>本文内容&lt;/p>
+&lt;ul>
+&lt;li>Set的基本使用&lt;/li>
+&lt;li>常用用法&lt;/li>
+&lt;/ul>
+&lt;blockquote>
+&lt;p>Set 对象允许你存储任何类型的唯一值，无论是原始值或者是对象引用。&lt;/p>
+&lt;/blockquote>
+&lt;h2 id="基本使用">基本使用&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-javascript" data-lang="javascript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">Set&lt;/span>([&lt;span style="color:#a6e22e">iterator&lt;/span>])
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ul>
+&lt;li>iterator &lt;!-- raw HTML omitted --> 与Map类似，Set接收一个可选的Iterator对象，所有元素将按照顺序不重复地添加到Set中。传递null或者undefined将返回一个空Set&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-javascript" data-lang="javascript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">set&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">Set&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// 添加元素
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#a6e22e">set&lt;/span>.&lt;span style="color:#a6e22e">add&lt;/span>(&lt;span style="color:#ae81ff">1&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// 移除元素
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#a6e22e">set&lt;/span>.&lt;span style="color:#66d9ef">delete&lt;/span>(&lt;span style="color:#ae81ff">1&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// 检测元素是否存在
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#a6e22e">set&lt;/span>.&lt;span style="color:#a6e22e">has&lt;/span>(&lt;span style="color:#ae81ff">1&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// 清空Set
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#a6e22e">set&lt;/span>.&lt;span style="color:#a6e22e">clear&lt;/span>();
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="数据类型的唯一性判定">数据类型的唯一性判定&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-javascript" data-lang="javascript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">set&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">Set&lt;/span>(&lt;span style="color:#66d9ef">undefined&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">set&lt;/span>.
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">add&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;string&amp;#34;&lt;/span>).&lt;span style="color:#a6e22e">add&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;string&amp;#34;&lt;/span>).
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">add&lt;/span>(&lt;span style="color:#ae81ff">1&lt;/span>).&lt;span style="color:#a6e22e">add&lt;/span>(&lt;span style="color:#ae81ff">1&lt;/span>).
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">add&lt;/span>(&lt;span style="color:#66d9ef">true&lt;/span>).&lt;span style="color:#a6e22e">add&lt;/span>(&lt;span style="color:#66d9ef">true&lt;/span>).
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">add&lt;/span>(&lt;span style="color:#66d9ef">null&lt;/span>).&lt;span style="color:#a6e22e">add&lt;/span>(&lt;span style="color:#66d9ef">null&lt;/span>).
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">add&lt;/span>(&lt;span style="color:#66d9ef">undefined&lt;/span>).&lt;span style="color:#a6e22e">add&lt;/span>(&lt;span style="color:#66d9ef">undefined&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .&lt;span style="color:#a6e22e">add&lt;/span>(&lt;span style="color:#66d9ef">NaN&lt;/span>).&lt;span style="color:#a6e22e">add&lt;/span>(&lt;span style="color:#66d9ef">NaN&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .&lt;span style="color:#a6e22e">add&lt;/span>({}).&lt;span style="color:#a6e22e">add&lt;/span>({})
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .&lt;span style="color:#a6e22e">add&lt;/span>([]).&lt;span style="color:#a6e22e">add&lt;/span>([])
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .&lt;span style="color:#a6e22e">add&lt;/span>(&lt;span style="color:#66d9ef">function&lt;/span> () { }).&lt;span style="color:#a6e22e">add&lt;/span>(&lt;span style="color:#66d9ef">function&lt;/span> () { });
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">set&lt;/span>);
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>输出如下：&lt;/p>
+&lt;pre tabindex="0">&lt;code>Set {
+&amp;#39;string&amp;#39;,
+1,
+true,
+null,
+undefined,
+NaN,
+{},
+{},
+[],
+[],
+[Function],
+[Function]
+}
+&lt;/code>&lt;/pre>&lt;h3 id="结论">结论&lt;/h3>
+&lt;ul>
+&lt;li>string/number/boolean/null/undefined/NaN是使用值判重
+&lt;ul>
+&lt;li>NaN!==NaN，但是Set也只会存一份，所以值判定应该不完全是用===做的&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>object/array/function等object类型使用引用判重&lt;/li>
+&lt;/ul>
+&lt;h2 id="set的迭代">Set的迭代&lt;/h2>
+&lt;p>for&amp;hellip;of&lt;/p>
+&lt;blockquote>
+&lt;p>由于Set实现了Symol.iteator方法，所以可以使用for&amp;hellip;of迭代&lt;/p>
+&lt;/blockquote>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-javascript" data-lang="javascript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">set&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">Set&lt;/span>(&lt;span style="color:#66d9ef">undefined&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">set&lt;/span>.&lt;span style="color:#a6e22e">add&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;string&amp;#34;&lt;/span>).&lt;span style="color:#a6e22e">add&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;string&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">for&lt;/span> (&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">v&lt;/span> &lt;span style="color:#66d9ef">of&lt;/span> &lt;span style="color:#a6e22e">set&lt;/span>.&lt;span style="color:#a6e22e">entries&lt;/span>()) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">v&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>forEach&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-javascript" data-lang="javascript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">set&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">Set&lt;/span>(&lt;span style="color:#66d9ef">undefined&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">set&lt;/span>.&lt;span style="color:#a6e22e">add&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;string&amp;#34;&lt;/span>).&lt;span style="color:#a6e22e">add&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;string&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">set&lt;/span>.&lt;span style="color:#a6e22e">forEach&lt;/span>(&lt;span style="color:#66d9ef">function&lt;/span>(&lt;span style="color:#a6e22e">value&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">value&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>});
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="使用场景">使用场景&lt;/h2>
+&lt;p>Set和数组相互转化&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-javascript" data-lang="javascript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">array&lt;/span> &lt;span style="color:#f92672">=&lt;/span> [&lt;span style="color:#ae81ff">1&lt;/span>,&lt;span style="color:#ae81ff">2&lt;/span>];
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">set&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">Set&lt;/span>(&lt;span style="color:#a6e22e">array&lt;/span>); &lt;span style="color:#75715e">// 数组转化为set
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">newArray&lt;/span> &lt;span style="color:#f92672">=&lt;/span> [...&lt;span style="color:#a6e22e">set&lt;/span>]; &lt;span style="color:#75715e">// set转化为数组
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>去除字符串重复字符&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-javascript" data-lang="javascript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">s&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#39;aabbcc&amp;#39;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">set&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">Set&lt;/span>(&lt;span style="color:#a6e22e">s&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">newString&lt;/span> &lt;span style="color:#f92672">=&lt;/span> [...&lt;span style="color:#a6e22e">set&lt;/span>].&lt;span style="color:#a6e22e">join&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;&amp;#39;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">newString&lt;/span>); &lt;span style="color:#75715e">// abc
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>数组去重&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-javascript" data-lang="javascript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">list&lt;/span> &lt;span style="color:#f92672">=&lt;/span> [&lt;span style="color:#ae81ff">1&lt;/span>,&lt;span style="color:#ae81ff">2&lt;/span>,&lt;span style="color:#ae81ff">3&lt;/span>,&lt;span style="color:#ae81ff">1&lt;/span>,&lt;span style="color:#ae81ff">2&lt;/span>,&lt;span style="color:#ae81ff">3&lt;/span>];
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">set&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">Set&lt;/span>(&lt;span style="color:#a6e22e">list&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>([...&lt;span style="color:#a6e22e">set&lt;/span>]); &lt;span style="color:#75715e">// [1,2,3]
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>并集&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-javascript" data-lang="javascript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">set&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">Set&lt;/span>([&lt;span style="color:#ae81ff">1&lt;/span>,&lt;span style="color:#ae81ff">2&lt;/span>,&lt;span style="color:#ae81ff">3&lt;/span>]);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">set2&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">Set&lt;/span>([&lt;span style="color:#ae81ff">1&lt;/span>,&lt;span style="color:#ae81ff">2&lt;/span>,&lt;span style="color:#ae81ff">3&lt;/span>,&lt;span style="color:#ae81ff">4&lt;/span>]);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">set3&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">Set&lt;/span>([...&lt;span style="color:#a6e22e">set&lt;/span>], [...&lt;span style="color:#a6e22e">set2&lt;/span>]); &lt;span style="color:#75715e">// [1, 2, 3]
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>交集&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-javascript" data-lang="javascript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">set&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">Set&lt;/span>([&lt;span style="color:#ae81ff">1&lt;/span>,&lt;span style="color:#ae81ff">2&lt;/span>,&lt;span style="color:#ae81ff">3&lt;/span>]);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">set2&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">Set&lt;/span>([&lt;span style="color:#ae81ff">1&lt;/span>,&lt;span style="color:#ae81ff">2&lt;/span>,&lt;span style="color:#ae81ff">3&lt;/span>,&lt;span style="color:#ae81ff">4&lt;/span>]);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">set3&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">Set&lt;/span>([...&lt;span style="color:#a6e22e">set&lt;/span>].&lt;span style="color:#a6e22e">filter&lt;/span>(&lt;span style="color:#a6e22e">item&lt;/span> =&amp;gt; &lt;span style="color:#a6e22e">set2&lt;/span>.&lt;span style="color:#a6e22e">has&lt;/span>(&lt;span style="color:#a6e22e">item&lt;/span>))); &lt;span style="color:#75715e">// [1, 2, 3]
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>差集&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-javascript" data-lang="javascript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">set&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">Set&lt;/span>([&lt;span style="color:#ae81ff">1&lt;/span>,&lt;span style="color:#ae81ff">2&lt;/span>,&lt;span style="color:#ae81ff">3&lt;/span>]);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">set2&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">Set&lt;/span>([&lt;span style="color:#ae81ff">1&lt;/span>,&lt;span style="color:#ae81ff">2&lt;/span>,&lt;span style="color:#ae81ff">3&lt;/span>,&lt;span style="color:#ae81ff">4&lt;/span>]);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">set3&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">Set&lt;/span>([...&lt;span style="color:#a6e22e">set2&lt;/span>].&lt;span style="color:#a6e22e">filter&lt;/span>(&lt;span style="color:#a6e22e">item&lt;/span> =&amp;gt; &lt;span style="color:#f92672">!&lt;/span>&lt;span style="color:#a6e22e">set&lt;/span>.&lt;span style="color:#a6e22e">has&lt;/span>(&lt;span style="color:#a6e22e">item&lt;/span>))); &lt;span style="color:#75715e">// [4], 注意set2和set的顺序
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="总结">总结&lt;/h2>
+&lt;p>在需要唯一性的场景中，Set使用起来比数组要方便许多，比如添加标签，这个肯定是不重复的，用Set去实现就可以省去重复判断之类的操作，可以专注业务逻辑。&lt;/p>
+&lt;p>&lt;img src="https://static.ddhigh.com/blog/2019-10-22-102654.jpg" alt="0.jpeg">&lt;/p></description></item><item><title>ES6的Map类型</title><link>https://www.ddhigh.com/2019/10/30/es6-map/</link><pubDate>Wed, 30 Oct 2019 12:00:00 +0000</pubDate><guid>https://www.ddhigh.com/2019/10/30/es6-map/</guid><description>&lt;p>本文内容&lt;/p>
+&lt;ul>
+&lt;li>Map的基本使用&lt;/li>
+&lt;li>Map支持的数据类型&lt;/li>
+&lt;li>Map的迭代&lt;/li>
+&lt;li>Map与其他对象的转化&lt;/li>
+&lt;/ul>
+&lt;p>在Map出现之前，要实现类似需求，只能使用Object，但是Object还是存在一些问题的。&lt;/p>
+&lt;ul>
+&lt;li>如果使用Object作为key存储在{}中，key最终是当做&lt;code>[object Object]&lt;/code>来使用的&lt;/li>
+&lt;li>Object的keys是无序的&lt;/li>
+&lt;li>无法安全遍历Object&lt;/li>
+&lt;li>无法直接获取Object大小&lt;/li>
+&lt;/ul>
+&lt;blockquote>
+&lt;p>Map 对象保存键值对。任何值(对象或者原始值) 都可以作为一个键或一个值。&lt;/p>
+&lt;/blockquote>
+&lt;h2 id="基本操作">基本操作&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">Map&lt;/span>([&lt;span style="color:#a6e22e">iterator&lt;/span>])
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ul>
+&lt;li>iterator &lt;!-- raw HTML omitted --> 可以是一个数组或者其他iterator对象，其元素为键值对(如&lt;code>['key', 'value']&lt;/code>)。&lt;/li>
+&lt;li>null或undefined不会生效，返回一个空的Map&lt;/li>
+&lt;li>非iterator会抛出错误 &lt;code>TypeError: object is not iterable&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">map&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">Map&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// Create
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#a6e22e">map&lt;/span>.&lt;span style="color:#a6e22e">set&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;name&amp;#39;&lt;/span>,&lt;span style="color:#e6db74">&amp;#39;xialei&amp;#39;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">map&lt;/span>.&lt;span style="color:#a6e22e">set&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;site&amp;#39;&lt;/span>, &lt;span style="color:#e6db74">&amp;#39;https://www.ddhigh.com&amp;#39;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// Update
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#a6e22e">map&lt;/span>.&lt;span style="color:#a6e22e">set&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;name&amp;#39;&lt;/span>, &lt;span style="color:#e6db74">&amp;#39;xialeistudio&amp;#39;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// Read
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#a6e22e">map&lt;/span>.&lt;span style="color:#a6e22e">get&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;name&amp;#39;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// Delete
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#a6e22e">map&lt;/span>.&lt;span style="color:#66d9ef">delete&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;name&amp;#39;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// 清空
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#a6e22e">map&lt;/span>.&lt;span style="color:#a6e22e">clear&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// map大小
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">map&lt;/span>.&lt;span style="color:#a6e22e">size&lt;/span>);
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="数据类型测试">数据类型测试&lt;/h2>
+&lt;p>JS中基本数据类型有string、number、boolean、null、undefined、symbol，复杂数据类型有object(包括object,array,function等)，还有个特殊的NaN(typeof结果是number)，分别对这些类型进行测试&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">map&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">Map&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">sKey&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#39;key&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">nKey&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">bKey&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">true&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">nullKey&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">null&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">uKey&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">undefined&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">symbolKey&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">Symbol&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;key&amp;#34;&lt;/span>),
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">oKey&lt;/span> &lt;span style="color:#f92672">=&lt;/span> {},
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">ooKey&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">oKey&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">aKey&lt;/span> &lt;span style="color:#f92672">=&lt;/span> [],
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">fKey&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">function&lt;/span> () { },
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">nanKey&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">NaN&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">map&lt;/span>.&lt;span style="color:#a6e22e">set&lt;/span>(&lt;span style="color:#a6e22e">sKey&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;string&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .&lt;span style="color:#a6e22e">set&lt;/span>(&lt;span style="color:#a6e22e">nKey&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;number&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .&lt;span style="color:#a6e22e">set&lt;/span>(&lt;span style="color:#a6e22e">bKey&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;boolean&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .&lt;span style="color:#a6e22e">set&lt;/span>(&lt;span style="color:#a6e22e">nullKey&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;null&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .&lt;span style="color:#a6e22e">set&lt;/span>(&lt;span style="color:#a6e22e">uKey&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;undefined&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .&lt;span style="color:#a6e22e">set&lt;/span>(&lt;span style="color:#a6e22e">symbolKey&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;symbol&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .&lt;span style="color:#a6e22e">set&lt;/span>(&lt;span style="color:#a6e22e">oKey&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;object&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .&lt;span style="color:#a6e22e">set&lt;/span>(&lt;span style="color:#a6e22e">aKey&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;array&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .&lt;span style="color:#a6e22e">set&lt;/span>(&lt;span style="color:#a6e22e">fKey&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;function&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .&lt;span style="color:#a6e22e">set&lt;/span>(&lt;span style="color:#a6e22e">nanKey&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;NaN&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">map&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">map&lt;/span>.&lt;span style="color:#a6e22e">get&lt;/span>(&lt;span style="color:#a6e22e">sKey&lt;/span>) &lt;span style="color:#f92672">===&lt;/span> &lt;span style="color:#e6db74">&amp;#34;string&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">map&lt;/span>.&lt;span style="color:#a6e22e">get&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;key&amp;#34;&lt;/span>) &lt;span style="color:#f92672">===&lt;/span> &lt;span style="color:#e6db74">&amp;#34;string&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">map&lt;/span>.&lt;span style="color:#a6e22e">get&lt;/span>(&lt;span style="color:#a6e22e">nKey&lt;/span>) &lt;span style="color:#f92672">===&lt;/span> &lt;span style="color:#e6db74">&amp;#34;number&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">map&lt;/span>.&lt;span style="color:#a6e22e">get&lt;/span>(&lt;span style="color:#ae81ff">1&lt;/span>) &lt;span style="color:#f92672">===&lt;/span> &lt;span style="color:#e6db74">&amp;#34;number&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">map&lt;/span>.&lt;span style="color:#a6e22e">get&lt;/span>(&lt;span style="color:#a6e22e">bKey&lt;/span>) &lt;span style="color:#f92672">===&lt;/span> &lt;span style="color:#e6db74">&amp;#34;boolean&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">map&lt;/span>.&lt;span style="color:#a6e22e">get&lt;/span>(&lt;span style="color:#66d9ef">true&lt;/span>) &lt;span style="color:#f92672">===&lt;/span> &lt;span style="color:#e6db74">&amp;#34;boolean&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">map&lt;/span>.&lt;span style="color:#a6e22e">get&lt;/span>(&lt;span style="color:#a6e22e">nullKey&lt;/span>) &lt;span style="color:#f92672">===&lt;/span> &lt;span style="color:#e6db74">&amp;#34;null&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">map&lt;/span>.&lt;span style="color:#a6e22e">get&lt;/span>(&lt;span style="color:#66d9ef">null&lt;/span>) &lt;span style="color:#f92672">===&lt;/span> &lt;span style="color:#e6db74">&amp;#34;null&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">map&lt;/span>.&lt;span style="color:#a6e22e">get&lt;/span>(&lt;span style="color:#a6e22e">uKey&lt;/span>) &lt;span style="color:#f92672">===&lt;/span> &lt;span style="color:#e6db74">&amp;#34;undefined&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">map&lt;/span>.&lt;span style="color:#a6e22e">get&lt;/span>(&lt;span style="color:#66d9ef">undefined&lt;/span>) &lt;span style="color:#f92672">===&lt;/span> &lt;span style="color:#e6db74">&amp;#34;undefined&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">map&lt;/span>.&lt;span style="color:#a6e22e">get&lt;/span>(&lt;span style="color:#a6e22e">symbolKey&lt;/span>) &lt;span style="color:#f92672">===&lt;/span> &lt;span style="color:#e6db74">&amp;#34;symbol&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">map&lt;/span>.&lt;span style="color:#a6e22e">get&lt;/span>(&lt;span style="color:#a6e22e">oKey&lt;/span>) &lt;span style="color:#f92672">===&lt;/span> &lt;span style="color:#e6db74">&amp;#34;object&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">map&lt;/span>.&lt;span style="color:#a6e22e">get&lt;/span>({}) &lt;span style="color:#f92672">===&lt;/span> &lt;span style="color:#e6db74">&amp;#34;object&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">map&lt;/span>.&lt;span style="color:#a6e22e">get&lt;/span>(&lt;span style="color:#a6e22e">oKey&lt;/span>) &lt;span style="color:#f92672">===&lt;/span> &lt;span style="color:#a6e22e">map&lt;/span>.&lt;span style="color:#a6e22e">get&lt;/span>(&lt;span style="color:#a6e22e">ooKey&lt;/span>));
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">map&lt;/span>.&lt;span style="color:#a6e22e">get&lt;/span>(&lt;span style="color:#a6e22e">aKey&lt;/span>) &lt;span style="color:#f92672">===&lt;/span> &lt;span style="color:#e6db74">&amp;#34;array&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">map&lt;/span>.&lt;span style="color:#a6e22e">get&lt;/span>([]) &lt;span style="color:#f92672">===&lt;/span> &lt;span style="color:#e6db74">&amp;#34;array&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">map&lt;/span>.&lt;span style="color:#a6e22e">get&lt;/span>(&lt;span style="color:#a6e22e">fKey&lt;/span>) &lt;span style="color:#f92672">===&lt;/span> &lt;span style="color:#e6db74">&amp;#34;function&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">map&lt;/span>.&lt;span style="color:#a6e22e">get&lt;/span>(&lt;span style="color:#66d9ef">function&lt;/span> () { }) &lt;span style="color:#f92672">===&lt;/span> &lt;span style="color:#e6db74">&amp;#34;function&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">map&lt;/span>.&lt;span style="color:#a6e22e">get&lt;/span>(&lt;span style="color:#a6e22e">nanKey&lt;/span>) &lt;span style="color:#f92672">===&lt;/span> &lt;span style="color:#e6db74">&amp;#34;NaN&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">map&lt;/span>.&lt;span style="color:#a6e22e">get&lt;/span>(&lt;span style="color:#66d9ef">NaN&lt;/span>) &lt;span style="color:#f92672">===&lt;/span> &lt;span style="color:#e6db74">&amp;#34;NaN&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>输出如下&lt;/p>
+&lt;pre tabindex="0">&lt;code>Map {
+&amp;#39;key&amp;#39; =&amp;gt; &amp;#39;string&amp;#39;,
+1 =&amp;gt; &amp;#39;number&amp;#39;,
+true =&amp;gt; &amp;#39;boolean&amp;#39;,
+null =&amp;gt; &amp;#39;null&amp;#39;,
+undefined =&amp;gt; &amp;#39;undefined&amp;#39;,
+Symbol(key) =&amp;gt; &amp;#39;symbol&amp;#39;,
+{} =&amp;gt; &amp;#39;object&amp;#39;,
+[] =&amp;gt; &amp;#39;array&amp;#39;,
+[Function: fKey] =&amp;gt; &amp;#39;function&amp;#39;,
+NaN =&amp;gt; &amp;#39;NaN&amp;#39;
+}
+true true
+true true
+true true
+true true
+true true
+true
+true false true
+true false
+true false
+true true
+&lt;/code>&lt;/pre>&lt;p>结论&lt;/p>
+&lt;ul>
+&lt;li>string/number/boolean/null/undefined/NaN 按值存储，值一致即可访问&lt;/li>
+&lt;li>symbol必须是同一个Symbol才能访问，详见&lt;a href="https://www.ddhigh.com/2019/10/28/symbol.html">深入浅出ES6的Symbol类型&lt;/a>&lt;/li>
+&lt;li>object/array/function等Object类型按照引用访问，必须是同一个引用才可以访问&lt;/li>
+&lt;li>Map是&lt;code>有序&lt;/code>的，按照插入顺序&lt;/li>
+&lt;li>Map.set方法支持链式操作&lt;/li>
+&lt;/ul>
+&lt;h2 id="map的迭代">Map的迭代&lt;/h2>
+&lt;h4 id="forof">for&amp;hellip;of&lt;/h4>
+&lt;p>同时迭代键值&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// 普通版本
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">map&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">Map&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">map&lt;/span>.&lt;span style="color:#a6e22e">set&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;1&amp;#34;&lt;/span>, &lt;span style="color:#ae81ff">1&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">map&lt;/span>.&lt;span style="color:#a6e22e">set&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;2&amp;#34;&lt;/span>, &lt;span style="color:#ae81ff">2&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">for&lt;/span> (&lt;span style="color:#66d9ef">const&lt;/span> [&lt;span style="color:#a6e22e">k&lt;/span>, &lt;span style="color:#a6e22e">v&lt;/span>] &lt;span style="color:#66d9ef">of&lt;/span> &lt;span style="color:#a6e22e">map&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">k&lt;/span>, &lt;span style="color:#a6e22e">v&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// 迭代器版本
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">map&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">Map&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">map&lt;/span>.&lt;span style="color:#a6e22e">set&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;1&amp;#34;&lt;/span>, &lt;span style="color:#ae81ff">1&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">map&lt;/span>.&lt;span style="color:#a6e22e">set&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;2&amp;#34;&lt;/span>, &lt;span style="color:#ae81ff">2&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">for&lt;/span> (&lt;span style="color:#66d9ef">const&lt;/span> [&lt;span style="color:#a6e22e">k&lt;/span>, &lt;span style="color:#a6e22e">v&lt;/span>] &lt;span style="color:#66d9ef">of&lt;/span> &lt;span style="color:#a6e22e">map&lt;/span>.&lt;span style="color:#a6e22e">entries&lt;/span>()) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">k&lt;/span>, &lt;span style="color:#a6e22e">v&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>迭代键&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// 普通版本
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">map&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">Map&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">map&lt;/span>.&lt;span style="color:#a6e22e">set&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;1&amp;#34;&lt;/span>, &lt;span style="color:#ae81ff">1&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">map&lt;/span>.&lt;span style="color:#a6e22e">set&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;2&amp;#34;&lt;/span>, &lt;span style="color:#ae81ff">2&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">for&lt;/span> (&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">k&lt;/span> &lt;span style="color:#66d9ef">of&lt;/span> &lt;span style="color:#a6e22e">map&lt;/span>.&lt;span style="color:#a6e22e">keys&lt;/span>()) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">k&lt;/span>, &lt;span style="color:#a6e22e">map&lt;/span>.&lt;span style="color:#a6e22e">get&lt;/span>(&lt;span style="color:#a6e22e">k&lt;/span>));
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// 迭代器版本
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">map&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">Map&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">map&lt;/span>.&lt;span style="color:#a6e22e">set&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;1&amp;#34;&lt;/span>, &lt;span style="color:#ae81ff">1&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">map&lt;/span>.&lt;span style="color:#a6e22e">set&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;2&amp;#34;&lt;/span>, &lt;span style="color:#ae81ff">2&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">for&lt;/span> (&lt;span style="color:#66d9ef">const&lt;/span> [&lt;span style="color:#a6e22e">k&lt;/span>] &lt;span style="color:#66d9ef">of&lt;/span> &lt;span style="color:#a6e22e">map&lt;/span>.&lt;span style="color:#a6e22e">entries&lt;/span>()) { &lt;span style="color:#75715e">// 解构赋值
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">k&lt;/span>, &lt;span style="color:#a6e22e">map&lt;/span>.&lt;span style="color:#a6e22e">get&lt;/span>(&lt;span style="color:#a6e22e">k&lt;/span>));
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>迭代值&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// 普通版本
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">map&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">Map&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">map&lt;/span>.&lt;span style="color:#a6e22e">set&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;1&amp;#34;&lt;/span>, &lt;span style="color:#ae81ff">1&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">map&lt;/span>.&lt;span style="color:#a6e22e">set&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;2&amp;#34;&lt;/span>, &lt;span style="color:#ae81ff">2&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">for&lt;/span> (&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">v&lt;/span> &lt;span style="color:#66d9ef">of&lt;/span> &lt;span style="color:#a6e22e">map&lt;/span>.&lt;span style="color:#a6e22e">values&lt;/span>()) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">v&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// 迭代器版本
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">map&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">Map&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">map&lt;/span>.&lt;span style="color:#a6e22e">set&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;1&amp;#34;&lt;/span>, &lt;span style="color:#ae81ff">1&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">map&lt;/span>.&lt;span style="color:#a6e22e">set&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;2&amp;#34;&lt;/span>, &lt;span style="color:#ae81ff">2&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">for&lt;/span> (&lt;span style="color:#66d9ef">const&lt;/span> [,&lt;span style="color:#a6e22e">v&lt;/span>] &lt;span style="color:#66d9ef">of&lt;/span> &lt;span style="color:#a6e22e">map&lt;/span>.&lt;span style="color:#a6e22e">entries&lt;/span>()) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">v&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>forEach()&lt;/p>
+&lt;blockquote>
+&lt;p>forEach方法的顺序是value, key，不是key, value!&lt;/p>
+&lt;/blockquote>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">map&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">Map&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">map&lt;/span>.&lt;span style="color:#a6e22e">set&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;1&amp;#34;&lt;/span>, &lt;span style="color:#ae81ff">1&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">map&lt;/span>.&lt;span style="color:#a6e22e">set&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;2&amp;#34;&lt;/span>, &lt;span style="color:#ae81ff">2&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">map&lt;/span>.&lt;span style="color:#a6e22e">forEach&lt;/span>((&lt;span style="color:#a6e22e">value&lt;/span>, &lt;span style="color:#a6e22e">key&lt;/span>) =&amp;gt; {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">value&lt;/span>, &lt;span style="color:#a6e22e">key&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>});
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="map与其他类型的转换">Map与其他类型的转换&lt;/h2>
+&lt;h3 id="map与object">Map与Object&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">obj&lt;/span> &lt;span style="color:#f92672">=&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">name&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#e6db74">&amp;#39;xialei&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">site&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#e6db74">&amp;#39;https://www.ddhigh.com&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>};
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">map&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">Map&lt;/span>(&lt;span style="color:#a6e22e">obj&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">map&lt;/span>);
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>执行报错&lt;code>TypeError: object is not iterable&lt;/code>，因为Object不是可迭代对象。&lt;/p>
+&lt;blockquote>
+&lt;p>可迭代对象：ES6新出的语法，对象或对象的原型链实现了Symbol.iterator方法，关于迭代器的内容将在下一篇文章中详细介绍&lt;/p>
+&lt;/blockquote>
+&lt;p>我们给Object.prototype添加属性方法来支持迭代：&lt;/p>
+&lt;blockquote>
+&lt;p>warning: 正式代码请谨慎修改原型链!&lt;/p>
+&lt;/blockquote>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">obj&lt;/span> &lt;span style="color:#f92672">=&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">name&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#e6db74">&amp;#39;xialei&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">site&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#e6db74">&amp;#39;https://www.ddhigh.com&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>};
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Object.&lt;span style="color:#a6e22e">prototype&lt;/span>[&lt;span style="color:#a6e22e">Symbol&lt;/span>.&lt;span style="color:#a6e22e">iterator&lt;/span>] &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">function&lt;/span> () { &lt;span style="color:#75715e">// Symbol.iterator可以理解为全局唯一的标识
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">keys&lt;/span> &lt;span style="color:#f92672">=&lt;/span> Object.&lt;span style="color:#a6e22e">keys&lt;/span>(&lt;span style="color:#66d9ef">this&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">let&lt;/span> &lt;span style="color:#a6e22e">keyIndex&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">next&lt;/span>() {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> (&lt;span style="color:#a6e22e">keyIndex&lt;/span> &lt;span style="color:#f92672">&amp;lt;&lt;/span> &lt;span style="color:#a6e22e">keys&lt;/span>.&lt;span style="color:#a6e22e">length&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">key&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">keys&lt;/span>[&lt;span style="color:#a6e22e">keyIndex&lt;/span>&lt;span style="color:#f92672">++&lt;/span>];
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> { &lt;span style="color:#a6e22e">value&lt;/span>&lt;span style="color:#f92672">:&lt;/span> [&lt;span style="color:#a6e22e">key&lt;/span>, &lt;span style="color:#a6e22e">obj&lt;/span>[&lt;span style="color:#a6e22e">key&lt;/span>]] }; &lt;span style="color:#75715e">// 迭代值
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> { &lt;span style="color:#a6e22e">done&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#66d9ef">true&lt;/span> }; &lt;span style="color:#75715e">// 迭代结束
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>};
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">map&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">Map&lt;/span>(&lt;span style="color:#a6e22e">obj&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">map&lt;/span>);
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="map与数组">Map与数组&lt;/h3>
+&lt;blockquote>
+&lt;p>只支持[[key, value]]这种二维数组。二维数组的每一个元素包含key和value两个子元素&lt;/p>
+&lt;/blockquote>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">map&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">Map&lt;/span>([[&lt;span style="color:#e6db74">&amp;#39;name&amp;#39;&lt;/span>, &lt;span style="color:#e6db74">&amp;#39;xialeistudio&amp;#39;&lt;/span>], [&lt;span style="color:#e6db74">&amp;#39;site&amp;#39;&lt;/span>, &lt;span style="color:#e6db74">&amp;#39;https://www.ddhigh.com&amp;#39;&lt;/span>]]);
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="map与map">Map与Map&lt;/h3>
+&lt;blockquote>
+&lt;p>由于Map是可迭代对象，因此可以作为参数传给Map构造函数&lt;/p>
+&lt;p>两个Map的元素是一样的，不是Map不相等，因为不是同一个对象&lt;/p>
+&lt;/blockquote>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">map&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">Map&lt;/span>([[&lt;span style="color:#e6db74">&amp;#39;name&amp;#39;&lt;/span>, &lt;span style="color:#e6db74">&amp;#39;xialeistudio&amp;#39;&lt;/span>], [&lt;span style="color:#e6db74">&amp;#39;site&amp;#39;&lt;/span>, &lt;span style="color:#e6db74">&amp;#39;https://www.ddhigh.com&amp;#39;&lt;/span>]]);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">map2&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">Map&lt;/span>(&lt;span style="color:#a6e22e">map&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">map&lt;/span> &lt;span style="color:#f92672">===&lt;/span> &lt;span style="color:#a6e22e">map2&lt;/span>); &lt;span style="color:#75715e">// false
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="map的合并">Map的合并&lt;/h3>
+&lt;blockquote>
+&lt;p>多个Map可以合并，相同key会被覆盖，规则为后面的覆盖前面的&lt;/p>
+&lt;/blockquote>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">map&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">Map&lt;/span>([
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [&lt;span style="color:#ae81ff">1&lt;/span>, &lt;span style="color:#ae81ff">1&lt;/span>],
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [&lt;span style="color:#ae81ff">2&lt;/span>, &lt;span style="color:#ae81ff">2&lt;/span>]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>]);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">map2&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">Map&lt;/span>([
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [&lt;span style="color:#ae81ff">1&lt;/span>, &lt;span style="color:#ae81ff">2&lt;/span>]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>]);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">map3&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">Map&lt;/span>([...&lt;span style="color:#a6e22e">map&lt;/span>, ...&lt;span style="color:#a6e22e">map2&lt;/span>]);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">map3&lt;/span>); &lt;span style="color:#75715e">// Map { 1 =&amp;gt; 2, 2 =&amp;gt; 2 }
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="总结">总结&lt;/h2>
+&lt;p>Map的出现解决了传统object无法直接解决的问题，更好地向标准编程语言靠近(标准编程语言一般会提供Map集合)，使用的坑也比较少（比如没有object作为key时转换为[object Object]的问题）。&lt;/p>
+&lt;p>&lt;img src="https://static.ddhigh.com/blog/2019-10-22-102654.jpg" alt="0.jpeg">&lt;/p></description></item><item><title>深入浅出ES6的Symbol类型</title><link>https://www.ddhigh.com/2019/10/28/symbol/</link><pubDate>Mon, 28 Oct 2019 12:00:00 +0000</pubDate><guid>https://www.ddhigh.com/2019/10/28/symbol/</guid><description>&lt;h2 id="本文内容">本文内容&lt;/h2>
+&lt;ul>
+&lt;li>JS基本数据类型种类&lt;/li>
+&lt;li>Symbol的主要用法, 全局Symbol的使用与检测&lt;/li>
+&lt;li>Symbol与其他基本类型转换时的规则&lt;/li>
+&lt;/ul>
+&lt;p>ES6引入了一种新的原始数据类型，表示独一无二的值，最大的用处是作为对象属性的唯一标识符。&lt;/p>
+&lt;p>至此，Javascript拥有6种基本数据类型和一种复杂数据类型。&lt;/p>
+&lt;h2 id="数据类型">数据类型&lt;/h2>
+&lt;p>基本类型&lt;/p>
+&lt;ul>
+&lt;li>string&lt;/li>
+&lt;li>number&lt;/li>
+&lt;li>boolean&lt;/li>
+&lt;li>undefined&lt;/li>
+&lt;li>null&lt;/li>
+&lt;li>symbol&lt;/li>
+&lt;/ul>
+&lt;p>复杂类型&lt;/p>
+&lt;ul>
+&lt;li>object&lt;/li>
+&lt;/ul>
+&lt;h2 id="用法">用法&lt;/h2>
+&lt;h3 id="基本语法">基本语法&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">Symbol&lt;/span>([&lt;span style="color:#a6e22e">description&lt;/span>])
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ul>
+&lt;li>description 可选的描述，一般用在调试的时候作为区分，但是 &lt;strong>不能用来访问Symbol&lt;/strong>。&lt;/li>
+&lt;li>该方法返回一个symbol值&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">let&lt;/span> &lt;span style="color:#a6e22e">s&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">Symbol&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;test&amp;#39;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">let&lt;/span> &lt;span style="color:#a6e22e">s2&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">Symbol&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;test&amp;#39;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">let&lt;/span> &lt;span style="color:#a6e22e">s3&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">Symbol&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;test&amp;#39;&lt;/span>); &lt;span style="color:#75715e">// TypeError
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">s&lt;/span> &lt;span style="color:#f92672">===&lt;/span> &lt;span style="color:#a6e22e">s2&lt;/span>); &lt;span style="color:#75715e">// false
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#66d9ef">typeof&lt;/span> &lt;span style="color:#a6e22e">s&lt;/span>); &lt;span style="color:#75715e">// symbol
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">s&lt;/span>.&lt;span style="color:#a6e22e">description&lt;/span>); &lt;span style="color:#75715e">// test
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ul>
+&lt;li>每次调用Symbol()返回的值都是独一无二的，不管描述是否一致。&lt;/li>
+&lt;li>&lt;code>Symbol&lt;/code>不支持&lt;code>new&lt;/code>调用&lt;/li>
+&lt;li>通过description属性可以获取到传入Symbol的描述性字符串&lt;/li>
+&lt;/ul>
+&lt;h3 id="全局单例的symbol">全局单例的Symbol&lt;/h3>
+&lt;p>使用Symbol.for()可以创建全局单例的symbol值，语法如下：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">Symbol&lt;/span>.&lt;span style="color:#66d9ef">for&lt;/span>([&lt;span style="color:#a6e22e">name&lt;/span>])
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ul>
+&lt;li>name 可选的描述，建议传入，否则name会作为undefined传入&lt;/li>
+&lt;/ul>
+&lt;ol>
+&lt;li>类似于单例模式，执行环境(一般是浏览器)内部维护了一个全局Symbol注册表，记录name和Symbol(name)关系&lt;/li>
+&lt;li>尝试通过name在该注册表查找对应symbol值，如果找到，则返回这个symbol值&lt;/li>
+&lt;li>如果没找到，则使用Symbol(name)创建一个symbol值，并记录该symbol值与name的关联关系，之后返回该symbol&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">name&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">Symbol&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;name&amp;#39;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">name2&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">Symbol&lt;/span>.&lt;span style="color:#66d9ef">for&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;name&amp;#39;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">name3&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">Symbol&lt;/span>.&lt;span style="color:#66d9ef">for&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;name&amp;#39;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">name&lt;/span> &lt;span style="color:#f92672">===&lt;/span> &lt;span style="color:#a6e22e">name2&lt;/span>); &lt;span style="color:#75715e">// false
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">name2&lt;/span> &lt;span style="color:#f92672">===&lt;/span> &lt;span style="color:#a6e22e">name3&lt;/span>); &lt;span style="color:#75715e">// true
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ul>
+&lt;li>
+&lt;p>全局Symbol映射关系中name是作为字符串来使用的，结构类似下面的代码：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">globalSymbols&lt;/span> &lt;span style="color:#f92672">=&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">name&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#a6e22e">Symbol&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;name&amp;#39;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>};
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;li>
+&lt;p>使用同样的字符串描述调用Symbol()和Symbol.for()获取到的symbol值不相等&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="查找是否为全局的单例symbol">查找是否为全局的单例Symbol&lt;/h3>
+&lt;p>使用Symbol.keyFor()可以检测给定的symbol值是否是全局单例的symbol(简单来说就是检测是否是Symbol.for()创建的)，语法如下：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">Symbol&lt;/span>.&lt;span style="color:#a6e22e">keyFor&lt;/span>(&lt;span style="color:#a6e22e">symbol&lt;/span>)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ul>
+&lt;li>symbol 必传， 待检测的symbol值&lt;/li>
+&lt;li>如果给定的symbol值是通过Symbol.for()得到的，该方法返回传入symbol的字符串描述&lt;/li>
+&lt;li>如果给定的symbol值不是通过Symbol.for()得到的，该方法返回undefined&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">s&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">Symbol&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;s1&amp;#39;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">s2&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">Symbol&lt;/span>.&lt;span style="color:#66d9ef">for&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;s2&amp;#39;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">Symbol&lt;/span>.&lt;span style="color:#a6e22e">keyFor&lt;/span>(&lt;span style="color:#a6e22e">s&lt;/span>)); &lt;span style="color:#75715e">// undefined
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">Symbol&lt;/span>.&lt;span style="color:#a6e22e">keyFor&lt;/span>(&lt;span style="color:#a6e22e">s2&lt;/span>)); &lt;span style="color:#75715e">// s2
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="symbol与jsonstringify">Symbol与JSON.stringify&lt;/h3>
+&lt;blockquote>
+&lt;p>Symbol类型的属性不会参与JSON的序列化&lt;/p>
+&lt;/blockquote>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">name&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">Symbol&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;name&amp;#39;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">obj&lt;/span> &lt;span style="color:#f92672">=&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [&lt;span style="color:#a6e22e">name&lt;/span>]&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#e6db74">&amp;#39;xialei&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">data&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>};
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">JSON&lt;/span>.&lt;span style="color:#a6e22e">stringify&lt;/span>(&lt;span style="color:#a6e22e">obj&lt;/span>)); &lt;span style="color:#75715e">// {&amp;#34;data&amp;#34;: 1}
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="symbol与for--in和for--of">Symbol与for &amp;hellip; in和for &amp;hellip; of&lt;/h3>
+&lt;blockquote>
+&lt;p>Symbol类型的属性不会出现在for &amp;hellip; in和for &amp;hellip; of循环中&lt;/p>
+&lt;/blockquote>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">name&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">Symbol&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;name&amp;#39;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">user&lt;/span> &lt;span style="color:#f92672">=&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [&lt;span style="color:#a6e22e">name&lt;/span>]&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#e6db74">&amp;#39;xialei&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">data&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>};
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">for&lt;/span>(&lt;span style="color:#66d9ef">let&lt;/span> &lt;span style="color:#a6e22e">i&lt;/span> &lt;span style="color:#66d9ef">in&lt;/span> &lt;span style="color:#a6e22e">user&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">i&lt;/span>, &lt;span style="color:#a6e22e">user&lt;/span>[&lt;span style="color:#a6e22e">i&lt;/span>]);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// 上述循环输出 data 1
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">for&lt;/span>(&lt;span style="color:#66d9ef">let&lt;/span> &lt;span style="color:#a6e22e">i&lt;/span> &lt;span style="color:#66d9ef">of&lt;/span> &lt;span style="color:#a6e22e">user&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">i&lt;/span>, &lt;span style="color:#a6e22e">user&lt;/span>[&lt;span style="color:#a6e22e">i&lt;/span>]);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// TypeError: user不是可迭代对象
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="symbol与objectkeys和objectgetownpropertynames">Symbol与Object.keys()和Object.getOwnPropertyNames()&lt;/h3>
+&lt;blockquote>
+&lt;p>Symbol类型的属性不会出现在Object.keys()和Object.getOwnPropertyNames()返回结果中&lt;/p>
+&lt;/blockquote>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">name&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">Symbol&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;name&amp;#39;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">user&lt;/span> &lt;span style="color:#f92672">=&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [&lt;span style="color:#a6e22e">name&lt;/span>]&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#e6db74">&amp;#39;xialei&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">data&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>};
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(Object.&lt;span style="color:#a6e22e">keys&lt;/span>(&lt;span style="color:#a6e22e">user&lt;/span>)); &lt;span style="color:#75715e">// [&amp;#34;data&amp;#34;]
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(Object.&lt;span style="color:#a6e22e">getOwnPropertyNames&lt;/span>(&lt;span style="color:#a6e22e">user&lt;/span>)); &lt;span style="color:#75715e">// [&amp;#34;data&amp;#34;]
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="symbol与objectgetownpropertysymbols">Symbol与Object.getOwnPropertySymbols()&lt;/h3>
+&lt;blockquote>
+&lt;p>Symbol类型的属性会出现在Object.Object.getOwnPropertySymbols()&lt;/p>
+&lt;/blockquote>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">name&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">Symbol&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;name&amp;#39;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">user&lt;/span> &lt;span style="color:#f92672">=&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [&lt;span style="color:#a6e22e">name&lt;/span>]&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#e6db74">&amp;#39;xialei&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">data&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>};
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(Object.Object.&lt;span style="color:#a6e22e">getOwnPropertySymbols&lt;/span>(&lt;span style="color:#a6e22e">user&lt;/span>)); &lt;span style="color:#75715e">// [Symbol(name)]
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="symbol数据类型转换">Symbol数据类型转换&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">name&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">Symbol&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;1&amp;#39;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">name&lt;/span> &lt;span style="color:#f92672">+&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>); &lt;span style="color:#75715e">// TypeError
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(Number(&lt;span style="color:#a6e22e">name&lt;/span>)); &lt;span style="color:#75715e">// 创建包装对象
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">name&lt;/span> &lt;span style="color:#f92672">+&lt;/span> &lt;span style="color:#e6db74">&amp;#39;1&amp;#39;&lt;/span>); &lt;span style="color:#75715e">// TypeError
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(String(&lt;span style="color:#a6e22e">name&lt;/span>)); &lt;span style="color:#75715e">// Symbol(1)
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#f92672">!!&lt;/span>&lt;span style="color:#a6e22e">name&lt;/span>); &lt;span style="color:#75715e">// true
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(Boolean(&lt;span style="color:#a6e22e">name&lt;/span>)); &lt;span style="color:#75715e">// true
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ul>
+&lt;li>symbol值不能转换为数字&lt;/li>
+&lt;li>symbol不能直接转换为字符串，需要通过String包装才能转化&lt;/li>
+&lt;li>symbol可以直接转换为boolean，转化后为true&lt;/li>
+&lt;/ul>
+&lt;h2 id="结尾">结尾&lt;/h2>
+&lt;ul>
+&lt;li>使用Symbol最大的注意事项应该是使用方括号语法去访问对应的属性，而不是字符串。&lt;/li>
+&lt;li>Symbol数据类型转换规范比较简单，大部分场景下也没用拿Symbol去做数据转换&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://static.ddhigh.com/blog/2019-10-22-102654.jpg" alt="0.jpeg">&lt;img src="https://static.ddhigh.com/blog/2021-02-25-112206-2.png" alt="image-20210225112205987">&lt;/p></description></item><item><title>不只是块级作用域，你不知道的let和const</title><link>https://www.ddhigh.com/2019/10/22/let-and-const/</link><pubDate>Tue, 22 Oct 2019 12:00:00 +0000</pubDate><guid>https://www.ddhigh.com/2019/10/22/let-and-const/</guid><description>&lt;p>ES6新增了两个重要的关键字&lt;code>let&lt;/code>和&lt;code>const&lt;/code>，相信大家都不陌生，但是包括我在内，在系统学习ES6之前也只使用到了【不存在变量提升】这个特性。&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>let&lt;/strong>声明一个块级作用域的本地变量&lt;/li>
+&lt;li>&lt;strong>const&lt;/strong>语句声明一个块级作用域的本地常量，不可以重新赋值&lt;/li>
+&lt;/ul>
+&lt;h2 id="支持块级作用域">支持块级作用域&lt;/h2>
+&lt;p>&lt;code>var&lt;/code>定义的变量会提升到整个函数作用域内，&lt;code>let/const&lt;/code>则支持块级作用域。&lt;/p>
+&lt;blockquote>
+&lt;p>块级作用域: 由&lt;code>{}&lt;/code>包裹的作用域（函数那种{}不算）&lt;/p>
+&lt;/blockquote>
+&lt;p>来看一个&lt;code>var&lt;/code>的例子:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-javascript" data-lang="javascript">&lt;span style="display:flex;">&lt;span>{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">var&lt;/span> &lt;span style="color:#a6e22e">a&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">a&lt;/span>);
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>此时输出1，因为&lt;code>var&lt;/code>没有块级作用域。&lt;/p>
+&lt;p>来看一个&lt;code>let&lt;/code>的例子(&lt;code>const&lt;/code>效果一样):&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-javascript" data-lang="javascript">&lt;span style="display:flex;">&lt;span>{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">let&lt;/span> &lt;span style="color:#a6e22e">a&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">a&lt;/span>);
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>此时会报错&lt;code>ReferenceError&lt;/code>，因为&lt;code>let/const&lt;/code>支持块级作用域，所以&lt;code>let&lt;/code>定义的&lt;code>a&lt;/code>只在&lt;code>{}&lt;/code>可以访问&lt;/p>
+&lt;h2 id="不存在变量提升">不存在变量提升&lt;/h2>
+&lt;p>与&lt;code>var&lt;/code>不同的是，&lt;code>let/const&lt;/code>声明的变量不存在变量提升，也就是说&lt;code>{}&lt;/code>对于&lt;code>let/const&lt;/code>是有效的。&lt;/p>
+&lt;p>来看一个&lt;code>var&lt;/code>的例子:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-javascript" data-lang="javascript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">a&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">var&lt;/span> &lt;span style="color:#a6e22e">a&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>此时会输出undefined，因为var声明的变量会提升到作用域顶部（只提升声明，不提升赋值）&lt;/p>
+&lt;p>来看一个&lt;code>let&lt;/code>的例子(&lt;code>const&lt;/code>效果也一样):&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-javascript" data-lang="javascript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">a&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">let&lt;/span> &lt;span style="color:#a6e22e">a&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>此时会报错&lt;code>ReferenceError&lt;/code>，因为&lt;code>let&lt;/code>不存在变量提升&lt;/p>
+&lt;h2 id="同一作用域内不可以重复声明">同一作用域内不可以重复声明&lt;/h2>
+&lt;p>同一作用域内&lt;code>let/const&lt;/code>不可以重复声明,&lt;code>var&lt;/code>可以。&lt;/p>
+&lt;p>来看一个&lt;code>var&lt;/code>的例子:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-javascript" data-lang="javascript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">var&lt;/span> &lt;span style="color:#a6e22e">a&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">var&lt;/span> &lt;span style="color:#a6e22e">a&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">2&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">a&lt;/span>);
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>此时会输出2，var是支持重复声明的，后面声明的值会覆盖前面声明的值。&lt;/p>
+&lt;p>来看一个&lt;code>let&lt;/code>的例子(&lt;code>const&lt;/code>效果也一样):&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-javascript" data-lang="javascript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">let&lt;/span> &lt;span style="color:#a6e22e">a&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">let&lt;/span> &lt;span style="color:#a6e22e">a&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">2&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">a&lt;/span>);
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>此时会报错&lt;code>SyntaxError&lt;/code>，因为同一作用域内&lt;code>let/const&lt;/code>不可以重复声明。&lt;/p>
+&lt;p>再来看一个不同作用域的例子：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-javascript" data-lang="javascript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">let&lt;/span> &lt;span style="color:#a6e22e">a&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">let&lt;/span> &lt;span style="color:#a6e22e">a&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">2&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">a&lt;/span>);
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>此时输出1，因为两者作用域不同&lt;/p>
+&lt;h2 id="暂存死区">暂存死区&lt;/h2>
+&lt;p>**暂存死区TDZ(Temporal Dead Zone)**是ES6中对作用域新的语义。&lt;/p>
+&lt;p>通过&lt;code>let/const&lt;/code>定义的变量直到执行他们的初始化代码时才被初始化。在初始化之前访问&lt;code>该变量&lt;/code>会导致&lt;code>ReferenceError&lt;/code>。该变量处于&lt;code>一个自作用域顶部到初始化代码&lt;/code>之间的“暂存死区”中。&lt;/p>
+&lt;p>来看以下例子：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-javascript" data-lang="javascript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">function&lt;/span> &lt;span style="color:#a6e22e">do_something&lt;/span>() {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">bar&lt;/span>); &lt;span style="color:#75715e">// undefined
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">foo&lt;/span>); &lt;span style="color:#75715e">// ReferenceError
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">var&lt;/span> &lt;span style="color:#a6e22e">bar&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">let&lt;/span> &lt;span style="color:#a6e22e">foo&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">2&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">do_something&lt;/span>();
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>var&lt;/code>定义的变量声明会提升到作用域顶部，所以&lt;code>bar&lt;/code>是undefined，而&lt;code>let&lt;/code>定义的变量&lt;code>从作用域开始到let foo=2&lt;/code>这中间都无法访问，访问会报错&lt;code>ReferenceError&lt;/code>&lt;/p>
+&lt;h2 id="暂存死区与typeof">暂存死区与typeof&lt;/h2>
+&lt;p>typeof检测var定义的变量或者检测不存在的变量时会返回undefined，如果检测暂存死区内的变量，会报错&lt;code>ReferenceError&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-javascript" data-lang="javascript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#66d9ef">typeof&lt;/span> &lt;span style="color:#a6e22e">foo&lt;/span>); &lt;span style="color:#75715e">// undefined
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#66d9ef">typeof&lt;/span> &lt;span style="color:#a6e22e">bar&lt;/span>); &lt;span style="color:#75715e">// ReferenceError
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#66d9ef">typeof&lt;/span> &lt;span style="color:#a6e22e">bar2&lt;/span>); &lt;span style="color:#75715e">// undefined
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">let&lt;/span> &lt;span style="color:#a6e22e">bar&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">var&lt;/span> &lt;span style="color:#a6e22e">bar2&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">2&lt;/span>;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>也就是说typeof去检测未初始化的&lt;code>let&lt;/code>变量时会报错，&lt;code>var&lt;/code>或者未声明的变量不会报错&lt;/p>
+&lt;h2 id="面试题">面试题&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-javascript" data-lang="javascript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">function&lt;/span> &lt;span style="color:#a6e22e">test&lt;/span>(){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">var&lt;/span> &lt;span style="color:#a6e22e">foo&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">33&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">let&lt;/span> &lt;span style="color:#a6e22e">foo&lt;/span> &lt;span style="color:#f92672">=&lt;/span> (&lt;span style="color:#a6e22e">foo&lt;/span> &lt;span style="color:#f92672">+&lt;/span> &lt;span style="color:#ae81ff">55&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">test&lt;/span>();
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>以上函数执行结果是什么?为什么?&lt;/p>
+&lt;blockquote>
+&lt;p>报错&lt;/p>
+&lt;p>&lt;code>{}&lt;/code>内有&lt;code>let&lt;/code>定义的&lt;code>foo&lt;/code>，所以存在暂存死区，&lt;code>(foo + 55)&lt;/code>这个表达式是在&lt;code>let foo&lt;/code>之前执行的(赋值时先执行等号右边的，执行完毕把结果赋给等号左边)，表达式执行的时候还没有初始化foo，所以报错&lt;code>ReferenceError&lt;/code>&lt;/p>
+&lt;/blockquote>
+&lt;h2 id="总结">总结&lt;/h2>
+&lt;ol>
+&lt;li>let/const支持函数作用域和块级作用域,var只有函数作用域&lt;/li>
+&lt;li>let/const不存在变量提升，var存在变量提升&lt;/li>
+&lt;li>let/const同一作用域内不可以重复声明，var可以重复声明&lt;/li>
+&lt;li>let/const存在暂存死区，var不存在&lt;/li>
+&lt;/ol>
+&lt;h2 id="面试题-1">面试题&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-javascript" data-lang="javascript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">let&lt;/span> &lt;span style="color:#a6e22e">b&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">function&lt;/span> &lt;span style="color:#a6e22e">test4&lt;/span>() {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">b&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">let&lt;/span> &lt;span style="color:#a6e22e">b&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">2&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">test4&lt;/span>()
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;img src="https://static.ddhigh.com/blog/2019-10-22-102654.jpg" alt="0.jpeg">&lt;/p></description></item></channel></rss>
