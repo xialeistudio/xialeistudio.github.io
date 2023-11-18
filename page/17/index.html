@@ -196,7 +196,7 @@ var _hmt = _hmt || [];
                 <span class="level-item has-text-grey">
                     
                     
-                    3 minutes read (About 454 words)
+                    a few seconds read (About 89 words)
                 </span>
                 
                 
@@ -205,16 +205,16 @@ var _hmt = _hmt || [];
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-            <a class="has-link-black-ter" href="/2017/07/30/spring-boot-pm2.html">使用pm2来保证Spring Boot应用稳定运行</a>
+            <a class="has-link-black-ter" href="/2017/07/30/spring-boot-exclude-null.html">Spring Boot JPA 返回json时排除Null字段</a>
             
         </h1>
         <div class="content">
             
                 
                 
-                <html><head></head><body><p>Spring Boot开发web应用就像开发普通的java程序一般简洁，因为其内嵌了web容易，启动的时候只需要一条命令<code>java -jar server.jar</code>即可，非常方便。<br>但是由此而来的问题是万一应用挂了怎么办？</p>
-<p>别担心，有pm2进程管理工具可以帮到你。</p>
-<h2 id="PM2简介"><a href="#PM2简介" class="headerlink" title="PM2简介"></a>PM2简介</h2><p>pm2原先是nodejs应用的进程管理工具，不过其良好的设计以及扩展性可以手动执行执行进程。</p>
+                <html><head></head><body><p>Spring Boot在返回JSON的时候默认会返回null字段，这个对客户端一般没什么作用，还会增加服务器带宽压力。使用如下配置可以屏蔽。</p>
+<p>在pojo对象上添加注解</p>
+<figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">@JsonInclude</span>(JsonInclude.Include.NON_NULL)</span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span> </span>{</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
                 
             
@@ -249,7 +249,7 @@ var _hmt = _hmt || [];
                 <span class="level-item has-text-grey">
                     
                     
-                    a few seconds read (About 89 words)
+                    3 minutes read (About 454 words)
                 </span>
                 
                 
@@ -258,16 +258,16 @@ var _hmt = _hmt || [];
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-            <a class="has-link-black-ter" href="/2017/07/30/spring-boot-exclude-null.html">Spring Boot JPA 返回json时排除Null字段</a>
+            <a class="has-link-black-ter" href="/2017/07/30/spring-boot-pm2.html">使用pm2来保证Spring Boot应用稳定运行</a>
             
         </h1>
         <div class="content">
             
                 
                 
-                <html><head></head><body><p>Spring Boot在返回JSON的时候默认会返回null字段，这个对客户端一般没什么作用，还会增加服务器带宽压力。使用如下配置可以屏蔽。</p>
-<p>在pojo对象上添加注解</p>
-<figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">@JsonInclude</span>(JsonInclude.Include.NON_NULL)</span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span> </span>{</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+                <html><head></head><body><p>Spring Boot开发web应用就像开发普通的java程序一般简洁，因为其内嵌了web容易，启动的时候只需要一条命令<code>java -jar server.jar</code>即可，非常方便。<br>但是由此而来的问题是万一应用挂了怎么办？</p>
+<p>别担心，有pm2进程管理工具可以帮到你。</p>
+<h2 id="PM2简介"><a href="#PM2简介" class="headerlink" title="PM2简介"></a>PM2简介</h2><p>pm2原先是nodejs应用的进程管理工具，不过其良好的设计以及扩展性可以手动执行执行进程。</p>
 
                 
             
@@ -615,7 +615,7 @@ var _hmt = _hmt || [];
                 <span class="level-item has-text-grey">
                     
                     
-                    2 minutes read (About 248 words)
+                    3 minutes read (About 438 words)
                 </span>
                 
                 
@@ -624,16 +624,16 @@ var _hmt = _hmt || [];
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-            <a class="has-link-black-ter" href="/2017/04/26/node-syslogd.html">使用NodeJs提供syslogd服务端</a>
+            <a class="has-link-black-ter" href="/2017/04/26/log4php-syslog.html">log4php使用syslog记录日志</a>
             
         </h1>
         <div class="content">
             
                 
                 
-                <html><head></head><body><p>syslog作为Linux发行版一个重要组件，相信大家都不陌生，而如果每台服务器都独立使用一份的话，不能做到日志统一管理，对于以后的日志查询不太方便。<br>syslog有标准的协议格式，这里不做讨论，有兴趣的可以基于协议的报文结构使用socket编程实现。</p>
-<h2 id="部署服务端"><a href="#部署服务端" class="headerlink" title="部署服务端"></a>部署服务端</h2><p>本文使用Nodejs来部署一台syslog服务端。</p>
-<ol>
+                <html><head></head><body><p>log4php是apache基金会下的一个开源项目，灵活、强大，已经有几个项目使用了log4php处理日志，目前遇到的问题是服务器太多的时候日志如何统一管理，本来想使用数据库存储。但是日志格式成了一个问题，而且不利于扩展，如果临时需要保存到文件，又要更改log4php的配置。<br>好在log4php提供了syslog的一个appender，可以将日志写入syslog;</p>
+<h2 id="log4php配置"><a href="#log4php配置" class="headerlink" title="log4php配置"></a>log4php配置</h2><figure class="highlight roboconf hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">log4php.rootLogger=INFO, stdout, stderr</span><br><span class="line">log4php.appender.stdout=LoggerAppenderConsole</span><br><span class="line">log4php.appender.stdout.layout=LoggerLayoutPattern</span><br><span class="line">log4php.appender.stdout.layout.ConversionPattern=%date{<span class="hljs-attribute">Y-m-d H</span>:i:s} [%-5p] %m%n</span><br><span class="line">log4php<span class="hljs-variable">.appender</span><span class="hljs-variable">.stdout</span><span class="hljs-variable">.threshold</span>=INFO</span><br><span class="line"></span><br><span class="line">log4php<span class="hljs-variable">.appender</span><span class="hljs-variable">.stderr</span>=LoggerAppenderSyslog</span><br><span class="line">log4php<span class="hljs-variable">.appender</span><span class="hljs-variable">.stderr</span><span class="hljs-variable">.ident</span>=qun<span class="hljs-variable">.hk-task</span></span><br><span class="line">log4php<span class="hljs-variable">.appender</span><span class="hljs-variable">.stderr</span><span class="hljs-variable">.priority</span>=ERR</span><br><span class="line">log4php<span class="hljs-variable">.appender</span><span class="hljs-variable">.stderr</span><span class="hljs-variable">.facility</span>=LOCAL0</span><br><span class="line">log4php<span class="hljs-variable">.appender</span><span class="hljs-variable">.stderr</span><span class="hljs-variable">.layout</span>=LoggerLayoutPattern</span><br><span class="line">log4php<span class="hljs-variable">.appender</span><span class="hljs-variable">.stderr</span><span class="hljs-variable">.layout</span><span class="hljs-variable">.ConversionPattern</span>=%date{Y-m-d H:i:s} %m%n</span><br><span class="line">log4php<span class="hljs-variable">.appender</span><span class="hljs-variable">.stderr</span><span class="hljs-variable">.threshold</span>=WARN</span><br></pre></td></tr></tbody></table></figure>
+<p>这里使用两个输出目的地,stdout输出到终端，stderr输出到syslod，log4php配置对应rsyslog的配置关系为：</p>
 
                 
             

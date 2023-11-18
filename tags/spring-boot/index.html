@@ -211,7 +211,7 @@ var _hmt = _hmt || [];
                 <span class="level-item has-text-grey">
                     
                     
-                    3 minutes read (About 454 words)
+                    a few seconds read (About 89 words)
                 </span>
                 
                 
@@ -220,16 +220,16 @@ var _hmt = _hmt || [];
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-            <a class="has-link-black-ter" href="/2017/07/30/spring-boot-pm2.html">使用pm2来保证Spring Boot应用稳定运行</a>
+            <a class="has-link-black-ter" href="/2017/07/30/spring-boot-exclude-null.html">Spring Boot JPA 返回json时排除Null字段</a>
             
         </h1>
         <div class="content">
             
                 
                 
-                <html><head></head><body><p>Spring Boot开发web应用就像开发普通的java程序一般简洁，因为其内嵌了web容易，启动的时候只需要一条命令<code>java -jar server.jar</code>即可，非常方便。<br>但是由此而来的问题是万一应用挂了怎么办？</p>
-<p>别担心，有pm2进程管理工具可以帮到你。</p>
-<h2 id="PM2简介"><a href="#PM2简介" class="headerlink" title="PM2简介"></a>PM2简介</h2><p>pm2原先是nodejs应用的进程管理工具，不过其良好的设计以及扩展性可以手动执行执行进程。</p>
+                <html><head></head><body><p>Spring Boot在返回JSON的时候默认会返回null字段，这个对客户端一般没什么作用，还会增加服务器带宽压力。使用如下配置可以屏蔽。</p>
+<p>在pojo对象上添加注解</p>
+<figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">@JsonInclude</span>(JsonInclude.Include.NON_NULL)</span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span> </span>{</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
                 
             
@@ -264,7 +264,7 @@ var _hmt = _hmt || [];
                 <span class="level-item has-text-grey">
                     
                     
-                    a few seconds read (About 89 words)
+                    3 minutes read (About 454 words)
                 </span>
                 
                 
@@ -273,16 +273,16 @@ var _hmt = _hmt || [];
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-            <a class="has-link-black-ter" href="/2017/07/30/spring-boot-exclude-null.html">Spring Boot JPA 返回json时排除Null字段</a>
+            <a class="has-link-black-ter" href="/2017/07/30/spring-boot-pm2.html">使用pm2来保证Spring Boot应用稳定运行</a>
             
         </h1>
         <div class="content">
             
                 
                 
-                <html><head></head><body><p>Spring Boot在返回JSON的时候默认会返回null字段，这个对客户端一般没什么作用，还会增加服务器带宽压力。使用如下配置可以屏蔽。</p>
-<p>在pojo对象上添加注解</p>
-<figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">@JsonInclude</span>(JsonInclude.Include.NON_NULL)</span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span> </span>{</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+                <html><head></head><body><p>Spring Boot开发web应用就像开发普通的java程序一般简洁，因为其内嵌了web容易，启动的时候只需要一条命令<code>java -jar server.jar</code>即可，非常方便。<br>但是由此而来的问题是万一应用挂了怎么办？</p>
+<p>别担心，有pm2进程管理工具可以帮到你。</p>
+<h2 id="PM2简介"><a href="#PM2简介" class="headerlink" title="PM2简介"></a>PM2简介</h2><p>pm2原先是nodejs应用的进程管理工具，不过其良好的设计以及扩展性可以手动执行执行进程。</p>
 
                 
             
