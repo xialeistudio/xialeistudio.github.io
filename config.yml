@@ -76,7 +76,7 @@ languages:
           url: /guestbook
           weight: 4
         - name: Dashboard
-          url: https://umami-beta-peach.vercel.app/share/zzRmEmKxhfX3fvhh/xialeistudio
+          url: https://umami-beta-peach.vercel.app/
           weight: 5
   zh:
     disabled: true
@@ -99,7 +99,7 @@ languages:
           url: /zh/guestbook
           weight: 5
         - name: 网站统计
-          url: https://umami-beta-peach.vercel.app/share/zzRmEmKxhfX3fvhh/xialeistudio
+          url: https://umami-beta-peach.vercel.app
           weight: 6
     permalinks:
       page:
