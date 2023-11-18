@@ -17,7 +17,7 @@ ext.zip
 extension=php_igbinary.dll extension=php_redis.dll 请注意顺序！
 重启web服务器就可以了。
 示例代码
-&lt;?php $redis = new Redis(); $redis->connect('127.0.0.1'); //存储一个值 $redis->set('name', 'zhangsan', 5); //存储多个值 $array = array( 'name' => '张三', 'sex' => 'male', 'age' => 10 ); $array_get=array( 'name','sex','age' ); $redis->mset($array); print_r($redis->mget($array_get)); 本文只起到抛砖引玉的作用，详细的使用有待大家挖掘~</div></article><article><div class=blog-card><h3><a href=/archives/>Archives</a></h3><p><small>January 1, 1&nbsp;· 0 words&nbsp;· 0 min</small><p></div></article><article><div class=blog-card><h3><a href=/guestbook/>Guestbook</a></h3><p><small>January 1, 1&nbsp;· 0 words&nbsp;· 0 min</small><p></div></article><article><div class=blog-card><h3><a href=/tags/>Tags</a></h3><p><small>January 1, 1&nbsp;· 0 words&nbsp;· 0 min</small><p></div></article></div><div class=paginator><a class=prev href=/page/31/>&larr;&nbsp;&nbsp;Pre Page</a></div></div></div></div><footer class=footer><p>&copy; 2014 - 2023 <a href=https://www.ddhigh.com>Lei Xia</a>
+&lt;?php $redis = new Redis(); $redis->connect('127.0.0.1'); //存储一个值 $redis->set('name', 'zhangsan', 5); //存储多个值 $array = array( 'name' => '张三', 'sex' => 'male', 'age' => 10 ); $array_get=array( 'name','sex','age' ); $redis->mset($array); print_r($redis->mget($array_get)); 本文只起到抛砖引玉的作用，详细的使用有待大家挖掘~</div></article></div><div class=paginator><a class=prev href=/page/31/>&larr;&nbsp;&nbsp;Pre Page</a></div></div></div></div><footer class=footer><p>&copy; 2014 - 2023 <a href=https://www.ddhigh.com>Lei Xia</a>
 Powered by
 <a href=https://gohugo.io/ rel=noopener target=_blank>Hugo️️</a>
 <a href=https://github.com/guangzhengli/hugo-theme-ladder rel=noopener target=_blank>Ladder</a>

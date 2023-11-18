@@ -1,0 +1,116 @@
+<!doctype html><html lang=en><head><meta name=viewport content="width=device-width,initial-scale=1"><title>sort</title>
+<meta charset=utf-8><meta name=description content="Ladder@Learning & Writing & Sharing"><meta name=author content="Lei Xia"><link rel=canonical href=https://www.ddhigh.com/tags/sort/><link rel=alternate type=application/rss+xml href=https://www.ddhigh.com/index.xml title="Lei Xia"><script async defer data-website-id=865c8529-0729-4cf5-88a9-448616abbcbb src=https://umami-beta-peach.vercel.app/xialeistudio></script><meta property="og:title" content="sort"><meta property="og:description" content="Learning & Writing & Sharing"><meta property="og:type" content="website"><meta property="og:url" content="https://www.ddhigh.com/tags/sort/"><meta name=twitter:card content="summary"><meta name=twitter:title content="sort"><meta name=twitter:description content="Learning & Writing & Sharing"><link rel=icon href=/img/favicon.ico sizes=16x16><link rel=apple-touch-icon href=/img/favicon.ico><link rel=manifest href=/img/favicon.ico><link rel=stylesheet href=https://cdn.staticfile.org/lxgw-wenkai-webfont/1.6.0/style.css><link rel=stylesheet href=/css/main.min.ff1bc260fafbfb440e10194d7d06d57eb5e85eed11d12d06255581262664204e.css integrity="sha256-/xvCYPr7+0QOEBlNfQbVfrXoXu0R0S0GJVWBJiZkIE4=" crossorigin=anonymous media=screen><link rel=stylesheet href=/scss/highlight/github-dark.min.min.66034289ee9a113219a2c4aae0a8bd2095ab255c832a42efcf5863f10814e7a1.css><script src=/js/highlight.min.min.894ca9c68afab956438c4926a0dc7f5293e04e08595bd27abdb123e94801f684.js></script><script>hljs.highlightAll()</script><script>(()=>{var t=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,e=localStorage.getItem("theme");t&&e===null&&(localStorage.setItem("theme","dark"),document.documentElement.setAttribute("data-dark-mode","")),t&&e==="dark"&&document.documentElement.setAttribute("data-dark-mode",""),e==="dark"&&document.documentElement.setAttribute("data-dark-mode","")})()</script></head><body><main class=wrapper><nav class=navigation><section class=container><a class=navigation-brand href=/>HOME
+</a><input type=checkbox id=menu-toggle>
+<label class="menu-button float-right" for=menu-toggle><span></span><span></span><span></span></label><ul class=navigation-list id=navigation-list><li class="navigation-item navigation-menu"><a class=navigation-link href=/archives>Archive</a></li><li class="navigation-item navigation-menu"><a class=navigation-link href=/tags>Tags</a></li><li class="navigation-item navigation-menu"><a class=navigation-link href=/guestbook>Guestbook</a></li><li class="navigation-item menu-separator"><span>|</span></li><li class="navigation-item navigation-social"><a class=navigation-link href=https://github.com/xialeistudio><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37.0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44.0 0020 4.77 5.07 5.07.0 0019.91 1S18.73.65 16 2.48a13.38 13.38.0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07.0 005 4.77 5.44 5.44.0 003.5 8.55c0 5.42 3.3 6.61 6.44 7A3.37 3.37.0 009 18.13V22"/></svg></a></li><li class="navigation-item navigation-dark"><button id=mode type=button aria-label="toggle user light or dark theme">
+<span class=toggle-dark><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></span><span class=toggle-light><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></span></button></li></ul></section></nav><div id=content><div class=blog-wrapper><div><div class=blog-list><article><div class=blog-card><h3><a href=/2021/09/18/gomonkey-private-method-stub/>gomonkey私有方法打桩</a></h3><p><small>September 18, 2021&nbsp;· 79 words&nbsp;· One minute</small><p>ApplyMethod基于反射实现，无法对私有方法打桩，本文将解决这一问题。
+被测代码 type Dao struct { } // 私有方法 func (d *Dao) method1() error { return errors.New("failed") } // Method 公有方法 func (d *Dao) Method() error { return d.method1() } method1是私有方法，使用ApplyMethod无法打桩 测试代码 func TestDao_Method(t *testing.T) { // 基于ApplyFunc可以读取到私有方法的地址并进行替换 g := gomonkey.ApplyFunc((*Dao).method1, func(_ *Dao) error { return errors.New("打桩返回的错误") }) defer g.Reset() d := Dao{} fmt.Println(d.Method()) } 执行 执行时需要添加-gcflags=-l禁止内联(内联后函数地址发生变化，某些函数会直接转化为语句调用)
+=== RUN TestDao_Method 打桩返回的错误 --- PASS: TestDao_Method (0.00s) PASS 注意事项 执行测试命令时添加-gcflags=-l ``gomonkey.ApplyFunc需要传递(*Dao).method1`(结构体指针对应的函数) 被测方法的接收器必须是结构体指针(因为第2步是传递指针) func (d *Dao) method1() error { return errors.</div></article><article><div class=blog-card><h3><a href=/2021/06/04/plantuml-tutorial/>PlanUML指南</a></h3><p><small>June 4, 2021&nbsp;· 501 words&nbsp;· 3 min</small><p>简介 统一建模语言（英语：Unified Modeling Language，缩写 UML）是非专利的第三代建模和规约语言。UML是一种开放的方法，用于说明、可视化、构建和编写一个正在开发的、面向对象的、软件密集系统的制品的开放方法
+编写UML的软件很多，但是基本是可视化的，需要手动编写，本文主要介绍基于文本的UML编写工具——PlantUML。
+安装 PlantUML有以下依赖：
+graphviz jdk Jetbrains IDE插件(可选，本文推荐) 安装graphviz 本文使用Homebrew安装graphviz，终端执行以下命令安装graphviz。
+brew install graphviz 安装完毕后查看版本信息。
+dot -v 输出如下：
+dot - graphviz version 2.47.0 (20210316.0004) libdir = "/usr/local/Cellar/graphviz/2.47.0/lib/graphviz" Activated plugin library: libgvplugin_dot_layout.6.dylib Using layout: dot:dot_layout Activated plugin library: libgvplugin_core.6.dylib Using render: dot:core Using device: dot:dot:core The plugin configuration file: /usr/local/Cellar/graphviz/2.47.0/lib/graphviz/config6 was successfully loaded. render : cairo dot dot_json fig gd json json0 map mp pic pov ps quartz svg tk visio vml vrml xdot xdot_json layout : circo dot fdp neato nop nop1 nop2 osage patchwork sfdp twopi textlayout : textlayout device : bmp canon cgimage cmap cmapx cmapx_np dot dot_json eps exr fig gd gd2 gif gv icns ico imap imap_np ismap jp2 jpe jpeg jpg json json0 mp pct pdf pic pict plain plain-ext png pov ps ps2 psd sgi svg svgz tga tif tiff tk vdx vml vmlz vrml wbmp webp xdot xdot1.</div></article><article><div class=blog-card><h3><a href=/2021/03/17/golang-function/>Golang程序设计——函数</a></h3><p><small>March 17, 2021&nbsp;· 509 words&nbsp;· 3 min</small><p>本文学习Go语言函数知识。函数是基本的代码块，用于执行一个任务。在Go语言中，函数可以接收数量不固定的参数，也可以返回多个结果。
+函数结构 在编程领域，函数向编译器和开发者提供了有关的信息，这些信息指明了函数该接收什么样的输入以及会产生什么样的输出。这些信息是通过函数第一行提供的，第一行称为函数签名。
+Go语言声明函数语法如下：
+func 函数名称(参数名 参数类型) (返回值名称 返回值类型) { // 函数体 return语句 } 参数名在参数类型前面，如a int，这一点和其他语言是不同的 函数参数数量可以不固定，但是只允许最后一个参数数量不固定，而且必须是同种类型 返回值名称不是必须的，但是参数名是必须写的 有返回值的函数，函数体内必须包含return语句 示例：函数定义与调用
+package main import "fmt" func sum(a, b int) int { return a + b } func main() { fmt.Printf("1+2=%d\n", sum(1, 2)) } 在Go语言中，如果多个参数或多个返回值类型相同，只需要在最后一个参数或返回值声明类型。
+例如下面的函数签名在Go语言中是合法的。
+func sum2(a, b int) (c, d int) 不定参数函数 不定参数也就是数量不固定的参数。例如C语言中的printf函数就是一个典型的不定参数函数。Go语言支持不定参数函数，但是不定参数的类型必须相同。要声明不定参数，需要使用3个点(&mldr;)。
+示例：不定参数的加法函数
+package main import "fmt" func sum(nums ...int) int { total := 0 for _, n := range nums { total += n } return total } func main() { fmt.</div></article><article><div class=blog-card><h3><a href=/2021/03/09/golang-data-container/>Golang程序设计——数据容器</a></h3><p><small>March 9, 2021&nbsp;· 511 words&nbsp;· 3 min</small><p>本文学习Go语言数据容器、包括数组、切片和映射。
+数组 数组是一个数据集合，常用于存储用数字索引的同类型数据。Go语言的数组调用函数时使用的是值传递，因此形参会拷贝一份实参的值。
+在Go语言中，声明数组需要同时指定长度和数据类型，数组长度是其类型的一部分，因此[5]int和[1]int是两种类型。
+Go语言可以对数组进行写入、读取、删除、遍历等操作。
+package main import "fmt" func main() { // 声明数组并指明长度，不初始化，因此a的5个元素为int类型的零值（0） var a [5]int // 声明数组并指明长度，并初始化4个元素，因此b的最后1个元素为int类型零值（0） var b = [5]int{1, 2, 3, 4} // 声明数组，不指明长度，编译器会根据值数量推导长度为4 var c = [...]int{1, 2, 3, 4} // 数组写入 a[0] = 0 a[1] = 1 // 数组读取 fmt.Printf("a[0]=%d\n", a[0]) // 数组删除（赋零值） a[0] = 0 // 数组的遍历 for index, value := range c { fmt.Printf("c[%d]=%d\n", index, value) } // 输出b fmt.Printf("b=%v\n", b) } 切片 使用切片 在Go语言中，数组是一个重要的类型，但是使用切片的情况更多。切片是底层数组中的一个连续片段，因此数组支持的特性切片也全部支持，必须顺序遍历、通过索引访问元素等等。</div></article><article><div class=blog-card><h3><a href=/2021/02/26/golang-basic/>Golang程序设计——基本语法</a></h3><p><small>February 26, 2021&nbsp;· 878 words&nbsp;· 5 min</small><p>本文学习Go语言基本语法，例如变量和常量、数据类型、运算符、条件语句、循环语句。
+变量和常量 变量和常量是计算机程序不可或缺的部分。本节将介绍如何在Go程序中声明、使用变量和常量、还将介绍声明方式和作用域。
+变量声明 在Go语言中，声明变量的方式有多种。在前面的文章介绍过，Go语言是一种静态类型语言，因此声明变量时必须指明其类型。
+例：声明string类型的变量。
+package main import "fmt" func main() { var s1 string = "Hello World" var s2 = "Hello World" var s3 string s3 = "Hello World" fmt.Println(s1, s2, s3) } 使用关键字var声明变量。
+如果变量类型可以通过值推导则不用声明类型。s2通过值可以推导类型为string类型。
+变量可以在声明后赋值，未赋值的变量值为该类型的零值。
+变量的类型很重要，因为这决定了可将什么值赋给该变量。例如，对于类型为string的变量，不能将整数赋值给它。将不匹配的值赋值给变量时，将导致编译错误。
+例：将string类型的值赋值给int类型的变量。
+package main import "fmt" func main() { var i int i = "Hello World" fmt.Println(i) } 编译该文件将导致编译错误。
+go build main.go # command-line-arguments ./main.go:7:4: cannot use "Hello World" (type untyped string) as type int in assignment 多变量声明 例：声明多个类型相同的变量并进行赋值（显式指定类型）。</div></article><article><div class=blog-card><h3><a href=/2021/02/25/fix-gittalk-github/>修复GitTalk出现Forbidden问题</a></h3><p><small>February 25, 2021&nbsp;· 107 words&nbsp;· One minute</small><p>GitTalk失效原因 对于所有自建博客的博主来书，GitTalk应该不陌生。GitTalk通过Github的OpenAPI以及issues功能实现社区评论，确实是一大亮点。
+今天在查看文章的时候发现评论区出现了Forbidden错误，通过检查网络请求发现获取Github Token时请求了以下链接
+https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token 通过查询GitTalk官方文档发现github.com的oauth是不允许跨域请求的，cors-anywhere.herokuapp.com是一个第三方提供的CORS代理服务，会默认放行所有CORS请求。目前由于该CORS代理服务遭到滥用，因此做了限制，导致GitTalk失效。
+解决方案 通过自己的nginx进行反向代理转发即可。
+修改gitalk初始化参数 笔者使用的是hexo+icarus主题，其他主题或者博客系统也是类似做法。
+编辑themes/icarus/layout/comment/gitalk.ejs
+&lt;script> var gitalk = new Gitalk({ clientID: '&lt;%= get_config('comment.client_id') %>', clientSecret: '&lt;%= get_config('comment.client_secret') %>', id: '&lt;%= md5(page.path) %>', repo: '&lt;%= get_config('comment.repo') %>', owner: '&lt;%= get_config('comment.owner') %>', admin: &lt;%- JSON.stringify(get_config('comment.admin'))%>, createIssueManually: &lt;%= get_config('comment.create_issue_manually', false) %>, distractionFreeMode: &lt;%= get_config('comment.distraction_free_mode', false) %>, proxy: '/github/login/oauth/access_token' // 新添加的 }) gitalk.render('comment-container') &lt;/script> nginx配置 编辑nginx配置，笔者的博客域名为www.ddhigh.com，因此需要限制CORS来源域名，否则将有盗用风险!
+location /github { add_header Access-Control-Allow-Origin www.ddhigh.com; add_header Access-Control-Allow-Methods 'GET, POST, OPTIONS'; add_header Access-Control-Allow-Headers 'DNT,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization'; if ($request_method = 'OPTIONS') { return 204; } proxy_pass https://github.</div></article><article><div class=blog-card><h3><a href=/2021/02/25/golang-get-started/>Go语言程序设计</a></h3><p><small>February 25, 2021&nbsp;· 229 words&nbsp;· 2 min</small><p>Go语言概述 语言历史 Go语言也称为Golang，是由Google公司开发的一种静态强类型、编译型、语言原生支持并发、具有垃圾回收功能的编程语言。起源于2007年，并在2009年正式对外发布。Go语言是非常年轻的一门语言，它的主要目标是“兼具 Python 等动态语言的开发速度和 C/C++等编译型语言的性能与安全性”。
+Go语言是编程语言设计的又一次尝试，是对类C语言的重大改进，它不但能让你访问底层操作系统，还提供了强大的网络编程和并发编程支持。Go语言的用途众多，可以进行网络编程、系统编程、并发编程等等。
+Go语言的推出，旨在不损失应用程序性能的情况下降低代码的复杂性，具有“部署简单、并发性好、语言设计良好、执行性能好”等优势。
+Go语言有时候被描述为“21世纪的C语言”。Go 从C语言继承了相似的表达式语法、控制流结构、基础数据类型、调用参数传值、指针等很多思想，还有C语言编译后的运行效率。
+Go语言没有类和继承的概念，通过组合来实现代码复用，同时它通过接口（interface）的概念来实现多态性。所以Go语言的面向对象编程和传统面向对象语言（如C++和Java）并不相同。
+Go语言有一个吉祥物，在会议、文档页面和博文中，大多会包含下图所示的 Go Gopher，这是才华横溢的插画家 Renee French 设计的，她也是 Go 设计者之一 Rob Pike 的妻子。
+语言特性 语法简单
+Go语言的设计思想类似Unix的“少即是多”。Go语言的语法规则严谨，没有歧义，这使得Go语言简单易学。Go语言保留了指针，但通常情况下禁止指针运算（保留unsafe包操作指针的能力）。此外，Go语言还内置切片和字典，在保留运行性能的同时也提高了开发效率。
+语言级别支持并发
+主流的并发模型有多进程模型、多线程模型。和主流多并发模型不同，Go语言采用了基于CSP的协程实现，并且在运行时做了更深度的优化处理。这使得语言级别上并发编程变得极为容易，无须处理回调、也无需关注线程切换，只需要添加一个go关键字即可。
+“通过通信去共享内存，而不是通过共享内存去通信”，go语言内置的channel数据结构配合go关键字实现并发通信及控制，这对于需要考虑内存可见性等问题的多线程模型来说，是一个良好的解决方案。
+高效的垃圾回收
+Go语言的每次升级，垃圾回收器必然是核心组件里修改最多的部分。从并发清理，到降低STW时间，直到Go的1.5版本实现并发标记，逐步引入三色标记和写屏障等等，都是为了能让垃圾回收在不影响用户逻辑的情况下更好地工作。从最开始的秒级别STW到目前的微秒级STW，Go语言开发团队一直在垃圾回收方面进行努力。
+静态链接
+静态编译的好处显而易见。将运行时、依赖库直接打包到可执行文件内部，简化了部署和发布操作，无须事先安装运行环境和下载诸多第三方库。虽然相比动态编译增加了可执行文件的大小，但是省去了依赖库的管理。随着微服务和容器化的发展，这也成为了Go语言的杀手锏之一，一个二进制文件即可运行服务。
+标准库
+功能完善、质量可靠的标准库为编程语言提供了有力的支持。在不借助第三方扩展的情况下，就可完成大部分基础功能开发，这大大降低了学习和使用成本。
+Go语言标准库可以说极为丰富。其中值得称道的是net/http，仅须简单几条语句就能实现一个高性能 Web Server。
+工具链
+完整的工具链对于项目开发极为重要。Go语言在此做得相当不错，无论是编译、格式化、错误检查、帮助文档，还是第三方包下载、更新都有对应的工具。
+值得一提的gofmt工具，为了解决开发者经常遇到的“代码风格不统一”的难题，官方直接通过gofmt指定一套标准，可以看出go语言在工程方面确实解决了许多实际问题。
+此外Go语言内置完整测试框架，其中包括单元测试、性能测试、代码覆盖率、数据竞争，以及用来调优的pprof，这些都是保障代码能正确而稳定运行的必备利器。
+Go语言应用场景 Go 语言从发布1.0版本以来备受众多开发者关注并得到广泛使用，Go 语言的简单、高效、并发特性吸引了众多传统语言开发者的加入，而且人数越来越多。
+鉴于Go语言的特点和设计的初衷，Go语言作为服务器编程语言，很适合处理日志、数据打包、虚拟机处理、文件系统、分布式系统、数据库代理等；网络编程方面，Go语言广泛应用于Web应用、API应用、下载应用等；除此之外，Go语言还适用于内存数据库和云平台领域，目前国外很多云平台都是采用Go开发。
+服务器编程。例如处理日志、数据打包、虚拟机处理、文件系统等。
+分布式系统、数据库代理器、中间件等。例如Etcd。
+网络编程。这一块目前应用最广，包括Web应用、API应用、下载应用等等。
+开发云平台。目前国内外很多云平台在采用Go开发。
+Go语言知名项目 Go发布之后，很多公司特别是云计算公司开始用Go重构他们的基础架构，很多基础设施都是直接采用Go进行了开发，诞生了许多热门项目。
+基础设施
+代表项目：docker、kubernetes、etcd、consul等。
+数据库
+代表项目：influxdb、cockroachdb等。
+微服务
+代表项目：go-kit、micro、kratos等。
+安装Go语言 Go语言可用于FreeBSD、Linux、Windows和macOS等操作系统。有关对这些平台的要求，请参与Go语言网站列出的系统需求。
+Go语言的官方网站为https://golang.org/，国内的用户可以访问https://golang.google.cn/dl/。通常情况下，按照本文的步骤进行安装不会出现问题，遇到安装问题的读者，请通过公众号与我联系。
+Windows系统 下载链接
+32位下载地址：https://golang.google.cn/dl/go1.15.8.windows-386.msi
+64位下载地址：https://golang.google.cn/dl/go1.15.8.windows-amd64.msi
+默认安装到C:\go目录下，建议不要更改安装目录。
+GOPATH配置
+安装完毕后需要配置GOPATH，GOPATH是Go语言用来存放第三方源码、二进制文件、类库等文件的路径。
+例如系统用户名为demo，则需要新建以下三个目录： C:\Users\demo\go\src 存放源码</div></article><article><div class=blog-card><h3><a href=/2021/02/06/go-wire-tutorial/>golang依赖注入工具wire指南</a></h3><p><small>February 6, 2021&nbsp;· 829 words&nbsp;· 4 min</small><p>wire与依赖注入 Wire 是一个的Golang依赖注入工具，通过自动生成代码的方式在编译期完成依赖注入，Java体系中最出名的Spring框架采用运行时注入，个人认为这是wire和其他依赖注入最大的不同之处。
+依赖注入(Dependency Injection)也称作控制反转(Inversion of Control)，个人给控制反转下的定义如下：
+当前对象需要的依赖对象由外部提供（通常是IoC容器），外部负责依赖对象的构造等操作，当前对象只负责调用，而不关心依赖对象的构造。即依赖对象的控制权交给了IoC容器。
+下面给出一个控制反转的示例，比如我们通过配置去创建一个数据库连接：
+// 连接配置 type DatabaseConfig struct { Dsn string } func NewDB(config *DatabaseConfig)(*sql.DB, error) { db,err := sql.Open("mysql", config.Dsn) if err != nil { return nil, err } // ... } fun NewConfig()(*DatabaseConfig,error) { // 读取配置文件 fp, err := os.Open("config.json") if err != nil { return nil,err } defer fp.Close() // 解析为Json var config DatabaseConfig if err:=json.NewDecoder(fp).Decode(&amp;config);err!=nil { return nil,err } return &amp;config, nil } func InitDatabase() { cfg, err:=NewConfig() if err!</div></article><article><div class=blog-card><h3><a href=/2021/01/12/golang-halia-get-started/>Golang组件化网络服务器框架Halia指南</a></h3><p><small>January 12, 2021&nbsp;· 614 words&nbsp;· 3 min</small><p>写在前面 在netty框架面世之前，几乎没有一个成熟的OOP/组件化规范指导网络服务器开发，一些常用的FrameDecoder,BusinessHandler等等组件紧密耦合在了项目当中，整个项目可以说扩展性比较差。
+netty的出现可以说是划时代的，基于OOP/组件化屏蔽了底层 BlockingIO/NonBlockingIO/AsynchrousIO之间的差异，各种组件可以无缝切换，网络服务器开发效率有了非常大的提高。
+通过阅读netty源码，以及核心组件的架构，基于Golang进行了实现，至此，Golang的Halia框架面世了！
+Halia特性 组件化/可扩展 Halia框架面向接口编程，并提供默认实现，同时内置常用的解码器，真正做到开箱即用。
+高性能 基于Golang原生网络库进行开发，无第三方依赖，性能有保障。
+易用性 Halia框架采用极简设计，没有冗余代码，并附带3个常用解码器示例，助您基于Halia快速开始开发。
+开源免费 Halia框架基于MIT开源协议发布，无论是商用以及非商用都可以免费使用。
+社区驱动 Halia框架托管于Github，任何人都可以贡献一臂之力。
+快速开始 接下来将演示如何开发一个时间回显服务器。
+客户端每隔1秒发送时间字符串给服务器，服务器回显该数据。
+公用代码 encoder.go 字符串编码器，将字符串转换为[]byte传输到下一个出站处理器
+package main import ( "halia/channel" ) type StringToByteEncoder struct{} // 编码器不处理处理，交由下一个处理器(也就是业务处理器)处理 func (e *StringToByteEncoder) OnError(c channel.HandlerContext, err error) { c.FireOnError(err) } func (e *StringToByteEncoder) Write(c channel.HandlerContext, msg interface{}) error { if str, ok := msg.(string); ok { // string才转换 return c.Write([]byte(str)) } return c.Write(msg) } func (e *StringToByteEncoder) Flush(c channel.</div></article><article><div class=blog-card><h3><a href=/2020/10/20/laravel-crontab-log-permission/>Laravel定时任务写入日志用户变为root导致Web进程无法写入日志问题</a></h3><p><small>October 20, 2020&nbsp;· 59 words&nbsp;· One minute</small><p>今天访问接口时返回 接口写入日志失败，通过排查后发现 storage/logs下面出现了root用户新建的日志，导致www用户无法写入日志。
+通过排查发现，crontab写入了laravel的定时任务命令。默认情况下，crontab的任务是使用root用户去执行的，因此laravel定时任务新建的文件属主自然成为了root。
+解决方法 解决方法就是使用指定用户来运行 crontab 任务。比如使用www用户来运行laravel的计划任务命令。
+使用下面的命令编辑www用户的定时任务。
+crontab -u www -e 例如写入下面的示例任务：
+* * * * * /usr/local/php/bin/php /data/wwwroot/laravel/artisan schedule:run >> /var/log/laravel-crontab.log 2>&amp;1 保存即可，等待系统运行任务。
+运行时错误 通过观察发现定时任务并没有成功运行，通过查询/var/log/cron日志发现如下的日志：
+(www) CMD (/usr/local/php/bin/php /data/wwwroot/laravel/artisan schedule:run >> /var/log/laravel-crontab.log 2>&amp;1) (CRON) ERROR chdir failed (/home/www): No such file or directory 可以看到，定时任务确实有执行，但是执行出错。出现这个问题的原因是www 用户没有主目录。
+解决方案如下：
+新建/home/www目录 将/home/www的用户属主改为www用户 相关命令如下：
+mkdir /home/www chown -R www:www /home/www 后续执行没有再出现错误。</div></article></div><div class=paginator><a class=prev href=/tags/sort/page/4/>&larr;&nbsp;&nbsp;Pre Page</a>
+<a class=next href=/tags/sort/page/6/>Next Page&nbsp;&nbsp;&rarr;</a></div></div></div></div><footer class=footer><p>&copy; 2014 - 2023 <a href=https://www.ddhigh.com>Lei Xia</a>
+Powered by
+<a href=https://gohugo.io/ rel=noopener target=_blank>Hugo️️</a>
+<a href=https://github.com/guangzhengli/hugo-theme-ladder rel=noopener target=_blank>Ladder</a>
+<a href=https://umami-beta-peach.vercel.app/ target=_blank>Statistics</a>
+️</p></footer><a href=#top aria-label="go to top" title="Go to Top (Alt + G)" class=top-link id=top-link accesskey=g><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.5376 22.7916C11.0152 22.7207 22.5795 21.1781 22.0978 10.4211 22.0536 9.43274 21.9303 8.53367 21.7387 7.71865M10.5376 22.7916C16.876 22.3728 20.0969 19.8899 21.5383 16.9142M10.5376 22.7916C9.7707 22.9055 8.97982 22.8964 8.19743 22.7725M21.7387 7.71865C21.4988 6.69828 21.1518 5.80967 20.7188 5.04257m1.0199 2.67608C22.6022 10.1105 23.0542 13.7848 21.5383 16.9142M20.7188 5.04257c-3.5504-6.28886-12.88753-4.410077-16.44303.0C2.88063 6.77451-.0433281 11.1668 1.38159 16.6571c.89322 3.4417 3.7911 5.6365 6.81584 6.1154M20.7188 5.04257c1.3509 1.89783 3.3111 6.34223 1.6353 10.37273M21.5383 16.9142C21.8737 16.4251 22.1428 15.9235 22.3541 15.4153M8.19743 22.7725C12.1971 23.4683 20.6281 22.971 22.3541 15.4153M14 10.945C13.3836 10.289 12.003 8.63215 11.2034 7.04814 11.1703 6.98257 11.0247 6.98456 10.9937 7.05061 10.5221 8.05496 9.07362 9.92941 8 10.945m3.0333-3.50056C10.9392 9.86549 11 15 12 17" stroke="currentcolor" stroke-linecap="round"/></svg></a><script>var mybutton=document.getElementById("top-link");window.onscroll=function(){document.body.scrollTop>800||document.documentElement.scrollTop>800?(mybutton.style.visibility="visible",mybutton.style.opacity="1"):(mybutton.style.visibility="hidden",mybutton.style.opacity="0")}</script><script>document.querySelectorAll("pre > code").forEach(e=>{const s=e.parentNode.parentNode,t=document.createElement("button");t.classList.add("copy-code"),t.innerHTML="Copy";function n(){t.innerHTML="Copied",setTimeout(()=>{t.innerHTML="Copy"},2e3)}t.addEventListener("click",t=>{if("clipboard"in navigator){navigator.clipboard.writeText(e.textContent),n();return}const s=document.createRange();s.selectNodeContents(e);const o=window.getSelection();o.removeAllRanges(),o.addRange(s);try{document.execCommand("copy"),n()}catch{}o.removeRange(s)}),e.parentNode.appendChild(t)})</script></main></body><script src=https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js integrity="sha512-N9IJRoc3LaP3NDoiGkcPa4gG94kapGpaA5Zq9/Dr04uf5TbLFU5q0o8AbRhLKUUlp8QFS2u7S+Yti0U7QtuZvQ==" crossorigin=anonymous referrerpolicy=no-referrer></script><script>const images=Array.from(document.querySelectorAll(".blog-content img"));images.forEach(e=>{mediumZoom(e,{margin:10,scrollOffset:40,container:null,template:null,background:"rgba(0, 0, 0, 0.5)"})})</script><script src=/main.min.6bb26b69159420159c74dc9e097b06a578ed2b68c701466a91a44a9632d851bd0af167a1b30012387b4c512b48ad9ad4d3394e04d77ae38d57e1920fe4ed34fe.js integrity="sha512-a7JraRWUIBWcdNyeCXsGpXjtK2jHAUZqkaRKljLYUb0K8WehswASOHtMUStIrZrU0zlOBNd6441X4ZIP5O00/g==" crossorigin=anonymous defer></script></html>
