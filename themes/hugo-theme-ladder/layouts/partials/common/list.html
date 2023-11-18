@@ -1,0 +1,26 @@
+<div class="blog-wrapper">
+    <div>
+        <div class="blog-list">
+            {{ $paginator := .Paginate (where site.RegularPages "Type" "in" site.Params.mainSections) }}
+            {{ range $paginator.Pages }}
+            <article>
+                <div class="blog-card">
+                    <h3><a href="{{ .RelPermalink }}">{{ .Params.title }}</a></h3>
+                    {{ partial "blog/meta.html" . }}
+                    {{ .Summary }}
+                </div>
+            </article>
+            {{ end -}}
+        </div>
+        {{ if gt $paginator.TotalPages 1 }}
+        <div class="paginator">
+            {{ if $paginator.HasPrev }}
+            <a class="prev" href="{{ $paginator.Prev.URL }}">&larr;&nbsp;&nbsp;Pre Page</a>
+            {{ end }}
+            {{ if $paginator.HasNext }}
+            <a class="next" href="{{ $paginator.Next.URL }}">Next Page&nbsp;&nbsp;&rarr;</a>
+            {{ end }}
+        </div>
+        {{ end }}
+    </div>
+</div>
