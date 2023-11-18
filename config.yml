@@ -1,0 +1,117 @@
+baseURL: 'https://www.ddhigh.com'
+title: Lei Xia
+theme: hugo-theme-ladder
+license: MIT
+licenselink: 'https://github.com/guangzhengli/hugo-theme-ladder/blob/master/LICENSE'
+homepage: 'https://www.ddhigh.com'
+defaultContentLanguage: 'en'
+paginate: 10
+params:
+  brand: HOME
+  avatarURL: /img/favicon.ico
+  author: Lei Xia
+  authorDescription: Sr. Software Engineer|Solution Architect
+  info: Learning & Writing & Sharing
+  description: 'Learning & Writing & Sharing'
+  favicon: /img/favicon.ico
+  sponsors:
+    buymeacoffee:
+      enable: true
+      url: https://www.buymeacoffee.com/leixia
+      buttom_api: https://img.buymeacoffee.com/button-api/?text=Buy%20me%20a%20coffee&emoji=&slug=iguangzhengli&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff
+      qr: /img/bmc_qr.png
+    wechat:
+      enable: true
+      qr: /img/wx_qr.png
+  mermaid:
+    enable: true
+  options:
+    showDarkMode: true
+    enableImgZooming: true
+    enableMultiLang: true
+  darkModeTheme: data-dark-mode
+  comments:
+    giscus:
+      enable: true
+      repo: xialeistudio/discussion
+      repo_id: R_kgDOKurTRA
+      category: General
+      category_id: DIC_kwDOKurTRM4CbCJt
+      mapping: pathname
+      position: bottom
+      lang: en # pick a language from https://github.com/giscus/giscus/tree/main/locales
+  analytics:
+    google:
+      # SiteVerificationTag: xxx
+    umami:
+      enable: true
+      website_id: 865c8529-0729-4cf5-88a9-448616abbcbb
+      url: https://umami-beta-peach.vercel.app/xialeistudio
+  guestbook:
+    title: Guestbook
+    description: Leave a comment below. It could be anything –- question, appreciation, information, or even humor.
+  social:
+    - name: GitHub
+      pre: >-
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+      url: 'https://github.com/xialeistudio'
+  rss:
+    text: RSS
+    url: /atom.xml
+  sponsor:
+    text: Sponsor
+    url: /sponsors
+languages:
+  en:
+    languageName: EN
+    menu:
+      main:
+        - name: Archive
+          url: /archives
+          weight: 2
+        - name: Tags
+          url: /tags
+          weight: 3
+        - name: Guestbook
+          url: /guestbook
+          weight: 4
+        - name: Dashboard
+          url: https://umami-beta-peach.vercel.app/share/zzRmEmKxhfX3fvhh/xialeistudio
+          weight: 5
+  zh:
+    disabled: true
+    languageName: 中
+    author: Lei Xia
+    authorDescription: Sr. Software Engineer|Solution Architect
+    info: Learning & Writing & Sharing
+    guestbook:
+      title: 留言板
+      description: 您的评论，会让该网站更精彩！
+    menu:
+      main:
+        - name: 归档
+          url: /zh/archives
+          weight: 3
+        - name: 标签
+          url: /zh/tags
+          weight: 4
+        - name: 留言板
+          url: /zh/guestbook
+          weight: 5
+        - name: 网站统计
+          url: https://umami-beta-peach.vercel.app/share/zzRmEmKxhfX3fvhh/xialeistudio
+          weight: 6
+    permalinks:
+      page:
+        posts: /zh/:year/:month/:day/:slug
+taxonomies:
+  series: series
+  tag: tags
+outputFormats:
+  RSS:
+    mediatype: application/rss
+    baseName: atom
+    notAlternative: true
+permalinks:
+  page:
+    posts: /:year/:month/:day/:slug
