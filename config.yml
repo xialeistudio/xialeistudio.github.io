@@ -8,7 +8,7 @@ defaultContentLanguage: 'en'
 paginate: 10
 params:
   brand: HOME
-  avatarURL: /img/favicon.ico
+#  avatarURL: /img/favicon.ico
   author: Lei Xia
   authorDescription: Sr. Software Engineer|Solution Architect
   info: Learning & Writing & Sharing
