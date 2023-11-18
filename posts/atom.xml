@@ -20543,7 +20543,7 @@ access_log syslog:server=127.0.0.1;
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>phpenmod sphinx
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>即可启用扩展。&lt;/p>
 &lt;h2 id="本文服务器环境">本文服务器环境&lt;/h2>
-&lt;p>Ubuntu16.04 Server + PHP7.0(使用apt安装)&lt;/p></description></item><item><title>NodeJs socket.io连接参数中传入查询字符串</title><link>https://www.ddhigh.com/2017/02/09/socket.io-connect-params/</link><pubDate>Thu, 09 Feb 2017 00:00:00 +0000</pubDate><guid>https://www.ddhigh.com/2017/02/09/socket.io-connect-params/</guid><description>&lt;p>socket.io一般会配合&lt;strong>room&lt;/strong>进行消息转发，目前我的做法如下:&lt;/p>
+&lt;p>Ubuntu16.04 Server + PHP7.0(使用apt安装)&lt;/p></description></item><item><title>NodeJs socket.io连接参数中传入查询字符串</title><link>https://www.ddhigh.com/2017/02/08/socket.io-connect-params/</link><pubDate>Wed, 08 Feb 2017 00:00:00 +0000</pubDate><guid>https://www.ddhigh.com/2017/02/08/socket.io-connect-params/</guid><description>&lt;p>socket.io一般会配合&lt;strong>room&lt;/strong>进行消息转发，目前我的做法如下:&lt;/p>
 &lt;ul>
 &lt;li>服务端&lt;/li>
 &lt;/ul>
