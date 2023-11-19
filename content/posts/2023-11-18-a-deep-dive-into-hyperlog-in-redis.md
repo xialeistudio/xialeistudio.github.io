@@ -1,5 +1,5 @@
 ---
-title: A deep dive into HyperLog in redis
+title: A deep dive into HyperLog in Redis
 slug: a-deep-dive-into-hyperlog-in-redis
 date: 2023-11-18
 categories:
