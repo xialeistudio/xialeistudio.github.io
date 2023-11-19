@@ -6,6 +6,24 @@ licenselink: 'https://github.com/guangzhengli/hugo-theme-ladder/blob/master/LICE
 homepage: 'https://www.ddhigh.com'
 defaultContentLanguage: 'en'
 paginate: 10
+
+taxonomies:
+  category: categories
+  series: series
+  tag: tags
+permalinks:
+  page:
+    posts: /:year/:month/:day/:slug
+outputFormats:
+  RSS:
+    mediatype: application/rss
+    baseName: atom
+    notAlternative: true
+sitemap:
+  changeFreq: ""
+  filename: sitemap.xml
+  priority: 0.5
+
 params:
   brand: HOME
 #  avatarURL: /img/favicon.ico
@@ -100,38 +118,32 @@ languages:
     disabled: true
     languageName: 中
     author: Lei Xia
-    authorDescription: Sr. Software Engineer|Solution Architect
-    info: Learning & Writing & Sharing
-    guestbook:
-      title: 留言板
-      description: 您的评论，会让该网站更精彩！
     menu:
       main:
+        - name: 分类
+          url: /zh/categories
+          weight: 1
         - name: 归档
           url: /zh/archives
-          weight: 3
+          weight: 2
         - name: 标签
           url: /zh/tags
-          weight: 4
+          weight: 3
         - name: 留言板
           url: /zh/guestbook
-          weight: 5
+          weight: 4
     permalinks:
       page:
         posts: /zh/:year/:month/:day/:slug
-taxonomies:
-  category: categories
-  series: series
-  tag: tags
-outputFormats:
-  RSS:
-    mediatype: application/rss
-    baseName: atom
-    notAlternative: true
-permalinks:
-  page:
-    posts: /:year/:month/:day/:slug
-sitemap:
-  changeFreq: ""
-  filename: sitemap.xml
-  priority: 0.5
+    params:
+      authorDescription: Sr. Software Engineer | Solution Architect
+      info: 抒写代码，尽享生活，筑就未来。
+      guestbook:
+        title: 留言板
+        description: 您的评论，会让该网站更精彩！
+      rss:
+        text: RSS订阅
+        url: /atom.xml
+      sponsor:
+        text: 赞赏
+        url: /sponsors
