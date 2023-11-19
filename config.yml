@@ -84,6 +84,9 @@ languages:
     languageName: EN
     menu:
       main:
+        - name: Categories
+          url: /categories
+          weight: 1
         - name: Archive
           url: /archives
           weight: 2
@@ -117,6 +120,7 @@ languages:
       page:
         posts: /zh/:year/:month/:day/:slug
 taxonomies:
+  category: categories
   series: series
   tag: tags
 outputFormats:
@@ -127,3 +131,7 @@ outputFormats:
 permalinks:
   page:
     posts: /:year/:month/:day/:slug
+sitemap:
+  changeFreq: ""
+  filename: sitemap.xml
+  priority: 0.5

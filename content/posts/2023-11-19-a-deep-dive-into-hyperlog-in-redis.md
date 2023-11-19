@@ -2,6 +2,8 @@
 title: A deep dive into HyperLog in redis
 slug: a-deep-dive-into-hyperlog-in-redis
 date: 2023-11-18
+categories:
+  - Engineering  
 tags: 
   - redis
 featured: true
@@ -27,7 +29,8 @@ and implement fast and memory-saving unique visitor counting.
 First, we can use Redis's HyperLog to create a structure that logs visitors, such as "visitors". 
 Whenever a visitor visits a website, we use the `PFADD` command to add its unique identifier (such as an IP address or user ID) to the HyperLog.
 Also, we can use `PFCOUNT` command to retrieve the amount of unique visitors.
-Here is an example:
+
+Here is an **redis-cli** example:
 
 ```bash
 127.0.0.1:6379> PFADD visitors visitor1 visitor2 visitor3 visitor4 visitor1 visitor5
@@ -36,6 +39,44 @@ Here is an example:
 (integer) 5
 127.0.0.1:6379> 
 ```
+
+Here is an **golang** example:
+
+```go
+package main
+
+import (
+	"fmt"
+
+	"github.com/go-redis/redis"
+)
+
+func main() {
+	// Create a Redis client
+	client := redis.NewClient(&redis.Options{
+		Addr:     "localhost:6379", // Redis server address and port
+		Password: "",               // Redis password (if any)
+		DB:       0,                // Redis database index
+	})
+
+	// Add visitors to HyperLogLog
+	err := client.PFAdd("visitors", "visitor1", "visitor2", "visitor3", "visitor4", "visitor1", "visitor5").Err()
+	if err != nil {
+		fmt.Println("PFAdd error:", err)
+		return
+	}
+
+	// Get the count of unique visitors from HyperLogLog
+	count, err := client.PFCount("visitors").Result()
+	if err != nil {
+		fmt.Println("PFCount error:", err)
+		return
+	}
+
+	fmt.Println("Unique visitors count:", count)
+}
+```
+
 
 ## Margin of Error
 When storing 100 million IP addresses using HyperLogLog, it's important to note that the algorithm introduces a small margin of error in estimating the cardinality (number of distinct IP addresses). The error rate of HyperLogLog is typically around **0.81%** (or 0.0081) of the estimated cardinality.
