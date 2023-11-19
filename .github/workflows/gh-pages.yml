@@ -25,10 +25,20 @@ jobs:
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
-        # If you're changing the branch from main,
-        # also change the `main` in `refs/heads/main`
-        # below accordingly.
-        if: github.ref == 'refs/heads/master'
         with:
           github_token: ${{ secrets.HEXO_DEPLOY }}
           publish_dir: ./public
+          publish_branch: gh-pages
+
+      - name: Install SSH Key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          known_hosts: 'just-a-placeholder-so-we-dont-get-errors'
+
+      - name: Adding Known Hosts
+        run: ssh-keyscan -H static.ddhigh.com >> ~/.ssh/known_hosts
+
+      - name: Deploy Server
+        run: |
+          ssh ec2-user@static.ddhigh.com "cd /var/www/xialeistudio.github.io && git pull" 

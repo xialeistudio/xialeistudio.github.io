@@ -8,8 +8,8 @@ tags:
   - redis
 featured: true
 ---
-In this article, we'll deep dive into an interesting and powerful feature of Redis: HyperLog.
-By understanding the working principles and application scenarios of these features, you'll be able to leverage Redis effectively to build high-performance and high-scalable applications.
+In this article, I'll deep dive into an interesting and powerful feature of Redis: HyperLog.
+By understanding the working principles and application scenarios of this feature, you'll be able to leverage Redis effectively to build high-performance and high-scalable applications.
 
 <!--more-->
 
