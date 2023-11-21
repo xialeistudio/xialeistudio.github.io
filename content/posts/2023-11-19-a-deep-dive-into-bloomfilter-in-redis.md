@@ -2,6 +2,8 @@
 title: A deep dive into Bloomfilter in Redis
 slug: a-deep-dive-into-bloomfilter-in-redis
 date: 2023-11-19
+series:
+  - Redis
 categories:
   - Engineering  
 tags: 

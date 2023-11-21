@@ -4,9 +4,6 @@
             <h1>{{ .Site.Params.author }}</h1>
             <small>{{ .Site.Params.authorDescription | markdownify }}</small>
             <p>{{ .Site.Params.info | markdownify }}</p>
-            <p><a href="{{ .Site.Params.rss.url | relURL }}">{{ .Site.Params.rss.text | markdownify }}</a> |
-                <a href="{{ .Site.Params.sponsor.url | relURL }}">{{ .Site.Params.sponsor.text | markdownify }}</a>
-            </p>
         </div>
 
         {{ if .Site.Params.avatarURL }}
@@ -17,4 +14,3 @@
     </div>
 
 </div>
-

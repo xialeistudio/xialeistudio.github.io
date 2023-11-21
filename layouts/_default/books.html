@@ -1,0 +1,20 @@
+{{ define "content" }}
+
+<div class="archive">
+
+    <div class="archive-content" style="width: 80rem;">
+        {{ range site.Params.books }}
+        <div class="archive-posts">
+            <div class="archive-entry">
+                <h3 class="archive-entry-title">{{ .title }}</h3>
+                <div class="archive-meta">
+                    <p> <small>Pubdate: {{.pubdate}} · ISBN: {{.isbn}}</small></p>
+                </div>
+                <a class="archive-link" aria-label="{{.title}}" target="_blank" href="{{.link}}"></a>
+            </div>
+        </div>
+        {{- end }}
+    </div>
+</div>
+
+{{- end }}
