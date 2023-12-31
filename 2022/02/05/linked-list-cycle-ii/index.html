@@ -31,7 +31,7 @@
 解释：链表中有一个环，其尾部连接到第一个节点。
 </code></pre><p>来源：力扣（LeetCode）
 链接：https://leetcode-cn.com/problems/linked-list-cycle-ii
-著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p><h2 id=思路>思路</h2><h3 id=哈希表>哈希表</h3><p>参考上一篇<a href=/2022/02/05/linked-list-cycle.md>环形链表</a>，可以利用哈希表存储节点，当再次遇到该节点时，该节点就是成环点。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#75715e>// 1. 遍历节点存入map
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p><h2 id=思路>思路</h2><h3 id=哈希表>哈希表</h3><p>参考上一篇<a href=/2022/02/05/linked-list-cycle.md target=_blank rel=noopener>环形链表</a>，可以利用哈希表存储节点，当再次遇到该节点时，该节点就是成环点。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#75715e>// 1. 遍历节点存入map
 </span></span></span><span style=display:flex><span><span style=color:#75715e>// 2. 如果节点已存在，则该节点是成环节点
 </span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>detectCycle</span>(<span style=color:#a6e22e>head</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>ListNode</span>) <span style=color:#f92672>*</span><span style=color:#a6e22e>ListNode</span> {
 </span></span><span style=display:flex><span>	<span style=color:#a6e22e>m</span> <span style=color:#f92672>:=</span> make(<span style=color:#66d9ef>map</span>[<span style=color:#f92672>*</span><span style=color:#a6e22e>ListNode</span>]<span style=color:#66d9ef>struct</span>{})

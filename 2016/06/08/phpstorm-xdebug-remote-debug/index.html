@@ -44,7 +44,7 @@ xdebug.remote_host=【调试终端所在的公网IP】
 xdebug.remote_port=9000
 xdebug.remote_autostart=1
 xdebug.idekey=&#34;PHPSTORM&#34;
-</code></pre><p>本文中调试终端为<strong>PHPSTORM</strong>，所以本地公网IP为<strong>remote_host</strong>的值<br><a href=http://www.ip138.com>查看本地公网IP</a><br>更改配置完毕后终端执行:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>lnmp php-fpm reload
+</code></pre><p>本文中调试终端为<strong>PHPSTORM</strong>，所以本地公网IP为<strong>remote_host</strong>的值<br><a href=http://www.ip138.com target=_blank rel=noopener>查看本地公网IP</a><br>更改配置完毕后终端执行:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>lnmp php-fpm reload
 </span></span></code></pre></div><h2 id=ide配置>IDE配置</h2><h3 id=配置server>配置server</h3><p>Setting => Languages & Frameworks=>PHP=>Servers，
 <img src=https://og5r5kasb.qnssl.com/wp-content/uploads/2016/06/QQ%E5%9B%BE%E7%89%8720160608121441.png alt=Server配置></p><h3 id=配置dbgp-proxy>配置DBGp Proxy</h3><p>Settings => Languages & Frameworks => PHP => Debug => DBGp Proxy
 <img src=https://og5r5kasb.qnssl.com/wp-content/uploads/2016/06/QQ%E5%9B%BE%E7%89%8720160608121659.png alt="DBGp Proxy"><br>其中红框处需要和服务器的xdebug配置文件一致。</p><h2 id=路由端口映射>路由端口映射</h2><p>由于大部分朋友公司都有路由器的，所以本机IP是局域网IP，这里需要将路由器的端口映射到本地。具体规则如下：</p><pre tabindex=0><code>服务器Xdebug端口（路由器公网端口） =&gt; 本地端口，笔者这里把路由器的9000端口映射到本地的9000端口。

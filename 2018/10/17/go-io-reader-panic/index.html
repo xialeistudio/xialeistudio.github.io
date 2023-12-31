@@ -28,7 +28,7 @@ soiMarker = 0xd8 // Start Of Image. 可以看到判断了第1个字节如果不�
 </span></span></code></pre></div><p>soiMarker常量</p><pre tabindex=0><code>	soiMarker  = 0xd8 // Start Of Image.
 </code></pre><p>可以看到判断了第1个字节如果不是<code>0xff</code>或者第2个字节不是<code>0xd8</code>就报错。打印图片的bytes前几个字节如下：</p><pre tabindex=0><code>[]byte{0xff, 0xd8, 0xff, 0xe0, 0x0, 0x10}
 </code></pre><p>可以看到第1个字节和第2个字节满足要求，按理说不会出现这个问题，无奈只能求助于Google,搜索了
-<code>invalid JPEG format: missing SOI marker</code>关键字出现一篇<a href=https://stackoverflow.com/questions/46022262/covert-base64-string-to-jpg>Covert base64 string to JPG</a>引起了我的注意。
+<code>invalid JPEG format: missing SOI marker</code>关键字出现一篇<a href=https://stackoverflow.com/questions/46022262/covert-base64-string-to-jpg target=_blank rel=noopener>Covert base64 string to JPG</a>引起了我的注意。
 打开看到答案</p><blockquote><p>You need to create a new reader for each decoder:</p></blockquote><pre tabindex=0><code>pngI, errPng := png.Decode(bytes.NewReader(unbased))
 
 // ...
