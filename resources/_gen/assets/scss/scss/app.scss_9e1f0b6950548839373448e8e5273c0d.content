@@ -432,7 +432,7 @@ img {
 .home {
   width: 100%;
   height: 100%;
-  max-width: 80rem;
+  max-width: 100rem;
   margin: 1rem auto; }
   .home .info {
     display: flex;
@@ -501,7 +501,7 @@ img {
 .navigation {
   height: 6rem;
   margin: 1rem auto;
-  max-width: 80rem;
+  max-width: 100rem;
   width: 100%;
   padding-left: 2rem;
   padding-right: 2rem; }
@@ -627,7 +627,7 @@ img {
 
 .blog-wrapper {
   position: relative;
-  max-width: 80rem;
+  max-width: 100rem;
   margin: auto;
   padding: 1.5rem; }
   .blog-wrapper .blog-card {
@@ -640,7 +640,7 @@ img {
 
 .blog-single {
   position: relative;
-  max-width: 80rem;
+  max-width: 100rem;
   margin: auto;
   padding: 1.5rem; }
   .blog-single .blog-toc {
@@ -739,7 +739,7 @@ img {
 .tags {
   width: 100%; }
   .tags .tags-list {
-    width: 80rem;
+    width: 100rem;
     margin-left: auto;
     margin-right: auto; }
     @media only screen and (max-width: 768px) {
@@ -764,7 +764,7 @@ img {
 .archive {
   width: 100%; }
   .archive .archive-content {
-    width: 60rem;
+    width: 80rem;
     margin-left: auto;
     margin-right: auto; }
     @media only screen and (max-width: 768px) {
@@ -820,7 +820,7 @@ img {
 
 .guestbook {
   position: relative;
-  max-width: 80rem;
+  max-width: 100rem;
   margin: auto;
   padding: 1.5rem; }
 
@@ -831,7 +831,7 @@ figure {
   margin-left: auto;
   margin-right: auto;
   border-left: 0 !important;
-  max-width: 80rem; }
+  max-width: 100rem; }
 
 .toggle:hover {
   cursor: pointer; }
@@ -902,7 +902,7 @@ figure {
 
 .card-wrapper {
   position: relative;
-  max-width: 80rem;
+  max-width: 100rem;
   margin: auto;
   padding: 1.5rem; }
   .card-wrapper a:link {
@@ -926,7 +926,7 @@ figure {
     .card-wrapper .card .card-img {
       width: auto;
       height: auto;
-      max-height: 80rem; }
+      max-height: 100rem; }
     .card-wrapper .card .card-title {
       display: inline-block;
       margin-left: 2rem; }

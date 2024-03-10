@@ -100,9 +100,9 @@ languages:
         - name: Archive
           url: /archives
           weight: 2
-        - name: Tags
-          url: /tags
-          weight: 3
+        # - name: Tags
+        #   url: /tags
+        #   weight: 3
         - name: Books
           url: /books
           weight: 4

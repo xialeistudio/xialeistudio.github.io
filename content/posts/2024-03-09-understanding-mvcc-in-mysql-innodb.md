@@ -1,0 +1,127 @@
+---
+title: Understanding MVCC In MySQL InnoDB
+date: 2024-03-09T18:26:50+08:00
+tags: 
+  - mysql
+categories: 
+  - Engineering  
+series:
+  - How it works
+featured: true
+---
+In MySQL, MVCC (Multi-Version Concurrency Control) refers to the concurrency control mechanism used by the InnoDB storage engine. It provides concurrent access to data and ensures data consistency and isolation in a multi-user environment.
+
+<!--more-->
+
+InnoDB stores multiple versions of each record through the "undo log," which provides historical records for reading and allows different transactions to access different data versions. During a transaction, the client can only see the records committed before the start of the current transaction and the modifications made within the current transaction.
+
+## Isolation Level
+
+There are 4 isolation level in MySQL:
+
+**READ UNCOMMITTED** 
+
+The current transaction can read uncommitted data. This data may be rolled back, so we refer to the uncommitted data as dirty data, and this problem is called a **dirty read**.
+
+**READ COMMITTED**
+
+The current transaction can indeed read committed data, so there is no dirty read problem. However, if the current transaction reads the same record multiple times, it may retrieve different data. This is because, during the current transaction, there may be other transactions that have modified and committed the record. This problem is known as an **unrepeatable read**.
+
+**REPEATABLE READ**
+
+A transaction reads a particular set of records multiple times, it will always get the same values for those records, even if other transactions modify or commit changes to those records during the course of the transaction. However, if we execute a `SELECT COUNT(*) FROM {table_name}` multiple times in current transaction, we may see different result, this problem is called a **phantom read**.
+
+*REPEATABLE READ is the default isolation level in MySQL InnoDB.*
+
+**SERIALIZABLE**
+
+All transactions are forcibly sorted, which solves the problems of dirty reads, unrepeatable reads, and phantom reads. However, the Serializable isolation level has poor performance, so it is rarely used in practice.
+
+*MVCC only works in the **READ COMMITTED** and **REPEATABLE READ** isolation levels because **READ UNCOMMITTED** always reads the latest record and **SERIALIZABLE** adds locks to all records it reads.*
+
+## Concepts
+
+Let's explore some concepts in MVCC. Afterward, we'll learn how MVCC works.
+
+**Transaction ID**
+
+When a new transaction starts, it will get an auto-incremented transaction ID, through which InnoDB can know the execution order of each transaction.
+
+**Hidden Columns**
+
+Each record in InnoDB has two hidden columns `db_trx_id` and `db_roll_pointer`, if there is no primary key or non-null unique key in the table, InnoDB will generate a hidden auto-increment `db_row_id`.
+
+| Column Name     | Required | Desc                                                         |
+| --------------- | -------- | ------------------------------------------------------------ |
+| db_trx_id       | Y        | records the transaction id of the transaction that operates the row |
+| db_roll_pointer | Y        | undo pointer, point to the undo log of the row               |
+
+*InnoDB records `insert`, `update`, and `delete` operations in the undo log. However, for the `delete` operation, InnoDB actually records it as an `update` operation, which is often referred to as a "soft-delete." Instead of physically deleting the row, InnoDB updates a "deleted flag" to indicate that the row is logically deleted. This approach allows for the retrieval of the previous version of the row, which would not be possible if the row were permanently deleted.*
+
+**Current Read**
+
+Some SQL statements, such as `SELECT * ... LOCK IN SHARE MODE(shared lock)`, `SELECT * ... FOR UPDATE(exclusive lock)`, `UPDATE`, `DELETE`, and `INSERT`, are considered current reading operations. These operations read the latest version of the row. During the reading process, InnoDB ensures that no other transaction can modify the current records by adding locks to them.
+
+**Snapshot Read**
+
+`SELECT` statements without locks are considered snapshot reading operations, reading the required versions via MVCC. Snapshot reading is lock-free, effectively improving transaction performance.
+
+In essence, snapshots are a way of exchanging space for time.
+
+**Undo Log**
+
+Undo log stores the previous version of modified row. Before the row is modified, InnoDB copys the current version to Undo log, which has the following functionalities:
+
++ If the transaction rollback, InnoDB can find a previous version to restore.
++ If the current version is invisible for the current transaction, it'll find a visible version through undo log.
+
+As mentiond before, InnoDB records delete operation as update operation, so there are only two types of operation in Undo Log:
+
++ Insert undo log: Generated by the insert operation, only used for transaction rollback, and can be discarded immediately after the transaction is commited.
++ Update undo log: Generated by the update operation, not only used for transaction rollback, but also used for snapshot reading. Only when the log record is not involved in the snapshot used by database, the corresponding undo log will be deleted.
+
+**Version Chain**
+
+When multiple transactions operate on the same record at the same time, each transaction will generate a new version, and these versions form a linked list through `db_roll_pointer`, called a version chain.
+
+![version chain](https://raw.githubusercontent.com/xialeistudio/picture-bucket/main/blog/version%20chain.jpg)
+
+**Read View**
+
+ReadView is a record snapshot generated when a transaction executes a snapshot read.
+
+Read View stores all active transactions before the start of current transaction. There are 4 important properties:
+
++ trx_ids: the active transaction ids (don't include the current transaction and commited transactions).
++ low_limit_id: the next transaction id being allocated.
++ up_limit_id: the minimal transaction id in trx_ids, if trx_ids are empty, up_limit_id equals to low_limit_id.
++ creator_trx_id: the transaction id generating the read view.
+
+The following rules are used to check whether a record should be visible to the current transaction:
+
++ If the transaction ID of the accessed version = creator_trx_id, it means that the current transaction accesses the record that it has modified, then this version is visible to the current transaction.
++ If the transaction ID of the accessed version < up_limit_id, it means that the transaction that generated this version has been committed before the current transaction generates ReadView, so this version can be accessed by the current transaction.
++ If the transaction ID of the accessed version > low_limit_id value, it means that the transaction that generated this version was opened after the current transaction generated ReadView, so this version cannot be accessed by the current transaction.
++ If the transaction ID of the accessed version is between up_limit_id and m_low_limit_id, then you need to determine whether the transaction ID of the version is in the trx_ids list. If it is, it means that the transaction generated by this version is still active when the ReadView is created, and this version cannot visited.
++ If not, it means that the transaction that generated this version when the ReadView was created has been committed and this version can be accessed.
+
+## Implementation
+
+When we understand the key concepts, the implementation of MVCC is very simple.
+
+### Query Process
+
+1. Obtain the transaction's own transaction ID, known as trx_id. (This is not obtained during a SELECT statement but rather when the transaction starts, i.e., when BEGIN is executed.)
+2. Retrieve the ReadView (which is generated only during a SELECT statement).
+3. In the database table, if data is found, compare it with the transaction version number in the ReadView.
+4. If it does not comply with the visibility rules of the ReadView, the historical snapshot in the Undo Log is needed until the data that complies with the rules is returned.
+
+InnoDB implements MVCC through the combination of ReadView and Undo Log. The Undo Log stores historical snapshots, while the ReadView's visibility rules help determine the visibility of the current version of the data.
+
+### Different between Read Commited and Repeatable Read
+
+The only difference between the Read Committed (RC) and Repeatable Read (RR) isolation levels is that **in RC, a new ReadView is created for each SELECT statement**, while in RR, the ReadView is created only for the first SELECT statement within a transaction.
+
+## Conclusion
+
+In conclusion, MySQL's MVCC mechanism, implemented by the InnoDB storage engine, provides concurrency control and data consistency in multi-user environments. It utilizes transaction IDs, hidden columns, read and snapshot views, undo logs, and version chains to manage concurrent access to data. The Read Committed and Repeatable Read isolation levels differ in how they create ReadViews, with Read Committed creating a new ReadView for each SELECT statement and Repeatable Read creating it only for the first SELECT statement within a transaction. MVCC ensures transaction isolation and allows for consistent and efficient read operations in MySQL.
