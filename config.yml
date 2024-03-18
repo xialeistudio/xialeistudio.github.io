@@ -113,9 +113,6 @@ languages:
         - name: Guestbook
           url: /en/guestbook
           weight: 5
-    permalinks:
-      page:
-        posts: /en/:year/:month/:day/:slug
     params:
       books:
       - title: ThinkPHP5 in action
@@ -150,9 +147,6 @@ languages:
         - name: 留言板
           url: /guestbook
           weight: 5
-    permalinks:
-      page:
-        posts: /:year/:month/:day/:slug
     params:
       authorDescription: Sr. Software Engineer | Solution Architect
       info:  | 
