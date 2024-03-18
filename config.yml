@@ -4,7 +4,7 @@ theme: hugo-theme-ladder
 license: MIT
 licenselink: 'https://github.com/guangzhengli/hugo-theme-ladder/blob/master/LICENSE'
 homepage: 'https://www.ddhigh.com'
-defaultContentLanguage: 'en'
+defaultContentLanguage: 'zh'
 paginate: 10
 
 taxonomies:
@@ -32,8 +32,8 @@ params:
   info: |
     Writing code, Enjoying life, Building future
     
-    [RSS](/atom.xml) ·
-    [Sponsor](/sponsors)
+    [RSS](/en/atom.xml) ·
+    [Sponsor](/en/sponsors)
   description: 'Learning & Writing & Sharing'
   favicon: /img/favicon.ico
   sponsors:
@@ -42,9 +42,12 @@ params:
       url: https://www.buymeacoffee.com/leixia
       buttom_api: https://img.buymeacoffee.com/button-api/?text=Buy%20me%20a%20coffee&emoji=&slug=iguangzhengli&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff
       qr: /img/bmc_qr.png
-    wechat:
-      enable: true
-      qr: /img/wx_qr.png
+    # wechat:
+    #   enable: true
+    #   qr: /img/wx_qr.png
+    # alipay:
+    #   enable: true
+    #   qr: /img/alipay_qr.png
   mermaid:
     enable: true
   options:
@@ -94,45 +97,93 @@ params:
       isbn: 9787302555957
 languages:
   en:
+    contentDir: content/en
     languageName: EN
     menu:
       main:
-        - name: Archive
-          url: /archives
+        - name: Archives
+          url: /en/archives
           weight: 2
-        # - name: Tags
-        #   url: /tags
-        #   weight: 3
+        - name: Tags
+          url: /en/tags
+          weight: 3
         - name: Books
-          url: /books
+          url: /en/books
           weight: 4
         - name: Guestbook
-          url: /guestbook
+          url: /en/guestbook
           weight: 5
+    permalinks:
+      page:
+        posts: /en/:year/:month/:day/:slug
+    params:
+      books:
+      - title: ThinkPHP5 in action
+        link: http://www.tup.tsinghua.edu.cn/booksCenter/book_08079501.html
+        pubdate: 2019.10
+        isbn: 9787302533580
+
+      - title: ThinkPHP in action
+        link: http://www.tup.tsinghua.edu.cn/booksCenter/book_06867701.html
+        pubdate: 2017.04
+        isbn: 9787302466529
+
+      - title: Node.js & Webpack in action
+        link: http://www.tup.tsinghua.edu.cn/booksCenter/book_07638401.html
+        pubdate: 2020.08
+        isbn: 9787302555957
   zh:
-    disabled: true
+    contentDir: content/zh
     languageName: 中
     author: Lei Xia
     menu:
       main:
-        - name: 分类
-          url: /zh/categories
-          weight: 1
         - name: 归档
-          url: /zh/archives
+          url: /archives
           weight: 2
         - name: 标签
-          url: /zh/tags
-          weight: 3
-        - name: 留言板
-          url: /zh/guestbook
+          url: /tags
+          weight: 2
+        - name: 出版物
+          url: /books
           weight: 4
+        - name: 留言板
+          url: /guestbook
+          weight: 5
     permalinks:
       page:
-        posts: /zh/:year/:month/:day/:slug
+        posts: /:year/:month/:day/:slug
     params:
       authorDescription: Sr. Software Engineer | Solution Architect
-      info: 抒写代码，尽享生活，筑就未来。
+      info:  | 
+        抒写代码，尽享生活，筑就未来。
+        
+        [订阅](/atom.xml) ·
+        [赞赏](/sponsors)
       guestbook:
         title: 留言板
         description: 您的评论，会让该网站更精彩！
+      books:
+      - title: ThinkPHP5实战
+        link: http://www.tup.tsinghua.edu.cn/booksCenter/book_08079501.html
+        pubdate: 2019.10
+        isbn: 9787302533580
+
+      - title: ThinkPHP实战
+        link: http://www.tup.tsinghua.edu.cn/booksCenter/book_06867701.html
+        pubdate: 2017.04
+        isbn: 9787302466529
+
+      - title: Node.js & Webpack实战
+        link: http://www.tup.tsinghua.edu.cn/booksCenter/book_07638401.html
+        pubdate: 2020.08
+        isbn: 9787302555957
+      sponsors:
+        buymeacoffee:
+          enable: false
+        wechat:
+          enable: true
+          qr: /img/wx_qr.png
+        alipay:
+          enable: true
+          qr: /img/alipay_qr.png
