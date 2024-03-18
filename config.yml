@@ -102,16 +102,13 @@ languages:
     menu:
       main:
         - name: Archives
-          url: /en/archives
+          url: /archives
           weight: 2
-        - name: Tags
-          url: /en/tags
-          weight: 3
         - name: Books
-          url: /en/books
+          url: /books
           weight: 4
         - name: Guestbook
-          url: /en/guestbook
+          url: /guestbook
           weight: 5
     params:
       books:
@@ -137,9 +134,6 @@ languages:
       main:
         - name: 归档
           url: /archives
-          weight: 2
-        - name: 标签
-          url: /tags
           weight: 2
         - name: 出版物
           url: /books
