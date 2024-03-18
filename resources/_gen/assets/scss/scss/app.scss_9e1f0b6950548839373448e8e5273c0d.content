@@ -445,7 +445,6 @@ img {
     .home .info .intro {
       margin-top: 0.5rem;
       float: left;
-      height: 20rem;
       width: 70%; }
       .home .info .intro h1 {
         margin-bottom: 0;
