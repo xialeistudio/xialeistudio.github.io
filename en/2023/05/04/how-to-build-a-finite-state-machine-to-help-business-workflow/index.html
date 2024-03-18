@@ -1,0 +1,200 @@
+<!doctype html><html lang=en><head><meta name=viewport content="width=device-width,initial-scale=1"><title>How to build a Finite State Machine to help business workflow</title>
+<meta charset=utf-8><meta name=description content="Ladder@This is the first article written in English. In this article, I&rsquo;ll share how to build a Finite State Machine(FSM) to help business workflow transition, such as auditing.
+
+A finite-state machine (FSM) or finite-state automaton (FSA, plural: automata), finite automaton, or simply a state machine, is a mathematical model of computation. It is an abstract machine that can be in exactly one of a finite number of states at any given time. The FSM can change from one state to another in response to some inputs; the change from one state to another is called a transition
+Wikipedia - Finite-state machine
+"><meta name=author content="Lei Xia"><link rel=canonical href=https://www.ddhigh.com/en/2023/05/04/how-to-build-a-finite-state-machine-to-help-business-workflow/><link rel=alternate type=application/rss+xml href=https://www.ddhigh.com//index.xml title="Lei Xia"><meta property="og:title" content="How to build a Finite State Machine to help business workflow"><meta property="og:description" content="This is the first article written in English. In this article, I&rsquo;ll share how to build a Finite State Machine(FSM) to help business workflow transition, such as auditing.
+
+A finite-state machine (FSM) or finite-state automaton (FSA, plural: automata), finite automaton, or simply a state machine, is a mathematical model of computation. It is an abstract machine that can be in exactly one of a finite number of states at any given time. The FSM can change from one state to another in response to some inputs; the change from one state to another is called a transition
+Wikipedia - Finite-state machine
+"><meta property="og:type" content="article"><meta property="og:url" content="https://www.ddhigh.com/en/2023/05/04/how-to-build-a-finite-state-machine-to-help-business-workflow/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2023-05-04T17:16:00+00:00"><meta property="article:modified_time" content="2023-05-04T17:16:00+00:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="How to build a Finite State Machine to help business workflow"><meta name=twitter:description content="This is the first article written in English. In this article, I&rsquo;ll share how to build a Finite State Machine(FSM) to help business workflow transition, such as auditing.
+
+A finite-state machine (FSM) or finite-state automaton (FSA, plural: automata), finite automaton, or simply a state machine, is a mathematical model of computation. It is an abstract machine that can be in exactly one of a finite number of states at any given time. The FSM can change from one state to another in response to some inputs; the change from one state to another is called a transition
+Wikipedia - Finite-state machine
+"><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://www.ddhigh.com/en/posts/"},{"@type":"ListItem","position":2,"name":"How to build a Finite State Machine to help business workflow","item":"https://www.ddhigh.com/en/2023/05/04/how-to-build-a-finite-state-machine-to-help-business-workflow/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"How to build a Finite State Machine to help business workflow","name":"How to build a Finite State Machine to help business workflow","description":"This is the first article written in English. In this article, I\u0026rsquo;ll share how to build a Finite State Machine(FSM) to help business workflow transition, such as auditing.\nA finite-state machine (FSM) or finite-state automaton (FSA, plural: automata), finite automaton, or simply a state machine, is a mathematical model of computation. It is an abstract machine that can be in exactly one of a finite number of states at any given time. The FSM can change from one state to another in response to some inputs; the change from one state to another is called a transition\nWikipedia - Finite-state machine\n","keywords":[],"articleBody":"This is the first article written in English. In this article, I’ll share how to build a Finite State Machine(FSM) to help business workflow transition, such as auditing.\nA finite-state machine (FSM) or finite-state automaton (FSA, plural: automata), finite automaton, or simply a state machine, is a mathematical model of computation. It is an abstract machine that can be in exactly one of a finite number of states at any given time. The FSM can change from one state to another in response to some inputs; the change from one state to another is called a transition\nWikipedia - Finite-state machine\nSituation Imaging you are working at a E-Commercial company, if you want to publish a new product to production environment, you need to submit a AuditRequest first, then your manager will accept or reject this AuditRequest. If your manager accept, you can publish your product, so anyone can see it.\nIn this case, the state of the product transited many times, show as the following graph.\nstateDiagram direction LR [*] --\u003e Unpublished Unpublished --\u003e Auditing: Apply auditing Auditing --\u003e AuditAccepted: Accept Auditing --\u003e AuditRejected: Reject AuditAccepted --\u003e Published: Publish AuditRejected --\u003e [*] Published --\u003e [*] Definition of Terms FromState: the current state of an entity. In the example above, at the beginning, the state is Unpublished. Event: the event to transit to next state. There is an Apply auditing event triggered by you. ToState: the next state. There is an Auditing state. Action: action to execute. This action will change the state of the product from FromState and ToState, and action allows to do more things such as sending a HTTP request to an audit platform. Transition: A record represents from FromState to ToState through Event with Action. Implementing How to implement this FSM? Essentially, we can think of it as a directed cyclic graph, each Node is a state, each edge is a event. So we can use some data structure and algorithm of graph to implement this.\nThe following are the implementation steps:\nConfig the state machine, usually we can query the all the transitions from database, so we can config it freely. Make a Map","wordCount":"785","inLanguage":"en","datePublished":"2023-05-04T17:16:00Z","dateModified":"2023-05-04T17:16:00Z","author":{"@type":"Person","name":"Lei Xia"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.ddhigh.com/en/2023/05/04/how-to-build-a-finite-state-machine-to-help-business-workflow/"},"publisher":{"@type":"Organization","name":"Lei Xia","logo":{"@type":"ImageObject","url":"https://www.ddhigh.com/favicon.ico"}}}</script><link rel=icon href=/img/favicon.ico sizes=16x16><link rel=apple-touch-icon href=/img/favicon.ico><link rel=manifest href=/img/favicon.ico><link rel=stylesheet href=https://cdn.staticfile.org/lxgw-wenkai-webfont/1.6.0/style.css><link rel=stylesheet href=/css/main.min.51e9bcb176a7201d92208afac35520340a49e35312fd5d4cf5fdb9f10da064ef.css integrity="sha256-Uem8sXanIB2SIIr6w1UgNApJ41MS/V1M9f258Q2gZO8=" crossorigin=anonymous media=screen><link rel=stylesheet href=/scss/highlight/github-dark.min.min.66034289ee9a113219a2c4aae0a8bd2095ab255c832a42efcf5863f10814e7a1.css><script src=/js/highlight.min.min.c607d6febd16934a82eb61d3a896ed9d869f54373cc63ce95864ed5488fe3128.js></script><script>hljs.highlightAll()</script><script>$darkModeInit.Content|safeJS</script><script async src="https://www.googletagmanager.com/gtag/js?id=G-EC3XLVSGKV"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-EC3XLVSGKV")</script></head><body><main class=wrapper><nav class=navigation><section class=container><a class=navigation-brand href=/en>HOME
+</a><input type=checkbox id=menu-toggle>
+<label class="menu-button float-right" for=menu-toggle><span></span><span></span><span></span></label><ul class=navigation-list id=navigation-list><li class="navigation-item navigation-menu"><a class=navigation-link href=/en/archives>Archives</a></li><li class="navigation-item navigation-menu"><a class=navigation-link href=/en/tags>Tags</a></li><li class="navigation-item navigation-menu"><a class=navigation-link href=/en/books>Books</a></li><li class="navigation-item navigation-menu"><a class=navigation-link href=/en/guestbook>Guestbook</a></li><li class="navigation-item menu-separator"><span>|</span></li><li class="navigation-item navigation-social"><a class=navigation-link href=https://github.com/xialeistudio><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37.0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44.0 0020 4.77 5.07 5.07.0 0019.91 1S18.73.65 16 2.48a13.38 13.38.0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07.0 005 4.77 5.44 5.44.0 003.5 8.55c0 5.42 3.3 6.61 6.44 7A3.37 3.37.0 009 18.13V22"/></svg></a></li><li class="navigation-item navigation-dark"><button id=mode type=button aria-label="toggle user light or dark theme">
+<span class=toggle-dark><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></span>
+<span class=toggle-light><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></span></button></li><li class="navigation-item navigation-language"><a href=https://www.ddhigh.com/>中</a></li></ul></section></nav><div id=content><article class=blog-single><header class=blog-title><h1>How to build a Finite State Machine to help business workflow</h1></header><p><small>May 4, 2023&nbsp;· 785 words&nbsp;· 4 min</small><p><div class=blog-toc><nav id=TableOfContents><ul><li><a href=#situation>Situation</a></li><li><a href=#definition-of-terms>Definition of Terms</a></li><li><a href=#implementing>Implementing</a></li><li><a href=#conclusion>Conclusion</a></li><li><a href=#reference>Reference</a></li></ul></nav></div><section class=blog-content><p>This is the first article written in English. In this article, I&rsquo;ll share how to build a Finite State Machine(FSM) to help business workflow transition, such as auditing.</p><blockquote><p>A <strong>finite-state machine</strong> (<strong>FSM</strong>) or <strong>finite-state automaton</strong> (<strong>FSA</strong>, plural: <em>automata</em>), <strong>finite automaton</strong>, or simply a <strong>state machine</strong>, is a mathematical <a href=https://en.wikipedia.org/wiki/Model_of_computation target=_blank rel=noopener>model of computation</a>. It is an <a href=https://en.wikipedia.org/wiki/Abstract_machine target=_blank rel=noopener>abstract machine</a> that can be in exactly one of a finite number of <em><a href=https://en.wikipedia.org/wiki/State_%28computer_science%29 target=_blank rel=noopener>states</a></em> at any given time. The FSM can change from one state to another in response to some <a href=https://en.wikipedia.org/wiki/Input_%28computer_science%29 target=_blank rel=noopener>inputs</a>; the change from one state to another is called a <em>transition</em></p><p><em><strong>Wikipedia</strong></em> - <strong><a href=https://en.wikipedia.org/wiki/Finite-state_machine target=_blank rel=noopener>Finite-state machine</a></strong></p></blockquote><h2 id=situation>Situation</h2><p>Imaging you are working at a E-Commercial company, if you want to publish a new product to production environment, you need to submit a <strong>AuditRequest</strong> first, then your manager will accept or reject this AuditRequest. If your manager accept, you can publish your product, so anyone can see it.</p><p>In this case, the state of the product transited many times, show as the following graph.</p><pre class=mermaid>stateDiagram
+direction LR
+[*] --> Unpublished
+Unpublished --> Auditing: Apply auditing
+Auditing --> AuditAccepted: Accept
+Auditing --> AuditRejected: Reject
+AuditAccepted --> Published: Publish
+AuditRejected --> [*]
+Published --> [*]
+</pre><h2 id=definition-of-terms>Definition of Terms</h2><ul><li>FromState: the current state of an entity. In the example above, at the beginning, the state is <strong>Unpublished</strong>.</li><li>Event: the event to transit to next state. There is an <strong>Apply auditing</strong> event triggered by you.</li><li>ToState: the next state. There is an <strong>Auditing</strong> state.</li><li>Action: action to execute. This action will change the state of the product from <strong>FromState</strong> and <strong>ToState</strong>, and action allows to do more things such as sending a HTTP request to an audit platform.</li><li>Transition: A record represents from <strong>FromState</strong> to <strong>ToState</strong> through <strong>Event</strong> with <strong>Action</strong>.</li></ul><h2 id=implementing>Implementing</h2><p>How to implement this FSM? Essentially, we can think of it as a directed cyclic graph, each Node is a state, each edge is a event. So we can use some data structure and algorithm of graph to implement this.</p><p>The following are the implementation steps:</p><ol><li>Config the state machine, usually we can query the all the transitions from database, so we can config it freely.</li><li>Make a <code>Map&lt;FromState, Map&lt;Event, Pair&lt;ToState, List&lt;Action>>>></code> map, it represents the graph.</li><li>Query current state of product and event, we can get event name from <strong>requestURI</strong>.</li><li>Find the next <code>Pair</code> in Map, by current state and event.</li></ol><p>The following is the implementation of the java language.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span>	<span style=color:#75715e>// Action.java</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>package</span> org.example;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> java.util.List;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>@FunctionalInterface</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>interface</span> <span style=color:#a6e22e>Action</span> {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>run</span>();
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// ApplyAuditAction.java</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>package</span> org.example.actions;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> org.example.Action;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// send http request to apply an audit</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>ApplyAuditAction</span> <span style=color:#66d9ef>implements</span> Action {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>@Override</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>run</span>() {
+</span></span><span style=display:flex><span>        System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(<span style=color:#e6db74>&#34;mock send HTTP request&#34;</span>);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// AuditController.java</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>package</span> org.example;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>AuditController</span> {
+</span></span><span style=display:flex><span>    Repository repository;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> String <span style=color:#a6e22e>apply</span>(<span style=color:#66d9ef>int</span> productId) {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>try</span> {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>var</span> product <span style=color:#f92672>=</span> repository.<span style=color:#a6e22e>findProduct</span>(productId);
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>var</span> transitions <span style=color:#f92672>=</span> repository.<span style=color:#a6e22e>findAllByTypeId</span>(product.<span style=color:#a6e22e>typeId</span>);
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>var</span> stateMachine <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> StateMachine(transitions);
+</span></span><span style=display:flex><span>            stateMachine.<span style=color:#a6e22e>transit</span>(product, Event.<span style=color:#a6e22e>ApplyAudit</span>);
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#34;succeed&#34;</span>;
+</span></span><span style=display:flex><span>        } <span style=color:#66d9ef>catch</span> (RuntimeException e) {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> e.<span style=color:#a6e22e>getMessage</span>();
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// Event.java</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>package</span> org.example;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>enum</span> Event {
+</span></span><span style=display:flex><span>        ApplyAudit,
+</span></span><span style=display:flex><span>        AcceptAudit,
+</span></span><span style=display:flex><span>        RejectAudit,
+</span></span><span style=display:flex><span>        Publish
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// Pair.java</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>package</span> org.example;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Pair</span><span style=color:#f92672>&lt;</span>F, S<span style=color:#f92672>&gt;</span> {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> F first;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> S second;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#a6e22e>Pair</span>(F first, S second) {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>first</span> <span style=color:#f92672>=</span> first;
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>second</span> <span style=color:#f92672>=</span> second;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// Product.java</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>package</span> org.example;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Product</span> {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>int</span> id;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> State state;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>int</span> typeId;
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// Repository.java</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>package</span> org.example;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> java.util.List;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// a simple definition of Repository, you need to implement</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>interface</span> <span style=color:#a6e22e>Repository</span> {
+</span></span><span style=display:flex><span>    List<span style=color:#f92672>&lt;</span>Transition<span style=color:#f92672>&gt;</span> <span style=color:#a6e22e>findAllByTypeId</span>(<span style=color:#66d9ef>int</span> typeId);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    Product <span style=color:#a6e22e>findProduct</span>(<span style=color:#66d9ef>int</span> productId);
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span><span style=color:#75715e>// State.java</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>package</span> org.example;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>enum</span> State {
+</span></span><span style=display:flex><span>    Unpublished,
+</span></span><span style=display:flex><span>    Auditing,
+</span></span><span style=display:flex><span>    AuditAccepted,
+</span></span><span style=display:flex><span>    AuditRejected,
+</span></span><span style=display:flex><span>    Published
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span><span style=color:#75715e>// StateMachine.java</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>package</span> org.example;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> org.example.actions.ApplyAuditAction;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> java.util.Arrays;
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> java.util.HashMap;
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> java.util.List;
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> java.util.Map;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>StateMachine</span> {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>final</span> Map<span style=color:#f92672>&lt;</span>String, Action<span style=color:#f92672>&gt;</span> actionMap <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> HashMap<span style=color:#f92672>&lt;&gt;</span>() {{
+</span></span><span style=display:flex><span>        put(<span style=color:#e6db74>&#34;applyAudit&#34;</span>, <span style=color:#66d9ef>new</span> ApplyAuditAction());
+</span></span><span style=display:flex><span>    }};
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>final</span> Map<span style=color:#f92672>&lt;</span>State, Map<span style=color:#f92672>&lt;</span>Event, Pair<span style=color:#f92672>&lt;</span>State, List<span style=color:#f92672>&lt;</span>Action<span style=color:#f92672>&gt;&gt;&gt;&gt;</span> graph;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#a6e22e>StateMachine</span>(List<span style=color:#f92672>&lt;</span>Transition<span style=color:#f92672>&gt;</span> transitions) {
+</span></span><span style=display:flex><span>        graph <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> HashMap<span style=color:#f92672>&lt;&gt;</span>();
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>for</span> (<span style=color:#66d9ef>var</span> transition : transitions) {
+</span></span><span style=display:flex><span>            addTransition(transition);
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>addTransition</span>(Transition transition) {
+</span></span><span style=display:flex><span>        graph.<span style=color:#a6e22e>putIfAbsent</span>(transition.<span style=color:#a6e22e>fromState</span>, <span style=color:#66d9ef>new</span> HashMap<span style=color:#f92672>&lt;&gt;</span>());
+</span></span><span style=display:flex><span>        graph.<span style=color:#a6e22e>get</span>(transition.<span style=color:#a6e22e>fromState</span>).<span style=color:#a6e22e>put</span>(transition.<span style=color:#a6e22e>event</span>, <span style=color:#66d9ef>new</span> Pair<span style=color:#f92672>&lt;&gt;</span>(transition.<span style=color:#a6e22e>toState</span>, makeActions(transition.<span style=color:#a6e22e>actions</span>)));
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> List<span style=color:#f92672>&lt;</span>Action<span style=color:#f92672>&gt;</span> <span style=color:#a6e22e>makeActions</span>(String action) {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>var</span> actionNames <span style=color:#f92672>=</span> action.<span style=color:#a6e22e>split</span>(<span style=color:#e6db74>&#34;,&#34;</span>); <span style=color:#75715e>// use comma to split multi actions</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> Arrays.<span style=color:#a6e22e>stream</span>(actionNames).<span style=color:#a6e22e>map</span>(actionMap::get).<span style=color:#a6e22e>toList</span>();
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>transit</span>(Product product, Event event) {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> (<span style=color:#f92672>!</span>graph.<span style=color:#a6e22e>containsKey</span>(product.<span style=color:#a6e22e>state</span>)) {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>throw</span> <span style=color:#66d9ef>new</span> RuntimeException(<span style=color:#e6db74>&#34;Product state not found&#34;</span>);
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> (<span style=color:#f92672>!</span>graph.<span style=color:#a6e22e>get</span>(product.<span style=color:#a6e22e>state</span>).<span style=color:#a6e22e>containsKey</span>(event)) {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>throw</span> <span style=color:#66d9ef>new</span> RuntimeException(<span style=color:#e6db74>&#34;Event not found&#34;</span>);
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>var</span> next <span style=color:#f92672>=</span> graph.<span style=color:#a6e22e>get</span>(product.<span style=color:#a6e22e>state</span>).<span style=color:#a6e22e>get</span>(event);
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// modify product state</span>
+</span></span><span style=display:flex><span>        product.<span style=color:#a6e22e>state</span> <span style=color:#f92672>=</span> next.<span style=color:#a6e22e>first</span>;
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// execute actions</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>for</span> (<span style=color:#66d9ef>var</span> action : next.<span style=color:#a6e22e>second</span>) {
+</span></span><span style=display:flex><span>            action.<span style=color:#a6e22e>run</span>();
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// Transition.java</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>package</span> org.example;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Transition</span> {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>int</span> id;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>int</span> typeId; <span style=color:#75715e>// represents the type of a product</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> State fromState;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> Event event;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> State toState;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> String actions;
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h2 id=conclusion>Conclusion</h2><p>By using a configurable FSM, you can easily modify the workflow by modifying database record, no code editing.</p><h2 id=reference>Reference</h2><ol><li><em><strong>Wikipedia</strong></em> - <strong><a href=https://en.wikipedia.org/wiki/Finite-state_machine target=_blank rel=noopener>Finite-state machine</a></strong></li></ol></section><div class=paginator><a class=prev href=https://www.ddhigh.com/en/2023/05/05/how-to-retry-requests-correctly/><svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.77086 21.1546C11.0491 22.698 21.4339 21.7773 21.4339 16.3608V4.63375c0-.69413-.075800000000001-1.3284-.2422-1.86588M3.77086 21.1546C1.9934 20.7777.973585 18.7264 1.08749 16.688c.17931-3.209.06972-7.25665-.08236-10.47293C.87809 3.52811 3.12891 1.16316 5.51029 1.25008c4.25565.15534 9.86671-.04779 13.28091-.24466 1.2952-.074686 2.0494.62843 2.4005 1.76245M3.77086 21.1546C4.56586 21.4723 5.49168 21.7879 6.5 22.0658M21.1917 2.76787c1.918 1.4143 1.9383 9.65123 1.7087 13.59293-2.0526 7.6586-10.5943 7.3054-16.4004 5.705M21.1917 2.76787C21.7612 4.51192 22.7203 9.67216 22 16.3608 21.2797 23.0494 11.3665 22.9511 6.5 22.0658M9.94496 9C9.28897 9.61644 7.63215 10.997 6.04814 11.7966 5.98257 11.8297 5.98456 11.9753 6.05061 12.0063c1.00435.4716 2.8788 1.9201 3.89435 2.9937M6.44444 11.9667C8.86549 12.0608 14 12 16 11" stroke="currentcolor" stroke-linecap="round"/></svg>
+<span>How to retry requests correctly with Feign</span></a></div><div class=comments><script>const getTheme=window.localStorage&&window.localStorage.getItem("theme");let theme=getTheme==="dark"?"dark":"light",s=document.createElement("script");s.src="https://giscus.app/client.js",s.setAttribute("data-repo","xialeistudio/discussion"),s.setAttribute("data-repo-id","R_kgDOKurTRA"),s.setAttribute("data-category","General"),s.setAttribute("data-category-id","DIC_kwDOKurTRM4CbCJt"),s.setAttribute("data-mapping","pathname"),s.setAttribute("data-strict","0"),s.setAttribute("data-reactions-enabled","1"),s.setAttribute("data-emit-metadata","0"),s.setAttribute("data-input-position","bottom"),s.setAttribute("data-theme",theme),s.setAttribute("data-lang","en"),s.setAttribute("data-loading","lazy"),s.setAttribute("crossorigin","anonymous"),s.setAttribute("async",""),document.querySelector("div.comments").innerHTML="",document.querySelector("div.comments").appendChild(s)</script></div></article></div><footer class=footer><p>&copy; 2014 - 2024 <a href=https://www.ddhigh.com/>Lei Xia</a>
+Powered by
+<a href=https://gohugo.io/ rel=noopener target=_blank>Hugo️️</a>
+<a href=https://github.com/guangzhengli/hugo-theme-ladder rel=noopener target=_blank>Ladder</a>
+️</p></footer><a href=#top aria-label="go to top" title="Go to Top (Alt + G)" class=top-link id=top-link accesskey=g><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.5376 22.7916C11.0152 22.7207 22.5795 21.1781 22.0978 10.4211 22.0536 9.43274 21.9303 8.53367 21.7387 7.71865M10.5376 22.7916C16.876 22.3728 20.0969 19.8899 21.5383 16.9142M10.5376 22.7916C9.7707 22.9055 8.97982 22.8964 8.19743 22.7725M21.7387 7.71865C21.4988 6.69828 21.1518 5.80967 20.7188 5.04257m1.0199 2.67608C22.6022 10.1105 23.0542 13.7848 21.5383 16.9142M20.7188 5.04257c-3.5504-6.28886-12.88753-4.410077-16.44303.0C2.88063 6.77451-.0433281 11.1668 1.38159 16.6571c.89322 3.4417 3.7911 5.6365 6.81584 6.1154M20.7188 5.04257c1.3509 1.89783 3.3111 6.34223 1.6353 10.37273M21.5383 16.9142C21.8737 16.4251 22.1428 15.9235 22.3541 15.4153M8.19743 22.7725C12.1971 23.4683 20.6281 22.971 22.3541 15.4153M14 10.945C13.3836 10.289 12.003 8.63215 11.2034 7.04814 11.1703 6.98257 11.0247 6.98456 10.9937 7.05061 10.5221 8.05496 9.07362 9.92941 8 10.945m3.0333-3.50056C10.9392 9.86549 11 15 12 17" stroke="currentcolor" stroke-linecap="round"/></svg>
+</a><script>var mybutton=document.getElementById("top-link");window.onscroll=function(){document.body.scrollTop>800||document.documentElement.scrollTop>800?(mybutton.style.visibility="visible",mybutton.style.opacity="1"):(mybutton.style.visibility="hidden",mybutton.style.opacity="0")}</script><script>document.querySelectorAll("pre > code").forEach(e=>{const s=e.parentNode.parentNode,t=document.createElement("button");t.classList.add("copy-code"),t.innerHTML="Copy";function n(){t.innerHTML="Copied",setTimeout(()=>{t.innerHTML="Copy"},2e3)}t.addEventListener("click",t=>{if("clipboard"in navigator){navigator.clipboard.writeText(e.textContent),n();return}const s=document.createRange();s.selectNodeContents(e);const o=window.getSelection();o.removeAllRanges(),o.addRange(s);try{document.execCommand("copy"),n()}catch{}o.removeRange(s)}),e.parentNode.appendChild(t)})</script><script type=module>
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.esm.min.mjs';
+
+    const config = {
+        startOnLoad: true,
+        theme: 'forest',
+        securityLevel: 'loose',
+    };
+    mermaid.initialize(config);
+</script></main></body><script src=https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js integrity="sha512-N9IJRoc3LaP3NDoiGkcPa4gG94kapGpaA5Zq9/Dr04uf5TbLFU5q0o8AbRhLKUUlp8QFS2u7S+Yti0U7QtuZvQ==" crossorigin=anonymous referrerpolicy=no-referrer></script><script>const images=Array.from(document.querySelectorAll(".blog-content img"));images.forEach(e=>{mediumZoom(e,{margin:10,scrollOffset:40,container:null,template:null,background:"rgba(0, 0, 0, 0.5)"})})</script><script src=/main.min.6bb26b69159420159c74dc9e097b06a578ed2b68c701466a91a44a9632d851bd0af167a1b30012387b4c512b48ad9ad4d3394e04d77ae38d57e1920fe4ed34fe.js integrity="sha512-a7JraRWUIBWcdNyeCXsGpXjtK2jHAUZqkaRKljLYUb0K8WehswASOHtMUStIrZrU0zlOBNd6441X4ZIP5O00/g==" crossorigin=anonymous defer></script></html>
