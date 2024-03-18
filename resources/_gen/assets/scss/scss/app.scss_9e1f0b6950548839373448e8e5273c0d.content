@@ -19,6 +19,10 @@ body {
     body {
       font-size: 1.6em;
       line-height: 1.6em; } }
+  body:lang(en) {
+    font-size: 2em;
+    line-height: 2em; }
+
 a {
   font-weight: 500;
   color: black;

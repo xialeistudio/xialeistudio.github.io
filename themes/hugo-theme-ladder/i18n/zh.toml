@@ -33,3 +33,19 @@ other = "相关系列文章推荐"
 [featured_posts]
 one = "推荐阅读"
 other = "推荐阅读"
+
+[post_author]
+one = "本文作者"
+other = "本文作者"
+
+[post_link]
+one = "本文链接"
+other = "本文链接"
+
+[copyright]
+one = "版权声明"
+other = "版权声明"
+
+[cc_by_nc_4]
+one = "署名-非商业性使用-相同方式共享 4.0 国际"
+other = "署名-非商业性使用-相同方式共享 4.0 国际"

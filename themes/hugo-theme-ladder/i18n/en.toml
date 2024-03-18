@@ -32,3 +32,19 @@ other = "Related Resources"
 [featured_posts]
 one = "Featured Posts"
 other = "Featured Posts"
+
+[post_author]
+one = "Author"
+other = "Author"
+
+[post_link]
+one = "Link"
+other = "Link"
+
+[copyright]
+one = "Copyright"
+other = "Copyright"
+
+[cc_by_nc_4]
+one = "CC BY-NC 4.0 DEED"
+other = "CC BY-NC 4.0 DEED"
