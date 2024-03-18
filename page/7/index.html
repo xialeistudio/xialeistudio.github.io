@@ -4,7 +4,34 @@
 <label class="menu-button float-right" for=menu-toggle><span></span><span></span><span></span></label><ul class=navigation-list id=navigation-list><li class="navigation-item navigation-menu"><a class=navigation-link href=/archives>归档</a></li><li class="navigation-item navigation-menu"><a class=navigation-link href=/books>出版物</a></li><li class="navigation-item navigation-menu"><a class=navigation-link href=/guestbook>留言板</a></li><li class="navigation-item menu-separator"><span>|</span></li><li class="navigation-item navigation-social"><a class=navigation-link href=https://github.com/xialeistudio><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37.0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44.0 0020 4.77 5.07 5.07.0 0019.91 1S18.73.65 16 2.48a13.38 13.38.0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07.0 005 4.77 5.44 5.44.0 003.5 8.55c0 5.42 3.3 6.61 6.44 7A3.37 3.37.0 009 18.13V22"/></svg></a></li><li class="navigation-item navigation-dark"><button id=mode type=button aria-label="toggle user light or dark theme">
 <span class=toggle-dark><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></span>
 <span class=toggle-light><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></span></button></li><li class="navigation-item navigation-language"><a href=https://www.ddhigh.com/en/>EN</a></li></ul></section></nav><div id=content><div class=home><div class=info><div class=intro><h1>Lei Xia</h1><small>Sr. Software Engineer | Solution Architect</small><p><p>抒写代码，尽享生活，筑就未来。</p><p><a href=/atom.xml target=_blank rel=noopener>订阅</a> ·
-<a href=/sponsors target=_blank rel=noopener>赞赏</a></p></p></div></div></div><div class=blog-wrapper><div><div class=blog-list><article><div class=blog-card><h3><a href=/2019/10/28/symbol/>深入浅出ES6的Symbol类型</a></h3><p><small>2019年10月28日&nbsp;· 252 字&nbsp;· 2 分钟</small><p>本文内容 JS基本数据类型种类 Symbol的主要用法, 全局Symbol的使用与检测 Symbol与其他基本类型转换时的规则 ES6引入了一种新的原始数据类型，表示独一无二的值，最大的用处是作为对象属性的唯一标识符。
+<a href=/sponsors target=_blank rel=noopener>赞赏</a></p></p></div></div></div><div class=blog-wrapper><div><div class=blog-list><article><div class=blog-card><h3><a href=/2019/10/30/twblog/>我是如何发现我的文章被侵权以及如何得到侵权网站的联系方式的?</a></h3><p><small>2019年10月30日&nbsp;· 261 字&nbsp;· 2 分钟</small><p>本文内容
+如何发现自己的文章被侵权 如何结合whois信息查询侵权网站的联系方式 声明：本文只做技术研究，请勿用于非法目的，如果恶意使用造成任何法律责任本人概不负责！
+发现侵权 我的文章除了发布在博客之外，还会同步到思否平台。自己没事的时候会去看看百度统计，比较关注来源网站(也就是referer)，一般来说通过搜索引擎过来的流量我不太关注，私人网站过来的就比较关注了，昨天查看来源的时候看到了一个新网站。
+可以看到这个 www.twblogs.net是一个普通网站，点进去发现这样一篇文章。
+可以看到这篇文章的作者是xialeistudio(也就是我常用的网络用户名)，可我压根就没听说过这个网站，我意识到可能被爬虫爬取了。
+点击作者进入到作者的文章页，发现我昨天下午刚发布没多久的文章就被爬了。
+然后我去查看nginx的访问日志，没有发现异常访问，有个IP虽然是美国的，但是是Google的爬虫。这意味着文章不是直接爬取我的博客来的。
+nginx的访问日志过滤使用shell命令即可做到，不过这不是本文的重点，此处略过
+那就只剩下思否和掘金，通过文章中的公众号图片二维码，我发现了爬取的文章来源。
+可以看到是通过思否爬取到的。
+侵权结论 伪造用户名爬取了思否大量的文章，截止发文时大概爬了三四十篇文章 思否应该并不知道这件事，应该早期的文章都爬过来了（包括我在思否已经删除的文章） 获取侵权网站联系方式 目前手头只有一个域名https://www.twblogs.net，先去站长工具的whois查询工具http://whois.chinaz.com/查询一下。
+whois：用来查询域名注册信息的一种技术
+通过查询并没有得到什么有效的信息。看来是whois做了保护处理。
+不过没关系，目前得到了twblogs.net的域名提供商是Goddy，我们可以到域名提供商的网站看一下Whois信息
+浏览器打开 whois.godaddy.com 输入 www.twblogs.net 就可以了，查询到的Whois信息如下：
+WHOIS 搜索结果 Domain Name: twblogs.net Registry Domain ID: 2330628228_DOMAIN_NET-VRSN Registrar WHOIS Server: whois.godaddy.com Registrar URL: http://www.godaddy.com Updated Date: 2019-10-09T11:09:43Z Creation Date: 2018-11-08T16:30:46Z Registrar Registration Expiration Date: 2021-11-08T16:30:46Z Registrar: GoDaddy.com, LLC Registrar IANA ID: 146 Registrar Abuse Contact Email: abuse@godaddy.com Registrar Abuse Contact Phone: +1.</div></article><article><div class=blog-card><h3><a href=/2019/10/29/redis-high-concurrent/>Redis优化高并发下的秒杀性能</a></h3><p><small>2019年10月29日&nbsp;· 470 字&nbsp;· 3 分钟</small><p>本文内容
+使用Redis优化高并发场景下的接口性能 数据库乐观锁 随着双11的临近，各种促销活动开始变得热门起来，比较主流的有秒杀、抢优惠券、拼团等等。
+涉及到高并发争抢同一个资源的主要场景有秒杀和抢优惠券。
+前提 活动规则
+奖品数量有限，比如100个 不限制参与用户数 每个用户只能参与1次秒杀 活动要求
+不能多发，也不能少发，100个奖品要全部发出去 1个用户最多抢1个奖品 遵循先到先得原则，先来的用户有奖品 数据库实现 悲观锁性能太差，本文不予讨论，讨论一下使用乐观锁解决高并发问题的优缺点。
+数据库结构 ID Code UserId CreatedAt RewardAt 奖品ID 奖品码 用户ID 创建时间 中奖时间 未中奖时UserId为0，RewardAt为NULL 中奖时UserId为中奖用户ID，RewardAt为中奖时间 乐观锁实现 乐观锁实际上并不存在真正的锁，乐观锁是利用数据的某个字段来做的，比如本文的例子就是以UserId来实现的。
+实现流程如下：
+查询UserId为0的奖品，如果未找到则提示无奖品
+SELECT * FROM envelope WHERE user_id=0 LIMIT 1 更新奖品的用户ID和中奖时间(假设奖品ID为1，中奖用户ID为100，当前时间为2019-10-29 12:00:00)，这里的user_id=0就是我们的乐观锁了。
+UPDATE envelope SET user_id=100, reward_at='2019-10-29 12:00:00' WHERE user_id=0 AND id=1 检测UPDATE语句的执行返回值，如果返回1证明中奖成功，否则证明该奖品被其他人抢了
+为什么要添加乐观锁 正常情况下获取奖品、然后把奖品更新给指定用户是没问题的。如果不添加user_id=0时，高并发场景下会出现下面的问题：
+两个用户同时查询到了1个未中奖的奖品(发生并发问题) 将奖品的中奖用户更新为用户1，更新条件只有ID=奖品ID 上述SQL执行是成功的，影响行数也是1，此时接口会返回用户1中奖 接下来将中奖用户更新为用户2，更新条件也只有ID=奖品ID 由于是同一个奖品，已经发给用户1的奖品会重新发放给用户2，此时影响行数为1，接口返回用户2也中奖 所以该奖品的最终结果是发放给用户2 用户1就会过来投诉活动方了，因为抽奖接口返回用户1中奖，但他的奖品被抢了，此时活动方只能赔钱了 添加乐观锁之后的抽奖流程 更新用户1时的条件为id=红包ID AND user_id=0 ,由于此时红包未分配给任何人，用户1更新成功，接口返回用户1中奖 当更新用户2时更新条件为id=红包ID AND user_id=0，由于此时该红包已经分配给用户1了，所以该条件不会更新任何记录，接口返回用户2中奖 乐观锁优缺点 优点</div></article><article><div class=blog-card><h3><a href=/2019/10/28/symbol/>深入浅出ES6的Symbol类型</a></h3><p><small>2019年10月28日&nbsp;· 252 字&nbsp;· 2 分钟</small><p>本文内容 JS基本数据类型种类 Symbol的主要用法, 全局Symbol的使用与检测 Symbol与其他基本类型转换时的规则 ES6引入了一种新的原始数据类型，表示独一无二的值，最大的用处是作为对象属性的唯一标识符。
 至此，Javascript拥有6种基本数据类型和一种复杂数据类型。
 数据类型 基本类型
 string number boolean undefined null symbol 复杂类型
@@ -117,26 +144,7 @@ nums1 = [1, 3] nums2 = [2] 则中位数是 2.0 示例 2:
 nums1 = [1, 2] nums2 = [3, 4] 则中位数是 (2 + 3)/2 = 2.5 中位数 中位数是按顺序排列的一组数据中居于中间位置的数，即在这组数据中，有一半的数据比他大，有一半的数据比他小。
 暴力法 将两个有序数组合并成一个有序数组
 如果长度是奇数则返回中间的值，如果是否则则返回中间两个数的平均值。
-var findMedianSortedArrays = function (nums1, nums2) { const nums = []; let p1 = p2 = 0; while (p1 &lt; nums1.</div></article><article><div class=blog-card><h3><a href=/2019/09/17/javascript-var-scope/>搞懂JS变量提升</a></h3><p><small>2019年9月17日&nbsp;· 107 字&nbsp;· 1 分钟</small><p>本文讲解Javascript变量提升引起的问题以及如何规避。
-问题 今天看到一道有意思的面试题，考察的还真是JS的基本功，题目如下：
-var name = "world"; (function(){ if(typeof name === "undefined") { var name = "Jack"; console.log("Hello " + name); } else { console.log("Hello " + name); } }()); 根据if条件可以得出可能的答案：
-Hello world Hello Jack 正确答案 答案是Hello Jack，但是答案怎么来的，回答不好可能还是只能打50分，有以下两种理解：
-理解1：
-立即执行函数有独立的作用域，访问不到外部name，所以if判断成立，输出 Hello Jack
-这个理解是不正确的。虽然函数隔离了作用域，但是由于作用域链的关系，JS会从当前作用域一直往上级查找，直到顶级作用域（浏览器环境为window）。
-如下代码输出Hello world
-var name = "world"; (function(){ console.log("Hello " + name); }()); 理解2：
-var存在变量提升，所以if在判断的时候name确实为undefined，走了if分支，输出 Hello Jack
-变量提升 MDN对变量提升的解释：
-“变量提升”意味着变量和函数的声明会在物理层面移动到代码的最前面，但这么说并不准确。实际上变量和函数声明在代码里的位置是不会动的，而是在编译阶段被放入内存中。
-JavaScript 仅提升声明，而不提升初始化 函数和变量相比，会被优先提升 根据变量提升理论我们可以“模拟”JS实际执行代码的过程：
-var name = "world"; (function(){ var name; // 变量提升，仅提升声明，不提升初始化 if(typeof name === "undefined") { name = "Jack"; console.</div></article><article><div class=blog-card><h3><a href=/2019/09/16/leetcode-longest-substring-without-repeating-characters-copy/>leetcode(3)——无重复字符的最长子串</a></h3><p><small>2019年9月16日&nbsp;· 341 字&nbsp;· 2 分钟</small><p>本文是力扣算法的第三篇，讲解无重复字符的最长子串问题。
-Question 给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。
-示例1：
-输入: "abcabcbb" 输出: 3 解释: 因为无重复字符的最长子串是 "abc"，所以其长度为 3。 示例2：
-输入: "bbbbb" 输出: 1 解释: 因为无重复字符的最长子串是 "b"，所以其长度为 1。 示例3：
-输入: "pwwkew" 输出: 3 解释: 因为无重复字符的最长子串是 "wke"，所以其长度为 3。 请注意，你的答案必须是 子串 的长度，"pwke" 是一个子序列，不是子串。 遍历法 最容易想到的一种算法，也是效率最低的一种算法
-通过两次遍历得到所有可能的 子字符串 列表 将每个字符串传入一个函数检测是否包含重复字符，如果不包含则更新最长子串的长度 // 判断给定的子串是否包含重复字符 function isUnique(str, start, end) { const chars = []; for(let i = start; i &lt; end; i++) { const char = str[i]; if(chars.indexOf(char) !== -1) { // 字符已存在，本字符串不符合条件 return false; } chars.</div></article></div><div class=paginator><a class=prev href=/page/6/>&larr;&nbsp;&nbsp;Pre Page</a>
+var findMedianSortedArrays = function (nums1, nums2) { const nums = []; let p1 = p2 = 0; while (p1 &lt; nums1.</div></article></div><div class=paginator><a class=prev href=/page/6/>&larr;&nbsp;&nbsp;Pre Page</a>
 <a class=next href=/page/8/>Next Page&nbsp;&nbsp;&rarr;</a></div></div></div></div><footer class=footer><p>&copy; 2014 - 2024 <a href=https://www.ddhigh.com/>Lei Xia</a>
 Powered by
 <a href=https://gohugo.io/ rel=noopener target=_blank>Hugo️️</a>

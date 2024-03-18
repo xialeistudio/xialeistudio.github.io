@@ -3,7 +3,26 @@
 </a><input type=checkbox id=menu-toggle>
 <label class="menu-button float-right" for=menu-toggle><span></span><span></span><span></span></label><ul class=navigation-list id=navigation-list><li class="navigation-item navigation-menu"><a class=navigation-link href=/archives>归档</a></li><li class="navigation-item navigation-menu"><a class=navigation-link href=/books>出版物</a></li><li class="navigation-item navigation-menu"><a class=navigation-link href=/guestbook>留言板</a></li><li class="navigation-item menu-separator"><span>|</span></li><li class="navigation-item navigation-social"><a class=navigation-link href=https://github.com/xialeistudio><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37.0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44.0 0020 4.77 5.07 5.07.0 0019.91 1S18.73.65 16 2.48a13.38 13.38.0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07.0 005 4.77 5.44 5.44.0 003.5 8.55c0 5.42 3.3 6.61 6.44 7A3.37 3.37.0 009 18.13V22"/></svg></a></li><li class="navigation-item navigation-dark"><button id=mode type=button aria-label="toggle user light or dark theme">
 <span class=toggle-dark><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></span>
-<span class=toggle-light><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></span></button></li><li class="navigation-item navigation-language"><a href=https://www.ddhigh.com/en/categories/engineering/>EN</a></li></ul></section></nav><div id=content><div class=blog-wrapper><div><div class=blog-list><article><div class=blog-card><h3><a href=/2019/10/29/redis-high-concurrent/>Redis优化高并发下的秒杀性能</a></h3><p><small>2019年10月29日&nbsp;· 470 字&nbsp;· 3 分钟</small><p>本文内容
+<span class=toggle-light><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></span></button></li><li class="navigation-item navigation-language"><a href=https://www.ddhigh.com/en/categories/engineering/>EN</a></li></ul></section></nav><div id=content><div class=blog-wrapper><div><div class=blog-list><article><div class=blog-card><h3><a href=/2019/10/30/es6-map/>ES6的Map类型</a></h3><p><small>2019年10月30日&nbsp;· 550 字&nbsp;· 3 分钟</small><p>本文内容
+Map的基本使用 Map支持的数据类型 Map的迭代 Map与其他对象的转化 在Map出现之前，要实现类似需求，只能使用Object，但是Object还是存在一些问题的。
+如果使用Object作为key存储在{}中，key最终是当做[object Object]来使用的 Object的keys是无序的 无法安全遍历Object 无法直接获取Object大小 Map 对象保存键值对。任何值(对象或者原始值) 都可以作为一个键或一个值。
+基本操作 new Map([iterator]) iterator 可以是一个数组或者其他iterator对象，其元素为键值对(如['key', 'value'])。 null或undefined不会生效，返回一个空的Map 非iterator会抛出错误 TypeError: object is not iterable const map = new Map(); // Create map.set('name','xialei'); map.set('site', 'https://www.ddhigh.com'); // Update map.set('name', 'xialeistudio'); // Read map.get('name'); // Delete map.delete('name'); // 清空 map.clear(); // map大小 console.log(map.size); 数据类型测试 JS中基本数据类型有string、number、boolean、null、undefined、symbol，复杂数据类型有object(包括object,array,function等)，还有个特殊的NaN(typeof结果是number)，分别对这些类型进行测试
+const map = new Map(); const sKey = 'key', nKey = 1, bKey = true, nullKey = null, uKey = undefined, symbolKey = Symbol("key"), oKey = {}, ooKey = oKey, aKey = [], fKey = function () { }, nanKey = NaN; map.</div></article><article><div class=blog-card><h3><a href=/2019/10/30/twblog/>我是如何发现我的文章被侵权以及如何得到侵权网站的联系方式的?</a></h3><p><small>2019年10月30日&nbsp;· 261 字&nbsp;· 2 分钟</small><p>本文内容
+如何发现自己的文章被侵权 如何结合whois信息查询侵权网站的联系方式 声明：本文只做技术研究，请勿用于非法目的，如果恶意使用造成任何法律责任本人概不负责！
+发现侵权 我的文章除了发布在博客之外，还会同步到思否平台。自己没事的时候会去看看百度统计，比较关注来源网站(也就是referer)，一般来说通过搜索引擎过来的流量我不太关注，私人网站过来的就比较关注了，昨天查看来源的时候看到了一个新网站。
+可以看到这个 www.twblogs.net是一个普通网站，点进去发现这样一篇文章。
+可以看到这篇文章的作者是xialeistudio(也就是我常用的网络用户名)，可我压根就没听说过这个网站，我意识到可能被爬虫爬取了。
+点击作者进入到作者的文章页，发现我昨天下午刚发布没多久的文章就被爬了。
+然后我去查看nginx的访问日志，没有发现异常访问，有个IP虽然是美国的，但是是Google的爬虫。这意味着文章不是直接爬取我的博客来的。
+nginx的访问日志过滤使用shell命令即可做到，不过这不是本文的重点，此处略过
+那就只剩下思否和掘金，通过文章中的公众号图片二维码，我发现了爬取的文章来源。
+可以看到是通过思否爬取到的。
+侵权结论 伪造用户名爬取了思否大量的文章，截止发文时大概爬了三四十篇文章 思否应该并不知道这件事，应该早期的文章都爬过来了（包括我在思否已经删除的文章） 获取侵权网站联系方式 目前手头只有一个域名https://www.twblogs.net，先去站长工具的whois查询工具http://whois.chinaz.com/查询一下。
+whois：用来查询域名注册信息的一种技术
+通过查询并没有得到什么有效的信息。看来是whois做了保护处理。
+不过没关系，目前得到了twblogs.net的域名提供商是Goddy，我们可以到域名提供商的网站看一下Whois信息
+浏览器打开 whois.godaddy.com 输入 www.twblogs.net 就可以了，查询到的Whois信息如下：
+WHOIS 搜索结果 Domain Name: twblogs.net Registry Domain ID: 2330628228_DOMAIN_NET-VRSN Registrar WHOIS Server: whois.godaddy.com Registrar URL: http://www.godaddy.com Updated Date: 2019-10-09T11:09:43Z Creation Date: 2018-11-08T16:30:46Z Registrar Registration Expiration Date: 2021-11-08T16:30:46Z Registrar: GoDaddy.com, LLC Registrar IANA ID: 146 Registrar Abuse Contact Email: abuse@godaddy.com Registrar Abuse Contact Phone: +1.</div></article><article><div class=blog-card><h3><a href=/2019/10/29/redis-high-concurrent/>Redis优化高并发下的秒杀性能</a></h3><p><small>2019年10月29日&nbsp;· 470 字&nbsp;· 3 分钟</small><p>本文内容
 使用Redis优化高并发场景下的接口性能 数据库乐观锁 随着双11的临近，各种促销活动开始变得热门起来，比较主流的有秒杀、抢优惠券、拼团等等。
 涉及到高并发争抢同一个资源的主要场景有秒杀和抢优惠券。
 前提 活动规则
@@ -119,31 +138,7 @@ const list = []; // 定义数组 list.__proto__ === Array.prototype; // true lis
 list是Array的实例对象，使用了字面量的方式创建了对象实例。
 每个实例对象（ object ）都有一个私有属性（称之为 __proto__ ）指向它的构造函数的原型对象（prototype ）。
 // list的构造函数是Array，所以list.__proto__指向构造函数Array的原型对象。 list.__proto__ === Array.prototype; // true 该原型对象也有一个自己的原型对象( __proto__ )
-// Array.</div></article><article><div class=blog-card><h3><a href=/2019/09/17/javascript-var-scope/>搞懂JS变量提升</a></h3><p><small>2019年9月17日&nbsp;· 107 字&nbsp;· 1 分钟</small><p>本文讲解Javascript变量提升引起的问题以及如何规避。
-问题 今天看到一道有意思的面试题，考察的还真是JS的基本功，题目如下：
-var name = "world"; (function(){ if(typeof name === "undefined") { var name = "Jack"; console.log("Hello " + name); } else { console.log("Hello " + name); } }()); 根据if条件可以得出可能的答案：
-Hello world Hello Jack 正确答案 答案是Hello Jack，但是答案怎么来的，回答不好可能还是只能打50分，有以下两种理解：
-理解1：
-立即执行函数有独立的作用域，访问不到外部name，所以if判断成立，输出 Hello Jack
-这个理解是不正确的。虽然函数隔离了作用域，但是由于作用域链的关系，JS会从当前作用域一直往上级查找，直到顶级作用域（浏览器环境为window）。
-如下代码输出Hello world
-var name = "world"; (function(){ console.log("Hello " + name); }()); 理解2：
-var存在变量提升，所以if在判断的时候name确实为undefined，走了if分支，输出 Hello Jack
-变量提升 MDN对变量提升的解释：
-“变量提升”意味着变量和函数的声明会在物理层面移动到代码的最前面，但这么说并不准确。实际上变量和函数声明在代码里的位置是不会动的，而是在编译阶段被放入内存中。
-JavaScript 仅提升声明，而不提升初始化 函数和变量相比，会被优先提升 根据变量提升理论我们可以“模拟”JS实际执行代码的过程：
-var name = "world"; (function(){ var name; // 变量提升，仅提升声明，不提升初始化 if(typeof name === "undefined") { name = "Jack"; console.</div></article><article><div class=blog-card><h3><a href=/2019/09/10/nestjs-interceptor/>NestJs学习之旅(9)——拦截器</a></h3><p><small>2019年9月10日&nbsp;· 405 字&nbsp;· 2 分钟</small><p>本文是NestJs的第九篇，讲解拦截器。
-拦截器是一个实现了NestInterceptor接口且被**@Injectable**装饰器修饰的类。
-拦截器是基于AOP编程思想的一种应用，以下是常用的功能：
-在方法执行之前或之后执行额外的逻辑，这些逻辑一般不属于业务的一部分 转换函数执行结果 转换函数执行时抛出的异常 扩展函数基本行为 特定场景下完全重写函数的行为（比如缓存拦截器，一旦有可用的缓存则直接返回，不执行真正的业务逻辑，即业务逻辑处理函数行为已经被重写） 拦截器接口 每个拦截器都需要实现NestInterceptor接口的**intercept()**方法，该方法接收两个参数。方法原型如下：
-function intercept(context: ExecutionContext, next: CallHandler): Observable&lt;any> ExecutionContext 执行上下文，与NestJs学习之旅(7)——路由守卫中的执行上下文相同 CallHandler 路由处理函数 CallHandler 该接口是对路由处理函数的抽象，接口定义如下：
-export interface CallHandler&lt;T = any> { handle(): Observable&lt;T>; } handle()函数的返回值也就是对应路由函数的返回值。
-以获取用户列表为例：
-// user.controller.ts @Controller('user') export class UserController { @Get() list() { return []; } } 当访问 /user/list 时，路由处理函数返回**[]**，如果在应用拦截器的情况下，调用CallHandler接口的handle()方法得到的也是Observable&lt;[]>(RxJs包装对象)。
-所以，如果在拦截器中调用了next.handle()方法就会执行对应的路由处理函数，如果不调用的话就不会执行。
-一个请求链路日志记录拦截器 随着微服务的兴起，原来的单一项目被拆分成多个比较小的子模块，这些子模块可以独立开发、独立部署、独立运行，大大提高了开发、执行效率，但是带来的问题也比较多，一个经常遇到的问题是接口调用出错不好查找日志。
-如果在业务逻辑中硬编码这种链路调用日志是非常不可取的，严重违反了单一职责的原则，这在微服务开发中是相当不好的一种行为，会让微服务变得臃肿，这些逻辑完全可以通过拦截器来实现。
-// app.interceptor.ts import { CallHandler, ExecutionContext, Injectable, Logger, NestInterceptor } from '@nestjs/common'; import { Observable } from 'rxjs'; import { tap } from 'rxjs/operators'; import { Request } from 'express'; import { format } from 'util'; @Injectable() export class AppInterceptor implements NestInterceptor { private readonly logger = new Logger(); // 实例化日志记录器 intercept(context: ExecutionContext, next: CallHandler): Observable&lt;any> { const start = Date.</div></article></div><div class=paginator><a class=prev href=/categories/engineering/page/3/>&larr;&nbsp;&nbsp;Pre Page</a>
+// Array.</div></article></div><div class=paginator><a class=prev href=/categories/engineering/page/3/>&larr;&nbsp;&nbsp;Pre Page</a>
 <a class=next href=/categories/engineering/page/5/>Next Page&nbsp;&nbsp;&rarr;</a></div></div></div></div><footer class=footer><p>&copy; 2014 - 2024 <a href=https://www.ddhigh.com/>Lei Xia</a>
 Powered by
 <a href=https://gohugo.io/ rel=noopener target=_blank>Hugo️️</a>

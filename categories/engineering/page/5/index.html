@@ -3,7 +3,31 @@
 </a><input type=checkbox id=menu-toggle>
 <label class="menu-button float-right" for=menu-toggle><span></span><span></span><span></span></label><ul class=navigation-list id=navigation-list><li class="navigation-item navigation-menu"><a class=navigation-link href=/archives>归档</a></li><li class="navigation-item navigation-menu"><a class=navigation-link href=/books>出版物</a></li><li class="navigation-item navigation-menu"><a class=navigation-link href=/guestbook>留言板</a></li><li class="navigation-item menu-separator"><span>|</span></li><li class="navigation-item navigation-social"><a class=navigation-link href=https://github.com/xialeistudio><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37.0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44.0 0020 4.77 5.07 5.07.0 0019.91 1S18.73.65 16 2.48a13.38 13.38.0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07.0 005 4.77 5.44 5.44.0 003.5 8.55c0 5.42 3.3 6.61 6.44 7A3.37 3.37.0 009 18.13V22"/></svg></a></li><li class="navigation-item navigation-dark"><button id=mode type=button aria-label="toggle user light or dark theme">
 <span class=toggle-dark><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></span>
-<span class=toggle-light><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></span></button></li><li class="navigation-item navigation-language"><a href=https://www.ddhigh.com/en/categories/engineering/>EN</a></li></ul></section></nav><div id=content><div class=blog-wrapper><div><div class=blog-list><article><div class=blog-card><h3><a href=/2019/08/28/nestjs-pipe/>NestJs学习之旅(8)——管道</a></h3><p><small>2019年8月28日&nbsp;· 387 字&nbsp;· 2 分钟</small><p>本文是NestJs学习之旅的第八篇，讲解管道。
+<span class=toggle-light><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></span></button></li><li class="navigation-item navigation-language"><a href=https://www.ddhigh.com/en/categories/engineering/>EN</a></li></ul></section></nav><div id=content><div class=blog-wrapper><div><div class=blog-list><article><div class=blog-card><h3><a href=/2019/09/17/javascript-var-scope/>搞懂JS变量提升</a></h3><p><small>2019年9月17日&nbsp;· 107 字&nbsp;· 1 分钟</small><p>本文讲解Javascript变量提升引起的问题以及如何规避。
+问题 今天看到一道有意思的面试题，考察的还真是JS的基本功，题目如下：
+var name = "world"; (function(){ if(typeof name === "undefined") { var name = "Jack"; console.log("Hello " + name); } else { console.log("Hello " + name); } }()); 根据if条件可以得出可能的答案：
+Hello world Hello Jack 正确答案 答案是Hello Jack，但是答案怎么来的，回答不好可能还是只能打50分，有以下两种理解：
+理解1：
+立即执行函数有独立的作用域，访问不到外部name，所以if判断成立，输出 Hello Jack
+这个理解是不正确的。虽然函数隔离了作用域，但是由于作用域链的关系，JS会从当前作用域一直往上级查找，直到顶级作用域（浏览器环境为window）。
+如下代码输出Hello world
+var name = "world"; (function(){ console.log("Hello " + name); }()); 理解2：
+var存在变量提升，所以if在判断的时候name确实为undefined，走了if分支，输出 Hello Jack
+变量提升 MDN对变量提升的解释：
+“变量提升”意味着变量和函数的声明会在物理层面移动到代码的最前面，但这么说并不准确。实际上变量和函数声明在代码里的位置是不会动的，而是在编译阶段被放入内存中。
+JavaScript 仅提升声明，而不提升初始化 函数和变量相比，会被优先提升 根据变量提升理论我们可以“模拟”JS实际执行代码的过程：
+var name = "world"; (function(){ var name; // 变量提升，仅提升声明，不提升初始化 if(typeof name === "undefined") { name = "Jack"; console.</div></article><article><div class=blog-card><h3><a href=/2019/09/10/nestjs-interceptor/>NestJs学习之旅(9)——拦截器</a></h3><p><small>2019年9月10日&nbsp;· 405 字&nbsp;· 2 分钟</small><p>本文是NestJs的第九篇，讲解拦截器。
+拦截器是一个实现了NestInterceptor接口且被**@Injectable**装饰器修饰的类。
+拦截器是基于AOP编程思想的一种应用，以下是常用的功能：
+在方法执行之前或之后执行额外的逻辑，这些逻辑一般不属于业务的一部分 转换函数执行结果 转换函数执行时抛出的异常 扩展函数基本行为 特定场景下完全重写函数的行为（比如缓存拦截器，一旦有可用的缓存则直接返回，不执行真正的业务逻辑，即业务逻辑处理函数行为已经被重写） 拦截器接口 每个拦截器都需要实现NestInterceptor接口的**intercept()**方法，该方法接收两个参数。方法原型如下：
+function intercept(context: ExecutionContext, next: CallHandler): Observable&lt;any> ExecutionContext 执行上下文，与NestJs学习之旅(7)——路由守卫中的执行上下文相同 CallHandler 路由处理函数 CallHandler 该接口是对路由处理函数的抽象，接口定义如下：
+export interface CallHandler&lt;T = any> { handle(): Observable&lt;T>; } handle()函数的返回值也就是对应路由函数的返回值。
+以获取用户列表为例：
+// user.controller.ts @Controller('user') export class UserController { @Get() list() { return []; } } 当访问 /user/list 时，路由处理函数返回**[]**，如果在应用拦截器的情况下，调用CallHandler接口的handle()方法得到的也是Observable&lt;[]>(RxJs包装对象)。
+所以，如果在拦截器中调用了next.handle()方法就会执行对应的路由处理函数，如果不调用的话就不会执行。
+一个请求链路日志记录拦截器 随着微服务的兴起，原来的单一项目被拆分成多个比较小的子模块，这些子模块可以独立开发、独立部署、独立运行，大大提高了开发、执行效率，但是带来的问题也比较多，一个经常遇到的问题是接口调用出错不好查找日志。
+如果在业务逻辑中硬编码这种链路调用日志是非常不可取的，严重违反了单一职责的原则，这在微服务开发中是相当不好的一种行为，会让微服务变得臃肿，这些逻辑完全可以通过拦截器来实现。
+// app.interceptor.ts import { CallHandler, ExecutionContext, Injectable, Logger, NestInterceptor } from '@nestjs/common'; import { Observable } from 'rxjs'; import { tap } from 'rxjs/operators'; import { Request } from 'express'; import { format } from 'util'; @Injectable() export class AppInterceptor implements NestInterceptor { private readonly logger = new Logger(); // 实例化日志记录器 intercept(context: ExecutionContext, next: CallHandler): Observable&lt;any> { const start = Date.</div></article><article><div class=blog-card><h3><a href=/2019/08/28/nestjs-pipe/>NestJs学习之旅(8)——管道</a></h3><p><small>2019年8月28日&nbsp;· 387 字&nbsp;· 2 分钟</small><p>本文是NestJs学习之旅的第八篇，讲解管道。
 管道 熟悉Linux命令的伙伴应该对“管道运算符”不陌生。
 ls -la | grep demo &ldquo;|&rdquo; 就是管道运算符，它把左边命令的输出作为输入传递给右边的命令，支持级联，如此一来，便可以通过管道运算符进行复杂命令的交替运算。
 NestJs中的管道有着类似的功能，也可以级联处理数据。NestJs管道通过**@Injectable()装饰器装饰，需要实现PipeTransform**接口。
@@ -71,23 +95,7 @@ API项目直接输出JSON数据，无需渲染页面 无数据库或者复杂业
 为了创建一个基本的控制器，我们使用类和装饰器。装饰器将类与所需的元数据相关联，并使Nest能够创建路由映射（将请求绑定到相应的控制器）。
 控制器定义 使用@Controller装饰器来定义控制器，传入一个可选的路由前缀可以将该控制器绑定到该前缀。
 import { Controller, Get } from '@nestjs/common'; @Controller('cats') export class CatsController { @Get('list') findAll(): string { return 'This action returns all cats'; } @Get('show') fineOne(): string { return 'one cat'; } @Get() index():string { return 'index'; } } 以上例程会生成以下路由：
-GET /cats/list CatsController::findAll方法处理 GET /cats/show CatsController::show方法处理 GET /cats CatsController::index方法处理 上述例程使用的是@Get装饰器，所以只能处理GET请求，以下是支持的请求方法与对应的装饰器</div></article><article><div class=blog-card><h3><a href=/2019/08/19/nestjs-get-started/>NestJs学习之旅(1)——快速开始</a></h3><p><small>2019年8月19日&nbsp;· 179 字&nbsp;· 1 分钟</small><p>本文是NestJs学习之旅的第一篇，简要介绍一下NestJs框架，搭建一个Hello World应用。
-介绍 Nest（或NestJS）是一个用于构建高效，可扩展的Node.js服务器端应用程序的框架。它使用渐进式JavaScript，内置并完全支持TypeScript（但仍然允许开发人员使用纯JavaScript编写代码）并结合了OOP（面向对象编程），FP（功能编程）和FRP（功能反应编程）的元素。
-import { Controller, Get } from '@nestjs/common'; @Controller('cats') export class CatsController { @Get() findAll(): string { return 'This action returns all cats'; } } 熟悉Java的同学应该有似曾相识的感觉，SpringBoot中大量使用注解来简化开发。现在，使用基于ES6装饰器构建的NestJs框架，你也可以做到!
-优缺点 先说说优点吧：
-完美支持Typescript，因此可以使用日益繁荣的TS生态资源 兼容express中间件，降低造轮子成本 完美支持响应式编程框架rxjs 完美支持依赖注入 模块化思想，方便开发以及后期维护 使用装饰器简化开发，减少样板代码 组件化设计，解决Node.js无全栈框架约束的现存问题 当然，&ldquo;缺点"也是有点的，不过熟练之后这些都不是缺点：
-基于TS导致的语言门槛 代码设计上对模块化/组件化思想有一定要求 第一个NestJs应用 使用NestJs的命令行工具，可以简化项目的创建以及项目文件的创建。
-npm install -g @nestjs/cli安装命令行工具 nest new 项目名称初始化项目 初始化完毕后可以看到一个完整的项目结果，目录如下(忽略node_modules)：
-├── README.md 自述文件 ├── nest-cli.json NestJs项目配置 ├── package.json npm文件 ├── src 项目源码 │ ├── app.controller.spec.ts 控制器测试文件 │ ├── app.controller.ts 控制器类 │ ├── app.</div></article><article><div class=blog-card><h3><a href=/2019/08/06/typescript-quick-guide4/>TS简明教程(4)</a></h3><p><small>2019年8月6日&nbsp;· 295 字&nbsp;· 2 分钟</small><p>本文是TS简明教程的第四篇，讲解装饰器。
-装饰器 装饰器是一种特殊类型的声明，它能够被附加到类声明，方法，访问符，属性或参数上。 装饰器使用@expression这种形式，expression必须是一个函数，它会在运行时被调用，被装饰的声明信息做为参数传入。
-Typescript中的装饰器是一项实验性功能，需要在tsconfig.json中开启该特性
-{ "compilerOptions": { "experimentalDecorators": true } } 例如，有一个@sealed装饰器，我们这样定义sealed:
-function sealed(target: any) { // 操作被装饰对象 } 装饰器工厂 如果需要给装饰器添加一些动态行为，比如开发一个监控统计的装饰器，需要传入当前统计的事件名称，有多个事件名称时只需要变更传入的事件名而不用重复定义装饰器。
-这时候需要使用到装饰器工厂。装饰器工厂也是一个函数，只不过它的返回值是一个装饰器。例如如下的事件监控装饰器：
-function event(eventName: string) { return function(target: any) { // 获取到当前eventName和被装饰对象进行操作 } } 装饰器组合 多个装饰器可以同时应用到被装饰对象上，例如下面的例子：
-@sealed @test('test') class Demo { } 装饰器执行顺序：
-装饰器工厂需要先求值，再装饰，求值顺序是由上到下 装饰器可以直接求值，装饰顺序是由下到上 上面的说明可以难以理解，下面举一个实际的例子：
-function f() { console.log('f求值'); return function(target: any) { console.log('f装饰'); } } function g() { console.log('g求值'); return function(target: any) { console.log('g装饰'); } } @f() @g() class Demo { } 上例的执行顺序为</div></article></div><div class=paginator><a class=prev href=/categories/engineering/page/4/>&larr;&nbsp;&nbsp;Pre Page</a>
+GET /cats/list CatsController::findAll方法处理 GET /cats/show CatsController::show方法处理 GET /cats CatsController::index方法处理 上述例程使用的是@Get装饰器，所以只能处理GET请求，以下是支持的请求方法与对应的装饰器</div></article></div><div class=paginator><a class=prev href=/categories/engineering/page/4/>&larr;&nbsp;&nbsp;Pre Page</a>
 <a class=next href=/categories/engineering/page/6/>Next Page&nbsp;&nbsp;&rarr;</a></div></div></div></div><footer class=footer><p>&copy; 2014 - 2024 <a href=https://www.ddhigh.com/>Lei Xia</a>
 Powered by
 <a href=https://gohugo.io/ rel=noopener target=_blank>Hugo️️</a>

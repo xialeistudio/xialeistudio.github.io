@@ -3,7 +3,25 @@
 </a><input type=checkbox id=menu-toggle>
 <label class="menu-button float-right" for=menu-toggle><span></span><span></span><span></span></label><ul class=navigation-list id=navigation-list><li class="navigation-item navigation-menu"><a class=navigation-link href=/archives>归档</a></li><li class="navigation-item navigation-menu"><a class=navigation-link href=/books>出版物</a></li><li class="navigation-item navigation-menu"><a class=navigation-link href=/guestbook>留言板</a></li><li class="navigation-item menu-separator"><span>|</span></li><li class="navigation-item navigation-social"><a class=navigation-link href=https://github.com/xialeistudio><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37.0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44.0 0020 4.77 5.07 5.07.0 0019.91 1S18.73.65 16 2.48a13.38 13.38.0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07.0 005 4.77 5.44 5.44.0 003.5 8.55c0 5.42 3.3 6.61 6.44 7A3.37 3.37.0 009 18.13V22"/></svg></a></li><li class="navigation-item navigation-dark"><button id=mode type=button aria-label="toggle user light or dark theme">
 <span class=toggle-dark><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></span>
-<span class=toggle-light><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></span></button></li><li class="navigation-item navigation-language"><a href=https://www.ddhigh.com/en/posts/>EN</a></li></ul></section></nav><div id=content><div class=blog-wrapper><div><div class=blog-list><article><div class=blog-card><h3><a href=/2019/07/16/wechat-mini-program-data-column-case/>微信小程序数据字段大小写问题</a></h3><p><small>2019年7月16日&nbsp;· 44 字&nbsp;· 1 分钟</small><p>这两天在开发微信小程序登录以及加解密的时候，因为数据大小写的问题被坑了一把。
+<span class=toggle-light><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></span></button></li><li class="navigation-item navigation-language"><a href=https://www.ddhigh.com/en/posts/>EN</a></li></ul></section></nav><div id=content><div class=blog-wrapper><div><div class=blog-list><article><div class=blog-card><h3><a href=/2019/07/18/nodejs-guide-about/>NodeJs简明教程(1)</a></h3><p><small>2019年7月18日&nbsp;· 120 字&nbsp;· 1 分钟</small><p>本文是NodeJs简明教程的第一篇，将介绍NodeJs整体架构以及重点概念。
+NodeJs究竟是什么 来看一段官方的说法[1]：
+As an asynchronous event driven JavaScript runtime, Node is designed to build scalable network applications. In the following &ldquo;hello world&rdquo; example, many connections can be handled concurrently. Upon each connection the callback is fired, but if there is no work to be done, Node will sleep.
+Google翻译版本：
+作为异步事件驱动的JavaScript运行时，Node旨在构建可伸缩的网络应用程序。 在下面的“hello world”示例中，可以同时处理许多连接。 在每次连接时都会触发回调，但是如果没有工作要做，Node将会休眠。
+结合上面的介绍，我们可以得出一个结论：
+NodeJs的本质是一个Javascript运行时。该运行时基于异步事件驱动进行运作。
+异步 本文中的异步指异步IO。维基百科对异步IO的定义[2]：
+异步IO是计算机操作系统对输入输出的一种处理方式：发起IO请求的线程不等IO操作完成，就继续执行随后的代码，IO结果用其他方式通知发起IO请求的程序。与异步IO相对的是更为常见的“同步（阻塞）IO”：发起IO请求的线程不从正在调用的IO操作函数返回（即被阻塞），直至IO操作完成。
+一言以蔽之就是：
+执行IO请求后，调用方不等执行结果就继续执行下面的代码，IO操作完成后执行者会告诉调用者“我执行完了”。在NodeJs中通知方式是“回调”。
+事件驱动 事件驱动是相对 线程驱动 而言的。线程驱动 下服务器为每个请求新建一个线程去处理。 维基百科对事件驱动的定义[3]：
+事件驱动程序模型下的系统，基本上的架构是预先设计一个事件循环所形成的程序，这个事件循环程序不断地检查当前要处理的信息，根据要处理的信息运行一个触发函数进行必要的处理。其中这个外部信息可能来自一个目录夹中的文件，可能来自键盘或鼠标的动作，或者是一个时间事件。
+以NodeJs的HTTP服务器为例，当调用server.listen函数时，NodeJs就会创建一个事件循环，当有客户端请求过来时，NodeJs将该请求入队列进行后续处理，主线程以及轮询客户端请求并入队列，队列中的请求执行完毕后会通过回调函数的形式通知主线程，如此循环。
+Javascript运行时 Javascript运行时是个比较复杂的概念，本文在介绍 Javascript运行时 之前介绍一下 Javascript引擎。</div></article><article><div class=blog-card><h3><a href=/2019/07/16/make-a-deep-copy-function/>实现一个JS深拷贝函数</a></h3><p><small>2019年7月16日&nbsp;· 137 字&nbsp;· 1 分钟</small><p>JS深拷贝概念并不新鲜，但是真正要真正理解原理还是有点难度的。这也是JS语言精粹之一吧。
+例子 let a = { name: 'demo', age: 18 }; let b = a; b.name = 'demo1'; console.log(a); // 输出 {name: "demo1", age: 18} console.log(b); // 输出 {name: "demo1", age: 18} 因为JS对于对象的赋值使用的是浅拷贝，其中一个实例变量的赋值会影响到所有指向该对象的变量
+解决方案 粗暴好使的 JSON.parse(JSON.stringify)，缺点: 丢失成员函数
+Object.assign，缺点：只有第一级深拷贝，子级对象依旧是浅拷贝，例子如下：
+let a = {name:{demo:'1'}}; let b = Object.assign({}, a); console.log(a); // 输出 {name:{demo:'1'}} console.log(b); // 输出 {name:{demo:'1'}} b.name.demo = '2'; console.log(a); // 输出 {name:{demo:'2'}} console.log(b); // 输出 {name:{demo:'2'}} 手动实现原理 遍历待拷贝对象 判断当前值类型，如果是object类型且不是null(null也是object)，则递归调用拷贝函数 如果当前值类型时null或者非object类型，直接return，退出本次递归 编码实现 function deepCopy(obj) { let result = obj; if(typeof obj === 'object' && obj !</div></article><article><div class=blog-card><h3><a href=/2019/07/16/wechat-mini-program-data-column-case/>微信小程序数据字段大小写问题</a></h3><p><small>2019年7月16日&nbsp;· 44 字&nbsp;· 1 分钟</small><p>这两天在开发微信小程序登录以及加解密的时候，因为数据大小写的问题被坑了一把。
 场景 小程序调用wx.login时会获得code，传输给服务端可以得到openid,unionid(绑定了开放平台),session_key 小程序调用getUserInfo会获得encrypted_data,iv,解密后得到unionId,openId unionid和openid这两个场景键名大小写是不同的 例子 服务端根据code获取session_key返回结果如下：
 { "session_key": "我是session_key", "openid": "我是openid", "unionid": "我是unionid" } 服务端根据session_key解密encrypted_data和iv返回结果如下：
 { "openId": "OPENID", "nickName": "NICKNAME", "gender": GENDER, "city": "CITY", "province": "PROVINCE", "country": "COUNTRY", "avatarUrl": "AVATARURL", "unionId": "UNIONID", "watermark": { "appid":"APPID", "timestamp":TIMESTAMP } } 可以看到两次同样的字段openid和unionid大小写是不同的，此处容易踩坑。
@@ -41,18 +59,7 @@ Yii2优势：
 Yii2优点 完美的OOP设计 大量开箱即用的组件(DB/Cache/Logger/RBAC等等) 组件化开发 扩展性 Swoole优点 高性能/异步/事件驱动 使用PHP语言开发 单文件容器化(传统的php-fpm容器化有点麻烦，一般使用apache的镜像，但是性能不行) 如果这两者结合将会擦出什么样的火花呢?
 Yii2-Swoole-Extension Yii2-Swoole-Extension
 基于swoole运行环境的Yii2扩展，基于标准Yii2组件化思想开发，对应用无侵入性，可以随时从 PHP-FPM &lt;-> swoole 互相迁移。
-通过简单的几行代码即可完成传统PHP-FPM应用到Swoole的升级，给应用带来实打实的性能提升!</div></article><article><div class=blog-card><h3><a href=/2019/05/16/running-thrift-on-swoole/>使用swoole来运行thrift应用</a></h3><p><small>2019年5月16日&nbsp;· 24 字&nbsp;· 1 分钟</small><p>Swoole扩展简介 Swoole：面向生产环境的 PHP 异步网络通信引擎
-使 PHP 开发人员可以编写高性能的异步并发 TCP、UDP、Unix Socket、HTTP，WebSocket 服务。Swoole 可以广泛应用于互联网、移动通信、企业软件、云计算、网络游戏、物联网（IOT）、车联网、智能家居等领域。 使用 PHP + Swoole 作为网络通信框架，可以使企业 IT 研发团队的效率大大提升，更加专注于开发创新产品。
-thrift Thrift是一种接口描述语言和二进制通讯协议，它被用来定义和创建跨语言的服务。它被当作一个远程过程调用（RPC）框架来使用，是由Facebook为“大规模跨语言服务开发”而开发的。
-swoole实现 thrift官方提供的PHP服务端是运行在php原生阻塞IO模式的，性能比较差。笔者使用Swoole的异步服务端+thrift提供的接口实现一个了异步协程化的thrift应用。
-此项目已经在github上开源：
-https://github.com/xialeistudio/swoole-thrift.git</div></article><article><div class=blog-card><h3><a href=/2019/05/14/use-closure-in-cache/>在缓存中使用闭包函数</a></h3><p><small>2019年5月14日&nbsp;· 81 字&nbsp;· 1 分钟</small><p>闭包函数 PHP官方文档对于闭包函数的定义：
-匿名函数（Anonymous functions），也叫闭包函数（closures），允许 临时创建一个没有指定名称的函数。最经常用作回调函数（callback）参数的值。当然，也有其它应用的情况。
-简单来说，闭包函数也是一种数据类型，可以直接使用变量来存储、传参、调用等等。
-传统缓存操作 操作缓存的时候一般步骤如下：
-读取缓存 如果缓存不为空则返回缓存数据 读取数据库，然后设置到缓存 返回数据 PHP示例代码如下：
-function loadUser($userId) { $data = $cache->get('user-'. $userId); if(!empty($data)) { return $data; } $data = $db->findOne(['user_id' => $userId]); $cache->set('user-'. $userId, $data, 7200); return $data; } 其实查找缓存，如果不存在则查找数据库之后写入缓存这个操作也可以用闭包来实现：
-function getOrSet($key, callable $callable, $expire = 0) { $data = $cache->get($key); if(!empty($data)) { return $data; } $data = call_user_func($callable); $cache->set($key, $data, $expire); return $data; } function loadUser($userId) { return $cache->getOrSet('user-'. $userId, function() use($db, $userId) { return $db->findOne(['user_id' => $userId]); }, 7200); } 可以看到通过闭包省去了手动get和set的过程，而查询数据库那一步是只有在缓存读取不到才会执行。</div></article></div><div class=paginator><a class=prev href=/posts/page/10/>&larr;&nbsp;&nbsp;Pre Page</a>
+通过简单的几行代码即可完成传统PHP-FPM应用到Swoole的升级，给应用带来实打实的性能提升!</div></article></div><div class=paginator><a class=prev href=/posts/page/10/>&larr;&nbsp;&nbsp;Pre Page</a>
 <a class=next href=/posts/page/12/>Next Page&nbsp;&nbsp;&rarr;</a></div></div></div></div><footer class=footer><p>&copy; 2014 - 2024 <a href=https://www.ddhigh.com/>Lei Xia</a>
 Powered by
 <a href=https://gohugo.io/ rel=noopener target=_blank>Hugo️️</a>

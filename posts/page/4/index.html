@@ -3,7 +3,22 @@
 </a><input type=checkbox id=menu-toggle>
 <label class="menu-button float-right" for=menu-toggle><span></span><span></span><span></span></label><ul class=navigation-list id=navigation-list><li class="navigation-item navigation-menu"><a class=navigation-link href=/archives>归档</a></li><li class="navigation-item navigation-menu"><a class=navigation-link href=/books>出版物</a></li><li class="navigation-item navigation-menu"><a class=navigation-link href=/guestbook>留言板</a></li><li class="navigation-item menu-separator"><span>|</span></li><li class="navigation-item navigation-social"><a class=navigation-link href=https://github.com/xialeistudio><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37.0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44.0 0020 4.77 5.07 5.07.0 0019.91 1S18.73.65 16 2.48a13.38 13.38.0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07.0 005 4.77 5.44 5.44.0 003.5 8.55c0 5.42 3.3 6.61 6.44 7A3.37 3.37.0 009 18.13V22"/></svg></a></li><li class="navigation-item navigation-dark"><button id=mode type=button aria-label="toggle user light or dark theme">
 <span class=toggle-dark><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></span>
-<span class=toggle-light><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></span></button></li><li class="navigation-item navigation-language"><a href=https://www.ddhigh.com/en/posts/>EN</a></li></ul></section></nav><div id=content><div class=blog-wrapper><div><div class=blog-list><article><div class=blog-card><h3><a href=/2022/02/05/reverse-linked-list-ii/>LeetCode92——反转链表 II</a></h3><p><small>2022年2月5日&nbsp;· 365 字&nbsp;· 2 分钟</small><p>题目 给你单链表的头指针 head 和两个整数 left 和 right ，其中 left &lt;= right 。请你反转从位置 left 到位置 right 的链表节点，返回 反转后的链表 。
+<span class=toggle-light><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></span></button></li><li class="navigation-item navigation-language"><a href=https://www.ddhigh.com/en/posts/>EN</a></li></ul></section></nav><div id=content><div class=blog-wrapper><div><div class=blog-list><article><div class=blog-card><h3><a href=/2022/02/05/linked-list-cycle-ii/>LeetCode142——环形链表2</a></h3><p><small>2022年2月5日&nbsp;· 168 字&nbsp;· 1 分钟</small><p>题目 给定一个链表，返回链表开始入环的第一个节点。 如果链表无环，则返回 null。
+如果链表中有某个节点，可以通过连续跟踪 next 指针再次到达，则链表中存在环。 为了表示给定链表中的环，评测系统内部使用整数 pos 来表示链表尾连接到链表中的位置（索引从 0 开始）。如果 pos 是 -1，则在该链表中没有环。注意：pos 不作为参数进行传递，仅仅是为了标识链表的实际情况。
+不允许修改 链表。
+示例 1：
+输入：head = [3,2,0,-4], pos = 1 输出：返回索引为 1 的链表节点 解释：链表中有一个环，其尾部连接到第二个节点。 示例 2：
+输入：head = [1,2], pos = 0 输出：返回索引为 0 的链表节点 解释：链表中有一个环，其尾部连接到第一个节点。 来源：力扣（LeetCode） 链接：https://leetcode-cn.com/problems/linked-list-cycle-ii 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+思路 哈希表 参考上一篇环形链表，可以利用哈希表存储节点，当再次遇到该节点时，该节点就是成环点。
+// 1. 遍历节点存入map // 2. 如果节点已存在，则该节点是成环节点 func detectCycle(head *ListNode) *ListNode { m := make(map[*ListNode]struct{}) p := head for p != nil { if _, ok := m[p]; ok { return p } m[p] = struct{}{} p = p.</div></article><article><div class=blog-card><h3><a href=/2022/02/05/linked-list-cycle/>LeetCode141——环形链表</a></h3><p><small>2022年2月5日&nbsp;· 144 字&nbsp;· 1 分钟</small><p>题目 给你一个链表的头节点 head ，判断链表中是否有环。
+如果链表中有某个节点，可以通过连续跟踪 next 指针再次到达，则链表中存在环。 为了表示给定链表中的环，评测系统内部使用整数 pos 来表示链表尾连接到链表中的位置（索引从 0 开始）。注意：pos 不作为参数进行传递 。仅仅是为了标识链表的实际情况。
+如果链表中存在环 ，则返回 true 。 否则，返回 false 。
+示例 1：
+输入：head = [3,2,0,-4], pos = 1 输出：true 解释：链表中有一个环，其尾部连接到第二个节点。 示例 2：
+输入：head = [1,2], pos = 0 输出：true 解释：链表中有一个环，其尾部连接到第一个节点。 来源：力扣（LeetCode） 链接：https://leetcode-cn.com/problems/linked-list-cycle 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+思路 哈希表法 利用哈希表存储访问过的节点，如果遍历时节点在哈希表，则有环。
+Go语言中map的value为struct可以不占用存储空间。
+func hasCycle(head *ListNode) bool { m := map[*ListNode]struct{}{} for head != nil { if _, ok := m[head]; ok { return true } m[head] = struct{}{} head = head.</div></article><article><div class=blog-card><h3><a href=/2022/02/05/reverse-linked-list-ii/>LeetCode92——反转链表 II</a></h3><p><small>2022年2月5日&nbsp;· 365 字&nbsp;· 2 分钟</small><p>题目 给你单链表的头指针 head 和两个整数 left 和 right ，其中 left &lt;= right 。请你反转从位置 left 到位置 right 的链表节点，返回 反转后的链表 。
 示例 1： 输入：head = [1,2,3,4,5], left = 2, right = 4 输出：[1,4,3,2,5]
 示例 2：
 输入：head = [5], left = 1, right = 1 输出：[5]
@@ -58,54 +73,7 @@ https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token 
 修改gitalk初始化参数 笔者使用的是hexo+icarus主题，其他主题或者博客系统也是类似做法。
 编辑themes/icarus/layout/comment/gitalk.ejs
 &lt;script> var gitalk = new Gitalk({ clientID: '&lt;%= get_config('comment.client_id') %>', clientSecret: '&lt;%= get_config('comment.client_secret') %>', id: '&lt;%= md5(page.path) %>', repo: '&lt;%= get_config('comment.repo') %>', owner: '&lt;%= get_config('comment.owner') %>', admin: &lt;%- JSON.stringify(get_config('comment.admin'))%>, createIssueManually: &lt;%= get_config('comment.create_issue_manually', false) %>, distractionFreeMode: &lt;%= get_config('comment.distraction_free_mode', false) %>, proxy: '/github/login/oauth/access_token' // 新添加的 }) gitalk.render('comment-container') &lt;/script> nginx配置 编辑nginx配置，笔者的博客域名为www.ddhigh.com，因此需要限制CORS来源域名，否则将有盗用风险!
-location /github { add_header Access-Control-Allow-Origin www.ddhigh.com; add_header Access-Control-Allow-Methods 'GET, POST, OPTIONS'; add_header Access-Control-Allow-Headers 'DNT,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization'; if ($request_method = 'OPTIONS') { return 204; } proxy_pass https://github.</div></article><article><div class=blog-card><h3><a href=/2021/02/25/golang-get-started/>Go语言程序设计</a></h3><p><small>2021年2月25日&nbsp;· 229 字&nbsp;· 2 分钟</small><p>Go语言概述 语言历史 Go语言也称为Golang，是由Google公司开发的一种静态强类型、编译型、语言原生支持并发、具有垃圾回收功能的编程语言。起源于2007年，并在2009年正式对外发布。Go语言是非常年轻的一门语言，它的主要目标是“兼具 Python 等动态语言的开发速度和 C/C++等编译型语言的性能与安全性”。
-Go语言是编程语言设计的又一次尝试，是对类C语言的重大改进，它不但能让你访问底层操作系统，还提供了强大的网络编程和并发编程支持。Go语言的用途众多，可以进行网络编程、系统编程、并发编程等等。
-Go语言的推出，旨在不损失应用程序性能的情况下降低代码的复杂性，具有“部署简单、并发性好、语言设计良好、执行性能好”等优势。
-Go语言有时候被描述为“21世纪的C语言”。Go 从C语言继承了相似的表达式语法、控制流结构、基础数据类型、调用参数传值、指针等很多思想，还有C语言编译后的运行效率。
-Go语言没有类和继承的概念，通过组合来实现代码复用，同时它通过接口（interface）的概念来实现多态性。所以Go语言的面向对象编程和传统面向对象语言（如C++和Java）并不相同。
-Go语言有一个吉祥物，在会议、文档页面和博文中，大多会包含下图所示的 Go Gopher，这是才华横溢的插画家 Renee French 设计的，她也是 Go 设计者之一 Rob Pike 的妻子。
-语言特性 语法简单
-Go语言的设计思想类似Unix的“少即是多”。Go语言的语法规则严谨，没有歧义，这使得Go语言简单易学。Go语言保留了指针，但通常情况下禁止指针运算（保留unsafe包操作指针的能力）。此外，Go语言还内置切片和字典，在保留运行性能的同时也提高了开发效率。
-语言级别支持并发
-主流的并发模型有多进程模型、多线程模型。和主流多并发模型不同，Go语言采用了基于CSP的协程实现，并且在运行时做了更深度的优化处理。这使得语言级别上并发编程变得极为容易，无须处理回调、也无需关注线程切换，只需要添加一个go关键字即可。
-“通过通信去共享内存，而不是通过共享内存去通信”，go语言内置的channel数据结构配合go关键字实现并发通信及控制，这对于需要考虑内存可见性等问题的多线程模型来说，是一个良好的解决方案。
-高效的垃圾回收
-Go语言的每次升级，垃圾回收器必然是核心组件里修改最多的部分。从并发清理，到降低STW时间，直到Go的1.5版本实现并发标记，逐步引入三色标记和写屏障等等，都是为了能让垃圾回收在不影响用户逻辑的情况下更好地工作。从最开始的秒级别STW到目前的微秒级STW，Go语言开发团队一直在垃圾回收方面进行努力。
-静态链接
-静态编译的好处显而易见。将运行时、依赖库直接打包到可执行文件内部，简化了部署和发布操作，无须事先安装运行环境和下载诸多第三方库。虽然相比动态编译增加了可执行文件的大小，但是省去了依赖库的管理。随着微服务和容器化的发展，这也成为了Go语言的杀手锏之一，一个二进制文件即可运行服务。
-标准库
-功能完善、质量可靠的标准库为编程语言提供了有力的支持。在不借助第三方扩展的情况下，就可完成大部分基础功能开发，这大大降低了学习和使用成本。
-Go语言标准库可以说极为丰富。其中值得称道的是net/http，仅须简单几条语句就能实现一个高性能 Web Server。
-工具链
-完整的工具链对于项目开发极为重要。Go语言在此做得相当不错，无论是编译、格式化、错误检查、帮助文档，还是第三方包下载、更新都有对应的工具。
-值得一提的gofmt工具，为了解决开发者经常遇到的“代码风格不统一”的难题，官方直接通过gofmt指定一套标准，可以看出go语言在工程方面确实解决了许多实际问题。
-此外Go语言内置完整测试框架，其中包括单元测试、性能测试、代码覆盖率、数据竞争，以及用来调优的pprof，这些都是保障代码能正确而稳定运行的必备利器。
-Go语言应用场景 Go 语言从发布1.0版本以来备受众多开发者关注并得到广泛使用，Go 语言的简单、高效、并发特性吸引了众多传统语言开发者的加入，而且人数越来越多。
-鉴于Go语言的特点和设计的初衷，Go语言作为服务器编程语言，很适合处理日志、数据打包、虚拟机处理、文件系统、分布式系统、数据库代理等；网络编程方面，Go语言广泛应用于Web应用、API应用、下载应用等；除此之外，Go语言还适用于内存数据库和云平台领域，目前国外很多云平台都是采用Go开发。
-服务器编程。例如处理日志、数据打包、虚拟机处理、文件系统等。
-分布式系统、数据库代理器、中间件等。例如Etcd。
-网络编程。这一块目前应用最广，包括Web应用、API应用、下载应用等等。
-开发云平台。目前国内外很多云平台在采用Go开发。
-Go语言知名项目 Go发布之后，很多公司特别是云计算公司开始用Go重构他们的基础架构，很多基础设施都是直接采用Go进行了开发，诞生了许多热门项目。
-基础设施
-代表项目：docker、kubernetes、etcd、consul等。
-数据库
-代表项目：influxdb、cockroachdb等。
-微服务
-代表项目：go-kit、micro、kratos等。
-安装Go语言 Go语言可用于FreeBSD、Linux、Windows和macOS等操作系统。有关对这些平台的要求，请参与Go语言网站列出的系统需求。
-Go语言的官方网站为https://golang.org/，国内的用户可以访问https://golang.google.cn/dl/。通常情况下，按照本文的步骤进行安装不会出现问题，遇到安装问题的读者，请通过公众号与我联系。
-Windows系统 下载链接
-32位下载地址：https://golang.google.cn/dl/go1.15.8.windows-386.msi
-64位下载地址：https://golang.google.cn/dl/go1.15.8.windows-amd64.msi
-默认安装到C:\go目录下，建议不要更改安装目录。
-GOPATH配置
-安装完毕后需要配置GOPATH，GOPATH是Go语言用来存放第三方源码、二进制文件、类库等文件的路径。
-例如系统用户名为demo，则需要新建以下三个目录： C:\Users\demo\go\src 存放源码</div></article><article><div class=blog-card><h3><a href=/2021/02/06/go-wire-tutorial/>golang依赖注入工具wire指南</a></h3><p><small>2021年2月6日&nbsp;· 829 字&nbsp;· 4 分钟</small><p>wire与依赖注入 Wire 是一个的Golang依赖注入工具，通过自动生成代码的方式在编译期完成依赖注入，Java体系中最出名的Spring框架采用运行时注入，个人认为这是wire和其他依赖注入最大的不同之处。
-依赖注入(Dependency Injection)也称作控制反转(Inversion of Control)，个人给控制反转下的定义如下：
-当前对象需要的依赖对象由外部提供（通常是IoC容器），外部负责依赖对象的构造等操作，当前对象只负责调用，而不关心依赖对象的构造。即依赖对象的控制权交给了IoC容器。
-下面给出一个控制反转的示例，比如我们通过配置去创建一个数据库连接：
-// 连接配置 type DatabaseConfig struct { Dsn string } func NewDB(config *DatabaseConfig)(*sql.DB, error) { db,err := sql.Open("mysql", config.Dsn) if err != nil { return nil, err } // ... } fun NewConfig()(*DatabaseConfig,error) { // 读取配置文件 fp, err := os.Open("config.json") if err != nil { return nil,err } defer fp.Close() // 解析为Json var config DatabaseConfig if err:=json.NewDecoder(fp).Decode(&amp;config);err!=nil { return nil,err } return &amp;config, nil } func InitDatabase() { cfg, err:=NewConfig() if err!</div></article></div><div class=paginator><a class=prev href=/posts/page/3/>&larr;&nbsp;&nbsp;Pre Page</a>
+location /github { add_header Access-Control-Allow-Origin www.ddhigh.com; add_header Access-Control-Allow-Methods 'GET, POST, OPTIONS'; add_header Access-Control-Allow-Headers 'DNT,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization'; if ($request_method = 'OPTIONS') { return 204; } proxy_pass https://github.</div></article></div><div class=paginator><a class=prev href=/posts/page/3/>&larr;&nbsp;&nbsp;Pre Page</a>
 <a class=next href=/posts/page/5/>Next Page&nbsp;&nbsp;&rarr;</a></div></div></div></div><footer class=footer><p>&copy; 2014 - 2024 <a href=https://www.ddhigh.com/>Lei Xia</a>
 Powered by
 <a href=https://gohugo.io/ rel=noopener target=_blank>Hugo️️</a>

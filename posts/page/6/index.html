@@ -3,7 +3,26 @@
 </a><input type=checkbox id=menu-toggle>
 <label class="menu-button float-right" for=menu-toggle><span></span><span></span><span></span></label><ul class=navigation-list id=navigation-list><li class="navigation-item navigation-menu"><a class=navigation-link href=/archives>归档</a></li><li class="navigation-item navigation-menu"><a class=navigation-link href=/books>出版物</a></li><li class="navigation-item navigation-menu"><a class=navigation-link href=/guestbook>留言板</a></li><li class="navigation-item menu-separator"><span>|</span></li><li class="navigation-item navigation-social"><a class=navigation-link href=https://github.com/xialeistudio><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37.0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44.0 0020 4.77 5.07 5.07.0 0019.91 1S18.73.65 16 2.48a13.38 13.38.0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07.0 005 4.77 5.44 5.44.0 003.5 8.55c0 5.42 3.3 6.61 6.44 7A3.37 3.37.0 009 18.13V22"/></svg></a></li><li class="navigation-item navigation-dark"><button id=mode type=button aria-label="toggle user light or dark theme">
 <span class=toggle-dark><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></span>
-<span class=toggle-light><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></span></button></li><li class="navigation-item navigation-language"><a href=https://www.ddhigh.com/en/posts/>EN</a></li></ul></section></nav><div id=content><div class=blog-wrapper><div><div class=blog-list><article><div class=blog-card><h3><a href=/2020/01/17/php-binary-io/>kafka二进制协议简要分析</a></h3><p><small>2020年1月17日&nbsp;· 671 字&nbsp;· 4 分钟</small><p>最近分享了《应用层私有协议的设计和实战》，对应用层私有协议设计做了一些介绍，同时也对协议设计中常用的数据类型做了比较形象的讲解，今天我们来研究一下kafka的二进制协议。
+<span class=toggle-light><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></span></button></li><li class="navigation-item navigation-language"><a href=https://www.ddhigh.com/en/posts/>EN</a></li></ul></section></nav><div id=content><div class=blog-wrapper><div><div class=blog-list><article><div class=blog-card><h3><a href=/2020/02/10/shell-quickstart/>Shell脚本快速入门(1)</a></h3><p><small>2020年2月10日&nbsp;· 195 字&nbsp;· 1 分钟</small><p>Shell 是一个用 C 语言编写的程序，用户可以通过Shell脚本语言来进行程序开发。与其他脚本语言不同，Shell脚本所需的解释器一般是内置在操作系统的，而像Node.js、PHP等脚本语言需要手动安装解释器程序才可以。
+接下来将和大家一起来学习Shell脚本编程。
+Shell解释器 Shell解释器种类众多，笔者的电脑上内置以下Shell:
+/bin/bash /bin/csh /bin/ksh /bin/sh /bin/tcsh /bin/zsh 其中bash和sh是最常见的Shell解释器，一般情况下，这两种Shell没有区别，本文以bash为例。
+Hello World 打开文本编辑器(vim或者vscode)，新建文件 hello.sh，扩展名为sh(常用)。
+#!/bin/bash echo "Hello World!" 第1行用来指明本脚本需要使用什么解释器来执行。#!是一个约定的语法。
+echo用来输出文本。
+执行Shell脚本 有两种方法可以执行Shell脚本：
+作为可执行程序。给脚本添加可执行权限之后执行即可。 chmod +x ./hello.sh # 添加可执行权限 ./hello.sh # 执行脚本 作为解释器脚本。直接运行指定的解释器程序，并将脚本路径传入，本方式不要求脚本有可执行权限。 /bin/bash hello.sh # 使用/bin/bash来执行hello.sh Shell语法 和其他编程语言一样，Shell脚本也有自己的一套语法规则，我们现在来系统学习一下。
+变量 命名规则 定义变量时，变量名不加美元符号$，如：
+name="xialei" 和其他编程语言不同的时，Shell脚本中变量名和等号之间不能有空格。Shell变量名的命名规则如下：
+只能包含英文字母、数字和下划线，且不能以数字开头 不能包含空格 不能使用关键字命名(通过下划线连接关键字是允许的) 不能使用标点符号 以下是合法的示例
+var1 var_2 _var3 MAX_PAGE 以下是不合法的示例
+$var 赋值 Shell有以下两种复制方式。
+直接赋值。直接在等号后面指定变量值。 name="xialei admin=1 使用命名执行结果。可以将其他命令的执行结果赋值给变量。（以下两种方式是等效的） file=`ls /etc` # 反引号(键盘Tab上面的键) file1=$(ls /etc) 已经存在的变量，可以被重新赋值。</div></article><article><div class=blog-card><h3><a href=/2020/02/01/java-resource-load/>Java中加载文件的几种方式</a></h3><p><small>2020年2月1日&nbsp;· 115 字&nbsp;· 1 分钟</small><p>在Java程序中加载外部文件有多中方式，每种方式也存在区别，本文将理清这些加载方式之间的区别。
+文件IO方式 package org.xialei.example.resource; import java.io.File; import java.io.IOException; public class Main { public static void main(String[] args) throws IOException { File file = new File("app.properties"); System.out.println(file.getAbsolutePath()); } } 常见的读取方式，使用该方式读取文件时规则如下：
+如果传入的是绝对路径，则以系统根目录作为绝对路径的起点。
+如果传入的是相对路径，则以当前工作目录作为起点。
+本例中，运行java命令的目录即为工作目录，app.properties从工作目录开始查找。
+Class.getResourceAsStream package org.xialei.example.resource; import java.io.IOException; import java.io.InputStream; import java.util.Properties; public class Main { public static void main(String[] args) throws IOException { try (InputStream is = Main.class.getResourceAsStream("app.properties")) { Properties properties = new Properties(); properties.load(is); System.out.println(properties.getProperty("name")); } } } 使用该方式读取文件时规则如下：</div></article><article><div class=blog-card><h3><a href=/2020/01/17/php-binary-io/>kafka二进制协议简要分析</a></h3><p><small>2020年1月17日&nbsp;· 671 字&nbsp;· 4 分钟</small><p>最近分享了《应用层私有协议的设计和实战》，对应用层私有协议设计做了一些介绍，同时也对协议设计中常用的数据类型做了比较形象的讲解，今天我们来研究一下kafka的二进制协议。
 数据类型 kafka二进制协议定义了许多的数据类型，包含常用的数字、字符串，也包含了数组等类型。
 本文主要讨论不可变长数据类型，可变长度（如Google Protocol Buffers）不在讨论范围内。
 数据类型 字节长度 说明 BOOLEAN 1 布尔值 INT8 1 单字节整型，-2^7 ~ 2^7-1 INT16 2 双字节整型，大端序，范围 -2^15 ~ 2^15 - 1 INT32 4 四字节整型、大端序，范围 -2^31 ~ 2^31 - 1 INT64 8 八字节整型、大端序，范围 -2^63 ~ 2^63 -1 UINT32 4 十字街 UUID 16 16字节，Java UUID类型 STRING 2+N 头部由2字节标识字符串长度N，后续N字节为字符串内容 NULLABLE_STRING 2+N 头部由2字节标识字符串长度N，后续N字节为字符串内容，N为-1时无后续内容 BYTES 4+N 头部4字节标识字节数组长度，后续N字节为字节数组内容 NULLABLE_BYTES 4+N 头部4字节标识字节数组长度，后续N字节为字节数组内容，N为-1时无后续内容 ARRAY 4+N*M 头部4字节标识数组长度N，M为单个数组元素的长度，N为-1时为空数组 错误码 -1 未知错误 0 未出错 大于0， 具体错误 kafka内置的操作类型有点多，有兴趣的可以参阅kafka错误码</div></article><article><div class=blog-card><h3><a href=/2019/12/30/javascript-event/>Javascript事件系统</a></h3><p><small>2019年12月30日&nbsp;· 450 字&nbsp;· 3 分钟</small><p>本文内容
@@ -61,34 +80,7 @@ Set { 'string', 1, true, null, undefined, NaN, {}, {}, [], [], [Function], [Func
 Map的基本使用 Map支持的数据类型 Map的迭代 Map与其他对象的转化 在Map出现之前，要实现类似需求，只能使用Object，但是Object还是存在一些问题的。
 如果使用Object作为key存储在{}中，key最终是当做[object Object]来使用的 Object的keys是无序的 无法安全遍历Object 无法直接获取Object大小 Map 对象保存键值对。任何值(对象或者原始值) 都可以作为一个键或一个值。
 基本操作 new Map([iterator]) iterator 可以是一个数组或者其他iterator对象，其元素为键值对(如['key', 'value'])。 null或undefined不会生效，返回一个空的Map 非iterator会抛出错误 TypeError: object is not iterable const map = new Map(); // Create map.set('name','xialei'); map.set('site', 'https://www.ddhigh.com'); // Update map.set('name', 'xialeistudio'); // Read map.get('name'); // Delete map.delete('name'); // 清空 map.clear(); // map大小 console.log(map.size); 数据类型测试 JS中基本数据类型有string、number、boolean、null、undefined、symbol，复杂数据类型有object(包括object,array,function等)，还有个特殊的NaN(typeof结果是number)，分别对这些类型进行测试
-const map = new Map(); const sKey = 'key', nKey = 1, bKey = true, nullKey = null, uKey = undefined, symbolKey = Symbol("key"), oKey = {}, ooKey = oKey, aKey = [], fKey = function () { }, nanKey = NaN; map.</div></article><article><div class=blog-card><h3><a href=/2019/10/30/twblog/>我是如何发现我的文章被侵权以及如何得到侵权网站的联系方式的?</a></h3><p><small>2019年10月30日&nbsp;· 261 字&nbsp;· 2 分钟</small><p>本文内容
-如何发现自己的文章被侵权 如何结合whois信息查询侵权网站的联系方式 声明：本文只做技术研究，请勿用于非法目的，如果恶意使用造成任何法律责任本人概不负责！
-发现侵权 我的文章除了发布在博客之外，还会同步到思否平台。自己没事的时候会去看看百度统计，比较关注来源网站(也就是referer)，一般来说通过搜索引擎过来的流量我不太关注，私人网站过来的就比较关注了，昨天查看来源的时候看到了一个新网站。
-可以看到这个 www.twblogs.net是一个普通网站，点进去发现这样一篇文章。
-可以看到这篇文章的作者是xialeistudio(也就是我常用的网络用户名)，可我压根就没听说过这个网站，我意识到可能被爬虫爬取了。
-点击作者进入到作者的文章页，发现我昨天下午刚发布没多久的文章就被爬了。
-然后我去查看nginx的访问日志，没有发现异常访问，有个IP虽然是美国的，但是是Google的爬虫。这意味着文章不是直接爬取我的博客来的。
-nginx的访问日志过滤使用shell命令即可做到，不过这不是本文的重点，此处略过
-那就只剩下思否和掘金，通过文章中的公众号图片二维码，我发现了爬取的文章来源。
-可以看到是通过思否爬取到的。
-侵权结论 伪造用户名爬取了思否大量的文章，截止发文时大概爬了三四十篇文章 思否应该并不知道这件事，应该早期的文章都爬过来了（包括我在思否已经删除的文章） 获取侵权网站联系方式 目前手头只有一个域名https://www.twblogs.net，先去站长工具的whois查询工具http://whois.chinaz.com/查询一下。
-whois：用来查询域名注册信息的一种技术
-通过查询并没有得到什么有效的信息。看来是whois做了保护处理。
-不过没关系，目前得到了twblogs.net的域名提供商是Goddy，我们可以到域名提供商的网站看一下Whois信息
-浏览器打开 whois.godaddy.com 输入 www.twblogs.net 就可以了，查询到的Whois信息如下：
-WHOIS 搜索结果 Domain Name: twblogs.net Registry Domain ID: 2330628228_DOMAIN_NET-VRSN Registrar WHOIS Server: whois.godaddy.com Registrar URL: http://www.godaddy.com Updated Date: 2019-10-09T11:09:43Z Creation Date: 2018-11-08T16:30:46Z Registrar Registration Expiration Date: 2021-11-08T16:30:46Z Registrar: GoDaddy.com, LLC Registrar IANA ID: 146 Registrar Abuse Contact Email: abuse@godaddy.com Registrar Abuse Contact Phone: +1.</div></article><article><div class=blog-card><h3><a href=/2019/10/29/redis-high-concurrent/>Redis优化高并发下的秒杀性能</a></h3><p><small>2019年10月29日&nbsp;· 470 字&nbsp;· 3 分钟</small><p>本文内容
-使用Redis优化高并发场景下的接口性能 数据库乐观锁 随着双11的临近，各种促销活动开始变得热门起来，比较主流的有秒杀、抢优惠券、拼团等等。
-涉及到高并发争抢同一个资源的主要场景有秒杀和抢优惠券。
-前提 活动规则
-奖品数量有限，比如100个 不限制参与用户数 每个用户只能参与1次秒杀 活动要求
-不能多发，也不能少发，100个奖品要全部发出去 1个用户最多抢1个奖品 遵循先到先得原则，先来的用户有奖品 数据库实现 悲观锁性能太差，本文不予讨论，讨论一下使用乐观锁解决高并发问题的优缺点。
-数据库结构 ID Code UserId CreatedAt RewardAt 奖品ID 奖品码 用户ID 创建时间 中奖时间 未中奖时UserId为0，RewardAt为NULL 中奖时UserId为中奖用户ID，RewardAt为中奖时间 乐观锁实现 乐观锁实际上并不存在真正的锁，乐观锁是利用数据的某个字段来做的，比如本文的例子就是以UserId来实现的。
-实现流程如下：
-查询UserId为0的奖品，如果未找到则提示无奖品
-SELECT * FROM envelope WHERE user_id=0 LIMIT 1 更新奖品的用户ID和中奖时间(假设奖品ID为1，中奖用户ID为100，当前时间为2019-10-29 12:00:00)，这里的user_id=0就是我们的乐观锁了。
-UPDATE envelope SET user_id=100, reward_at='2019-10-29 12:00:00' WHERE user_id=0 AND id=1 检测UPDATE语句的执行返回值，如果返回1证明中奖成功，否则证明该奖品被其他人抢了
-为什么要添加乐观锁 正常情况下获取奖品、然后把奖品更新给指定用户是没问题的。如果不添加user_id=0时，高并发场景下会出现下面的问题：
-两个用户同时查询到了1个未中奖的奖品(发生并发问题) 将奖品的中奖用户更新为用户1，更新条件只有ID=奖品ID 上述SQL执行是成功的，影响行数也是1，此时接口会返回用户1中奖 接下来将中奖用户更新为用户2，更新条件也只有ID=奖品ID 由于是同一个奖品，已经发给用户1的奖品会重新发放给用户2，此时影响行数为1，接口返回用户2也中奖 所以该奖品的最终结果是发放给用户2 用户1就会过来投诉活动方了，因为抽奖接口返回用户1中奖，但他的奖品被抢了，此时活动方只能赔钱了 添加乐观锁之后的抽奖流程 更新用户1时的条件为id=红包ID AND user_id=0 ,由于此时红包未分配给任何人，用户1更新成功，接口返回用户1中奖 当更新用户2时更新条件为id=红包ID AND user_id=0，由于此时该红包已经分配给用户1了，所以该条件不会更新任何记录，接口返回用户2中奖 乐观锁优缺点 优点</div></article></div><div class=paginator><a class=prev href=/posts/page/5/>&larr;&nbsp;&nbsp;Pre Page</a>
+const map = new Map(); const sKey = 'key', nKey = 1, bKey = true, nullKey = null, uKey = undefined, symbolKey = Symbol("key"), oKey = {}, ooKey = oKey, aKey = [], fKey = function () { }, nanKey = NaN; map.</div></article></div><div class=paginator><a class=prev href=/posts/page/5/>&larr;&nbsp;&nbsp;Pre Page</a>
 <a class=next href=/posts/page/7/>Next Page&nbsp;&nbsp;&rarr;</a></div></div></div></div><footer class=footer><p>&copy; 2014 - 2024 <a href=https://www.ddhigh.com/>Lei Xia</a>
 Powered by
 <a href=https://gohugo.io/ rel=noopener target=_blank>Hugo️️</a>
