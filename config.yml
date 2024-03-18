@@ -6,6 +6,8 @@ licenselink: 'https://github.com/guangzhengli/hugo-theme-ladder/blob/master/LICE
 homepage: 'https://www.ddhigh.com'
 defaultContentLanguage: 'zh'
 paginate: 10
+summaryLength: 5
+
 
 taxonomies:
   category: categories
@@ -69,9 +71,9 @@ params:
     google:
       # SiteVerificationTag: xxx
     umami:
-      enable: false
-      #website_id: 865c8529-0729-4cf5-88a9-448616abbcbb
-      #url: https://umami-beta-peach.vercel.app/xialeistudio
+      enable: true
+      website_id: a835b340-3774-4c04-b33b-d34b544bd3e5
+      url: https://umami-beta-peach.vercel.app/xialeistudio
   guestbook:
     title: Guestbook
     description: Leave a comment below. It could be anything –- question, appreciation, information, or even humor.
