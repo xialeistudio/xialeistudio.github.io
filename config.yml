@@ -71,7 +71,7 @@ params:
     google:
       # SiteVerificationTag: xxx
     umami:
-      enable: true
+      enable: false
       website_id: a835b340-3774-4c04-b33b-d34b544bd3e5
       url: https://umami-beta-peach.vercel.app/xialeistudio
   guestbook:
