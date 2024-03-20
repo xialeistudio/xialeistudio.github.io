@@ -5,6 +5,7 @@
   "@type": "{{- ( site.Params.schema.publisherType | default "Organization") | title -}}",
   "name": {{ site.Title }},
   "url": {{ site.BaseURL }},
+  "keywords" {{ site.Params.keywords }},
   "description": {{ site.Params.description | plainify | truncate 180 | safeHTML }},
   "thumbnailUrl": {{ site.Params.assets.favicon | default "favicon.ico" | absURL }},
   "sameAs": [
