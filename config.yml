@@ -115,6 +115,9 @@ languages:
     languageName: EN
     menu:
       main:
+        - name: Home
+          url: /
+          weight: 1
         - name: Archives
           url: /archives
           weight: 2
@@ -146,6 +149,9 @@ languages:
     author: Lei Xia
     menu:
       main:
+        - name: 首页
+          url: /
+          weight: 1
         - name: 归档
           url: /archives
           weight: 2

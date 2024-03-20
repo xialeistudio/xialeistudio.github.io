@@ -4,14 +4,18 @@ title: Understanding RBAC
 date: 2023-09-25 11:22:17
 categories:
 - engineering
+keywords:
+- authorization
+- rbac
 tags:
 - authorization
+- rbac
 ---
 
 >  [Role-based access control(RBAC)](https://en.wikipedia.org/wiki/Role-based_access_control) is a policy-neutral access control mechanism defined around **roles** and **privileges**. The components of RBAC such as **role-permissions**, **user-role** and role-role relationships make it simple to perform user assignments. 
 
 In this article, I'll share some information about RBAC and ABAC.
-
+<!--more-->
 The basic idea of RBAC is to separate permission management from users to reduce management complexity and provider higher flexibility and security. By using roles as a middle layer, administrators can more easily manage user permissions without having to focus on each user's permission settings.
 
 ## Terminology
