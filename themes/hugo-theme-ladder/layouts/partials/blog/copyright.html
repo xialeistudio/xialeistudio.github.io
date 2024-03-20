@@ -1,7 +1,15 @@
-<div style="margin-top: 2em; border: 1px solid #d3d3d3; background-color: #f7f7f7;">
-    <ul>
-        <li style="margin-bottom: 0.5em;">{{- i18n "post_author" -}}: <a href="https://ddhigh.com/" target="_blank" style="color: #000000; text-decoration: none;">xialeistudio</a></li>
-        <li style="margin-bottom: 0.5em;">{{- i18n "post_link" -}}: <a href="{{ .Permalink }}" target="_blank" style="color: #000000; text-decoration: none;">{{ .Title }}</a></li>
-        <li>{{- i18n "copyright" -}}: <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" style="color: #000000; text-decoration: none;">「{{- i18n "cc_by_nc_4" -}}」</a></li>
-    </ul>
+<div class="blog-footer">
+    <div class="copyright">
+        <ul>
+            <li style="margin-bottom: 0.5em;">{{- i18n "post_author" -}}: <a href="https://ddhigh.com/" target="_blank"
+                    style="color: #000000; text-decoration: none;">xialeistudio</a></li>
+            <li style="margin-bottom: 0.5em;">{{- i18n "post_link" -}}: <a href="{{ .Permalink }}" target="_blank"
+                    style="color: #000000; text-decoration: none;">{{ .Title }}</a></li>
+            <li>{{- i18n "copyright" -}}: <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank"
+                    style="color: #000000; text-decoration: none;">「{{- i18n "cc_by_nc_4" -}}」</a></li>
+        </ul>
+    </div>
+    {{ if eq .Site.Language.Lang "zh"}}
+    <div style="margin-top: 2rem;"><img src="/img/mp.png" alt="qrcode"></div>
+    {{end}}
 </div>

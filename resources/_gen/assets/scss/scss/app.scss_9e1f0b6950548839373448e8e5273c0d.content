@@ -203,6 +203,13 @@ table th {
 img {
   max-width: 100%; }
 
+.blog-footer {
+  margin-top: 2em; }
+  .blog-footer .copyright {
+    border: 1px solid #d3d3d3;
+    background-color: #f7f7f7;
+    flex: 1; }
+
 [data-dark-mode] body .navigation .navigation-list .navigation-dark .toggle-light {
   display: block;
   color: #dee2e6; }
@@ -470,17 +477,13 @@ img {
           width: 100%;
           height: 10rem; } }
     .home .info .avatar {
-      width: 30%;
+      width: 60%;
       display: flex;
       align-items: center;
       justify-content: center; }
-      .home .info .avatar img {
-        height: 15rem;
-        border-radius: 50%; }
-        @media only screen and (max-width: 768px) {
-          .home .info .avatar img {
-            margin-top: 2rem;
-            height: 10rem; } }
+      @media only screen and (max-width: 768px) {
+        .home .info .avatar img {
+          margin-top: 2rem; } }
       @media only screen and (max-width: 768px) {
         .home .info .avatar {
           width: 100%;

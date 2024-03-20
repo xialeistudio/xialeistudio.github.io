@@ -28,7 +28,7 @@ sitemap:
 
 params:
   brand: DayDayUP
-#  avatarURL: /img/favicon.ico
+  avatarURL: /img/mp.png
   author: Lei Xia
   authorDescription: Sr. Software Engineer | Solution Architect
   info: |

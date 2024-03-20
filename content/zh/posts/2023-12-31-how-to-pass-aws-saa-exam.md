@@ -48,7 +48,7 @@ AWS对新用户提供了一年免费的 [Free Tier套餐](https://aws.amazon.com
 
 ## 参考
 
-+ AWS SAA官方课程 https://explore.skillbuilder.aws/learn/lp/1044/solutions-architect-knowledge-badge-readiness-path
-+ AWS Free Tier https://aws.amazon.com/cn/free/
-+ 刷题网站 https://aws.ddhigh.com/
++ [AWS SAA官方课程](https://explore.skillbuilder.aws/learn/lp/1044/solutions-architect-knowledge-badge-readiness-path)
++ [AWS Free Tier](https://aws.amazon.com/cn/free/)
++ [AWS练习题库](https://aws.ddhigh.com/)
 
