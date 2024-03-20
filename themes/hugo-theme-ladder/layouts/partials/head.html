@@ -7,7 +7,7 @@
     {{ if .Keywords }}
     <meta content="{{ delimit .Keywords " , " }}" name="keywords">
     {{ else }}
-    <meta content="{{ .Site.Params.Keywords }}" name="keywords">
+    <meta content="{{ delimit .Site.Params.Keywords " , " }}" name="keywords">
     {{ end }}
     <meta name="description" content="{{- with .Description }}{{ . }}{{- else }}{{- if or .IsPage .IsSection}}
     {{- .Summary | default (printf " %s - %s" .Title site.Title) }}{{- else }} {{- with site.Params.description }}{{ .

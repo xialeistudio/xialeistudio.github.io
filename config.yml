@@ -36,7 +36,18 @@ params:
     
     [RSS](/en/atom.xml) ·
     [Sponsor](/en/sponsors)
-  keywords: Web, Java, Go, Node.js, PHP, Koa, MySQL, Redis, front-end, back-end, database
+  keywords: 
+    - Web
+    - Java
+    - Go
+    - Node.js
+    - PHP
+    - Koa
+    - MySQL
+    - Redis
+    - front-end
+    - back-end
+    - database
   description: Welcome to my blog! Articles related to web development are provided here, covering technologies such as Java, Go, Node.js, PHP, Koa, MySQL, and Redis. From front-end to back-end, providing you with practical guidance and advice on web application development. Explore best practices and learn about RESTful API design, responsive web design, and performance and security.
   favicon: /img/favicon.ico
   sponsors:
@@ -147,7 +158,18 @@ languages:
     params:
       brand: 每天进步一点点
       authorDescription: Sr. Software Engineer | Solution Architect
-      keywords: Web开发, Java, Go, Node.js, PHP, Koa, MySQL, Redis, 前端，后端, 数据库
+      keywords: 
+        - Web开发
+        - Java
+        - Go
+        - Node.js
+        - PHP
+        - Koa
+        - MySQL
+        - Redis
+        - 前端
+        - 后端
+        - 数据库
       description: 欢迎来到我的博客！这里提供与Web开发相关的文章，涵盖Java、Go、Node.js、PHP、Koa、MySQL和Redis等技术。从前端到后端，为您提供有关Web应用程序开发的实用指南和建议。探索最佳实践，了解RESTful API设计、响应式网页设计以及性能和安全性方面的知识。
       info:  | 
         抒写代码，尽享生活，筑就未来。
