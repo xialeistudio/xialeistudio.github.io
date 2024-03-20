@@ -38,7 +38,7 @@
     <link rel="stylesheet" href="{{ $styles.RelPermalink }}" integrity="{{ $styles.Data.Integrity }}"
         crossorigin="anonymous" media="screen" />
     {{ end }}
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css" integrity="sha512-ygEyjMC6rqnzJqWGjRTJUPYMEs9JUOm3i7OWUS9CgQ4XkBUvMsgCS1I8JqavidQ2ClHcREB7IbA2mN08+r9Elg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     {{ $highlight := resources.Get "scss/highlight/github-dark.min.css" | minify | fingerprint }}
     <link rel="stylesheet" href="{{ $highlight.RelPermalink }}" />

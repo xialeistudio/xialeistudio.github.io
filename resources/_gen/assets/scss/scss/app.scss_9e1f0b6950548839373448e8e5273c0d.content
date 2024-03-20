@@ -203,12 +203,11 @@ table th {
 img {
   max-width: 100%; }
 
-.blog-footer {
-  margin-top: 2em; }
-  .blog-footer .copyright {
-    border: 1px solid #d3d3d3;
-    background-color: #f7f7f7;
-    flex: 1; }
+.blog-footer .copyright {
+  margin-top: 1rem;
+  border: 1px solid #d3d3d3;
+  background-color: #f7f7f7;
+  flex: 1; }
 
 [data-dark-mode] body .navigation .navigation-list .navigation-dark .toggle-light {
   display: block;
