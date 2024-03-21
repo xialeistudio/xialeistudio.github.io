@@ -1,5 +1,6 @@
 ---
 title: 理解RBAC授权
+slug: understand-rbac
 date: 2024-03-20T15:15:26+08:00
 categories:
 - engineering
