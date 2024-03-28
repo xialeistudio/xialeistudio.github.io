@@ -3,5 +3,3 @@ User-agent: *
 Disallow: /images/
 Disallow: /js/
 Disallow: /css/
-
-Sitemap: {{ "sitemap.xml" | absURL }}
