@@ -83,9 +83,9 @@ params:
     google:
       # SiteVerificationTag: xxx
     umami:
-      enable: false
-      website_id: a835b340-3774-4c04-b33b-d34b544bd3e5
-      url: https://umami-beta-peach.vercel.app/xialeistudio
+      enable: true
+      website_id: 52f8f0f9-d93d-466b-8ef5-508aae8c4ed4
+      url: https://analysis.ddhigh.com/script.js
   guestbook:
     title: Guestbook
     description: Leave a comment below. It could be anything –- question, appreciation, information, or even humor.
