@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh"><head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webpack4不求人(2) ——手把手搭建TypeScript&#43;React16&#43;ReactRouter5同构应用脚手架</title>
+    <meta charset="utf-8">
+    
+    <meta content="Web开发 , Java , Go , Node.js , PHP , Koa , MySQL , Redis , 前端 , 后端 , 数据库" name="keywords">
+    
+    <meta name="description" content="同构应用 使用同一份应用代码，同时提供浏览器环境和服务器环境下的应用，解决传统浏览器单页应用的两个顽固问题：
+不利于SEO，浏览器环境代码是在客户端渲染，大部分爬虫都只能爬到一个空白的入口文件 代码在浏览器渲染，低端机可能会卡顿 接下来我们一起从零开始搭建基于Webpack的React同构应用脚手架。">
+    <meta name="author" content="Lei Xia">
+    <link rel="canonical"
+        href="https://www.ddhigh.com/2020/03/02/react-ssr-example/">
+
+    <link rel="alternate" type="application/rss+xml" href="https://www.ddhigh.com/index.xml" title="每天进步一点点">
+
+    
+
+
+<script async defer data-website-id="52f8f0f9-d93d-466b-8ef5-508aae8c4ed4"
+    src="https://analysis.ddhigh.com/script.js"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EC3XLVSGKV"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-EC3XLVSGKV');
+</script>
+    <meta property="og:title" content="Webpack4不求人(2) ——手把手搭建TypeScript&#43;React16&#43;ReactRouter5同构应用脚手架" />
+<meta property="og:description" content="同构应用 使用同一份应用代码，同时提供浏览器环境和服务器环境下的应用，解决传统浏览器单页应用的两个顽固问题：
+不利于SEO，浏览器环境代码是在客户端渲染，大部分爬虫都只能爬到一个空白的入口文件 代码在浏览器渲染，低端机可能会卡顿 接下来我们一起从零开始搭建基于Webpack的React同构应用脚手架。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.ddhigh.com/2020/03/02/react-ssr-example/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-03-02T12:00:00+00:00" />
+<meta property="article:modified_time" content="2020-03-02T12:00:00+00:00" />
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Webpack4不求人(2) ——手把手搭建TypeScript&#43;React16&#43;ReactRouter5同构应用脚手架"/>
+<meta name="twitter:description" content="同构应用 使用同一份应用代码，同时提供浏览器环境和服务器环境下的应用，解决传统浏览器单页应用的两个顽固问题：
+不利于SEO，浏览器环境代码是在客户端渲染，大部分爬虫都只能爬到一个空白的入口文件 代码在浏览器渲染，低端机可能会卡顿 接下来我们一起从零开始搭建基于Webpack的React同构应用脚手架。"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://www.ddhigh.com/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "Webpack4不求人(2) ——手把手搭建TypeScript+React16+ReactRouter5同构应用脚手架",
+      "item": "https://www.ddhigh.com/2020/03/02/react-ssr-example/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Webpack4不求人(2) ——手把手搭建TypeScript+React16+ReactRouter5同构应用脚手架",
+  "name": "Webpack4不求人(2) ——手把手搭建TypeScript\u002bReact16\u002bReactRouter5同构应用脚手架",
+  "description": "同构应用 使用同一份应用代码，同时提供浏览器环境和服务器环境下的应用，解决传统浏览器单页应用的两个顽固问题：\n不利于SEO，浏览器环境代码是在客户端渲染，大部分爬虫都只能爬到一个空白的入口文件 代码在浏览器渲染，低端机可能会卡顿 接下来我们一起从零开始搭建基于Webpack的React同构应用脚手架。",
+  "keywords": [
+    "webpack"
+  ],
+  "articleBody": "同构应用 使用同一份应用代码，同时提供浏览器环境和服务器环境下的应用，解决传统浏览器单页应用的两个顽固问题：\n不利于SEO，浏览器环境代码是在客户端渲染，大部分爬虫都只能爬到一个空白的入口文件 代码在浏览器渲染，低端机可能会卡顿 接下来我们一起从零开始搭建基于Webpack的React同构应用脚手架。\nSSR流程 Web应用构建完成后输出CSS、JS和HTML SSR应用构建完成后输出一个CommonJs模块文件，可以将虚拟DOM在服务端渲染为HTML字符串 Node.js新建HTTP服务器，收到请求后调用SSR模块导出的render函数输出HTML到客户端 初始化项目 mkdir react-ssr-example cd react-ssr-example yarn init -y yarn add webpack webpack-cli webpack-dev-server -D # 安装Webpack yarn add react react-dom react-router-dom # 安装React yarn add @types/react @types/react-dom @types/react-router-dom -D # 安装React声明文件 yarn add express # 安装express yarn add css-loader sass-loader node-sass mini-css-extract-plugin # 安装CSS相关模块 yarn add ts-loader typescript # 安装TypeScript yarn add html-webpack-plugin # 安装HTML处理插件 目录结构 脚手架的完整目录如下：(这些文件一步步都会有)\n|----build # 构建结果目录 |----styles # 样式 |----main.css |----bundle.ssr.js # SSR应用文件 |----bundle.web.js # Web应用文件 |----index.html # Web应用入口HTML |----src # 应用源码 |----home # 首页组件 |----index.scss # 首页SCSS |----index.tsx # 首页组件 |----signin # 登录页组件 |----index.scss # 登录页SCSS |----index.tsx # 登录页组件 |----App.tsx # 应用路由设置 |----index.html # Web应用入口HTML |----main.ssr.tsx # SSR入口文件 |----main.web.tsx # Web入口文件 |----index.js #　express服务器入口 |----package.json |----tsconfig.json # TypeScript配置文件 |----webpack.config.js # Web应用webpack配置 |----webconfig.ssr.config.js # SSR应用Webpack配置 工具配置 1.TypeScript配置，新建tsconfig.json\n{ \"compilerOptions\": { \"target\": \"es5\", \"module\": \"commonjs\", \"jsx\": \"react\", \"strict\": true, \"lib\": [ \"DOM\" ], \"esModuleInterop\": true }, \"include\": [ \"./src/**/*.ts\", \"./src/**/*.tsx\" ], \"exclude\": [ \"node_modules\" ] } 主要是添加了jsx设置和include设置\n2.Web环境webpack配置，新建webpack.config.js\nconst path = require('path'); const HtmlWebpackPlugin = require('html-webpack-plugin'); const MiniCssPlugin = require('mini-css-extract-plugin'); module.exports = { entry: './src/main.web', // 入口文件 output: { path: path.resolve(__dirname, 'build'), // 输出目录 filename: 'bundle.web.js' // 输出文件 }, module: { rules: [ { test: /\\.tsx?$/, // ts文件处理 use: 'ts-loader' }, { test: /\\.scss$/, // scss文件处理 use: [MiniCssPlugin.loader, 'css-loader', 'sass-loader'] }, { test: /\\.css$/, // css文件处理 use: [MiniCssPlugin.loader, 'css-loader'] } ] }, plugins: [ new HtmlWebpackPlugin({ chunks: ['main'], // chunk名称，entry是字符串类型，因此chunk为main filename: 'index.html', // 输出到build目录的文件名 template: 'src/index.html' // 模板路径 }), new MiniCssPlugin({ filename: 'styles/[name].[contenthash:8].css', // 输出的CSS文件名 chunkFilename: 'styles/[name].[contenthash:8].css' }) ], resolve: { extensions: ['.ts', '.tsx', '.js', '.json'] // 添加ts和tsx后缀 } }; 3.SSR环境Webpack配置，新建webpack.ssr.config.js\nconst path = require('path'); const MiniCssPlugin = require('mini-css-extract-plugin'); module.exports = { entry: './src/main.ssr', target: 'node', // 必须指定为Node.js，否则会打包Node.js内置模块 output: { path: path.resolve(__dirname, 'build'), filename: 'bundle.ssr.js', libraryTarget: 'commonjs2' // 打包为CommonJs模块才能被Node.js加载 }, module: { rules: [ { test: /\\.tsx?$/, use: 'ts-loader' }, { test: /\\.scss$/, use: [MiniCssPlugin.loader, 'css-loader', 'sass-loader'] }, { test: /\\.css$/, use: [MiniCssPlugin.loader, 'css-loader'] } ] }, plugins: [ new MiniCssPlugin({ filename: 'styles/[name].[contenthash:8].css', chunkFilename: 'styles/[name].[contenthash:8].css' }) ], resolve: { extensions: ['.ts', '.tsx', '.js', '.json'] } }; 4.package.json添加npm命令\n{ \"scripts\": { \"build\": \"webpack\", \"start\": \"webpack-dev-server\", \"build-ssr\": \"webpack --config webpack.ssr.config.js\" } } 应用编码 src/home/index.tsx\nimport React from 'react'; import './index.scss'; export default class Home extends React.Component { render() { return ( \u003cdiv className=\"main\"\u003e首页\u003c/div\u003e ) } } src/home/index.scss\n.main { color: red; } src/signin/index.tsx\nimport React from 'react'; import { withRouter } from 'react-router-dom'; function SignIn(props: any) { return ( \u003cbutton onClick={() =\u003e props.history.replace('/')}\u003e登录\u003c/button\u003e ) } export default withRouter(SignIn); src/App.tsx\nimport React from 'react'; import { Switch, Route, Link } from 'react-router-dom'; // router // 导入页面组件 import Home from './home'; import SignIn from './signin'; // 导出路由组件配置 export default function App() { return ( \u003cSwitch\u003e \u003cRoute path=\"/signin\" component={SignIn} /\u003e \u003cRoute path=\"/\" component={Home} /\u003e \u003c/Switch\u003e ) } index.html\n\u003c!DOCTYPE html\u003e \u003chtml lang=\"en\"\u003e \u003chead\u003e \u003cmeta charset=\"UTF-8\"\u003e \u003cmeta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"\u003e \u003ctitle\u003eHello World\u003c/title\u003e \u003c/head\u003e \u003cbody\u003e \u003cdiv id=\"app\"\u003e\u003c/div\u003e \u003c/body\u003e \u003c/html\u003e src/main.ssr.tsx\nimport React from 'react'; import { StaticRouter, Link } from 'react-router-dom'; import { renderToString } from 'react-dom/server'; import App from './App'; // 将路由组件导入进来 export function render(req: any) { // 导出一个渲染函数，根据请求链接进行分发 const context = {}; const html = renderToString( \u003cStaticRouter location={req.url} context={context}\u003e \u003cheader\u003e \u003cnav\u003e \u003cul\u003e \u003cli\u003e\u003cLink to=\"/\"\u003e首页\u003c/Link\u003e\u003c/li\u003e \u003cli\u003e\u003cLink to=\"/signin\"\u003e登录\u003c/Link\u003e\u003c/li\u003e \u003c/ul\u003e \u003c/nav\u003e \u003c/header\u003e \u003cApp /\u003e \u003c/StaticRouter\u003e ); return [html, context]; // 导出context和html渲染结果 } src/main.web.tsx\nimport React from 'react'; import ReactDOM from 'react-dom'; import { BrowserRouter, Link } from 'react-router-dom'; import App from './App'; ReactDOM.render( // 渲染路由 \u003cBrowserRouter\u003e \u003cheader\u003e \u003cnav\u003e \u003cul\u003e \u003cli\u003e\u003cLink to=\"/\"\u003e首页\u003c/Link\u003e\u003c/li\u003e \u003cli\u003e\u003cLink to=\"/signin\"\u003e登录\u003c/Link\u003e\u003c/li\u003e \u003c/ul\u003e \u003c/nav\u003e \u003c/header\u003e \u003cApp /\u003e \u003c/BrowserRouter\u003e, document.querySelector('#app')) index.js\nconst express = require('express'); // 加载express const { render } = require('./build/bundle.ssr'); // 加载ssr const app = express(); app.use(express.static('.')) // 静态资源配置 app.get('/*', (req, res) =\u003e { // 所有请求都走这里处理，必须加* const [html, context] = render(req) console.log(context) // context目前没发现啥用处 res.send(` SSR ${html} `); console.log(context) }); app.listen(8080) 注意：\n静态资源配置必须在最上面 app.get(’/’)必须有号 HTML字符串必须手动引入CSS和Web构建结果 执行构建 npm run build # 构建Web npm run build-ssr #　构建SSR node index.js # 启动Express服务器 查看结果 首页样式\n首页代码\n登录页样式\n登录页代码\n源码地址 Https://github.com/xialeistudio/react-ssr-example\n",
+  "wordCount" : "658",
+  "inLanguage": "zh",
+  "datePublished": "2020-03-02T12:00:00Z",
+  "dateModified": "2020-03-02T12:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Lei Xia"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://www.ddhigh.com/2020/03/02/react-ssr-example/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "每天进步一点点",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.ddhigh.com/favicon.ico"
+    }
+  }
+}
+</script>
+    <link rel="icon" href="/img/favicon.ico" sizes="16x16">
+
+<link rel="apple-touch-icon" href="/img/favicon.ico">
+
+<link rel="manifest" href="/img/favicon.ico">
+    
+
+    <link rel="stylesheet" href="https://cdn.staticfile.org/lxgw-wenkai-webfont/1.6.0/style.css" />
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/main.min.d0df733b91ef046970ecd63de7aa626886fd263fd3fb2b8ff28b560e505831f7.css" integrity="sha256-0N9zO5HvBGlw7NY956piaIb9Jj/T&#43;yuP8otWDlBYMfc="
+        crossorigin="anonymous" media="screen" />
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css" integrity="sha512-ygEyjMC6rqnzJqWGjRTJUPYMEs9JUOm3i7OWUS9CgQ4XkBUvMsgCS1I8JqavidQ2ClHcREB7IbA2mN08+r9Elg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    
+    <link rel="stylesheet" href="/scss/highlight/github-dark.min.min.66034289ee9a113219a2c4aae0a8bd2095ab255c832a42efcf5863f10814e7a1.css" />
+
+    
+    <script src="/js/highlight.min.min.894ca9c68afab956438c4926a0dc7f5293e04e08595bd27abdb123e94801f684.js"></script>
+    <script>hljs.highlightAll();</script>
+
+    <script>{ { $darkModeInit.Content | safeJS } }</script>
+    </head><body>
+      <main class="wrapper"><nav class="navigation">
+    <section class="container">
+        <a class="navigation-brand" href="/">
+            每天进步一点点
+        </a>
+        <input type="checkbox" id="menu-toggle" />
+        <label class="menu-button float-right" for="menu-toggle">
+            <span></span><span></span><span></span>
+        </label>
+        
+        <ul class="navigation-list" id="navigation-list">
+            
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/">首页</a>
+            </li>
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/archives">归档</a>
+            </li>
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/books">出版物</a>
+            </li>
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/guestbook">留言板</a>
+            </li>
+            
+            
+
+            <li class="navigation-item menu-separator">
+                <span>|</span>
+            </li>
+
+            
+            
+            <li class="navigation-item navigation-social">
+                <a class="navigation-link" href="https://github.com/xialeistudio"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a>
+            </li>
+            
+            
+
+            <li class="navigation-item navigation-dark">
+                <button id="mode" type="button" aria-label="toggle user light or dark theme">
+                    <span class="toggle-dark"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></span>
+                    <span class="toggle-light"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></span>
+                </button>
+            </li>
+
+            
+            
+            
+            
+            
+            
+            
+            <li class="navigation-item navigation-language">
+                <a href="https://www.ddhigh.com/en/">EN</a>
+            </li>
+            
+            
+            
+            
+        </ul>
+        
+    </section>
+</nav>
+<div id="content">
+<article class="blog-single">
+  <header class="blog-title">
+    <h1>Webpack4不求人(2) ——手把手搭建TypeScript&#43;React16&#43;ReactRouter5同构应用脚手架</h1>
+  </header>
+
+  <p>
+  <small>
+    2020年3月2日&nbsp;· 658 字&nbsp;· 4 分钟</small>
+
+  
+<p>
+
+  <div class="blog-toc">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#同构应用">同构应用</a></li>
+    <li><a href="#ssr流程">SSR流程</a></li>
+    <li><a href="#初始化项目">初始化项目</a></li>
+    <li><a href="#目录结构">目录结构</a></li>
+    <li><a href="#工具配置">工具配置</a></li>
+    <li><a href="#应用编码">应用编码</a></li>
+    <li><a href="#执行构建">执行构建</a></li>
+    <li><a href="#查看结果">查看结果</a></li>
+    <li><a href="#源码地址">源码地址</a></li>
+  </ul>
+</nav>
+  </div>
+
+  <section class="blog-content">
+    <h2 id="同构应用">同构应用</h2>
+<p>使用同一份应用代码，同时提供浏览器环境和服务器环境下的应用，解决传统浏览器单页应用的两个顽固问题：</p>
+<ul>
+<li>不利于SEO，浏览器环境代码是在客户端渲染，大部分爬虫都只能爬到一个空白的入口文件</li>
+<li>代码在浏览器渲染，低端机可能会卡顿</li>
+</ul>
+<p>接下来我们一起从零开始搭建基于Webpack的React同构应用脚手架。</p>
+<h2 id="ssr流程">SSR流程</h2>
+<ol>
+<li>Web应用构建完成后输出CSS、JS和HTML</li>
+<li>SSR应用构建完成后输出一个CommonJs模块文件，可以将虚拟DOM在服务端渲染为HTML字符串</li>
+<li>Node.js新建HTTP服务器，收到请求后调用SSR模块导出的render函数输出HTML到客户端</li>
+</ol>
+<h2 id="初始化项目">初始化项目</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mkdir react-ssr-example
+</span></span><span style="display:flex;"><span>cd react-ssr-example
+</span></span><span style="display:flex;"><span>yarn init -y
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>yarn add webpack webpack-cli webpack-dev-server -D <span style="color:#75715e"># 安装Webpack</span>
+</span></span><span style="display:flex;"><span>yarn add react react-dom react-router-dom <span style="color:#75715e"># 安装React</span>
+</span></span><span style="display:flex;"><span>yarn add @types/react @types/react-dom @types/react-router-dom -D <span style="color:#75715e"># 安装React声明文件</span>
+</span></span><span style="display:flex;"><span>yarn add express <span style="color:#75715e"># 安装express</span>
+</span></span><span style="display:flex;"><span>yarn add css-loader sass-loader node-sass mini-css-extract-plugin <span style="color:#75715e"># 安装CSS相关模块</span>
+</span></span><span style="display:flex;"><span>yarn add ts-loader typescript <span style="color:#75715e"># 安装TypeScript</span>
+</span></span><span style="display:flex;"><span>yarn add html-webpack-plugin <span style="color:#75715e"># 安装HTML处理插件</span>
+</span></span></code></pre></div><h2 id="目录结构">目录结构</h2>
+<p>脚手架的完整目录如下：(这些文件一步步都会有)</p>
+<pre tabindex="0"><code>|----build # 构建结果目录
+		|----styles # 样式
+				|----main.css
+		|----bundle.ssr.js # SSR应用文件
+		|----bundle.web.js # Web应用文件
+		|----index.html # Web应用入口HTML
+|----src # 应用源码
+		|----home # 首页组件
+				|----index.scss # 首页SCSS
+				|----index.tsx # 首页组件
+		|----signin # 登录页组件
+				|----index.scss # 登录页SCSS
+				|----index.tsx # 登录页组件
+		|----App.tsx # 应用路由设置
+		|----index.html # Web应用入口HTML
+		|----main.ssr.tsx # SSR入口文件
+		|----main.web.tsx # Web入口文件
+|----index.js #　express服务器入口
+|----package.json
+|----tsconfig.json # TypeScript配置文件
+|----webpack.config.js # Web应用webpack配置
+|----webconfig.ssr.config.js # SSR应用Webpack配置
+</code></pre><h2 id="工具配置">工具配置</h2>
+<p>1.TypeScript配置，新建tsconfig.json</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;compilerOptions&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;target&#34;</span>: <span style="color:#e6db74">&#34;es5&#34;</span>, 
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;module&#34;</span>: <span style="color:#e6db74">&#34;commonjs&#34;</span>, 
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;jsx&#34;</span>: <span style="color:#e6db74">&#34;react&#34;</span>, 
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;strict&#34;</span>: <span style="color:#66d9ef">true</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;lib&#34;</span>: [
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;DOM&#34;</span>
+</span></span><span style="display:flex;"><span>      ],
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;esModuleInterop&#34;</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;include&#34;</span>: [
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;./src/**/*.ts&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;./src/**/*.tsx&#34;</span>
+</span></span><span style="display:flex;"><span>    ],
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;exclude&#34;</span>: [
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;node_modules&#34;</span>
+</span></span><span style="display:flex;"><span>    ]
+</span></span><span style="display:flex;"><span>  }
+</span></span></code></pre></div><p>主要是添加了jsx设置和include设置</p>
+<p>2.Web环境webpack配置，新建webpack.config.js</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">path</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;path&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">HtmlWebpackPlugin</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;html-webpack-plugin&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">MiniCssPlugin</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;mini-css-extract-plugin&#39;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">module</span>.<span style="color:#a6e22e">exports</span> <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">entry</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;./src/main.web&#39;</span>, <span style="color:#75715e">// 入口文件
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">output</span><span style="color:#f92672">:</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">path</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">path</span>.<span style="color:#a6e22e">resolve</span>(<span style="color:#a6e22e">__dirname</span>, <span style="color:#e6db74">&#39;build&#39;</span>), <span style="color:#75715e">// 输出目录
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#a6e22e">filename</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;bundle.web.js&#39;</span> <span style="color:#75715e">// 输出文件
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">module</span><span style="color:#f92672">:</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">rules</span><span style="color:#f92672">:</span> [
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#a6e22e">test</span><span style="color:#f92672">:</span> <span style="color:#e6db74">/\.tsx?$/</span>, <span style="color:#75715e">// ts文件处理
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                <span style="color:#a6e22e">use</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;ts-loader&#39;</span>
+</span></span><span style="display:flex;"><span>            },
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#a6e22e">test</span><span style="color:#f92672">:</span> <span style="color:#e6db74">/\.scss$/</span>, <span style="color:#75715e">// scss文件处理
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                <span style="color:#a6e22e">use</span><span style="color:#f92672">:</span> [<span style="color:#a6e22e">MiniCssPlugin</span>.<span style="color:#a6e22e">loader</span>, <span style="color:#e6db74">&#39;css-loader&#39;</span>, <span style="color:#e6db74">&#39;sass-loader&#39;</span>]
+</span></span><span style="display:flex;"><span>            },
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#a6e22e">test</span><span style="color:#f92672">:</span> <span style="color:#e6db74">/\.css$/</span>, <span style="color:#75715e">// css文件处理
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                <span style="color:#a6e22e">use</span><span style="color:#f92672">:</span> [<span style="color:#a6e22e">MiniCssPlugin</span>.<span style="color:#a6e22e">loader</span>, <span style="color:#e6db74">&#39;css-loader&#39;</span>]
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        ]
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">plugins</span><span style="color:#f92672">:</span> [
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">HtmlWebpackPlugin</span>({
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">chunks</span><span style="color:#f92672">:</span> [<span style="color:#e6db74">&#39;main&#39;</span>], <span style="color:#75715e">// chunk名称，entry是字符串类型，因此chunk为main
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#a6e22e">filename</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;index.html&#39;</span>, <span style="color:#75715e">// 输出到build目录的文件名
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#a6e22e">template</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;src/index.html&#39;</span> <span style="color:#75715e">// 模板路径
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        }),
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">MiniCssPlugin</span>({
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">filename</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;styles/[name].[contenthash:8].css&#39;</span>, <span style="color:#75715e">// 输出的CSS文件名
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#a6e22e">chunkFilename</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;styles/[name].[contenthash:8].css&#39;</span>
+</span></span><span style="display:flex;"><span>        })
+</span></span><span style="display:flex;"><span>    ],
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">resolve</span><span style="color:#f92672">:</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">extensions</span><span style="color:#f92672">:</span> [<span style="color:#e6db74">&#39;.ts&#39;</span>, <span style="color:#e6db74">&#39;.tsx&#39;</span>, <span style="color:#e6db74">&#39;.js&#39;</span>, <span style="color:#e6db74">&#39;.json&#39;</span>] <span style="color:#75715e">// 添加ts和tsx后缀
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    }
+</span></span><span style="display:flex;"><span>};
+</span></span></code></pre></div><p>3.SSR环境Webpack配置，新建webpack.ssr.config.js</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">path</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;path&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">MiniCssPlugin</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;mini-css-extract-plugin&#39;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">module</span>.<span style="color:#a6e22e">exports</span> <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">entry</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;./src/main.ssr&#39;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">target</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;node&#39;</span>, <span style="color:#75715e">// 必须指定为Node.js，否则会打包Node.js内置模块
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">output</span><span style="color:#f92672">:</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">path</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">path</span>.<span style="color:#a6e22e">resolve</span>(<span style="color:#a6e22e">__dirname</span>, <span style="color:#e6db74">&#39;build&#39;</span>),
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">filename</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;bundle.ssr.js&#39;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">libraryTarget</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;commonjs2&#39;</span> <span style="color:#75715e">// 打包为CommonJs模块才能被Node.js加载
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">module</span><span style="color:#f92672">:</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">rules</span><span style="color:#f92672">:</span> [
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#a6e22e">test</span><span style="color:#f92672">:</span> <span style="color:#e6db74">/\.tsx?$/</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#a6e22e">use</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;ts-loader&#39;</span>
+</span></span><span style="display:flex;"><span>            },
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#a6e22e">test</span><span style="color:#f92672">:</span> <span style="color:#e6db74">/\.scss$/</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#a6e22e">use</span><span style="color:#f92672">:</span> [<span style="color:#a6e22e">MiniCssPlugin</span>.<span style="color:#a6e22e">loader</span>, <span style="color:#e6db74">&#39;css-loader&#39;</span>, <span style="color:#e6db74">&#39;sass-loader&#39;</span>]
+</span></span><span style="display:flex;"><span>            },
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#a6e22e">test</span><span style="color:#f92672">:</span> <span style="color:#e6db74">/\.css$/</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#a6e22e">use</span><span style="color:#f92672">:</span> [<span style="color:#a6e22e">MiniCssPlugin</span>.<span style="color:#a6e22e">loader</span>, <span style="color:#e6db74">&#39;css-loader&#39;</span>]
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        ]
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">plugins</span><span style="color:#f92672">:</span> [
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">MiniCssPlugin</span>({
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">filename</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;styles/[name].[contenthash:8].css&#39;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">chunkFilename</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;styles/[name].[contenthash:8].css&#39;</span>
+</span></span><span style="display:flex;"><span>        })
+</span></span><span style="display:flex;"><span>    ],
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">resolve</span><span style="color:#f92672">:</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">extensions</span><span style="color:#f92672">:</span> [<span style="color:#e6db74">&#39;.ts&#39;</span>, <span style="color:#e6db74">&#39;.tsx&#39;</span>, <span style="color:#e6db74">&#39;.js&#39;</span>, <span style="color:#e6db74">&#39;.json&#39;</span>]
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>};
+</span></span></code></pre></div><p>4.package.json添加npm命令</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;scripts&#34;</span>: {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;build&#34;</span>: <span style="color:#e6db74">&#34;webpack&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;start&#34;</span>: <span style="color:#e6db74">&#34;webpack-dev-server&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;build-ssr&#34;</span>: <span style="color:#e6db74">&#34;webpack --config webpack.ssr.config.js&#34;</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="应用编码">应用编码</h2>
+<p>src/home/index.tsx</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#66d9ef">import</span> <span style="color:#a6e22e">React</span> <span style="color:#66d9ef">from</span> <span style="color:#e6db74">&#39;react&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">import</span> <span style="color:#e6db74">&#39;./index.scss&#39;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">export</span> <span style="color:#66d9ef">default</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Home</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">React</span>.<span style="color:#a6e22e">Component</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">render() {</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> (
+</span></span><span style="display:flex;"><span>            &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">className</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;main&#34;</span>&gt;<span style="color:#960050;background-color:#1e0010">首页</span>&lt;/<span style="color:#f92672">div</span>&gt;
+</span></span><span style="display:flex;"><span>        )
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>src/home/index.scss</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-scss" data-lang="scss"><span style="display:flex;"><span><span style="color:#a6e22e">.main</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">color</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">red</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>src/signin/index.tsx</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#66d9ef">import</span> <span style="color:#a6e22e">React</span> <span style="color:#66d9ef">from</span> <span style="color:#e6db74">&#39;react&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">import</span> { <span style="color:#a6e22e">withRouter</span> } <span style="color:#66d9ef">from</span> <span style="color:#e6db74">&#39;react-router-dom&#39;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">SignIn</span>(<span style="color:#a6e22e">props</span>: <span style="color:#66d9ef">any</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> (
+</span></span><span style="display:flex;"><span>        &lt;<span style="color:#f92672">button</span> <span style="color:#a6e22e">onClick</span><span style="color:#f92672">=</span>{() <span style="color:#f92672">=&gt;</span> <span style="color:#a6e22e">props</span>.<span style="color:#a6e22e">history</span>.<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">&#39;/&#39;</span>)}&gt;<span style="color:#960050;background-color:#1e0010">登录</span>&lt;/<span style="color:#f92672">button</span>&gt;
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">export</span> <span style="color:#66d9ef">default</span> <span style="color:#a6e22e">withRouter</span>(<span style="color:#a6e22e">SignIn</span>);
+</span></span></code></pre></div><p>src/App.tsx</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">import</span> <span style="color:#a6e22e">React</span> <span style="color:#66d9ef">from</span> <span style="color:#e6db74">&#39;react&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">import</span> { <span style="color:#a6e22e">Switch</span>, <span style="color:#a6e22e">Route</span>, <span style="color:#a6e22e">Link</span> } <span style="color:#66d9ef">from</span> <span style="color:#e6db74">&#39;react-router-dom&#39;</span>; <span style="color:#75715e">// router
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 导入页面组件
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">import</span> <span style="color:#a6e22e">Home</span> <span style="color:#66d9ef">from</span> <span style="color:#e6db74">&#39;./home&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">import</span> <span style="color:#a6e22e">SignIn</span> <span style="color:#66d9ef">from</span> <span style="color:#e6db74">&#39;./signin&#39;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 导出路由组件配置
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">export</span> <span style="color:#66d9ef">default</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">App() {</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> (
+</span></span><span style="display:flex;"><span>        &lt;<span style="color:#f92672">Switch</span>&gt;
+</span></span><span style="display:flex;"><span>            &lt;<span style="color:#f92672">Route</span> <span style="color:#a6e22e">path</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/signin&#34;</span> <span style="color:#a6e22e">component</span><span style="color:#f92672">=</span>{<span style="color:#a6e22e">SignIn</span>} /&gt;
+</span></span><span style="display:flex;"><span>            &lt;<span style="color:#f92672">Route</span> <span style="color:#a6e22e">path</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/&#34;</span> <span style="color:#a6e22e">component</span><span style="color:#f92672">=</span>{<span style="color:#a6e22e">Home</span>} /&gt;
+</span></span><span style="display:flex;"><span>        &lt;/<span style="color:#f92672">Switch</span>&gt;
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>index.html</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span><span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">html</span> <span style="color:#a6e22e">lang</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;en&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">head</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">charset</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;UTF-8&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;viewport&#34;</span> <span style="color:#a6e22e">content</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;width=device-width, initial-scale=1.0&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">title</span>&gt;Hello World&lt;/<span style="color:#f92672">title</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">head</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">body</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;app&#34;</span>&gt;&lt;/<span style="color:#f92672">div</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">body</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">html</span>&gt;
+</span></span></code></pre></div><p>src/main.ssr.tsx</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#66d9ef">import</span> <span style="color:#a6e22e">React</span> <span style="color:#66d9ef">from</span> <span style="color:#e6db74">&#39;react&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">import</span> { <span style="color:#a6e22e">StaticRouter</span>, <span style="color:#a6e22e">Link</span> } <span style="color:#66d9ef">from</span> <span style="color:#e6db74">&#39;react-router-dom&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">import</span> { <span style="color:#a6e22e">renderToString</span> } <span style="color:#66d9ef">from</span> <span style="color:#e6db74">&#39;react-dom/server&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">import</span> <span style="color:#a6e22e">App</span> <span style="color:#66d9ef">from</span> <span style="color:#e6db74">&#39;./App&#39;</span>; <span style="color:#75715e">// 将路由组件导入进来
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">export</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">render</span>(<span style="color:#a6e22e">req</span>: <span style="color:#66d9ef">any</span>) { <span style="color:#75715e">// 导出一个渲染函数，根据请求链接进行分发
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">context</span> <span style="color:#f92672">=</span> {};
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">html</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">renderToString</span>(
+</span></span><span style="display:flex;"><span>        &lt;<span style="color:#f92672">StaticRouter</span> <span style="color:#a6e22e">location</span><span style="color:#f92672">=</span>{<span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">url</span>} <span style="color:#a6e22e">context</span><span style="color:#f92672">=</span>{<span style="color:#a6e22e">context</span>}&gt;
+</span></span><span style="display:flex;"><span>            &lt;<span style="color:#f92672">header</span>&gt;
+</span></span><span style="display:flex;"><span>                &lt;<span style="color:#f92672">nav</span>&gt;
+</span></span><span style="display:flex;"><span>                    &lt;<span style="color:#f92672">ul</span>&gt;
+</span></span><span style="display:flex;"><span>                        &lt;<span style="color:#f92672">li</span>&gt;&lt;<span style="color:#f92672">Link</span> <span style="color:#a6e22e">to</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/&#34;</span>&gt;<span style="color:#960050;background-color:#1e0010">首页</span>&lt;/<span style="color:#f92672">Link</span>&gt;&lt;/<span style="color:#f92672">li</span>&gt;
+</span></span><span style="display:flex;"><span>                        &lt;<span style="color:#f92672">li</span>&gt;&lt;<span style="color:#f92672">Link</span> <span style="color:#a6e22e">to</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/signin&#34;</span>&gt;<span style="color:#960050;background-color:#1e0010">登录</span>&lt;/<span style="color:#f92672">Link</span>&gt;&lt;/<span style="color:#f92672">li</span>&gt;
+</span></span><span style="display:flex;"><span>                    &lt;/<span style="color:#f92672">ul</span>&gt;
+</span></span><span style="display:flex;"><span>                &lt;/<span style="color:#f92672">nav</span>&gt;
+</span></span><span style="display:flex;"><span>            &lt;/<span style="color:#f92672">header</span>&gt;
+</span></span><span style="display:flex;"><span>            &lt;<span style="color:#f92672">App</span> /&gt;
+</span></span><span style="display:flex;"><span>        &lt;/<span style="color:#f92672">StaticRouter</span>&gt;
+</span></span><span style="display:flex;"><span>    );
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> [<span style="color:#a6e22e">html</span>, <span style="color:#a6e22e">context</span>]; <span style="color:#75715e">// 导出context和html渲染结果
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div><p>src/main.web.tsx</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-tsx" data-lang="tsx"><span style="display:flex;"><span><span style="color:#66d9ef">import</span> <span style="color:#a6e22e">React</span> <span style="color:#66d9ef">from</span> <span style="color:#e6db74">&#39;react&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">import</span> <span style="color:#a6e22e">ReactDOM</span> <span style="color:#66d9ef">from</span> <span style="color:#e6db74">&#39;react-dom&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">import</span> { <span style="color:#a6e22e">BrowserRouter</span>, <span style="color:#a6e22e">Link</span> } <span style="color:#66d9ef">from</span> <span style="color:#e6db74">&#39;react-router-dom&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">import</span> <span style="color:#a6e22e">App</span> <span style="color:#66d9ef">from</span> <span style="color:#e6db74">&#39;./App&#39;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">ReactDOM</span>.<span style="color:#a6e22e">render</span>( <span style="color:#75715e">// 渲染路由
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    &lt;<span style="color:#f92672">BrowserRouter</span>&gt;
+</span></span><span style="display:flex;"><span>        &lt;<span style="color:#f92672">header</span>&gt;
+</span></span><span style="display:flex;"><span>            &lt;<span style="color:#f92672">nav</span>&gt;
+</span></span><span style="display:flex;"><span>                &lt;<span style="color:#f92672">ul</span>&gt;
+</span></span><span style="display:flex;"><span>                    &lt;<span style="color:#f92672">li</span>&gt;&lt;<span style="color:#f92672">Link</span> <span style="color:#a6e22e">to</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/&#34;</span>&gt;<span style="color:#960050;background-color:#1e0010">首页</span>&lt;/<span style="color:#f92672">Link</span>&gt;&lt;/<span style="color:#f92672">li</span>&gt;
+</span></span><span style="display:flex;"><span>                    &lt;<span style="color:#f92672">li</span>&gt;&lt;<span style="color:#f92672">Link</span> <span style="color:#a6e22e">to</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/signin&#34;</span>&gt;<span style="color:#960050;background-color:#1e0010">登录</span>&lt;/<span style="color:#f92672">Link</span>&gt;&lt;/<span style="color:#f92672">li</span>&gt;
+</span></span><span style="display:flex;"><span>                &lt;/<span style="color:#f92672">ul</span>&gt;
+</span></span><span style="display:flex;"><span>            &lt;/<span style="color:#f92672">nav</span>&gt;
+</span></span><span style="display:flex;"><span>        &lt;/<span style="color:#f92672">header</span>&gt;
+</span></span><span style="display:flex;"><span>        &lt;<span style="color:#f92672">App</span> /&gt;
+</span></span><span style="display:flex;"><span>    &lt;/<span style="color:#f92672">BrowserRouter</span>&gt;, document.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#39;#app&#39;</span>))
+</span></span></code></pre></div><p>index.js</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">express</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;express&#39;</span>); <span style="color:#75715e">// 加载express
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> { <span style="color:#a6e22e">render</span> } <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;./build/bundle.ssr&#39;</span>); <span style="color:#75715e">// 加载ssr
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">app</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">express</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">app</span>.<span style="color:#a6e22e">use</span>(<span style="color:#a6e22e">express</span>.<span style="color:#66d9ef">static</span>(<span style="color:#e6db74">&#39;.&#39;</span>)) <span style="color:#75715e">// 静态资源配置
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">app</span>.<span style="color:#a6e22e">get</span>(<span style="color:#e6db74">&#39;/*&#39;</span>, (<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">res</span>) =&gt; { <span style="color:#75715e">// 所有请求都走这里处理，必须加*
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">const</span> [<span style="color:#a6e22e">html</span>, <span style="color:#a6e22e">context</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">render</span>(<span style="color:#a6e22e">req</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">context</span>) <span style="color:#75715e">// context目前没发现啥用处
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">send</span>(<span style="color:#e6db74">`
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &lt;html&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &lt;head&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &lt;meta charset=&#34;UTF-8&#34;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &lt;title&gt;SSR&lt;/title&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &lt;link href=&#34;build/styles/main.8f173ff5.css&#34; rel=&#34;stylesheet&#34;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &lt;/head&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &lt;body&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &lt;div id=&#34;app&#34;&gt;</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">html</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&lt;/div&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &lt;script src=&#34;build/bundle.web.js&#34;&gt;&lt;/script&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &lt;/body&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &lt;/html&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    `</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">context</span>)
+</span></span><span style="display:flex;"><span>});
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">app</span>.<span style="color:#a6e22e">listen</span>(<span style="color:#ae81ff">8080</span>)
+</span></span></code></pre></div><p>注意：</p>
+<ul>
+<li>静态资源配置必须在最上面</li>
+<li>app.get(&rsquo;/<em>&rsquo;)必须有</em>号</li>
+<li>HTML字符串必须手动引入CSS和Web构建结果</li>
+</ul>
+<h2 id="执行构建">执行构建</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>npm run build <span style="color:#75715e"># 构建Web</span>
+</span></span><span style="display:flex;"><span>npm run build-ssr <span style="color:#75715e">#　构建SSR</span>
+</span></span><span style="display:flex;"><span>node index.js <span style="color:#75715e"># 启动Express服务器</span>
+</span></span></code></pre></div><h2 id="查看结果">查看结果</h2>
+<p>首页样式</p>
+<p><img src="https://static.ddhigh.com/blog/2020-03-02-093301.png" alt="image-20200302173258430"></p>
+<p>首页代码</p>
+<p><img src="https://static.ddhigh.com/blog/2020-03-02-093323.png" alt="image-20200302173322601"></p>
+<p>登录页样式</p>
+<p><img src="https://static.ddhigh.com/blog/2020-03-02-093346.png" alt="image-20200302173344488"></p>
+<p>登录页代码</p>
+<p><img src="https://static.ddhigh.com/blog/2020-03-02-093408.png" alt="image-20200302173405907"></p>
+<h2 id="源码地址">源码地址</h2>
+<p>Https://github.com/xialeistudio/react-ssr-example</p>
+<p><img src="https://static.ddhigh.com/blog/2019-10-22-102654.jpg" alt="0.jpeg"></p>
+
+    <div class="blog-footer">
+    <div class="social-share"></div>
+    <div class="copyright">
+        <ul>
+            <li style="margin-bottom: 0.5em;">本文作者: <a href="https://ddhigh.com/" target="_blank"
+                    style="color: #000000; text-decoration: none;">xialeistudio</a></li>
+            <li style="margin-bottom: 0.5em;">本文链接: <a href="https://www.ddhigh.com/2020/03/02/react-ssr-example/" target="_blank"
+                    style="color: #000000; text-decoration: none;">Webpack4不求人(2) ——手把手搭建TypeScript&#43;React16&#43;ReactRouter5同构应用脚手架</a></li>
+            <li>版权声明: <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank"
+                    style="color: #000000; text-decoration: none;">「署名-非商业性使用-相同方式共享 4.0 国际」</a></li>
+        </ul>
+    </div>
+    
+    <div style="margin-top: 2rem;"><img src="/img/mp.png" alt="qrcode"></div>
+    
+</div>
+  </section>
+
+  
+  
+  <div class="paginator">
+    
+    <a class="prev" href="https://www.ddhigh.com/2020/03/06/webpack-optimize/">
+      <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M3.77086 21.1546C11.0491 22.698 21.4339 21.7773 21.4339 16.3608V4.63375C21.4339 3.93962 21.3581 3.30535 21.1917 2.76787M3.77086 21.1546C1.9934 20.7777 0.973585 18.7264 1.08749 16.688C1.2668 13.479 1.15721 9.43135 1.00513 6.21507C0.87809 3.52811 3.12891 1.16316 5.51029 1.25008C9.76594 1.40542 15.377 1.20229 18.7912 1.00542C20.0864 0.930734 20.8406 1.63385 21.1917 2.76787M3.77086 21.1546C4.56586 21.4723 5.49168 21.7879 6.5 22.0658M21.1917 2.76787C23.1097 4.18217 23.13 12.4191 22.9004 16.3608C20.8478 24.0194 12.3061 23.6662 6.5 22.0658M21.1917 2.76787C21.7612 4.51192 22.7203 9.67216 22 16.3608C21.2797 23.0494 11.3665 22.9511 6.5 22.0658M9.94496 9C9.28897 9.61644 7.63215 10.997 6.04814 11.7966C5.98257 11.8297 5.98456 11.9753 6.05061 12.0063C7.05496 12.4779 8.92941 13.9264 9.94496 15M6.44444 11.9667C8.86549 12.0608 14 12 16 11"
+          stroke="currentColor" stroke-linecap="round" />
+      </svg>
+      <span>Webpack4不求人(3) ——性能优化</span></a>
+    
+    
+    <a class="next" href="https://www.ddhigh.com/2020/02/11/shell-operator-flow-control/"><span>Shell脚本快速入门(2)</span>
+      <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M3.77086 21.1546C11.0491 22.698 21.4339 21.7773 21.4339 16.3608V4.63375C21.4339 3.93962 21.3581 3.30535 21.1917 2.76787M3.77086 21.1546C1.9934 20.7777 0.973585 18.7264 1.08749 16.688C1.2668 13.479 1.15721 9.43135 1.00513 6.21507C0.87809 3.52811 3.12891 1.16316 5.51029 1.25008C9.76594 1.40542 15.377 1.20229 18.7912 1.00542C20.0864 0.930734 20.8406 1.63385 21.1917 2.76787M3.77086 21.1546C4.56586 21.4723 5.49168 21.7879 6.5 22.0658M21.1917 2.76787C23.1097 4.18217 23.13 12.4191 22.9004 16.3608C20.8478 24.0194 12.3061 23.6662 6.5 22.0658M21.1917 2.76787C21.7612 4.51192 22.7203 9.67216 22 16.3608C21.2797 23.0494 11.3665 22.9511 6.5 22.0658M12.055 9C12.711 9.61644 14.3679 10.997 15.9519 11.7966C16.0174 11.8297 16.0154 11.9753 15.9494 12.0063C14.945 12.4779 13.0706 13.9264 12.055 15M15.5556 11.9667C13.1345 12.0608 8 12 6 11"
+          stroke="currentColor" stroke-linecap="round" />
+      </svg>
+    </a>
+    
+  </div>
+  
+
+  
+
+
+  
+  
+<div class="comments">
+  <script>
+      const getTheme = window.localStorage && window.localStorage.getItem("theme");
+      let theme = getTheme === 'dark' ? 'dark' : 'light';
+      let s = document.createElement('script');
+      s.src = 'https://giscus.app/client.js';
+      s.setAttribute('data-repo', 'xialeistudio\/discussion');
+      s.setAttribute('data-repo-id', 'R_kgDOKurTRA');
+      s.setAttribute('data-category', 'General');
+      s.setAttribute('data-category-id', 'DIC_kwDOKurTRM4CbCJt');
+      s.setAttribute('data-mapping', 'pathname');
+      s.setAttribute('data-strict', '0');
+      s.setAttribute('data-reactions-enabled', '1');
+      s.setAttribute('data-emit-metadata', '0');
+      s.setAttribute('data-input-position', 'bottom');
+      s.setAttribute('data-theme', theme);
+      s.setAttribute('data-lang', 'en');
+      s.setAttribute('data-loading', 'lazy');
+      s.setAttribute('crossorigin', 'anonymous');
+      s.setAttribute('async', '');
+      document.querySelector('div.comments').innerHTML = '';
+      document.querySelector('div.comments').appendChild(s);
+  </script>
+</div>
+
+</article>
+
+
+        </div><footer class="footer">
+    <p>&copy; 2014 - 2024 <a href="https://www.ddhigh.com">每天进步一点点</a>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener" target="_blank">Hugo️️</a>
+        <a href="https://github.com/guangzhengli/hugo-theme-ladder" rel="noopener" target="_blank">Ladder</a>
+        ️ </p>
+</footer>
+
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10.5376 22.7916C11.0152 22.7207 22.5795 21.1781 22.0978 10.4211C22.0536 9.43274 21.9303 8.53367 21.7387 7.71865M10.5376 22.7916C16.876 22.3728 20.0969 19.8899 21.5383 16.9142M10.5376 22.7916C9.7707 22.9055 8.97982 22.8964 8.19743 22.7725M21.7387 7.71865C21.4988 6.69828 21.1518 5.80967 20.7188 5.04257M21.7387 7.71865C22.6022 10.1105 23.0542 13.7848 21.5383 16.9142M20.7188 5.04257C17.1684 -1.24629 7.83127 0.632493 4.27577 5.04257C2.88063 6.77451 -0.0433281 11.1668 1.38159 16.6571C2.27481 20.0988 5.17269 22.2936 8.19743 22.7725M20.7188 5.04257C22.0697 6.9404 24.0299 11.3848 22.3541 15.4153M21.5383 16.9142C21.8737 16.4251 22.1428 15.9235 22.3541 15.4153M8.19743 22.7725C12.1971 23.4683 20.6281 22.971 22.3541 15.4153M14 10.945C13.3836 10.289 12.003 8.63215 11.2034 7.04814C11.1703 6.98257 11.0247 6.98456 10.9937 7.05061C10.5221 8.05496 9.07362 9.92941 8 10.945M11.0333 7.44444C10.9392 9.86549 11 15 12 17"
+              stroke="currentColor" stroke-linecap="round"/>
+    </svg>
+</a>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'Copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'Copied';
+            setTimeout(() => {
+                copybutton.innerHTML = 'Copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {
+            }
+            ;
+            selection.removeRange(range);
+        });
+        codeblock.parentNode.appendChild(copybutton);
+    });
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js" integrity="sha512-9DNXrSjk17bU9MUbRp3IjwcWe46V8FaGA062PFbryPUAEQVRbz4jiZP6FW0AdbqEGtMYBDWnul3eiGBMJOQajA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script></main>
+    </body><script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha512-N9IJRoc3LaP3NDoiGkcPa4gG94kapGpaA5Zq9/Dr04uf5TbLFU5q0o8AbRhLKUUlp8QFS2u7S+Yti0U7QtuZvQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script>
+      const images = Array.from(document.querySelectorAll(".blog-content img"));
+      images.forEach(img => {
+          mediumZoom(img, {
+              margin: 10,  
+              scrollOffset: 40,  
+              container: null,  
+              template: null,  
+              background: 'rgba(0, 0, 0, 0.5)'
+          });
+      });
+  </script>
+
+  
+  <script src="/main.min.6bb26b69159420159c74dc9e097b06a578ed2b68c701466a91a44a9632d851bd0af167a1b30012387b4c512b48ad9ad4d3394e04d77ae38d57e1920fe4ed34fe.js" integrity="sha512-a7JraRWUIBWcdNyeCXsGpXjtK2jHAUZqkaRKljLYUb0K8WehswASOHtMUStIrZrU0zlOBNd6441X4ZIP5O00/g==" crossorigin="anonymous" defer></script></html>

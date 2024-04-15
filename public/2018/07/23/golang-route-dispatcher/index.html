@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="zh"><head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>不到20行代码实现golang路由调度</title>
+    <meta charset="utf-8">
+    
+    <meta content="Web开发 , Java , Go , Node.js , PHP , Koa , MySQL , Redis , 前端 , 后端 , 数据库" name="keywords">
+    
+    <meta name="description" content="项目地址 go-dispatcher
+本项目依赖 使用标准库实现，无额外依赖
+为什么需要路由调度层 golang http标准库只能精确匹配请求的URI，然后执行handler。现在一般web项目都至少有个Controller层，以struct实现，根据不同的请求路径派发到不同的方法中去。">
+    <meta name="author" content="Lei Xia">
+    <link rel="canonical"
+        href="https://www.ddhigh.com/2018/07/23/golang-route-dispatcher/">
+
+    <link rel="alternate" type="application/rss+xml" href="https://www.ddhigh.com/index.xml" title="每天进步一点点">
+
+    
+
+
+<script async defer data-website-id="52f8f0f9-d93d-466b-8ef5-508aae8c4ed4"
+    src="https://analysis.ddhigh.com/script.js"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EC3XLVSGKV"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-EC3XLVSGKV');
+</script>
+    <meta property="og:title" content="不到20行代码实现golang路由调度" />
+<meta property="og:description" content="项目地址 go-dispatcher
+本项目依赖 使用标准库实现，无额外依赖
+为什么需要路由调度层 golang http标准库只能精确匹配请求的URI，然后执行handler。现在一般web项目都至少有个Controller层，以struct实现，根据不同的请求路径派发到不同的方法中去。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.ddhigh.com/2018/07/23/golang-route-dispatcher/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2018-07-23T21:44:05+00:00" />
+<meta property="article:modified_time" content="2018-07-23T21:44:05+00:00" />
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="不到20行代码实现golang路由调度"/>
+<meta name="twitter:description" content="项目地址 go-dispatcher
+本项目依赖 使用标准库实现，无额外依赖
+为什么需要路由调度层 golang http标准库只能精确匹配请求的URI，然后执行handler。现在一般web项目都至少有个Controller层，以struct实现，根据不同的请求路径派发到不同的方法中去。"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://www.ddhigh.com/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "不到20行代码实现golang路由调度",
+      "item": "https://www.ddhigh.com/2018/07/23/golang-route-dispatcher/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "不到20行代码实现golang路由调度",
+  "name": "不到20行代码实现golang路由调度",
+  "description": "项目地址 go-dispatcher\n本项目依赖 使用标准库实现，无额外依赖\n为什么需要路由调度层 golang http标准库只能精确匹配请求的URI，然后执行handler。现在一般web项目都至少有个Controller层，以struct实现，根据不同的请求路径派发到不同的方法中去。",
+  "keywords": [
+    
+  ],
+  "articleBody": "项目地址 go-dispatcher\n本项目依赖 使用标准库实现，无额外依赖\n为什么需要路由调度层 golang http标准库只能精确匹配请求的URI，然后执行handler。现在一般web项目都至少有个Controller层，以struct实现，根据不同的请求路径派发到不同的方法中去。\n路由调度器定义 由于golang暂时还不可以动态创建对象(比如java的Class.forName(\"xxx\").newInstance(),xxx是任意存在的class名称)。所以需要手动注册一下controller关系。\n定义routes保存controller指针 解析请求过来的URL查询参数，暂定a为action名称,c为controller名称，本文偷了下懒，没对PATH_INFO做处理，也没有对actionName的首字母自动大写，这个不影响本文要传达的核心内容，有兴趣的读者可以自行实现。 根据URL中的controllerName找到对应的controller 使用反射将当前请求对象的*http.Request和http.ResponseWriter设置到该Controller 使用反射以及actionName对应该controller的方法 由于golang的继承不是一般的OOP，所以也没有父子类这种说法，路由注册那里只能使用interface{}\n代码实现 app/app.go 该文件为核心调度文件\npackage app import ( \"net/http\" \"reflect\" \"fmt\" ) type application struct { routes map[string]interface{} } func New() *application { return \u0026application{ routes: make(map[string]interface{}), } } func (p *application) ServeHTTP(w http.ResponseWriter, r *http.Request) { controllerName := r.URL.Query().Get(\"c\") actionName := r.URL.Query().Get(\"a\") if controllerName == \"\" || actionName == \"\" { http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest) return } route, ok := p.routes[controllerName] if !ok { http.Error(w, \"Controller Not Found\", http.StatusNotFound) return } ele := reflect.ValueOf(route).Elem() ele.FieldByName(\"Request\").Set(reflect.ValueOf(r)) ele.FieldByName(\"Response\").Set(reflect.ValueOf(w)) ele.MethodByName(actionName).Call([]reflect.Value{}) } func (p *application) printRoutes() { for route, controller := range p.routes { ele := reflect.ValueOf(controller).Type().String() fmt.Printf(\"%s %s\\n\", route, ele) } } func (p *application) Get(route string, controller interface{}) { p.routes[route] = controller } func (p *application) Run(addr string) error { p.printRoutes() fmt.Printf(\"listen on %s\\n\", addr) return http.ListenAndServe(addr, p) } app/controller.go 控制器\"基类\"\npackage app import \"net/http\" type Controller struct { Response http.ResponseWriter Request *http.Request } controller/site.go 具体业务逻辑类\npackage controllers import ( \"fmt\" \"app\" ) type SiteController struct { app.Controller } func (p SiteController) Index() { fmt.Fprint(p.Response, p.Request.RequestURI) } main.go 入口文件\npackage main import ( _ \"github.com/go-sql-driver/mysql\" \"app\" \"controllers\" ) func main() { application := app.New() application.Get(\"site\", \u0026controllers.SiteController{}) application.Run(\":8080\") } 运行项目 启动进程 访问http://localhost:8080?c=site\u0026a=Index会输出/?c=site\u0026a=Index 写在最后 希望这个小小的项目能启发到各位读者，早日开发出适合自己的Web框架!\n",
+  "wordCount" : "205",
+  "inLanguage": "zh",
+  "datePublished": "2018-07-23T21:44:05Z",
+  "dateModified": "2018-07-23T21:44:05Z",
+  "author":{
+    "@type": "Person",
+    "name": "Lei Xia"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://www.ddhigh.com/2018/07/23/golang-route-dispatcher/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "每天进步一点点",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.ddhigh.com/favicon.ico"
+    }
+  }
+}
+</script>
+    <link rel="icon" href="/img/favicon.ico" sizes="16x16">
+
+<link rel="apple-touch-icon" href="/img/favicon.ico">
+
+<link rel="manifest" href="/img/favicon.ico">
+    
+
+    <link rel="stylesheet" href="https://cdn.staticfile.org/lxgw-wenkai-webfont/1.6.0/style.css" />
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/main.min.d0df733b91ef046970ecd63de7aa626886fd263fd3fb2b8ff28b560e505831f7.css" integrity="sha256-0N9zO5HvBGlw7NY956piaIb9Jj/T&#43;yuP8otWDlBYMfc="
+        crossorigin="anonymous" media="screen" />
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css" integrity="sha512-ygEyjMC6rqnzJqWGjRTJUPYMEs9JUOm3i7OWUS9CgQ4XkBUvMsgCS1I8JqavidQ2ClHcREB7IbA2mN08+r9Elg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    
+    <link rel="stylesheet" href="/scss/highlight/github-dark.min.min.66034289ee9a113219a2c4aae0a8bd2095ab255c832a42efcf5863f10814e7a1.css" />
+
+    
+    <script src="/js/highlight.min.min.894ca9c68afab956438c4926a0dc7f5293e04e08595bd27abdb123e94801f684.js"></script>
+    <script>hljs.highlightAll();</script>
+
+    <script>{ { $darkModeInit.Content | safeJS } }</script>
+    </head><body>
+      <main class="wrapper"><nav class="navigation">
+    <section class="container">
+        <a class="navigation-brand" href="/">
+            每天进步一点点
+        </a>
+        <input type="checkbox" id="menu-toggle" />
+        <label class="menu-button float-right" for="menu-toggle">
+            <span></span><span></span><span></span>
+        </label>
+        
+        <ul class="navigation-list" id="navigation-list">
+            
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/">首页</a>
+            </li>
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/archives">归档</a>
+            </li>
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/books">出版物</a>
+            </li>
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/guestbook">留言板</a>
+            </li>
+            
+            
+
+            <li class="navigation-item menu-separator">
+                <span>|</span>
+            </li>
+
+            
+            
+            <li class="navigation-item navigation-social">
+                <a class="navigation-link" href="https://github.com/xialeistudio"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a>
+            </li>
+            
+            
+
+            <li class="navigation-item navigation-dark">
+                <button id="mode" type="button" aria-label="toggle user light or dark theme">
+                    <span class="toggle-dark"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></span>
+                    <span class="toggle-light"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></span>
+                </button>
+            </li>
+
+            
+            
+            
+            
+            
+            
+            
+            <li class="navigation-item navigation-language">
+                <a href="https://www.ddhigh.com/en/">EN</a>
+            </li>
+            
+            
+            
+            
+        </ul>
+        
+    </section>
+</nav>
+<div id="content">
+<article class="blog-single">
+  <header class="blog-title">
+    <h1>不到20行代码实现golang路由调度</h1>
+  </header>
+
+  <p>
+  <small>
+    2018年7月23日&nbsp;· 205 字&nbsp;· 1 分钟</small>
+
+  
+<p>
+
+  <div class="blog-toc">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#项目地址">项目地址</a></li>
+    <li><a href="#本项目依赖">本项目依赖</a></li>
+    <li><a href="#为什么需要路由调度层">为什么需要路由调度层</a></li>
+    <li><a href="#路由调度器定义">路由调度器定义</a></li>
+    <li><a href="#代码实现">代码实现</a>
+      <ul>
+        <li><a href="#appappgo">app/app.go</a></li>
+        <li><a href="#appcontrollergo">app/controller.go</a></li>
+        <li><a href="#controllersitego">controller/site.go</a></li>
+        <li><a href="#maingo">main.go</a></li>
+      </ul>
+    </li>
+    <li><a href="#运行项目">运行项目</a></li>
+    <li><a href="#写在最后">写在最后</a></li>
+  </ul>
+</nav>
+  </div>
+
+  <section class="blog-content">
+    <h2 id="项目地址">项目地址</h2>
+<p><a href="https://github.com/xialeistudio/go-dispatcher" target="_blank" rel="noopener">go-dispatcher</a></p>
+<h2 id="本项目依赖">本项目依赖</h2>
+<p>使用标准库实现，无额外依赖</p>
+<h2 id="为什么需要路由调度层">为什么需要路由调度层</h2>
+<blockquote>
+<p>golang http标准库只能精确匹配请求的URI，然后执行handler。现在一般web项目都至少有个Controller层，以struct实现，根据不同的请求路径派发到不同的方法中去。</p>
+</blockquote>
+<h2 id="路由调度器定义">路由调度器定义</h2>
+<p>由于golang暂时还不可以动态创建对象(比如java的<code>Class.forName(&quot;xxx&quot;).newInstance()</code>,xxx是任意存在的class名称)。所以需要手动注册一下controller关系。</p>
+<ol>
+<li>定义<code>routes</code>保存controller指针</li>
+<li>解析请求过来的URL查询参数，暂定<code>a</code>为<code>action名称</code>,<code>c</code>为<code>controller名称</code>，本文偷了下懒，没对PATH_INFO做处理，也没有对actionName的首字母自动大写，这个不影响本文要传达的核心内容，有兴趣的读者可以自行实现。</li>
+<li>根据URL中的<code>controllerName</code>找到对应的controller</li>
+<li>使用反射将当前请求对象的<code>*http.Request</code>和<code>http.ResponseWriter</code>设置到该Controller</li>
+<li>使用反射以及actionName对应该controller的方法</li>
+</ol>
+<blockquote>
+<p>由于golang的继承不是一般的OOP，所以也没有父子类这种说法，路由注册那里只能使用interface{}</p>
+</blockquote>
+<h2 id="代码实现">代码实现</h2>
+<h3 id="appappgo">app/app.go</h3>
+<p>该文件为核心调度文件</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">app</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;net/http&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;reflect&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">application</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">routes</span> <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">interface</span>{}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">New</span>() <span style="color:#f92672">*</span><span style="color:#a6e22e">application</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">application</span>{
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">routes</span>: make(<span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">interface</span>{}),
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">p</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">application</span>) <span style="color:#a6e22e">ServeHTTP</span>(<span style="color:#a6e22e">w</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ResponseWriter</span>, <span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Request</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">controllerName</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">URL</span>.<span style="color:#a6e22e">Query</span>().<span style="color:#a6e22e">Get</span>(<span style="color:#e6db74">&#34;c&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">actionName</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">URL</span>.<span style="color:#a6e22e">Query</span>().<span style="color:#a6e22e">Get</span>(<span style="color:#e6db74">&#34;a&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">controllerName</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;&#34;</span> <span style="color:#f92672">||</span> <span style="color:#a6e22e">actionName</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;&#34;</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Error</span>(<span style="color:#a6e22e">w</span>, <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">StatusText</span>(<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">StatusBadRequest</span>), <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">StatusBadRequest</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">route</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">routes</span>[<span style="color:#a6e22e">controllerName</span>]
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">ok</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Error</span>(<span style="color:#a6e22e">w</span>, <span style="color:#e6db74">&#34;Controller Not Found&#34;</span>, <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">StatusNotFound</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">ele</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">ValueOf</span>(<span style="color:#a6e22e">route</span>).<span style="color:#a6e22e">Elem</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">ele</span>.<span style="color:#a6e22e">FieldByName</span>(<span style="color:#e6db74">&#34;Request&#34;</span>).<span style="color:#a6e22e">Set</span>(<span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">ValueOf</span>(<span style="color:#a6e22e">r</span>))
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">ele</span>.<span style="color:#a6e22e">FieldByName</span>(<span style="color:#e6db74">&#34;Response&#34;</span>).<span style="color:#a6e22e">Set</span>(<span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">ValueOf</span>(<span style="color:#a6e22e">w</span>))
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">ele</span>.<span style="color:#a6e22e">MethodByName</span>(<span style="color:#a6e22e">actionName</span>).<span style="color:#a6e22e">Call</span>([]<span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">Value</span>{})
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">p</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">application</span>) <span style="color:#a6e22e">printRoutes</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">route</span>, <span style="color:#a6e22e">controller</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">routes</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">ele</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">ValueOf</span>(<span style="color:#a6e22e">controller</span>).<span style="color:#a6e22e">Type</span>().<span style="color:#a6e22e">String</span>()
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%s %s\n&#34;</span>, <span style="color:#a6e22e">route</span>, <span style="color:#a6e22e">ele</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">p</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">application</span>) <span style="color:#a6e22e">Get</span>(<span style="color:#a6e22e">route</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">controller</span> <span style="color:#66d9ef">interface</span>{}) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">routes</span>[<span style="color:#a6e22e">route</span>] = <span style="color:#a6e22e">controller</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">p</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">application</span>) <span style="color:#a6e22e">Run</span>(<span style="color:#a6e22e">addr</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">error</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">printRoutes</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;listen on %s\n&#34;</span>, <span style="color:#a6e22e">addr</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ListenAndServe</span>(<span style="color:#a6e22e">addr</span>, <span style="color:#a6e22e">p</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="appcontrollergo">app/controller.go</h3>
+<p>控制器&quot;基类&quot;</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">app</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;net/http&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Controller</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Response</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ResponseWriter</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Request</span>  <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Request</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="controllersitego">controller/site.go</h3>
+<p>具体业务逻辑类</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">controllers</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;app&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">SiteController</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">app</span>.<span style="color:#a6e22e">Controller</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">p</span> <span style="color:#a6e22e">SiteController</span>) <span style="color:#a6e22e">Index</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Fprint</span>(<span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Response</span>, <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Request</span>.<span style="color:#a6e22e">RequestURI</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="maingo">main.go</h3>
+<p>入口文件</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">_</span> <span style="color:#e6db74">&#34;github.com/go-sql-driver/mysql&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;app&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;controllers&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">application</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">app</span>.<span style="color:#a6e22e">New</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">application</span>.<span style="color:#a6e22e">Get</span>(<span style="color:#e6db74">&#34;site&#34;</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">controllers</span>.<span style="color:#a6e22e">SiteController</span>{})
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">application</span>.<span style="color:#a6e22e">Run</span>(<span style="color:#e6db74">&#34;:8080&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="运行项目">运行项目</h2>
+<ol>
+<li>启动进程</li>
+<li>访问<code>http://localhost:8080?c=site&amp;a=Index</code>会输出<code>/?c=site&amp;a=Index</code></li>
+</ol>
+<h2 id="写在最后">写在最后</h2>
+<p>希望这个小小的项目能启发到各位读者，早日开发出适合自己的Web框架!</p>
+
+    <div class="blog-footer">
+    <div class="social-share"></div>
+    <div class="copyright">
+        <ul>
+            <li style="margin-bottom: 0.5em;">本文作者: <a href="https://ddhigh.com/" target="_blank"
+                    style="color: #000000; text-decoration: none;">xialeistudio</a></li>
+            <li style="margin-bottom: 0.5em;">本文链接: <a href="https://www.ddhigh.com/2018/07/23/golang-route-dispatcher/" target="_blank"
+                    style="color: #000000; text-decoration: none;">不到20行代码实现golang路由调度</a></li>
+            <li>版权声明: <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank"
+                    style="color: #000000; text-decoration: none;">「署名-非商业性使用-相同方式共享 4.0 国际」</a></li>
+        </ul>
+    </div>
+    
+    <div style="margin-top: 2rem;"><img src="/img/mp.png" alt="qrcode"></div>
+    
+</div>
+  </section>
+
+  
+  
+  <div class="paginator">
+    
+    <a class="prev" href="https://www.ddhigh.com/2018/07/24/golang-dependency-inject-container/">
+      <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M3.77086 21.1546C11.0491 22.698 21.4339 21.7773 21.4339 16.3608V4.63375C21.4339 3.93962 21.3581 3.30535 21.1917 2.76787M3.77086 21.1546C1.9934 20.7777 0.973585 18.7264 1.08749 16.688C1.2668 13.479 1.15721 9.43135 1.00513 6.21507C0.87809 3.52811 3.12891 1.16316 5.51029 1.25008C9.76594 1.40542 15.377 1.20229 18.7912 1.00542C20.0864 0.930734 20.8406 1.63385 21.1917 2.76787M3.77086 21.1546C4.56586 21.4723 5.49168 21.7879 6.5 22.0658M21.1917 2.76787C23.1097 4.18217 23.13 12.4191 22.9004 16.3608C20.8478 24.0194 12.3061 23.6662 6.5 22.0658M21.1917 2.76787C21.7612 4.51192 22.7203 9.67216 22 16.3608C21.2797 23.0494 11.3665 22.9511 6.5 22.0658M9.94496 9C9.28897 9.61644 7.63215 10.997 6.04814 11.7966C5.98257 11.8297 5.98456 11.9753 6.05061 12.0063C7.05496 12.4779 8.92941 13.9264 9.94496 15M6.44444 11.9667C8.86549 12.0608 14 12 16 11"
+          stroke="currentColor" stroke-linecap="round" />
+      </svg>
+      <span>golang不到30行代码实现依赖注入</span></a>
+    
+    
+    <a class="next" href="https://www.ddhigh.com/2018/06/14/redis-common-practice/"><span>redis常用实践</span>
+      <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M3.77086 21.1546C11.0491 22.698 21.4339 21.7773 21.4339 16.3608V4.63375C21.4339 3.93962 21.3581 3.30535 21.1917 2.76787M3.77086 21.1546C1.9934 20.7777 0.973585 18.7264 1.08749 16.688C1.2668 13.479 1.15721 9.43135 1.00513 6.21507C0.87809 3.52811 3.12891 1.16316 5.51029 1.25008C9.76594 1.40542 15.377 1.20229 18.7912 1.00542C20.0864 0.930734 20.8406 1.63385 21.1917 2.76787M3.77086 21.1546C4.56586 21.4723 5.49168 21.7879 6.5 22.0658M21.1917 2.76787C23.1097 4.18217 23.13 12.4191 22.9004 16.3608C20.8478 24.0194 12.3061 23.6662 6.5 22.0658M21.1917 2.76787C21.7612 4.51192 22.7203 9.67216 22 16.3608C21.2797 23.0494 11.3665 22.9511 6.5 22.0658M12.055 9C12.711 9.61644 14.3679 10.997 15.9519 11.7966C16.0174 11.8297 16.0154 11.9753 15.9494 12.0063C14.945 12.4779 13.0706 13.9264 12.055 15M15.5556 11.9667C13.1345 12.0608 8 12 6 11"
+          stroke="currentColor" stroke-linecap="round" />
+      </svg>
+    </a>
+    
+  </div>
+  
+
+  
+
+
+  
+  
+<div class="comments">
+  <script>
+      const getTheme = window.localStorage && window.localStorage.getItem("theme");
+      let theme = getTheme === 'dark' ? 'dark' : 'light';
+      let s = document.createElement('script');
+      s.src = 'https://giscus.app/client.js';
+      s.setAttribute('data-repo', 'xialeistudio\/discussion');
+      s.setAttribute('data-repo-id', 'R_kgDOKurTRA');
+      s.setAttribute('data-category', 'General');
+      s.setAttribute('data-category-id', 'DIC_kwDOKurTRM4CbCJt');
+      s.setAttribute('data-mapping', 'pathname');
+      s.setAttribute('data-strict', '0');
+      s.setAttribute('data-reactions-enabled', '1');
+      s.setAttribute('data-emit-metadata', '0');
+      s.setAttribute('data-input-position', 'bottom');
+      s.setAttribute('data-theme', theme);
+      s.setAttribute('data-lang', 'en');
+      s.setAttribute('data-loading', 'lazy');
+      s.setAttribute('crossorigin', 'anonymous');
+      s.setAttribute('async', '');
+      document.querySelector('div.comments').innerHTML = '';
+      document.querySelector('div.comments').appendChild(s);
+  </script>
+</div>
+
+</article>
+
+
+        </div><footer class="footer">
+    <p>&copy; 2014 - 2024 <a href="https://www.ddhigh.com">每天进步一点点</a>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener" target="_blank">Hugo️️</a>
+        <a href="https://github.com/guangzhengli/hugo-theme-ladder" rel="noopener" target="_blank">Ladder</a>
+        ️ </p>
+</footer>
+
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10.5376 22.7916C11.0152 22.7207 22.5795 21.1781 22.0978 10.4211C22.0536 9.43274 21.9303 8.53367 21.7387 7.71865M10.5376 22.7916C16.876 22.3728 20.0969 19.8899 21.5383 16.9142M10.5376 22.7916C9.7707 22.9055 8.97982 22.8964 8.19743 22.7725M21.7387 7.71865C21.4988 6.69828 21.1518 5.80967 20.7188 5.04257M21.7387 7.71865C22.6022 10.1105 23.0542 13.7848 21.5383 16.9142M20.7188 5.04257C17.1684 -1.24629 7.83127 0.632493 4.27577 5.04257C2.88063 6.77451 -0.0433281 11.1668 1.38159 16.6571C2.27481 20.0988 5.17269 22.2936 8.19743 22.7725M20.7188 5.04257C22.0697 6.9404 24.0299 11.3848 22.3541 15.4153M21.5383 16.9142C21.8737 16.4251 22.1428 15.9235 22.3541 15.4153M8.19743 22.7725C12.1971 23.4683 20.6281 22.971 22.3541 15.4153M14 10.945C13.3836 10.289 12.003 8.63215 11.2034 7.04814C11.1703 6.98257 11.0247 6.98456 10.9937 7.05061C10.5221 8.05496 9.07362 9.92941 8 10.945M11.0333 7.44444C10.9392 9.86549 11 15 12 17"
+              stroke="currentColor" stroke-linecap="round"/>
+    </svg>
+</a>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'Copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'Copied';
+            setTimeout(() => {
+                copybutton.innerHTML = 'Copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {
+            }
+            ;
+            selection.removeRange(range);
+        });
+        codeblock.parentNode.appendChild(copybutton);
+    });
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js" integrity="sha512-9DNXrSjk17bU9MUbRp3IjwcWe46V8FaGA062PFbryPUAEQVRbz4jiZP6FW0AdbqEGtMYBDWnul3eiGBMJOQajA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script></main>
+    </body><script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha512-N9IJRoc3LaP3NDoiGkcPa4gG94kapGpaA5Zq9/Dr04uf5TbLFU5q0o8AbRhLKUUlp8QFS2u7S+Yti0U7QtuZvQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script>
+      const images = Array.from(document.querySelectorAll(".blog-content img"));
+      images.forEach(img => {
+          mediumZoom(img, {
+              margin: 10,  
+              scrollOffset: 40,  
+              container: null,  
+              template: null,  
+              background: 'rgba(0, 0, 0, 0.5)'
+          });
+      });
+  </script>
+
+  
+  <script src="/main.min.6bb26b69159420159c74dc9e097b06a578ed2b68c701466a91a44a9632d851bd0af167a1b30012387b4c512b48ad9ad4d3394e04d77ae38d57e1920fe4ed34fe.js" integrity="sha512-a7JraRWUIBWcdNyeCXsGpXjtK2jHAUZqkaRKljLYUb0K8WehswASOHtMUStIrZrU0zlOBNd6441X4ZIP5O00/g==" crossorigin="anonymous" defer></script></html>

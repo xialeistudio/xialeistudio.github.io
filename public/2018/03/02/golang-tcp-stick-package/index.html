@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="zh"><head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>golang解决TCP粘包问题</title>
+    <meta charset="utf-8">
+    
+    <meta content="Web开发 , Java , Go , Node.js , PHP , Koa , MySQL , Redis , 前端 , 后端 , 数据库" name="keywords">
+    
+    <meta name="description" content="什么是TCP粘包问题以及为什么会产生TCP粘包，本文不加讨论。本文使用golang的bufio.Scanner来实现自定义协议解包。
+协议数据包定义 本文模拟一个日志服务器，该服务器接收客户端传到的数据包并显示出来
+type Package struct { Version [2]byte // 协议版本，暂定V1 Length int16 // 数据部分长度 Timestamp int64 // 时间戳 HostnameLength int16 // 主机名长度 Hostname []byte // 主机名 TagLength int16 // 标签长度 Tag []byte // 标签 Msg []byte // 日志数据 } 协议定义部分没有什么好讲的，根据具体的业务逻辑定义即可。">
+    <meta name="author" content="Lei Xia">
+    <link rel="canonical"
+        href="https://www.ddhigh.com/2018/03/02/golang-tcp-stick-package/">
+
+    <link rel="alternate" type="application/rss+xml" href="https://www.ddhigh.com/index.xml" title="每天进步一点点">
+
+    
+
+
+<script async defer data-website-id="52f8f0f9-d93d-466b-8ef5-508aae8c4ed4"
+    src="https://analysis.ddhigh.com/script.js"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EC3XLVSGKV"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-EC3XLVSGKV');
+</script>
+    <meta property="og:title" content="golang解决TCP粘包问题" />
+<meta property="og:description" content="什么是TCP粘包问题以及为什么会产生TCP粘包，本文不加讨论。本文使用golang的bufio.Scanner来实现自定义协议解包。
+协议数据包定义 本文模拟一个日志服务器，该服务器接收客户端传到的数据包并显示出来
+type Package struct { Version [2]byte // 协议版本，暂定V1 Length int16 // 数据部分长度 Timestamp int64 // 时间戳 HostnameLength int16 // 主机名长度 Hostname []byte // 主机名 TagLength int16 // 标签长度 Tag []byte // 标签 Msg []byte // 日志数据 } 协议定义部分没有什么好讲的，根据具体的业务逻辑定义即可。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.ddhigh.com/2018/03/02/golang-tcp-stick-package/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2018-03-02T17:50:31+00:00" />
+<meta property="article:modified_time" content="2018-03-02T17:50:31+00:00" />
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="golang解决TCP粘包问题"/>
+<meta name="twitter:description" content="什么是TCP粘包问题以及为什么会产生TCP粘包，本文不加讨论。本文使用golang的bufio.Scanner来实现自定义协议解包。
+协议数据包定义 本文模拟一个日志服务器，该服务器接收客户端传到的数据包并显示出来
+type Package struct { Version [2]byte // 协议版本，暂定V1 Length int16 // 数据部分长度 Timestamp int64 // 时间戳 HostnameLength int16 // 主机名长度 Hostname []byte // 主机名 TagLength int16 // 标签长度 Tag []byte // 标签 Msg []byte // 日志数据 } 协议定义部分没有什么好讲的，根据具体的业务逻辑定义即可。"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://www.ddhigh.com/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "golang解决TCP粘包问题",
+      "item": "https://www.ddhigh.com/2018/03/02/golang-tcp-stick-package/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "golang解决TCP粘包问题",
+  "name": "golang解决TCP粘包问题",
+  "description": "什么是TCP粘包问题以及为什么会产生TCP粘包，本文不加讨论。本文使用golang的bufio.Scanner来实现自定义协议解包。\n协议数据包定义 本文模拟一个日志服务器，该服务器接收客户端传到的数据包并显示出来\ntype Package struct { Version [2]byte // 协议版本，暂定V1 Length int16 // 数据部分长度 Timestamp int64 // 时间戳 HostnameLength int16 // 主机名长度 Hostname []byte // 主机名 TagLength int16 // 标签长度 Tag []byte // 标签 Msg []byte // 日志数据 } 协议定义部分没有什么好讲的，根据具体的业务逻辑定义即可。",
+  "keywords": [
+    "protocol"
+  ],
+  "articleBody": "什么是TCP粘包问题以及为什么会产生TCP粘包，本文不加讨论。本文使用golang的bufio.Scanner来实现自定义协议解包。\n协议数据包定义 本文模拟一个日志服务器，该服务器接收客户端传到的数据包并显示出来\ntype Package struct { Version [2]byte // 协议版本，暂定V1 Length int16 // 数据部分长度 Timestamp int64 // 时间戳 HostnameLength int16 // 主机名长度 Hostname []byte // 主机名 TagLength int16 // 标签长度 Tag []byte // 标签 Msg []byte // 日志数据 } 协议定义部分没有什么好讲的，根据具体的业务逻辑定义即可。\n数据打包 由于TCP协议是语言无关的协议，所以直接把协议数据包结构体发送到TCP连接中也是不可能的，只能发送字节流数据，所以需要自己实现数据编码。所幸golang提供了binary来帮助我们实现网络字节编码。\nfunc (p *Package) Pack(writer io.Writer) error { var err error err = binary.Write(writer, binary.BigEndian, \u0026p.Version) err = binary.Write(writer, binary.BigEndian, \u0026p.Length) err = binary.Write(writer, binary.BigEndian, \u0026p.Timestamp) err = binary.Write(writer, binary.BigEndian, \u0026p.HostnameLength) err = binary.Write(writer, binary.BigEndian, \u0026p.Hostname) err = binary.Write(writer, binary.BigEndian, \u0026p.TagLength) err = binary.Write(writer, binary.BigEndian, \u0026p.Tag) err = binary.Write(writer, binary.BigEndian, \u0026p.Msg) return err } Pack方法的输出目标为io.Writer，有利于接口扩展，只要实现了该接口即可编码数据写入。binary.BigEndian是字节序，本文暂时不讨论，有需要的读者可以自行查找资料研究。\n数据解包 解包需要将TCP数据包解析到结构体中，接下来会讲为什么需要添加几个数据无关的长度字段。\nfunc (p *Package) Unpack(reader io.Reader) error { var err error err = binary.Read(reader, binary.BigEndian, \u0026p.Version) err = binary.Read(reader, binary.BigEndian, \u0026p.Length) err = binary.Read(reader, binary.BigEndian, \u0026p.Timestamp) err = binary.Read(reader, binary.BigEndian, \u0026p.HostnameLength) p.Hostname = make([]byte, p.HostnameLength) err = binary.Read(reader, binary.BigEndian, \u0026p.Hostname) err = binary.Read(reader, binary.BigEndian, \u0026p.TagLength) p.Tag = make([]byte, p.TagLength) err = binary.Read(reader, binary.BigEndian, \u0026p.Tag) p.Msg = make([]byte, p.Length-8-2-p.HostnameLength-2-p.TagLength) err = binary.Read(reader, binary.BigEndian, \u0026p.Msg) return err } 由于主机名、标签这种数据是不固定长度的，所以需要两个字节来标识数据长度，否则读取的时候只知道一个总的数据长度是无法区分主机名、标签名、日志数据的。\n数据包的粘包问题解决 上文只是解决了编码/解码问题，前提是收到的数据包没有产生粘包问题，解决粘包就是要正确分割字节流中的数据。一般有以下做法：\n定长分隔(每个数据包最大为该长度) 缺点是数据不足时会浪费传输资源 特定字符分隔(如\\r\\n) 缺点是如果正文中有\\r\\n就会导致问题 在数据包中添加长度字段(本文采用的) golang提供了bufio.Scanner来解决粘包问题。\nscanner := bufio.NewScanner(reader) // reader为实现了io.Reader接口的对象，如net.Conn scanner.Split(func(data []byte, atEOF bool) (advance int, token []byte, err error) { if !atEOF \u0026\u0026 data[0] == 'V' { // 由于我们定义的数据包头最开始为两个字节的版本号，所以只有以V开头的数据包才处理 if len(data) \u003e 4 { // 如果收到的数据\u003e4个字节(2字节版本号+2字节数据包长度) length := int16(0) binary.Read(bytes.NewReader(data[2:4]), binary.BigEndian, \u0026length) // 读取数据包第3-4字节(int16)=\u003e数据部分长度 if int(length)+4 \u003c= len(data) { // 如果读取到的数据正文长度+2字节版本号+2字节数据长度不超过读到的数据(实际上就是成功完整的解析出了一个包) return int(length) + 4, data[:int(length)+4], nil } } } return }) // 打印接收到的数据包 for scanner.Scan() { scannedPack := new(Package) scannedPack.Unpack(bytes.NewReader(scanner.Bytes())) log.Println(scannedPack) } 本文的核心就在于scanner.Split方法，该方法用来解析TCP数据包\n完整源码 package main import ( \"bufio\" \"bytes\" \"encoding/binary\" \"fmt\" \"io\" \"log\" \"os\" \"time\" ) type Package struct { Version [2]byte // 协议版本 Length int16 // 数据部分长度 Timestamp int64 // 时间戳 HostnameLength int16 // 主机名长度 Hostname []byte // 主机名 TagLength int16 // Tag长度 Tag []byte // Tag Msg []byte // 数据部分长度 } func (p *Package) Pack(writer io.Writer) error { var err error err = binary.Write(writer, binary.BigEndian, \u0026p.Version) err = binary.Write(writer, binary.BigEndian, \u0026p.Length) err = binary.Write(writer, binary.BigEndian, \u0026p.Timestamp) err = binary.Write(writer, binary.BigEndian, \u0026p.HostnameLength) err = binary.Write(writer, binary.BigEndian, \u0026p.Hostname) err = binary.Write(writer, binary.BigEndian, \u0026p.TagLength) err = binary.Write(writer, binary.BigEndian, \u0026p.Tag) err = binary.Write(writer, binary.BigEndian, \u0026p.Msg) return err } func (p *Package) Unpack(reader io.Reader) error { var err error err = binary.Read(reader, binary.BigEndian, \u0026p.Version) err = binary.Read(reader, binary.BigEndian, \u0026p.Length) err = binary.Read(reader, binary.BigEndian, \u0026p.Timestamp) err = binary.Read(reader, binary.BigEndian, \u0026p.HostnameLength) p.Hostname = make([]byte, p.HostnameLength) err = binary.Read(reader, binary.BigEndian, \u0026p.Hostname) err = binary.Read(reader, binary.BigEndian, \u0026p.TagLength) p.Tag = make([]byte, p.TagLength) err = binary.Read(reader, binary.BigEndian, \u0026p.Tag) p.Msg = make([]byte, p.Length-8-2-p.HostnameLength-2-p.TagLength) err = binary.Read(reader, binary.BigEndian, \u0026p.Msg) return err } func (p *Package) String() string { return fmt.Sprintf(\"version:%s length:%d timestamp:%d hostname:%s tag:%s msg:%s\", p.Version, p.Length, p.Timestamp, p.Hostname, p.Tag, p.Msg, ) } func main() { hostname, err := os.Hostname() if err != nil { log.Fatal(err) } pack := \u0026Package{ Version: [2]byte{'V', '1'}, Timestamp: time.Now().Unix(), HostnameLength: int16(len(hostname)), Hostname: []byte(hostname), TagLength: 4, Tag: []byte(\"demo\"), Msg: []byte((\"现在时间是:\" + time.Now().Format(\"2006-01-02 15:04:05\"))), } pack.Length = 8 + 2 + pack.HostnameLength + 2 + pack.TagLength + int16(len(pack.Msg)) buf := new(bytes.Buffer) // 写入四次，模拟TCP粘包效果 pack.Pack(buf) pack.Pack(buf) pack.Pack(buf) pack.Pack(buf) // scanner scanner := bufio.NewScanner(buf) scanner.Split(func(data []byte, atEOF bool) (advance int, token []byte, err error) { if !atEOF \u0026\u0026 data[0] == 'V' { if len(data) \u003e 4 { length := int16(0) binary.Read(bytes.NewReader(data[2:4]), binary.BigEndian, \u0026length) if int(length)+4 \u003c= len(data) { return int(length) + 4, data[:int(length)+4], nil } } } return }) for scanner.Scan() { scannedPack := new(Package) scannedPack.Unpack(bytes.NewReader(scanner.Bytes())) log.Println(scannedPack) } if err := scanner.Err(); err != nil { log.Fatal(\"无效数据包\") } } 写在最后 golang作为一门强大的网络编程语言，实现自定义协议是非常重要的，实际上实现自定义协议也不是很难，以下几个步骤：\n数据包编码 数据包解码 处理TCP粘包问题 断线重连(可以使用心跳实现)(非必须) ",
+  "wordCount" : "567",
+  "inLanguage": "zh",
+  "datePublished": "2018-03-02T17:50:31Z",
+  "dateModified": "2018-03-02T17:50:31Z",
+  "author":{
+    "@type": "Person",
+    "name": "Lei Xia"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://www.ddhigh.com/2018/03/02/golang-tcp-stick-package/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "每天进步一点点",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.ddhigh.com/favicon.ico"
+    }
+  }
+}
+</script>
+    <link rel="icon" href="/img/favicon.ico" sizes="16x16">
+
+<link rel="apple-touch-icon" href="/img/favicon.ico">
+
+<link rel="manifest" href="/img/favicon.ico">
+    
+
+    <link rel="stylesheet" href="https://cdn.staticfile.org/lxgw-wenkai-webfont/1.6.0/style.css" />
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/main.min.d0df733b91ef046970ecd63de7aa626886fd263fd3fb2b8ff28b560e505831f7.css" integrity="sha256-0N9zO5HvBGlw7NY956piaIb9Jj/T&#43;yuP8otWDlBYMfc="
+        crossorigin="anonymous" media="screen" />
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css" integrity="sha512-ygEyjMC6rqnzJqWGjRTJUPYMEs9JUOm3i7OWUS9CgQ4XkBUvMsgCS1I8JqavidQ2ClHcREB7IbA2mN08+r9Elg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    
+    <link rel="stylesheet" href="/scss/highlight/github-dark.min.min.66034289ee9a113219a2c4aae0a8bd2095ab255c832a42efcf5863f10814e7a1.css" />
+
+    
+    <script src="/js/highlight.min.min.894ca9c68afab956438c4926a0dc7f5293e04e08595bd27abdb123e94801f684.js"></script>
+    <script>hljs.highlightAll();</script>
+
+    <script>{ { $darkModeInit.Content | safeJS } }</script>
+    </head><body>
+      <main class="wrapper"><nav class="navigation">
+    <section class="container">
+        <a class="navigation-brand" href="/">
+            每天进步一点点
+        </a>
+        <input type="checkbox" id="menu-toggle" />
+        <label class="menu-button float-right" for="menu-toggle">
+            <span></span><span></span><span></span>
+        </label>
+        
+        <ul class="navigation-list" id="navigation-list">
+            
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/">首页</a>
+            </li>
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/archives">归档</a>
+            </li>
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/books">出版物</a>
+            </li>
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/guestbook">留言板</a>
+            </li>
+            
+            
+
+            <li class="navigation-item menu-separator">
+                <span>|</span>
+            </li>
+
+            
+            
+            <li class="navigation-item navigation-social">
+                <a class="navigation-link" href="https://github.com/xialeistudio"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a>
+            </li>
+            
+            
+
+            <li class="navigation-item navigation-dark">
+                <button id="mode" type="button" aria-label="toggle user light or dark theme">
+                    <span class="toggle-dark"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></span>
+                    <span class="toggle-light"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></span>
+                </button>
+            </li>
+
+            
+            
+            
+            
+            
+            
+            
+            <li class="navigation-item navigation-language">
+                <a href="https://www.ddhigh.com/en/">EN</a>
+            </li>
+            
+            
+            
+            
+        </ul>
+        
+    </section>
+</nav>
+<div id="content">
+<article class="blog-single">
+  <header class="blog-title">
+    <h1>golang解决TCP粘包问题</h1>
+  </header>
+
+  <p>
+  <small>
+    2018年3月2日&nbsp;· 567 字&nbsp;· 3 分钟</small>
+
+  
+<p>
+
+  <div class="blog-toc">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#协议数据包定义">协议数据包定义</a></li>
+    <li><a href="#数据打包">数据打包</a></li>
+    <li><a href="#数据解包">数据解包</a></li>
+    <li><a href="#数据包的粘包问题解决">数据包的粘包问题解决</a></li>
+    <li><a href="#完整源码">完整源码</a></li>
+    <li><a href="#写在最后">写在最后</a></li>
+  </ul>
+</nav>
+  </div>
+
+  <section class="blog-content">
+    <p>什么是TCP粘包问题以及为什么会产生TCP粘包，本文不加讨论。本文使用golang的<code>bufio.Scanner</code>来实现自定义协议解包。</p>
+<h2 id="协议数据包定义">协议数据包定义</h2>
+<p>本文模拟一个日志服务器，该服务器接收客户端传到的数据包并显示出来</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Package</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Version</span>        [<span style="color:#ae81ff">2</span>]<span style="color:#66d9ef">byte</span> <span style="color:#75715e">// 协议版本，暂定V1
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Length</span>         <span style="color:#66d9ef">int16</span>   <span style="color:#75715e">// 数据部分长度
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Timestamp</span>      <span style="color:#66d9ef">int64</span>   <span style="color:#75715e">// 时间戳
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">HostnameLength</span> <span style="color:#66d9ef">int16</span>   <span style="color:#75715e">// 主机名长度
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Hostname</span>       []<span style="color:#66d9ef">byte</span>  <span style="color:#75715e">// 主机名
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">TagLength</span>      <span style="color:#66d9ef">int16</span>   <span style="color:#75715e">// 标签长度
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Tag</span>            []<span style="color:#66d9ef">byte</span>  <span style="color:#75715e">// 标签
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Msg</span>            []<span style="color:#66d9ef">byte</span>  <span style="color:#75715e">// 日志数据
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div><p>协议定义部分没有什么好讲的，根据具体的业务逻辑定义即可。</p>
+<h2 id="数据打包">数据打包</h2>
+<p>由于TCP协议是语言无关的协议，所以直接把协议数据包结构体发送到TCP连接中也是不可能的，只能发送字节流数据，所以需要自己实现数据编码。所幸golang提供了<code>binary</code>来帮助我们实现网络字节编码。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">p</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Package</span>) <span style="color:#a6e22e">Pack</span>(<span style="color:#a6e22e">writer</span> <span style="color:#a6e22e">io</span>.<span style="color:#a6e22e">Writer</span>) <span style="color:#66d9ef">error</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">Write</span>(<span style="color:#a6e22e">writer</span>, <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">BigEndian</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Version</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">Write</span>(<span style="color:#a6e22e">writer</span>, <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">BigEndian</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Length</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">Write</span>(<span style="color:#a6e22e">writer</span>, <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">BigEndian</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Timestamp</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">Write</span>(<span style="color:#a6e22e">writer</span>, <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">BigEndian</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">HostnameLength</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">Write</span>(<span style="color:#a6e22e">writer</span>, <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">BigEndian</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Hostname</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">Write</span>(<span style="color:#a6e22e">writer</span>, <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">BigEndian</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">TagLength</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">Write</span>(<span style="color:#a6e22e">writer</span>, <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">BigEndian</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Tag</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">Write</span>(<span style="color:#a6e22e">writer</span>, <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">BigEndian</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Msg</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Pack方法的输出目标为<code>io.Writer</code>，有利于接口扩展，只要实现了该接口即可编码数据写入。<code>binary.BigEndian</code>是字节序，本文暂时不讨论，有需要的读者可以自行查找资料研究。</p>
+<h2 id="数据解包">数据解包</h2>
+<p>解包需要将TCP数据包解析到结构体中，接下来会讲为什么需要添加几个<code>数据无关</code>的长度字段。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">p</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Package</span>) <span style="color:#a6e22e">Unpack</span>(<span style="color:#a6e22e">reader</span> <span style="color:#a6e22e">io</span>.<span style="color:#a6e22e">Reader</span>) <span style="color:#66d9ef">error</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">Read</span>(<span style="color:#a6e22e">reader</span>, <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">BigEndian</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Version</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">Read</span>(<span style="color:#a6e22e">reader</span>, <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">BigEndian</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Length</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">Read</span>(<span style="color:#a6e22e">reader</span>, <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">BigEndian</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Timestamp</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">Read</span>(<span style="color:#a6e22e">reader</span>, <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">BigEndian</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">HostnameLength</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Hostname</span> = make([]<span style="color:#66d9ef">byte</span>, <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">HostnameLength</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">Read</span>(<span style="color:#a6e22e">reader</span>, <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">BigEndian</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Hostname</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">Read</span>(<span style="color:#a6e22e">reader</span>, <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">BigEndian</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">TagLength</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Tag</span> = make([]<span style="color:#66d9ef">byte</span>, <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">TagLength</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">Read</span>(<span style="color:#a6e22e">reader</span>, <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">BigEndian</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Tag</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Msg</span> = make([]<span style="color:#66d9ef">byte</span>, <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Length</span><span style="color:#f92672">-</span><span style="color:#ae81ff">8</span><span style="color:#f92672">-</span><span style="color:#ae81ff">2</span><span style="color:#f92672">-</span><span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">HostnameLength</span><span style="color:#f92672">-</span><span style="color:#ae81ff">2</span><span style="color:#f92672">-</span><span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">TagLength</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">Read</span>(<span style="color:#a6e22e">reader</span>, <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">BigEndian</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Msg</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>由于主机名、标签这种数据是不固定长度的，所以需要两个字节来标识数据长度，否则读取的时候只知道一个总的数据长度是无法区分主机名、标签名、日志数据的。</p>
+<h2 id="数据包的粘包问题解决">数据包的粘包问题解决</h2>
+<p>上文只是解决了<code>编码/解码</code>问题，前提是收到的数据包没有产生粘包问题，解决粘包就是要正确分割字节流中的数据。一般有以下做法：</p>
+<ol>
+<li>定长分隔(每个数据包最大为该长度) 缺点是数据不足时会浪费传输资源</li>
+<li>特定字符分隔(如\r\n) 缺点是如果正文中有\r\n就会导致问题</li>
+<li>在数据包中添加长度字段(本文采用的)</li>
+</ol>
+<p>golang提供了<code>bufio.Scanner</code>来解决粘包问题。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">scanner</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">bufio</span>.<span style="color:#a6e22e">NewScanner</span>(<span style="color:#a6e22e">reader</span>) <span style="color:#75715e">// reader为实现了io.Reader接口的对象，如net.Conn
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">scanner</span>.<span style="color:#a6e22e">Split</span>(<span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">data</span> []<span style="color:#66d9ef">byte</span>, <span style="color:#a6e22e">atEOF</span> <span style="color:#66d9ef">bool</span>) (<span style="color:#a6e22e">advance</span> <span style="color:#66d9ef">int</span>, <span style="color:#a6e22e">token</span> []<span style="color:#66d9ef">byte</span>, <span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">atEOF</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">data</span>[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;V&#39;</span> { <span style="color:#75715e">// 由于我们定义的数据包头最开始为两个字节的版本号，所以只有以V开头的数据包才处理
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#66d9ef">if</span> len(<span style="color:#a6e22e">data</span>) &gt; <span style="color:#ae81ff">4</span> { <span style="color:#75715e">// 如果收到的数据&gt;4个字节(2字节版本号+2字节数据包长度)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>			<span style="color:#a6e22e">length</span> <span style="color:#f92672">:=</span> int16(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">Read</span>(<span style="color:#a6e22e">bytes</span>.<span style="color:#a6e22e">NewReader</span>(<span style="color:#a6e22e">data</span>[<span style="color:#ae81ff">2</span>:<span style="color:#ae81ff">4</span>]), <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">BigEndian</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">length</span>) <span style="color:#75715e">// 读取数据包第3-4字节(int16)=&gt;数据部分长度
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>			<span style="color:#66d9ef">if</span> int(<span style="color:#a6e22e">length</span>)<span style="color:#f92672">+</span><span style="color:#ae81ff">4</span> <span style="color:#f92672">&lt;=</span> len(<span style="color:#a6e22e">data</span>) { <span style="color:#75715e">// 如果读取到的数据正文长度+2字节版本号+2字节数据长度不超过读到的数据(实际上就是成功完整的解析出了一个包)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>				<span style="color:#66d9ef">return</span> int(<span style="color:#a6e22e">length</span>) <span style="color:#f92672">+</span> <span style="color:#ae81ff">4</span>, <span style="color:#a6e22e">data</span>[:int(<span style="color:#a6e22e">length</span>)<span style="color:#f92672">+</span><span style="color:#ae81ff">4</span>], <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>			}
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>})
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 打印接收到的数据包
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">for</span> <span style="color:#a6e22e">scanner</span>.<span style="color:#a6e22e">Scan</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">scannedPack</span> <span style="color:#f92672">:=</span> new(<span style="color:#a6e22e">Package</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">scannedPack</span>.<span style="color:#a6e22e">Unpack</span>(<span style="color:#a6e22e">bytes</span>.<span style="color:#a6e22e">NewReader</span>(<span style="color:#a6e22e">scanner</span>.<span style="color:#a6e22e">Bytes</span>()))
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">scannedPack</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>本文的核心就在于<code>scanner.Split</code>方法，该方法用来解析TCP数据包</p>
+<h2 id="完整源码">完整源码</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;bufio&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;bytes&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;encoding/binary&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;io&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;log&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;os&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;time&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Package</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Version</span>        [<span style="color:#ae81ff">2</span>]<span style="color:#66d9ef">byte</span> <span style="color:#75715e">// 协议版本
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Length</span>         <span style="color:#66d9ef">int16</span>   <span style="color:#75715e">// 数据部分长度
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Timestamp</span>      <span style="color:#66d9ef">int64</span>   <span style="color:#75715e">// 时间戳
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">HostnameLength</span> <span style="color:#66d9ef">int16</span>   <span style="color:#75715e">// 主机名长度
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Hostname</span>       []<span style="color:#66d9ef">byte</span>  <span style="color:#75715e">// 主机名
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">TagLength</span>      <span style="color:#66d9ef">int16</span>   <span style="color:#75715e">// Tag长度
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Tag</span>            []<span style="color:#66d9ef">byte</span>  <span style="color:#75715e">// Tag
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Msg</span>            []<span style="color:#66d9ef">byte</span>  <span style="color:#75715e">// 数据部分长度
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">p</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Package</span>) <span style="color:#a6e22e">Pack</span>(<span style="color:#a6e22e">writer</span> <span style="color:#a6e22e">io</span>.<span style="color:#a6e22e">Writer</span>) <span style="color:#66d9ef">error</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">Write</span>(<span style="color:#a6e22e">writer</span>, <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">BigEndian</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Version</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">Write</span>(<span style="color:#a6e22e">writer</span>, <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">BigEndian</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Length</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">Write</span>(<span style="color:#a6e22e">writer</span>, <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">BigEndian</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Timestamp</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">Write</span>(<span style="color:#a6e22e">writer</span>, <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">BigEndian</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">HostnameLength</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">Write</span>(<span style="color:#a6e22e">writer</span>, <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">BigEndian</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Hostname</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">Write</span>(<span style="color:#a6e22e">writer</span>, <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">BigEndian</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">TagLength</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">Write</span>(<span style="color:#a6e22e">writer</span>, <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">BigEndian</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Tag</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">Write</span>(<span style="color:#a6e22e">writer</span>, <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">BigEndian</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Msg</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">p</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Package</span>) <span style="color:#a6e22e">Unpack</span>(<span style="color:#a6e22e">reader</span> <span style="color:#a6e22e">io</span>.<span style="color:#a6e22e">Reader</span>) <span style="color:#66d9ef">error</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">Read</span>(<span style="color:#a6e22e">reader</span>, <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">BigEndian</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Version</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">Read</span>(<span style="color:#a6e22e">reader</span>, <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">BigEndian</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Length</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">Read</span>(<span style="color:#a6e22e">reader</span>, <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">BigEndian</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Timestamp</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">Read</span>(<span style="color:#a6e22e">reader</span>, <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">BigEndian</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">HostnameLength</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Hostname</span> = make([]<span style="color:#66d9ef">byte</span>, <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">HostnameLength</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">Read</span>(<span style="color:#a6e22e">reader</span>, <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">BigEndian</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Hostname</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">Read</span>(<span style="color:#a6e22e">reader</span>, <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">BigEndian</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">TagLength</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Tag</span> = make([]<span style="color:#66d9ef">byte</span>, <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">TagLength</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">Read</span>(<span style="color:#a6e22e">reader</span>, <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">BigEndian</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Tag</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Msg</span> = make([]<span style="color:#66d9ef">byte</span>, <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Length</span><span style="color:#f92672">-</span><span style="color:#ae81ff">8</span><span style="color:#f92672">-</span><span style="color:#ae81ff">2</span><span style="color:#f92672">-</span><span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">HostnameLength</span><span style="color:#f92672">-</span><span style="color:#ae81ff">2</span><span style="color:#f92672">-</span><span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">TagLength</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">Read</span>(<span style="color:#a6e22e">reader</span>, <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">BigEndian</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Msg</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">p</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Package</span>) <span style="color:#a6e22e">String</span>() <span style="color:#66d9ef">string</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;version:%s length:%d timestamp:%d hostname:%s tag:%s msg:%s&#34;</span>,
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Version</span>,
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Length</span>,
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Timestamp</span>,
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Hostname</span>,
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Tag</span>,
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Msg</span>,
+</span></span><span style="display:flex;"><span>	)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">hostname</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Hostname</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatal</span>(<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">pack</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Package</span>{
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Version</span>:        [<span style="color:#ae81ff">2</span>]<span style="color:#66d9ef">byte</span>{<span style="color:#e6db74">&#39;V&#39;</span>, <span style="color:#e6db74">&#39;1&#39;</span>},
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Timestamp</span>:      <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>().<span style="color:#a6e22e">Unix</span>(),
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">HostnameLength</span>: int16(len(<span style="color:#a6e22e">hostname</span>)),
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Hostname</span>:       []byte(<span style="color:#a6e22e">hostname</span>),
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">TagLength</span>:      <span style="color:#ae81ff">4</span>,
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Tag</span>:            []byte(<span style="color:#e6db74">&#34;demo&#34;</span>),
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Msg</span>:            []byte((<span style="color:#e6db74">&#34;现在时间是:&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>().<span style="color:#a6e22e">Format</span>(<span style="color:#e6db74">&#34;2006-01-02 15:04:05&#34;</span>))),
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">pack</span>.<span style="color:#a6e22e">Length</span> = <span style="color:#ae81ff">8</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">pack</span>.<span style="color:#a6e22e">HostnameLength</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">pack</span>.<span style="color:#a6e22e">TagLength</span> <span style="color:#f92672">+</span> int16(len(<span style="color:#a6e22e">pack</span>.<span style="color:#a6e22e">Msg</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">buf</span> <span style="color:#f92672">:=</span> new(<span style="color:#a6e22e">bytes</span>.<span style="color:#a6e22e">Buffer</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 写入四次，模拟TCP粘包效果
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">pack</span>.<span style="color:#a6e22e">Pack</span>(<span style="color:#a6e22e">buf</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">pack</span>.<span style="color:#a6e22e">Pack</span>(<span style="color:#a6e22e">buf</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">pack</span>.<span style="color:#a6e22e">Pack</span>(<span style="color:#a6e22e">buf</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">pack</span>.<span style="color:#a6e22e">Pack</span>(<span style="color:#a6e22e">buf</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// scanner
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">scanner</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">bufio</span>.<span style="color:#a6e22e">NewScanner</span>(<span style="color:#a6e22e">buf</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">scanner</span>.<span style="color:#a6e22e">Split</span>(<span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">data</span> []<span style="color:#66d9ef">byte</span>, <span style="color:#a6e22e">atEOF</span> <span style="color:#66d9ef">bool</span>) (<span style="color:#a6e22e">advance</span> <span style="color:#66d9ef">int</span>, <span style="color:#a6e22e">token</span> []<span style="color:#66d9ef">byte</span>, <span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>) {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">atEOF</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">data</span>[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;V&#39;</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">if</span> len(<span style="color:#a6e22e">data</span>) &gt; <span style="color:#ae81ff">4</span> {
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">length</span> <span style="color:#f92672">:=</span> int16(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">Read</span>(<span style="color:#a6e22e">bytes</span>.<span style="color:#a6e22e">NewReader</span>(<span style="color:#a6e22e">data</span>[<span style="color:#ae81ff">2</span>:<span style="color:#ae81ff">4</span>]), <span style="color:#a6e22e">binary</span>.<span style="color:#a6e22e">BigEndian</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">length</span>)
+</span></span><span style="display:flex;"><span>				<span style="color:#66d9ef">if</span> int(<span style="color:#a6e22e">length</span>)<span style="color:#f92672">+</span><span style="color:#ae81ff">4</span> <span style="color:#f92672">&lt;=</span> len(<span style="color:#a6e22e">data</span>) {
+</span></span><span style="display:flex;"><span>					<span style="color:#66d9ef">return</span> int(<span style="color:#a6e22e">length</span>) <span style="color:#f92672">+</span> <span style="color:#ae81ff">4</span>, <span style="color:#a6e22e">data</span>[:int(<span style="color:#a6e22e">length</span>)<span style="color:#f92672">+</span><span style="color:#ae81ff">4</span>], <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>				}
+</span></span><span style="display:flex;"><span>			}
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>	})
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">scanner</span>.<span style="color:#a6e22e">Scan</span>() {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">scannedPack</span> <span style="color:#f92672">:=</span> new(<span style="color:#a6e22e">Package</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">scannedPack</span>.<span style="color:#a6e22e">Unpack</span>(<span style="color:#a6e22e">bytes</span>.<span style="color:#a6e22e">NewReader</span>(<span style="color:#a6e22e">scanner</span>.<span style="color:#a6e22e">Bytes</span>()))
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">scannedPack</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">scanner</span>.<span style="color:#a6e22e">Err</span>(); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatal</span>(<span style="color:#e6db74">&#34;无效数据包&#34;</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="写在最后">写在最后</h2>
+<p>golang作为一门强大的网络编程语言，实现自定义协议是非常重要的，实际上实现自定义协议也不是很难，以下几个步骤：</p>
+<ol>
+<li>数据包编码</li>
+<li>数据包解码</li>
+<li>处理TCP粘包问题</li>
+<li>断线重连(可以使用心跳实现)(非必须)</li>
+</ol>
+
+    <div class="blog-footer">
+    <div class="social-share"></div>
+    <div class="copyright">
+        <ul>
+            <li style="margin-bottom: 0.5em;">本文作者: <a href="https://ddhigh.com/" target="_blank"
+                    style="color: #000000; text-decoration: none;">xialeistudio</a></li>
+            <li style="margin-bottom: 0.5em;">本文链接: <a href="https://www.ddhigh.com/2018/03/02/golang-tcp-stick-package/" target="_blank"
+                    style="color: #000000; text-decoration: none;">golang解决TCP粘包问题</a></li>
+            <li>版权声明: <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank"
+                    style="color: #000000; text-decoration: none;">「署名-非商业性使用-相同方式共享 4.0 国际」</a></li>
+        </ul>
+    </div>
+    
+    <div style="margin-top: 2rem;"><img src="/img/mp.png" alt="qrcode"></div>
+    
+</div>
+  </section>
+
+  
+  
+  <div class="paginator">
+    
+    <a class="prev" href="https://www.ddhigh.com/2018/04/05/golang-for-over-channels/">
+      <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M3.77086 21.1546C11.0491 22.698 21.4339 21.7773 21.4339 16.3608V4.63375C21.4339 3.93962 21.3581 3.30535 21.1917 2.76787M3.77086 21.1546C1.9934 20.7777 0.973585 18.7264 1.08749 16.688C1.2668 13.479 1.15721 9.43135 1.00513 6.21507C0.87809 3.52811 3.12891 1.16316 5.51029 1.25008C9.76594 1.40542 15.377 1.20229 18.7912 1.00542C20.0864 0.930734 20.8406 1.63385 21.1917 2.76787M3.77086 21.1546C4.56586 21.4723 5.49168 21.7879 6.5 22.0658M21.1917 2.76787C23.1097 4.18217 23.13 12.4191 22.9004 16.3608C20.8478 24.0194 12.3061 23.6662 6.5 22.0658M21.1917 2.76787C21.7612 4.51192 22.7203 9.67216 22 16.3608C21.2797 23.0494 11.3665 22.9511 6.5 22.0658M9.94496 9C9.28897 9.61644 7.63215 10.997 6.04814 11.7966C5.98257 11.8297 5.98456 11.9753 6.05061 12.0063C7.05496 12.4779 8.92941 13.9264 9.94496 15M6.44444 11.9667C8.86549 12.0608 14 12 16 11"
+          stroke="currentColor" stroke-linecap="round" />
+      </svg>
+      <span>golang for遍历channel时需要注意的问题</span></a>
+    
+    
+    <a class="next" href="https://www.ddhigh.com/2018/03/01/golang-upload/"><span>golang multipart上传文件到远端（如上传微信临时素材）</span>
+      <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M3.77086 21.1546C11.0491 22.698 21.4339 21.7773 21.4339 16.3608V4.63375C21.4339 3.93962 21.3581 3.30535 21.1917 2.76787M3.77086 21.1546C1.9934 20.7777 0.973585 18.7264 1.08749 16.688C1.2668 13.479 1.15721 9.43135 1.00513 6.21507C0.87809 3.52811 3.12891 1.16316 5.51029 1.25008C9.76594 1.40542 15.377 1.20229 18.7912 1.00542C20.0864 0.930734 20.8406 1.63385 21.1917 2.76787M3.77086 21.1546C4.56586 21.4723 5.49168 21.7879 6.5 22.0658M21.1917 2.76787C23.1097 4.18217 23.13 12.4191 22.9004 16.3608C20.8478 24.0194 12.3061 23.6662 6.5 22.0658M21.1917 2.76787C21.7612 4.51192 22.7203 9.67216 22 16.3608C21.2797 23.0494 11.3665 22.9511 6.5 22.0658M12.055 9C12.711 9.61644 14.3679 10.997 15.9519 11.7966C16.0174 11.8297 16.0154 11.9753 15.9494 12.0063C14.945 12.4779 13.0706 13.9264 12.055 15M15.5556 11.9667C13.1345 12.0608 8 12 6 11"
+          stroke="currentColor" stroke-linecap="round" />
+      </svg>
+    </a>
+    
+  </div>
+  
+
+  
+
+
+  
+  
+<div class="comments">
+  <script>
+      const getTheme = window.localStorage && window.localStorage.getItem("theme");
+      let theme = getTheme === 'dark' ? 'dark' : 'light';
+      let s = document.createElement('script');
+      s.src = 'https://giscus.app/client.js';
+      s.setAttribute('data-repo', 'xialeistudio\/discussion');
+      s.setAttribute('data-repo-id', 'R_kgDOKurTRA');
+      s.setAttribute('data-category', 'General');
+      s.setAttribute('data-category-id', 'DIC_kwDOKurTRM4CbCJt');
+      s.setAttribute('data-mapping', 'pathname');
+      s.setAttribute('data-strict', '0');
+      s.setAttribute('data-reactions-enabled', '1');
+      s.setAttribute('data-emit-metadata', '0');
+      s.setAttribute('data-input-position', 'bottom');
+      s.setAttribute('data-theme', theme);
+      s.setAttribute('data-lang', 'en');
+      s.setAttribute('data-loading', 'lazy');
+      s.setAttribute('crossorigin', 'anonymous');
+      s.setAttribute('async', '');
+      document.querySelector('div.comments').innerHTML = '';
+      document.querySelector('div.comments').appendChild(s);
+  </script>
+</div>
+
+</article>
+
+
+        </div><footer class="footer">
+    <p>&copy; 2014 - 2024 <a href="https://www.ddhigh.com">每天进步一点点</a>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener" target="_blank">Hugo️️</a>
+        <a href="https://github.com/guangzhengli/hugo-theme-ladder" rel="noopener" target="_blank">Ladder</a>
+        ️ </p>
+</footer>
+
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10.5376 22.7916C11.0152 22.7207 22.5795 21.1781 22.0978 10.4211C22.0536 9.43274 21.9303 8.53367 21.7387 7.71865M10.5376 22.7916C16.876 22.3728 20.0969 19.8899 21.5383 16.9142M10.5376 22.7916C9.7707 22.9055 8.97982 22.8964 8.19743 22.7725M21.7387 7.71865C21.4988 6.69828 21.1518 5.80967 20.7188 5.04257M21.7387 7.71865C22.6022 10.1105 23.0542 13.7848 21.5383 16.9142M20.7188 5.04257C17.1684 -1.24629 7.83127 0.632493 4.27577 5.04257C2.88063 6.77451 -0.0433281 11.1668 1.38159 16.6571C2.27481 20.0988 5.17269 22.2936 8.19743 22.7725M20.7188 5.04257C22.0697 6.9404 24.0299 11.3848 22.3541 15.4153M21.5383 16.9142C21.8737 16.4251 22.1428 15.9235 22.3541 15.4153M8.19743 22.7725C12.1971 23.4683 20.6281 22.971 22.3541 15.4153M14 10.945C13.3836 10.289 12.003 8.63215 11.2034 7.04814C11.1703 6.98257 11.0247 6.98456 10.9937 7.05061C10.5221 8.05496 9.07362 9.92941 8 10.945M11.0333 7.44444C10.9392 9.86549 11 15 12 17"
+              stroke="currentColor" stroke-linecap="round"/>
+    </svg>
+</a>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'Copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'Copied';
+            setTimeout(() => {
+                copybutton.innerHTML = 'Copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {
+            }
+            ;
+            selection.removeRange(range);
+        });
+        codeblock.parentNode.appendChild(copybutton);
+    });
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js" integrity="sha512-9DNXrSjk17bU9MUbRp3IjwcWe46V8FaGA062PFbryPUAEQVRbz4jiZP6FW0AdbqEGtMYBDWnul3eiGBMJOQajA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script></main>
+    </body><script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha512-N9IJRoc3LaP3NDoiGkcPa4gG94kapGpaA5Zq9/Dr04uf5TbLFU5q0o8AbRhLKUUlp8QFS2u7S+Yti0U7QtuZvQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script>
+      const images = Array.from(document.querySelectorAll(".blog-content img"));
+      images.forEach(img => {
+          mediumZoom(img, {
+              margin: 10,  
+              scrollOffset: 40,  
+              container: null,  
+              template: null,  
+              background: 'rgba(0, 0, 0, 0.5)'
+          });
+      });
+  </script>
+
+  
+  <script src="/main.min.6bb26b69159420159c74dc9e097b06a578ed2b68c701466a91a44a9632d851bd0af167a1b30012387b4c512b48ad9ad4d3394e04d77ae38d57e1920fe4ed34fe.js" integrity="sha512-a7JraRWUIBWcdNyeCXsGpXjtK2jHAUZqkaRKljLYUb0K8WehswASOHtMUStIrZrU0zlOBNd6441X4ZIP5O00/g==" crossorigin="anonymous" defer></script></html>

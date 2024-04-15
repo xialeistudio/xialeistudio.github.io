@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="zh"><head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Engineering</title>
+    <meta charset="utf-8">
+    
+    <meta content="Web开发 , Java , Go , Node.js , PHP , Koa , MySQL , Redis , 前端 , 后端 , 数据库" name="keywords">
+    
+    <meta name="description" content="欢迎来到我的博客！这里提供与Web开发相关的文章，涵盖Java、Go、Node.js、PHP、Koa、MySQL和Redis等技术。从前端到后端，为您提供有关Web应用程序开发的实用指南和建议。探索最佳实践，了解RESTful API设计、响应式网页设计以及性能和安全性方面的知识。">
+    <meta name="author" content="Lei Xia">
+    <link rel="canonical"
+        href="https://www.ddhigh.com/categories/engineering/">
+
+    <link rel="alternate" type="application/rss+xml" href="https://www.ddhigh.com/index.xml" title="每天进步一点点">
+
+    
+
+
+<script async defer data-website-id="52f8f0f9-d93d-466b-8ef5-508aae8c4ed4"
+    src="https://analysis.ddhigh.com/script.js"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EC3XLVSGKV"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-EC3XLVSGKV');
+</script>
+    <meta property="og:title" content="Engineering" />
+<meta property="og:description" content="欢迎来到我的博客！这里提供与Web开发相关的文章，涵盖Java、Go、Node.js、PHP、Koa、MySQL和Redis等技术。从前端到后端，为您提供有关Web应用程序开发的实用指南和建议。探索最佳实践，了解RESTful API设计、响应式网页设计以及性能和安全性方面的知识。" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://www.ddhigh.com/categories/engineering/" />
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Engineering"/>
+<meta name="twitter:description" content="欢迎来到我的博客！这里提供与Web开发相关的文章，涵盖Java、Go、Node.js、PHP、Koa、MySQL和Redis等技术。从前端到后端，为您提供有关Web应用程序开发的实用指南和建议。探索最佳实践，了解RESTful API设计、响应式网页设计以及性能和安全性方面的知识。"/>
+
+    <link rel="icon" href="/img/favicon.ico" sizes="16x16">
+
+<link rel="apple-touch-icon" href="/img/favicon.ico">
+
+<link rel="manifest" href="/img/favicon.ico">
+    
+
+    <link rel="stylesheet" href="https://cdn.staticfile.org/lxgw-wenkai-webfont/1.6.0/style.css" />
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/main.min.d0df733b91ef046970ecd63de7aa626886fd263fd3fb2b8ff28b560e505831f7.css" integrity="sha256-0N9zO5HvBGlw7NY956piaIb9Jj/T&#43;yuP8otWDlBYMfc="
+        crossorigin="anonymous" media="screen" />
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css" integrity="sha512-ygEyjMC6rqnzJqWGjRTJUPYMEs9JUOm3i7OWUS9CgQ4XkBUvMsgCS1I8JqavidQ2ClHcREB7IbA2mN08+r9Elg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    
+    <link rel="stylesheet" href="/scss/highlight/github-dark.min.min.66034289ee9a113219a2c4aae0a8bd2095ab255c832a42efcf5863f10814e7a1.css" />
+
+    
+    <script src="/js/highlight.min.min.894ca9c68afab956438c4926a0dc7f5293e04e08595bd27abdb123e94801f684.js"></script>
+    <script>hljs.highlightAll();</script>
+
+    <script>{ { $darkModeInit.Content | safeJS } }</script>
+    </head><body>
+      <main class="wrapper"><nav class="navigation">
+    <section class="container">
+        <a class="navigation-brand" href="/">
+            每天进步一点点
+        </a>
+        <input type="checkbox" id="menu-toggle" />
+        <label class="menu-button float-right" for="menu-toggle">
+            <span></span><span></span><span></span>
+        </label>
+        
+        <ul class="navigation-list" id="navigation-list">
+            
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/">首页</a>
+            </li>
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/archives">归档</a>
+            </li>
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/books">出版物</a>
+            </li>
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/guestbook">留言板</a>
+            </li>
+            
+            
+
+            <li class="navigation-item menu-separator">
+                <span>|</span>
+            </li>
+
+            
+            
+            <li class="navigation-item navigation-social">
+                <a class="navigation-link" href="https://github.com/xialeistudio"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a>
+            </li>
+            
+            
+
+            <li class="navigation-item navigation-dark">
+                <button id="mode" type="button" aria-label="toggle user light or dark theme">
+                    <span class="toggle-dark"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></span>
+                    <span class="toggle-light"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></span>
+                </button>
+            </li>
+
+            
+            
+            
+            
+            
+            <li class="navigation-item navigation-language">
+                <a href="https://www.ddhigh.com/en/categories/engineering/">EN</a>
+            </li>
+            
+            
+            
+            
+        </ul>
+        
+    </section>
+</nav>
+<div id="content">
+<div class="blog-wrapper">
+    <div>
+        <div class="blog-list">
+            
+            <article>
+                <div class="blog-card">
+                    <h3><a href="/2017/05/12/yii2-memcached-qcloud-not-expires/">Yii2框架MemCache在腾讯云部署时不过期问题</a></h3>
+                    <p>
+  <small>
+    2017年5月12日&nbsp;· 1278 字&nbsp;· 6 分钟</small>
+
+  
+<p>
+                    之前部署在阿里云时一直memcache没有问题，部署到腾讯云发现缓存永不过期。查看yii2的MemCache类源码后，发现在设置缓存时，Yii2添加了$expire = $duration &gt; 0 ?
+                </div>
+            </article>
+            
+            <article>
+                <div class="blog-card">
+                    <h3><a href="/2017/04/27/log4php-syslog/">log4php使用syslog记录日志</a></h3>
+                    <p>
+  <small>
+    2017年4月27日&nbsp;· 58 字&nbsp;· 1 分钟</small>
+
+  
+<p>
+                    log4php是apache基金会下的一个开源项目，灵活、强大，已经有几个项目使用了log4php处理日志，目前遇到的问题是服务器太多的时候日志如何统一管理，本来想使用数据库存储。但是日志格式成了一个问题，而且不利于扩展，如果临时需要保存到文件，又要更改log4php的配置。 好在log4php提供了syslog的一个appender，可以将日志写入syslog;
+log4php配置 log4php.rootLogger=INFO, stdout, stderr log4php.
+                </div>
+            </article>
+            
+            <article>
+                <div class="blog-card">
+                    <h3><a href="/2017/04/27/node-syslogd/">使用NodeJs提供syslogd服务端</a></h3>
+                    <p>
+  <small>
+    2017年4月27日&nbsp;· 52 字&nbsp;· 1 分钟</small>
+
+  
+<p>
+                    syslog作为Linux发行版一个重要组件，相信大家都不陌生，而如果每台服务器都独立使用一份的话，不能做到日志统一管理，对于以后的日志查询不太方便。 syslog有标准的协议格式，这里不做讨论，有兴趣的可以基于协议的报文结构使用socket编程实现。
+部署服务端 本文使用Nodejs来部署一台syslog服务端。
+终端执行 npm init -y npm install syslogd --save index.
+                </div>
+            </article>
+            
+            <article>
+                <div class="blog-card">
+                    <h3><a href="/2017/03/31/ios10.3-message-crash/">IOS10.3信息APP闪退解决方案</a></h3>
+                    <p>
+  <small>
+    2017年3月31日&nbsp;· 8 字&nbsp;· 1 分钟</small>
+
+  
+<p>
+                    问题 更新IOS10.3之后系统自带的信息APP打开闪退，当然，刷机是一种解决方案。可是遇到点问题就刷机这个工作量有点太大了。
+解决方案 设置 -&gt; 信息 -&gt; 打开过滤未知发件人
+                </div>
+            </article>
+            
+            <article>
+                <div class="blog-card">
+                    <h3><a href="/2017/03/27/react-native-hidden-tabbar-with-navigatorios/">ReactNative在NavigatorIOS中隐藏TabBar</a></h3>
+                    <p>
+  <small>
+    2017年3月27日&nbsp;· 7 字&nbsp;· 1 分钟</small>
+
+  
+<p>
+                    ReactNative常用的一种布局是TabBar+Navigator布局，底部几个固定的标签，顶部有个导航栏，如果进入子页面的话，底部TabBar是需要隐藏起来的。
+不过官方没有提供这个属性，github和StackOverflow上的答案有个bug，平时没什么问题，如果手指左滑一点然后松开，这时候路由没切换，但是TarBar会显示，然后不消失。
+目前能够完美解决这个问题的方案如下：
+找到React/RCTWrapperViewController.m 查找 willShowViewController 在该方法最开始的地方加入self.
+                </div>
+            </article>
+            
+            <article>
+                <div class="blog-card">
+                    <h3><a href="/2017/03/20/nginx-proxy-websocket/">nginx反向代理websocket</a></h3>
+                    <p>
+  <small>
+    2017年3月20日&nbsp;· 24 字&nbsp;· 1 分钟</small>
+
+  
+<p>
+                    websocket协议基于http协议升级而来，所以nginx可以直接反向代理websocket，只需要加上必要的header即可。
+假设websocket监听端口为18080，编辑nginx配置文件：
+server { listen 80; server_name socket.
+                </div>
+            </article>
+            
+            <article>
+                <div class="blog-card">
+                    <h3><a href="/2017/02/28/php7-compile-sphinx-extension/">PHP7编译sphinx扩展</a></h3>
+                    <p>
+  <small>
+    2017年2月28日&nbsp;· 26 字&nbsp;· 1 分钟</small>
+
+  
+<p>
+                    最近在做基于sphinx的全文搜索引擎，使用PHP进行数据读取，但是服务器使用的PHP版本是PHP7，pecl.php.net中没有提供PHP7的版本。手痒点到source code中看了一下。 看到源代码中有的headers中有个php7的，点击shortlog进去看了一下，最新更新日期是2017-02-10，挺新的，应该是针对PHP7开发的版本，只不过未发布编译版本，想着linux下的软件有源代码基本都能自行编译。故选择了最新的PHP7快照下载。
+开始安装 wget http://git.
+                </div>
+            </article>
+            
+            <article>
+                <div class="blog-card">
+                    <h3><a href="/2017/02/08/socket.io-connect-params/">NodeJs socket.io连接参数中传入查询字符串</a></h3>
+                    <p>
+  <small>
+    2017年2月8日&nbsp;· 37 字&nbsp;· 1 分钟</small>
+
+  
+<p>
+                    socket.io一般会配合room进行消息转发，目前我的做法如下:
+服务端 io.on(&#39;connection&#39;,function(socket){ socket.on(&#39;join&#39;,function(roomId){ socket.join(roomId); }); }); 客户端 var socket = io(&#39;http://localhost:8888&#39;); socket.
+                </div>
+            </article>
+            
+            <article>
+                <div class="blog-card">
+                    <h3><a href="/2017/01/23/linux-public-key-login/">使用公钥登录Linux</a></h3>
+                    <p>
+  <small>
+    2017年1月23日&nbsp;· 24 字&nbsp;· 1 分钟</small>
+
+  
+<p>
+                    服务器密码往往是随机字符串，难以记忆，通过配置公钥登录的方式来进行登录。
+准备 服务器A 192.168.1.2 客户机 服务器B 192.
+                </div>
+            </article>
+            
+            <article>
+                <div class="blog-card">
+                    <h3><a href="/2017/01/20/yii2-migrate/">Yii2 migrate使用</a></h3>
+                    <p>
+  <small>
+    2017年1月20日&nbsp;· 102 字&nbsp;· 1 分钟</small>
+
+  
+<p>
+                    试想一个很简单的场景，在使用Yii2开发时，如果对已经有数据的数据表结构进行编辑的话，需要同步数据结构需要在本地导出一份SQL，放到线上去执行SQL，非常的不方便。 而有了Yii2 migrate工具之后，这个问题简直不是问题。以下对常用的表结构操作进行演示。
+关键命令 创建migrate yii migrate/create [名称] 执行migrate升级 yii migrate 执行migrate降级 yii migrate/down 创建新表 执行创建migrate命令后，项目文件夹下migrations中会多出m170119_093917_[名称].
+                </div>
+            </article>
+            </div>
+        
+        <div class="paginator">
+            
+            <a class="prev" href="/categories/engineering/page/13/">&larr;&nbsp;&nbsp;Pre Page</a>
+            
+            
+            <a class="next" href="/categories/engineering/page/15/">Next Page&nbsp;&nbsp;&rarr;</a>
+            
+        </div>
+        
+    </div>
+</div>
+
+
+        </div><footer class="footer">
+    <p>&copy; 2014 - 2024 <a href="https://www.ddhigh.com">每天进步一点点</a>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener" target="_blank">Hugo️️</a>
+        <a href="https://github.com/guangzhengli/hugo-theme-ladder" rel="noopener" target="_blank">Ladder</a>
+        ️ </p>
+</footer>
+
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10.5376 22.7916C11.0152 22.7207 22.5795 21.1781 22.0978 10.4211C22.0536 9.43274 21.9303 8.53367 21.7387 7.71865M10.5376 22.7916C16.876 22.3728 20.0969 19.8899 21.5383 16.9142M10.5376 22.7916C9.7707 22.9055 8.97982 22.8964 8.19743 22.7725M21.7387 7.71865C21.4988 6.69828 21.1518 5.80967 20.7188 5.04257M21.7387 7.71865C22.6022 10.1105 23.0542 13.7848 21.5383 16.9142M20.7188 5.04257C17.1684 -1.24629 7.83127 0.632493 4.27577 5.04257C2.88063 6.77451 -0.0433281 11.1668 1.38159 16.6571C2.27481 20.0988 5.17269 22.2936 8.19743 22.7725M20.7188 5.04257C22.0697 6.9404 24.0299 11.3848 22.3541 15.4153M21.5383 16.9142C21.8737 16.4251 22.1428 15.9235 22.3541 15.4153M8.19743 22.7725C12.1971 23.4683 20.6281 22.971 22.3541 15.4153M14 10.945C13.3836 10.289 12.003 8.63215 11.2034 7.04814C11.1703 6.98257 11.0247 6.98456 10.9937 7.05061C10.5221 8.05496 9.07362 9.92941 8 10.945M11.0333 7.44444C10.9392 9.86549 11 15 12 17"
+              stroke="currentColor" stroke-linecap="round"/>
+    </svg>
+</a>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'Copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'Copied';
+            setTimeout(() => {
+                copybutton.innerHTML = 'Copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {
+            }
+            ;
+            selection.removeRange(range);
+        });
+        codeblock.parentNode.appendChild(copybutton);
+    });
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js" integrity="sha512-9DNXrSjk17bU9MUbRp3IjwcWe46V8FaGA062PFbryPUAEQVRbz4jiZP6FW0AdbqEGtMYBDWnul3eiGBMJOQajA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script></main>
+    </body><script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha512-N9IJRoc3LaP3NDoiGkcPa4gG94kapGpaA5Zq9/Dr04uf5TbLFU5q0o8AbRhLKUUlp8QFS2u7S+Yti0U7QtuZvQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script>
+      const images = Array.from(document.querySelectorAll(".blog-content img"));
+      images.forEach(img => {
+          mediumZoom(img, {
+              margin: 10,  
+              scrollOffset: 40,  
+              container: null,  
+              template: null,  
+              background: 'rgba(0, 0, 0, 0.5)'
+          });
+      });
+  </script>
+
+  
+  <script src="/main.min.6bb26b69159420159c74dc9e097b06a578ed2b68c701466a91a44a9632d851bd0af167a1b30012387b4c512b48ad9ad4d3394e04d77ae38d57e1920fe4ed34fe.js" integrity="sha512-a7JraRWUIBWcdNyeCXsGpXjtK2jHAUZqkaRKljLYUb0K8WehswASOHtMUStIrZrU0zlOBNd6441X4ZIP5O00/g==" crossorigin="anonymous" defer></script></html>

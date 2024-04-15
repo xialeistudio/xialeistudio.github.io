@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="zh"><head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>手把手从零开始小程序单元测试(附避坑指南以及源码跟踪)</title>
+    <meta charset="utf-8">
+    
+    <meta content="Web开发 , Java , Go , Node.js , PHP , Koa , MySQL , Redis , 前端 , 后端 , 数据库" name="keywords">
+    
+    <meta name="description" content="单元测试是一个老生常谈的话题，基于Web/NodeJs环境的测试框架、测试教程数不胜数，也趋于成熟了。但是对于微信小程序的单元测试，目前还是处于起步状态，这两天在研究微信小程序的测试，也遇到了一些坑，在这里记录一下，希望给看到本文的小伙伴带来一点帮助，少走一些弯路。
+demo地址 https://github.com/xialeistudio/miniprogram-unit-test-demo
+关键依赖版本 本文写作时相关依赖版本如下(版本不同，源码行数可能不同)：">
+    <meta name="author" content="Lei Xia">
+    <link rel="canonical"
+        href="https://www.ddhigh.com/2019/07/27/miniprogram-unit-test/">
+
+    <link rel="alternate" type="application/rss+xml" href="https://www.ddhigh.com/index.xml" title="每天进步一点点">
+
+    
+
+
+<script async defer data-website-id="52f8f0f9-d93d-466b-8ef5-508aae8c4ed4"
+    src="https://analysis.ddhigh.com/script.js"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EC3XLVSGKV"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-EC3XLVSGKV');
+</script>
+    <meta property="og:title" content="手把手从零开始小程序单元测试(附避坑指南以及源码跟踪)" />
+<meta property="og:description" content="单元测试是一个老生常谈的话题，基于Web/NodeJs环境的测试框架、测试教程数不胜数，也趋于成熟了。但是对于微信小程序的单元测试，目前还是处于起步状态，这两天在研究微信小程序的测试，也遇到了一些坑，在这里记录一下，希望给看到本文的小伙伴带来一点帮助，少走一些弯路。
+demo地址 https://github.com/xialeistudio/miniprogram-unit-test-demo
+关键依赖版本 本文写作时相关依赖版本如下(版本不同，源码行数可能不同)：" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.ddhigh.com/2019/07/27/miniprogram-unit-test/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2019-07-27T18:35:49+00:00" />
+<meta property="article:modified_time" content="2019-07-27T18:35:49+00:00" />
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="手把手从零开始小程序单元测试(附避坑指南以及源码跟踪)"/>
+<meta name="twitter:description" content="单元测试是一个老生常谈的话题，基于Web/NodeJs环境的测试框架、测试教程数不胜数，也趋于成熟了。但是对于微信小程序的单元测试，目前还是处于起步状态，这两天在研究微信小程序的测试，也遇到了一些坑，在这里记录一下，希望给看到本文的小伙伴带来一点帮助，少走一些弯路。
+demo地址 https://github.com/xialeistudio/miniprogram-unit-test-demo
+关键依赖版本 本文写作时相关依赖版本如下(版本不同，源码行数可能不同)："/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://www.ddhigh.com/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "手把手从零开始小程序单元测试(附避坑指南以及源码跟踪)",
+      "item": "https://www.ddhigh.com/2019/07/27/miniprogram-unit-test/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "手把手从零开始小程序单元测试(附避坑指南以及源码跟踪)",
+  "name": "手把手从零开始小程序单元测试(附避坑指南以及源码跟踪)",
+  "description": "单元测试是一个老生常谈的话题，基于Web/NodeJs环境的测试框架、测试教程数不胜数，也趋于成熟了。但是对于微信小程序的单元测试，目前还是处于起步状态，这两天在研究微信小程序的测试，也遇到了一些坑，在这里记录一下，希望给看到本文的小伙伴带来一点帮助，少走一些弯路。\ndemo地址 https://github.com/xialeistudio/miniprogram-unit-test-demo\n关键依赖版本 本文写作时相关依赖版本如下(版本不同，源码行数可能不同)：",
+  "keywords": [
+    "test"
+  ],
+  "articleBody": "单元测试是一个老生常谈的话题，基于Web/NodeJs环境的测试框架、测试教程数不胜数，也趋于成熟了。但是对于微信小程序的单元测试，目前还是处于起步状态，这两天在研究微信小程序的测试，也遇到了一些坑，在这里记录一下，希望给看到本文的小伙伴带来一点帮助，少走一些弯路。\ndemo地址 https://github.com/xialeistudio/miniprogram-unit-test-demo\n关键依赖版本 本文写作时相关依赖版本如下(版本不同，源码行数可能不同)：\nminiprogram-simulate: 1.0.7 j-component: 1.1.6 miniprogram-exparser: 0.0.6 测试流程 初始化小程序项目，编写待测试组件 安装jest,miniprogram-simulate测试环境 编写测试用例 执行测试 初始化小程序项目 使用小程序开发者工具初始化新项目，APPID选择测试号即可，语言选择Javascript。 使用小程序开发者工具新建/components/user组件 components/user.js // components/user.js Component({ data: { nickname: '' }, methods: { handleUserInfo: function(e) { this.setData({ nickname: e.detail.userInfo.nickName }) } } }) components/user.wxml ",
+  "wordCount" : "455",
+  "inLanguage": "zh",
+  "datePublished": "2019-07-27T18:35:49Z",
+  "dateModified": "2019-07-27T18:35:49Z",
+  "author":{
+    "@type": "Person",
+    "name": "Lei Xia"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://www.ddhigh.com/2019/07/27/miniprogram-unit-test/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "每天进步一点点",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.ddhigh.com/favicon.ico"
+    }
+  }
+}
+</script>
+    <link rel="icon" href="/img/favicon.ico" sizes="16x16">
+
+<link rel="apple-touch-icon" href="/img/favicon.ico">
+
+<link rel="manifest" href="/img/favicon.ico">
+    
+
+    <link rel="stylesheet" href="https://cdn.staticfile.org/lxgw-wenkai-webfont/1.6.0/style.css" />
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/main.min.d0df733b91ef046970ecd63de7aa626886fd263fd3fb2b8ff28b560e505831f7.css" integrity="sha256-0N9zO5HvBGlw7NY956piaIb9Jj/T&#43;yuP8otWDlBYMfc="
+        crossorigin="anonymous" media="screen" />
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css" integrity="sha512-ygEyjMC6rqnzJqWGjRTJUPYMEs9JUOm3i7OWUS9CgQ4XkBUvMsgCS1I8JqavidQ2ClHcREB7IbA2mN08+r9Elg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    
+    <link rel="stylesheet" href="/scss/highlight/github-dark.min.min.66034289ee9a113219a2c4aae0a8bd2095ab255c832a42efcf5863f10814e7a1.css" />
+
+    
+    <script src="/js/highlight.min.min.894ca9c68afab956438c4926a0dc7f5293e04e08595bd27abdb123e94801f684.js"></script>
+    <script>hljs.highlightAll();</script>
+
+    <script>{ { $darkModeInit.Content | safeJS } }</script>
+    </head><body>
+      <main class="wrapper"><nav class="navigation">
+    <section class="container">
+        <a class="navigation-brand" href="/">
+            每天进步一点点
+        </a>
+        <input type="checkbox" id="menu-toggle" />
+        <label class="menu-button float-right" for="menu-toggle">
+            <span></span><span></span><span></span>
+        </label>
+        
+        <ul class="navigation-list" id="navigation-list">
+            
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/">首页</a>
+            </li>
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/archives">归档</a>
+            </li>
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/books">出版物</a>
+            </li>
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/guestbook">留言板</a>
+            </li>
+            
+            
+
+            <li class="navigation-item menu-separator">
+                <span>|</span>
+            </li>
+
+            
+            
+            <li class="navigation-item navigation-social">
+                <a class="navigation-link" href="https://github.com/xialeistudio"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a>
+            </li>
+            
+            
+
+            <li class="navigation-item navigation-dark">
+                <button id="mode" type="button" aria-label="toggle user light or dark theme">
+                    <span class="toggle-dark"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></span>
+                    <span class="toggle-light"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></span>
+                </button>
+            </li>
+
+            
+            
+            
+            
+            
+            
+            
+            <li class="navigation-item navigation-language">
+                <a href="https://www.ddhigh.com/en/">EN</a>
+            </li>
+            
+            
+            
+            
+        </ul>
+        
+    </section>
+</nav>
+<div id="content">
+<article class="blog-single">
+  <header class="blog-title">
+    <h1>手把手从零开始小程序单元测试(附避坑指南以及源码跟踪)</h1>
+  </header>
+
+  <p>
+  <small>
+    2019年7月27日&nbsp;· 455 字&nbsp;· 3 分钟</small>
+
+  
+<p>
+
+  <div class="blog-toc">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#demo地址">demo地址</a></li>
+    <li><a href="#关键依赖版本">关键依赖版本</a></li>
+    <li><a href="#测试流程">测试流程</a></li>
+    <li><a href="#初始化小程序项目">初始化小程序项目</a></li>
+    <li><a href="#安装jestminiprogram-simulate测试环境">安装jest/miniprogram-simulate测试环境</a></li>
+    <li><a href="#编写测试用例">编写测试用例</a></li>
+    <li><a href="#执行测试">执行测试</a></li>
+    <li><a href="#错误分析源码跟踪过程">错误分析(源码跟踪过程)</a></li>
+    <li><a href="#避坑指南">避坑指南</a></li>
+    <li><a href="#结语">结语</a></li>
+  </ul>
+</nav>
+  </div>
+
+  <section class="blog-content">
+    <p>单元测试是一个老生常谈的话题，基于Web/NodeJs环境的测试框架、测试教程数不胜数，也趋于成熟了。但是对于微信小程序的单元测试，目前还是处于起步状态，这两天在研究微信小程序的测试，也遇到了一些坑，在这里记录一下，希望给看到本文的小伙伴带来一点帮助，少走一些弯路。</p>
+<h2 id="demo地址">demo地址</h2>
+<p><a href="https://github.com/xialeistudio/miniprogram-unit-test-demo" target="_blank" rel="noopener">https://github.com/xialeistudio/miniprogram-unit-test-demo</a></p>
+<h2 id="关键依赖版本">关键依赖版本</h2>
+<p>本文写作时相关依赖版本如下(版本不同，源码行数可能不同)：</p>
+<ol>
+<li>miniprogram-simulate: 1.0.7</li>
+<li>j-component: 1.1.6</li>
+<li>miniprogram-exparser: 0.0.6</li>
+</ol>
+<h2 id="测试流程">测试流程</h2>
+<ol>
+<li>初始化小程序项目，编写待测试组件</li>
+<li>安装jest,miniprogram-simulate测试环境</li>
+<li>编写测试用例</li>
+<li>执行测试</li>
+</ol>
+<h2 id="初始化小程序项目">初始化小程序项目</h2>
+<ol>
+<li>使用小程序开发者工具初始化新项目，APPID选择<code>测试号</code>即可，语言选择<code>Javascript</code>。</li>
+<li>使用小程序开发者工具新建<code>/components/user</code>组件</li>
+<li><code>components/user.js</code>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#75715e">// components/user.js
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">Component</span>({
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">data</span><span style="color:#f92672">:</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">nickname</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">methods</span><span style="color:#f92672">:</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">handleUserInfo</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">e</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">setData</span>({ <span style="color:#a6e22e">nickname</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">detail</span>.<span style="color:#a6e22e">userInfo</span>.<span style="color:#a6e22e">nickName</span> })
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>})
+</span></span></code></pre></div></li>
+<li><code>components/user.wxml</code>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span> <span style="color:#f92672">&lt;text</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;nickname&#34;</span><span style="color:#f92672">&gt;</span>{{nickname}}<span style="color:#f92672">&lt;/text&gt;</span>
+</span></span><span style="display:flex;"><span> <span style="color:#f92672">&lt;button</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;button&#34;</span> <span style="color:#a6e22e">open-type=</span><span style="color:#e6db74">&#34;getUserInfo&#34;</span> <span style="color:#a6e22e">bindgetuserinfo=</span><span style="color:#e6db74">&#34;handleUserInfo&#34;</span><span style="color:#f92672">&gt;</span>Oauth<span style="color:#f92672">&lt;/button&gt;</span>
+</span></span></code></pre></div></li>
+<li><code>pages/index/index.js</code>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#a6e22e">Page</span>({
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">data</span><span style="color:#f92672">:</span>{}
+</span></span><span style="display:flex;"><span>})
+</span></span></code></pre></div></li>
+<li><code>pages/index/index.wxml</code>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;view</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;container&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;user&gt;&lt;/user&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/view&gt;</span>
+</span></span></code></pre></div></li>
+<li>打开小程序开发者工具，可以看到有一个<code>Oauth</code>按钮，点击之后会在上面显示昵称。</li>
+<li>由此可以得到测试用例<code>点击授权按钮时上方显示为授权用户的昵称</code></li>
+</ol>
+<h2 id="安装jestminiprogram-simulate测试环境">安装jest/miniprogram-simulate测试环境</h2>
+<ol>
+<li>由于JS项目的小程序根目录没有<code>package.json</code>，需要手动生成一下</li>
+<li>打开终端，在项目根目录执行<code>npm init -y</code>生成<code>package.json</code></li>
+<li>安装测试工具集<code>npm install jest miniprogram-simulate --save-dev</code></li>
+<li>编辑<code>package.json</code>，在<code>scripts</code>新建<code>test</code>命令
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;unit-test-demo&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;1.0.0&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;description&#34;</span>: <span style="color:#e6db74">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;main&#34;</span>: <span style="color:#e6db74">&#34;app.js&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;scripts&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;test&#34;</span>: <span style="color:#e6db74">&#34;jest&#34;</span>
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;keywords&#34;</span>: [],
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;author&#34;</span>: <span style="color:#e6db74">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;license&#34;</span>: <span style="color:#e6db74">&#34;ISC&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;devDependencies&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;jest&#34;</span>: <span style="color:#e6db74">&#34;^24.8.0&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;miniprogram-simulate&#34;</span>: <span style="color:#e6db74">&#34;^1.0.7&#34;</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></li>
+</ol>
+<h2 id="编写测试用例">编写测试用例</h2>
+<ol>
+<li>在项目根目录新建<code>tests/components/user.spec.js</code>文件(目录需要手动创建)</li>
+<li>代码如下(参考微信官方单元测试文档编写):
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">simulate</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;miniprogram-simulate&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">path</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;path&#39;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">test</span>(<span style="color:#e6db74">&#39;components/user&#39;</span>, (<span style="color:#a6e22e">done</span>) =&gt; { <span style="color:#75715e">// 定义测试名称,传入done表示当前测试是异步测试，需要回调函数来告诉jest，我测试执行完毕
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">id</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">simulate</span>.<span style="color:#a6e22e">load</span>(<span style="color:#a6e22e">path</span>.<span style="color:#a6e22e">join</span>(<span style="color:#a6e22e">__dirname</span>, <span style="color:#e6db74">&#39;../../components/user&#39;</span>)); <span style="color:#75715e">// 加载组件
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">component</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">simulate</span>.<span style="color:#a6e22e">render</span>(<span style="color:#a6e22e">id</span>); <span style="color:#75715e">// 渲染组件
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">text</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">component</span>.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#39;.nickname&#39;</span>); <span style="color:#75715e">// 获取nickname节点
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">button</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">component</span>.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#39;.button&#39;</span>); <span style="color:#75715e">// 获取button节点
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">button</span>.<span style="color:#a6e22e">dispatchEvent</span>(<span style="color:#e6db74">&#39;getuserinfo&#39;</span>, { <span style="color:#75715e">// 模拟触发事件
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">detail</span><span style="color:#f92672">:</span> {   <span style="color:#75715e">// 传递事件参数
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#a6e22e">userInfo</span><span style="color:#f92672">:</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">nickName</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;hello&#39;</span>,
+</span></span><span style="display:flex;"><span>        },
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>});
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">setTimeout</span>(() =&gt; { <span style="color:#75715e">// 异步断言
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">expect</span>(<span style="color:#a6e22e">text</span>.<span style="color:#a6e22e">dom</span>.<span style="color:#a6e22e">innerHTML</span>).<span style="color:#a6e22e">toBe</span>(<span style="color:#e6db74">&#39;hello&#39;</span>); <span style="color:#75715e">// 检测text节点的innerHTML等于模拟授权获取的昵称
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">done</span>();
+</span></span><span style="display:flex;"><span>}, <span style="color:#ae81ff">1000</span>);
+</span></span><span style="display:flex;"><span>});
+</span></span></code></pre></div></li>
+</ol>
+<h2 id="执行测试">执行测试</h2>
+<ol>
+<li><code>npm run test</code>，等待一秒后发现，<code>不出意外的话，测试肯定过不去</code></li>
+<li>部分出错日志：
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Expected: &#34;hello&#34;
+</span></span><span style="display:flex;"><span>Received: &#34;&#34;
+</span></span><span style="display:flex;"><span>     at toBe (/Users/xialeistudio/WeChatProjects/unit-test-demo/tests/components/user.spec.js:18:32)
+</span></span><span style="display:flex;"><span>     at Timeout.callback [as _onTimeout] (/Users/xialeistudio/WeChatProjects/unit-test-demo/node_modules/jsdom/lib/jsdom/browser/Window.js:678:19)
+</span></span><span style="display:flex;"><span>     at listOnTimeout (internal/timers.js:535:17)
+</span></span><span style="display:flex;"><span>     at processTimers (internal/timers.js:479:7)
+</span></span></code></pre></div></li>
+<li>可以推测一下原因：
+<ol>
+<li>dispatchEvent的事件触发有问题，导致handleUserInfo未触发[1]</li>
+<li>dispatchEvent的事件触发成功，但是触发参数有问题[2]</li>
+</ol>
+</li>
+</ol>
+<h2 id="错误分析源码跟踪过程">错误分析(源码跟踪过程)</h2>
+<ol>
+<li>针对第1点原因，可以写一下测试代码(<code>components/user.js</code>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span> <span style="color:#a6e22e">Component</span>({
+</span></span><span style="display:flex;"><span>     <span style="color:#a6e22e">data</span><span style="color:#f92672">:</span> {
+</span></span><span style="display:flex;"><span>         <span style="color:#a6e22e">nickname</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>     },
+</span></span><span style="display:flex;"><span>     <span style="color:#a6e22e">methods</span><span style="color:#f92672">:</span> {
+</span></span><span style="display:flex;"><span>         <span style="color:#a6e22e">handleUserInfo</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">e</span>) {
+</span></span><span style="display:flex;"><span>             <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">e</span>);
+</span></span><span style="display:flex;"><span>         }
+</span></span><span style="display:flex;"><span>     }
+</span></span><span style="display:flex;"><span> })
+</span></span></code></pre></div></li>
+<li><code>npm run test</code>，可以看到事件还是成功触发了，不过<code>detail</code>是<code>{}</code>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>  console.log components/user.js:21
+</span></span><span style="display:flex;"><span> { type: &#39;getuserinfo&#39;,
+</span></span><span style="display:flex;"><span>   timeStamp: 948,
+</span></span><span style="display:flex;"><span>   target: { id: &#39;&#39;, offsetLeft: 0, offsetTop: 0, dataset: {} },
+</span></span><span style="display:flex;"><span>   currentTarget: { id: &#39;&#39;, offsetLeft: 0, offsetTop: 0, dataset: {} },
+</span></span><span style="display:flex;"><span>   detail: {},
+</span></span><span style="display:flex;"><span>   touches: {},
+</span></span><span style="display:flex;"><span>   changedTouches: {} }
+</span></span></code></pre></div></li>
+<li>原因1排除，查原因2</li>
+<li><code>dispatchEvent</code>方法是<code>被测试组件的子组件</code>，<code>被测试组件</code>由<code>simulate.render</code>函数返回</li>
+<li>浏览<code>node_modules/miniprogram-simulate/src/index.js</code>，看到<code>render函数(152行)</code>，可以看到返回的组件由<code>jComponent.create</code>提供</li>
+<li>浏览<code>node_modules/j-component/src/index.js</code>的<code>create</code>函数，可以看到其返回了<code>RootComponent</code>实例，而<code>RootComponent</code>是由<code>./render/component.js</code>提供</li>
+<li>浏览<code>node_modules/j-component/src/render/component.js</code>的<code>dispatchEvent</code>函数，在这里可以打下日志测试(本文就不打了，结果是这里的options就是<code>user.spec.js</code> <code>dispatchEvent</code>函数的<code>第二个参数</code>，<code>detail</code>是有值的)</li>
+<li>继续跟踪源码，由于咱们的是<code>自定义事件</code>，所以会走到<code>91行</code>的代码，该代码块如下：
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#75715e">// 自定义事件
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">customEvent</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">CustomEvent</span>(<span style="color:#a6e22e">eventName</span>, <span style="color:#a6e22e">options</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// 模拟异步情况
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#a6e22e">setTimeout</span>(() =&gt; {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">dom</span>.<span style="color:#a6e22e">dispatchEvent</span>(<span style="color:#a6e22e">customEvent</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">exparser</span>.<span style="color:#a6e22e">Event</span>.<span style="color:#a6e22e">dispatchEvent</span>(<span style="color:#a6e22e">customEvent</span>.<span style="color:#a6e22e">target</span>, <span style="color:#a6e22e">exparser</span>.<span style="color:#a6e22e">Event</span>.<span style="color:#a6e22e">create</span>(<span style="color:#a6e22e">eventName</span>, {}, {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">originalEvent</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">customEvent</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">bubbles</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">capturePhase</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">composed</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">extraFields</span><span style="color:#f92672">:</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">touches</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">options</span>.<span style="color:#a6e22e">touches</span> <span style="color:#f92672">||</span> {},
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">changedTouches</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">options</span>.<span style="color:#a6e22e">changedTouches</span> <span style="color:#f92672">||</span> {},
+</span></span><span style="display:flex;"><span>      },
+</span></span><span style="display:flex;"><span>    }));
+</span></span><span style="display:flex;"><span>  }, <span style="color:#ae81ff">0</span>);
+</span></span></code></pre></div></li>
+<li>可以看到调用了<code>exparser.Event.dispatchEvent</code>函数，该函数的<code>第二个参数</code>调用了<code>exparser.Event.create</code>对自定义事件进行了包装，这里还没到最底层，需要继续跟踪</li>
+<li><code>exparser</code>对象是<code>miniprogram-exparser模块</code>提供的，浏览<code>node_modules/miniprogram-exparser/exparser.min.js</code>，发现该文件被混淆了，不过没关系<code>混淆后的代码逻辑是不变的，只不过变量名变得无意义，可读性变差</code></li>
+<li>使用webstorm格式化该文件，这里我传了一份格式化好的到github <a href="https://github.com/xialeistudio/miniprogram-unit-test-demo/blob/master/extra/wxparser.jscc" target="_blank" rel="noopener">wxparser.js，可在线观看</a></li>
+<li>需要在源码中搜索<code>三个参数</code>的<code>create</code>函数(<code>Object.create不算</code>)，需要有耐心，经过排查后发现<a href="https://github.com/xialeistudio/miniprogram-unit-test-demo/blob/master/extra/wxparser.js#L168" target="_blank" rel="noopener">168行</a>代码应该是目标代码
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#a6e22e">i</span>.<span style="color:#a6e22e">create</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">e</span>, <span style="color:#a6e22e">t</span>, <span style="color:#a6e22e">r</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">r</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">r</span> <span style="color:#f92672">||</span> {};
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">n</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">originalEvent</span>, <span style="color:#a6e22e">o</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">extraFields</span> <span style="color:#f92672">||</span> {}, <span style="color:#a6e22e">a</span> <span style="color:#f92672">=</span> Date.<span style="color:#a6e22e">now</span>() <span style="color:#f92672">-</span> <span style="color:#a6e22e">l</span>, <span style="color:#a6e22e">s</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">i</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">currentTarget</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span>, <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">type</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">e</span>, <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">timeStamp</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">a</span>, <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">mark</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span>, <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">detail</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">t</span>, <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">bubbles</span> <span style="color:#f92672">=</span> <span style="color:#f92672">!!</span><span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">bubbles</span>, <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">composed</span> <span style="color:#f92672">=</span> <span style="color:#f92672">!!</span><span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">composed</span>, <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">__originalEvent</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">n</span>, <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">__hasCapture</span> <span style="color:#f92672">=</span> <span style="color:#f92672">!!</span><span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">capturePhase</span>, <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">__stopped</span> <span style="color:#f92672">=</span> <span style="color:#f92672">!</span><span style="color:#ae81ff">1</span>, <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">__dispatched</span> <span style="color:#f92672">=</span> <span style="color:#f92672">!</span><span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">u</span> <span style="color:#66d9ef">in</span> <span style="color:#a6e22e">o</span>) <span style="color:#a6e22e">s</span>[<span style="color:#a6e22e">u</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">o</span>[<span style="color:#a6e22e">u</span>];
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">s</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></li>
+<li>可以看到<code>s.detail = t</code>这个赋值，<code>t</code>是<code>create</code>的<code>第二个参数</code>，由<code>node_modules/j-component/render/component.js</code>的<code>wxparser.Event.create</code>传入，但是传入的<code>第二个参数写死了{}</code>，所以咱们的组件获取<code>detail</code>的时候<code>永远为{}</code>，将其修改为<code>options.detail||{}</code>即可，修改后代码如下：
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#a6e22e">exparser</span>.<span style="color:#a6e22e">Event</span>.<span style="color:#a6e22e">dispatchEvent</span>(<span style="color:#a6e22e">customEvent</span>.<span style="color:#a6e22e">target</span>, <span style="color:#a6e22e">exparser</span>.<span style="color:#a6e22e">Event</span>.<span style="color:#a6e22e">create</span>(<span style="color:#a6e22e">eventName</span>, <span style="color:#a6e22e">options</span>.<span style="color:#a6e22e">detail</span><span style="color:#f92672">||</span>{}, <span style="color:#a6e22e">xxxxxx</span>
+</span></span></code></pre></div></li>
+<li>重新测试
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span> PASS  tests/components/user.spec.js
+</span></span><span style="display:flex;"><span>✓ components/user (1099ms)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Test Suites: 1 passed, 1 total
+</span></span><span style="display:flex;"><span>Tests:       1 passed, 1 total
+</span></span><span style="display:flex;"><span>Snapshots:   0 total
+</span></span><span style="display:flex;"><span>Time:        3.622s
+</span></span><span style="display:flex;"><span>Ran all test suites.
+</span></span></code></pre></div></li>
+</ol>
+<h2 id="避坑指南">避坑指南</h2>
+<ol>
+<li><code>querySelector</code>用法同HTML，但是需要在<code>组件</code>执行，而不是<code>组件.dom</code>，HTML中实在<code>DOMNode</code>执行的</li>
+<li><code>dispatchEvent</code>是触发事件，需要在<code>组件</code>执行，上述代码中是触发<code>button组件</code>的<code>自定义事件</code></li>
+<li><code>dispatchEvent</code>事件名规范: <code>去掉前导bind剩余的字符串为事件名</code>，示例代码中<code>bindgetuserinfo</code>，触发时就是<code>getuserinfo</code>，如果是<code>bindtap</code>，那触发时就是<code>tap</code></li>
+<li><code>dispatchEvent</code>底层是<code>j-component</code>这个<code>npm模块实现</code>的，跟踪源码发现执行是异步的(代码文件<code>node_modules/j-component/src/render/component.js</code>，函数名<code>dispatchEvent</code>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#75715e">// 自定义事件
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">customEvent</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">CustomEvent</span>(<span style="color:#a6e22e">eventName</span>, <span style="color:#a6e22e">options</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// 模拟异步情况
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#a6e22e">setTimeout</span>(() =&gt; {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">dom</span>.<span style="color:#a6e22e">dispatchEvent</span>(<span style="color:#a6e22e">customEvent</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">exparser</span>.<span style="color:#a6e22e">Event</span>.<span style="color:#a6e22e">dispatchEvent</span>(<span style="color:#a6e22e">customEvent</span>.<span style="color:#a6e22e">target</span>, <span style="color:#a6e22e">exparser</span>.<span style="color:#a6e22e">Event</span>.<span style="color:#a6e22e">create</span>(<span style="color:#a6e22e">eventName</span>, {}, {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">originalEvent</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">customEvent</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">bubbles</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">capturePhase</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">composed</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">extraFields</span><span style="color:#f92672">:</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">touches</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">options</span>.<span style="color:#a6e22e">touches</span> <span style="color:#f92672">||</span> {},
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">changedTouches</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">options</span>.<span style="color:#a6e22e">changedTouches</span> <span style="color:#f92672">||</span> {},
+</span></span><span style="display:flex;"><span>      },
+</span></span><span style="display:flex;"><span>    }));
+</span></span><span style="display:flex;"><span>  }, <span style="color:#ae81ff">0</span>);
+</span></span></code></pre></div></li>
+<li>由于<code>setTimeout</code>的存在，触发事件为异步，所以写断言时需要加定时器</li>
+</ol>
+<h2 id="结语">结语</h2>
+<p>小程序单元测试基本是没什么经验扩借鉴，但是基于官网提供的工具，以及<code>开源</code>，咱们遇到问题时细心排查然后修改一下，还是可以解决问题的。</p>
+
+    <div class="blog-footer">
+    <div class="social-share"></div>
+    <div class="copyright">
+        <ul>
+            <li style="margin-bottom: 0.5em;">本文作者: <a href="https://ddhigh.com/" target="_blank"
+                    style="color: #000000; text-decoration: none;">xialeistudio</a></li>
+            <li style="margin-bottom: 0.5em;">本文链接: <a href="https://www.ddhigh.com/2019/07/27/miniprogram-unit-test/" target="_blank"
+                    style="color: #000000; text-decoration: none;">手把手从零开始小程序单元测试(附避坑指南以及源码跟踪)</a></li>
+            <li>版权声明: <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank"
+                    style="color: #000000; text-decoration: none;">「署名-非商业性使用-相同方式共享 4.0 国际」</a></li>
+        </ul>
+    </div>
+    
+    <div style="margin-top: 2rem;"><img src="/img/mp.png" alt="qrcode"></div>
+    
+</div>
+  </section>
+
+  
+  
+  <div class="paginator">
+    
+    <a class="prev" href="https://www.ddhigh.com/2019/07/29/typescript-quick-guide2/">
+      <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M3.77086 21.1546C11.0491 22.698 21.4339 21.7773 21.4339 16.3608V4.63375C21.4339 3.93962 21.3581 3.30535 21.1917 2.76787M3.77086 21.1546C1.9934 20.7777 0.973585 18.7264 1.08749 16.688C1.2668 13.479 1.15721 9.43135 1.00513 6.21507C0.87809 3.52811 3.12891 1.16316 5.51029 1.25008C9.76594 1.40542 15.377 1.20229 18.7912 1.00542C20.0864 0.930734 20.8406 1.63385 21.1917 2.76787M3.77086 21.1546C4.56586 21.4723 5.49168 21.7879 6.5 22.0658M21.1917 2.76787C23.1097 4.18217 23.13 12.4191 22.9004 16.3608C20.8478 24.0194 12.3061 23.6662 6.5 22.0658M21.1917 2.76787C21.7612 4.51192 22.7203 9.67216 22 16.3608C21.2797 23.0494 11.3665 22.9511 6.5 22.0658M9.94496 9C9.28897 9.61644 7.63215 10.997 6.04814 11.7966C5.98257 11.8297 5.98456 11.9753 6.05061 12.0063C7.05496 12.4779 8.92941 13.9264 9.94496 15M6.44444 11.9667C8.86549 12.0608 14 12 16 11"
+          stroke="currentColor" stroke-linecap="round" />
+      </svg>
+      <span>TS简明教程(2)</span></a>
+    
+    
+    <a class="next" href="https://www.ddhigh.com/2019/07/26/react-decorator-example/"><span>使用Typescript装饰器来劫持React组件</span>
+      <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M3.77086 21.1546C11.0491 22.698 21.4339 21.7773 21.4339 16.3608V4.63375C21.4339 3.93962 21.3581 3.30535 21.1917 2.76787M3.77086 21.1546C1.9934 20.7777 0.973585 18.7264 1.08749 16.688C1.2668 13.479 1.15721 9.43135 1.00513 6.21507C0.87809 3.52811 3.12891 1.16316 5.51029 1.25008C9.76594 1.40542 15.377 1.20229 18.7912 1.00542C20.0864 0.930734 20.8406 1.63385 21.1917 2.76787M3.77086 21.1546C4.56586 21.4723 5.49168 21.7879 6.5 22.0658M21.1917 2.76787C23.1097 4.18217 23.13 12.4191 22.9004 16.3608C20.8478 24.0194 12.3061 23.6662 6.5 22.0658M21.1917 2.76787C21.7612 4.51192 22.7203 9.67216 22 16.3608C21.2797 23.0494 11.3665 22.9511 6.5 22.0658M12.055 9C12.711 9.61644 14.3679 10.997 15.9519 11.7966C16.0174 11.8297 16.0154 11.9753 15.9494 12.0063C14.945 12.4779 13.0706 13.9264 12.055 15M15.5556 11.9667C13.1345 12.0608 8 12 6 11"
+          stroke="currentColor" stroke-linecap="round" />
+      </svg>
+    </a>
+    
+  </div>
+  
+
+  
+
+
+  
+  
+<div class="comments">
+  <script>
+      const getTheme = window.localStorage && window.localStorage.getItem("theme");
+      let theme = getTheme === 'dark' ? 'dark' : 'light';
+      let s = document.createElement('script');
+      s.src = 'https://giscus.app/client.js';
+      s.setAttribute('data-repo', 'xialeistudio\/discussion');
+      s.setAttribute('data-repo-id', 'R_kgDOKurTRA');
+      s.setAttribute('data-category', 'General');
+      s.setAttribute('data-category-id', 'DIC_kwDOKurTRM4CbCJt');
+      s.setAttribute('data-mapping', 'pathname');
+      s.setAttribute('data-strict', '0');
+      s.setAttribute('data-reactions-enabled', '1');
+      s.setAttribute('data-emit-metadata', '0');
+      s.setAttribute('data-input-position', 'bottom');
+      s.setAttribute('data-theme', theme);
+      s.setAttribute('data-lang', 'en');
+      s.setAttribute('data-loading', 'lazy');
+      s.setAttribute('crossorigin', 'anonymous');
+      s.setAttribute('async', '');
+      document.querySelector('div.comments').innerHTML = '';
+      document.querySelector('div.comments').appendChild(s);
+  </script>
+</div>
+
+</article>
+
+
+        </div><footer class="footer">
+    <p>&copy; 2014 - 2024 <a href="https://www.ddhigh.com">每天进步一点点</a>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener" target="_blank">Hugo️️</a>
+        <a href="https://github.com/guangzhengli/hugo-theme-ladder" rel="noopener" target="_blank">Ladder</a>
+        ️ </p>
+</footer>
+
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10.5376 22.7916C11.0152 22.7207 22.5795 21.1781 22.0978 10.4211C22.0536 9.43274 21.9303 8.53367 21.7387 7.71865M10.5376 22.7916C16.876 22.3728 20.0969 19.8899 21.5383 16.9142M10.5376 22.7916C9.7707 22.9055 8.97982 22.8964 8.19743 22.7725M21.7387 7.71865C21.4988 6.69828 21.1518 5.80967 20.7188 5.04257M21.7387 7.71865C22.6022 10.1105 23.0542 13.7848 21.5383 16.9142M20.7188 5.04257C17.1684 -1.24629 7.83127 0.632493 4.27577 5.04257C2.88063 6.77451 -0.0433281 11.1668 1.38159 16.6571C2.27481 20.0988 5.17269 22.2936 8.19743 22.7725M20.7188 5.04257C22.0697 6.9404 24.0299 11.3848 22.3541 15.4153M21.5383 16.9142C21.8737 16.4251 22.1428 15.9235 22.3541 15.4153M8.19743 22.7725C12.1971 23.4683 20.6281 22.971 22.3541 15.4153M14 10.945C13.3836 10.289 12.003 8.63215 11.2034 7.04814C11.1703 6.98257 11.0247 6.98456 10.9937 7.05061C10.5221 8.05496 9.07362 9.92941 8 10.945M11.0333 7.44444C10.9392 9.86549 11 15 12 17"
+              stroke="currentColor" stroke-linecap="round"/>
+    </svg>
+</a>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'Copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'Copied';
+            setTimeout(() => {
+                copybutton.innerHTML = 'Copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {
+            }
+            ;
+            selection.removeRange(range);
+        });
+        codeblock.parentNode.appendChild(copybutton);
+    });
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js" integrity="sha512-9DNXrSjk17bU9MUbRp3IjwcWe46V8FaGA062PFbryPUAEQVRbz4jiZP6FW0AdbqEGtMYBDWnul3eiGBMJOQajA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script></main>
+    </body><script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha512-N9IJRoc3LaP3NDoiGkcPa4gG94kapGpaA5Zq9/Dr04uf5TbLFU5q0o8AbRhLKUUlp8QFS2u7S+Yti0U7QtuZvQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script>
+      const images = Array.from(document.querySelectorAll(".blog-content img"));
+      images.forEach(img => {
+          mediumZoom(img, {
+              margin: 10,  
+              scrollOffset: 40,  
+              container: null,  
+              template: null,  
+              background: 'rgba(0, 0, 0, 0.5)'
+          });
+      });
+  </script>
+
+  
+  <script src="/main.min.6bb26b69159420159c74dc9e097b06a578ed2b68c701466a91a44a9632d851bd0af167a1b30012387b4c512b48ad9ad4d3394e04d77ae38d57e1920fe4ed34fe.js" integrity="sha512-a7JraRWUIBWcdNyeCXsGpXjtK2jHAUZqkaRKljLYUb0K8WehswASOHtMUStIrZrU0zlOBNd6441X4ZIP5O00/g==" crossorigin="anonymous" defer></script></html>

@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="zh"><head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Golang程序设计——基本语法</title>
+    <meta charset="utf-8">
+    
+    <meta content="Web开发 , Java , Go , Node.js , PHP , Koa , MySQL , Redis , 前端 , 后端 , 数据库" name="keywords">
+    
+    <meta name="description" content="本文学习Go语言基本语法，例如变量和常量、数据类型、运算符、条件语句、循环语句。
+变量和常量 变量和常量是计算机程序不可或缺的部分。本节将介绍如何在Go程序中声明、使用变量和常量、还将介绍声明方式和作用域。
+变量声明 在Go语言中，声明变量的方式有多种。在前面的文章介绍过，Go语言是一种静态类型语言，因此声明变量时必须指明其类型。">
+    <meta name="author" content="Lei Xia">
+    <link rel="canonical"
+        href="https://www.ddhigh.com/2021/02/26/golang-basic/">
+
+    <link rel="alternate" type="application/rss+xml" href="https://www.ddhigh.com/index.xml" title="每天进步一点点">
+
+    
+
+
+<script async defer data-website-id="52f8f0f9-d93d-466b-8ef5-508aae8c4ed4"
+    src="https://analysis.ddhigh.com/script.js"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EC3XLVSGKV"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-EC3XLVSGKV');
+</script>
+    <meta property="og:title" content="Golang程序设计——基本语法" />
+<meta property="og:description" content="本文学习Go语言基本语法，例如变量和常量、数据类型、运算符、条件语句、循环语句。
+变量和常量 变量和常量是计算机程序不可或缺的部分。本节将介绍如何在Go程序中声明、使用变量和常量、还将介绍声明方式和作用域。
+变量声明 在Go语言中，声明变量的方式有多种。在前面的文章介绍过，Go语言是一种静态类型语言，因此声明变量时必须指明其类型。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.ddhigh.com/2021/02/26/golang-basic/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-02-26T16:04:33+00:00" />
+<meta property="article:modified_time" content="2021-02-26T16:04:33+00:00" />
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Golang程序设计——基本语法"/>
+<meta name="twitter:description" content="本文学习Go语言基本语法，例如变量和常量、数据类型、运算符、条件语句、循环语句。
+变量和常量 变量和常量是计算机程序不可或缺的部分。本节将介绍如何在Go程序中声明、使用变量和常量、还将介绍声明方式和作用域。
+变量声明 在Go语言中，声明变量的方式有多种。在前面的文章介绍过，Go语言是一种静态类型语言，因此声明变量时必须指明其类型。"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://www.ddhigh.com/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "Golang程序设计——基本语法",
+      "item": "https://www.ddhigh.com/2021/02/26/golang-basic/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Golang程序设计——基本语法",
+  "name": "Golang程序设计——基本语法",
+  "description": "本文学习Go语言基本语法，例如变量和常量、数据类型、运算符、条件语句、循环语句。\n变量和常量 变量和常量是计算机程序不可或缺的部分。本节将介绍如何在Go程序中声明、使用变量和常量、还将介绍声明方式和作用域。\n变量声明 在Go语言中，声明变量的方式有多种。在前面的文章介绍过，Go语言是一种静态类型语言，因此声明变量时必须指明其类型。",
+  "keywords": [
+    
+  ],
+  "articleBody": "本文学习Go语言基本语法，例如变量和常量、数据类型、运算符、条件语句、循环语句。\n变量和常量 变量和常量是计算机程序不可或缺的部分。本节将介绍如何在Go程序中声明、使用变量和常量、还将介绍声明方式和作用域。\n变量声明 在Go语言中，声明变量的方式有多种。在前面的文章介绍过，Go语言是一种静态类型语言，因此声明变量时必须指明其类型。\n例：声明string类型的变量。\npackage main import \"fmt\" func main() { var s1 string = \"Hello World\" var s2 = \"Hello World\" var s3 string s3 = \"Hello World\" fmt.Println(s1, s2, s3) } 使用关键字var声明变量。\n如果变量类型可以通过值推导则不用声明类型。s2通过值可以推导类型为string类型。\n变量可以在声明后赋值，未赋值的变量值为该类型的零值。\n变量的类型很重要，因为这决定了可将什么值赋给该变量。例如，对于类型为string的变量，不能将整数赋值给它。将不匹配的值赋值给变量时，将导致编译错误。\n例：将string类型的值赋值给int类型的变量。\npackage main import \"fmt\" func main() { var i int i = \"Hello World\" fmt.Println(i) } 编译该文件将导致编译错误。\ngo build main.go # command-line-arguments ./main.go:7:4: cannot use \"Hello World\" (type untyped string) as type int in assignment 多变量声明 例：声明多个类型相同的变量并进行赋值（显式指定类型）。\npackage main import \"fmt\" func main() { var s1, s2 string = \"S1\", \"S2\" fmt.Println(s1, s2) } 例：声明多个类型不同的变量并进行赋值（不能显式指定类型）。\npackage main import \"fmt\" func main() { var s1, i1= \"S1\", 1 fmt.Println(s1, i1) } 例：声明多个类型不同的变量（显式指定类型）。\npackage main import \"fmt\" func main() { var ( s1 string i1 int ) s1 = \"Hello\" i1 = 10 fmt.Println(s1, i1) } 声明变量后可以再次赋值，但是同一个变量只允许声明一次，否则将导致编译错误。\n简短变量声明 在函数中声明变量时，可以用更简洁的方式。\npackage main import \"fmt\" func main() { s1 := \"Hello World\" fmt.Println(s1) } :=表示简短变量声明，可以不使用var，不指定类型，但是必须进行赋值。\n只能在函数中使用简短变量声明。\n变量声明最佳实践 Go语言提供了多种变量声明方式，下面的声明方式都是合法的。\nvar s string = \"Hello\" var s1 = \"Hello\" var s2 string s2 = \"Hello\" s3 := \"Hello\" 该使用哪种方式呢？\nGo语言对此有一个限制——只能在函数内部使用简短变量声明，在函数外部必须使用var进行声明。\n在标准库中遵循的约定如下：有初始值的情况下，在函数内使用简短变量声明，在函数外使用var并省略类型；无初始值的情况下使用var并指定类型。\npackage main import \"fmt\" var s = \"Hello World\" func main() { s1 := \"Hello World\" fmt.Println(s, s1) } 变量和零值 在Go语言中，声明变量时如果未初始化，则变量为默认值，该默认值也称为零值。在其他语言中未初始化的值为null或undefined。\npackage main import \"fmt\" func main() { var s string var i int var b bool var f float32 fmt.Printf(\"%v %v %v %v\\n\", s, i, b, f) } 在Go语言中，检查变量是否为空，必须与该类型的零值比较。例如检测string类型的变量是否为空，可以与\"“判定。\npackage main import \"fmt\" func main() { var s string if s == \"\" { fmt.Println(\"s为空\") } } 变量作用域 作用域指变量可以在什么地方使用，而不是说变量在哪里声明的。Go语言使用基于块的词法作用域，简单来说就是{}会产生一个作用域。\nGo语言作用域规则如下：\n一对大括号({})表示一个块，块是可以嵌套的 对于在块内声明的变量，可以在本块以及子块中访问 子块可以访问父块的变量，父块不能访问子块的变量 例：Go语言的作用域。\npackage main import \"fmt\" func main() { var s1 = \"s1\" { var s2 = \"s2\" // 可以访问s1,s2 fmt.Println(s1, s2) { var s3 = \"s3\" // 可以访问s1,s2,s3 fmt.Println(s1, s2, s3) } } // 只能访问s1 fmt.Println(s1) } 简单来说，就是块内可以访问块外的变量，块外不能访问块内变量。\n声明常量 常量只在整个程序运行过程中都不变的值，常量必须在声明时赋值，声明后不可以更改。\nGo语言使用const关键字声明常量。\npackage main import \"fmt\" const s = \"Hello\" func main() { const s2 = \"World\" const s3,s4 = \"Hello\",\"World\" fmt.Println(s, s2) } 常量也支持一次声明多个，此外常量的作用域和变量作用域一致。\n数据类型 Go语言提供了丰富的数据类型，按类别分为布尔型、数值型（整数、浮点数、复数）、字符串型 、派生型。其中派声型包括指针类型、数组类型、结构体类型、接口类型、Channel类型、函数类型、切片类型和Map类型。\n派生类型我们将在后面的内容中进行介绍。\n布尔类型 布尔类型值只能为true或false。某些语言允许使用1和0来表示true和false，但Go语言不允许。\n布尔类型的零值为false。\npackage main import \"fmt\" func main() { var b bool if b { fmt.Println(\"b是true\") } else { fmt.Println(\"b是false\") } } 数值型 Go语言中数值型包含整数、浮点数以及复数。\n整数型\n类型 字节数 范围 byte 1 0 ~ 28 uint8 1 0 ~ 28 int8 1 -27 ~ 27-1 uint16 2 0 ~ 216 int16 2 -215 ~ 215-1 uint32 4 0 ~ 232 int32 4 -231 ~ 231-1 uint64 8 0 ~ 264 int64 8 263 ~ 263-1 int 平台相关(32位或64位) uint 平台相关(32位或64位) 浮点数\n类型 字节数 范围 float32 4 -3.403E38 ~ 3.403E38 float64 8 -1.798E308 ~ 1.798E308 复数\n略\n字符串类型 字符串可以是任何字符序列，包括数字、字母和符号。Go语言使用Unicode来存储字符串，因此可以支持世界上所有的语言。\n下面是一些字符串示例：\nvar s = \"$%^\u0026*\" var s2 = \"1234\" var s3 = \"你好\" 运算符 运算符用于在程序运行时执行数据运算和逻辑运算。Go语言支持的运算符有：\n算术运算符\n逻辑运算符\n关系运算符\n位运算符\n算术运算符 算术运算符是用来对数值类型进行算术运算的。下表列出了Go语言支持的算术运算符。\n运算符 说明 + 相加 - 相减 * 相乘 / 相除 % 取余 ++ 自增 – 自减 package main import \"fmt\" func main() { var ( a = 10 b = 20 ) fmt.Printf(\"a+b=%d\\n\", a+b) fmt.Printf(\"a-b=%d\\n\", a-b) fmt.Printf(\"a*b=%d\\n\", a*b) fmt.Printf(\"a/b=%d\\n\", a/b) fmt.Printf(\"a%%b=%d\\n\", a%b) a++ fmt.Printf(\"a++=%d\\n\", a) a-- fmt.Printf(\"a--=%d\\n\", a) } 和其他语言不同的是，Go语言不提供++a，–a运算符，只提供a++，a–。\n关系运算符 关系运算符用来判断两个值的关系。下表列出了Go语言支持的关系运算符。\n运算符 说明 == 判断两个值是否相等 != 判断两个值是否不相等 \u003e 判断运算符左边的值是否大于右边的值 \u003c 判断运算符左边的值是否小于右边的值 \u003e= 判断运算符左边的值是否大于等于右边的值 \u003c= 判断运算符左边的值是否小于等于右边的值 package main import \"fmt\" func main() { var ( a = 10 b = 20 ) if a == b { fmt.Println(\"a==b\") } else { fmt.Println(\"a!=b\") } if a \u003c b { fmt.Println(\"a",
+  "wordCount" : "878",
+  "inLanguage": "zh",
+  "datePublished": "2021-02-26T16:04:33Z",
+  "dateModified": "2021-02-26T16:04:33Z",
+  "author":{
+    "@type": "Person",
+    "name": "Lei Xia"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://www.ddhigh.com/2021/02/26/golang-basic/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "每天进步一点点",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.ddhigh.com/favicon.ico"
+    }
+  }
+}
+</script>
+    <link rel="icon" href="/img/favicon.ico" sizes="16x16">
+
+<link rel="apple-touch-icon" href="/img/favicon.ico">
+
+<link rel="manifest" href="/img/favicon.ico">
+    
+
+    <link rel="stylesheet" href="https://cdn.staticfile.org/lxgw-wenkai-webfont/1.6.0/style.css" />
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/main.min.d0df733b91ef046970ecd63de7aa626886fd263fd3fb2b8ff28b560e505831f7.css" integrity="sha256-0N9zO5HvBGlw7NY956piaIb9Jj/T&#43;yuP8otWDlBYMfc="
+        crossorigin="anonymous" media="screen" />
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css" integrity="sha512-ygEyjMC6rqnzJqWGjRTJUPYMEs9JUOm3i7OWUS9CgQ4XkBUvMsgCS1I8JqavidQ2ClHcREB7IbA2mN08+r9Elg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    
+    <link rel="stylesheet" href="/scss/highlight/github-dark.min.min.66034289ee9a113219a2c4aae0a8bd2095ab255c832a42efcf5863f10814e7a1.css" />
+
+    
+    <script src="/js/highlight.min.min.894ca9c68afab956438c4926a0dc7f5293e04e08595bd27abdb123e94801f684.js"></script>
+    <script>hljs.highlightAll();</script>
+
+    <script>{ { $darkModeInit.Content | safeJS } }</script>
+    </head><body>
+      <main class="wrapper"><nav class="navigation">
+    <section class="container">
+        <a class="navigation-brand" href="/">
+            每天进步一点点
+        </a>
+        <input type="checkbox" id="menu-toggle" />
+        <label class="menu-button float-right" for="menu-toggle">
+            <span></span><span></span><span></span>
+        </label>
+        
+        <ul class="navigation-list" id="navigation-list">
+            
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/">首页</a>
+            </li>
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/archives">归档</a>
+            </li>
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/books">出版物</a>
+            </li>
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/guestbook">留言板</a>
+            </li>
+            
+            
+
+            <li class="navigation-item menu-separator">
+                <span>|</span>
+            </li>
+
+            
+            
+            <li class="navigation-item navigation-social">
+                <a class="navigation-link" href="https://github.com/xialeistudio"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a>
+            </li>
+            
+            
+
+            <li class="navigation-item navigation-dark">
+                <button id="mode" type="button" aria-label="toggle user light or dark theme">
+                    <span class="toggle-dark"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></span>
+                    <span class="toggle-light"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></span>
+                </button>
+            </li>
+
+            
+            
+            
+            
+            
+            
+            
+            <li class="navigation-item navigation-language">
+                <a href="https://www.ddhigh.com/en/">EN</a>
+            </li>
+            
+            
+            
+            
+        </ul>
+        
+    </section>
+</nav>
+<div id="content">
+<article class="blog-single">
+  <header class="blog-title">
+    <h1>Golang程序设计——基本语法</h1>
+  </header>
+
+  <p>
+  <small>
+    2021年2月26日&nbsp;· 878 字&nbsp;· 5 分钟</small>
+
+  
+<p>
+
+  <div class="blog-toc">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#变量和常量">变量和常量</a>
+      <ul>
+        <li><a href="#变量声明">变量声明</a></li>
+        <li><a href="#多变量声明">多变量声明</a></li>
+        <li><a href="#简短变量声明">简短变量声明</a></li>
+        <li><a href="#变量声明最佳实践">变量声明最佳实践</a></li>
+        <li><a href="#变量和零值">变量和零值</a></li>
+        <li><a href="#变量作用域">变量作用域</a></li>
+        <li><a href="#声明常量">声明常量</a></li>
+      </ul>
+    </li>
+    <li><a href="#数据类型">数据类型</a>
+      <ul>
+        <li><a href="#布尔类型">布尔类型</a></li>
+        <li><a href="#数值型">数值型</a></li>
+        <li><a href="#字符串类型">字符串类型</a></li>
+      </ul>
+    </li>
+    <li><a href="#运算符">运算符</a>
+      <ul>
+        <li><a href="#算术运算符">算术运算符</a></li>
+        <li><a href="#关系运算符">关系运算符</a></li>
+        <li><a href="#逻辑运算符">逻辑运算符</a></li>
+        <li><a href="#位运算符">位运算符</a></li>
+      </ul>
+    </li>
+    <li><a href="#条件语句">条件语句</a></li>
+    <li><a href="#循环语句">循环语句</a>
+      <ul>
+        <li><a href="#for">for</a></li>
+        <li><a href="#while">while</a></li>
+        <li><a href="#foreach">foreach</a></li>
+        <li><a href="#continue">continue</a></li>
+        <li><a href="#315---break">3.1.5   break</a></li>
+      </ul>
+    </li>
+    <li><a href="#小结">小结</a></li>
+  </ul>
+</nav>
+  </div>
+
+  <section class="blog-content">
+    <p>本文学习Go语言基本语法，例如变量和常量、数据类型、运算符、条件语句、循环语句。</p>
+<h2 id="变量和常量">变量和常量</h2>
+<p>变量和常量是计算机程序不可或缺的部分。本节将介绍如何在Go程序中声明、使用变量和常量、还将介绍声明方式和作用域。</p>
+<h3 id="变量声明">变量声明</h3>
+<p>在Go语言中，声明变量的方式有多种。在前面的文章介绍过，Go语言是一种静态类型语言，因此声明变量时必须指明其类型。</p>
+<p>例：声明string类型的变量。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">s1</span> <span style="color:#66d9ef">string</span> = <span style="color:#e6db74">&#34;Hello World&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">s2</span> = <span style="color:#e6db74">&#34;Hello World&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">s3</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">s3</span> = <span style="color:#e6db74">&#34;Hello World&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">s1</span>, <span style="color:#a6e22e">s2</span>, <span style="color:#a6e22e">s3</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
+<li>
+<p>使用关键字var声明变量。</p>
+</li>
+<li>
+<p>如果变量类型可以通过值推导则不用声明类型。s2通过值可以推导类型为string类型。</p>
+</li>
+<li>
+<p>变量可以在声明后赋值，未赋值的变量值为该类型的零值。</p>
+</li>
+</ul>
+<blockquote>
+<p>变量的类型很重要，因为这决定了可将什么值赋给该变量。例如，对于类型为string的变量，不能将整数赋值给它。将不匹配的值赋值给变量时，将导致编译错误。</p>
+</blockquote>
+<p>例：将string类型的值赋值给int类型的变量。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">i</span> <span style="color:#66d9ef">int</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">i</span> = <span style="color:#e6db74">&#34;Hello World&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">i</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>编译该文件将导致编译错误。</p>
+<pre tabindex="0"><code>go build main.go 
+# command-line-arguments
+./main.go:7:4: cannot use &#34;Hello World&#34; (type untyped string) as type int in assignment
+</code></pre><h3 id="多变量声明">多变量声明</h3>
+<p>例：声明多个<strong>类型相同</strong>的变量并进行赋值（显式指定类型）。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">s1</span>, <span style="color:#a6e22e">s2</span> <span style="color:#66d9ef">string</span> = <span style="color:#e6db74">&#34;S1&#34;</span>, <span style="color:#e6db74">&#34;S2&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">s1</span>, <span style="color:#a6e22e">s2</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>例：声明多个<strong>类型不同</strong>的变量并进行赋值（不能显式指定类型）。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">s1</span>, <span style="color:#a6e22e">i1</span>= <span style="color:#e6db74">&#34;S1&#34;</span>, <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">s1</span>, <span style="color:#a6e22e">i1</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>例：声明多个<strong>类型不同</strong>的变量（显式指定类型）。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> (
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">s1</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">i1</span> <span style="color:#66d9ef">int</span>
+</span></span><span style="display:flex;"><span>	)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">s1</span> = <span style="color:#e6db74">&#34;Hello&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">i1</span> = <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">s1</span>, <span style="color:#a6e22e">i1</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><blockquote>
+<p>声明变量后可以再次赋值，但是同一个变量只允许声明一次，否则将导致编译错误。</p>
+</blockquote>
+<h3 id="简短变量声明">简短变量声明</h3>
+<p>在<strong>函数</strong>中声明变量时，可以用更简洁的方式。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">s1</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;Hello World&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">s1</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
+<li>
+<p>:=表示简短变量声明，可以不使用var，不指定类型，但是必须进行赋值。</p>
+</li>
+<li>
+<p>只能在函数中使用简短变量声明。</p>
+</li>
+</ul>
+<h3 id="变量声明最佳实践">变量声明最佳实践</h3>
+<p>Go语言提供了多种变量声明方式，下面的声明方式都是合法的。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">s</span> <span style="color:#66d9ef">string</span> = <span style="color:#e6db74">&#34;Hello&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">s1</span> = <span style="color:#e6db74">&#34;Hello&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">s2</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">s2</span> = <span style="color:#e6db74">&#34;Hello&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">s3</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;Hello&#34;</span>
+</span></span></code></pre></div><p>该使用哪种方式呢？</p>
+<p>Go语言对此有一个限制——只能在函数内部使用简短变量声明，在函数外部必须使用var进行声明。</p>
+<blockquote>
+<p>在标准库中遵循的约定如下：有初始值的情况下，在函数内使用简短变量声明，在函数外使用var并省略类型；无初始值的情况下使用var并指定类型。</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">s</span> = <span style="color:#e6db74">&#34;Hello World&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">s1</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;Hello World&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">s</span>, <span style="color:#a6e22e">s1</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="变量和零值">变量和零值</h3>
+<p>在Go语言中，声明变量时如果未初始化，则变量为默认值，该默认值也称为零值。在其他语言中未初始化的值为null或undefined。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">s</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">i</span> <span style="color:#66d9ef">int</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">b</span> <span style="color:#66d9ef">bool</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">f</span> <span style="color:#66d9ef">float32</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%v %v %v %v\n&#34;</span>, <span style="color:#a6e22e">s</span>, <span style="color:#a6e22e">i</span>, <span style="color:#a6e22e">b</span>, <span style="color:#a6e22e">f</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>在Go语言中，检查变量是否为空，必须与该类型的零值比较。例如检测string类型的变量是否为空，可以与&quot;&ldquo;判定。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">s</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">s</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;&#34;</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;s为空&#34;</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="变量作用域">变量作用域</h3>
+<p>作用域指变量可以在什么地方使用，而不是说变量在哪里声明的。Go语言使用基于块的词法作用域，简单来说就是{}会产生一个作用域。</p>
+<p>Go语言作用域规则如下：</p>
+<ol>
+<li>一对大括号({})表示一个块，块是可以嵌套的</li>
+<li>对于在块内声明的变量，可以在本块以及子块中访问</li>
+<li>子块可以访问父块的变量，父块不能访问子块的变量</li>
+</ol>
+<p>例：Go语言的作用域。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">s1</span> = <span style="color:#e6db74">&#34;s1&#34;</span>
+</span></span><span style="display:flex;"><span>	{
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">s2</span> = <span style="color:#e6db74">&#34;s2&#34;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// 可以访问s1,s2
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">s1</span>, <span style="color:#a6e22e">s2</span>)
+</span></span><span style="display:flex;"><span>		{
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">s3</span> = <span style="color:#e6db74">&#34;s3&#34;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#75715e">// 可以访问s1,s2,s3
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>			<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">s1</span>, <span style="color:#a6e22e">s2</span>, <span style="color:#a6e22e">s3</span>)
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 只能访问s1
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">s1</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><blockquote>
+<p>简单来说，就是块内可以访问块外的变量，块外不能访问块内变量。</p>
+</blockquote>
+<h3 id="声明常量">声明常量</h3>
+<p>常量只在整个程序运行过程中都不变的值，常量必须在声明时赋值，声明后不可以更改。</p>
+<p>Go语言使用const关键字声明常量。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">s</span> = <span style="color:#e6db74">&#34;Hello&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">s2</span> = <span style="color:#e6db74">&#34;World&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">s3</span>,<span style="color:#a6e22e">s4</span> = <span style="color:#e6db74">&#34;Hello&#34;</span>,<span style="color:#e6db74">&#34;World&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">s</span>, <span style="color:#a6e22e">s2</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><blockquote>
+<p>常量也支持一次声明多个，此外常量的作用域和变量作用域一致。</p>
+</blockquote>
+<h2 id="数据类型">数据类型</h2>
+<p>Go语言提供了丰富的数据类型，按类别分为布尔型、数值型（整数、浮点数、复数）、字符串型 、派生型。其中派声型包括指针类型、数组类型、结构体类型、接口类型、Channel类型、函数类型、切片类型和Map类型。</p>
+<p>派生类型我们将在后面的内容中进行介绍。</p>
+<h3 id="布尔类型">布尔类型</h3>
+<p>布尔类型值只能为true或false。某些语言允许使用1和0来表示true和false，但Go语言不允许。</p>
+<p>布尔类型的零值为false。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">b</span> <span style="color:#66d9ef">bool</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">b</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;b是true&#34;</span>)
+</span></span><span style="display:flex;"><span>	} <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;b是false&#34;</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>} 
+</span></span></code></pre></div><h3 id="数值型">数值型</h3>
+<p>Go语言中数值型包含整数、浮点数以及复数。</p>
+<p><strong>整数型</strong></p>
+<table>
+<thead>
+<tr>
+<th><strong>类型</strong></th>
+<th><strong>字节数</strong></th>
+<th><strong>范围</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>byte</td>
+<td>1</td>
+<td>0 ~ 28</td>
+</tr>
+<tr>
+<td>uint8</td>
+<td>1</td>
+<td>0 ~ 28</td>
+</tr>
+<tr>
+<td>int8</td>
+<td>1</td>
+<td>-27 ~ 27-1</td>
+</tr>
+<tr>
+<td>uint16</td>
+<td>2</td>
+<td>0 ~ 216</td>
+</tr>
+<tr>
+<td>int16</td>
+<td>2</td>
+<td>-215 ~ 215-1</td>
+</tr>
+<tr>
+<td>uint32</td>
+<td>4</td>
+<td>0 ~ 232</td>
+</tr>
+<tr>
+<td>int32</td>
+<td>4</td>
+<td>-231 ~ 231-1</td>
+</tr>
+<tr>
+<td>uint64</td>
+<td>8</td>
+<td>0 ~ 264</td>
+</tr>
+<tr>
+<td>int64</td>
+<td>8</td>
+<td>263 ~ 263-1</td>
+</tr>
+<tr>
+<td>int</td>
+<td>平台相关(32位或64位)</td>
+<td></td>
+</tr>
+<tr>
+<td>uint</td>
+<td>平台相关(32位或64位)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>浮点数</strong></p>
+<table>
+<thead>
+<tr>
+<th><strong>类型</strong></th>
+<th><strong>字节数</strong></th>
+<th><strong>范围</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>float32</td>
+<td>4</td>
+<td>-3.403E38 ~ 3.403E38</td>
+</tr>
+<tr>
+<td>float64</td>
+<td>8</td>
+<td>-1.798E308 ~ 1.798E308</td>
+</tr>
+</tbody>
+</table>
+<p><strong>复数</strong></p>
+<p>略</p>
+<h3 id="字符串类型">字符串类型</h3>
+<p>字符串可以是任何字符序列，包括数字、字母和符号。Go语言使用Unicode来存储字符串，因此可以支持世界上所有的语言。</p>
+<p>下面是一些字符串示例：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">s</span> = <span style="color:#e6db74">&#34;$%^&amp;*&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">s2</span> = <span style="color:#e6db74">&#34;1234&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">s3</span> = <span style="color:#e6db74">&#34;你好&#34;</span>
+</span></span></code></pre></div><h2 id="运算符">运算符</h2>
+<p>运算符用于在程序运行时执行数据运算和逻辑运算。Go语言支持的运算符有：</p>
+<ul>
+<li>
+<p>算术运算符</p>
+</li>
+<li>
+<p>逻辑运算符</p>
+</li>
+<li>
+<p>关系运算符</p>
+</li>
+<li>
+<p>位运算符</p>
+</li>
+</ul>
+<h3 id="算术运算符">算术运算符</h3>
+<p>算术运算符是用来对数值类型进行算术运算的。下表列出了Go语言支持的算术运算符。</p>
+<table>
+<thead>
+<tr>
+<th>运算符</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>+</td>
+<td>相加</td>
+</tr>
+<tr>
+<td>-</td>
+<td>相减</td>
+</tr>
+<tr>
+<td>*</td>
+<td>相乘</td>
+</tr>
+<tr>
+<td>/</td>
+<td>相除</td>
+</tr>
+<tr>
+<td>%</td>
+<td>取余</td>
+</tr>
+<tr>
+<td>++</td>
+<td>自增</td>
+</tr>
+<tr>
+<td>&ndash;</td>
+<td>自减</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> (
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">a</span> = <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">b</span> = <span style="color:#ae81ff">20</span>
+</span></span><span style="display:flex;"><span>	)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;a+b=%d\n&#34;</span>, <span style="color:#a6e22e">a</span><span style="color:#f92672">+</span><span style="color:#a6e22e">b</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;a-b=%d\n&#34;</span>, <span style="color:#a6e22e">a</span><span style="color:#f92672">-</span><span style="color:#a6e22e">b</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;a*b=%d\n&#34;</span>, <span style="color:#a6e22e">a</span><span style="color:#f92672">*</span><span style="color:#a6e22e">b</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;a/b=%d\n&#34;</span>, <span style="color:#a6e22e">a</span><span style="color:#f92672">/</span><span style="color:#a6e22e">b</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;a%%b=%d\n&#34;</span>, <span style="color:#a6e22e">a</span><span style="color:#f92672">%</span><span style="color:#a6e22e">b</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">a</span><span style="color:#f92672">++</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;a++=%d\n&#34;</span>, <span style="color:#a6e22e">a</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">a</span><span style="color:#f92672">--</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;a--=%d\n&#34;</span>, <span style="color:#a6e22e">a</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><blockquote>
+<p>和其他语言不同的是，Go语言不提供++a，&ndash;a运算符，只提供a++，a&ndash;。</p>
+</blockquote>
+<h3 id="关系运算符">关系运算符</h3>
+<p>关系运算符用来判断两个值的关系。下表列出了Go语言支持的关系运算符。</p>
+<table>
+<thead>
+<tr>
+<th>运算符</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>==</td>
+<td>判断两个值是否相等</td>
+</tr>
+<tr>
+<td>!=</td>
+<td>判断两个值是否不相等</td>
+</tr>
+<tr>
+<td>&gt;</td>
+<td>判断运算符左边的值是否大于右边的值</td>
+</tr>
+<tr>
+<td>&lt;</td>
+<td>判断运算符左边的值是否小于右边的值</td>
+</tr>
+<tr>
+<td>&gt;=</td>
+<td>判断运算符左边的值是否大于等于右边的值</td>
+</tr>
+<tr>
+<td>&lt;=</td>
+<td>判断运算符左边的值是否小于等于右边的值</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> (
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">a</span> = <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">b</span> = <span style="color:#ae81ff">20</span>
+</span></span><span style="display:flex;"><span>	)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">a</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">b</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;a==b&#34;</span>)
+</span></span><span style="display:flex;"><span>	} <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;a!=b&#34;</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">a</span> &lt; <span style="color:#a6e22e">b</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;a&lt;b&#34;</span>)
+</span></span><span style="display:flex;"><span>	} <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;a&gt;=b&#34;</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">a</span> <span style="color:#f92672">&lt;=</span> <span style="color:#a6e22e">b</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;a&lt;=b&#34;</span>)
+</span></span><span style="display:flex;"><span>	} <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;a&gt;b&#34;</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="逻辑运算符">逻辑运算符</h3>
+<p>逻辑运算符用来对操作数进行逻辑判断。下表列出了Go语言支持的逻辑运算符。</p>
+<table>
+<thead>
+<tr>
+<th>运算符</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&amp;&amp;</td>
+<td>逻辑与。两边操作数都为true则结果为true，否则为false</td>
+</tr>
+<tr>
+<td>||</td>
+<td>逻辑或。两边操作数只要有一个为true则结果为true，否则为false</td>
+</tr>
+<tr>
+<td>!</td>
+<td>逻辑非。如果操作数为true则结果为false，否则为true</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">a</span>, <span style="color:#a6e22e">b</span> = <span style="color:#66d9ef">true</span>, <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">a</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">b</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;a和b同时为true&#34;</span>)
+</span></span><span style="display:flex;"><span>	} <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;a和b至少一个为false&#34;</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">a</span> <span style="color:#f92672">||</span> <span style="color:#a6e22e">b</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;a和b至少一个为true&#34;</span>)
+</span></span><span style="display:flex;"><span>	} <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;a和b都为false&#34;</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">a</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;a是false&#34;</span>)
+</span></span><span style="display:flex;"><span>	} <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;a是true&#34;</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="位运算符">位运算符</h3>
+<p>位运算符用来对整数进行二进制位操作。下表列出了Go语言支持的位运算符。</p>
+<table>
+<thead>
+<tr>
+<th>运算符</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&amp;</td>
+<td>按位与</td>
+</tr>
+<tr>
+<td>|</td>
+<td>按位或</td>
+</tr>
+<tr>
+<td>^</td>
+<td>按位异或</td>
+</tr>
+<tr>
+<td>&raquo;</td>
+<td>右移</td>
+</tr>
+<tr>
+<td>&laquo;</td>
+<td>左移</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> (
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">a</span> = <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">b</span> = <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>	)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;a&amp;b=%d\n&#34;</span>, <span style="color:#a6e22e">a</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">b</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;a|b=%d\n&#34;</span>, <span style="color:#a6e22e">a</span>|<span style="color:#a6e22e">b</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;a^b=%d\n&#34;</span>, <span style="color:#a6e22e">a</span>^<span style="color:#a6e22e">b</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;a&gt;&gt;1=%d\n&#34;</span>, <span style="color:#a6e22e">a</span><span style="color:#f92672">&gt;&gt;</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;a&lt;&lt;1=%d\n&#34;</span>, <span style="color:#a6e22e">a</span><span style="color:#f92672">&lt;&lt;</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="条件语句">条件语句</h2>
+<p>条件语句是计算机程序的重要组成部分，几乎所有编程语言都支持。简单地说，条件语句检查指定的条件是否满足，并在满足时执行指定的操作。</p>
+<p>下表列出了Go语言支持的条件语句。</p>
+<table>
+<thead>
+<tr>
+<th>if</th>
+<th>由一个布尔表达式后紧跟一个或多个语句组成。</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>if&hellip;else if&hellip;else</td>
+<td>由多个布尔表达式分支组成，并提供例外分支</td>
+</tr>
+<tr>
+<td>switch</td>
+<td>基于不同条件执行不同操作，并提供默认操作</td>
+</tr>
+</tbody>
+</table>
+<p>例：if的使用。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">a</span> = <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">a</span> &gt; <span style="color:#ae81ff">10</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;a大于10&#34;</span>)
+</span></span><span style="display:flex;"><span>	} <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">a</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">10</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;a等于10&#34;</span>)
+</span></span><span style="display:flex;"><span>	} <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;a小于10&#34;</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>例：switch的使用。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">a</span> = <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">switch</span> <span style="color:#a6e22e">a</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">case</span> <span style="color:#ae81ff">1</span>:
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;a等于1&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">case</span> <span style="color:#ae81ff">2</span>:
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;a等于2&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">case</span> <span style="color:#ae81ff">10</span>:
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;a等于3&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">default</span>:
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;默认分支&#34;</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><blockquote>
+<p>和其他语言不同，Go语言的case分支不需要添加break。</p>
+</blockquote>
+<h2 id="循环语句">循环语句</h2>
+<p>在其他语言中一般会提供for、while、foreach等关键字实现循环，而在Go语言中只提供for关键字，但是也实现了类似的效果。</p>
+<h3 id="for">for</h3>
+<p>for循环有着经典的三段式结构：</p>
+<ol>
+<li>
+<p>循环初始化</p>
+</li>
+<li>
+<p>循环终止条件</p>
+</li>
+<li>
+<p>循环步进条件</p>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#ae81ff">10</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">i</span>)
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="while">while</h3>
+<p>while循环指定循环终止条件，不满足条件时循环一直执行并向终止条件靠拢，满足条件后终止循环。（无终止条件的循环称为死循环）</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> &lt; <span style="color:#ae81ff">10</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">i</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>死循环不需要终止条件。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;time&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">i</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Sleep</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>)
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="foreach">foreach</h3>
+<p>foreach循环多用来遍历列表、字典等数据结构。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">list</span> <span style="color:#f92672">:=</span> []<span style="color:#66d9ef">int</span>{<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>}
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">index</span>, <span style="color:#a6e22e">value</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">list</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">index</span>, <span style="color:#a6e22e">value</span>)
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="continue">continue</h3>
+<p>continue用来跳过本次循环继续执行下次循环。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#ae81ff">5</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">continue</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">i</span>)
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>该程序判断i为1时跳过并执行下次循环，该程序输出如下。</p>
+<pre tabindex="0"><code>0
+2
+3
+4
+</code></pre><h3 id="315---break">3.1.5   break</h3>
+<p>break用来跳出循环，后续循环将不执行。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#ae81ff">5</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">i</span>)
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>该程序判断i为1时跳出循环，该程序输出如下。</p>
+<pre tabindex="0"><code>0
+</code></pre><h2 id="小结">小结</h2>
+<p>本文介绍了Go语言的基本语法，包括变量和常量的使用、基础数据类型、流程控制等知识。下一章将介绍Go语言的数据容器类型，包括数组、切片和映射。</p>
+<p><img src="https://static.ddhigh.com/blog/2021-02-26-161953-2.png" alt="img"></p>
+
+    <div class="blog-footer">
+    <div class="social-share"></div>
+    <div class="copyright">
+        <ul>
+            <li style="margin-bottom: 0.5em;">本文作者: <a href="https://ddhigh.com/" target="_blank"
+                    style="color: #000000; text-decoration: none;">xialeistudio</a></li>
+            <li style="margin-bottom: 0.5em;">本文链接: <a href="https://www.ddhigh.com/2021/02/26/golang-basic/" target="_blank"
+                    style="color: #000000; text-decoration: none;">Golang程序设计——基本语法</a></li>
+            <li>版权声明: <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank"
+                    style="color: #000000; text-decoration: none;">「署名-非商业性使用-相同方式共享 4.0 国际」</a></li>
+        </ul>
+    </div>
+    
+    <div style="margin-top: 2rem;"><img src="/img/mp.png" alt="qrcode"></div>
+    
+</div>
+  </section>
+
+  
+  
+  <div class="paginator">
+    
+    <a class="prev" href="https://www.ddhigh.com/2021/03/09/golang-data-container/">
+      <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M3.77086 21.1546C11.0491 22.698 21.4339 21.7773 21.4339 16.3608V4.63375C21.4339 3.93962 21.3581 3.30535 21.1917 2.76787M3.77086 21.1546C1.9934 20.7777 0.973585 18.7264 1.08749 16.688C1.2668 13.479 1.15721 9.43135 1.00513 6.21507C0.87809 3.52811 3.12891 1.16316 5.51029 1.25008C9.76594 1.40542 15.377 1.20229 18.7912 1.00542C20.0864 0.930734 20.8406 1.63385 21.1917 2.76787M3.77086 21.1546C4.56586 21.4723 5.49168 21.7879 6.5 22.0658M21.1917 2.76787C23.1097 4.18217 23.13 12.4191 22.9004 16.3608C20.8478 24.0194 12.3061 23.6662 6.5 22.0658M21.1917 2.76787C21.7612 4.51192 22.7203 9.67216 22 16.3608C21.2797 23.0494 11.3665 22.9511 6.5 22.0658M9.94496 9C9.28897 9.61644 7.63215 10.997 6.04814 11.7966C5.98257 11.8297 5.98456 11.9753 6.05061 12.0063C7.05496 12.4779 8.92941 13.9264 9.94496 15M6.44444 11.9667C8.86549 12.0608 14 12 16 11"
+          stroke="currentColor" stroke-linecap="round" />
+      </svg>
+      <span>Golang程序设计——数据容器</span></a>
+    
+    
+    <a class="next" href="https://www.ddhigh.com/2021/02/25/fix-gittalk-github/"><span>修复GitTalk出现Forbidden问题</span>
+      <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M3.77086 21.1546C11.0491 22.698 21.4339 21.7773 21.4339 16.3608V4.63375C21.4339 3.93962 21.3581 3.30535 21.1917 2.76787M3.77086 21.1546C1.9934 20.7777 0.973585 18.7264 1.08749 16.688C1.2668 13.479 1.15721 9.43135 1.00513 6.21507C0.87809 3.52811 3.12891 1.16316 5.51029 1.25008C9.76594 1.40542 15.377 1.20229 18.7912 1.00542C20.0864 0.930734 20.8406 1.63385 21.1917 2.76787M3.77086 21.1546C4.56586 21.4723 5.49168 21.7879 6.5 22.0658M21.1917 2.76787C23.1097 4.18217 23.13 12.4191 22.9004 16.3608C20.8478 24.0194 12.3061 23.6662 6.5 22.0658M21.1917 2.76787C21.7612 4.51192 22.7203 9.67216 22 16.3608C21.2797 23.0494 11.3665 22.9511 6.5 22.0658M12.055 9C12.711 9.61644 14.3679 10.997 15.9519 11.7966C16.0174 11.8297 16.0154 11.9753 15.9494 12.0063C14.945 12.4779 13.0706 13.9264 12.055 15M15.5556 11.9667C13.1345 12.0608 8 12 6 11"
+          stroke="currentColor" stroke-linecap="round" />
+      </svg>
+    </a>
+    
+  </div>
+  
+
+  
+
+
+  
+  
+<div class="comments">
+  <script>
+      const getTheme = window.localStorage && window.localStorage.getItem("theme");
+      let theme = getTheme === 'dark' ? 'dark' : 'light';
+      let s = document.createElement('script');
+      s.src = 'https://giscus.app/client.js';
+      s.setAttribute('data-repo', 'xialeistudio\/discussion');
+      s.setAttribute('data-repo-id', 'R_kgDOKurTRA');
+      s.setAttribute('data-category', 'General');
+      s.setAttribute('data-category-id', 'DIC_kwDOKurTRM4CbCJt');
+      s.setAttribute('data-mapping', 'pathname');
+      s.setAttribute('data-strict', '0');
+      s.setAttribute('data-reactions-enabled', '1');
+      s.setAttribute('data-emit-metadata', '0');
+      s.setAttribute('data-input-position', 'bottom');
+      s.setAttribute('data-theme', theme);
+      s.setAttribute('data-lang', 'en');
+      s.setAttribute('data-loading', 'lazy');
+      s.setAttribute('crossorigin', 'anonymous');
+      s.setAttribute('async', '');
+      document.querySelector('div.comments').innerHTML = '';
+      document.querySelector('div.comments').appendChild(s);
+  </script>
+</div>
+
+</article>
+
+
+        </div><footer class="footer">
+    <p>&copy; 2014 - 2024 <a href="https://www.ddhigh.com">每天进步一点点</a>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener" target="_blank">Hugo️️</a>
+        <a href="https://github.com/guangzhengli/hugo-theme-ladder" rel="noopener" target="_blank">Ladder</a>
+        ️ </p>
+</footer>
+
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10.5376 22.7916C11.0152 22.7207 22.5795 21.1781 22.0978 10.4211C22.0536 9.43274 21.9303 8.53367 21.7387 7.71865M10.5376 22.7916C16.876 22.3728 20.0969 19.8899 21.5383 16.9142M10.5376 22.7916C9.7707 22.9055 8.97982 22.8964 8.19743 22.7725M21.7387 7.71865C21.4988 6.69828 21.1518 5.80967 20.7188 5.04257M21.7387 7.71865C22.6022 10.1105 23.0542 13.7848 21.5383 16.9142M20.7188 5.04257C17.1684 -1.24629 7.83127 0.632493 4.27577 5.04257C2.88063 6.77451 -0.0433281 11.1668 1.38159 16.6571C2.27481 20.0988 5.17269 22.2936 8.19743 22.7725M20.7188 5.04257C22.0697 6.9404 24.0299 11.3848 22.3541 15.4153M21.5383 16.9142C21.8737 16.4251 22.1428 15.9235 22.3541 15.4153M8.19743 22.7725C12.1971 23.4683 20.6281 22.971 22.3541 15.4153M14 10.945C13.3836 10.289 12.003 8.63215 11.2034 7.04814C11.1703 6.98257 11.0247 6.98456 10.9937 7.05061C10.5221 8.05496 9.07362 9.92941 8 10.945M11.0333 7.44444C10.9392 9.86549 11 15 12 17"
+              stroke="currentColor" stroke-linecap="round"/>
+    </svg>
+</a>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'Copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'Copied';
+            setTimeout(() => {
+                copybutton.innerHTML = 'Copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {
+            }
+            ;
+            selection.removeRange(range);
+        });
+        codeblock.parentNode.appendChild(copybutton);
+    });
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js" integrity="sha512-9DNXrSjk17bU9MUbRp3IjwcWe46V8FaGA062PFbryPUAEQVRbz4jiZP6FW0AdbqEGtMYBDWnul3eiGBMJOQajA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script></main>
+    </body><script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha512-N9IJRoc3LaP3NDoiGkcPa4gG94kapGpaA5Zq9/Dr04uf5TbLFU5q0o8AbRhLKUUlp8QFS2u7S+Yti0U7QtuZvQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script>
+      const images = Array.from(document.querySelectorAll(".blog-content img"));
+      images.forEach(img => {
+          mediumZoom(img, {
+              margin: 10,  
+              scrollOffset: 40,  
+              container: null,  
+              template: null,  
+              background: 'rgba(0, 0, 0, 0.5)'
+          });
+      });
+  </script>
+
+  
+  <script src="/main.min.6bb26b69159420159c74dc9e097b06a578ed2b68c701466a91a44a9632d851bd0af167a1b30012387b4c512b48ad9ad4d3394e04d77ae38d57e1920fe4ed34fe.js" integrity="sha512-a7JraRWUIBWcdNyeCXsGpXjtK2jHAUZqkaRKljLYUb0K8WehswASOHtMUStIrZrU0zlOBNd6441X4ZIP5O00/g==" crossorigin="anonymous" defer></script></html>

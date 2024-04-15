@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>context on 每天进步一点点</title>
+    <link>https://www.ddhigh.com/tags/context/</link>
+    <description>Recent content in context on 每天进步一点点</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <lastBuildDate>Wed, 02 Jan 2019 17:54:59 +0000</lastBuildDate><atom:link href="https://www.ddhigh.com/tags/context/atom.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>一起学context（二）——超时控制</title>
+      <link>https://www.ddhigh.com/2019/01/02/golang-timeout-context/</link>
+      <pubDate>Wed, 02 Jan 2019 17:54:59 +0000</pubDate>
+      
+      <guid>https://www.ddhigh.com/2019/01/02/golang-timeout-context/</guid>
+    </item>
+    
+    <item>
+      <title>一起学context（一）——上下文值传递</title>
+      <link>https://www.ddhigh.com/2018/10/17/golang-context-with-value/</link>
+      <pubDate>Wed, 17 Oct 2018 21:50:20 +0000</pubDate>
+      
+      <guid>https://www.ddhigh.com/2018/10/17/golang-context-with-value/</guid>
+    </item>
+    
+  </channel>
+</rss>

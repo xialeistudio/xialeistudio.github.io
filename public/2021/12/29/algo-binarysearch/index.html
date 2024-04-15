@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="zh"><head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>算法篇——二分查找</title>
+    <meta charset="utf-8">
+    
+    <meta content="Web开发 , Java , Go , Node.js , PHP , Koa , MySQL , Redis , 前端 , 后端 , 数据库" name="keywords">
+    
+    <meta name="description" content="本系列文章将学习/复习常用算法和数据结构。希望能够深入浅出的将复杂的知识讲清楚、说明白。
+本文介绍第一个基础算法：二分查找。二分查找算法可以在有序的数组中快速查询指定值。
+要求：有序数组 时间复杂度：O(logN) 空间复杂度：O(1) 例子 大家应该玩过数字猜大小的游戏，接下来看看实际过程。">
+    <meta name="author" content="Lei Xia">
+    <link rel="canonical"
+        href="https://www.ddhigh.com/2021/12/29/algo-binarysearch/">
+
+    <link rel="alternate" type="application/rss+xml" href="https://www.ddhigh.com/index.xml" title="每天进步一点点">
+
+    
+
+
+<script async defer data-website-id="52f8f0f9-d93d-466b-8ef5-508aae8c4ed4"
+    src="https://analysis.ddhigh.com/script.js"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EC3XLVSGKV"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-EC3XLVSGKV');
+</script>
+    <meta property="og:title" content="算法篇——二分查找" />
+<meta property="og:description" content="本系列文章将学习/复习常用算法和数据结构。希望能够深入浅出的将复杂的知识讲清楚、说明白。
+本文介绍第一个基础算法：二分查找。二分查找算法可以在有序的数组中快速查询指定值。
+要求：有序数组 时间复杂度：O(logN) 空间复杂度：O(1) 例子 大家应该玩过数字猜大小的游戏，接下来看看实际过程。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.ddhigh.com/2021/12/29/algo-binarysearch/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-12-29T18:32:50+00:00" />
+<meta property="article:modified_time" content="2021-12-29T18:32:50+00:00" />
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="算法篇——二分查找"/>
+<meta name="twitter:description" content="本系列文章将学习/复习常用算法和数据结构。希望能够深入浅出的将复杂的知识讲清楚、说明白。
+本文介绍第一个基础算法：二分查找。二分查找算法可以在有序的数组中快速查询指定值。
+要求：有序数组 时间复杂度：O(logN) 空间复杂度：O(1) 例子 大家应该玩过数字猜大小的游戏，接下来看看实际过程。"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://www.ddhigh.com/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "算法篇——二分查找",
+      "item": "https://www.ddhigh.com/2021/12/29/algo-binarysearch/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "算法篇——二分查找",
+  "name": "算法篇——二分查找",
+  "description": "本系列文章将学习/复习常用算法和数据结构。希望能够深入浅出的将复杂的知识讲清楚、说明白。\n本文介绍第一个基础算法：二分查找。二分查找算法可以在有序的数组中快速查询指定值。\n要求：有序数组 时间复杂度：O(logN) 空间复杂度：O(1) 例子 大家应该玩过数字猜大小的游戏，接下来看看实际过程。",
+  "keywords": [
+    "binarysearch"
+  ],
+  "articleBody": "本系列文章将学习/复习常用算法和数据结构。希望能够深入浅出的将复杂的知识讲清楚、说明白。\n本文介绍第一个基础算法：二分查找。二分查找算法可以在有序的数组中快速查询指定值。\n要求：有序数组 时间复杂度：O(logN) 空间复杂度：O(1) 例子 大家应该玩过数字猜大小的游戏，接下来看看实际过程。\n主持人从1~10选择1个数字，参与者每次猜1个数字，主持人给出提示正确/大了/小了。次数最少的获胜。\n线性查找 主持人选定数字5。 参与者：10 主持人：大了 参与者：9 主持人：大了 参与者：8 主持人：大了 … 参与者：5 主持人：正确 参与者采用线性报数方式，从最大的数字开始报，每次减1直到猜中。上面的例子主持人选的数字是5，参与者猜了6次（10,9,8,7,6,5)。效率是O(N)。\n主持人的大了/小了提示没有利用上，这肯定不是效率最高的方法。\n二分查找 主持人选定数字8。 参与者：5 主持人：小了 参与者：7 主持人：小了 参与者：8 主持人：正确 参与者根据主持人的大了/小了提示每次调整猜测范围直到猜中。上面的例子中主持人选的数字是8，参与者猜了3次：\n(0+10)/2 =\u003e 5，小了，所以下一次应该猜 比5大的数字，从 5 ~ 10继续猜 (5+10)/2 =\u003e 7(8也可以)，小了，所以下一次继续猜比7大的数字，从7~10继续猜 (7+10)/2 =\u003e 8(9也可以)，正确 可以看到二分查找法每次都能过滤掉1半的数据，达到了O(logN)的时间复杂度\n代码示例 给定一个有序数组，返回指定值的索引，如果有序数组不存在该值，返回-1。\n思路：\n找中间值，(0 + 数组最后一位的所以)/2得到中间值的位置，然后对比中间值和目标值大小 如果目标值比中间值小，那么目标值在数组前半部分，应该继续查找 0 ~ 数组中间索引-1的这部分 如果目标值比中间值大，那么目标值在数组后半部分，应该继续查找 数组中间索引+1 ~ 数组结尾的这部分 为什么继续查找时中间索引要+1或者-1移动？\n因为中间值已经比对过了，不满足条件，所以可以直接跳过中间值往前面后者后面一个位置继续查找\npackage main import \"fmt\" func main() { fmt.Println(search([]int{1, 2, 3, 4, 5, 6, 7}, 5)) } func search(nums []int, target int) int { begin := 0 end := len(nums) - 1 for begin \u003c= end { // 开始位置不能超过结束位置，超过证明所以数据都查过了 midIndex := (begin + end) / 2 // 中间索引 midValue := nums[midIndex] // 中间值 fmt.Printf(\"check pos(%v) value(%v)\\n\", midIndex, midValue) if target \u003c midValue { // 目标值比中间值小，所以在左边，将end移动到中间索引-1 end = midIndex - 1 continue } if target \u003e midValue { // 右半边，begin移动到中间索引+1 begin = midIndex + 1 continue } // 相等 return midIndex } return -1 } 输出如下\ncheck pos(3) value(4) check pos(5) value(6) check pos(4) value(5) 4 ",
+  "wordCount" : "164",
+  "inLanguage": "zh",
+  "datePublished": "2021-12-29T18:32:50Z",
+  "dateModified": "2021-12-29T18:32:50Z",
+  "author":{
+    "@type": "Person",
+    "name": "Lei Xia"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://www.ddhigh.com/2021/12/29/algo-binarysearch/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "每天进步一点点",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.ddhigh.com/favicon.ico"
+    }
+  }
+}
+</script>
+    <link rel="icon" href="/img/favicon.ico" sizes="16x16">
+
+<link rel="apple-touch-icon" href="/img/favicon.ico">
+
+<link rel="manifest" href="/img/favicon.ico">
+    
+
+    <link rel="stylesheet" href="https://cdn.staticfile.org/lxgw-wenkai-webfont/1.6.0/style.css" />
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/main.min.d0df733b91ef046970ecd63de7aa626886fd263fd3fb2b8ff28b560e505831f7.css" integrity="sha256-0N9zO5HvBGlw7NY956piaIb9Jj/T&#43;yuP8otWDlBYMfc="
+        crossorigin="anonymous" media="screen" />
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css" integrity="sha512-ygEyjMC6rqnzJqWGjRTJUPYMEs9JUOm3i7OWUS9CgQ4XkBUvMsgCS1I8JqavidQ2ClHcREB7IbA2mN08+r9Elg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    
+    <link rel="stylesheet" href="/scss/highlight/github-dark.min.min.66034289ee9a113219a2c4aae0a8bd2095ab255c832a42efcf5863f10814e7a1.css" />
+
+    
+    <script src="/js/highlight.min.min.894ca9c68afab956438c4926a0dc7f5293e04e08595bd27abdb123e94801f684.js"></script>
+    <script>hljs.highlightAll();</script>
+
+    <script>{ { $darkModeInit.Content | safeJS } }</script>
+    </head><body>
+      <main class="wrapper"><nav class="navigation">
+    <section class="container">
+        <a class="navigation-brand" href="/">
+            每天进步一点点
+        </a>
+        <input type="checkbox" id="menu-toggle" />
+        <label class="menu-button float-right" for="menu-toggle">
+            <span></span><span></span><span></span>
+        </label>
+        
+        <ul class="navigation-list" id="navigation-list">
+            
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/">首页</a>
+            </li>
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/archives">归档</a>
+            </li>
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/books">出版物</a>
+            </li>
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/guestbook">留言板</a>
+            </li>
+            
+            
+
+            <li class="navigation-item menu-separator">
+                <span>|</span>
+            </li>
+
+            
+            
+            <li class="navigation-item navigation-social">
+                <a class="navigation-link" href="https://github.com/xialeistudio"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a>
+            </li>
+            
+            
+
+            <li class="navigation-item navigation-dark">
+                <button id="mode" type="button" aria-label="toggle user light or dark theme">
+                    <span class="toggle-dark"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></span>
+                    <span class="toggle-light"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></span>
+                </button>
+            </li>
+
+            
+            
+            
+            
+            
+            
+            
+            <li class="navigation-item navigation-language">
+                <a href="https://www.ddhigh.com/en/">EN</a>
+            </li>
+            
+            
+            
+            
+        </ul>
+        
+    </section>
+</nav>
+<div id="content">
+<article class="blog-single">
+  <header class="blog-title">
+    <h1>算法篇——二分查找</h1>
+  </header>
+
+  <p>
+  <small>
+    2021年12月29日&nbsp;· 164 字&nbsp;· 1 分钟</small>
+
+  
+<p>
+
+  <div class="blog-toc">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#例子">例子</a>
+      <ul>
+        <li><a href="#线性查找">线性查找</a></li>
+        <li><a href="#二分查找">二分查找</a></li>
+      </ul>
+    </li>
+    <li><a href="#代码示例">代码示例</a></li>
+  </ul>
+</nav>
+  </div>
+
+  <section class="blog-content">
+    <p>本系列文章将学习/复习常用算法和数据结构。希望能够深入浅出的将复杂的知识讲清楚、说明白。</p>
+<p>本文介绍第一个基础算法：二分查找。二分查找算法可以在<code>有序</code>的数组中快速查询指定值。</p>
+<ul>
+<li>要求：有序数组</li>
+<li>时间复杂度：O(logN)</li>
+<li>空间复杂度：O(1)</li>
+</ul>
+<h2 id="例子">例子</h2>
+<p>大家应该玩过数字猜大小的游戏，接下来看看实际过程。</p>
+<p>主持人从1~10选择1个数字，参与者每次猜1个数字，主持人给出提示正确/大了/小了。次数最少的获胜。</p>
+<h3 id="线性查找">线性查找</h3>
+<blockquote>
+<ul>
+<li>主持人选定数字5。</li>
+<li>参与者：10</li>
+<li>主持人：大了</li>
+<li>参与者：9</li>
+<li>主持人：大了</li>
+<li>参与者：8</li>
+<li>主持人：大了</li>
+<li>&hellip;</li>
+<li>参与者：5</li>
+<li>主持人：正确</li>
+</ul>
+</blockquote>
+<p>参与者采用线性报数方式，从最大的数字开始报，每次减1直到猜中。上面的例子主持人选的数字是5，参与者猜了6次（10,9,8,7,6,5)。效率是O(N)。</p>
+<p>主持人的<code>大了/小了</code>提示没有利用上，这肯定不是效率最高的方法。</p>
+<h3 id="二分查找">二分查找</h3>
+<blockquote>
+<ul>
+<li>主持人选定数字8。</li>
+<li>参与者：5</li>
+<li>主持人：小了</li>
+<li>参与者：7</li>
+<li>主持人：小了</li>
+<li>参与者：8</li>
+<li>主持人：正确</li>
+</ul>
+</blockquote>
+<p>参与者根据主持人的<code>大了/小了</code>提示每次调整猜测范围直到猜中。上面的例子中主持人选的数字是8，参与者猜了3次：</p>
+<ol>
+<li>(0+10)/2 =&gt; 5，小了，所以下一次应该猜 比5大的数字，从 5 ~ 10继续猜</li>
+<li>(5+10)/2 =&gt; 7(8也可以)，小了，所以下一次继续猜比7大的数字，从7~10继续猜</li>
+<li>(7+10)/2 =&gt; 8(9也可以)，正确</li>
+</ol>
+<p>可以看到二分查找法每次都能过滤掉1半的数据，达到了O(logN)的时间复杂度</p>
+<h2 id="代码示例">代码示例</h2>
+<p>给定一个有序数组，返回指定值的索引，如果有序数组不存在该值，返回-1。</p>
+<p>思路：</p>
+<ol>
+<li>找中间值，(0 + 数组最后一位的所以)/2得到中间值的位置，然后对比中间值和目标值大小</li>
+<li>如果目标值比中间值小，那么目标值在数组前半部分，应该继续查找 0 ~ 数组中间索引-1的这部分</li>
+<li>如果目标值比中间值大，那么目标值在数组后半部分，应该继续查找 数组中间索引+1 ~ 数组结尾的这部分</li>
+</ol>
+<blockquote>
+<p>为什么继续查找时中间索引要+1或者-1移动？</p>
+<p>因为中间值已经比对过了，不满足条件，所以可以直接跳过中间值往前面后者后面一个位置继续查找</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">search</span>([]<span style="color:#66d9ef">int</span>{<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">7</span>}, <span style="color:#ae81ff">5</span>))
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">search</span>(<span style="color:#a6e22e">nums</span> []<span style="color:#66d9ef">int</span>, <span style="color:#a6e22e">target</span> <span style="color:#66d9ef">int</span>) <span style="color:#66d9ef">int</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">begin</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">end</span> <span style="color:#f92672">:=</span> len(<span style="color:#a6e22e">nums</span>) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">begin</span> <span style="color:#f92672">&lt;=</span> <span style="color:#a6e22e">end</span> { <span style="color:#75715e">// 开始位置不能超过结束位置，超过证明所以数据都查过了
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#a6e22e">midIndex</span> <span style="color:#f92672">:=</span> (<span style="color:#a6e22e">begin</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">end</span>) <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span> <span style="color:#75715e">// 中间索引
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#a6e22e">midValue</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">nums</span>[<span style="color:#a6e22e">midIndex</span>]    <span style="color:#75715e">// 中间值
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;check pos(%v) value(%v)\n&#34;</span>, <span style="color:#a6e22e">midIndex</span>, <span style="color:#a6e22e">midValue</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">target</span> &lt; <span style="color:#a6e22e">midValue</span> { <span style="color:#75715e">// 目标值比中间值小，所以在左边，将end移动到中间索引-1
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>			<span style="color:#a6e22e">end</span> = <span style="color:#a6e22e">midIndex</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">continue</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">target</span> &gt; <span style="color:#a6e22e">midValue</span> { <span style="color:#75715e">// 右半边，begin移动到中间索引+1
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>			<span style="color:#a6e22e">begin</span> = <span style="color:#a6e22e">midIndex</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">continue</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// 相等
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">midIndex</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>输出如下</p>
+<pre tabindex="0"><code>check pos(3) value(4)
+check pos(5) value(6)
+check pos(4) value(5)
+4
+</code></pre>
+    <div class="blog-footer">
+    <div class="social-share"></div>
+    <div class="copyright">
+        <ul>
+            <li style="margin-bottom: 0.5em;">本文作者: <a href="https://ddhigh.com/" target="_blank"
+                    style="color: #000000; text-decoration: none;">xialeistudio</a></li>
+            <li style="margin-bottom: 0.5em;">本文链接: <a href="https://www.ddhigh.com/2021/12/29/algo-binarysearch/" target="_blank"
+                    style="color: #000000; text-decoration: none;">算法篇——二分查找</a></li>
+            <li>版权声明: <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank"
+                    style="color: #000000; text-decoration: none;">「署名-非商业性使用-相同方式共享 4.0 国际」</a></li>
+        </ul>
+    </div>
+    
+    <div style="margin-top: 2rem;"><img src="/img/mp.png" alt="qrcode"></div>
+    
+</div>
+  </section>
+
+  
+  
+  <div class="paginator">
+    
+    <a class="prev" href="https://www.ddhigh.com/2022/02/05/reverse-linked-list-ii/">
+      <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M3.77086 21.1546C11.0491 22.698 21.4339 21.7773 21.4339 16.3608V4.63375C21.4339 3.93962 21.3581 3.30535 21.1917 2.76787M3.77086 21.1546C1.9934 20.7777 0.973585 18.7264 1.08749 16.688C1.2668 13.479 1.15721 9.43135 1.00513 6.21507C0.87809 3.52811 3.12891 1.16316 5.51029 1.25008C9.76594 1.40542 15.377 1.20229 18.7912 1.00542C20.0864 0.930734 20.8406 1.63385 21.1917 2.76787M3.77086 21.1546C4.56586 21.4723 5.49168 21.7879 6.5 22.0658M21.1917 2.76787C23.1097 4.18217 23.13 12.4191 22.9004 16.3608C20.8478 24.0194 12.3061 23.6662 6.5 22.0658M21.1917 2.76787C21.7612 4.51192 22.7203 9.67216 22 16.3608C21.2797 23.0494 11.3665 22.9511 6.5 22.0658M9.94496 9C9.28897 9.61644 7.63215 10.997 6.04814 11.7966C5.98257 11.8297 5.98456 11.9753 6.05061 12.0063C7.05496 12.4779 8.92941 13.9264 9.94496 15M6.44444 11.9667C8.86549 12.0608 14 12 16 11"
+          stroke="currentColor" stroke-linecap="round" />
+      </svg>
+      <span>LeetCode92——反转链表 II</span></a>
+    
+    
+    <a class="next" href="https://www.ddhigh.com/2021/09/18/gomonkey-private-method-stub/"><span>gomonkey私有方法打桩</span>
+      <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M3.77086 21.1546C11.0491 22.698 21.4339 21.7773 21.4339 16.3608V4.63375C21.4339 3.93962 21.3581 3.30535 21.1917 2.76787M3.77086 21.1546C1.9934 20.7777 0.973585 18.7264 1.08749 16.688C1.2668 13.479 1.15721 9.43135 1.00513 6.21507C0.87809 3.52811 3.12891 1.16316 5.51029 1.25008C9.76594 1.40542 15.377 1.20229 18.7912 1.00542C20.0864 0.930734 20.8406 1.63385 21.1917 2.76787M3.77086 21.1546C4.56586 21.4723 5.49168 21.7879 6.5 22.0658M21.1917 2.76787C23.1097 4.18217 23.13 12.4191 22.9004 16.3608C20.8478 24.0194 12.3061 23.6662 6.5 22.0658M21.1917 2.76787C21.7612 4.51192 22.7203 9.67216 22 16.3608C21.2797 23.0494 11.3665 22.9511 6.5 22.0658M12.055 9C12.711 9.61644 14.3679 10.997 15.9519 11.7966C16.0174 11.8297 16.0154 11.9753 15.9494 12.0063C14.945 12.4779 13.0706 13.9264 12.055 15M15.5556 11.9667C13.1345 12.0608 8 12 6 11"
+          stroke="currentColor" stroke-linecap="round" />
+      </svg>
+    </a>
+    
+  </div>
+  
+
+  
+
+
+  
+  
+<div class="comments">
+  <script>
+      const getTheme = window.localStorage && window.localStorage.getItem("theme");
+      let theme = getTheme === 'dark' ? 'dark' : 'light';
+      let s = document.createElement('script');
+      s.src = 'https://giscus.app/client.js';
+      s.setAttribute('data-repo', 'xialeistudio\/discussion');
+      s.setAttribute('data-repo-id', 'R_kgDOKurTRA');
+      s.setAttribute('data-category', 'General');
+      s.setAttribute('data-category-id', 'DIC_kwDOKurTRM4CbCJt');
+      s.setAttribute('data-mapping', 'pathname');
+      s.setAttribute('data-strict', '0');
+      s.setAttribute('data-reactions-enabled', '1');
+      s.setAttribute('data-emit-metadata', '0');
+      s.setAttribute('data-input-position', 'bottom');
+      s.setAttribute('data-theme', theme);
+      s.setAttribute('data-lang', 'en');
+      s.setAttribute('data-loading', 'lazy');
+      s.setAttribute('crossorigin', 'anonymous');
+      s.setAttribute('async', '');
+      document.querySelector('div.comments').innerHTML = '';
+      document.querySelector('div.comments').appendChild(s);
+  </script>
+</div>
+
+</article>
+
+
+        </div><footer class="footer">
+    <p>&copy; 2014 - 2024 <a href="https://www.ddhigh.com">每天进步一点点</a>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener" target="_blank">Hugo️️</a>
+        <a href="https://github.com/guangzhengli/hugo-theme-ladder" rel="noopener" target="_blank">Ladder</a>
+        ️ </p>
+</footer>
+
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10.5376 22.7916C11.0152 22.7207 22.5795 21.1781 22.0978 10.4211C22.0536 9.43274 21.9303 8.53367 21.7387 7.71865M10.5376 22.7916C16.876 22.3728 20.0969 19.8899 21.5383 16.9142M10.5376 22.7916C9.7707 22.9055 8.97982 22.8964 8.19743 22.7725M21.7387 7.71865C21.4988 6.69828 21.1518 5.80967 20.7188 5.04257M21.7387 7.71865C22.6022 10.1105 23.0542 13.7848 21.5383 16.9142M20.7188 5.04257C17.1684 -1.24629 7.83127 0.632493 4.27577 5.04257C2.88063 6.77451 -0.0433281 11.1668 1.38159 16.6571C2.27481 20.0988 5.17269 22.2936 8.19743 22.7725M20.7188 5.04257C22.0697 6.9404 24.0299 11.3848 22.3541 15.4153M21.5383 16.9142C21.8737 16.4251 22.1428 15.9235 22.3541 15.4153M8.19743 22.7725C12.1971 23.4683 20.6281 22.971 22.3541 15.4153M14 10.945C13.3836 10.289 12.003 8.63215 11.2034 7.04814C11.1703 6.98257 11.0247 6.98456 10.9937 7.05061C10.5221 8.05496 9.07362 9.92941 8 10.945M11.0333 7.44444C10.9392 9.86549 11 15 12 17"
+              stroke="currentColor" stroke-linecap="round"/>
+    </svg>
+</a>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'Copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'Copied';
+            setTimeout(() => {
+                copybutton.innerHTML = 'Copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {
+            }
+            ;
+            selection.removeRange(range);
+        });
+        codeblock.parentNode.appendChild(copybutton);
+    });
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js" integrity="sha512-9DNXrSjk17bU9MUbRp3IjwcWe46V8FaGA062PFbryPUAEQVRbz4jiZP6FW0AdbqEGtMYBDWnul3eiGBMJOQajA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script></main>
+    </body><script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha512-N9IJRoc3LaP3NDoiGkcPa4gG94kapGpaA5Zq9/Dr04uf5TbLFU5q0o8AbRhLKUUlp8QFS2u7S+Yti0U7QtuZvQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script>
+      const images = Array.from(document.querySelectorAll(".blog-content img"));
+      images.forEach(img => {
+          mediumZoom(img, {
+              margin: 10,  
+              scrollOffset: 40,  
+              container: null,  
+              template: null,  
+              background: 'rgba(0, 0, 0, 0.5)'
+          });
+      });
+  </script>
+
+  
+  <script src="/main.min.6bb26b69159420159c74dc9e097b06a578ed2b68c701466a91a44a9632d851bd0af167a1b30012387b4c512b48ad9ad4d3394e04d77ae38d57e1920fe4ed34fe.js" integrity="sha512-a7JraRWUIBWcdNyeCXsGpXjtK2jHAUZqkaRKljLYUb0K8WehswASOHtMUStIrZrU0zlOBNd6441X4ZIP5O00/g==" crossorigin="anonymous" defer></script></html>

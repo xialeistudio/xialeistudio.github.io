@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="zh"><head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React Flux ES6记事本应用</title>
+    <meta charset="utf-8">
+    
+    <meta content="Web开发 , Java , Go , Node.js , PHP , Koa , MySQL , Redis , 前端 , 后端 , 数据库" name="keywords">
+    
+    <meta name="description" content="项目地址 react-notepad-es6
+React出来有很久了，与angularjs最大的不同在于React只是一个处理UI层面的库，可以认为是“V”，而angularjs则是一整套解决方案。
+随着前端开发的组件化思想越来越浓烈，angularjs很多场合已经显得力不从心了。而这时候，核心为“模块化、组件化”的React可以派上永用场。真正用来开发项目的话，React肯定是不足的，缺少C和M模块。
+Facebook官方推荐的Flux可以认为是一个简单的解决方案，Flux没什么特别含义，就是一个facebook随便找的一个词而已。至于什么是Flux，本文不做解释，本文以Flux来开发一个记事本应用。">
+    <meta name="author" content="Lei Xia">
+    <link rel="canonical"
+        href="https://www.ddhigh.com/2016/03/24/react-flux-es6-note-app/">
+
+    <link rel="alternate" type="application/rss+xml" href="https://www.ddhigh.com/index.xml" title="每天进步一点点">
+
+    
+
+
+<script async defer data-website-id="52f8f0f9-d93d-466b-8ef5-508aae8c4ed4"
+    src="https://analysis.ddhigh.com/script.js"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EC3XLVSGKV"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-EC3XLVSGKV');
+</script>
+    <meta property="og:title" content="React Flux ES6记事本应用" />
+<meta property="og:description" content="项目地址 react-notepad-es6
+React出来有很久了，与angularjs最大的不同在于React只是一个处理UI层面的库，可以认为是“V”，而angularjs则是一整套解决方案。
+随着前端开发的组件化思想越来越浓烈，angularjs很多场合已经显得力不从心了。而这时候，核心为“模块化、组件化”的React可以派上永用场。真正用来开发项目的话，React肯定是不足的，缺少C和M模块。
+Facebook官方推荐的Flux可以认为是一个简单的解决方案，Flux没什么特别含义，就是一个facebook随便找的一个词而已。至于什么是Flux，本文不做解释，本文以Flux来开发一个记事本应用。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.ddhigh.com/2016/03/24/react-flux-es6-note-app/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2016-03-24T15:20:00+08:00" />
+<meta property="article:modified_time" content="2016-03-24T15:20:00+08:00" />
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="React Flux ES6记事本应用"/>
+<meta name="twitter:description" content="项目地址 react-notepad-es6
+React出来有很久了，与angularjs最大的不同在于React只是一个处理UI层面的库，可以认为是“V”，而angularjs则是一整套解决方案。
+随着前端开发的组件化思想越来越浓烈，angularjs很多场合已经显得力不从心了。而这时候，核心为“模块化、组件化”的React可以派上永用场。真正用来开发项目的话，React肯定是不足的，缺少C和M模块。
+Facebook官方推荐的Flux可以认为是一个简单的解决方案，Flux没什么特别含义，就是一个facebook随便找的一个词而已。至于什么是Flux，本文不做解释，本文以Flux来开发一个记事本应用。"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://www.ddhigh.com/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "React Flux ES6记事本应用",
+      "item": "https://www.ddhigh.com/2016/03/24/react-flux-es6-note-app/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "React Flux ES6记事本应用",
+  "name": "React Flux ES6记事本应用",
+  "description": "项目地址 react-notepad-es6\nReact出来有很久了，与angularjs最大的不同在于React只是一个处理UI层面的库，可以认为是“V”，而angularjs则是一整套解决方案。\n随着前端开发的组件化思想越来越浓烈，angularjs很多场合已经显得力不从心了。而这时候，核心为“模块化、组件化”的React可以派上永用场。真正用来开发项目的话，React肯定是不足的，缺少C和M模块。\nFacebook官方推荐的Flux可以认为是一个简单的解决方案，Flux没什么特别含义，就是一个facebook随便找的一个词而已。至于什么是Flux，本文不做解释，本文以Flux来开发一个记事本应用。",
+  "keywords": [
+    
+  ],
+  "articleBody": "项目地址 react-notepad-es6\nReact出来有很久了，与angularjs最大的不同在于React只是一个处理UI层面的库，可以认为是“V”，而angularjs则是一整套解决方案。\n随着前端开发的组件化思想越来越浓烈，angularjs很多场合已经显得力不从心了。而这时候，核心为“模块化、组件化”的React可以派上永用场。真正用来开发项目的话，React肯定是不足的，缺少C和M模块。\nFacebook官方推荐的Flux可以认为是一个简单的解决方案，Flux没什么特别含义，就是一个facebook随便找的一个词而已。至于什么是Flux，本文不做解释，本文以Flux来开发一个记事本应用。\n项目目录 |----action Action Creator |---- NoteAction.js 记事本应用需要的动作 |----css 样式文件目录 |---- style.scss 样式文件 |----dispatcher 分发器目录 |---- AppDispatcher.js 分发器 |----store Store目录 |---- NoteStore.js 存储日记数据以及处理AppDispatcher派发事件 |----view 视图\u0026组件目录 |---- Note.jsx 单条日记 |---- NoteBox.jsx 整个日记组件的父容器 |---- NoteForm.jsx 日记创建/编辑表单 |----NoteList.jsx 日记列表组件 |----entry.js webpack入口文件 |----index.html 项目页面 |----webpack.config.js webpack配置文件 项目思路 NoteList.jsx组件包含多个Note.jsx，NoteList.jsx的数据来源于NoteStore.js。 创建日记时，NoteForm.jsx需要调用NoteAction的add方法最终触发AppDispatcher.dispatch方法 NoteStore注册AppDispatcher的监听器实现对dispatch事件的监听 编辑日记时，Note.jsx调用NoteAction的setNote方法设置需要编辑的日记，通过AppDispatcher的调度之后最终将日记数据显示在NoteForm.jsx组件中。 项目实现 安装依赖 本文采用ES6语法进行开发， 所以需要安装babel编译器，打开终端执行以下命令：\nnpm init -y npm install webpack webpack-dev-server -g npm install flux microevent react react-dom --save npm install babel-loader css-loader jsx-loader sass-loader style-loader --save-dev npm instlal babel-preset-es2015 babel-preset-react --save-dev npm install microevent --save webpack.config.js /** * Created by xialei on 2016/3/23 0023. */ module.exports = { entry: './entry.jsx', output: { publicPath: 'http://localhost:8000/assets', filename: 'bundle.js', path: './assets' }, module: { loaders: [ {test: /\\.js$/, loader: 'babel'}, { test: /.jsx?$/, loader: 'babel-loader', exclude: /node_modules/, query: { presets: ['es2015', 'react'] } }, {test: /\\.css$/, loader: 'style!css'}, {test: /\\.scss$/, loader: 'style!css!sass'} ] }, resolve: { extensions: ['', '.js', '.jsx'] } }; dispatcher/AppDispatcher.js import Flux from 'flux'; let AppDispatcher = new Flux.Dispatcher(); export default AppDispatcher; action/NoteAction.js ActionCreator主要是为了简化代码量，不然每次需要触发动作的时候都需要调用AppDispatcher.dispatch方法。\n根据项目实际情况，可以总结出需要以下动作：\n创建日记 更新日记 删除日记 编辑日记 由于ActionCreator是为了简化AppDispatcher.dispatch的方法调用，所以需要引入该模块。\n/** * Created by xialei on 2016/3/23 0023. */ import AppDispatcher from '../dispatcher/AppDispatcher'; export default class NoteAction { static create(item) { AppDispatcher.dispatch({ eventName: 'create-note', item: item }); } static update(item) { AppDispatcher.dispatch({ eventName: 'update-note', item: item }); } static remove(item) { AppDispatcher.dispatch({ eventName: 'remove-note', item: item }); } static setNote(item) { AppDispatcher.dispatch({ eventName: 'set-note', item: item }); } } store/NoteScore.js 有了分发，就要有接收，所以接下来编辑 store/NoteScore.js文件，这里需要注意的是由于V中不要直接调用AppDispatcher.dispatch，但是V是肯定需要监听事件的，所以这里使用MicroEvent库来进行事件处理。\n/** * Created by xialei on 2016/3/23 0023. */ import AppDispatcher from '../dispatcher/AppDispatcher'; import MicroEvent from 'microevent'; class NoteStore { constructor() { this.items = []; } } MicroEvent.mixin(NoteStore); let store = new NoteStore(); AppDispatcher.register((payload)=\u003e { switch (payload.eventName) { case 'create-note': store.items.push(payload.item); store.trigger('change'); break; case 'update-note': store.items.forEach(function(i, index2) { if (i.id == payload.item.id) { store.items[index2] = payload.item; store.trigger('change'); } }); break; case 'remove-note': store.items.forEach(function(i, index2) { if (i.id == payload.item.id) { store.items.splice(index2, 1); store.trigger('change'); } }); break; case 'set-note': store.trigger('set', payload.item); break; } return true; }); export default store; view/Note.jsx 该组件主要负责单条日记的显示和操作，所以该组件需要有一个初始属性以及编辑/删除方法，由于编辑日记最终会放在NoteForm.jsx组件进行，所以此处使用props而不是state。\n/** * Created by xialei on 2016/3/23 0023. */ import React from 'react'; import NoteAction from '../action/NoteAction'; export default class Note extends React.Component { constructor() { super(); this.handleDelete = this.handleDelete.bind(this); this.handleUpdate = this.handleUpdate.bind(this); } handleUpdate() { NoteAction.setNote(this.props.note); } handleDelete() { if (confirm('确定删除吗?')) { NoteAction.remove(this.props.note); } } render() { return ( \u003cdiv className=\"note-item\"\u003e \u003cdiv className=\"id\"\u003e{this.props.note.id}\u003c/div\u003e \u003cdiv className=\"text\"\u003e{this.props.note.text}\u003c/div\u003e \u003cdiv className=\"operation\"\u003e \u003cbutton type=\"button\" onClick={this.handleUpdate}\u003e编辑\u003c/button\u003e \u003cbutton type=\"button\" onClick={this.handleDelete}\u003e删除\u003c/button\u003e \u003c/div\u003e \u003c/div\u003e ); } } 由于采用了ES6语法，所以此处需要对this做特殊处理，否则会提示props undefined之类的错误。\nview/NoteBox.jsx 该组件的作用是将日记列表和日记表单显示出来，所以该组件只有一个构造方法和render方法。\n/** * Created by xialei on 2016/3/23 0023. */ import NoteList from './NoteList'; import NoteForm from './NoteForm'; import React from 'react'; export default class NoteBox extends React.Component { render() { return ( \u003cdiv className=\"note-box\"\u003e \u003cNoteList/\u003e \u003cNoteForm/\u003e \u003c/div\u003e ); } } view/NoteForm.jsx 该组件需要完成的事情比较多：\n需要对编辑和创建进行分别处理 需要监听Note.jsx组件触发的编辑事件 可编辑的文本域 根据以上要求，可以得出以下结论：\n需要使用state，以及设置一个初始的state 在textarea的onChange事件中，将值设置到state中去 需要监听NoteStore触发的“set”事件，将需要编辑的日记显示在textarea中 /** * Created by xialei on 2016/3/23 0023. */ import React from 'react'; import NoteAction from '../action/NoteAction'; import NoteStore from '../store/NoteStore'; export default class NoteForm extends React.Component { constructor() { super(); this.handleClick = this.handleClick.bind(this); this.handleSetNote = this.handleSetNote.bind(this); this.handleChange = this.handleChange.bind(this); this.resetForm = this.resetForm.bind(this); this.state = { note: { id: 0, text: '' } }; } componentDidMount() { NoteStore.bind('set', this.handleSetNote); } componentWillUnmount() { NoteStore.unbind('set', this.handleSetNote); } isCreate() { return this.state.note.id == 0; } handleClick() { let text = this.refs.input.value; if (text.length == 0) { alert('请输入日记内容'); this.refs.input.focus(); return; } if (this.isCreate()) { let id = 1; if (NoteStore.items.length \u003e 0) { id = NoteStore.items[NoteStore.items.length - 1].id + 1; } NoteAction.create({ id: id, text: text }); } else { let note = this.state.note; note.text = text; NoteAction.update(note); } this.resetForm(); } render() { let note = this.state.note.text; let btnText = this.isCreate() ? '创建' : '编辑'; let tips = this.isCreate() ? '' : '当前编辑 [' + this.state.note.id + '] 号日记'; return ( \u003cdiv className=\"note-form\"\u003e \u003cdiv\u003e{tips}\u003c/div\u003e \u003ctextarea ref=\"input\" rows=\"8\" placeholder=\"日记内容\" value={note} onChange={this.handleChange}/\u003e \u003cbutton type=\"button\" onClick={this.handleClick}\u003e{btnText}\u003c/button\u003e \u003cbutton type=\"button\" onClick={this.resetForm}\u003e重置\u003c/button\u003e \u003c/div\u003e ); } handleChange(e) { let id = this.state.note.id || 0; this.setState({ note: { id: id, text: e.target.value } }); } handleSetNote(note) { this.setState({note: note}); console.log('set ', this.state.note); } resetForm() { this.setState({ note: { id: 0, text: '' } }); } } view/NoteList.jsx 该组件负责渲染NoteStore中的日记列表以及对NoteStore触发的change事件作出相应，实时显示最新数据。\n/** * Created by xialei on 2016/3/23 0023. */ import React from 'react'; import NoteStore from '../store/NoteStore'; import Note from './Note'; export default class NoteList extends React.Component { constructor() { super(); this.handleChanged = this.handleChanged.bind(this); } componentDidMount() { NoteStore.bind('change', this.handleChanged); } componentWillUnmount() { NoteStore.unbind('change', this.handleChanged); } handleChanged() { this.forceUpdate(); } render() { const notes = NoteStore.items.map((item)=\u003e { return \u003cNote note={item} key={item.id}/\u003e; }); return ( \u003cdiv className=\"note-list\"\u003e{notes}\u003c/div\u003e ); } } entry.jsx 该文件主要将NoteBox.jsx组件渲染到html容器中。\n/** * Created by xialei on 2016/3/23 0023. */ import ReactDOM from 'react-dom'; import NoteBox from './view/NoteBox'; import './css/style.scss'; ReactDOM.render(\u003cNoteBox/\u003e, document.querySelector('#content')); index.html \u003c!DOCTYPE html\u003e \u003chtml lang=\"en\"\u003e \u003chead\u003e \u003cmeta charset=\"UTF-8\"\u003e \u003ctitle\u003eTitle\u003c/title\u003e \u003cscript src=\"./node_modules/react/dist/react-with-addons.js\"\u003e\u003c/script\u003e \u003c/head\u003e \u003cbody\u003e \u003cdiv id=\"content\"\u003e\u003c/div\u003e \u003cscript src=\"http://localhost:8000/webpack-dev-server.js\"\u003e\u003c/script\u003e \u003cscript src=\"http://localhost:8000/assets/bundle.js\"\u003e\u003c/script\u003e \u003c/body\u003e \u003c/html\u003e 项目运行 webpack-dev-server --progress --colors --port 8000 demo\n",
+  "wordCount" : "781",
+  "inLanguage": "zh",
+  "datePublished": "2016-03-24T15:20:00+08:00",
+  "dateModified": "2016-03-24T15:20:00+08:00",
+  "author":{
+    "@type": "Person",
+    "name": "Lei Xia"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://www.ddhigh.com/2016/03/24/react-flux-es6-note-app/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "每天进步一点点",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.ddhigh.com/favicon.ico"
+    }
+  }
+}
+</script>
+    <link rel="icon" href="/img/favicon.ico" sizes="16x16">
+
+<link rel="apple-touch-icon" href="/img/favicon.ico">
+
+<link rel="manifest" href="/img/favicon.ico">
+    
+
+    <link rel="stylesheet" href="https://cdn.staticfile.org/lxgw-wenkai-webfont/1.6.0/style.css" />
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/main.min.d0df733b91ef046970ecd63de7aa626886fd263fd3fb2b8ff28b560e505831f7.css" integrity="sha256-0N9zO5HvBGlw7NY956piaIb9Jj/T&#43;yuP8otWDlBYMfc="
+        crossorigin="anonymous" media="screen" />
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css" integrity="sha512-ygEyjMC6rqnzJqWGjRTJUPYMEs9JUOm3i7OWUS9CgQ4XkBUvMsgCS1I8JqavidQ2ClHcREB7IbA2mN08+r9Elg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    
+    <link rel="stylesheet" href="/scss/highlight/github-dark.min.min.66034289ee9a113219a2c4aae0a8bd2095ab255c832a42efcf5863f10814e7a1.css" />
+
+    
+    <script src="/js/highlight.min.min.894ca9c68afab956438c4926a0dc7f5293e04e08595bd27abdb123e94801f684.js"></script>
+    <script>hljs.highlightAll();</script>
+
+    <script>{ { $darkModeInit.Content | safeJS } }</script>
+    </head><body>
+      <main class="wrapper"><nav class="navigation">
+    <section class="container">
+        <a class="navigation-brand" href="/">
+            每天进步一点点
+        </a>
+        <input type="checkbox" id="menu-toggle" />
+        <label class="menu-button float-right" for="menu-toggle">
+            <span></span><span></span><span></span>
+        </label>
+        
+        <ul class="navigation-list" id="navigation-list">
+            
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/">首页</a>
+            </li>
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/archives">归档</a>
+            </li>
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/books">出版物</a>
+            </li>
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/guestbook">留言板</a>
+            </li>
+            
+            
+
+            <li class="navigation-item menu-separator">
+                <span>|</span>
+            </li>
+
+            
+            
+            <li class="navigation-item navigation-social">
+                <a class="navigation-link" href="https://github.com/xialeistudio"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a>
+            </li>
+            
+            
+
+            <li class="navigation-item navigation-dark">
+                <button id="mode" type="button" aria-label="toggle user light or dark theme">
+                    <span class="toggle-dark"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></span>
+                    <span class="toggle-light"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></span>
+                </button>
+            </li>
+
+            
+            
+            
+            
+            
+            
+            
+            <li class="navigation-item navigation-language">
+                <a href="https://www.ddhigh.com/en/">EN</a>
+            </li>
+            
+            
+            
+            
+        </ul>
+        
+    </section>
+</nav>
+<div id="content">
+<article class="blog-single">
+  <header class="blog-title">
+    <h1>React Flux ES6记事本应用</h1>
+  </header>
+
+  <p>
+  <small>
+    2016年3月24日&nbsp;· 781 字&nbsp;· 4 分钟</small>
+
+  
+<p>
+
+  <div class="blog-toc">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#项目地址">项目地址</a></li>
+    <li><a href="#项目目录">项目目录</a></li>
+    <li><a href="#项目思路">项目思路</a></li>
+    <li><a href="#项目实现">项目实现</a>
+      <ul>
+        <li><a href="#安装依赖">安装依赖</a></li>
+        <li><a href="#webpackconfigjs">webpack.config.js</a></li>
+        <li><a href="#dispatcherappdispatcherjs">dispatcher/AppDispatcher.js</a></li>
+        <li><a href="#actionnoteactionjs">action/NoteAction.js</a></li>
+        <li><a href="#storenotescorejs">store/NoteScore.js</a></li>
+        <li><a href="#viewnotejsx">view/Note.jsx</a></li>
+        <li><a href="#viewnoteboxjsx">view/NoteBox.jsx</a></li>
+        <li><a href="#viewnoteformjsx">view/NoteForm.jsx</a></li>
+        <li><a href="#viewnotelistjsx">view/NoteList.jsx</a></li>
+      </ul>
+    </li>
+    <li><a href="#entryjsx">entry.jsx</a></li>
+    <li><a href="#indexhtml">index.html</a></li>
+    <li><a href="#项目运行">项目运行</a></li>
+  </ul>
+</nav>
+  </div>
+
+  <section class="blog-content">
+    <h2 id="项目地址">项目地址</h2>
+<p><a href="https://github.com/xialeistudio/react-notepad-es6.git" target="_blank" rel="noopener">react-notepad-es6</a></p>
+<p>React出来有很久了，与angularjs最大的不同在于React只是一个处理UI层面的库，可以认为是“V”，而angularjs则是一整套解决方案。</p>
+<p>随着前端开发的组件化思想越来越浓烈，angularjs很多场合已经显得力不从心了。而这时候，核心为“模块化、组件化”的React可以派上永用场。真正用来开发项目的话，React肯定是不足的，缺少C和M模块。</p>
+<p>Facebook官方推荐的Flux可以认为是一个简单的解决方案，Flux没什么特别含义，就是一个facebook随便找的一个词而已。至于什么是Flux，本文不做解释，本文以Flux来开发一个记事本应用。</p>
+<h2 id="项目目录">项目目录</h2>
+<pre tabindex="0"><code>|----action    Action Creator
+
+    |---- NoteAction.js    记事本应用需要的动作
+
+|----css    样式文件目录
+
+    |---- style.scss    样式文件
+
+|----dispatcher    分发器目录
+
+    |---- AppDispatcher.js    分发器
+
+|----store    Store目录
+
+    |---- NoteStore.js     存储日记数据以及处理AppDispatcher派发事件
+
+|----view    视图&amp;组件目录
+
+    |---- Note.jsx    单条日记
+
+    |---- NoteBox.jsx    整个日记组件的父容器
+
+    |---- NoteForm.jsx    日记创建/编辑表单
+
+    |----NoteList.jsx    日记列表组件
+
+|----entry.js    webpack入口文件
+
+|----index.html    项目页面
+
+|----webpack.config.js    webpack配置文件
+</code></pre><h2 id="项目思路">项目思路</h2>
+<ol>
+<li>NoteList.jsx组件包含多个Note.jsx，NoteList.jsx的数据来源于NoteStore.js。</li>
+<li>创建日记时，NoteForm.jsx需要调用NoteAction的add方法最终触发AppDispatcher.dispatch方法</li>
+<li>NoteStore注册AppDispatcher的监听器实现对dispatch事件的监听</li>
+<li>编辑日记时，Note.jsx调用NoteAction的setNote方法设置需要编辑的日记，通过AppDispatcher的调度之后最终将日记数据显示在NoteForm.jsx组件中。</li>
+</ol>
+<h2 id="项目实现">项目实现</h2>
+<h3 id="安装依赖">安装依赖</h3>
+<p>本文采用ES6语法进行开发， 所以需要安装babel编译器，打开终端执行以下命令：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>npm init -y
+</span></span><span style="display:flex;"><span>npm install webpack webpack-dev-server -g
+</span></span><span style="display:flex;"><span>npm install flux microevent react react-dom --save
+</span></span><span style="display:flex;"><span>npm install babel-loader css-loader jsx-loader sass-loader style-loader --save-dev
+</span></span><span style="display:flex;"><span>npm instlal babel-preset-es2015 babel-preset-react --save-dev
+</span></span><span style="display:flex;"><span>npm install microevent --save
+</span></span></code></pre></div><h3 id="webpackconfigjs">webpack.config.js</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * Created by xialei on 2016/3/23 0023.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">module</span>.<span style="color:#a6e22e">exports</span> <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">entry</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;./entry.jsx&#39;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">output</span><span style="color:#f92672">:</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">publicPath</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;http://localhost:8000/assets&#39;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">filename</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;bundle.js&#39;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">path</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;./assets&#39;</span>
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">module</span><span style="color:#f92672">:</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">loaders</span><span style="color:#f92672">:</span> [
+</span></span><span style="display:flex;"><span>    {<span style="color:#a6e22e">test</span><span style="color:#f92672">:</span> <span style="color:#e6db74">/\.js$/</span>, <span style="color:#a6e22e">loader</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;babel&#39;</span>},
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">test</span><span style="color:#f92672">:</span> <span style="color:#e6db74">/.jsx?$/</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">loader</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;babel-loader&#39;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">exclude</span><span style="color:#f92672">:</span> <span style="color:#e6db74">/node_modules/</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">query</span><span style="color:#f92672">:</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">presets</span><span style="color:#f92672">:</span> [<span style="color:#e6db74">&#39;es2015&#39;</span>, <span style="color:#e6db74">&#39;react&#39;</span>]
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    {<span style="color:#a6e22e">test</span><span style="color:#f92672">:</span> <span style="color:#e6db74">/\.css$/</span>, <span style="color:#a6e22e">loader</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;style!css&#39;</span>},
+</span></span><span style="display:flex;"><span>    {<span style="color:#a6e22e">test</span><span style="color:#f92672">:</span> <span style="color:#e6db74">/\.scss$/</span>, <span style="color:#a6e22e">loader</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;style!css!sass&#39;</span>}
+</span></span><span style="display:flex;"><span>    ]
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">resolve</span><span style="color:#f92672">:</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">extensions</span><span style="color:#f92672">:</span> [<span style="color:#e6db74">&#39;&#39;</span>, <span style="color:#e6db74">&#39;.js&#39;</span>, <span style="color:#e6db74">&#39;.jsx&#39;</span>]
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>};
+</span></span></code></pre></div><h3 id="dispatcherappdispatcherjs">dispatcher/AppDispatcher.js</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">import</span> <span style="color:#a6e22e">Flux</span> <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#39;flux&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">AppDispatcher</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Flux</span>.<span style="color:#a6e22e">Dispatcher</span>();
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">export</span> <span style="color:#66d9ef">default</span> <span style="color:#a6e22e">AppDispatcher</span>;
+</span></span></code></pre></div><h3 id="actionnoteactionjs">action/NoteAction.js</h3>
+<p>ActionCreator主要是为了简化代码量，不然每次需要触发动作的时候都需要调用AppDispatcher.dispatch方法。<br>
+根据项目实际情况，可以总结出需要以下动作：</p>
+<ul>
+<li>创建日记</li>
+<li>更新日记</li>
+<li>删除日记</li>
+<li>编辑日记</li>
+</ul>
+<p>由于ActionCreator是为了简化AppDispatcher.dispatch的方法调用，所以需要引入该模块。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * Created by xialei on 2016/3/23 0023.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">import</span> <span style="color:#a6e22e">AppDispatcher</span> <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#39;../dispatcher/AppDispatcher&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">export</span> <span style="color:#66d9ef">default</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">NoteAction</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">static</span> <span style="color:#a6e22e">create</span>(<span style="color:#a6e22e">item</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">AppDispatcher</span>.<span style="color:#a6e22e">dispatch</span>({
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">eventName</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;create-note&#39;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">item</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">item</span>
+</span></span><span style="display:flex;"><span>    });
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">static</span> <span style="color:#a6e22e">update</span>(<span style="color:#a6e22e">item</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">AppDispatcher</span>.<span style="color:#a6e22e">dispatch</span>({
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">eventName</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;update-note&#39;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">item</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">item</span>
+</span></span><span style="display:flex;"><span>    });
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">static</span> <span style="color:#a6e22e">remove</span>(<span style="color:#a6e22e">item</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">AppDispatcher</span>.<span style="color:#a6e22e">dispatch</span>({
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">eventName</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;remove-note&#39;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">item</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">item</span>
+</span></span><span style="display:flex;"><span>    });
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">static</span> <span style="color:#a6e22e">setNote</span>(<span style="color:#a6e22e">item</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">AppDispatcher</span>.<span style="color:#a6e22e">dispatch</span>({
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">eventName</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;set-note&#39;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">item</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">item</span>
+</span></span><span style="display:flex;"><span>    });
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="storenotescorejs">store/NoteScore.js</h3>
+<p>有了分发，就要有接收，所以接下来编辑 store/NoteScore.js文件，这里需要注意的是由于V中不要直接调用AppDispatcher.dispatch，但是V是肯定需要监听事件的，所以这里使用<strong>MicroEvent</strong>库来进行事件处理。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * Created by xialei on 2016/3/23 0023.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">import</span> <span style="color:#a6e22e">AppDispatcher</span> <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#39;../dispatcher/AppDispatcher&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">import</span> <span style="color:#a6e22e">MicroEvent</span> <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#39;microevent&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">NoteStore</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">constructor</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">items</span> <span style="color:#f92672">=</span> [];
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">MicroEvent</span>.<span style="color:#a6e22e">mixin</span>(<span style="color:#a6e22e">NoteStore</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">store</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">NoteStore</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">AppDispatcher</span>.<span style="color:#a6e22e">register</span>((<span style="color:#a6e22e">payload</span>)=&gt; {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">switch</span> (<span style="color:#a6e22e">payload</span>.<span style="color:#a6e22e">eventName</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#39;create-note&#39;</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">store</span>.<span style="color:#a6e22e">items</span>.<span style="color:#a6e22e">push</span>(<span style="color:#a6e22e">payload</span>.<span style="color:#a6e22e">item</span>);
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">store</span>.<span style="color:#a6e22e">trigger</span>(<span style="color:#e6db74">&#39;change&#39;</span>);
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#39;update-note&#39;</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">store</span>.<span style="color:#a6e22e">items</span>.<span style="color:#a6e22e">forEach</span>(<span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">i</span>, <span style="color:#a6e22e">index2</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">i</span>.<span style="color:#a6e22e">id</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">payload</span>.<span style="color:#a6e22e">item</span>.<span style="color:#a6e22e">id</span>) {
+</span></span><span style="display:flex;"><span>          <span style="color:#a6e22e">store</span>.<span style="color:#a6e22e">items</span>[<span style="color:#a6e22e">index2</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">payload</span>.<span style="color:#a6e22e">item</span>;
+</span></span><span style="display:flex;"><span>          <span style="color:#a6e22e">store</span>.<span style="color:#a6e22e">trigger</span>(<span style="color:#e6db74">&#39;change&#39;</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>      });
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#39;remove-note&#39;</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">store</span>.<span style="color:#a6e22e">items</span>.<span style="color:#a6e22e">forEach</span>(<span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">i</span>, <span style="color:#a6e22e">index2</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">i</span>.<span style="color:#a6e22e">id</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">payload</span>.<span style="color:#a6e22e">item</span>.<span style="color:#a6e22e">id</span>) {
+</span></span><span style="display:flex;"><span>          <span style="color:#a6e22e">store</span>.<span style="color:#a6e22e">items</span>.<span style="color:#a6e22e">splice</span>(<span style="color:#a6e22e">index2</span>, <span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>          <span style="color:#a6e22e">store</span>.<span style="color:#a6e22e">trigger</span>(<span style="color:#e6db74">&#39;change&#39;</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>      });
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#39;set-note&#39;</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">store</span>.<span style="color:#a6e22e">trigger</span>(<span style="color:#e6db74">&#39;set&#39;</span>, <span style="color:#a6e22e">payload</span>.<span style="color:#a6e22e">item</span>);
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>;
+</span></span><span style="display:flex;"><span>});
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">export</span> <span style="color:#66d9ef">default</span> <span style="color:#a6e22e">store</span>;
+</span></span></code></pre></div><h3 id="viewnotejsx">view/Note.jsx</h3>
+<p>该组件主要负责单条日记的显示和操作，所以该组件需要有一个初始属性以及编辑/删除方法，由于编辑日记最终会放在NoteForm.jsx组件进行，所以此处使用props而不是state。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * Created by xialei on 2016/3/23 0023.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">import</span> <span style="color:#a6e22e">React</span> <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#39;react&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">import</span> <span style="color:#a6e22e">NoteAction</span> <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#39;../action/NoteAction&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">export</span> <span style="color:#66d9ef">default</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Note</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">React</span>.<span style="color:#a6e22e">Component</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">constructor</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">super</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">handleDelete</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">handleDelete</span>.<span style="color:#a6e22e">bind</span>(<span style="color:#66d9ef">this</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">handleUpdate</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">handleUpdate</span>.<span style="color:#a6e22e">bind</span>(<span style="color:#66d9ef">this</span>);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">handleUpdate</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">NoteAction</span>.<span style="color:#a6e22e">setNote</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">props</span>.<span style="color:#a6e22e">note</span>);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">handleDelete</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">confirm</span>(<span style="color:#e6db74">&#39;确定删除吗?&#39;</span>)) {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">NoteAction</span>.<span style="color:#a6e22e">remove</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">props</span>.<span style="color:#a6e22e">note</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">render</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> (
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">div</span> <span style="color:#a6e22e">className</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;note-item&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">div</span> <span style="color:#a6e22e">className</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;id&#34;</span><span style="color:#f92672">&gt;</span>{<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">props</span>.<span style="color:#a6e22e">note</span>.<span style="color:#a6e22e">id</span>}<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/div&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">div</span> <span style="color:#a6e22e">className</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text&#34;</span><span style="color:#f92672">&gt;</span>{<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">props</span>.<span style="color:#a6e22e">note</span>.<span style="color:#a6e22e">text</span>}<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/div&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">div</span> <span style="color:#a6e22e">className</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;operation&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">button</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;button&#34;</span> <span style="color:#a6e22e">onClick</span><span style="color:#f92672">=</span>{<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">handleUpdate</span>}<span style="color:#f92672">&gt;</span><span style="color:#a6e22e">编辑</span><span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/button&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">button</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;button&#34;</span> <span style="color:#a6e22e">onClick</span><span style="color:#f92672">=</span>{<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">handleDelete</span>}<span style="color:#f92672">&gt;</span><span style="color:#a6e22e">删除</span><span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/button&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/div&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/div&gt;</span>
+</span></span><span style="display:flex;"><span>    );
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>由于采用了ES6语法，所以此处需要对this做特殊处理，否则会提示props undefined之类的错误。</p>
+<h3 id="viewnoteboxjsx">view/NoteBox.jsx</h3>
+<p>该组件的作用是将日记列表和日记表单显示出来，所以该组件只有一个构造方法和render方法。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * Created by xialei on 2016/3/23 0023.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">import</span> <span style="color:#a6e22e">NoteList</span> <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#39;./NoteList&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">import</span> <span style="color:#a6e22e">NoteForm</span> <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#39;./NoteForm&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">import</span> <span style="color:#a6e22e">React</span> <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#39;react&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">export</span> <span style="color:#66d9ef">default</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">NoteBox</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">React</span>.<span style="color:#a6e22e">Component</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">render</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> (
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">div</span> <span style="color:#a6e22e">className</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;note-box&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">NoteList</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">NoteForm</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/div&gt;</span>
+</span></span><span style="display:flex;"><span>    );
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="viewnoteformjsx">view/NoteForm.jsx</h3>
+<p>该组件需要完成的事情比较多：</p>
+<ol>
+<li>需要对编辑和创建进行分别处理</li>
+<li>需要监听Note.jsx组件触发的编辑事件</li>
+<li>可编辑的文本域</li>
+</ol>
+<p>根据以上要求，可以得出以下结论：</p>
+<ol>
+<li>需要使用state，以及设置一个初始的state</li>
+<li>在textarea的onChange事件中，将值设置到state中去</li>
+<li>需要监听NoteStore触发的“set”事件，将需要编辑的日记显示在textarea中</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * Created by xialei on 2016/3/23 0023.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">import</span> <span style="color:#a6e22e">React</span> <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#39;react&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">import</span> <span style="color:#a6e22e">NoteAction</span> <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#39;../action/NoteAction&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">import</span> <span style="color:#a6e22e">NoteStore</span> <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#39;../store/NoteStore&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">export</span> <span style="color:#66d9ef">default</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">NoteForm</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">React</span>.<span style="color:#a6e22e">Component</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">constructor</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">super</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">handleClick</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">handleClick</span>.<span style="color:#a6e22e">bind</span>(<span style="color:#66d9ef">this</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">handleSetNote</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">handleSetNote</span>.<span style="color:#a6e22e">bind</span>(<span style="color:#66d9ef">this</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">handleChange</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">handleChange</span>.<span style="color:#a6e22e">bind</span>(<span style="color:#66d9ef">this</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">resetForm</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">resetForm</span>.<span style="color:#a6e22e">bind</span>(<span style="color:#66d9ef">this</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">state</span> <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">note</span><span style="color:#f92672">:</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">id</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">text</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>    };
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">componentDidMount</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">NoteStore</span>.<span style="color:#a6e22e">bind</span>(<span style="color:#e6db74">&#39;set&#39;</span>, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">handleSetNote</span>);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">componentWillUnmount</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">NoteStore</span>.<span style="color:#a6e22e">unbind</span>(<span style="color:#e6db74">&#39;set&#39;</span>, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">handleSetNote</span>);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">isCreate</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">state</span>.<span style="color:#a6e22e">note</span>.<span style="color:#a6e22e">id</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">handleClick</span>() {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">text</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">refs</span>.<span style="color:#a6e22e">input</span>.<span style="color:#a6e22e">value</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">text</span>.<span style="color:#a6e22e">length</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">alert</span>(<span style="color:#e6db74">&#39;请输入日记内容&#39;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">refs</span>.<span style="color:#a6e22e">input</span>.<span style="color:#a6e22e">focus</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">isCreate</span>()) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">id</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">NoteStore</span>.<span style="color:#a6e22e">items</span>.<span style="color:#a6e22e">length</span> <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>) {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">id</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">NoteStore</span>.<span style="color:#a6e22e">items</span>[<span style="color:#a6e22e">NoteStore</span>.<span style="color:#a6e22e">items</span>.<span style="color:#a6e22e">length</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>].<span style="color:#a6e22e">id</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">NoteAction</span>.<span style="color:#a6e22e">create</span>({
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">id</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">id</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">text</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">text</span>
+</span></span><span style="display:flex;"><span>    });
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">note</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">state</span>.<span style="color:#a6e22e">note</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">note</span>.<span style="color:#a6e22e">text</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">text</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">NoteAction</span>.<span style="color:#a6e22e">update</span>(<span style="color:#a6e22e">note</span>);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">resetForm</span>();
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">render</span>() {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">note</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">state</span>.<span style="color:#a6e22e">note</span>.<span style="color:#a6e22e">text</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">btnText</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">isCreate</span>() <span style="color:#f92672">?</span> <span style="color:#e6db74">&#39;创建&#39;</span> <span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;编辑&#39;</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">tips</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">isCreate</span>() <span style="color:#f92672">?</span> <span style="color:#e6db74">&#39;&#39;</span> <span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;当前编辑 [&#39;</span> <span style="color:#f92672">+</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">state</span>.<span style="color:#a6e22e">note</span>.<span style="color:#a6e22e">id</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;] 号日记&#39;</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> (
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">div</span> <span style="color:#a6e22e">className</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;note-form&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">div</span><span style="color:#f92672">&gt;</span>{<span style="color:#a6e22e">tips</span>}<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/div&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">textarea</span> <span style="color:#a6e22e">ref</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;input&#34;</span> <span style="color:#a6e22e">rows</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;8&#34;</span> <span style="color:#a6e22e">placeholder</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;日记内容&#34;</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span>{<span style="color:#a6e22e">note</span>} <span style="color:#a6e22e">onChange</span><span style="color:#f92672">=</span>{<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">handleChange</span>}<span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">button</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;button&#34;</span> <span style="color:#a6e22e">onClick</span><span style="color:#f92672">=</span>{<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">handleClick</span>}<span style="color:#f92672">&gt;</span>{<span style="color:#a6e22e">btnText</span>}<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/button&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">button</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;button&#34;</span> <span style="color:#a6e22e">onClick</span><span style="color:#f92672">=</span>{<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">resetForm</span>}<span style="color:#f92672">&gt;</span><span style="color:#a6e22e">重置</span><span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/button&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/div&gt;</span>
+</span></span><span style="display:flex;"><span>  );
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">handleChange</span>(<span style="color:#a6e22e">e</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">id</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">state</span>.<span style="color:#a6e22e">note</span>.<span style="color:#a6e22e">id</span> <span style="color:#f92672">||</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">setState</span>({
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">note</span><span style="color:#f92672">:</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">id</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">id</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">text</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">value</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  });
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">handleSetNote</span>(<span style="color:#a6e22e">note</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">setState</span>({<span style="color:#a6e22e">note</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">note</span>});
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;set &#39;</span>, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">state</span>.<span style="color:#a6e22e">note</span>);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">resetForm</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">setState</span>({
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">note</span><span style="color:#f92672">:</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">id</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">text</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>    });
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="viewnotelistjsx">view/NoteList.jsx</h3>
+<p>该组件负责渲染NoteStore中的日记列表以及对NoteStore触发的change事件作出相应，实时显示最新数据。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * Created by xialei on 2016/3/23 0023.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">import</span> <span style="color:#a6e22e">React</span> <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#39;react&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">import</span> <span style="color:#a6e22e">NoteStore</span> <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#39;../store/NoteStore&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">import</span> <span style="color:#a6e22e">Note</span> <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#39;./Note&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">export</span> <span style="color:#66d9ef">default</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">NoteList</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">React</span>.<span style="color:#a6e22e">Component</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">constructor</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">super</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">handleChanged</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">handleChanged</span>.<span style="color:#a6e22e">bind</span>(<span style="color:#66d9ef">this</span>);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">componentDidMount</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">NoteStore</span>.<span style="color:#a6e22e">bind</span>(<span style="color:#e6db74">&#39;change&#39;</span>, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">handleChanged</span>);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">componentWillUnmount</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">NoteStore</span>.<span style="color:#a6e22e">unbind</span>(<span style="color:#e6db74">&#39;change&#39;</span>, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">handleChanged</span>);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">handleChanged</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">forceUpdate</span>();
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">render</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">notes</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">NoteStore</span>.<span style="color:#a6e22e">items</span>.<span style="color:#a6e22e">map</span>((<span style="color:#a6e22e">item</span>)=&gt; {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">return</span> <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">Note</span> <span style="color:#a6e22e">note</span><span style="color:#f92672">=</span>{<span style="color:#a6e22e">item</span>} <span style="color:#a6e22e">key</span><span style="color:#f92672">=</span>{<span style="color:#a6e22e">item</span>.<span style="color:#a6e22e">id</span>}<span style="color:#f92672">/&gt;</span>;
+</span></span><span style="display:flex;"><span>    });
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> (
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">div</span> <span style="color:#a6e22e">className</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;note-list&#34;</span><span style="color:#f92672">&gt;</span>{<span style="color:#a6e22e">notes</span>}<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/div&gt;</span>
+</span></span><span style="display:flex;"><span>    );
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="entryjsx">entry.jsx</h2>
+<p>该文件主要将NoteBox.jsx组件渲染到html容器中。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * Created by xialei on 2016/3/23 0023.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">import</span> <span style="color:#a6e22e">ReactDOM</span> <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#39;react-dom&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">import</span> <span style="color:#a6e22e">NoteBox</span> <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#39;./view/NoteBox&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">import</span> <span style="color:#e6db74">&#39;./css/style.scss&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">ReactDOM</span>.<span style="color:#a6e22e">render</span>(<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">NoteBox</span><span style="color:#f92672">/&gt;</span>, document.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#39;#content&#39;</span>));
+</span></span></code></pre></div><h2 id="indexhtml">index.html</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span><span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">html</span> <span style="color:#a6e22e">lang</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;en&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">head</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">charset</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;UTF-8&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#f92672">title</span>&gt;Title&lt;/<span style="color:#f92672">title</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;./node_modules/react/dist/react-with-addons.js&#34;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">head</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">body</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;content&#34;</span>&gt;&lt;/<span style="color:#f92672">div</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://localhost:8000/webpack-dev-server.js&#34;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://localhost:8000/assets/bundle.js&#34;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">body</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">html</span>&gt;
+</span></span></code></pre></div><h2 id="项目运行">项目运行</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>webpack-dev-server --progress --colors --port <span style="color:#ae81ff">8000</span>
+</span></span></code></pre></div><p><a href="http://ngdemo.sinaapp.com/react-notepad" target="_blank" rel="noopener">demo</a></p>
+
+    <div class="blog-footer">
+    <div class="social-share"></div>
+    <div class="copyright">
+        <ul>
+            <li style="margin-bottom: 0.5em;">本文作者: <a href="https://ddhigh.com/" target="_blank"
+                    style="color: #000000; text-decoration: none;">xialeistudio</a></li>
+            <li style="margin-bottom: 0.5em;">本文链接: <a href="https://www.ddhigh.com/2016/03/24/react-flux-es6-note-app/" target="_blank"
+                    style="color: #000000; text-decoration: none;">React Flux ES6记事本应用</a></li>
+            <li>版权声明: <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank"
+                    style="color: #000000; text-decoration: none;">「署名-非商业性使用-相同方式共享 4.0 国际」</a></li>
+        </ul>
+    </div>
+    
+    <div style="margin-top: 2rem;"><img src="/img/mp.png" alt="qrcode"></div>
+    
+</div>
+  </section>
+
+  
+  
+  <div class="paginator">
+    
+    <a class="prev" href="https://www.ddhigh.com/2016/03/29/angularjs-display-html/">
+      <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M3.77086 21.1546C11.0491 22.698 21.4339 21.7773 21.4339 16.3608V4.63375C21.4339 3.93962 21.3581 3.30535 21.1917 2.76787M3.77086 21.1546C1.9934 20.7777 0.973585 18.7264 1.08749 16.688C1.2668 13.479 1.15721 9.43135 1.00513 6.21507C0.87809 3.52811 3.12891 1.16316 5.51029 1.25008C9.76594 1.40542 15.377 1.20229 18.7912 1.00542C20.0864 0.930734 20.8406 1.63385 21.1917 2.76787M3.77086 21.1546C4.56586 21.4723 5.49168 21.7879 6.5 22.0658M21.1917 2.76787C23.1097 4.18217 23.13 12.4191 22.9004 16.3608C20.8478 24.0194 12.3061 23.6662 6.5 22.0658M21.1917 2.76787C21.7612 4.51192 22.7203 9.67216 22 16.3608C21.2797 23.0494 11.3665 22.9511 6.5 22.0658M9.94496 9C9.28897 9.61644 7.63215 10.997 6.04814 11.7966C5.98257 11.8297 5.98456 11.9753 6.05061 12.0063C7.05496 12.4779 8.92941 13.9264 9.94496 15M6.44444 11.9667C8.86549 12.0608 14 12 16 11"
+          stroke="currentColor" stroke-linecap="round" />
+      </svg>
+      <span>angularjs显示html文本</span></a>
+    
+    
+    <a class="next" href="https://www.ddhigh.com/2016/03/02/android-pick-image-return-image-path/"><span>android选择图片返回统一图片地址</span>
+      <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M3.77086 21.1546C11.0491 22.698 21.4339 21.7773 21.4339 16.3608V4.63375C21.4339 3.93962 21.3581 3.30535 21.1917 2.76787M3.77086 21.1546C1.9934 20.7777 0.973585 18.7264 1.08749 16.688C1.2668 13.479 1.15721 9.43135 1.00513 6.21507C0.87809 3.52811 3.12891 1.16316 5.51029 1.25008C9.76594 1.40542 15.377 1.20229 18.7912 1.00542C20.0864 0.930734 20.8406 1.63385 21.1917 2.76787M3.77086 21.1546C4.56586 21.4723 5.49168 21.7879 6.5 22.0658M21.1917 2.76787C23.1097 4.18217 23.13 12.4191 22.9004 16.3608C20.8478 24.0194 12.3061 23.6662 6.5 22.0658M21.1917 2.76787C21.7612 4.51192 22.7203 9.67216 22 16.3608C21.2797 23.0494 11.3665 22.9511 6.5 22.0658M12.055 9C12.711 9.61644 14.3679 10.997 15.9519 11.7966C16.0174 11.8297 16.0154 11.9753 15.9494 12.0063C14.945 12.4779 13.0706 13.9264 12.055 15M15.5556 11.9667C13.1345 12.0608 8 12 6 11"
+          stroke="currentColor" stroke-linecap="round" />
+      </svg>
+    </a>
+    
+  </div>
+  
+
+  
+
+
+  
+  
+<div class="comments">
+  <script>
+      const getTheme = window.localStorage && window.localStorage.getItem("theme");
+      let theme = getTheme === 'dark' ? 'dark' : 'light';
+      let s = document.createElement('script');
+      s.src = 'https://giscus.app/client.js';
+      s.setAttribute('data-repo', 'xialeistudio\/discussion');
+      s.setAttribute('data-repo-id', 'R_kgDOKurTRA');
+      s.setAttribute('data-category', 'General');
+      s.setAttribute('data-category-id', 'DIC_kwDOKurTRM4CbCJt');
+      s.setAttribute('data-mapping', 'pathname');
+      s.setAttribute('data-strict', '0');
+      s.setAttribute('data-reactions-enabled', '1');
+      s.setAttribute('data-emit-metadata', '0');
+      s.setAttribute('data-input-position', 'bottom');
+      s.setAttribute('data-theme', theme);
+      s.setAttribute('data-lang', 'en');
+      s.setAttribute('data-loading', 'lazy');
+      s.setAttribute('crossorigin', 'anonymous');
+      s.setAttribute('async', '');
+      document.querySelector('div.comments').innerHTML = '';
+      document.querySelector('div.comments').appendChild(s);
+  </script>
+</div>
+
+</article>
+
+
+        </div><footer class="footer">
+    <p>&copy; 2014 - 2024 <a href="https://www.ddhigh.com">每天进步一点点</a>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener" target="_blank">Hugo️️</a>
+        <a href="https://github.com/guangzhengli/hugo-theme-ladder" rel="noopener" target="_blank">Ladder</a>
+        ️ </p>
+</footer>
+
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10.5376 22.7916C11.0152 22.7207 22.5795 21.1781 22.0978 10.4211C22.0536 9.43274 21.9303 8.53367 21.7387 7.71865M10.5376 22.7916C16.876 22.3728 20.0969 19.8899 21.5383 16.9142M10.5376 22.7916C9.7707 22.9055 8.97982 22.8964 8.19743 22.7725M21.7387 7.71865C21.4988 6.69828 21.1518 5.80967 20.7188 5.04257M21.7387 7.71865C22.6022 10.1105 23.0542 13.7848 21.5383 16.9142M20.7188 5.04257C17.1684 -1.24629 7.83127 0.632493 4.27577 5.04257C2.88063 6.77451 -0.0433281 11.1668 1.38159 16.6571C2.27481 20.0988 5.17269 22.2936 8.19743 22.7725M20.7188 5.04257C22.0697 6.9404 24.0299 11.3848 22.3541 15.4153M21.5383 16.9142C21.8737 16.4251 22.1428 15.9235 22.3541 15.4153M8.19743 22.7725C12.1971 23.4683 20.6281 22.971 22.3541 15.4153M14 10.945C13.3836 10.289 12.003 8.63215 11.2034 7.04814C11.1703 6.98257 11.0247 6.98456 10.9937 7.05061C10.5221 8.05496 9.07362 9.92941 8 10.945M11.0333 7.44444C10.9392 9.86549 11 15 12 17"
+              stroke="currentColor" stroke-linecap="round"/>
+    </svg>
+</a>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'Copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'Copied';
+            setTimeout(() => {
+                copybutton.innerHTML = 'Copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {
+            }
+            ;
+            selection.removeRange(range);
+        });
+        codeblock.parentNode.appendChild(copybutton);
+    });
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js" integrity="sha512-9DNXrSjk17bU9MUbRp3IjwcWe46V8FaGA062PFbryPUAEQVRbz4jiZP6FW0AdbqEGtMYBDWnul3eiGBMJOQajA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script></main>
+    </body><script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha512-N9IJRoc3LaP3NDoiGkcPa4gG94kapGpaA5Zq9/Dr04uf5TbLFU5q0o8AbRhLKUUlp8QFS2u7S+Yti0U7QtuZvQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script>
+      const images = Array.from(document.querySelectorAll(".blog-content img"));
+      images.forEach(img => {
+          mediumZoom(img, {
+              margin: 10,  
+              scrollOffset: 40,  
+              container: null,  
+              template: null,  
+              background: 'rgba(0, 0, 0, 0.5)'
+          });
+      });
+  </script>
+
+  
+  <script src="/main.min.6bb26b69159420159c74dc9e097b06a578ed2b68c701466a91a44a9632d851bd0af167a1b30012387b4c512b48ad9ad4d3394e04d77ae38d57e1920fe4ed34fe.js" integrity="sha512-a7JraRWUIBWcdNyeCXsGpXjtK2jHAUZqkaRKljLYUb0K8WehswASOHtMUStIrZrU0zlOBNd6441X4ZIP5O00/g==" crossorigin="anonymous" defer></script></html>

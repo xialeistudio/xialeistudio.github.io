@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>rbac on 每天进步一点点</title>
+    <link>https://www.ddhigh.com/en/tags/rbac/</link>
+    <description>Recent content in rbac on 每天进步一点点</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 25 Sep 2023 11:22:17 +0000</lastBuildDate><atom:link href="https://www.ddhigh.com/en/tags/rbac/atom.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Understanding RBAC</title>
+      <link>https://www.ddhigh.com/en/2023/09/25/understanding-rbac/</link>
+      <pubDate>Mon, 25 Sep 2023 11:22:17 +0000</pubDate>
+      
+      <guid>https://www.ddhigh.com/en/2023/09/25/understanding-rbac/</guid>
+    </item>
+    
+  </channel>
+</rss>

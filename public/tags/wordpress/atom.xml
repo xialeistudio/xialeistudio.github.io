@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>wordpress on 每天进步一点点</title>
+    <link>https://www.ddhigh.com/tags/wordpress/</link>
+    <description>Recent content in wordpress on 每天进步一点点</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <lastBuildDate>Thu, 12 May 2016 14:05:35 +0800</lastBuildDate><atom:link href="https://www.ddhigh.com/tags/wordpress/atom.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>wordpress WPImageEditorImagick 漏洞临时修复方案</title>
+      <link>https://www.ddhigh.com/2016/05/12/fix-wordpress-wpimageeditorimagick-bug/</link>
+      <pubDate>Thu, 12 May 2016 14:05:35 +0800</pubDate>
+      
+      <guid>https://www.ddhigh.com/2016/05/12/fix-wordpress-wpimageeditorimagick-bug/</guid>
+    </item>
+    
+    <item>
+      <title>wordpress使用prettify插件实现代码高亮</title>
+      <link>https://www.ddhigh.com/2014/12/28/wordpress-prettify/</link>
+      <pubDate>Sun, 28 Dec 2014 00:07:50 +0800</pubDate>
+      
+      <guid>https://www.ddhigh.com/2014/12/28/wordpress-prettify/</guid>
+    </item>
+    
+  </channel>
+</rss>
