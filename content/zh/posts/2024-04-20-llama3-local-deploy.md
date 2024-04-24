@@ -31,7 +31,7 @@ Ollama可以简单理解为客户端，实现和大模型的交互，读者可�
 
 下载之后打开，直接点击`Next`以及`Install`安装`ollama`到命令行。安装完成后界面上会提示`ollama run llama2`，不需要执行这条命令，因为我们要安装`llama3`。
 
- ![image-20240420085557726](/Users/xialei/Library/Application Support/typora-user-images/image-20240420085557726.png)
+ ![image-20240420085557726](https://raw.githubusercontent.com/xialeistudio/picture-bucket/main/blog/image-20240420085557726.png)
 
 ## 下载Llama3
 
@@ -119,3 +119,5 @@ npm run dev
 笔者给模型提了一个编写一个Golang Echo Server的例子，大概5秒就开始打印结果，速度非常不错。
 
 ![image-20240420091325732](https://raw.githubusercontent.com/xialeistudio/picture-bucket/main/blog/image-20240420091325732.png)
+
+部署遇到问题的小伙伴可以关注公众号进群交流。
