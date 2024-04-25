@@ -9,7 +9,7 @@ categories:
 featured: true
 ---
 
-当谈到代码自动补全和辅助编程工具时，GitHub Copilot是一个备受推崇的选择。然而，有时我们可能希望在本地环境中构建一个类似的解决方案，以便更好地控制数据和隐私，更重要的是Llama3是免费，而Github Copilot是收费的。本文将分享如何基于Llama3和CodeGPT这两个强大的开源项目，搭建自己的本地Copilot。
+当谈到代码自动补全和辅助编程工具时，GitHub Copilot是一个备受推崇的选择。然而，有时我们可能希望在本地环境中构建一个类似的解决方案，以便更好地控制数据和隐私，更重要的是Llama3是免费，而Github Copilot是收费的。本文将分享如何基于Llama3这个强大的开源项目，搭建自己的本地Copilot。
 
 <!--more-->
 
