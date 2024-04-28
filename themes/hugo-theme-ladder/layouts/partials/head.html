@@ -36,8 +36,7 @@
     {{ else }}
     {{ $cssFile := (dict "targetPath" "css/main.css" ) }}
     {{ $styles := resources.Get "/scss/app.scss" | toCSS $cssFile | minify | fingerprint }}
-    <link rel="stylesheet" href="{{ $styles.RelPermalink }}" integrity="{{ $styles.Data.Integrity }}"
-        crossorigin="anonymous" media="screen" />
+    <link rel="stylesheet" href="{{ $styles.RelPermalink }}" integrity="{{ $styles.Data.Integrity }}" crossorigin="anonymous" media="screen" />
     {{ end }}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css" integrity="sha512-ygEyjMC6rqnzJqWGjRTJUPYMEs9JUOm3i7OWUS9CgQ4XkBUvMsgCS1I8JqavidQ2ClHcREB7IbA2mN08+r9Elg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
@@ -53,5 +52,5 @@
     <script>{ { $darkModeInit.Content | safeJS } }</script>
     {{ end -}}
     <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2871082647721658" -->
-     crossorigin="anonymous"></script>
+     <!-- crossorigin="anonymous"></script> -->
 </head>
