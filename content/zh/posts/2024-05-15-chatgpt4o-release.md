@@ -1,6 +1,6 @@
 ---
 title: 重磅！ChatGPT团队官宣船新版本的多模态大模型GPT-4o，完全免费！
-slug: ai-agent
+slug: chatgpt4o-releaase
 date: 2024-05-15T06:30:57+08:00
 categories:
 - ai
