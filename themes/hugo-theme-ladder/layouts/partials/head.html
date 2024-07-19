@@ -27,7 +27,7 @@
     {{ partial "common/icon.html" . }}
     {{ if .Params.math }}{{ partial "math.html" . }}{{ end }}
 
-    <link rel="stylesheet" href="https://cdn.staticfile.org/lxgw-wenkai-webfont/1.6.0/style.css" />
+    <link href="https://fonts.cdnfonts.com/css/titillium-web" rel="stylesheet">
 
     {{ if .Site.IsServer }}
     {{ $cssFile := (dict "targetPath" "css/main.css" "enableSourceMap" true ) }}

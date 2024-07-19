@@ -11,7 +11,7 @@ html {
 body {
   color: #212121;
   background-color: white;
-  font-family: Garamond, Georgia, "Times New Roman", "Microsoft Yahei", "PingFang SC", sans-serif;
+  font-family: "Titillium Web", Garamond, Georgia, "Times New Roman", "Microsoft Yahei", "PingFang SC", sans-serif;
   font-size: 1.8em;
   font-weight: 400;
   line-height: 1.8em; }
@@ -40,7 +40,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: Garamond, Georgia, "Times New Roman", "Microsoft Yahei", "PingFang SC", sans-serif;
+  font-family: "Titillium Web", Garamond, Georgia, "Times New Roman", "Microsoft Yahei", "PingFang SC", sans-serif;
   font-weight: 600;
   color: #000;
   margin: 2rem 0 2rem 0; }
@@ -514,7 +514,7 @@ img {
   .navigation span {
     display: inline;
     font-size: 1.7rem;
-    font-family: Garamond, Georgia, "Times New Roman", "Microsoft Yahei", "PingFang SC", sans-serif;
+    font-family: "Titillium Web", Garamond, Georgia, "Times New Roman", "Microsoft Yahei", "PingFang SC", sans-serif;
     font-weight: 600;
     color: #212121; }
   .navigation a:hover, .navigation a:focus {
