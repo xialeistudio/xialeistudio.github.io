@@ -1,0 +1,83 @@
+@font-face {
+    font-family: titillium web;
+    font-style: normal;
+    font-weight: 400;
+    src: local('Titillium Web'), url(/titilliumweb/TitilliumWeb-Regular.ttf) format('ttf')
+}
+
+@font-face {
+    font-family: titillium web;
+    font-style: normal;
+    font-weight: 400;
+    src: local('Titillium Web'), url(/titilliumweb/TitilliumWeb-Regular.ttf) format('ttf')
+}
+
+@font-face {
+    font-family: titillium web;
+    font-style: italic;
+    font-weight: 400;
+    src: local('Titillium Web'), url(/titilliumweb/TitilliumWeb-Italic.ttf) format('ttf')
+}
+
+@font-face {
+    font-family: titillium web;
+    font-style: normal;
+    font-weight: 275;
+    src: local('Titillium Web'), url(/titilliumweb/TitilliumWeb-ExtraLight.ttf) format('ttf')
+}
+
+@font-face {
+    font-family: titillium web;
+    font-style: italic;
+    font-weight: 275;
+    src: local('Titillium Web'), url(/titilliumweb/TitilliumWeb-ExtraLightItalic.ttf) format('ttf')
+}
+
+@font-face {
+    font-family: titillium web;
+    font-style: normal;
+    font-weight: 300;
+    src: local('Titillium Web'), url(/titilliumweb/TitilliumWeb-Light.ttf) format('ttf')
+}
+
+@font-face {
+    font-family: titillium web;
+    font-style: italic;
+    font-weight: 300;
+    src: local('Titillium Web'), url(/titilliumweb/TitilliumWeb-LightItalic.ttf) format('ttf')
+}
+
+@font-face {
+    font-family: titillium web;
+    font-style: normal;
+    font-weight: 600;
+    src: local('Titillium Web'), url(/titilliumweb/TitilliumWeb-SemiBold.ttf) format('ttf')
+}
+
+@font-face {
+    font-family: titillium web;
+    font-style: italic;
+    font-weight: 600;
+    src: local('Titillium Web'), url(/titilliumweb/TitilliumWeb-SemiBoldItalic.ttf) format('ttf')
+}
+
+@font-face {
+    font-family: titillium web;
+    font-style: normal;
+    font-weight: 700;
+    src: local('Titillium Web'), url(/titilliumweb/TitilliumWeb-Bold.ttf) format('ttf')
+}
+
+@font-face {
+    font-family: titillium web;
+    font-style: italic;
+    font-weight: 700;
+    src: local('Titillium Web'), url(/titilliumweb/TitilliumWeb-BoldItalic.ttf) format('ttf')
+}
+
+@font-face {
+    font-family: titillium web;
+    font-style: normal;
+    font-weight: 900;
+    src: local('Titillium Web'), url(/titilliumweb/TitilliumWeb-Black.ttf) format('ttf')
+}
