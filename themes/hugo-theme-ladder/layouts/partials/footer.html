@@ -64,15 +64,6 @@
     });
 </script>
 {{ if .Page.Store.Get "hasMermaid" }}
-<script type="module">
-    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.esm.min.mjs';
-
-    const config = {
-        startOnLoad: true,
-        theme: 'forest',
-        securityLevel: 'loose',
-    };
-    mermaid.initialize(config);
-</script>
+<script src="/mermaid/mermaid.min.js"></script>
 {{ end }}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js" integrity="sha512-9DNXrSjk17bU9MUbRp3IjwcWe46V8FaGA062PFbryPUAEQVRbz4jiZP6FW0AdbqEGtMYBDWnul3eiGBMJOQajA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
