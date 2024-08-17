@@ -1,6 +1,7 @@
 ---
 title: 基于LLM和搜索引擎构建你的AI搜索机器人
 date: 2024-08-15T15:57:11+08:00
+slug: build-your-ai-search-bot-with-llm-and-search-engines
 tags:
 - rag
 categories: 

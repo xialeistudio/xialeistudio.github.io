@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="zh"><head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>百度分享不支持HTTPS解决办法</title>
+    <meta charset="utf-8">
+    <meta name="google-adsense-account" content="ca-pub-2871082647721658">
+    
+    <meta content="Web开发 , Java , Go , Node.js , PHP , Koa , MySQL , Redis , 前端 , 后端 , 数据库" name="keywords">
+    
+    <meta name="description" content="这两天接入文章页百度分享时发现本地可以显示分享按钮，但是发布到线上之后发现分享按钮不会展示。打开浏览器调试工具发现，HTTPS下的百度分享资源未加载，起初以为是HTTPS站点下面使用的是HTTP协议的链接，但是查看源代码发现是自适应协议的， 所以问题应该是处在百度这里。
+打开https://bdimg.share.baidu.com/static/api/js/share.js发现浏览器提示NET::ERR_CERT_COMMON_NAME_INVALID，也就是访问的域名和证书配置的域名不匹配，证书的域名是*.baidu.com，访问的域名是bdimg.share.baidu.com，泛域名是不可以跨级使用的。
+虽然是百度的问题，但是咱也不可能要他去改这个分享，所以只能自己来处理了。
+可能的处理方案 全站使用HTTP，放弃该方案（现在都9012年了，免费证书一大把，基本都是HTTPS站点了） 将百度分享的资源打包下来进行部署 部署到自己的服务器（成本低，易迁移，但是服务器带宽是个问题） 部署到CDN，本文以七牛为例 资源路径 百度分享相关JS我已经分享到github了，一键直达仓库">
+    <meta name="author" content="Lei Xia">
+    <link rel="canonical"
+        href="https://www.ddhigh.com/2019/07/12/baidu-share-support-https/">
+
+    <link rel="alternate" type="application/rss+xml" href="https://www.ddhigh.com/index.xml" title="每天进步一点点">
+
+    
+
+
+<script async defer data-website-id="52f8f0f9-d93d-466b-8ef5-508aae8c4ed4"
+    src="https://analysis.ddhigh.com/script.js"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EC3XLVSGKV"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-EC3XLVSGKV');
+</script>
+    <meta property="og:title" content="百度分享不支持HTTPS解决办法" />
+<meta property="og:description" content="这两天接入文章页百度分享时发现本地可以显示分享按钮，但是发布到线上之后发现分享按钮不会展示。打开浏览器调试工具发现，HTTPS下的百度分享资源未加载，起初以为是HTTPS站点下面使用的是HTTP协议的链接，但是查看源代码发现是自适应协议的， 所以问题应该是处在百度这里。
+打开https://bdimg.share.baidu.com/static/api/js/share.js发现浏览器提示NET::ERR_CERT_COMMON_NAME_INVALID，也就是访问的域名和证书配置的域名不匹配，证书的域名是*.baidu.com，访问的域名是bdimg.share.baidu.com，泛域名是不可以跨级使用的。
+虽然是百度的问题，但是咱也不可能要他去改这个分享，所以只能自己来处理了。
+可能的处理方案 全站使用HTTP，放弃该方案（现在都9012年了，免费证书一大把，基本都是HTTPS站点了） 将百度分享的资源打包下来进行部署 部署到自己的服务器（成本低，易迁移，但是服务器带宽是个问题） 部署到CDN，本文以七牛为例 资源路径 百度分享相关JS我已经分享到github了，一键直达仓库" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.ddhigh.com/2019/07/12/baidu-share-support-https/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2019-07-12T19:10:52+00:00" />
+<meta property="article:modified_time" content="2019-07-12T19:10:52+00:00" />
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="百度分享不支持HTTPS解决办法"/>
+<meta name="twitter:description" content="这两天接入文章页百度分享时发现本地可以显示分享按钮，但是发布到线上之后发现分享按钮不会展示。打开浏览器调试工具发现，HTTPS下的百度分享资源未加载，起初以为是HTTPS站点下面使用的是HTTP协议的链接，但是查看源代码发现是自适应协议的， 所以问题应该是处在百度这里。
+打开https://bdimg.share.baidu.com/static/api/js/share.js发现浏览器提示NET::ERR_CERT_COMMON_NAME_INVALID，也就是访问的域名和证书配置的域名不匹配，证书的域名是*.baidu.com，访问的域名是bdimg.share.baidu.com，泛域名是不可以跨级使用的。
+虽然是百度的问题，但是咱也不可能要他去改这个分享，所以只能自己来处理了。
+可能的处理方案 全站使用HTTP，放弃该方案（现在都9012年了，免费证书一大把，基本都是HTTPS站点了） 将百度分享的资源打包下来进行部署 部署到自己的服务器（成本低，易迁移，但是服务器带宽是个问题） 部署到CDN，本文以七牛为例 资源路径 百度分享相关JS我已经分享到github了，一键直达仓库"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://www.ddhigh.com/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "百度分享不支持HTTPS解决办法",
+      "item": "https://www.ddhigh.com/2019/07/12/baidu-share-support-https/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "百度分享不支持HTTPS解决办法",
+  "name": "百度分享不支持HTTPS解决办法",
+  "description": "这两天接入文章页百度分享时发现本地可以显示分享按钮，但是发布到线上之后发现分享按钮不会展示。打开浏览器调试工具发现，HTTPS下的百度分享资源未加载，起初以为是HTTPS站点下面使用的是HTTP协议的链接，但是查看源代码发现是自适应协议的， 所以问题应该是处在百度这里。\n打开https://bdimg.share.baidu.com/static/api/js/share.js发现浏览器提示NET::ERR_CERT_COMMON_NAME_INVALID，也就是访问的域名和证书配置的域名不匹配，证书的域名是*.baidu.com，访问的域名是bdimg.share.baidu.com，泛域名是不可以跨级使用的。\n虽然是百度的问题，但是咱也不可能要他去改这个分享，所以只能自己来处理了。\n可能的处理方案 全站使用HTTP，放弃该方案（现在都9012年了，免费证书一大把，基本都是HTTPS站点了） 将百度分享的资源打包下来进行部署 部署到自己的服务器（成本低，易迁移，但是服务器带宽是个问题） 部署到CDN，本文以七牛为例 资源路径 百度分享相关JS我已经分享到github了，一键直达仓库",
+  "keywords": [
+    
+  ],
+  "articleBody": "这两天接入文章页百度分享时发现本地可以显示分享按钮，但是发布到线上之后发现分享按钮不会展示。打开浏览器调试工具发现，HTTPS下的百度分享资源未加载，起初以为是HTTPS站点下面使用的是HTTP协议的链接，但是查看源代码发现是自适应协议的， 所以问题应该是处在百度这里。\n打开https://bdimg.share.baidu.com/static/api/js/share.js发现浏览器提示NET::ERR_CERT_COMMON_NAME_INVALID，也就是访问的域名和证书配置的域名不匹配，证书的域名是*.baidu.com，访问的域名是bdimg.share.baidu.com，泛域名是不可以跨级使用的。\n虽然是百度的问题，但是咱也不可能要他去改这个分享，所以只能自己来处理了。\n可能的处理方案 全站使用HTTP，放弃该方案（现在都9012年了，免费证书一大把，基本都是HTTPS站点了） 将百度分享的资源打包下来进行部署 部署到自己的服务器（成本低，易迁移，但是服务器带宽是个问题） 部署到CDN，本文以七牛为例 资源路径 百度分享相关JS我已经分享到github了，一键直达仓库\n处理过程 将百度分享的资源解压到本地 使用PHP遍历目录上传到七牛(本文用的SPL进行文件夹遍历) 替换使用的百度分享JS路径 使用PHP变量目录上传到七牛 文件目录如下：\n|--static(百度分享资源目录) |--DirectorySync.php |--FilterScanner.php |--index.php DirectorySync.php\n/** * 目录同步器 * Class DirectorySync * @package sync * @author xialeistudio * @date 2019-07-11 */ class DirectorySync { private $accessKey; private $secretKey; private $bucket; /** * @var Auth */ private $auth; /** * DirectorySync constructor. * @param $accessKey * @param $secretKey * @param $bucket */ public function __construct($accessKey, $secretKey, $bucket) { $this-\u003eaccessKey = $accessKey; $this-\u003esecretKey = $secretKey; $this-\u003ebucket = $bucket; $this-\u003eauth = new Auth($accessKey, $secretKey); } /** * 同步目录 * @param array $list * @throws \\Exception * @author xialeistudio * @date 2019-07-11 */ public function sync(array $list) { $uploader = new UploadManager(); $token = $this-\u003eauth-\u003euploadToken($this-\u003ebucket); foreach ($list as $path =\u003e $keyPrefix) { $scanner = new FilterScanner($path); foreach ($scanner as $filename) { printf(\"uploading %s \\n\", $filename); /** @var Error $error */ list($ret, $error) = $uploader-\u003eputFile($token, $keyPrefix . $filename, $filename); if (!empty($error)) { printf(\"uploading %s error: %s\\n\", $filename, $error-\u003emessage()); } } } } } FilterScanner.php\n/** * 文件扫描器 * Class FilterScanner * @package sync * @author xialeistudio * @date 2019-07-11 */ class FilterScanner extends FilterIterator { /** * FilterScanner constructor. * @param $path */ public function __construct($path) { parent::__construct(new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path))); } /** * Check whether the current element of the iterator is acceptable * @link https://php.net/manual/en/filteriterator.accept.php * @return bool true if the current element is acceptable, otherwise false. * @since 5.1.0 */ public function accept() { return substr($this-\u003ecurrent(), -1, 1) != '.' \u0026\u0026 substr($this-\u003ecurrent(), -2, 2) != '..'; } } index.php\n$sync = new DirectorySync(ACCESS_KEY, SECRET_KEY, BUCKET); $sync-\u003esync([ 'static' =\u003e '' ]); 上传之前需要修改一下百度分享js相关的域名。打开static/api/js/share.js，搜索到如下代码：\njscfg: {domain: {staticUrl: \"/\"}} 将staticUrl改成七牛的域名，本站使用的是static.ddhigh.com，所以改完之后的代码如下：\njscfg: {domain: {staticUrl: \"//static.ddhigh.com/\"}} 完事之后执行php index.php上传到七牛，此时就可以随意部署了~。\n部署到应用 将以往使用bdimg.share.baidu.com/static/api/js/share.js的地方换成//static.ddhigh.com/static/api/js/share.js即可，其他资源会自动加载。\n本站的CDN域名做了防盗链处理，各位如果直接用我的share.js链接是会有问题的\nhexo Next百度分享的额外处理 上传到七牛这个步骤完成之后，搜索文件baidushare.swig，找到最下面的如下代码：\nwith(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)]; 将链接替换为自己的CDN链接，我这边替换后的结果如下：\nwith(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//static.ddhigh.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)]; ",
+  "wordCount" : "287",
+  "inLanguage": "zh",
+  "datePublished": "2019-07-12T19:10:52Z",
+  "dateModified": "2019-07-12T19:10:52Z",
+  "author":{
+    "@type": "Person",
+    "name": "Lei Xia"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://www.ddhigh.com/2019/07/12/baidu-share-support-https/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "每天进步一点点",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.ddhigh.com/favicon.ico"
+    }
+  }
+}
+</script>
+    <link rel="icon" href="/img/favicon.ico" sizes="16x16">
+
+<link rel="apple-touch-icon" href="/img/favicon.ico">
+
+<link rel="manifest" href="/img/favicon.ico">
+    
+
+    <link href="/titilliumweb/titilliumweb.css" rel="stylesheet">
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/main.min.0eb4160ba4a2d63122fe8ae83f1560951a87ab510d5dab0615973b5206555759.css" integrity="sha256-DrQWC6Si1jEi/oroPxVglRqHq1ENXasGFZc7UgZVV1k=" crossorigin="anonymous" media="screen" />
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css" integrity="sha512-ygEyjMC6rqnzJqWGjRTJUPYMEs9JUOm3i7OWUS9CgQ4XkBUvMsgCS1I8JqavidQ2ClHcREB7IbA2mN08+r9Elg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    
+    <link rel="stylesheet" href="/scss/highlight/github-dark.min.min.66034289ee9a113219a2c4aae0a8bd2095ab255c832a42efcf5863f10814e7a1.css" />
+
+    
+    <script src="/js/highlight.min.min.894ca9c68afab956438c4926a0dc7f5293e04e08595bd27abdb123e94801f684.js"></script>
+    <script>hljs.highlightAll();</script>
+
+    <script>{ { $darkModeInit.Content | safeJS } }</script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2871082647721658" crossorigin="anonymous"></script>
+</head><body>
+      <main class="wrapper"><nav class="navigation">
+    <section class="container">
+        <a class="navigation-brand" href="/">
+            每天进步一点点
+        </a>
+        <input type="checkbox" id="menu-toggle" />
+        <label class="menu-button float-right" for="menu-toggle">
+            <span></span><span></span><span></span>
+        </label>
+        
+        <ul class="navigation-list" id="navigation-list">
+            
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/">首页</a>
+            </li>
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/archives">归档</a>
+            </li>
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/books">出版物</a>
+            </li>
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/guestbook">留言板</a>
+            </li>
+            
+            
+
+            <li class="navigation-item menu-separator">
+                <span>|</span>
+            </li>
+
+            
+            
+            <li class="navigation-item navigation-social">
+                <a class="navigation-link" href="https://github.com/xialeistudio"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a>
+            </li>
+            
+            
+
+            <li class="navigation-item navigation-dark">
+                <button id="mode" type="button" aria-label="toggle user light or dark theme">
+                    <span class="toggle-dark"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></span>
+                    <span class="toggle-light"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></span>
+                </button>
+            </li>
+
+            
+            
+            
+            
+            
+            <li class="navigation-item navigation-language">
+                <a href="https://www.ddhigh.com/en/">EN</a>
+            </li>
+            
+            
+            
+            
+            
+            
+        </ul>
+        
+    </section>
+</nav>
+<div id="content">
+<article class="blog-single">
+  <header class="blog-title">
+    <h1>百度分享不支持HTTPS解决办法</h1>
+  </header>
+
+  <p>
+  <small>
+    2019年7月12日&nbsp;· 287 字&nbsp;· 2 分钟</small>
+
+  
+<p>
+
+  <div class="blog-toc">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#可能的处理方案">可能的处理方案</a></li>
+    <li><a href="#资源路径">资源路径</a></li>
+    <li><a href="#处理过程">处理过程</a>
+      <ul>
+        <li><a href="#使用php变量目录上传到七牛">使用PHP变量目录上传到七牛</a></li>
+      </ul>
+    </li>
+    <li><a href="#部署到应用">部署到应用</a></li>
+    <li><a href="#hexo-next百度分享的额外处理">hexo Next百度分享的额外处理</a></li>
+  </ul>
+</nav>
+  </div>
+
+  <section class="blog-content">
+    <p>这两天接入文章页百度分享时发现本地可以显示分享按钮，但是发布到线上之后发现分享按钮不会展示。打开浏览器调试工具发现，HTTPS下的百度分享资源未加载，起初以为是HTTPS站点下面使用的是HTTP协议的链接，但是查看源代码发现是自适应协议的， 所以问题应该是处在百度这里。</p>
+<p>打开<code>https://bdimg.share.baidu.com/static/api/js/share.js</code>发现浏览器提示<code>NET::ERR_CERT_COMMON_NAME_INVALID</code>，也就是<code>访问的域名和证书配置的域名不匹配</code>，证书的域名是<code>*.baidu.com</code>，访问的域名是<code>bdimg.share.baidu.com</code>，泛域名是不可以跨级使用的。</p>
+<p>虽然是百度的问题，但是咱也不可能要他去改这个分享，所以只能自己来处理了。</p>
+<h2 id="可能的处理方案">可能的处理方案</h2>
+<ol>
+<li>全站使用HTTP，放弃该方案（现在都9012年了，免费证书一大把，基本都是HTTPS站点了）</li>
+<li>将百度分享的资源打包下来进行部署
+<ol>
+<li>部署到自己的服务器（成本低，易迁移，但是服务器带宽是个问题）</li>
+<li>部署到CDN，本文以七牛为例</li>
+</ol>
+</li>
+</ol>
+<h2 id="资源路径">资源路径</h2>
+<p>百度分享相关JS我已经分享到github了，<a href="https://github.com/xialeistudio/baidu-share-resource" target="_blank" rel="noopener">一键直达仓库</a></p>
+<h2 id="处理过程">处理过程</h2>
+<ol>
+<li>将百度分享的资源解压到本地</li>
+<li>使用PHP遍历目录上传到七牛(本文用的SPL进行文件夹遍历)</li>
+<li>替换使用的百度分享JS路径</li>
+</ol>
+<h3 id="使用php变量目录上传到七牛">使用PHP变量目录上传到七牛</h3>
+<p>文件目录如下：</p>
+<pre tabindex="0"><code>|--static(百度分享资源目录)
+|--DirectorySync.php
+|--FilterScanner.php
+|--index.php
+</code></pre><p>DirectorySync.php</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> * 目录同步器
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> * Class DirectorySync
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> * @package sync
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> * @author xialeistudio
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> * @date 2019-07-11
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DirectorySync</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> $accessKey;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> $secretKey;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> $bucket;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     * @var Auth
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> $auth;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     * DirectorySync constructor.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     * @param $accessKey
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     * @param $secretKey
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     * @param $bucket
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> __construct($accessKey, $secretKey, $bucket)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">accessKey</span> <span style="color:#f92672">=</span> $accessKey;
+</span></span><span style="display:flex;"><span>        $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">secretKey</span> <span style="color:#f92672">=</span> $secretKey;
+</span></span><span style="display:flex;"><span>        $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">bucket</span> <span style="color:#f92672">=</span> $bucket;
+</span></span><span style="display:flex;"><span>        $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">auth</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Auth</span>($accessKey, $secretKey);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     * 同步目录
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     * @param array $list
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     * @throws \Exception
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     * @author xialeistudio
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     * @date 2019-07-11
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">sync</span>(<span style="color:#66d9ef">array</span> $list)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        $uploader <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">UploadManager</span>();
+</span></span><span style="display:flex;"><span>        $token <span style="color:#f92672">=</span> $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">auth</span><span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">uploadToken</span>($this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">bucket</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">foreach</span> ($list <span style="color:#66d9ef">as</span> $path <span style="color:#f92672">=&gt;</span> $keyPrefix) {
+</span></span><span style="display:flex;"><span>            $scanner <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">FilterScanner</span>($path);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">foreach</span> ($scanner <span style="color:#66d9ef">as</span> $filename) {
+</span></span><span style="display:flex;"><span>                <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;uploading %s </span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, $filename);
+</span></span><span style="display:flex;"><span>                <span style="color:#e6db74">/** @var Error $error */</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">list</span>($ret, $error) <span style="color:#f92672">=</span> $uploader<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">putFile</span>($token, $keyPrefix <span style="color:#f92672">.</span> $filename, $filename);
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#66d9ef">empty</span>($error)) {
+</span></span><span style="display:flex;"><span>                    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;uploading %s error: %s</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, $filename, $error<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">message</span>());
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>FilterScanner.php</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#e6db74">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> * 文件扫描器
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> * Class FilterScanner
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> * @package sync
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> * @author xialeistudio
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> * @date 2019-07-11
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FilterScanner</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">FilterIterator</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     * FilterScanner constructor.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     * @param $path
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> __construct($path)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">parent</span><span style="color:#f92672">::</span><span style="color:#a6e22e">__construct</span>(<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">RecursiveIteratorIterator</span>(<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">RecursiveDirectoryIterator</span>($path)));
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     * Check whether the current element of the iterator is acceptable
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     * @link https://php.net/manual/en/filteriterator.accept.php
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     * @return bool true if the current element is acceptable, otherwise false.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     * @since 5.1.0
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">accept</span>()
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">substr</span>($this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">current</span>(), <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>) <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#39;.&#39;</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">substr</span>($this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">current</span>(), <span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>) <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#39;..&#39;</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>index.php</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span>$sync <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">DirectorySync</span>(<span style="color:#a6e22e">ACCESS_KEY</span>, <span style="color:#a6e22e">SECRET_KEY</span>, <span style="color:#a6e22e">BUCKET</span>);
+</span></span><span style="display:flex;"><span>$sync<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">sync</span>([
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;static&#39;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>]);
+</span></span></code></pre></div><p>上传之前需要修改一下百度分享js相关的域名。打开<code>static/api/js/share.js</code>，搜索到如下代码：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#a6e22e">jscfg</span><span style="color:#f92672">:</span> {<span style="color:#a6e22e">domain</span><span style="color:#f92672">:</span> {<span style="color:#a6e22e">staticUrl</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;/&#34;</span>}}
+</span></span></code></pre></div><p>将<code>staticUrl</code>改成七牛的域名，本站使用的是<code>static.ddhigh.com</code>，所以改完之后的代码如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#a6e22e">jscfg</span><span style="color:#f92672">:</span> {<span style="color:#a6e22e">domain</span><span style="color:#f92672">:</span> {<span style="color:#a6e22e">staticUrl</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;//static.ddhigh.com/&#34;</span>}}
+</span></span></code></pre></div><p>完事之后执行<code>php index.php</code>上传到七牛，此时就可以随意部署了~。</p>
+<h2 id="部署到应用">部署到应用</h2>
+<p>将以往使用<code>bdimg.share.baidu.com/static/api/js/share.js</code>的地方换成<code>//static.ddhigh.com/static/api/js/share.js</code>即可，其他资源会自动加载。</p>
+<p><em>本站的CDN域名做了防盗链处理，各位如果直接用我的share.js链接是会有问题的</em></p>
+<h2 id="hexo-next百度分享的额外处理">hexo Next百度分享的额外处理</h2>
+<p>上传到七牛这个步骤完成之后，搜索文件<code>baidushare.swig</code>，找到最下面的如下代码：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">with</span>(document)<span style="color:#ae81ff">0</span>[(<span style="color:#a6e22e">getElementsByTagName</span>(<span style="color:#e6db74">&#39;head&#39;</span>)[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">||</span><span style="color:#a6e22e">body</span>).<span style="color:#a6e22e">appendChild</span>(<span style="color:#a6e22e">createElement</span>(<span style="color:#e6db74">&#39;script&#39;</span>)).<span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;//bdimg.share.baidu.com/static/api/js/share.js?cdnversion=&#39;</span><span style="color:#f92672">+~</span>(<span style="color:#f92672">-</span><span style="color:#66d9ef">new</span> Date()<span style="color:#f92672">/</span><span style="color:#ae81ff">36e5</span>)];
+</span></span></code></pre></div><p>将链接替换为自己的CDN链接，我这边替换后的结果如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">with</span>(document)<span style="color:#ae81ff">0</span>[(<span style="color:#a6e22e">getElementsByTagName</span>(<span style="color:#e6db74">&#39;head&#39;</span>)[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">||</span><span style="color:#a6e22e">body</span>).<span style="color:#a6e22e">appendChild</span>(<span style="color:#a6e22e">createElement</span>(<span style="color:#e6db74">&#39;script&#39;</span>)).<span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;//static.ddhigh.com/static/api/js/share.js?cdnversion=&#39;</span><span style="color:#f92672">+~</span>(<span style="color:#f92672">-</span><span style="color:#66d9ef">new</span> Date()<span style="color:#f92672">/</span><span style="color:#ae81ff">36e5</span>)];
+</span></span></code></pre></div>
+    <div class="blog-footer">
+    <div class="social-share"></div>
+    <div class="copyright">
+        <ul>
+            <li style="margin-bottom: 0.5em;">本文作者: <a href="https://ddhigh.com/" target="_blank"
+                    style="color: #000000; text-decoration: none;">xialeistudio</a></li>
+            <li style="margin-bottom: 0.5em;">本文链接: <a href="https://www.ddhigh.com/2019/07/12/baidu-share-support-https/" target="_blank"
+                    style="color: #000000; text-decoration: none;">百度分享不支持HTTPS解决办法</a></li>
+            <li>版权声明: <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank"
+                    style="color: #000000; text-decoration: none;">「署名-非商业性使用-相同方式共享 4.0 国际」</a></li>
+        </ul>
+    </div>
+    
+    <div style="margin-top: 2rem;"><img src="/img/mp.png" alt="qrcode"></div>
+    
+</div>
+  </section>
+
+  
+  
+  <div class="paginator">
+    
+    <a class="prev" href="https://www.ddhigh.com/2019/07/16/wechat-mini-program-data-column-case/">
+      <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M3.77086 21.1546C11.0491 22.698 21.4339 21.7773 21.4339 16.3608V4.63375C21.4339 3.93962 21.3581 3.30535 21.1917 2.76787M3.77086 21.1546C1.9934 20.7777 0.973585 18.7264 1.08749 16.688C1.2668 13.479 1.15721 9.43135 1.00513 6.21507C0.87809 3.52811 3.12891 1.16316 5.51029 1.25008C9.76594 1.40542 15.377 1.20229 18.7912 1.00542C20.0864 0.930734 20.8406 1.63385 21.1917 2.76787M3.77086 21.1546C4.56586 21.4723 5.49168 21.7879 6.5 22.0658M21.1917 2.76787C23.1097 4.18217 23.13 12.4191 22.9004 16.3608C20.8478 24.0194 12.3061 23.6662 6.5 22.0658M21.1917 2.76787C21.7612 4.51192 22.7203 9.67216 22 16.3608C21.2797 23.0494 11.3665 22.9511 6.5 22.0658M9.94496 9C9.28897 9.61644 7.63215 10.997 6.04814 11.7966C5.98257 11.8297 5.98456 11.9753 6.05061 12.0063C7.05496 12.4779 8.92941 13.9264 9.94496 15M6.44444 11.9667C8.86549 12.0608 14 12 16 11"
+          stroke="currentColor" stroke-linecap="round" />
+      </svg>
+      <span>微信小程序数据字段大小写问题</span></a>
+    
+    
+    <a class="next" href="https://www.ddhigh.com/2019/07/11/js-encrypt-php-decrypt/"><span>PHP和JS加解密</span>
+      <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M3.77086 21.1546C11.0491 22.698 21.4339 21.7773 21.4339 16.3608V4.63375C21.4339 3.93962 21.3581 3.30535 21.1917 2.76787M3.77086 21.1546C1.9934 20.7777 0.973585 18.7264 1.08749 16.688C1.2668 13.479 1.15721 9.43135 1.00513 6.21507C0.87809 3.52811 3.12891 1.16316 5.51029 1.25008C9.76594 1.40542 15.377 1.20229 18.7912 1.00542C20.0864 0.930734 20.8406 1.63385 21.1917 2.76787M3.77086 21.1546C4.56586 21.4723 5.49168 21.7879 6.5 22.0658M21.1917 2.76787C23.1097 4.18217 23.13 12.4191 22.9004 16.3608C20.8478 24.0194 12.3061 23.6662 6.5 22.0658M21.1917 2.76787C21.7612 4.51192 22.7203 9.67216 22 16.3608C21.2797 23.0494 11.3665 22.9511 6.5 22.0658M12.055 9C12.711 9.61644 14.3679 10.997 15.9519 11.7966C16.0174 11.8297 16.0154 11.9753 15.9494 12.0063C14.945 12.4779 13.0706 13.9264 12.055 15M15.5556 11.9667C13.1345 12.0608 8 12 6 11"
+          stroke="currentColor" stroke-linecap="round" />
+      </svg>
+    </a>
+    
+  </div>
+  
+
+  
+
+
+  
+  
+<div class="comments">
+  <script>
+      const getTheme = window.localStorage && window.localStorage.getItem("theme");
+      let theme = getTheme === 'dark' ? 'dark' : 'light';
+      let s = document.createElement('script');
+      s.src = 'https://giscus.app/client.js';
+      s.setAttribute('data-repo', 'xialeistudio\/discussion');
+      s.setAttribute('data-repo-id', 'R_kgDOKurTRA');
+      s.setAttribute('data-category', 'General');
+      s.setAttribute('data-category-id', 'DIC_kwDOKurTRM4CbCJt');
+      s.setAttribute('data-mapping', 'pathname');
+      s.setAttribute('data-strict', '0');
+      s.setAttribute('data-reactions-enabled', '1');
+      s.setAttribute('data-emit-metadata', '0');
+      s.setAttribute('data-input-position', 'bottom');
+      s.setAttribute('data-theme', theme);
+      s.setAttribute('data-lang', 'en');
+      s.setAttribute('data-loading', 'lazy');
+      s.setAttribute('crossorigin', 'anonymous');
+      s.setAttribute('async', '');
+      document.querySelector('div.comments').innerHTML = '';
+      document.querySelector('div.comments').appendChild(s);
+  </script>
+</div>
+
+</article>
+
+
+        </div><footer class="footer">
+    <p>&copy; 2014 - 2024 <a href="https://www.ddhigh.com">每天进步一点点</a>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener" target="_blank">Hugo️️</a>
+        <a href="https://github.com/guangzhengli/hugo-theme-ladder" rel="noopener" target="_blank">Ladder</a>
+        ️ </p>
+</footer>
+
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10.5376 22.7916C11.0152 22.7207 22.5795 21.1781 22.0978 10.4211C22.0536 9.43274 21.9303 8.53367 21.7387 7.71865M10.5376 22.7916C16.876 22.3728 20.0969 19.8899 21.5383 16.9142M10.5376 22.7916C9.7707 22.9055 8.97982 22.8964 8.19743 22.7725M21.7387 7.71865C21.4988 6.69828 21.1518 5.80967 20.7188 5.04257M21.7387 7.71865C22.6022 10.1105 23.0542 13.7848 21.5383 16.9142M20.7188 5.04257C17.1684 -1.24629 7.83127 0.632493 4.27577 5.04257C2.88063 6.77451 -0.0433281 11.1668 1.38159 16.6571C2.27481 20.0988 5.17269 22.2936 8.19743 22.7725M20.7188 5.04257C22.0697 6.9404 24.0299 11.3848 22.3541 15.4153M21.5383 16.9142C21.8737 16.4251 22.1428 15.9235 22.3541 15.4153M8.19743 22.7725C12.1971 23.4683 20.6281 22.971 22.3541 15.4153M14 10.945C13.3836 10.289 12.003 8.63215 11.2034 7.04814C11.1703 6.98257 11.0247 6.98456 10.9937 7.05061C10.5221 8.05496 9.07362 9.92941 8 10.945M11.0333 7.44444C10.9392 9.86549 11 15 12 17"
+              stroke="currentColor" stroke-linecap="round"/>
+    </svg>
+</a>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'Copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'Copied';
+            setTimeout(() => {
+                copybutton.innerHTML = 'Copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {
+            }
+            ;
+            selection.removeRange(range);
+        });
+        codeblock.parentNode.appendChild(copybutton);
+    });
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js" integrity="sha512-9DNXrSjk17bU9MUbRp3IjwcWe46V8FaGA062PFbryPUAEQVRbz4jiZP6FW0AdbqEGtMYBDWnul3eiGBMJOQajA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script></main>
+    </body><script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha512-N9IJRoc3LaP3NDoiGkcPa4gG94kapGpaA5Zq9/Dr04uf5TbLFU5q0o8AbRhLKUUlp8QFS2u7S+Yti0U7QtuZvQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script>
+      const images = Array.from(document.querySelectorAll(".blog-content img"));
+      images.forEach(img => {
+          mediumZoom(img, {
+              margin: 10,  
+              scrollOffset: 40,  
+              container: null,  
+              template: null,  
+              background: 'rgba(0, 0, 0, 0.5)'
+          });
+      });
+  </script>
+
+  
+  <script src="/main.min.6bb26b69159420159c74dc9e097b06a578ed2b68c701466a91a44a9632d851bd0af167a1b30012387b4c512b48ad9ad4d3394e04d77ae38d57e1920fe4ed34fe.js" integrity="sha512-a7JraRWUIBWcdNyeCXsGpXjtK2jHAUZqkaRKljLYUb0K8WehswASOHtMUStIrZrU0zlOBNd6441X4ZIP5O00/g==" crossorigin="anonymous" defer></script></html>

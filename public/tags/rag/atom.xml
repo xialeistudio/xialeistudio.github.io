@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>rag on 每天进步一点点</title>
+    <link>https://www.ddhigh.com/tags/rag/</link>
+    <description>Recent content in rag on 每天进步一点点</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <lastBuildDate>Thu, 15 Aug 2024 15:57:11 +0800</lastBuildDate><atom:link href="https://www.ddhigh.com/tags/rag/atom.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>基于LLM和搜索引擎构建你的AI搜索机器人</title>
+      <link>https://www.ddhigh.com/2024/08/15/%E5%9F%BA%E4%BA%8Ellm%E5%92%8C%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E6%9E%84%E5%BB%BA%E4%BD%A0%E7%9A%84ai%E6%90%9C%E7%B4%A2%E6%9C%BA%E5%99%A8%E4%BA%BA/</link>
+      <pubDate>Thu, 15 Aug 2024 15:57:11 +0800</pubDate>
+      
+      <guid>https://www.ddhigh.com/2024/08/15/%E5%9F%BA%E4%BA%8Ellm%E5%92%8C%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E6%9E%84%E5%BB%BA%E4%BD%A0%E7%9A%84ai%E6%90%9C%E7%B4%A2%E6%9C%BA%E5%99%A8%E4%BA%BA/</guid>
+    </item>
+    
+    <item>
+      <title>基于llama3和langchain使用RAG搭建你的私有知识库！</title>
+      <link>https://www.ddhigh.com/2024/04/28/llama3-rag-tutorial/</link>
+      <pubDate>Sun, 28 Apr 2024 08:30:57 +0800</pubDate>
+      
+      <guid>https://www.ddhigh.com/2024/04/28/llama3-rag-tutorial/</guid>
+    </item>
+    
+    <item>
+      <title>如何用解决大模型时效性和准确性问题？RAG技术核心原理</title>
+      <link>https://www.ddhigh.com/2024/04/24/retrieval-augmented-generation/</link>
+      <pubDate>Wed, 24 Apr 2024 08:30:57 +0800</pubDate>
+      
+      <guid>https://www.ddhigh.com/2024/04/24/retrieval-augmented-generation/</guid>
+    </item>
+    
+  </channel>
+</rss>

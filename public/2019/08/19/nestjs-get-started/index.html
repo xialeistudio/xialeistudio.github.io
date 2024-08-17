@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="zh"><head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NestJs学习之旅(1)——快速开始</title>
+    <meta charset="utf-8">
+    <meta name="google-adsense-account" content="ca-pub-2871082647721658">
+    
+    <meta content="Web开发 , Java , Go , Node.js , PHP , Koa , MySQL , Redis , 前端 , 后端 , 数据库" name="keywords">
+    
+    <meta name="description" content="本文是NestJs学习之旅的第一篇，简要介绍一下NestJs框架，搭建一个Hello World应用。
+介绍 Nest（或NestJS）是一个用于构建高效，可扩展的Node.js服务器端应用程序的框架。它使用渐进式JavaScript，内置并完全支持TypeScript（但仍然允许开发人员使用纯JavaScript编写代码）并结合了OOP（面向对象编程），FP（功能编程）和FRP（功能反应编程）的元素。
+import { Controller, Get } from &#39;@nestjs/common&#39;; @Controller(&#39;cats&#39;) export class CatsController { @Get() findAll(): string { return &#39;This action returns all cats&#39;; } } 熟悉Java的同学应该有似曾相识的感觉，SpringBoot中大量使用注解来简化开发。现在，使用基于ES6装饰器构建的NestJs框架，你也可以做到!">
+    <meta name="author" content="Lei Xia">
+    <link rel="canonical"
+        href="https://www.ddhigh.com/2019/08/19/nestjs-get-started/">
+
+    <link rel="alternate" type="application/rss+xml" href="https://www.ddhigh.com/index.xml" title="每天进步一点点">
+
+    
+
+
+<script async defer data-website-id="52f8f0f9-d93d-466b-8ef5-508aae8c4ed4"
+    src="https://analysis.ddhigh.com/script.js"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EC3XLVSGKV"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-EC3XLVSGKV');
+</script>
+    <meta property="og:title" content="NestJs学习之旅(1)——快速开始" />
+<meta property="og:description" content="本文是NestJs学习之旅的第一篇，简要介绍一下NestJs框架，搭建一个Hello World应用。
+介绍 Nest（或NestJS）是一个用于构建高效，可扩展的Node.js服务器端应用程序的框架。它使用渐进式JavaScript，内置并完全支持TypeScript（但仍然允许开发人员使用纯JavaScript编写代码）并结合了OOP（面向对象编程），FP（功能编程）和FRP（功能反应编程）的元素。
+import { Controller, Get } from &#39;@nestjs/common&#39;; @Controller(&#39;cats&#39;) export class CatsController { @Get() findAll(): string { return &#39;This action returns all cats&#39;; } } 熟悉Java的同学应该有似曾相识的感觉，SpringBoot中大量使用注解来简化开发。现在，使用基于ES6装饰器构建的NestJs框架，你也可以做到!" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.ddhigh.com/2019/08/19/nestjs-get-started/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2019-08-19T10:10:13+00:00" />
+<meta property="article:modified_time" content="2019-08-19T10:10:13+00:00" />
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="NestJs学习之旅(1)——快速开始"/>
+<meta name="twitter:description" content="本文是NestJs学习之旅的第一篇，简要介绍一下NestJs框架，搭建一个Hello World应用。
+介绍 Nest（或NestJS）是一个用于构建高效，可扩展的Node.js服务器端应用程序的框架。它使用渐进式JavaScript，内置并完全支持TypeScript（但仍然允许开发人员使用纯JavaScript编写代码）并结合了OOP（面向对象编程），FP（功能编程）和FRP（功能反应编程）的元素。
+import { Controller, Get } from &#39;@nestjs/common&#39;; @Controller(&#39;cats&#39;) export class CatsController { @Get() findAll(): string { return &#39;This action returns all cats&#39;; } } 熟悉Java的同学应该有似曾相识的感觉，SpringBoot中大量使用注解来简化开发。现在，使用基于ES6装饰器构建的NestJs框架，你也可以做到!"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://www.ddhigh.com/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "NestJs学习之旅(1)——快速开始",
+      "item": "https://www.ddhigh.com/2019/08/19/nestjs-get-started/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "NestJs学习之旅(1)——快速开始",
+  "name": "NestJs学习之旅(1)——快速开始",
+  "description": "本文是NestJs学习之旅的第一篇，简要介绍一下NestJs框架，搭建一个Hello World应用。\n介绍 Nest（或NestJS）是一个用于构建高效，可扩展的Node.js服务器端应用程序的框架。它使用渐进式JavaScript，内置并完全支持TypeScript（但仍然允许开发人员使用纯JavaScript编写代码）并结合了OOP（面向对象编程），FP（功能编程）和FRP（功能反应编程）的元素。\nimport { Controller, Get } from \u0026#39;@nestjs/common\u0026#39;; @Controller(\u0026#39;cats\u0026#39;) export class CatsController { @Get() findAll(): string { return \u0026#39;This action returns all cats\u0026#39;; } } 熟悉Java的同学应该有似曾相识的感觉，SpringBoot中大量使用注解来简化开发。现在，使用基于ES6装饰器构建的NestJs框架，你也可以做到!",
+  "keywords": [
+    "nestjs"
+  ],
+  "articleBody": "本文是NestJs学习之旅的第一篇，简要介绍一下NestJs框架，搭建一个Hello World应用。\n介绍 Nest（或NestJS）是一个用于构建高效，可扩展的Node.js服务器端应用程序的框架。它使用渐进式JavaScript，内置并完全支持TypeScript（但仍然允许开发人员使用纯JavaScript编写代码）并结合了OOP（面向对象编程），FP（功能编程）和FRP（功能反应编程）的元素。\nimport { Controller, Get } from '@nestjs/common'; @Controller('cats') export class CatsController { @Get() findAll(): string { return 'This action returns all cats'; } } 熟悉Java的同学应该有似曾相识的感觉，SpringBoot中大量使用注解来简化开发。现在，使用基于ES6装饰器构建的NestJs框架，你也可以做到!\n优缺点 先说说优点吧：\n完美支持Typescript，因此可以使用日益繁荣的TS生态资源 兼容express中间件，降低造轮子成本 完美支持响应式编程框架rxjs 完美支持依赖注入 模块化思想，方便开发以及后期维护 使用装饰器简化开发，减少样板代码 组件化设计，解决Node.js无全栈框架约束的现存问题 当然，“缺点\"也是有点的，不过熟练之后这些都不是缺点：\n基于TS导致的语言门槛 代码设计上对模块化/组件化思想有一定要求 第一个NestJs应用 使用NestJs的命令行工具，可以简化项目的创建以及项目文件的创建。\nnpm install -g @nestjs/cli安装命令行工具 nest new 项目名称初始化项目 初始化完毕后可以看到一个完整的项目结果，目录如下(忽略node_modules)：\n├── README.md 自述文件 ├── nest-cli.json NestJs项目配置 ├── package.json npm文件 ├── src 项目源码 │ ├── app.controller.spec.ts 控制器测试文件 │ ├── app.controller.ts 控制器类 │ ├── app.module.ts 模块类 │ ├── app.service.ts 服务类 │ └── main.ts 项目入口文件 ├── test 测试目录 │ ├── app.e2e-spec.ts 应用e2e测试 │ └── jest-e2e.json jest e2e测试配置 ├── tsconfig.build.json 生产环境Typescript所用 ├── tsconfig.json 开发环境Typescript配置 ├── tslint.json tslint配置 └── yarn.lock yarn锁文件 NestJs有几大类文件是主要的是下面几种，其他类型的文件在后续课程会讲解；\nmodule 模块声明(这是NestJs的一个亮点，有点DDD的思想) controller 控制器(负责接收数据，返回响应) service 服务(主要业务逻辑) 使用npm run start来运行项目。终端输出如下:\n[Nest] 2986 - 08/19/2019, 10:29 AM [NestFactory] Starting Nest application... [Nest] 2986 - 08/19/2019, 10:29 AM [InstanceLoader] AppModule dependencies initialized +22ms [Nest] 2986 - 08/19/2019, 10:29 AM [RoutesResolver] AppController {/}: +12ms [Nest] 2986 - 08/19/2019, 10:29 AM [RouterExplorer] Mapped {/, GET} route +9ms [Nest] 2986 - 08/19/2019, 10:29 AM [NestApplication] Nest application successfully started +6ms 一般来说，看到successfully就可以认为启动成功了。启动失败的话可以根据错误提示进行处理，比较多的情况可能是端口占用导致的错误。\n打开浏览器访问http://localhost:3000即可看到输出Hello World!。\nTo Be Continued 下一期将介绍Controller，欢迎持续关注!\n",
+  "wordCount" : "179",
+  "inLanguage": "zh",
+  "datePublished": "2019-08-19T10:10:13Z",
+  "dateModified": "2019-08-19T10:10:13Z",
+  "author":{
+    "@type": "Person",
+    "name": "Lei Xia"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://www.ddhigh.com/2019/08/19/nestjs-get-started/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "每天进步一点点",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.ddhigh.com/favicon.ico"
+    }
+  }
+}
+</script>
+    <link rel="icon" href="/img/favicon.ico" sizes="16x16">
+
+<link rel="apple-touch-icon" href="/img/favicon.ico">
+
+<link rel="manifest" href="/img/favicon.ico">
+    
+
+    <link href="/titilliumweb/titilliumweb.css" rel="stylesheet">
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/main.min.0eb4160ba4a2d63122fe8ae83f1560951a87ab510d5dab0615973b5206555759.css" integrity="sha256-DrQWC6Si1jEi/oroPxVglRqHq1ENXasGFZc7UgZVV1k=" crossorigin="anonymous" media="screen" />
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css" integrity="sha512-ygEyjMC6rqnzJqWGjRTJUPYMEs9JUOm3i7OWUS9CgQ4XkBUvMsgCS1I8JqavidQ2ClHcREB7IbA2mN08+r9Elg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    
+    <link rel="stylesheet" href="/scss/highlight/github-dark.min.min.66034289ee9a113219a2c4aae0a8bd2095ab255c832a42efcf5863f10814e7a1.css" />
+
+    
+    <script src="/js/highlight.min.min.894ca9c68afab956438c4926a0dc7f5293e04e08595bd27abdb123e94801f684.js"></script>
+    <script>hljs.highlightAll();</script>
+
+    <script>{ { $darkModeInit.Content | safeJS } }</script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2871082647721658" crossorigin="anonymous"></script>
+</head><body>
+      <main class="wrapper"><nav class="navigation">
+    <section class="container">
+        <a class="navigation-brand" href="/">
+            每天进步一点点
+        </a>
+        <input type="checkbox" id="menu-toggle" />
+        <label class="menu-button float-right" for="menu-toggle">
+            <span></span><span></span><span></span>
+        </label>
+        
+        <ul class="navigation-list" id="navigation-list">
+            
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/">首页</a>
+            </li>
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/archives">归档</a>
+            </li>
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/books">出版物</a>
+            </li>
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/guestbook">留言板</a>
+            </li>
+            
+            
+
+            <li class="navigation-item menu-separator">
+                <span>|</span>
+            </li>
+
+            
+            
+            <li class="navigation-item navigation-social">
+                <a class="navigation-link" href="https://github.com/xialeistudio"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a>
+            </li>
+            
+            
+
+            <li class="navigation-item navigation-dark">
+                <button id="mode" type="button" aria-label="toggle user light or dark theme">
+                    <span class="toggle-dark"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></span>
+                    <span class="toggle-light"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></span>
+                </button>
+            </li>
+
+            
+            
+            
+            
+            
+            <li class="navigation-item navigation-language">
+                <a href="https://www.ddhigh.com/en/">EN</a>
+            </li>
+            
+            
+            
+            
+            
+            
+        </ul>
+        
+    </section>
+</nav>
+<div id="content">
+<article class="blog-single">
+  <header class="blog-title">
+    <h1>NestJs学习之旅(1)——快速开始</h1>
+  </header>
+
+  <p>
+  <small>
+    2019年8月19日&nbsp;· 179 字&nbsp;· 1 分钟</small>
+
+  
+<p>
+
+  <div class="blog-toc">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#介绍">介绍</a></li>
+    <li><a href="#优缺点">优缺点</a></li>
+    <li><a href="#第一个nestjs应用">第一个NestJs应用</a></li>
+    <li><a href="#to-be-continued">To Be Continued</a></li>
+  </ul>
+</nav>
+  </div>
+
+  <section class="blog-content">
+    <p>本文是NestJs学习之旅的第一篇，简要介绍一下NestJs框架，搭建一个Hello World应用。</p>
+<h2 id="介绍">介绍</h2>
+<p>Nest（或NestJS）是一个用于构建高效，可扩展的Node.js服务器端应用程序的框架。它使用渐进式JavaScript，内置并完全支持TypeScript（但仍然允许开发人员使用纯JavaScript编写代码）并结合了OOP（面向对象编程），FP（功能编程）和FRP（功能反应编程）的元素。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">import</span> { <span style="color:#a6e22e">Controller</span>, <span style="color:#a6e22e">Get</span> } <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#39;@nestjs/common&#39;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">Controller</span>(<span style="color:#e6db74">&#39;cats&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">export</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CatsController</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">Get</span>()
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">findAll</span>()<span style="color:#f92672">:</span> <span style="color:#a6e22e">string</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#39;This action returns all cats&#39;</span>;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>熟悉Java的同学应该有似曾相识的感觉，SpringBoot中大量使用注解来简化开发。现在，使用基于ES6装饰器构建的NestJs框架，你也可以做到!</p>
+<h2 id="优缺点">优缺点</h2>
+<p>先说说优点吧：</p>
+<ul>
+<li>完美支持Typescript，因此可以使用日益繁荣的TS生态资源</li>
+<li>兼容express中间件，降低造轮子成本</li>
+<li>完美支持响应式编程框架rxjs</li>
+<li>完美支持依赖注入</li>
+<li>模块化思想，方便开发以及后期维护</li>
+<li>使用装饰器简化开发，减少样板代码</li>
+<li>组件化设计，解决Node.js无全栈框架约束的现存问题</li>
+</ul>
+<p>当然，&ldquo;缺点&quot;也是有点的，不过熟练之后这些都不是缺点：</p>
+<ul>
+<li>基于TS导致的语言门槛</li>
+<li>代码设计上对模块化/组件化思想有一定要求</li>
+</ul>
+<h2 id="第一个nestjs应用">第一个NestJs应用</h2>
+<p>使用NestJs的命令行工具，可以简化项目的创建以及项目文件的创建。</p>
+<ol>
+<li><code>npm install -g @nestjs/cli</code>安装命令行工具</li>
+<li><code>nest new 项目名称</code>初始化项目</li>
+</ol>
+<p>初始化完毕后可以看到一个完整的项目结果，目录如下(忽略node_modules)：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>├── README.md                       自述文件
+</span></span><span style="display:flex;"><span>├── nest-cli.json                   NestJs项目配置
+</span></span><span style="display:flex;"><span>├── package.json                    npm文件
+</span></span><span style="display:flex;"><span>├── src                             项目源码
+</span></span><span style="display:flex;"><span>│   ├── app.controller.spec.ts      控制器测试文件
+</span></span><span style="display:flex;"><span>│   ├── app.controller.ts           控制器类
+</span></span><span style="display:flex;"><span>│   ├── app.module.ts               模块类
+</span></span><span style="display:flex;"><span>│   ├── app.service.ts              服务类
+</span></span><span style="display:flex;"><span>│   └── main.ts                     项目入口文件
+</span></span><span style="display:flex;"><span>├── test                            测试目录
+</span></span><span style="display:flex;"><span>│   ├── app.e2e-spec.ts             应用e2e测试
+</span></span><span style="display:flex;"><span>│   └── jest-e2e.json               jest e2e测试配置
+</span></span><span style="display:flex;"><span>├── tsconfig.build.json             生产环境Typescript所用
+</span></span><span style="display:flex;"><span>├── tsconfig.json                   开发环境Typescript配置
+</span></span><span style="display:flex;"><span>├── tslint.json                     tslint配置
+</span></span><span style="display:flex;"><span>└── yarn.lock                       yarn锁文件
+</span></span></code></pre></div><p>NestJs有几大类文件是主要的是下面几种，其他类型的文件在后续课程会讲解；</p>
+<ul>
+<li>module 模块声明(这是NestJs的一个亮点，有点DDD的思想)</li>
+<li>controller 控制器(负责接收数据，返回响应)</li>
+<li>service 服务(主要业务逻辑)</li>
+</ul>
+<p>使用<code>npm run start</code>来运行项目。终端输出如下:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>[Nest] 2986   - 08/19/2019, 10:29 AM   [NestFactory] Starting Nest application...
+</span></span><span style="display:flex;"><span>[Nest] 2986   - 08/19/2019, 10:29 AM   [InstanceLoader] AppModule dependencies initialized +22ms
+</span></span><span style="display:flex;"><span>[Nest] 2986   - 08/19/2019, 10:29 AM   [RoutesResolver] AppController {/}: +12ms
+</span></span><span style="display:flex;"><span>[Nest] 2986   - 08/19/2019, 10:29 AM   [RouterExplorer] Mapped {/, GET} route +9ms
+</span></span><span style="display:flex;"><span>[Nest] 2986   - 08/19/2019, 10:29 AM   [NestApplication] Nest application successfully started +6ms
+</span></span></code></pre></div><p>一般来说，看到<code>successfully</code>就可以认为启动成功了。启动失败的话可以根据错误提示进行处理，比较多的情况可能是端口占用导致的错误。</p>
+<p>打开浏览器访问<code>http://localhost:3000</code>即可看到输出<code>Hello World!</code>。</p>
+<h2 id="to-be-continued">To Be Continued</h2>
+<p>下一期将介绍Controller，欢迎持续关注!</p>
+
+    <div class="blog-footer">
+    <div class="social-share"></div>
+    <div class="copyright">
+        <ul>
+            <li style="margin-bottom: 0.5em;">本文作者: <a href="https://ddhigh.com/" target="_blank"
+                    style="color: #000000; text-decoration: none;">xialeistudio</a></li>
+            <li style="margin-bottom: 0.5em;">本文链接: <a href="https://www.ddhigh.com/2019/08/19/nestjs-get-started/" target="_blank"
+                    style="color: #000000; text-decoration: none;">NestJs学习之旅(1)——快速开始</a></li>
+            <li>版权声明: <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank"
+                    style="color: #000000; text-decoration: none;">「署名-非商业性使用-相同方式共享 4.0 国际」</a></li>
+        </ul>
+    </div>
+    
+    <div style="margin-top: 2rem;"><img src="/img/mp.png" alt="qrcode"></div>
+    
+</div>
+  </section>
+
+  
+  
+  <div class="paginator">
+    
+    <a class="prev" href="https://www.ddhigh.com/2019/08/20/nestjs-controller/">
+      <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M3.77086 21.1546C11.0491 22.698 21.4339 21.7773 21.4339 16.3608V4.63375C21.4339 3.93962 21.3581 3.30535 21.1917 2.76787M3.77086 21.1546C1.9934 20.7777 0.973585 18.7264 1.08749 16.688C1.2668 13.479 1.15721 9.43135 1.00513 6.21507C0.87809 3.52811 3.12891 1.16316 5.51029 1.25008C9.76594 1.40542 15.377 1.20229 18.7912 1.00542C20.0864 0.930734 20.8406 1.63385 21.1917 2.76787M3.77086 21.1546C4.56586 21.4723 5.49168 21.7879 6.5 22.0658M21.1917 2.76787C23.1097 4.18217 23.13 12.4191 22.9004 16.3608C20.8478 24.0194 12.3061 23.6662 6.5 22.0658M21.1917 2.76787C21.7612 4.51192 22.7203 9.67216 22 16.3608C21.2797 23.0494 11.3665 22.9511 6.5 22.0658M9.94496 9C9.28897 9.61644 7.63215 10.997 6.04814 11.7966C5.98257 11.8297 5.98456 11.9753 6.05061 12.0063C7.05496 12.4779 8.92941 13.9264 9.94496 15M6.44444 11.9667C8.86549 12.0608 14 12 16 11"
+          stroke="currentColor" stroke-linecap="round" />
+      </svg>
+      <span>NestJs学习之旅(2)——控制器</span></a>
+    
+    
+    <a class="next" href="https://www.ddhigh.com/2019/08/06/typescript-quick-guide4/"><span>TS简明教程(4)</span>
+      <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M3.77086 21.1546C11.0491 22.698 21.4339 21.7773 21.4339 16.3608V4.63375C21.4339 3.93962 21.3581 3.30535 21.1917 2.76787M3.77086 21.1546C1.9934 20.7777 0.973585 18.7264 1.08749 16.688C1.2668 13.479 1.15721 9.43135 1.00513 6.21507C0.87809 3.52811 3.12891 1.16316 5.51029 1.25008C9.76594 1.40542 15.377 1.20229 18.7912 1.00542C20.0864 0.930734 20.8406 1.63385 21.1917 2.76787M3.77086 21.1546C4.56586 21.4723 5.49168 21.7879 6.5 22.0658M21.1917 2.76787C23.1097 4.18217 23.13 12.4191 22.9004 16.3608C20.8478 24.0194 12.3061 23.6662 6.5 22.0658M21.1917 2.76787C21.7612 4.51192 22.7203 9.67216 22 16.3608C21.2797 23.0494 11.3665 22.9511 6.5 22.0658M12.055 9C12.711 9.61644 14.3679 10.997 15.9519 11.7966C16.0174 11.8297 16.0154 11.9753 15.9494 12.0063C14.945 12.4779 13.0706 13.9264 12.055 15M15.5556 11.9667C13.1345 12.0608 8 12 6 11"
+          stroke="currentColor" stroke-linecap="round" />
+      </svg>
+    </a>
+    
+  </div>
+  
+
+  
+
+
+  
+  
+<div class="comments">
+  <script>
+      const getTheme = window.localStorage && window.localStorage.getItem("theme");
+      let theme = getTheme === 'dark' ? 'dark' : 'light';
+      let s = document.createElement('script');
+      s.src = 'https://giscus.app/client.js';
+      s.setAttribute('data-repo', 'xialeistudio\/discussion');
+      s.setAttribute('data-repo-id', 'R_kgDOKurTRA');
+      s.setAttribute('data-category', 'General');
+      s.setAttribute('data-category-id', 'DIC_kwDOKurTRM4CbCJt');
+      s.setAttribute('data-mapping', 'pathname');
+      s.setAttribute('data-strict', '0');
+      s.setAttribute('data-reactions-enabled', '1');
+      s.setAttribute('data-emit-metadata', '0');
+      s.setAttribute('data-input-position', 'bottom');
+      s.setAttribute('data-theme', theme);
+      s.setAttribute('data-lang', 'en');
+      s.setAttribute('data-loading', 'lazy');
+      s.setAttribute('crossorigin', 'anonymous');
+      s.setAttribute('async', '');
+      document.querySelector('div.comments').innerHTML = '';
+      document.querySelector('div.comments').appendChild(s);
+  </script>
+</div>
+
+</article>
+
+
+        </div><footer class="footer">
+    <p>&copy; 2014 - 2024 <a href="https://www.ddhigh.com">每天进步一点点</a>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener" target="_blank">Hugo️️</a>
+        <a href="https://github.com/guangzhengli/hugo-theme-ladder" rel="noopener" target="_blank">Ladder</a>
+        ️ </p>
+</footer>
+
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10.5376 22.7916C11.0152 22.7207 22.5795 21.1781 22.0978 10.4211C22.0536 9.43274 21.9303 8.53367 21.7387 7.71865M10.5376 22.7916C16.876 22.3728 20.0969 19.8899 21.5383 16.9142M10.5376 22.7916C9.7707 22.9055 8.97982 22.8964 8.19743 22.7725M21.7387 7.71865C21.4988 6.69828 21.1518 5.80967 20.7188 5.04257M21.7387 7.71865C22.6022 10.1105 23.0542 13.7848 21.5383 16.9142M20.7188 5.04257C17.1684 -1.24629 7.83127 0.632493 4.27577 5.04257C2.88063 6.77451 -0.0433281 11.1668 1.38159 16.6571C2.27481 20.0988 5.17269 22.2936 8.19743 22.7725M20.7188 5.04257C22.0697 6.9404 24.0299 11.3848 22.3541 15.4153M21.5383 16.9142C21.8737 16.4251 22.1428 15.9235 22.3541 15.4153M8.19743 22.7725C12.1971 23.4683 20.6281 22.971 22.3541 15.4153M14 10.945C13.3836 10.289 12.003 8.63215 11.2034 7.04814C11.1703 6.98257 11.0247 6.98456 10.9937 7.05061C10.5221 8.05496 9.07362 9.92941 8 10.945M11.0333 7.44444C10.9392 9.86549 11 15 12 17"
+              stroke="currentColor" stroke-linecap="round"/>
+    </svg>
+</a>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'Copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'Copied';
+            setTimeout(() => {
+                copybutton.innerHTML = 'Copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {
+            }
+            ;
+            selection.removeRange(range);
+        });
+        codeblock.parentNode.appendChild(copybutton);
+    });
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js" integrity="sha512-9DNXrSjk17bU9MUbRp3IjwcWe46V8FaGA062PFbryPUAEQVRbz4jiZP6FW0AdbqEGtMYBDWnul3eiGBMJOQajA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script></main>
+    </body><script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha512-N9IJRoc3LaP3NDoiGkcPa4gG94kapGpaA5Zq9/Dr04uf5TbLFU5q0o8AbRhLKUUlp8QFS2u7S+Yti0U7QtuZvQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script>
+      const images = Array.from(document.querySelectorAll(".blog-content img"));
+      images.forEach(img => {
+          mediumZoom(img, {
+              margin: 10,  
+              scrollOffset: 40,  
+              container: null,  
+              template: null,  
+              background: 'rgba(0, 0, 0, 0.5)'
+          });
+      });
+  </script>
+
+  
+  <script src="/main.min.6bb26b69159420159c74dc9e097b06a578ed2b68c701466a91a44a9632d851bd0af167a1b30012387b4c512b48ad9ad4d3394e04d77ae38d57e1920fe4ed34fe.js" integrity="sha512-a7JraRWUIBWcdNyeCXsGpXjtK2jHAUZqkaRKljLYUb0K8WehswASOHtMUStIrZrU0zlOBNd6441X4ZIP5O00/g==" crossorigin="anonymous" defer></script></html>

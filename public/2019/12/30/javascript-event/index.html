@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="zh"><head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Javascript事件系统</title>
+    <meta charset="utf-8">
+    <meta name="google-adsense-account" content="ca-pub-2871082647721658">
+    
+    <meta content="Web开发 , Java , Go , Node.js , PHP , Koa , MySQL , Redis , 前端 , 后端 , 数据库" name="keywords">
+    
+    <meta name="description" content="本文内容
+事件基础 事件监听方式 事件默认行为 事件冒泡与事件捕获 事件绑定与事件委托 事件基础 注意：本文不会深入探究Javascript的事件循环。">
+    <meta name="author" content="Lei Xia">
+    <link rel="canonical"
+        href="https://www.ddhigh.com/2019/12/30/javascript-event/">
+
+    <link rel="alternate" type="application/rss+xml" href="https://www.ddhigh.com/index.xml" title="每天进步一点点">
+
+    
+
+
+<script async defer data-website-id="52f8f0f9-d93d-466b-8ef5-508aae8c4ed4"
+    src="https://analysis.ddhigh.com/script.js"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EC3XLVSGKV"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-EC3XLVSGKV');
+</script>
+    <meta property="og:title" content="Javascript事件系统" />
+<meta property="og:description" content="本文内容
+事件基础 事件监听方式 事件默认行为 事件冒泡与事件捕获 事件绑定与事件委托 事件基础 注意：本文不会深入探究Javascript的事件循环。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.ddhigh.com/2019/12/30/javascript-event/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2019-12-30T12:00:00+00:00" />
+<meta property="article:modified_time" content="2019-12-30T12:00:00+00:00" />
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Javascript事件系统"/>
+<meta name="twitter:description" content="本文内容
+事件基础 事件监听方式 事件默认行为 事件冒泡与事件捕获 事件绑定与事件委托 事件基础 注意：本文不会深入探究Javascript的事件循环。"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://www.ddhigh.com/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "Javascript事件系统",
+      "item": "https://www.ddhigh.com/2019/12/30/javascript-event/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Javascript事件系统",
+  "name": "Javascript事件系统",
+  "description": "本文内容\n事件基础 事件监听方式 事件默认行为 事件冒泡与事件捕获 事件绑定与事件委托 事件基础 注意：本文不会深入探究Javascript的事件循环。",
+  "keywords": [
+    
+  ],
+  "articleBody": "本文内容\n事件基础 事件监听方式 事件默认行为 事件冒泡与事件捕获 事件绑定与事件委托 事件基础 注意：本文不会深入探究Javascript的事件循环。\n提到事件，相信每位Javascript开发者都不会陌生，由于Javascript是先有实现，后有规范，因此，对于大部分人来说，事件模块可以说是比较模糊的，本文将从不同角度帮助你理清楚事件模块。\n事件的本质可以说是一个回调函数，当事件触发时会调用你的监听函数。\n事件是一定会触发的，如果没有对应的监听函数，就不会执行回调。\n比如下面就是用户点击指定元素打印日志的例子：\ndocument.querySelector('#button').onclick = function() { console.log('clicked'); }; 事件基础相信大家都没什么问题，重点在后面的内容。\n事件监听方式 由于历史原因，Javascript目前存在三种事件监听方式：\nHTML代码中监听 DOM0级监听 DOM2级监听 Q: 为啥从DOM0级开始？\n1998年，W3C综合各浏览器厂商的现有API，指定了DOM1标准。在DOM1标准出现之前浏览器已有的事件监听方式叫做DOM0级。\nQ：DOM1级监听到哪里去了？\n由于DOM1标准只是对DOM0标准的整理+规范化，并没有增加新的内容，因此DOM0级可以看做DOM1级。\nHTML代码监听 \u003cbutton onclick=\"alert('Hello World!')\"\u003e点我\u003c/button\u003e 直接将事件处理函数或事件处理代码写到HTML元素对应的属性上的方式就是HTML代码监听方式。\n该方式有一个明显的缺点，如果事件逻辑比较复杂时，将大段代码直接写在HTML元素上不利于维护。因此一般会提取到一个专一的函数进行处理。\n\u003cbutton onclick=\"callback()\"\u003e点我\u003c/button\u003e 该方式也有一个问题，那就是如果callback()函数还未加载好时点击按钮将报错。而且直接将事件耦合到HTML元素上也不符合单一职责，HTML元素应该只负责展示，不负责事件。\n不建议在开发中使用该方式处理事件。\nDOM0级事件监听 在DOM1级规范出来之前，各浏览器厂商已经提供了一套事件API，也就是DOM0级API，它的写法如下：\n\u003cbutton id=\"click\"\u003e点我\u003c/button\u003e \u003cscript\u003e document.querySelector('#click').onclick = function() { console.log('clicked'); }; \u003c/script\u003e 这个相信大家在刚开始入行时写的比较多，比如我们的ajax相关API就是DOM0级的。\nvar xhr = new XMLHttpRequest(); xhr.onload = function() {}; xhr.onerror = function() {}; DOM0级事件基本上都是以\"on\"开头的\nDOM0级事件也存在一个问题，那就是不支持添加多个事件处理函数，因此只有在不支持DOM2级事件的情况下才会使用DOM0级来绑定事件。\nDOM2级事件监听 DOM2级事件是最新的事件处理程序规范（有许多年未更新了）。DOM2级事件通过addEventListener方式给元素添加事件处理程序。\n\u003cbutton id=\"click\"\u003e点我\u003c/button\u003e \u003cscript\u003e document.addEventListener('click', function(){ console.log('clicked'); }); \u003c/script\u003e 多次调用addEventListener可以绑定多个事件处理程序，但是需要注意：\n同样的事件名、同样的事件处理函数和同样的事件流机制(冒泡和捕获，下面会讲到)，只会触发一次。\n// 下面的代码只会触发一次 \u003cbutton id=\"request\"\u003e登录\u003c/button\u003e \u003cscript\u003e function onClick() { console.log('clicked'); } document.querySelector('#request').addEventListener('click', onClick, false); document.querySelector('#request').addEventListener('click', onClick, false); \u003c/script\u003e onClick是同一个事件处理程序，所以只触发一次\n// 下面的代码只会触发两次 \u003cbutton id=\"request\"\u003e登录\u003c/button\u003e \u003cscript\u003e document.querySelector('#request').addEventListener('click', function() { console.log('clicked'); }, false); document.querySelector('#request').addEventListener('click', function() { console.log('clicked'); }, false); \u003c/script\u003e 两个匿名函数，所以会触发两次\n事件默认行为 很多网页元素会有默认行为，比如下面这些：\n点击a标签的时候，会有跳转行为 点击右键时会弹出菜单 在表单中点击提交按钮会提交表单 如果我们需要阻止默认行为，比如我们在阻止表单的默认提交事件，进行数据校验，通过校验后再调用表单submit方法提交。\n不同的监听方式阻止默认行为的方式也不同。\nHTML代码方式 HTML代码方式支持return false和event.preventDefault()\nreturn false方式 \u003cform action=\"\" onsubmit=\"return handleSubmit()\"\u003e \u003cbutton type=\"submit\"\u003eSubmit\u003c/button\u003e \u003c/form\u003e \u003cscript\u003e function handleSubmit() { return false; } \u003c/script\u003e 上例中我们监听了表单的onsubmit事件，当点击按钮或者按下回车时，将会触发handleSubmit方法，同时会阻止表单的提交。\n表单内如果有type=“submit\"的按钮存在，按下回车时就会自动提交。\nHTML监听方式阻止默认事件需要满足以下两点：\nHTML事件监听代码return handler()，return不能少，少了就无法阻止默认行为 handler()函数需要返回false event.preventDefault() \u003ca href=\"https://www.ddhigh.com\" onclick=\"handleClick(event)\" id=\"click\"\u003eHref\u003c/a\u003e \u003cscript\u003e function handleClick(e) { e.preventDefault(); } \u003c/script\u003e DOM0级事件方式 DOM0级事件支持return false和event.preventDefault()两种方式。\nevent.preventDefault() // event.preventDefault() \u003ca href=\"https://www.ddhigh.com\" id=\"click\"\u003eHref\u003c/a\u003e \u003cscript\u003e document.querySelector('#click').onclick= function (event) { event.preventDefault(); }; \u003c/script\u003e return false // return false \u003ca href=\"https://www.ddhigh.com\" id=\"click\"\u003eHref\u003c/a\u003e \u003cscript\u003e document.querySelector('#click').onclick= function (event) { return false; }; \u003c/script\u003e 两种方式都能工作，不过建议使用event.preventDefault()，原因在下面DOM2级会讲到\nDOM2级事件 DOM2级事件事件**只支持event.preventDefault()**方式，这也是事件的标准处理方法。\n\u003ca href=\"https://www.ddhigh.com\" id=\"click\"\u003eHref\u003c/a\u003e \u003cscript\u003e document.querySelector('#click').addEventListener('click', function (e) { e.preventDefault(); }); \u003c/script\u003e 事件冒泡与事件捕获 先来看一个HTML结构\n\u003cdiv id=\"father\"\u003e \u003cdiv id=\"child\"\u003e \u003cdiv id=\"son\"\u003eClick\u003c/div\u003e \u003c/div\u003e \u003c/div\u003e 我们知道，一旦绑定了事件处理程序，在事件触发时，事件处理函数都会触发。\n如果我们给father/child/son都绑定了事件处理函数，点击了son时，谁被触发呢？\n事实上，三个函数都会被触发，因为son时child的子元素，child又是father的子元素，点击son，同时也点击了father和child。\n由此带来一个问题，三个函数谁先触发，谁后触发呢？这就是我们常说的事件流，father-\u003echild-\u003eson这种路径是可以的，但是son-\u003echild-\u003efather这种路径也是可以的。\n针对这两种方式，W3C给了我们一个答案，两种方式都支持，即可以从父元素到子元素，又可以从子元素到父元素，前者叫事件捕获，后者叫事件冒泡。\n事件捕获 事件发生时采取自上而下的方式进行触发，最先触发的是window，其次是document，然后根据DOM层级依次触发，最终进入到真正的事件元素。\naddEventListener第三个参数传入true就是捕获方式的标志。\n\u003cdiv id=\"father\"\u003e \u003cdiv id=\"child\"\u003e \u003cdiv id=\"son\"\u003eClick\u003c/div\u003e \u003c/div\u003e \u003c/div\u003e \u003cscript\u003e document.querySelector('#father').addEventListener('click', function () { console.log('father'); }, true); document.querySelector('#child').addEventListener('click', function () { console.log('child'); }, true); document.querySelector('#son').addEventListener('click', function () { console.log('son'); }, true); \u003c/script\u003e 点击son之后的输出顺序为\nfather child son 事件冒泡 事件发生时采取自下而上的方式进行触发，最先触发的是发生事件的元素，其次是父元素，依次向上，最终触发到document和window。\naddEventListener第三个参数传入false就是捕获冒泡的标志。\n\u003cdiv id=\"father\"\u003e \u003cdiv id=\"child\"\u003e \u003cdiv id=\"son\"\u003eClick\u003c/div\u003e \u003c/div\u003e \u003c/div\u003e \u003cscript\u003e document.querySelector('#father').addEventListener('click', function () { console.log('father'); }, false); document.querySelector('#child').addEventListener('click', function () { console.log('child'); }, false); document.querySelector('#son').addEventListener('click', function () { console.log('son'); }, false); \u003c/script\u003e 点击son之后的输出顺序为\nson child father 由于事件捕获和事件冒泡机制，我们需要一个标记来标识真正触发事件的元素，这个元素就是event.target，而另外一个相似的属性叫event.currentTarget，这是当前元素。\n事件捕获和时间冒泡的顺序 根据浏览器规范，事件捕获会先于事件冒泡发生。因此，总的事件顺序如下\nwindow 捕获阶段 document 捕获阶段 … 依次到真正触发事件的元素 捕获阶段 真正触发事件的元素 冒泡阶段 依次向上的父元素 冒泡阶段 document 冒泡阶段 window 冒泡阶段 \u003cdiv id=\"father\"\u003e \u003cdiv id=\"child\"\u003e \u003cdiv id=\"son\"\u003eClick\u003c/div\u003e \u003c/div\u003e \u003c/div\u003e \u003cscript\u003e document.querySelector('#father').addEventListener('click', function () { console.log('father捕获'); }, true); document.querySelector('#child').addEventListener('click', function () { console.log('child捕获'); }, true); document.querySelector('#son').addEventListener('click', function () { console.log('son捕获'); }, true); document.querySelector('#father').addEventListener('click', function () { console.log('father冒泡'); }, false); document.querySelector('#child').addEventListener('click', function () { console.log('child冒泡'); }, false); document.querySelector('#son').addEventListener('click', function () { console.log('son冒泡'); }, false); \u003c/script\u003e 点击son之后的输出为\nfather捕获 child捕获 son捕获 son冒泡 child冒泡 father冒泡 事件绑定和事件委托 弄明白浏览器的事件流机制之后，来讨论事件绑定和事件委托其实是很简单的事情。\n事件绑定 就是在事件监听方式中直接对具体元素进行事件监听的方式。有个明显的缺点，对于新增加的DOM节点是无法监听到事件的。\n\u003cdiv class=\"a\"\u003eclick1\u003c/div\u003e \u003cdiv class=\"a\"\u003eclick2\u003c/div\u003e \u003cscript\u003e document.querySelectorAll('.a').forEach(ele =\u003e ele.onclick = function () { console.log('clicked ' + this.innerHTML); }); setTimeout(function () { const div3 = document.createElement('div') div3.className = \"a\"; div3.innerHTML = \"click3\" document.body.appendChild(div3) }, 500); \u003c/script\u003e 上面的click3点击是没有任何反应的，因为在创建该元素时没有绑定事件处理函数。\n事件委托 我们利用事件流机制来实现上面的需求。\n事件委托就是利用事件流机制，在父元素进行监听，由于事件冒泡机制，父元素可以接受新添加元素的事件。\n\u003cdiv class=\"a\"\u003eclick1\u003c/div\u003e \u003cdiv class=\"a\"\u003eclick2\u003c/div\u003e \u003cscript\u003e document.body.addEventListener('click', function (e) { console.log(e.target.innerHTML) }, false); setTimeout(function () { const div3 = document.createElement('div') div3.className = \"a\"; div3.innerHTML = \"click3\" document.body.appendChild(div3) }, 500); \u003c/script\u003e 由于事件冒泡机制，click3元素点击之后会将事件冒泡给父元素，也就是我们的document.body，通过event.target可以拿到真正触发事件的元素。\n（完）\n",
+  "wordCount" : "450",
+  "inLanguage": "zh",
+  "datePublished": "2019-12-30T12:00:00Z",
+  "dateModified": "2019-12-30T12:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Lei Xia"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://www.ddhigh.com/2019/12/30/javascript-event/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "每天进步一点点",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.ddhigh.com/favicon.ico"
+    }
+  }
+}
+</script>
+    <link rel="icon" href="/img/favicon.ico" sizes="16x16">
+
+<link rel="apple-touch-icon" href="/img/favicon.ico">
+
+<link rel="manifest" href="/img/favicon.ico">
+    
+
+    <link href="/titilliumweb/titilliumweb.css" rel="stylesheet">
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/main.min.0eb4160ba4a2d63122fe8ae83f1560951a87ab510d5dab0615973b5206555759.css" integrity="sha256-DrQWC6Si1jEi/oroPxVglRqHq1ENXasGFZc7UgZVV1k=" crossorigin="anonymous" media="screen" />
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css" integrity="sha512-ygEyjMC6rqnzJqWGjRTJUPYMEs9JUOm3i7OWUS9CgQ4XkBUvMsgCS1I8JqavidQ2ClHcREB7IbA2mN08+r9Elg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    
+    <link rel="stylesheet" href="/scss/highlight/github-dark.min.min.66034289ee9a113219a2c4aae0a8bd2095ab255c832a42efcf5863f10814e7a1.css" />
+
+    
+    <script src="/js/highlight.min.min.894ca9c68afab956438c4926a0dc7f5293e04e08595bd27abdb123e94801f684.js"></script>
+    <script>hljs.highlightAll();</script>
+
+    <script>{ { $darkModeInit.Content | safeJS } }</script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2871082647721658" crossorigin="anonymous"></script>
+</head><body>
+      <main class="wrapper"><nav class="navigation">
+    <section class="container">
+        <a class="navigation-brand" href="/">
+            每天进步一点点
+        </a>
+        <input type="checkbox" id="menu-toggle" />
+        <label class="menu-button float-right" for="menu-toggle">
+            <span></span><span></span><span></span>
+        </label>
+        
+        <ul class="navigation-list" id="navigation-list">
+            
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/">首页</a>
+            </li>
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/archives">归档</a>
+            </li>
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/books">出版物</a>
+            </li>
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/guestbook">留言板</a>
+            </li>
+            
+            
+
+            <li class="navigation-item menu-separator">
+                <span>|</span>
+            </li>
+
+            
+            
+            <li class="navigation-item navigation-social">
+                <a class="navigation-link" href="https://github.com/xialeistudio"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a>
+            </li>
+            
+            
+
+            <li class="navigation-item navigation-dark">
+                <button id="mode" type="button" aria-label="toggle user light or dark theme">
+                    <span class="toggle-dark"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></span>
+                    <span class="toggle-light"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></span>
+                </button>
+            </li>
+
+            
+            
+            
+            
+            
+            <li class="navigation-item navigation-language">
+                <a href="https://www.ddhigh.com/en/">EN</a>
+            </li>
+            
+            
+            
+            
+            
+            
+        </ul>
+        
+    </section>
+</nav>
+<div id="content">
+<article class="blog-single">
+  <header class="blog-title">
+    <h1>Javascript事件系统</h1>
+  </header>
+
+  <p>
+  <small>
+    2019年12月30日&nbsp;· 450 字&nbsp;· 3 分钟</small>
+
+  
+<p>
+
+  <div class="blog-toc">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#事件基础">事件基础</a></li>
+    <li><a href="#事件监听方式">事件监听方式</a>
+      <ul>
+        <li><a href="#html代码监听">HTML代码监听</a></li>
+        <li><a href="#dom0级事件监听">DOM0级事件监听</a></li>
+        <li><a href="#dom2级事件监听">DOM2级事件监听</a></li>
+      </ul>
+    </li>
+    <li><a href="#事件默认行为">事件默认行为</a>
+      <ul>
+        <li><a href="#html代码方式">HTML代码方式</a></li>
+        <li><a href="#dom0级事件方式">DOM0级事件方式</a></li>
+        <li><a href="#dom2级事件">DOM2级事件</a></li>
+      </ul>
+    </li>
+    <li><a href="#事件冒泡与事件捕获">事件冒泡与事件捕获</a>
+      <ul>
+        <li><a href="#事件捕获">事件捕获</a></li>
+        <li><a href="#事件冒泡">事件冒泡</a></li>
+        <li><a href="#事件捕获和时间冒泡的顺序">事件捕获和时间冒泡的顺序</a></li>
+      </ul>
+    </li>
+    <li><a href="#事件绑定和事件委托">事件绑定和事件委托</a>
+      <ul>
+        <li><a href="#事件绑定">事件绑定</a></li>
+        <li><a href="#事件委托">事件委托</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+
+  <section class="blog-content">
+    <p>本文内容</p>
+<ul>
+<li>事件基础</li>
+<li>事件监听方式</li>
+<li>事件默认行为</li>
+<li>事件冒泡与事件捕获</li>
+<li>事件绑定与事件委托</li>
+</ul>
+<h2 id="事件基础">事件基础</h2>
+<blockquote>
+<p>注意：本文不会深入探究Javascript的事件循环。</p>
+</blockquote>
+<p>提到事件，相信每位Javascript开发者都不会陌生，由于Javascript是先有实现，后有规范，因此，对于大部分人来说，事件模块可以说是比较模糊的，本文将从不同角度帮助你理清楚事件模块。</p>
+<p>事件的本质可以说是一个回调函数，当事件触发时会调用你的监听函数。</p>
+<blockquote>
+<p>事件是一定会触发的，如果没有对应的监听函数，就不会执行回调。</p>
+</blockquote>
+<p>比如下面就是用户点击指定元素打印日志的例子：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span>document.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#39;#button&#39;</span>).<span style="color:#a6e22e">onclick</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;clicked&#39;</span>);
+</span></span><span style="display:flex;"><span>};
+</span></span></code></pre></div><p>事件基础相信大家都没什么问题，重点在后面的内容。</p>
+<h2 id="事件监听方式">事件监听方式</h2>
+<p>由于历史原因，Javascript目前存在三种事件监听方式：</p>
+<ol>
+<li>HTML代码中监听</li>
+<li>DOM0级监听</li>
+<li>DOM2级监听</li>
+</ol>
+<p>Q: 为啥从DOM0级开始？</p>
+<blockquote>
+<p>1998年，W3C综合各浏览器厂商的现有API，指定了DOM1标准。在DOM1标准出现之前浏览器已有的事件监听方式叫做DOM0级。</p>
+</blockquote>
+<p>Q：DOM1级监听到哪里去了？</p>
+<blockquote>
+<p>由于DOM1标准只是对DOM0标准的整理+规范化，并没有增加新的内容，因此DOM0级可以看做DOM1级。</p>
+</blockquote>
+<h3 id="html代码监听">HTML代码监听</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#f92672">button</span> <span style="color:#a6e22e">onclick</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;alert(&#39;Hello World!&#39;)&#34;</span>&gt;点我&lt;/<span style="color:#f92672">button</span>&gt;
+</span></span></code></pre></div><p>直接将事件处理函数或事件处理代码写到HTML元素对应的属性上的方式就是<strong>HTML代码监听方式</strong>。</p>
+<p>该方式有一个明显的缺点，如果事件逻辑比较复杂时，将大段代码直接写在HTML元素上不利于维护。因此一般会提取到一个专一的函数进行处理。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#f92672">button</span> <span style="color:#a6e22e">onclick</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;callback()&#34;</span>&gt;点我&lt;/<span style="color:#f92672">button</span>&gt;
+</span></span></code></pre></div><p>该方式也有一个问题，那就是如果<code>callback()</code>函数还未加载好时点击按钮将报错。而且直接将事件耦合到HTML元素上也不符合单一职责，HTML元素应该只负责展示，不负责事件。</p>
+<blockquote>
+<p>不建议在开发中使用该方式处理事件。</p>
+</blockquote>
+<h3 id="dom0级事件监听">DOM0级事件监听</h3>
+<p>在DOM1级规范出来之前，各浏览器厂商已经提供了一套事件API，也就是DOM0级API，它的写法如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#f92672">button</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;click&#34;</span>&gt;点我&lt;/<span style="color:#f92672">button</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">script</span>&gt;
+</span></span><span style="display:flex;"><span>  document.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#39;#click&#39;</span>).<span style="color:#a6e22e">onclick</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;clicked&#39;</span>);
+</span></span><span style="display:flex;"><span>  };
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">script</span>&gt;
+</span></span></code></pre></div><p>这个相信大家在刚开始入行时写的比较多，比如我们的ajax相关API就是DOM0级的。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">xhr</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">XMLHttpRequest</span>();
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">xhr</span>.<span style="color:#a6e22e">onload</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>() {};
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">xhr</span>.<span style="color:#a6e22e">onerror</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>() {};
+</span></span></code></pre></div><blockquote>
+<p>DOM0级事件基本上都是以&quot;on&quot;开头的</p>
+</blockquote>
+<p>DOM0级事件也存在一个问题，那就是不支持添加多个事件处理函数，因此只有在不支持DOM2级事件的情况下才会使用DOM0级来绑定事件。</p>
+<h3 id="dom2级事件监听">DOM2级事件监听</h3>
+<p>DOM2级事件是最新的事件处理程序规范（有许多年未更新了）。DOM2级事件通过<code>addEventListener</code>方式给元素添加事件处理程序。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#f92672">button</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;click&#34;</span>&gt;点我&lt;/<span style="color:#f92672">button</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">script</span>&gt;
+</span></span><span style="display:flex;"><span>  document.<span style="color:#a6e22e">addEventListener</span>(<span style="color:#e6db74">&#39;click&#39;</span>, <span style="color:#66d9ef">function</span>(){
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;clicked&#39;</span>);
+</span></span><span style="display:flex;"><span>  });
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">script</span>&gt;
+</span></span></code></pre></div><p>多次调用addEventListener可以绑定多个事件处理程序，但是需要注意：</p>
+<blockquote>
+<p>同样的事件名、同样的事件处理函数和同样的事件流机制(冒泡和捕获，下面会讲到)，<strong>只会触发一次</strong>。</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>// 下面的代码只会触发一次
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">button</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;request&#34;</span>&gt;登录&lt;/<span style="color:#f92672">button</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">script</span>&gt;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">onClick</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;clicked&#39;</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>document.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#39;#request&#39;</span>).<span style="color:#a6e22e">addEventListener</span>(<span style="color:#e6db74">&#39;click&#39;</span>, <span style="color:#a6e22e">onClick</span>, <span style="color:#66d9ef">false</span>);
+</span></span><span style="display:flex;"><span>document.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#39;#request&#39;</span>).<span style="color:#a6e22e">addEventListener</span>(<span style="color:#e6db74">&#39;click&#39;</span>, <span style="color:#a6e22e">onClick</span>, <span style="color:#66d9ef">false</span>);
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">script</span>&gt;
+</span></span></code></pre></div><p>onClick是同一个事件处理程序，所以只触发一次</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#75715e">// 下面的代码只会触发两次
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">button</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;request&#34;</span><span style="color:#f92672">&gt;</span><span style="color:#a6e22e">登录</span><span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/button&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">script</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>document.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#39;#request&#39;</span>).<span style="color:#a6e22e">addEventListener</span>(<span style="color:#e6db74">&#39;click&#39;</span>, <span style="color:#66d9ef">function</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;clicked&#39;</span>);
+</span></span><span style="display:flex;"><span>}, <span style="color:#66d9ef">false</span>);
+</span></span><span style="display:flex;"><span>document.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#39;#request&#39;</span>).<span style="color:#a6e22e">addEventListener</span>(<span style="color:#e6db74">&#39;click&#39;</span>, <span style="color:#66d9ef">function</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;clicked&#39;</span>);
+</span></span><span style="display:flex;"><span>}, <span style="color:#66d9ef">false</span>);
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/script&gt;</span>
+</span></span></code></pre></div><p>两个匿名函数，所以会触发两次</p>
+<h2 id="事件默认行为">事件默认行为</h2>
+<p>很多网页元素会有默认行为，比如下面这些：</p>
+<ul>
+<li>点击a标签的时候，会有跳转行为</li>
+<li>点击右键时会弹出菜单</li>
+<li>在表单中点击提交按钮会提交表单</li>
+</ul>
+<p>如果我们需要阻止默认行为，比如我们在阻止表单的默认提交事件，进行数据校验，通过校验后再调用表单submit方法提交。</p>
+<blockquote>
+<p>不同的监听方式阻止默认行为的方式也不同。</p>
+</blockquote>
+<h3 id="html代码方式">HTML代码方式</h3>
+<blockquote>
+<p>HTML代码方式支持return false和event.preventDefault()</p>
+</blockquote>
+<h4 id="return-false方式">return false方式</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#f92672">form</span> <span style="color:#a6e22e">action</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span> <span style="color:#a6e22e">onsubmit</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;return handleSubmit()&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>	&lt;<span style="color:#f92672">button</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;submit&#34;</span>&gt;Submit&lt;/<span style="color:#f92672">button</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">form</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">script</span>&gt;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">handleSubmit</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">script</span>&gt;
+</span></span></code></pre></div><p>上例中我们监听了表单的<code>onsubmit</code>事件，当点击按钮或者按下回车时，将会触发<code>handleSubmit</code>方法，同时会阻止表单的提交。</p>
+<blockquote>
+<p>表单内如果有type=&ldquo;submit&quot;的按钮存在，按下回车时就会自动提交。</p>
+</blockquote>
+<p>HTML监听方式阻止默认事件需要满足以下两点：</p>
+<ol>
+<li>HTML事件监听代码<code>return handler()</code>，<code>return不能少</code>，少了就无法阻止默认行为</li>
+<li><code>handler()</code>函数需要返回<code>false</code></li>
+</ol>
+<h4 id="eventpreventdefault">event.preventDefault()</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://www.ddhigh.com&#34;</span> <span style="color:#a6e22e">onclick</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;handleClick(event)&#34;</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;click&#34;</span>&gt;Href&lt;/<span style="color:#f92672">a</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">script</span>&gt;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">handleClick</span>(<span style="color:#a6e22e">e</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">preventDefault</span>();
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">script</span>&gt;
+</span></span></code></pre></div><h3 id="dom0级事件方式">DOM0级事件方式</h3>
+<blockquote>
+<p>DOM0级事件支持return false和event.preventDefault()两种方式。</p>
+</blockquote>
+<h4 id="eventpreventdefault-1">event.preventDefault()</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>// event.preventDefault()
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://www.ddhigh.com&#34;</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;click&#34;</span>&gt;Href&lt;/<span style="color:#f92672">a</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">script</span>&gt;
+</span></span><span style="display:flex;"><span>	document.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#39;#click&#39;</span>).<span style="color:#a6e22e">onclick</span><span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">event</span>) {
+</span></span><span style="display:flex;"><span>  	<span style="color:#a6e22e">event</span>.<span style="color:#a6e22e">preventDefault</span>();
+</span></span><span style="display:flex;"><span>  };
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">script</span>&gt;
+</span></span></code></pre></div><h4 id="return-false">return false</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>// return false
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://www.ddhigh.com&#34;</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;click&#34;</span>&gt;Href&lt;/<span style="color:#f92672">a</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">script</span>&gt;
+</span></span><span style="display:flex;"><span>	document.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#39;#click&#39;</span>).<span style="color:#a6e22e">onclick</span><span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">event</span>) {
+</span></span><span style="display:flex;"><span>  	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
+</span></span><span style="display:flex;"><span>  };
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">script</span>&gt;
+</span></span></code></pre></div><p>两种方式都能工作，不过建议使用<code>event.preventDefault()</code>，原因在下面DOM2级会讲到</p>
+<h3 id="dom2级事件">DOM2级事件</h3>
+<blockquote>
+<p>DOM2级事件事件**只支持event.preventDefault()**方式，这也是事件的标准处理方法。</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://www.ddhigh.com&#34;</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;click&#34;</span>&gt;Href&lt;/<span style="color:#f92672">a</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">script</span>&gt;
+</span></span><span style="display:flex;"><span>document.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#39;#click&#39;</span>).<span style="color:#a6e22e">addEventListener</span>(<span style="color:#e6db74">&#39;click&#39;</span>, <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">e</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">preventDefault</span>();
+</span></span><span style="display:flex;"><span>});
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">script</span>&gt;
+</span></span></code></pre></div><h2 id="事件冒泡与事件捕获">事件冒泡与事件捕获</h2>
+<p>先来看一个HTML结构</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;father&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;child&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;son&#34;</span>&gt;Click&lt;/<span style="color:#f92672">div</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;/<span style="color:#f92672">div</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">div</span>&gt;
+</span></span></code></pre></div><p>我们知道，一旦绑定了事件处理程序，在事件触发时，事件处理函数都会触发。</p>
+<p>如果我们给father/child/son都绑定了事件处理函数，点击了son时，谁被触发呢？</p>
+<p>事实上，三个函数都会被触发，因为son时child的子元素，child又是father的子元素，点击son，同时也点击了father和child。</p>
+<p>由此带来一个问题，三个函数谁先触发，谁后触发呢？这就是我们常说的事件流，father-&gt;child-&gt;son这种路径是可以的，但是son-&gt;child-&gt;father这种路径也是可以的。</p>
+<p>针对这两种方式，W3C给了我们一个答案，两种方式都支持，即可以从父元素到子元素，又可以从子元素到父元素，前者叫<strong>事件捕获</strong>，后者叫<strong>事件冒泡</strong>。</p>
+<h3 id="事件捕获">事件捕获</h3>
+<p>事件发生时采取<code>自上而下</code>的方式进行触发，最先触发的是<code>window</code>，其次是<code>document</code>，然后根据DOM层级依次触发，最终进入到真正的事件元素。</p>
+<blockquote>
+<p>addEventListener第三个参数传入true就是捕获方式的标志。</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;father&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>	&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;child&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>  	&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;son&#34;</span>&gt;Click&lt;/<span style="color:#f92672">div</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;/<span style="color:#f92672">div</span>&gt;
+</span></span><span style="display:flex;"><span>	&lt;/<span style="color:#f92672">div</span>&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#f92672">script</span>&gt;
+</span></span><span style="display:flex;"><span>  document.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#39;#father&#39;</span>).<span style="color:#a6e22e">addEventListener</span>(<span style="color:#e6db74">&#39;click&#39;</span>, <span style="color:#66d9ef">function</span> () {
+</span></span><span style="display:flex;"><span>  	<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;father&#39;</span>);
+</span></span><span style="display:flex;"><span>  }, <span style="color:#66d9ef">true</span>);
+</span></span><span style="display:flex;"><span>  document.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#39;#child&#39;</span>).<span style="color:#a6e22e">addEventListener</span>(<span style="color:#e6db74">&#39;click&#39;</span>, <span style="color:#66d9ef">function</span> () {
+</span></span><span style="display:flex;"><span>  	<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;child&#39;</span>);
+</span></span><span style="display:flex;"><span>  }, <span style="color:#66d9ef">true</span>);
+</span></span><span style="display:flex;"><span>  document.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#39;#son&#39;</span>).<span style="color:#a6e22e">addEventListener</span>(<span style="color:#e6db74">&#39;click&#39;</span>, <span style="color:#66d9ef">function</span> () {
+</span></span><span style="display:flex;"><span>  	<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;son&#39;</span>);
+</span></span><span style="display:flex;"><span>  }, <span style="color:#66d9ef">true</span>);
+</span></span><span style="display:flex;"><span>	&lt;/<span style="color:#f92672">script</span>&gt;
+</span></span></code></pre></div><p>点击son之后的输出顺序为</p>
+<pre tabindex="0"><code>father
+child
+son
+</code></pre><h3 id="事件冒泡">事件冒泡</h3>
+<p>事件发生时采取<code>自下而上</code>的方式进行触发，最先触发的是发生事件的元素，其次是父元素，依次向上，最终触发到<code>document</code>和<code>window</code>。</p>
+<blockquote>
+<p>addEventListener第三个参数传入false就是捕获冒泡的标志。</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;father&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>	&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;child&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>  	&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;son&#34;</span>&gt;Click&lt;/<span style="color:#f92672">div</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;/<span style="color:#f92672">div</span>&gt;
+</span></span><span style="display:flex;"><span>	&lt;/<span style="color:#f92672">div</span>&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#f92672">script</span>&gt;
+</span></span><span style="display:flex;"><span>  document.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#39;#father&#39;</span>).<span style="color:#a6e22e">addEventListener</span>(<span style="color:#e6db74">&#39;click&#39;</span>, <span style="color:#66d9ef">function</span> () {
+</span></span><span style="display:flex;"><span>  	<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;father&#39;</span>);
+</span></span><span style="display:flex;"><span>  }, <span style="color:#66d9ef">false</span>);
+</span></span><span style="display:flex;"><span>  document.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#39;#child&#39;</span>).<span style="color:#a6e22e">addEventListener</span>(<span style="color:#e6db74">&#39;click&#39;</span>, <span style="color:#66d9ef">function</span> () {
+</span></span><span style="display:flex;"><span>  	<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;child&#39;</span>);
+</span></span><span style="display:flex;"><span>  }, <span style="color:#66d9ef">false</span>);
+</span></span><span style="display:flex;"><span>  document.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#39;#son&#39;</span>).<span style="color:#a6e22e">addEventListener</span>(<span style="color:#e6db74">&#39;click&#39;</span>, <span style="color:#66d9ef">function</span> () {
+</span></span><span style="display:flex;"><span>  	<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;son&#39;</span>);
+</span></span><span style="display:flex;"><span>  }, <span style="color:#66d9ef">false</span>);
+</span></span><span style="display:flex;"><span>	&lt;/<span style="color:#f92672">script</span>&gt;
+</span></span></code></pre></div><p>点击son之后的输出顺序为</p>
+<pre tabindex="0"><code>son
+child
+father
+</code></pre><blockquote>
+<p>由于事件捕获和事件冒泡机制，我们需要一个标记来标识真正触发事件的元素，这个元素就是event.target，而另外一个相似的属性叫event.currentTarget，这是当前元素。</p>
+</blockquote>
+<h3 id="事件捕获和时间冒泡的顺序">事件捕获和时间冒泡的顺序</h3>
+<blockquote>
+<p>根据浏览器规范，事件捕获会先于事件冒泡发生。因此，总的事件顺序如下</p>
+</blockquote>
+<ol>
+<li>window 捕获阶段</li>
+<li>document 捕获阶段</li>
+<li>&hellip; 依次到真正触发事件的元素 捕获阶段</li>
+<li>真正触发事件的元素 冒泡阶段</li>
+<li>依次向上的父元素 冒泡阶段</li>
+<li>document  冒泡阶段</li>
+<li>window 冒泡阶段</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;father&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>        &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;child&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>            &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;son&#34;</span>&gt;Click&lt;/<span style="color:#f92672">div</span>&gt;
+</span></span><span style="display:flex;"><span>        &lt;/<span style="color:#f92672">div</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;/<span style="color:#f92672">div</span>&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">script</span>&gt;
+</span></span><span style="display:flex;"><span>        document.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#39;#father&#39;</span>).<span style="color:#a6e22e">addEventListener</span>(<span style="color:#e6db74">&#39;click&#39;</span>, <span style="color:#66d9ef">function</span> () {
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;father捕获&#39;</span>);
+</span></span><span style="display:flex;"><span>        }, <span style="color:#66d9ef">true</span>);
+</span></span><span style="display:flex;"><span>        document.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#39;#child&#39;</span>).<span style="color:#a6e22e">addEventListener</span>(<span style="color:#e6db74">&#39;click&#39;</span>, <span style="color:#66d9ef">function</span> () {
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;child捕获&#39;</span>);
+</span></span><span style="display:flex;"><span>        }, <span style="color:#66d9ef">true</span>);
+</span></span><span style="display:flex;"><span>        document.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#39;#son&#39;</span>).<span style="color:#a6e22e">addEventListener</span>(<span style="color:#e6db74">&#39;click&#39;</span>, <span style="color:#66d9ef">function</span> () {
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;son捕获&#39;</span>);
+</span></span><span style="display:flex;"><span>        }, <span style="color:#66d9ef">true</span>);
+</span></span><span style="display:flex;"><span>        document.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#39;#father&#39;</span>).<span style="color:#a6e22e">addEventListener</span>(<span style="color:#e6db74">&#39;click&#39;</span>, <span style="color:#66d9ef">function</span> () {
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;father冒泡&#39;</span>);
+</span></span><span style="display:flex;"><span>        }, <span style="color:#66d9ef">false</span>);
+</span></span><span style="display:flex;"><span>        document.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#39;#child&#39;</span>).<span style="color:#a6e22e">addEventListener</span>(<span style="color:#e6db74">&#39;click&#39;</span>, <span style="color:#66d9ef">function</span> () {
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;child冒泡&#39;</span>);
+</span></span><span style="display:flex;"><span>        }, <span style="color:#66d9ef">false</span>);
+</span></span><span style="display:flex;"><span>        document.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#39;#son&#39;</span>).<span style="color:#a6e22e">addEventListener</span>(<span style="color:#e6db74">&#39;click&#39;</span>, <span style="color:#66d9ef">function</span> () {
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;son冒泡&#39;</span>);
+</span></span><span style="display:flex;"><span>        }, <span style="color:#66d9ef">false</span>);
+</span></span><span style="display:flex;"><span>    &lt;/<span style="color:#f92672">script</span>&gt;
+</span></span></code></pre></div><p>点击son之后的输出为</p>
+<pre tabindex="0"><code>father捕获
+child捕获
+son捕获
+son冒泡
+child冒泡
+father冒泡
+</code></pre><h2 id="事件绑定和事件委托">事件绑定和事件委托</h2>
+<p>弄明白浏览器的事件流机制之后，来讨论事件绑定和事件委托其实是很简单的事情。</p>
+<h3 id="事件绑定">事件绑定</h3>
+<p>就是在事件监听方式中直接对具体元素进行事件监听的方式。有个明显的缺点，对于新增加的DOM节点是无法监听到事件的。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;a&#34;</span>&gt;click1&lt;/<span style="color:#f92672">div</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;a&#34;</span>&gt;click2&lt;/<span style="color:#f92672">div</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">script</span>&gt;
+</span></span><span style="display:flex;"><span>        document.<span style="color:#a6e22e">querySelectorAll</span>(<span style="color:#e6db74">&#39;.a&#39;</span>).<span style="color:#a6e22e">forEach</span>(<span style="color:#a6e22e">ele</span> =&gt; <span style="color:#a6e22e">ele</span>.<span style="color:#a6e22e">onclick</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> () {
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;clicked &#39;</span> <span style="color:#f92672">+</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">innerHTML</span>);
+</span></span><span style="display:flex;"><span>        });
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">setTimeout</span>(<span style="color:#66d9ef">function</span> () {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">div3</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">createElement</span>(<span style="color:#e6db74">&#39;div&#39;</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">div3</span>.<span style="color:#a6e22e">className</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;a&#34;</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">div3</span>.<span style="color:#a6e22e">innerHTML</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;click3&#34;</span>
+</span></span><span style="display:flex;"><span>            document.<span style="color:#a6e22e">body</span>.<span style="color:#a6e22e">appendChild</span>(<span style="color:#a6e22e">div3</span>)
+</span></span><span style="display:flex;"><span>        }, <span style="color:#ae81ff">500</span>);
+</span></span><span style="display:flex;"><span>    &lt;/<span style="color:#f92672">script</span>&gt;
+</span></span></code></pre></div><p>上面的click3点击是没有任何反应的，因为在创建该元素时没有绑定事件处理函数。</p>
+<h3 id="事件委托">事件委托</h3>
+<p>我们利用事件流机制来实现上面的需求。</p>
+<blockquote>
+<p>事件委托就是利用事件流机制，在父元素进行监听，由于事件冒泡机制，父元素可以接受新添加元素的事件。</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;a&#34;</span>&gt;click1&lt;/<span style="color:#f92672">div</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;a&#34;</span>&gt;click2&lt;/<span style="color:#f92672">div</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">script</span>&gt;
+</span></span><span style="display:flex;"><span>        document.<span style="color:#a6e22e">body</span>.<span style="color:#a6e22e">addEventListener</span>(<span style="color:#e6db74">&#39;click&#39;</span>, <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">e</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">innerHTML</span>)
+</span></span><span style="display:flex;"><span>        }, <span style="color:#66d9ef">false</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">setTimeout</span>(<span style="color:#66d9ef">function</span> () {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">div3</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">createElement</span>(<span style="color:#e6db74">&#39;div&#39;</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">div3</span>.<span style="color:#a6e22e">className</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;a&#34;</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">div3</span>.<span style="color:#a6e22e">innerHTML</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;click3&#34;</span>
+</span></span><span style="display:flex;"><span>            document.<span style="color:#a6e22e">body</span>.<span style="color:#a6e22e">appendChild</span>(<span style="color:#a6e22e">div3</span>)
+</span></span><span style="display:flex;"><span>        }, <span style="color:#ae81ff">500</span>);
+</span></span><span style="display:flex;"><span>    &lt;/<span style="color:#f92672">script</span>&gt;
+</span></span></code></pre></div><p>由于事件冒泡机制，click3元素点击之后会将事件冒泡给父元素，也就是我们的document.body，通过event.target可以拿到真正触发事件的元素。</p>
+<p>（完）</p>
+<p><img src="https://static.ddhigh.com/blog/2019-10-22-102654.jpg" alt="0.jpeg"></p>
+
+    <div class="blog-footer">
+    <div class="social-share"></div>
+    <div class="copyright">
+        <ul>
+            <li style="margin-bottom: 0.5em;">本文作者: <a href="https://ddhigh.com/" target="_blank"
+                    style="color: #000000; text-decoration: none;">xialeistudio</a></li>
+            <li style="margin-bottom: 0.5em;">本文链接: <a href="https://www.ddhigh.com/2019/12/30/javascript-event/" target="_blank"
+                    style="color: #000000; text-decoration: none;">Javascript事件系统</a></li>
+            <li>版权声明: <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank"
+                    style="color: #000000; text-decoration: none;">「署名-非商业性使用-相同方式共享 4.0 国际」</a></li>
+        </ul>
+    </div>
+    
+    <div style="margin-top: 2rem;"><img src="/img/mp.png" alt="qrcode"></div>
+    
+</div>
+  </section>
+
+  
+  
+  <div class="paginator">
+    
+    <a class="prev" href="https://www.ddhigh.com/2020/01/17/php-binary-io/">
+      <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M3.77086 21.1546C11.0491 22.698 21.4339 21.7773 21.4339 16.3608V4.63375C21.4339 3.93962 21.3581 3.30535 21.1917 2.76787M3.77086 21.1546C1.9934 20.7777 0.973585 18.7264 1.08749 16.688C1.2668 13.479 1.15721 9.43135 1.00513 6.21507C0.87809 3.52811 3.12891 1.16316 5.51029 1.25008C9.76594 1.40542 15.377 1.20229 18.7912 1.00542C20.0864 0.930734 20.8406 1.63385 21.1917 2.76787M3.77086 21.1546C4.56586 21.4723 5.49168 21.7879 6.5 22.0658M21.1917 2.76787C23.1097 4.18217 23.13 12.4191 22.9004 16.3608C20.8478 24.0194 12.3061 23.6662 6.5 22.0658M21.1917 2.76787C21.7612 4.51192 22.7203 9.67216 22 16.3608C21.2797 23.0494 11.3665 22.9511 6.5 22.0658M9.94496 9C9.28897 9.61644 7.63215 10.997 6.04814 11.7966C5.98257 11.8297 5.98456 11.9753 6.05061 12.0063C7.05496 12.4779 8.92941 13.9264 9.94496 15M6.44444 11.9667C8.86549 12.0608 14 12 16 11"
+          stroke="currentColor" stroke-linecap="round" />
+      </svg>
+      <span>kafka二进制协议简要分析</span></a>
+    
+    
+    <a class="next" href="https://www.ddhigh.com/2019/12/19/webpack-get-started/"><span>Webpack4不求人系列(1)</span>
+      <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M3.77086 21.1546C11.0491 22.698 21.4339 21.7773 21.4339 16.3608V4.63375C21.4339 3.93962 21.3581 3.30535 21.1917 2.76787M3.77086 21.1546C1.9934 20.7777 0.973585 18.7264 1.08749 16.688C1.2668 13.479 1.15721 9.43135 1.00513 6.21507C0.87809 3.52811 3.12891 1.16316 5.51029 1.25008C9.76594 1.40542 15.377 1.20229 18.7912 1.00542C20.0864 0.930734 20.8406 1.63385 21.1917 2.76787M3.77086 21.1546C4.56586 21.4723 5.49168 21.7879 6.5 22.0658M21.1917 2.76787C23.1097 4.18217 23.13 12.4191 22.9004 16.3608C20.8478 24.0194 12.3061 23.6662 6.5 22.0658M21.1917 2.76787C21.7612 4.51192 22.7203 9.67216 22 16.3608C21.2797 23.0494 11.3665 22.9511 6.5 22.0658M12.055 9C12.711 9.61644 14.3679 10.997 15.9519 11.7966C16.0174 11.8297 16.0154 11.9753 15.9494 12.0063C14.945 12.4779 13.0706 13.9264 12.055 15M15.5556 11.9667C13.1345 12.0608 8 12 6 11"
+          stroke="currentColor" stroke-linecap="round" />
+      </svg>
+    </a>
+    
+  </div>
+  
+
+  
+
+
+  
+  
+<div class="comments">
+  <script>
+      const getTheme = window.localStorage && window.localStorage.getItem("theme");
+      let theme = getTheme === 'dark' ? 'dark' : 'light';
+      let s = document.createElement('script');
+      s.src = 'https://giscus.app/client.js';
+      s.setAttribute('data-repo', 'xialeistudio\/discussion');
+      s.setAttribute('data-repo-id', 'R_kgDOKurTRA');
+      s.setAttribute('data-category', 'General');
+      s.setAttribute('data-category-id', 'DIC_kwDOKurTRM4CbCJt');
+      s.setAttribute('data-mapping', 'pathname');
+      s.setAttribute('data-strict', '0');
+      s.setAttribute('data-reactions-enabled', '1');
+      s.setAttribute('data-emit-metadata', '0');
+      s.setAttribute('data-input-position', 'bottom');
+      s.setAttribute('data-theme', theme);
+      s.setAttribute('data-lang', 'en');
+      s.setAttribute('data-loading', 'lazy');
+      s.setAttribute('crossorigin', 'anonymous');
+      s.setAttribute('async', '');
+      document.querySelector('div.comments').innerHTML = '';
+      document.querySelector('div.comments').appendChild(s);
+  </script>
+</div>
+
+</article>
+
+
+        </div><footer class="footer">
+    <p>&copy; 2014 - 2024 <a href="https://www.ddhigh.com">每天进步一点点</a>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener" target="_blank">Hugo️️</a>
+        <a href="https://github.com/guangzhengli/hugo-theme-ladder" rel="noopener" target="_blank">Ladder</a>
+        ️ </p>
+</footer>
+
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10.5376 22.7916C11.0152 22.7207 22.5795 21.1781 22.0978 10.4211C22.0536 9.43274 21.9303 8.53367 21.7387 7.71865M10.5376 22.7916C16.876 22.3728 20.0969 19.8899 21.5383 16.9142M10.5376 22.7916C9.7707 22.9055 8.97982 22.8964 8.19743 22.7725M21.7387 7.71865C21.4988 6.69828 21.1518 5.80967 20.7188 5.04257M21.7387 7.71865C22.6022 10.1105 23.0542 13.7848 21.5383 16.9142M20.7188 5.04257C17.1684 -1.24629 7.83127 0.632493 4.27577 5.04257C2.88063 6.77451 -0.0433281 11.1668 1.38159 16.6571C2.27481 20.0988 5.17269 22.2936 8.19743 22.7725M20.7188 5.04257C22.0697 6.9404 24.0299 11.3848 22.3541 15.4153M21.5383 16.9142C21.8737 16.4251 22.1428 15.9235 22.3541 15.4153M8.19743 22.7725C12.1971 23.4683 20.6281 22.971 22.3541 15.4153M14 10.945C13.3836 10.289 12.003 8.63215 11.2034 7.04814C11.1703 6.98257 11.0247 6.98456 10.9937 7.05061C10.5221 8.05496 9.07362 9.92941 8 10.945M11.0333 7.44444C10.9392 9.86549 11 15 12 17"
+              stroke="currentColor" stroke-linecap="round"/>
+    </svg>
+</a>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'Copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'Copied';
+            setTimeout(() => {
+                copybutton.innerHTML = 'Copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {
+            }
+            ;
+            selection.removeRange(range);
+        });
+        codeblock.parentNode.appendChild(copybutton);
+    });
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js" integrity="sha512-9DNXrSjk17bU9MUbRp3IjwcWe46V8FaGA062PFbryPUAEQVRbz4jiZP6FW0AdbqEGtMYBDWnul3eiGBMJOQajA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script></main>
+    </body><script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha512-N9IJRoc3LaP3NDoiGkcPa4gG94kapGpaA5Zq9/Dr04uf5TbLFU5q0o8AbRhLKUUlp8QFS2u7S+Yti0U7QtuZvQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script>
+      const images = Array.from(document.querySelectorAll(".blog-content img"));
+      images.forEach(img => {
+          mediumZoom(img, {
+              margin: 10,  
+              scrollOffset: 40,  
+              container: null,  
+              template: null,  
+              background: 'rgba(0, 0, 0, 0.5)'
+          });
+      });
+  </script>
+
+  
+  <script src="/main.min.6bb26b69159420159c74dc9e097b06a578ed2b68c701466a91a44a9632d851bd0af167a1b30012387b4c512b48ad9ad4d3394e04d77ae38d57e1920fe4ed34fe.js" integrity="sha512-a7JraRWUIBWcdNyeCXsGpXjtK2jHAUZqkaRKljLYUb0K8WehswASOHtMUStIrZrU0zlOBNd6441X4ZIP5O00/g==" crossorigin="anonymous" defer></script></html>

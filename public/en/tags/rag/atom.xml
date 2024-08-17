@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>rag on 每天进步一点点</title>
+    <link>https://www.ddhigh.com/en/tags/rag/</link>
+    <description>Recent content in rag on 每天进步一点点</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 15 Aug 2024 15:57:11 +0800</lastBuildDate><atom:link href="https://www.ddhigh.com/en/tags/rag/atom.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Build Your AI Search Bot with LLM and Search Engines</title>
+      <link>https://www.ddhigh.com/en/2024/08/15/build-your-ai-search-bot-with-llm-and-search-engines/</link>
+      <pubDate>Thu, 15 Aug 2024 15:57:11 +0800</pubDate>
+      
+      <guid>https://www.ddhigh.com/en/2024/08/15/build-your-ai-search-bot-with-llm-and-search-engines/</guid>
+    </item>
+    
+    <item>
+      <title>Use RAG to build your private knowledge base based on llama3 and langchain!</title>
+      <link>https://www.ddhigh.com/en/2024/04/28/llama3-rag-tutorial/</link>
+      <pubDate>Sun, 28 Apr 2024 08:30:57 +0800</pubDate>
+      
+      <guid>https://www.ddhigh.com/en/2024/04/28/llama3-rag-tutorial/</guid>
+    </item>
+    
+    <item>
+      <title>Retrieval-Augmented Generation</title>
+      <link>https://www.ddhigh.com/en/2024/04/24/retrieval-augmented-generation/</link>
+      <pubDate>Wed, 24 Apr 2024 20:30:57 +0800</pubDate>
+      
+      <guid>https://www.ddhigh.com/en/2024/04/24/retrieval-augmented-generation/</guid>
+    </item>
+    
+  </channel>
+</rss>

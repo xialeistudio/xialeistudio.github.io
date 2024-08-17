@@ -1,6 +1,7 @@
 ---
 title: Build Your AI Search Bot with LLM and Search Engines
 date: 2024-08-15T15:57:11+08:00
+slug: build-your-ai-search-bot-with-llm-and-search-engines
 tags:
 - rag
 categories: 
