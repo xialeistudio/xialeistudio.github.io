@@ -83,7 +83,7 @@ params:
     google:
       # SiteVerificationTag: xxx
     umami:
-      enable: true
+      enable: false
       website_id: 52f8f0f9-d93d-466b-8ef5-508aae8c4ed4
       url: https://analysis.ddhigh.com/script.js
   guestbook:
