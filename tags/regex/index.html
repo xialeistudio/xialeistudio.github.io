@@ -7,7 +7,7 @@
 正则表达式 /([\u4e00-\u9fa5\w]*)/ig 提取字符串 /** * 获得可打印字符 * @param str 需要提取的字符串 */ function getPrintableChars(str) { const matches = str.</div></article><article><div class=blog-card><h3><a href=/2014/11/07/android-replace-slash/>android 替换斜杠</a></h3><p><small>2014年11月7日&nbsp;· 21 字&nbsp;· 1 分钟</small><p>问题 最近写安卓的时候服务端返回的数据会带上“\n”，但是在android这边不能换行，初次想到的解决方法是利用
 String.replace("\n","\n") 给替换掉，结果是不行的。之前记得java的反斜杠是需要转义的，就用
 String.replaceAll("\n","\\n") 试了一下，结果依旧不行。后来去查了谷歌&ndash;，发现要 \\n 才可以 匹配到 \n,这么多斜杠，头都晕了，一个个来解释：</div></article><article><div class=blog-card><h3><a href=/2014/09/13/php-regex-chinese/>PHP正则表达式匹配中文</a></h3><p><small>2014年9月13日&nbsp;· 54 字&nbsp;· 1 分钟</small><p>正常的正则表达式匹配英文和数字以及一些常用字符还是很简单的，如
-/^\w$/ /^[0-9]$/ /^[\-\_]$/ 等等，但是匹配中文的话就有些麻烦了。UTF-8的中文根据unicode编码，所以我们需要手动构造UTF-8字符串</div></article></div></div></div></div><footer class=footer><p>&copy; 2014 - 2024 <a href=https://www.ddhigh.com>每天进步一点点</a>
+/^\w$/ /^[0-9]$/ /^[\-\_]$/ 等等，但是匹配中文的话就有些麻烦了。UTF-8的中文根据unicode编码，所以我们需要手动构造UTF-8字符串</div></article></div></div></div></div><footer class=footer><p>&copy; 2014 - 2025 <a href=https://www.ddhigh.com>每天进步一点点</a>
 Powered by
 <a href=https://gohugo.io/ rel=noopener target=_blank>Hugo️️</a>
 <a href=https://github.com/guangzhengli/hugo-theme-ladder rel=noopener target=_blank>Ladder</a>

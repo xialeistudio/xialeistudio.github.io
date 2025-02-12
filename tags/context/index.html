@@ -6,7 +6,7 @@
 分类 拥有超时控制的context有以下几种：
 context.WithTimeout(parent Context, timeout time.</div></article><article><div class=blog-card><h3><a href=/2018/10/17/golang-context-with-value/>一起学context（一）——上下文值传递</a></h3><p><small>2018年10月17日&nbsp;· 126 字&nbsp;· 1 分钟</small><p>系列开篇 本文开始将针对context的用法进行系统化讨论，在这里你将能够在工作中合理使用context解决一些比较棘手的问题。
 context处理超时处理之外还可以用来保存数据，当你需要在多个上下文传递时传递数据，那么本文提到的知识可以排上用场。
-示例代码 示例代码为一个简单的http服务，流程是登录之后会跳转首页，首页通过guard中间件进行鉴权。当然，示例代码未做其他诸如连接数据库之类的处理，这不是本文的重点。 守卫函数读取cookie之后将cookie值写入context并向下传递，在整个请求中可以说是“透明”的。当访问到需要保护的接口时检测到没有提供cookie，则直接终端请求，否则通过r.</div></article></div></div></div></div><footer class=footer><p>&copy; 2014 - 2024 <a href=https://www.ddhigh.com>每天进步一点点</a>
+示例代码 示例代码为一个简单的http服务，流程是登录之后会跳转首页，首页通过guard中间件进行鉴权。当然，示例代码未做其他诸如连接数据库之类的处理，这不是本文的重点。 守卫函数读取cookie之后将cookie值写入context并向下传递，在整个请求中可以说是“透明”的。当访问到需要保护的接口时检测到没有提供cookie，则直接终端请求，否则通过r.</div></article></div></div></div></div><footer class=footer><p>&copy; 2014 - 2025 <a href=https://www.ddhigh.com>每天进步一点点</a>
 Powered by
 <a href=https://gohugo.io/ rel=noopener target=_blank>Hugo️️</a>
 <a href=https://github.com/guangzhengli/hugo-theme-ladder rel=noopener target=_blank>Ladder</a>
