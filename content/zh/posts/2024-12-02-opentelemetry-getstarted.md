@@ -9,47 +9,71 @@ tags:
 - Observability
 ---
 ## 可观测性的三要素
-在现代分布式系统中，可观测性是确保系统健康和性能的关键。可观测性通常由以下三要素组成：
 
-**Metrics（指标）**
-Metrics 是关于系统性能和健康的数值数据。它们通常是定期收集的，提供了系统在特定时间点的状态快照。
-常见的指标包括 CPU 使用率、内存使用量、请求速率、错误率等。
-Metrics 通常用于监控和告警。
+在现代分布式系统中，随着架构复杂性和微服务化的加剧，传统的监控手段已不足以应对系统运行状态的全面掌握。可观测性（Observability）作为一种新兴理念，旨在通过数据的采集和分析，帮助开发者、运维人员深入理解系统内部行为，确保系统健康和性能。可观测性通常由以下三大核心要素构成：
 
-**Traces（追踪）**
-Traces 记录了请求在系统中流动的路径，帮助开发者理解请求的生命周期。
-每个 trace 由多个 span 组成，每个 span 代表请求在系统中一个特定操作的执行。
-Traces 对于调试分布式系统中的性能问题和瓶颈非常有用。
+### Metrics（指标）
 
-**Logs（日志）**
-Logs 是系统在运行时生成的事件记录，通常包含时间戳和事件描述。
-日志可以是结构化的（如 JSON 格式）或非结构化的（如纯文本）。
-Logs 是调试和故障排查的基础工具。
+Metrics 是对系统性能和健康状态的量化描述，通常以数值形式呈现。这些数据通过定期采集，提供系统在特定时间点的运行快照，帮助用户快速了解系统的整体状况。
 
-## OpenTelemetry
-OpenTelemetry 是一个开源项目，旨在为分布式系统提供统一的可观测性数据收集和传输标准。它是由 OpenTracing 和 OpenCensus 合并而来的，提供了以下功能：
-- 统一的 API 和 SDK：支持多种编程语言，帮助开发者轻松集成可观测性。
-- 自动化的上下文传播：在分布式系统中自动传播上下文信息，确保 trace 的完整性。
-- 多种后端支持：支持将数据发送到多种后端，如 Prometheus、Jaeger、Zipkin 等。
-- 可扩展性：通过插件和扩展机制，支持自定义数据收集和处理。
+- **常见示例**：CPU 使用率（如 75%）、内存占用量（如 2GB/8GB）、请求速率（如每秒 100 次请求）、错误率（如 2% 的请求失败）等。
+- **应用场景**：Metrics 通常与监控系统（如 Prometheus）结合，用于设置告警规则。例如，当错误率超过 5% 时触发告警通知。
+- **特点**：Metrics 是高度聚合的数据，适合长期趋势分析，但缺乏请求级别的细节。
 
-需要注意的是，OpenTelemetry 本身并不直接提供数据存储和分析功能，它只是一个标准和工具集，需要与具体的可观测性平台（如 Grafana、Jaeger、Prometheus 等）结合使用。
-本文使用OpenObserve作为后端，OpenTelemetry作为数据收集工具进行演示。
+### Traces（追踪）
 
-## Go服务接入OpenTelemetry实践
+Traces 通过记录请求在分布式系统中的完整生命周期，揭示了请求从进入系统到离开的每一步路径。它特别适用于理解跨服务调用的复杂交互。
 
-### 启动本地OpenObserve服务
-本地安装Docker后执行以下命令启动本地OpenObserve服务：
+- **组成**：每个 Trace 由多个 Span 组成，Span 是请求在系统中某一个操作的执行记录（如调用数据库、发送 HTTP 请求等），包含开始时间、结束时间和元数据（如服务名称）。
+- **实际用途**：例如，当用户访问一个电商网站下单时，Trace 可以展示从前端到支付服务、库存服务再到物流服务的调用链，快速定位延迟或错误的来源。
+- **优势**：Traces 是调试分布式系统中性能瓶颈和故障的利器，尤其在微服务架构中尤为重要。
+
+### Logs（日志）
+
+Logs 是系统运行时生成的时间序列事件记录，提供系统行为的详细上下文。
+
+- **形式**：日志可以是结构化的（如 JSON 格式，带有明确字段）或非结构化的（如纯文本）。结构化日志更易于查询和分析，例如：{"timestamp": "2025-02-25T10:00:00Z", "level": "INFO", "message": "User login successful"}。
+- **用途**：Logs 是故障排查的基石。例如，当系统抛出 500 错误时，开发者可以通过日志查看具体的错误堆栈或异常信息。
+- **与 Metrics 和 Traces 的关系**：Logs 提供细粒度的上下文，而 Metrics 提供宏观趋势，Traces 提供请求路径，三者相辅相成。
+
+------
+
+## OpenTelemetry：可观测性的统一标准
+
+OpenTelemetry 是一个由 CNCF（云原生计算基金会）支持的开源项目，旨在为分布式系统提供一致、可移植的可观测性数据采集和传输框架。它由 OpenTracing 和 OpenCensus 两个项目合并发展而来，解决了之前标准不统一的问题。以下是 OpenTelemetry 的核心功能和优势：
+
+- **统一的 API 和 SDK**：支持多种编程语言（如 Go、Java、Python 等），开发者只需集成一次即可采集 Metrics、Traces 和 Logs，无需为不同工具编写重复代码。
+- **上下文自动传播**：在分布式系统中，OpenTelemetry 利用 W3C Trace Context 标准，自动在服务间传递追踪上下文，确保跨服务的 Trace 完整无缺。例如，一个请求从前端到后端，Trace ID 会贯穿始终。
+- **广泛的后端支持**：支持将数据导出到多种可观测性平台，如 Prometheus（Metrics）、Jaeger（Traces）、Elasticsearch（Logs）等，提供灵活的选择。
+- **高度可扩展性**：通过插件机制，开发者可以自定义数据采集逻辑，例如添加特定的业务指标或日志字段。
+
+**注意事项**：OpenTelemetry 本身不负责数据的存储或可视化，它只是一个数据采集和传输的工具集。要实现完整可观测性，需要搭配后端平台（如本文使用的 OpenObserve）。
+
+------
+
+## Go 服务接入 OpenTelemetry 实践
+
+接下来，我们将通过一个完整的示例，展示如何在 Go 服务中集成 OpenTelemetry，并结合 OpenObserve 实现可观测性。示例包括本地环境的搭建、OpenTelemetry Collector 的配置以及 Go 代码的埋点实践。
+
+### 1. 启动本地 OpenObserve 服务
+
+OpenObserve 是一个轻量级的可观测性平台，支持存储和可视化 Metrics、Traces 和 Logs。假设已安装 Docker，可以通过以下步骤启动：
+
 ```bash
 docker run -v $PWD/data:/data -e ZO_DATA_DIR="/data" -p 5080:5080 \
     -e ZO_ROOT_USER_EMAIL="root@example.com" -e ZO_ROOT_USER_PASSWORD="Complexpass#123" \
     public.ecr.aws/zinclabs/openobserve:latest
 ```
 
-打开浏览器访问http://localhost:5080，使用root@example.com和Complexpass#123登录。
+- 参数说明
+  - -v $PWD/data:/data：将本地目录挂载到容器，用于持久化存储数据。
+  - -p 5080:5080：映射端口，使 OpenObserve 的 Web 界面可在本地访问。
+  - ZO_ROOT_USER_EMAIL 和 ZO_ROOT_USER_PASSWORD：设置管理员账户。
+- **验证**：启动后，打开浏览器访问 http://localhost:5080，使用 root@example.com 和 Complexpass#123 登录，检查仪表盘是否正常。
+
 ### 启动OpenTelemetry Collector服务
 
-新建 `otel-collector-config.yaml` 文件，内容如下：
+OpenTelemetry Collector 是一个独立的服务，负责接收、处理和导出可观测性数据。我们需要创建一个配置文件 otel-collector-config.yaml：
 ```yaml
 receivers:
   otlp:
@@ -86,9 +110,14 @@ service:
       processors: [batch]
       exporters: [otlphttp/openobserve]
 ```
-OpenTelemetry Collector由receiver、processor和exporter组成，receiver用于接收数据，processor用于处理数据，exporter用于将数据发送到后端。上述例子中，receiver使用otlp协议接收数据，processor使用batch进行批量处理，exporter将数据发送到OpenObserve。
+**配置文件解析**：
 
-使用下列配置通过Docker Compose启动OpenTelemetry Collector服务：
+- **Receivers**：使用 OTLP 协议（OpenTelemetry Protocol）接收数据，支持 gRPC 和 HTTP 两种方式。
+- **Processors**：batch 处理器将数据批量处理，减少网络开销。
+- **Exporters**：将数据发送到 OpenObserve，Authorization 使用 Base64 编码的用户名和密码（这里是示例值，实际使用时需替换）。
+
+**启动 Collector**：使用 Docker Compose 启动服务，配置文件如下：
+
 ```yaml
 services:
   otel-collector:
@@ -109,413 +138,201 @@ volumes:
   data:
 ```
 
-此时，OpenTelemetry Collector和OpenObserve服务已经启动，可以进行下一步。
+运行 docker-compose up 后，Collector 将监听 4317 和 4318 端口，接收数据并转发到 OpenObserve。
 
 ### Go代码埋点
 
-下面演示了一个Gin开发的Web服务器，访问主服务器的 `/hello` 路径时，会请求go协程启动的HTTP服务。
+以下是一个基于 Gin 框架的 Web 服务示例，展示如何集成 OpenTelemetry，采集 Metrics、Traces 和 Logs。服务包含两个端口：主服务（8080）和内部服务（18080），模拟分布式调用。
+
+#### 初始化 OpenTelemetry
+
+在 main.go 中初始化 Trace、Metric 和 Log 的 Provider：
 
 ```go
-package main
-
-import (
-	"context"
-	"encoding/json"
-	"fmt"
-	"io"
-	"math/rand"
-	"net/http"
-	"time"
-
-	"github.com/gin-gonic/gin"
-	"go.opentelemetry.io/contrib/bridges/otelzap"
-	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
-	"go.opentelemetry.io/otel"
-	"go.opentelemetry.io/otel/attribute"
-	"go.opentelemetry.io/otel/exporters/otlp/otlplog/otlploggrpc"
-	"go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetricgrpc"
-	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"
-	"go.opentelemetry.io/otel/log/global"
-	"go.opentelemetry.io/otel/metric"
-	"go.opentelemetry.io/otel/sdk/log"
-	sdkmetric "go.opentelemetry.io/otel/sdk/metric"
-	"go.opentelemetry.io/otel/sdk/resource"
-	sdktrace "go.opentelemetry.io/otel/sdk/trace"
-	semconv "go.opentelemetry.io/otel/semconv/v1.21.0"
-	"go.opentelemetry.io/otel/trace"
-	"go.uber.org/zap"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
-)
-
 func initProvider() (func(), error) {
-	ctx := context.Background()
+    ctx := context.Background()
 
-	res, err := resource.New(ctx,
-		resource.WithAttributes(
-			semconv.ServiceName("my-service"),
-			semconv.ServiceVersion("1.0.0"),
-		),
-	)
-	if err != nil {
-		return nil, err
-	}
+    // 定义服务资源
+    res, err := resource.New(ctx,
+        resource.WithAttributes(
+            semconv.ServiceName("my-service"),
+            semconv.ServiceVersion("1.0.0"),
+        ),
+    )
+    if err != nil {
+        return nil, err
+    }
 
-	conn, err := grpc.Dial("127.0.0.1:4317",
-		grpc.WithTransportCredentials(insecure.NewCredentials()),
-		grpc.WithBlock(),
-	)
-	if err != nil {
-		return nil, err
-	}
-	// 设置 trace exporter
-	traceExporter, err := otlptracegrpc.New(ctx, otlptracegrpc.WithGRPCConn(conn))
-	if err != nil {
-		return nil, err
-	}
+    // 连接到 Collector
+    conn, err := grpc.Dial("127.0.0.1:4317", grpc.WithTransportCredentials(insecure.NewCredentials()))
+    if err != nil {
+        return nil, err
+    }
 
-	// 设置 trace provider
-	tracerProvider := sdktrace.NewTracerProvider(
-		sdktrace.WithBatcher(traceExporter),
-		sdktrace.WithResource(res),
-	)
-	otel.SetTracerProvider(tracerProvider)
-	// 设置 metric exporter
-	metricExporter, err := otlpmetricgrpc.New(ctx, otlpmetricgrpc.WithGRPCConn(conn))
-	if err != nil {
-		return nil, err
-	}
+    // Trace exporter
+    traceExporter, err := otlptracegrpc.New(ctx, otlptracegrpc.WithGRPCConn(conn))
+    if err != nil {
+        return nil, err
+    }
+    tracerProvider := sdktrace.NewTracerProvider(sdktrace.WithBatcher(traceExporter), sdktrace.WithResource(res))
+    otel.SetTracerProvider(tracerProvider)
 
-	// 设置 metric provider
-	metricProvider := sdkmetric.NewMeterProvider(
-		sdkmetric.WithResource(res),
-		sdkmetric.WithReader(sdkmetric.NewPeriodicReader(metricExporter,
-			sdkmetric.WithInterval(2*time.Second))),
-	)
-	otel.SetMeterProvider(metricProvider)
+    // Metric exporter
+    metricExporter, err := otlpmetricgrpc.New(ctx, otlpmetricgrpc.WithGRPCConn(conn))
+    if err != nil {
+        return nil, err
+    }
+    metricProvider := sdkmetric.NewMeterProvider(sdkmetric.WithResource(res), sdkmetric.WithReader(sdkmetric.NewPeriodicReader(metricExporter)))
+    otel.SetMeterProvider(metricProvider)
 
-	// 设置log exporter
-	logExporter, err := otlploggrpc.New(ctx, otlploggrpc.WithGRPCConn(conn))
-	if err != nil {
-		return nil, err
-	}
-	processor := log.NewBatchProcessor(logExporter, log.WithExportMaxBatchSize(10))
-	logProvider := log.NewLoggerProvider(
-		log.WithResource(res),
-		log.WithProcessor(processor),
-	)
-	global.SetLoggerProvider(logProvider)
+    // Log exporter
+    logExporter, err := otlploggrpc.New(ctx, otlploggrpc.WithGRPCConn(conn))
+    if err != nil {
+        return nil, err
+    }
+    logProvider := log.NewLoggerProvider(log.WithResource(res), log.WithProcessor(log.NewBatchProcessor(logExporter)))
+    global.SetLoggerProvider(logProvider)
 
-	return func() {
-		ctx := context.Background()
-		if err := tracerProvider.Shutdown(ctx); err != nil {
-			panic(err)
-		}
-		if err := metricProvider.Shutdown(ctx); err != nil {
-			panic(err)
-		}
-		if err := logProvider.Shutdown(ctx); err != nil {
-			panic(err)
-		}
-		conn.Close()
-	}, nil
-}
-
-func metricsMiddleware() gin.HandlerFunc {
-	meter := otel.GetMeterProvider().Meter("http_server")
-	// 创建延迟直方图
-	latencyHist, _ := meter.Float64Histogram(
-		"http_server_request_duration_seconds",
-		metric.WithDescription("HTTP request duration in seconds"),
-	)
-
-	// 创建请求计数器
-	requestCount, _ := meter.Int64Counter(
-		"http_server_requests_total",
-		metric.WithDescription("Total number of HTTP requests"),
-	)
-
-	return func(c *gin.Context) {
-		start := time.Now()
-
-		c.Next()
-
-		duration := time.Since(start).Seconds()
-
-		// 通用标签
-		attrs := []attribute.KeyValue{
-			attribute.String("method", c.Request.Method),
-			attribute.String("path", c.FullPath()),
-			attribute.Int("status", c.Writer.Status()),
-		}
-
-		// 记录指标，使用正确的 API
-		latencyHist.Record(c.Request.Context(), duration, metric.WithAttributes(attrs...))
-		requestCount.Add(c.Request.Context(), 1, metric.WithAttributes(attrs...))
-	}
-}
-
-func newTracedServer(httpClient *http.Client, sugar *zap.SugaredLogger) *gin.Engine {
-	// 为内部服务创建新的 resource
-	res, err := resource.New(context.Background(),
-		resource.WithAttributes(
-			semconv.ServiceName("helloservice"),
-			semconv.ServiceVersion("1.0.0"),
-		),
-	)
-	if err != nil {
-		sugar.Errorw("failed to create resource", "error", err)
-		panic(err)
-	}
-
-	// 为内部服务创建新的 TracerProvider
-	tracerProvider := sdktrace.NewTracerProvider(
-		sdktrace.WithResource(res),
-	)
-
-	r := gin.New()
-	r.Use(gin.Recovery())
-
-	// 使用新的 TracerProvider 创建 handler
-	r.Use(func(c *gin.Context) {
-		handler := otelhttp.NewHandler(
-			http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-				c.Request = r
-				c.Next()
-			}),
-			"helloservice.http",
-			otelhttp.WithTracerProvider(tracerProvider),
-		)
-		handler.ServeHTTP(c.Writer, c.Request)
-	})
-
-	r.GET("/hello", func(c *gin.Context) {
-		// 从请求中获取 trace context
-		ctx := c.Request.Context()
-
-		// 创建 GitHub API 请求
-		req, err := http.NewRequestWithContext(ctx, "GET", "https://api.github.com", nil)
-		if err != nil {
-			sugar.Errorw("failed to create request", "error", err)
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-			return
-		}
-
-		// 发送请求
-		resp, err := httpClient.Do(req)
-		if err != nil {
-			sugar.Errorw("failed to send request", "error", err)
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-			return
-		}
-		defer resp.Body.Close()
-
-		// 读取响应
-		body, err := io.ReadAll(resp.Body)
-		if err != nil {
-			sugar.Errorw("failed to read response", "error", err)
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-			return
-		}
-
-		var respBody map[string]any
-		if err := json.Unmarshal(body, &respBody); err != nil {
-			sugar.Errorw("failed to unmarshal response", "error", err)
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-			return
-		}
-
-		c.JSON(http.StatusOK, respBody)
-	})
-
-	return r
-}
-
-func main() {
-	cleanup, err := initProvider()
-	if err != nil {
-		panic(err)
-	}
-	defer cleanup()
-
-	// 创建 OTLP core
-	logProvider := global.GetLoggerProvider()
-	logger := zap.New(otelzap.NewCore("my/pkg/name", otelzap.WithLoggerProvider(logProvider)))
-	defer logger.Sync()
-	sugar := logger.Sugar()
-
-	// 创建带有 trace 的 HTTP 客户端
-	httpClient := &http.Client{
-		Transport: otelhttp.NewTransport(http.DefaultTransport),
-	}
-
-	// 启动内部服务器（18080端口）
-	internalServer := newTracedServer(httpClient, sugar)
-	go func() {
-		if err := internalServer.Run(":18080"); err != nil {
-			sugar.Errorw("internal server failed", "error", err)
-		}
-	}()
-
-	// 主服务器配置
-	gin.SetMode(gin.ReleaseMode)
-	r := gin.New()
-	r.Use(gin.Recovery(), metricsMiddleware())
-
-	r.GET("/ping", func(c *gin.Context) {
-		resp := gin.H{
-			"message": "pong",
-		}
-		sugar.Infow("ping",
-			"url", c.Request.URL.String(),
-			"method", c.Request.Method,
-			"ip", c.ClientIP(),
-			"user-agent", c.Request.UserAgent(),
-			"resp", resp,
-		)
-		c.JSON(http.StatusOK, resp)
-	})
-
-	r.GET("/github", func(c *gin.Context) {
-		// 从 gin.Context 获取 trace context
-		ctx := c.Request.Context()
-
-		// 创建新的请求
-		req, err := http.NewRequestWithContext(ctx, "GET", "https://api.github.com", nil)
-		if err != nil {
-			sugar.Errorw("failed to create request",
-				"error", err,
-			)
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-			return
-		}
-
-		// 发送请求
-		resp, err := httpClient.Do(req)
-		if err != nil {
-			sugar.Errorw("failed to send request",
-				"error", err,
-			)
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-			return
-		}
-		defer resp.Body.Close()
-
-		// 读取响应
-		body, err := io.ReadAll(resp.Body)
-		if err != nil {
-			sugar.Errorw("failed to read response",
-				"error", err,
-			)
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-			return
-		}
-
-		var respBody map[string]any
-		if err := json.Unmarshal(body, &respBody); err != nil {
-			sugar.Errorw("failed to unmarshal response",
-				"error", err,
-			)
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-			return
-		}
-
-		// 记录日志
-		sugar.Infow("github api request",
-			zap.Any("resp", map[string]any{"status": rand.Intn(500)}),
-		)
-
-		// 返回响应
-		c.JSON(resp.StatusCode, respBody)
-	})
-
-	// 添加 /trace 路由
-	r.GET("/trace", func(c *gin.Context) {
-		ctx := c.Request.Context()
-
-		// 获取 trace ID 用于日志
-		var traceID string
-		if spanCtx := trace.SpanContextFromContext(ctx); spanCtx.IsValid() {
-			traceID = spanCtx.TraceID().String()
-		}
-
-		tr := otel.Tracer("time-consuming-operation")
-		ctx, span := tr.Start(ctx, "sleep-operation")
-		time.Sleep(1 * time.Second)
-		span.End()
-
-		req, err := http.NewRequestWithContext(ctx, "GET", "http://localhost:18080/hello", nil)
-		if err != nil {
-			sugar.Errorw("failed to create request",
-				"error", err,
-				"trace_id", traceID,
-			)
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-			return
-		}
-
-		resp, err := httpClient.Do(req)
-		if err != nil {
-			sugar.Errorw("failed to send request",
-				"error", err,
-				"trace_id", traceID,
-			)
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-			return
-		}
-		defer resp.Body.Close()
-
-		body, err := io.ReadAll(resp.Body)
-		if err != nil {
-			sugar.Errorw("failed to read response",
-				"error", err,
-				"trace_id", traceID,
-			)
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-			return
-		}
-
-		var respBody map[string]any
-		if err := json.Unmarshal(body, &respBody); err != nil {
-			sugar.Errorw("failed to unmarshal response",
-				"error", err,
-				"trace_id", traceID,
-			)
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-			return
-		}
-
-		// 记录成功日志
-		sugar.Infow("trace request completed",
-			"trace_id", traceID,
-			"status", resp.StatusCode,
-		)
-
-		// 设置响应头
-		if traceID != "" {
-			c.Header("X-Trace-ID", traceID)
-		}
-
-		c.JSON(resp.StatusCode, respBody)
-	})
-
-	fmt.Println("start server")
-	panic(r.Run(":8080"))
+    return func() {
+        tracerProvider.Shutdown(ctx)
+        metricProvider.Shutdown(ctx)
+        logProvider.Shutdown(ctx)
+        conn.Close()
+    }, nil
 }
 ```
 
+#### 添加 Metrics 中间件
+
+使用中间件记录 HTTP 请求的延迟和计数：
+
+```go
+func metricsMiddleware() gin.HandlerFunc {
+    meter := otel.GetMeterProvider().Meter("http_server")
+    latencyHist, _ := meter.Float64Histogram("http_server_request_duration_seconds", metric.WithDescription("HTTP request duration"))
+    requestCount, _ := meter.Int64Counter("http_server_requests_total", metric.WithDescription("Total HTTP requests"))
+
+    return func(c *gin.Context) {
+        start := time.Now()
+        c.Next()
+        duration := time.Since(start).Seconds()
+
+        attrs := []attribute.KeyValue{
+            attribute.String("method", c.Request.Method),
+            attribute.String("path", c.FullPath()),
+            attribute.Int("status", c.Writer.Status()),
+        }
+        latencyHist.Record(c.Request.Context(), duration, metric.WithAttributes(attrs...))
+        requestCount.Add(c.Request.Context(), 1, metric.WithAttributes(attrs...))
+    }
+}
+```
+
+#### 主服务和内部服务
+
+主服务监听 8080 端口，提供 /ping 和 /trace 两个端点。/trace 调用内部服务（18080 端口的 /hello）：
+
+```go
+func main() {
+    cleanup, err := initProvider()
+    if err != nil {
+        panic(err)
+    }
+    defer cleanup()
+
+    logger := zap.New(otelzap.NewCore("my-service", otelzap.WithLoggerProvider(global.GetLoggerProvider())))
+    sugar := logger.Sugar()
+
+    httpClient := &http.Client{Transport: otelhttp.NewTransport(http.DefaultTransport)}
+
+    // 启动内部服务
+    internalServer := newTracedServer(httpClient, sugar)
+    go func() {
+        if err := internalServer.Run(":18080"); err != nil {
+            sugar.Errorw("internal server failed", "error", err)
+        }
+    }()
+
+    // 主服务
+    r := gin.New()
+    r.Use(gin.Recovery(), metricsMiddleware())
+
+    r.GET("/ping", func(c *gin.Context) {
+        sugar.Infow("ping", "url", c.Request.URL.String(), "method", c.Request.Method)
+        c.JSON(http.StatusOK, gin.H{"message": "pong"})
+    })
+
+    r.GET("/trace", func(c *gin.Context) {
+        ctx := c.Request.Context()
+        traceID := trace.SpanContextFromContext(ctx).TraceID().String()
+
+        tr := otel.Tracer("time-consuming-operation")
+        ctx, span := tr.Start(ctx, "sleep-operation")
+        time.Sleep(1 * time.Second)
+        span.End()
+
+        req, _ := http.NewRequestWithContext(ctx, "GET", "http://localhost:18080/hello", nil)
+        resp, err := httpClient.Do(req)
+        if err != nil {
+            sugar.Errorw("failed to send request", "error", err, "trace_id", traceID)
+            c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+            return
+        }
+        defer resp.Body.Close()
+
+        body, _ := io.ReadAll(resp.Body)
+        var respBody map[string]any
+        json.Unmarshal(body, &respBody)
+        sugar.Infow("trace request completed", "trace_id", traceID, "status", resp.StatusCode)
+        c.Header("X-Trace-ID", traceID)
+        c.JSON(resp.StatusCode, respBody)
+    })
+
+    fmt.Println("Server started at :8080")
+    panic(r.Run(":8080"))
+}
+
+func newTracedServer(httpClient *http.Client, sugar *zap.SugaredLogger) *gin.Engine {
+    r := gin.New()
+    r.Use(gin.Recovery())
+    r.GET("/hello", func(c *gin.Context) {
+        req, _ := http.NewRequestWithContext(c.Request.Context(), "GET", "https://api.github.com", nil)
+        resp, err := httpClient.Do(req)
+        if err != nil {
+            sugar.Errorw("failed to send request", "error", err)
+            c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+            return
+        }
+        defer resp.Body.Close()
+
+        body, _ := io.ReadAll(resp.Body)
+        var respBody map[string]any
+        json.Unmarshal(body, &respBody)
+        c.JSON(http.StatusOK, respBody)
+    })
+    return r
+}
+```
+
+
+
 ## 总结
 
-本文详细介绍了OpenTelemetry在Go服务中的实践应用。通过可观测性的三大支柱（Metrics、Traces和Logs），我们可以全方位监控和了解分布式系统的运行状态。OpenTelemetry作为一个统一的可观测性框架，不仅提供了标准化的数据收集方式，还支持多种后端存储方案。
+通过本文的实践，我们展示了如何利用 OpenTelemetry 在 Go 服务中实现全面的可观测性：
 
-在实践部分，我们通过一个完整的示例展示了：
-1. 如何搭建本地OpenObserve和OpenTelemetry Collector环境
-2. 如何在Go服务中初始化OpenTelemetry的各个组件
-3. 如何使用中间件收集HTTP请求的指标
-4. 如何在分布式系统中进行链路追踪
-5. 如何集成结构化日志
+1. **本地环境搭建**：启动 OpenObserve 和 OpenTelemetry Collector，为数据存储和处理奠定基础。
+2. **组件初始化**：在 Go 中配置 Trace、Metric 和 Log 的 Provider，确保数据采集的完整性。
+3. **指标收集**：通过中间件记录 HTTP 请求的性能数据，适合实时监控。
+4. **链路追踪**：实现跨服务的请求追踪，定位分布式系统中的问题。
+5. **日志集成**：结合 Zap 和 OpenTelemetry，输出结构化日志，便于故障排查。
 
-通过这些实践，我们可以构建一个具有完整可观测性的现代分布式系统，为系统的监控、调试和优化提供有力支持。
+未来，可以进一步探索以下方向：
+
+- **高级可视化**：结合 Grafana Tempo 或 Jaeger，优化 Traces 的展示效果。
+- **自动化告警**：基于 Metrics 配置动态阈值告警。
+- **性能优化**：分析采集数据的开销，调整批量处理参数。
+
+可观测性不仅是技术工具，更是现代系统设计的核心理念。通过 OpenTelemetry 和后端平台的结合，我们能够构建健壮、可维护的分布式系统。
 
 ## 参考链接
 
