@@ -1,5 +1,5 @@
 ---
-title: IRSA vs. EC2 IAM: Usage Scenarios and Permission Management Practices
+title: IRSA vs. EC2 IAM:Usage Scenarios and Permission Management Practices
 date: 2025-03-25T11:53:08+08:00
 slug: aws-irsa-vs-ec2iam
 categories: 
