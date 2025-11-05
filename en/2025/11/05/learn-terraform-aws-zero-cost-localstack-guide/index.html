@@ -1,0 +1,577 @@
+<!doctype html><html lang=en><head><meta name=viewport content="width=device-width,initial-scale=1"><title>Learn Terraform and AWS at Zero Cost with LocalStack: A Complete Practical Guide</title>
+<meta charset=utf-8><meta name=google-adsense-account content="ca-pub-2871082647721658"><meta content="Web ,Java ,Go ,Node.js ,PHP ,Koa ,MySQL ,Redis ,front-end ,back-end ,database" name=keywords><meta name=description content="When learning AWS and Terraform, the biggest pain points are often the high costs of cloud services and the financial risks of misconfigurations. This guide will show you how to use LocalStack to simulate AWS services locally, enabling you to learn and experiment with Terraform Infrastructure as Code (IaC) at zero cost and zero risk.
+In this tutorial, we&rsquo;ll build a complete AWS network architecture including VPC, public/private subnets, Internet Gateway, security groups, and EC2 instances. All resources run in your local LocalStack environment without incurring any AWS charges or security risks from configuration errors."><meta name=author content="Lei Xia"><link rel=canonical href=https://www.ddhigh.com/en/2025/11/05/learn-terraform-aws-zero-cost-localstack-guide/><link rel=alternate type=application/rss+xml href=https://www.ddhigh.com/index.xml title=每天进步一点点><script async src="https://www.googletagmanager.com/gtag/js?id=G-EC3XLVSGKV"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-EC3XLVSGKV")</script><meta property="og:title" content="Learn Terraform and AWS at Zero Cost with LocalStack: A Complete Practical Guide"><meta property="og:description" content="When learning AWS and Terraform, the biggest pain points are often the high costs of cloud services and the financial risks of misconfigurations. This guide will show you how to use LocalStack to simulate AWS services locally, enabling you to learn and experiment with Terraform Infrastructure as Code (IaC) at zero cost and zero risk.
+In this tutorial, we&rsquo;ll build a complete AWS network architecture including VPC, public/private subnets, Internet Gateway, security groups, and EC2 instances. All resources run in your local LocalStack environment without incurring any AWS charges or security risks from configuration errors."><meta property="og:type" content="article"><meta property="og:url" content="https://www.ddhigh.com/en/2025/11/05/learn-terraform-aws-zero-cost-localstack-guide/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2025-11-05T09:00:00+08:00"><meta property="article:modified_time" content="2025-11-05T09:00:00+08:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="Learn Terraform and AWS at Zero Cost with LocalStack: A Complete Practical Guide"><meta name=twitter:description content="When learning AWS and Terraform, the biggest pain points are often the high costs of cloud services and the financial risks of misconfigurations. This guide will show you how to use LocalStack to simulate AWS services locally, enabling you to learn and experiment with Terraform Infrastructure as Code (IaC) at zero cost and zero risk.
+In this tutorial, we&rsquo;ll build a complete AWS network architecture including VPC, public/private subnets, Internet Gateway, security groups, and EC2 instances. All resources run in your local LocalStack environment without incurring any AWS charges or security risks from configuration errors."><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":4,"name":"Learn Terraform and AWS at Zero Cost with LocalStack: A Complete Practical Guide","item":"https://www.ddhigh.com/en/2025/11/05/learn-terraform-aws-zero-cost-localstack-guide/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"Learn Terraform and AWS at Zero Cost with LocalStack: A Complete Practical Guide","name":"Learn Terraform and AWS at Zero Cost with LocalStack: A Complete Practical Guide","description":"When learning AWS and Terraform, the biggest pain points are often the high costs of cloud services and the financial risks of misconfigurations. This guide will show you how to use LocalStack to simulate AWS services locally, enabling you to learn and experiment with Terraform Infrastructure as Code (IaC) at zero cost and zero risk.\nIn this tutorial, we\u0026rsquo;ll build a complete AWS network architecture including VPC, public/private subnets, Internet Gateway, security groups, and EC2 instances. All resources run in your local LocalStack environment without incurring any AWS charges or security risks from configuration errors.\n","keywords":["terraform","aws"],"articleBody":"When learning AWS and Terraform, the biggest pain points are often the high costs of cloud services and the financial risks of misconfigurations. This guide will show you how to use LocalStack to simulate AWS services locally, enabling you to learn and experiment with Terraform Infrastructure as Code (IaC) at zero cost and zero risk.\nIn this tutorial, we’ll build a complete AWS network architecture including VPC, public/private subnets, Internet Gateway, security groups, and EC2 instances. All resources run in your local LocalStack environment without incurring any AWS charges or security risks from configuration errors.\nNote: LocalStack creates simulated AWS resources for local development and testing purposes only. While these resources cannot be accessed from external networks, this is the perfect way to learn Terraform and become familiar with AWS services without worrying about costs or security.\nInstallation Install Terraform: https://developer.hashicorp.com/terraform/install Install Localstack: https://docs.localstack.cloud/aws/getting-started/installation/ Launch Localstack localstack start Build a simple architecture We’ll build a simple architecture with a VPC, a public subnet, a private subnet, an internet gateway, a route table, a route table association, a security group, and an EC2 instance.\nTerraform Code Create a new directory for your project and navigate to it.\nmkdir learn-terraform-aws-localstack cd learn-terraform-aws-localstack provider.tf\nThis file contains the provider configuration for AWS.\nprovider \"aws\" { access_key = \"mock_access_key\" region = \"us-east-1\" s3_use_path_style = true secret_key = \"mock_secret_key\" skip_credentials_validation = true skip_metadata_api_check = true skip_requesting_account_id = true endpoints { apigateway = \"http://localhost:4566\" cloudformation = \"http://localhost:4566\" cloudwatch = \"http://localhost:4566\" dynamodb = \"http://localhost:4566\" ec2 = \"http://localhost:4566\" es = \"http://localhost:4566\" firehose = \"http://localhost:4566\" iam = \"http://localhost:4566\" kinesis = \"http://localhost:4566\" lambda = \"http://localhost:4566\" route53 = \"http://localhost:4566\" redshift = \"http://localhost:4566\" s3 = \"http://localhost:4566\" secretsmanager = \"http://localhost:4566\" ses = \"http://localhost:4566\" sns = \"http://localhost:4566\" sqs = \"http://localhost:4566\" ssm = \"http://localhost:4566\" stepfunctions = \"http://localhost:4566\" sts = \"http://localhost:4566\" } } main.tf\nThis file contains the Terraform code for our architecture.\n# VPC resource \"aws_vpc\" \"main\" { cidr_block = var.vpc_cidr enable_dns_hostnames = true enable_dns_support = true tags = { Name = \"${var.workspace}-vpc\" Workspace = var.workspace } } # Internet Gateway resource \"aws_internet_gateway\" \"main\" { vpc_id = aws_vpc.main.id tags = { Name = \"${var.workspace}-igw\" Workspace = var.workspace } } # Public Subnet resource \"aws_subnet\" \"public\" { vpc_id = aws_vpc.main.id cidr_block = var.public_subnet_cidr map_public_ip_on_launch = true availability_zone = \"${var.region}a\" tags = { Name = \"${var.workspace}-public-subnet\" Workspace = var.workspace } } # Private Subnet resource \"aws_subnet\" \"private\" { vpc_id = aws_vpc.main.id cidr_block = var.private_subnet_cidr availability_zone = \"${var.region}a\" tags = { Name = \"${var.workspace}-private-subnet\" Workspace = var.workspace } } # Public Route Table resource \"aws_route_table\" \"public\" { vpc_id = aws_vpc.main.id route { cidr_block = \"0.0.0.0/0\" gateway_id = aws_internet_gateway.main.id } tags = { Name = \"${var.workspace}-public-rt\" Workspace = var.workspace } } # Private Route Table resource \"aws_route_table\" \"private\" { vpc_id = aws_vpc.main.id tags = { Name = \"${var.workspace}-private-rt\" Workspace = var.workspace } } # Route Table Associations resource \"aws_route_table_association\" \"public\" { subnet_id = aws_subnet.public.id route_table_id = aws_route_table.public.id } resource \"aws_route_table_association\" \"private\" { subnet_id = aws_subnet.private.id route_table_id = aws_route_table.private.id } # Security Group for EC2 resource \"aws_security_group\" \"ec2\" { name = \"${var.workspace}-ec2-sg\" description = \"Security group for EC2 instance\" vpc_id = aws_vpc.main.id ingress { description = \"Allow port 8000 from anywhere\" from_port = 8000 to_port = 8000 protocol = \"tcp\" cidr_blocks = [\"0.0.0.0/0\"] } egress { description = \"Allow all outbound traffic\" from_port = 0 to_port = 0 protocol = \"-1\" cidr_blocks = [\"0.0.0.0/0\"] } tags = { Name = \"${var.workspace}-ec2-sg\" Workspace = var.workspace } } # EC2 Instance in Public Subnet resource \"aws_instance\" \"web\" { ami = var.ec2_ami instance_type = var.ec2_instance_type subnet_id = aws_subnet.public.id vpc_security_group_ids = [aws_security_group.ec2.id] tags = { Name = \"${var.workspace}-web-server\" } } vars.tf\nThis file contains the variables for our architecture.\nvariable \"workspace\" { type = string description = \"The workspace to use\" default = \"dev\" } variable \"region\" { type = string description = \"The region to use\" default = \"us-east-1\" } variable \"vpc_cidr\" { type = string description = \"CIDR block for VPC\" default = \"10.0.0.0/16\" } variable \"public_subnet_cidr\" { type = string description = \"CIDR block for public subnet\" default = \"10.0.1.0/24\" } variable \"private_subnet_cidr\" { type = string description = \"CIDR block for private subnet\" default = \"10.0.2.0/24\" } variable \"ec2_instance_type\" { type = string description = \"EC2 instance type\" default = \"t3.micro\" } variable \"ec2_ami\" { type = string description = \"AMI ID for EC2 instance\" default = \"ami-0c55b159cbfafe1f0\" # Amazon Linux 2 } outputs.tf\nThis file contains the outputs for our architecture.\noutput \"vpc_id\" { description = \"VPC ID\" value = aws_vpc.main.id } output \"public_subnet_id\" { description = \"Public subnet ID\" value = aws_subnet.public.id } output \"private_subnet_id\" { description = \"Private subnet ID\" value = aws_subnet.private.id } output \"ec2_instance_id\" { description = \"EC2 instance ID\" value = aws_instance.web.id } output \"ec2_public_ip\" { description = \"EC2 instance public IP\" value = aws_instance.web.public_ip } output \"ec2_private_ip\" { description = \"EC2 instance private IP\" value = aws_instance.web.private_ip } output \"security_group_id\" { description = \"EC2 security group ID\" value = aws_security_group.ec2.id } Run Terraform Run the following commands to build the architecture.\nterraform init # This will download the provider plugins terraform plan # This will show the changes that will be applied terraform apply # This will apply the changes Run the following command to see the whole state of the infrastructure.\nterraform show Here is my state:\n# aws_instance.web: resource \"aws_instance\" \"web\" { ami = \"ami-0c55b159cbfafe1f0\" arn = \"arn:aws:ec2:us-east-1::instance/i-628f2d8a778d0398f\" associate_public_ip_address = true availability_zone = \"us-east-1a\" disable_api_stop = false disable_api_termination = false ebs_optimized = false force_destroy = false get_password_data = false hibernation = false host_id = null iam_instance_profile = \"dev-ec2-profile\" id = \"i-628f2d8a778d0398f\" instance_initiated_shutdown_behavior = \"stop\" instance_lifecycle = null instance_state = \"running\" instance_type = \"t3.micro\" ipv6_address_count = 0 ipv6_addresses = [] key_name = null monitoring = false outpost_arn = null password_data = null placement_group = null placement_group_id = null placement_partition_number = 0 primary_network_interface_id = \"eni-a320bc52a3f9cc681\" private_dns = \"ip-10-0-1-4.ec2.internal\" private_ip = \"10.0.1.4\" public_dns = \"ec2-54-214-147-137.compute-1.amazonaws.com\" public_ip = \"54.214.147.137\" region = \"us-east-1\" secondary_private_ips = [] security_groups = [] source_dest_check = true spot_instance_request_id = null subnet_id = \"subnet-296cb609d6cf6c00c\" tags = { \"Name\" = \"dev-web-server\" } tags_all = { \"Name\" = \"dev-web-server\" } tenancy = \"default\" user_data_replace_on_change = false vpc_security_group_ids = [ \"sg-6dac1e4483215e7cd\", ] metadata_options { http_endpoint = \"enabled\" http_protocol_ipv6 = \"disabled\" http_put_response_hop_limit = 1 http_tokens = \"optional\" instance_metadata_tags = \"disabled\" } primary_network_interface { delete_on_termination = true network_interface_id = \"eni-a320bc52a3f9cc681\" } root_block_device { delete_on_termination = true device_name = \"/dev/sda1\" encrypted = false iops = 0 kms_key_id = null tags = {} tags_all = {} throughput = 0 volume_id = \"vol-863def1230da5eec3\" volume_size = 8 volume_type = \"gp2\" } } # aws_internet_gateway.main: resource \"aws_internet_gateway\" \"main\" { arn = \"arn:aws:ec2:us-east-1:000000000000:internet-gateway/igw-2b2b955804ed3852f\" id = \"igw-2b2b955804ed3852f\" owner_id = \"000000000000\" region = \"us-east-1\" tags = { \"Name\" = \"dev-igw\" \"Workspace\" = \"dev\" } tags_all = { \"Name\" = \"dev-igw\" \"Workspace\" = \"dev\" } vpc_id = \"vpc-1f5d8418e1e2ce4dc\" } # aws_route_table.private: resource \"aws_route_table\" \"private\" { arn = \"arn:aws:ec2:us-east-1:000000000000:route-table/rtb-f33ee41ac3ddc20d0\" id = \"rtb-f33ee41ac3ddc20d0\" owner_id = \"000000000000\" propagating_vgws = [] region = \"us-east-1\" route = [] tags = { \"Name\" = \"dev-private-rt\" \"Workspace\" = \"dev\" } tags_all = { \"Name\" = \"dev-private-rt\" \"Workspace\" = \"dev\" } vpc_id = \"vpc-1f5d8418e1e2ce4dc\" } # aws_route_table.public: resource \"aws_route_table\" \"public\" { arn = \"arn:aws:ec2:us-east-1:000000000000:route-table/rtb-d5f6d58f5ad703b08\" id = \"rtb-d5f6d58f5ad703b08\" owner_id = \"000000000000\" propagating_vgws = [] region = \"us-east-1\" route = [ { carrier_gateway_id = null cidr_block = \"0.0.0.0/0\" core_network_arn = null destination_prefix_list_id = null egress_only_gateway_id = null gateway_id = \"igw-2b2b955804ed3852f\" ipv6_cidr_block = null local_gateway_id = null nat_gateway_id = null network_interface_id = null transit_gateway_id = null vpc_endpoint_id = null vpc_peering_connection_id = null }, ] tags = { \"Name\" = \"dev-public-rt\" \"Workspace\" = \"dev\" } tags_all = { \"Name\" = \"dev-public-rt\" \"Workspace\" = \"dev\" } vpc_id = \"vpc-1f5d8418e1e2ce4dc\" } # aws_route_table_association.private: resource \"aws_route_table_association\" \"private\" { gateway_id = null id = \"rtbassoc-084a1cbcbcbe6e0c5\" region = \"us-east-1\" route_table_id = \"rtb-f33ee41ac3ddc20d0\" subnet_id = \"subnet-489196b43b007d2db\" } # aws_route_table_association.public: resource \"aws_route_table_association\" \"public\" { gateway_id = null id = \"rtbassoc-b0f38c2456e2fef35\" region = \"us-east-1\" route_table_id = \"rtb-d5f6d58f5ad703b08\" subnet_id = \"subnet-296cb609d6cf6c00c\" } # aws_security_group.ec2: resource \"aws_security_group\" \"ec2\" { arn = \"arn:aws:ec2:us-east-1:000000000000:security-group/sg-6dac1e4483215e7cd\" description = \"Security group for EC2 instance\" egress = [ { cidr_blocks = [ \"0.0.0.0/0\", ] description = \"Allow all outbound traffic\" from_port = 0 ipv6_cidr_blocks = [] prefix_list_ids = [] protocol = \"-1\" security_groups = [] self = false to_port = 0 }, ] id = \"sg-6dac1e4483215e7cd\" ingress = [ { cidr_blocks = [ \"0.0.0.0/0\", ] description = \"Allow port 8000 from anywhere\" from_port = 8000 ipv6_cidr_blocks = [] prefix_list_ids = [] protocol = \"tcp\" security_groups = [] self = false to_port = 8000 }, ] name = \"dev-ec2-sg\" name_prefix = null owner_id = \"000000000000\" region = \"us-east-1\" revoke_rules_on_delete = false tags = { \"Name\" = \"dev-ec2-sg\" \"Workspace\" = \"dev\" } tags_all = { \"Name\" = \"dev-ec2-sg\" \"Workspace\" = \"dev\" } vpc_id = \"vpc-1f5d8418e1e2ce4dc\" } # aws_subnet.private: resource \"aws_subnet\" \"private\" { arn = \"arn:aws:ec2:us-east-1:000000000000:subnet/subnet-489196b43b007d2db\" assign_ipv6_address_on_creation = false availability_zone = \"us-east-1a\" availability_zone_id = \"use1-az6\" cidr_block = \"10.0.2.0/24\" customer_owned_ipv4_pool = null enable_dns64 = false enable_lni_at_device_index = 0 enable_resource_name_dns_a_record_on_launch = false enable_resource_name_dns_aaaa_record_on_launch = false id = \"subnet-489196b43b007d2db\" ipv6_cidr_block = null ipv6_cidr_block_association_id = null ipv6_native = false map_customer_owned_ip_on_launch = false map_public_ip_on_launch = false outpost_arn = null owner_id = \"000000000000\" private_dns_hostname_type_on_launch = \"ip-name\" region = \"us-east-1\" tags = { \"Name\" = \"dev-private-subnet\" \"Workspace\" = \"dev\" } tags_all = { \"Name\" = \"dev-private-subnet\" \"Workspace\" = \"dev\" } vpc_id = \"vpc-1f5d8418e1e2ce4dc\" } # aws_subnet.public: resource \"aws_subnet\" \"public\" { arn = \"arn:aws:ec2:us-east-1:000000000000:subnet/subnet-296cb609d6cf6c00c\" assign_ipv6_address_on_creation = false availability_zone = \"us-east-1a\" availability_zone_id = \"use1-az6\" cidr_block = \"10.0.1.0/24\" customer_owned_ipv4_pool = null enable_dns64 = false enable_lni_at_device_index = 0 enable_resource_name_dns_a_record_on_launch = false enable_resource_name_dns_aaaa_record_on_launch = false id = \"subnet-296cb609d6cf6c00c\" ipv6_cidr_block = null ipv6_cidr_block_association_id = null ipv6_native = false map_customer_owned_ip_on_launch = false map_public_ip_on_launch = true outpost_arn = null owner_id = \"000000000000\" private_dns_hostname_type_on_launch = \"ip-name\" region = \"us-east-1\" tags = { \"Name\" = \"dev-public-subnet\" \"Workspace\" = \"dev\" } tags_all = { \"Name\" = \"dev-public-subnet\" \"Workspace\" = \"dev\" } vpc_id = \"vpc-1f5d8418e1e2ce4dc\" } # aws_vpc.main: resource \"aws_vpc\" \"main\" { arn = \"arn:aws:ec2:us-east-1:000000000000:vpc/vpc-1f5d8418e1e2ce4dc\" assign_generated_ipv6_cidr_block = false cidr_block = \"10.0.0.0/16\" default_network_acl_id = \"acl-89a71b82683d7254b\" default_route_table_id = \"rtb-0fcd2ecf27bae8732\" default_security_group_id = \"sg-f10b7fa4f906a9ef4\" dhcp_options_id = \"default\" enable_dns_hostnames = true enable_dns_support = true enable_network_address_usage_metrics = false id = \"vpc-1f5d8418e1e2ce4dc\" instance_tenancy = \"default\" ipv6_association_id = null ipv6_cidr_block = null ipv6_cidr_block_network_border_group = null ipv6_ipam_pool_id = null ipv6_netmask_length = 0 main_route_table_id = \"rtb-0fcd2ecf27bae8732\" owner_id = \"000000000000\" region = \"us-east-1\" tags = { \"Name\" = \"dev-vpc\" \"Workspace\" = \"dev\" } tags_all = { \"Name\" = \"dev-vpc\" \"Workspace\" = \"dev\" } } Outputs: ec2_instance_id = \"i-628f2d8a778d0398f\" ec2_private_ip = \"10.0.1.4\" ec2_public_ip = \"54.214.147.137\" private_subnet_id = \"subnet-489196b43b007d2db\" public_subnet_id = \"subnet-296cb609d6cf6c00c\" security_group_id = \"sg-6dac1e4483215e7cd\" vpc_id = \"vpc-1f5d8418e1e2ce4dc\" Clean up terraform destroy # This will destroy the infrastructure ","wordCount":"1739","inLanguage":"en","datePublished":"2025-11-05T09:00:00+08:00","dateModified":"2025-11-05T09:00:00+08:00","author":{"@type":"Person","name":"Lei Xia"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://www.ddhigh.com/en/2025/11/05/learn-terraform-aws-zero-cost-localstack-guide/"},"publisher":{"@type":"Organization","name":"每天进步一点点","logo":{"@type":"ImageObject","url":"https://www.ddhigh.com/favicon.ico"}}}</script><link rel=icon href=/img/favicon.ico sizes=16x16><link rel=apple-touch-icon href=/img/favicon.ico><link rel=manifest href=/img/favicon.ico><link href=/titilliumweb/titilliumweb.css rel=stylesheet><link rel=stylesheet href=/css/main.min.0eb4160ba4a2d63122fe8ae83f1560951a87ab510d5dab0615973b5206555759.css integrity="sha256-DrQWC6Si1jEi/oroPxVglRqHq1ENXasGFZc7UgZVV1k=" crossorigin=anonymous media=screen><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css integrity="sha512-ygEyjMC6rqnzJqWGjRTJUPYMEs9JUOm3i7OWUS9CgQ4XkBUvMsgCS1I8JqavidQ2ClHcREB7IbA2mN08+r9Elg==" crossorigin=anonymous referrerpolicy=no-referrer><link rel=stylesheet href=/scss/highlight/github-dark.min.min.66034289ee9a113219a2c4aae0a8bd2095ab255c832a42efcf5863f10814e7a1.css><script src=/js/highlight.min.min.894ca9c68afab956438c4926a0dc7f5293e04e08595bd27abdb123e94801f684.js></script><script>hljs.highlightAll()</script><script>$darkModeInit.Content|safeJS</script><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2871082647721658" crossorigin=anonymous></script></head><body><main class=wrapper><nav class=navigation><section class=container><a class=navigation-brand href=/en>DayDayUP
+</a><input type=checkbox id=menu-toggle>
+<label class="menu-button float-right" for=menu-toggle><span></span><span></span><span></span></label><ul class=navigation-list id=navigation-list><li class="navigation-item navigation-menu"><a class=navigation-link href=/en/>Home</a></li><li class="navigation-item navigation-menu"><a class=navigation-link href=/en/archives>Archives</a></li><li class="navigation-item navigation-menu"><a class=navigation-link href=/en/books>Books</a></li><li class="navigation-item navigation-menu"><a class=navigation-link href=/en/guestbook>Guestbook</a></li><li class="navigation-item menu-separator"><span>|</span></li><li class="navigation-item navigation-social"><a class=navigation-link href=https://github.com/xialeistudio><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37.0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44.0 0020 4.77 5.07 5.07.0 0019.91 1S18.73.65 16 2.48a13.38 13.38.0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07.0 005 4.77 5.44 5.44.0 003.5 8.55c0 5.42 3.3 6.61 6.44 7A3.37 3.37.0 009 18.13V22"/></svg></a></li><li class="navigation-item navigation-dark"><button id=mode type=button aria-label="toggle user light or dark theme">
+<span class=toggle-dark><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></span><span class=toggle-light><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></span></button></li><li class="navigation-item navigation-language"><a href=https://www.ddhigh.com/>中</a></li></ul></section></nav><div id=content><article class=blog-single><header class=blog-title><h1>Learn Terraform and AWS at Zero Cost with LocalStack: A Complete Practical Guide</h1></header><p><small>November 5, 2025&nbsp;· 1739 words&nbsp;· 9 min</small><p><div class=blog-toc><nav id=TableOfContents><ul><li><a href=#installation>Installation</a></li><li><a href=#launch-localstack>Launch Localstack</a></li><li><a href=#build-a-simple-architecture>Build a simple architecture</a><ul><li><a href=#terraform-code>Terraform Code</a></li><li><a href=#run-terraform>Run Terraform</a></li><li><a href=#clean-up>Clean up</a></li></ul></li></ul></nav></div><section class=blog-content><p>When learning AWS and Terraform, the biggest pain points are often the high costs of cloud services and the financial risks of misconfigurations. This guide will show you how to use LocalStack to simulate AWS services locally, enabling you to learn and experiment with Terraform Infrastructure as Code (IaC) at zero cost and zero risk.</p><p>In this tutorial, we&rsquo;ll build a complete AWS network architecture including VPC, public/private subnets, Internet Gateway, security groups, and EC2 instances. All resources run in your local LocalStack environment without incurring any AWS charges or security risks from configuration errors.</p><blockquote><p><strong>Note</strong>: LocalStack creates simulated AWS resources for local development and testing purposes only. While these resources cannot be accessed from external networks, this is the perfect way to learn Terraform and become familiar with AWS services without worrying about costs or security.</p></blockquote><h2 id=installation>Installation</h2><ul><li>Install Terraform: <a href=https://developer.hashicorp.com/terraform/install target=_blank rel=noopener>https://developer.hashicorp.com/terraform/install</a></li><li>Install Localstack: <a href=https://docs.localstack.cloud/aws/getting-started/installation/ target=_blank rel=noopener>https://docs.localstack.cloud/aws/getting-started/installation/</a></li></ul><h2 id=launch-localstack>Launch Localstack</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>localstack start
+</span></span></code></pre></div><h2 id=build-a-simple-architecture>Build a simple architecture</h2><p>We&rsquo;ll build a simple architecture with a VPC, a public subnet, a private subnet, an internet gateway, a route table, a route table association, a security group, and an EC2 instance.</p><h3 id=terraform-code>Terraform Code</h3><p>Create a new directory for your project and navigate to it.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>mkdir learn-terraform-aws-localstack
+</span></span><span style=display:flex><span>cd learn-terraform-aws-localstack
+</span></span></code></pre></div><p><strong>provider.tf</strong></p><blockquote><p>This file contains the provider configuration for AWS.</p></blockquote><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-hcl data-lang=hcl><span style=display:flex><span><span style=color:#66d9ef>provider</span> <span style=color:#e6db74>&#34;aws&#34;</span> {
+</span></span><span style=display:flex><span>  access_key                  <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;mock_access_key&#34;</span>
+</span></span><span style=display:flex><span>  region                      <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;us-east-1&#34;</span>
+</span></span><span style=display:flex><span>  s3_use_path_style           <span style=color:#f92672>=</span> <span style=color:#66d9ef>true</span>
+</span></span><span style=display:flex><span>  secret_key                  <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;mock_secret_key&#34;</span>
+</span></span><span style=display:flex><span>  skip_credentials_validation <span style=color:#f92672>=</span> <span style=color:#66d9ef>true</span>
+</span></span><span style=display:flex><span>  skip_metadata_api_check     <span style=color:#f92672>=</span> <span style=color:#66d9ef>true</span>
+</span></span><span style=display:flex><span>  skip_requesting_account_id  <span style=color:#f92672>=</span> <span style=color:#66d9ef>true</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>endpoints</span> {
+</span></span><span style=display:flex><span>    apigateway     <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;http://localhost:4566&#34;</span>
+</span></span><span style=display:flex><span>    cloudformation <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;http://localhost:4566&#34;</span>
+</span></span><span style=display:flex><span>    cloudwatch     <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;http://localhost:4566&#34;</span>
+</span></span><span style=display:flex><span>    dynamodb       <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;http://localhost:4566&#34;</span>
+</span></span><span style=display:flex><span>    ec2            <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;http://localhost:4566&#34;</span>
+</span></span><span style=display:flex><span>    es             <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;http://localhost:4566&#34;</span>
+</span></span><span style=display:flex><span>    firehose       <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;http://localhost:4566&#34;</span>
+</span></span><span style=display:flex><span>    iam            <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;http://localhost:4566&#34;</span>
+</span></span><span style=display:flex><span>    kinesis        <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;http://localhost:4566&#34;</span>
+</span></span><span style=display:flex><span>    lambda         <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;http://localhost:4566&#34;</span>
+</span></span><span style=display:flex><span>    route53        <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;http://localhost:4566&#34;</span>
+</span></span><span style=display:flex><span>    redshift       <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;http://localhost:4566&#34;</span>
+</span></span><span style=display:flex><span>    s3             <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;http://localhost:4566&#34;</span>
+</span></span><span style=display:flex><span>    secretsmanager <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;http://localhost:4566&#34;</span>
+</span></span><span style=display:flex><span>    ses            <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;http://localhost:4566&#34;</span>
+</span></span><span style=display:flex><span>    sns            <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;http://localhost:4566&#34;</span>
+</span></span><span style=display:flex><span>    sqs            <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;http://localhost:4566&#34;</span>
+</span></span><span style=display:flex><span>    ssm            <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;http://localhost:4566&#34;</span>
+</span></span><span style=display:flex><span>    stepfunctions  <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;http://localhost:4566&#34;</span>
+</span></span><span style=display:flex><span>    sts            <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;http://localhost:4566&#34;</span>
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p><strong>main.tf</strong></p><blockquote><p>This file contains the Terraform code for our architecture.</p></blockquote><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-hcl data-lang=hcl><span style=display:flex><span><span style=color:#75715e># VPC
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>resource</span> <span style=color:#e6db74>&#34;aws_vpc&#34; &#34;main&#34;</span> {
+</span></span><span style=display:flex><span>  cidr_block           <span style=color:#f92672>=</span> <span style=color:#66d9ef>var</span>.<span style=color:#66d9ef>vpc_cidr</span>
+</span></span><span style=display:flex><span>  enable_dns_hostnames <span style=color:#f92672>=</span> <span style=color:#66d9ef>true</span>
+</span></span><span style=display:flex><span>  enable_dns_support   <span style=color:#f92672>=</span> <span style=color:#66d9ef>true</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  tags <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>    Name <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;${var.workspace}-vpc&#34;</span>
+</span></span><span style=display:flex><span>    Workspace <span style=color:#f92672>=</span> <span style=color:#66d9ef>var</span>.<span style=color:#66d9ef>workspace</span>
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>}<span style=color:#75715e>
+</span></span></span><span style=display:flex><span><span style=color:#75715e>
+</span></span></span><span style=display:flex><span><span style=color:#75715e># Internet Gateway
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>resource</span> <span style=color:#e6db74>&#34;aws_internet_gateway&#34; &#34;main&#34;</span> {
+</span></span><span style=display:flex><span>  vpc_id <span style=color:#f92672>=</span> <span style=color:#66d9ef>aws_vpc</span>.<span style=color:#66d9ef>main</span>.<span style=color:#66d9ef>id</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  tags <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>    Name <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;${var.workspace}-igw&#34;</span>
+</span></span><span style=display:flex><span>    Workspace <span style=color:#f92672>=</span> <span style=color:#66d9ef>var</span>.<span style=color:#66d9ef>workspace</span>
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>}<span style=color:#75715e>
+</span></span></span><span style=display:flex><span><span style=color:#75715e>
+</span></span></span><span style=display:flex><span><span style=color:#75715e># Public Subnet
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>resource</span> <span style=color:#e6db74>&#34;aws_subnet&#34; &#34;public&#34;</span> {
+</span></span><span style=display:flex><span>  vpc_id                  <span style=color:#f92672>=</span> <span style=color:#66d9ef>aws_vpc</span>.<span style=color:#66d9ef>main</span>.<span style=color:#66d9ef>id</span>
+</span></span><span style=display:flex><span>  cidr_block              <span style=color:#f92672>=</span> <span style=color:#66d9ef>var</span>.<span style=color:#66d9ef>public_subnet_cidr</span>
+</span></span><span style=display:flex><span>  map_public_ip_on_launch <span style=color:#f92672>=</span> <span style=color:#66d9ef>true</span>
+</span></span><span style=display:flex><span>  availability_zone       <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;${var.region}a&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  tags <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>    Name <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;${var.workspace}-public-subnet&#34;</span>
+</span></span><span style=display:flex><span>    Workspace <span style=color:#f92672>=</span> <span style=color:#66d9ef>var</span>.<span style=color:#66d9ef>workspace</span>
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>}<span style=color:#75715e>
+</span></span></span><span style=display:flex><span><span style=color:#75715e>
+</span></span></span><span style=display:flex><span><span style=color:#75715e># Private Subnet
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>resource</span> <span style=color:#e6db74>&#34;aws_subnet&#34; &#34;private&#34;</span> {
+</span></span><span style=display:flex><span>  vpc_id            <span style=color:#f92672>=</span> <span style=color:#66d9ef>aws_vpc</span>.<span style=color:#66d9ef>main</span>.<span style=color:#66d9ef>id</span>
+</span></span><span style=display:flex><span>  cidr_block        <span style=color:#f92672>=</span> <span style=color:#66d9ef>var</span>.<span style=color:#66d9ef>private_subnet_cidr</span>
+</span></span><span style=display:flex><span>  availability_zone <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;${var.region}a&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  tags <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>    Name <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;${var.workspace}-private-subnet&#34;</span>
+</span></span><span style=display:flex><span>    Workspace <span style=color:#f92672>=</span> <span style=color:#66d9ef>var</span>.<span style=color:#66d9ef>workspace</span>
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>}<span style=color:#75715e>
+</span></span></span><span style=display:flex><span><span style=color:#75715e>
+</span></span></span><span style=display:flex><span><span style=color:#75715e># Public Route Table
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>resource</span> <span style=color:#e6db74>&#34;aws_route_table&#34; &#34;public&#34;</span> {
+</span></span><span style=display:flex><span>  vpc_id <span style=color:#f92672>=</span> <span style=color:#66d9ef>aws_vpc</span>.<span style=color:#66d9ef>main</span>.<span style=color:#66d9ef>id</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>route</span> {
+</span></span><span style=display:flex><span>    cidr_block <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;0.0.0.0/0&#34;</span>
+</span></span><span style=display:flex><span>    gateway_id <span style=color:#f92672>=</span> <span style=color:#66d9ef>aws_internet_gateway</span>.<span style=color:#66d9ef>main</span>.<span style=color:#66d9ef>id</span>
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  tags <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>    Name <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;${var.workspace}-public-rt&#34;</span>
+</span></span><span style=display:flex><span>    Workspace <span style=color:#f92672>=</span> <span style=color:#66d9ef>var</span>.<span style=color:#66d9ef>workspace</span>
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>}<span style=color:#75715e>
+</span></span></span><span style=display:flex><span><span style=color:#75715e>
+</span></span></span><span style=display:flex><span><span style=color:#75715e># Private Route Table
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>resource</span> <span style=color:#e6db74>&#34;aws_route_table&#34; &#34;private&#34;</span> {
+</span></span><span style=display:flex><span>  vpc_id <span style=color:#f92672>=</span> <span style=color:#66d9ef>aws_vpc</span>.<span style=color:#66d9ef>main</span>.<span style=color:#66d9ef>id</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  tags <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>    Name <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;${var.workspace}-private-rt&#34;</span>
+</span></span><span style=display:flex><span>    Workspace <span style=color:#f92672>=</span> <span style=color:#66d9ef>var</span>.<span style=color:#66d9ef>workspace</span>
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>}<span style=color:#75715e>
+</span></span></span><span style=display:flex><span><span style=color:#75715e>
+</span></span></span><span style=display:flex><span><span style=color:#75715e># Route Table Associations
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>resource</span> <span style=color:#e6db74>&#34;aws_route_table_association&#34; &#34;public&#34;</span> {
+</span></span><span style=display:flex><span>  subnet_id      <span style=color:#f92672>=</span> <span style=color:#66d9ef>aws_subnet</span>.<span style=color:#66d9ef>public</span>.<span style=color:#66d9ef>id</span>
+</span></span><span style=display:flex><span>  route_table_id <span style=color:#f92672>=</span> <span style=color:#66d9ef>aws_route_table</span>.<span style=color:#66d9ef>public</span>.<span style=color:#66d9ef>id</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>resource</span> <span style=color:#e6db74>&#34;aws_route_table_association&#34; &#34;private&#34;</span> {
+</span></span><span style=display:flex><span>  subnet_id      <span style=color:#f92672>=</span> <span style=color:#66d9ef>aws_subnet</span>.<span style=color:#66d9ef>private</span>.<span style=color:#66d9ef>id</span>
+</span></span><span style=display:flex><span>  route_table_id <span style=color:#f92672>=</span> <span style=color:#66d9ef>aws_route_table</span>.<span style=color:#66d9ef>private</span>.<span style=color:#66d9ef>id</span>
+</span></span><span style=display:flex><span>}<span style=color:#75715e>
+</span></span></span><span style=display:flex><span><span style=color:#75715e>
+</span></span></span><span style=display:flex><span><span style=color:#75715e># Security Group for EC2
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>resource</span> <span style=color:#e6db74>&#34;aws_security_group&#34; &#34;ec2&#34;</span> {
+</span></span><span style=display:flex><span>  name        <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;${var.workspace}-ec2-sg&#34;</span>
+</span></span><span style=display:flex><span>  description <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;Security group for EC2 instance&#34;</span>
+</span></span><span style=display:flex><span>  vpc_id      <span style=color:#f92672>=</span> <span style=color:#66d9ef>aws_vpc</span>.<span style=color:#66d9ef>main</span>.<span style=color:#66d9ef>id</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>ingress</span> {
+</span></span><span style=display:flex><span>    description <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;Allow port 8000 from anywhere&#34;</span>
+</span></span><span style=display:flex><span>    from_port   <span style=color:#f92672>=</span> <span style=color:#ae81ff>8000</span>
+</span></span><span style=display:flex><span>    to_port     <span style=color:#f92672>=</span> <span style=color:#ae81ff>8000</span>
+</span></span><span style=display:flex><span>    protocol    <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;tcp&#34;</span>
+</span></span><span style=display:flex><span>    cidr_blocks <span style=color:#f92672>=</span> [<span style=color:#e6db74>&#34;0.0.0.0/0&#34;</span>]
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>egress</span> {
+</span></span><span style=display:flex><span>    description <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;Allow all outbound traffic&#34;</span>
+</span></span><span style=display:flex><span>    from_port   <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>
+</span></span><span style=display:flex><span>    to_port     <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>
+</span></span><span style=display:flex><span>    protocol    <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;-1&#34;</span>
+</span></span><span style=display:flex><span>    cidr_blocks <span style=color:#f92672>=</span> [<span style=color:#e6db74>&#34;0.0.0.0/0&#34;</span>]
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  tags <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>    Name <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;${var.workspace}-ec2-sg&#34;</span>
+</span></span><span style=display:flex><span>    Workspace <span style=color:#f92672>=</span> <span style=color:#66d9ef>var</span>.<span style=color:#66d9ef>workspace</span>
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>}<span style=color:#75715e>
+</span></span></span><span style=display:flex><span><span style=color:#75715e>
+</span></span></span><span style=display:flex><span><span style=color:#75715e>
+</span></span></span><span style=display:flex><span><span style=color:#75715e># EC2 Instance in Public Subnet
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>resource</span> <span style=color:#e6db74>&#34;aws_instance&#34; &#34;web&#34;</span> {
+</span></span><span style=display:flex><span>  ami                    <span style=color:#f92672>=</span> <span style=color:#66d9ef>var</span>.<span style=color:#66d9ef>ec2_ami</span>
+</span></span><span style=display:flex><span>  instance_type          <span style=color:#f92672>=</span> <span style=color:#66d9ef>var</span>.<span style=color:#66d9ef>ec2_instance_type</span>
+</span></span><span style=display:flex><span>  subnet_id              <span style=color:#f92672>=</span> <span style=color:#66d9ef>aws_subnet</span>.<span style=color:#66d9ef>public</span>.<span style=color:#66d9ef>id</span>
+</span></span><span style=display:flex><span>  vpc_security_group_ids <span style=color:#f92672>=</span> [<span style=color:#66d9ef>aws_security_group</span>.<span style=color:#66d9ef>ec2</span>.<span style=color:#66d9ef>id</span>]
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  tags <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>    Name <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;${var.workspace}-web-server&#34;</span>
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p><strong>vars.tf</strong></p><blockquote><p>This file contains the variables for our architecture.</p></blockquote><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-hcl data-lang=hcl><span style=display:flex><span><span style=color:#66d9ef>variable</span> <span style=color:#e6db74>&#34;workspace&#34;</span> {
+</span></span><span style=display:flex><span>    type <span style=color:#f92672>=</span> <span style=color:#66d9ef>string</span>
+</span></span><span style=display:flex><span>    description <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;The workspace to use&#34;</span>
+</span></span><span style=display:flex><span>    default <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;dev&#34;</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>variable</span> <span style=color:#e6db74>&#34;region&#34;</span> {
+</span></span><span style=display:flex><span>    type <span style=color:#f92672>=</span> <span style=color:#66d9ef>string</span>
+</span></span><span style=display:flex><span>    description <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;The region to use&#34;</span>
+</span></span><span style=display:flex><span>    default <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;us-east-1&#34;</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>variable</span> <span style=color:#e6db74>&#34;vpc_cidr&#34;</span> {
+</span></span><span style=display:flex><span>    type <span style=color:#f92672>=</span> <span style=color:#66d9ef>string</span>
+</span></span><span style=display:flex><span>    description <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;CIDR block for VPC&#34;</span>
+</span></span><span style=display:flex><span>    default <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;10.0.0.0/16&#34;</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>variable</span> <span style=color:#e6db74>&#34;public_subnet_cidr&#34;</span> {
+</span></span><span style=display:flex><span>    type <span style=color:#f92672>=</span> <span style=color:#66d9ef>string</span>
+</span></span><span style=display:flex><span>    description <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;CIDR block for public subnet&#34;</span>
+</span></span><span style=display:flex><span>    default <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;10.0.1.0/24&#34;</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>variable</span> <span style=color:#e6db74>&#34;private_subnet_cidr&#34;</span> {
+</span></span><span style=display:flex><span>    type <span style=color:#f92672>=</span> <span style=color:#66d9ef>string</span>
+</span></span><span style=display:flex><span>    description <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;CIDR block for private subnet&#34;</span>
+</span></span><span style=display:flex><span>    default <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;10.0.2.0/24&#34;</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>variable</span> <span style=color:#e6db74>&#34;ec2_instance_type&#34;</span> {
+</span></span><span style=display:flex><span>    type <span style=color:#f92672>=</span> <span style=color:#66d9ef>string</span>
+</span></span><span style=display:flex><span>    description <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;EC2 instance type&#34;</span>
+</span></span><span style=display:flex><span>    default <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;t3.micro&#34;</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>variable</span> <span style=color:#e6db74>&#34;ec2_ami&#34;</span> {
+</span></span><span style=display:flex><span>    type <span style=color:#f92672>=</span> <span style=color:#66d9ef>string</span>
+</span></span><span style=display:flex><span>    description <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;AMI ID for EC2 instance&#34;</span>
+</span></span><span style=display:flex><span>    default <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;ami-0c55b159cbfafe1f0&#34;</span><span style=color:#75715e>  # Amazon Linux 2
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>}
+</span></span></code></pre></div><p><strong>outputs.tf</strong></p><blockquote><p>This file contains the outputs for our architecture.</p></blockquote><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-hcl data-lang=hcl><span style=display:flex><span><span style=color:#66d9ef>output</span> <span style=color:#e6db74>&#34;vpc_id&#34;</span> {
+</span></span><span style=display:flex><span>  description <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;VPC ID&#34;</span>
+</span></span><span style=display:flex><span>  value       <span style=color:#f92672>=</span> <span style=color:#66d9ef>aws_vpc</span>.<span style=color:#66d9ef>main</span>.<span style=color:#66d9ef>id</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>output</span> <span style=color:#e6db74>&#34;public_subnet_id&#34;</span> {
+</span></span><span style=display:flex><span>  description <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;Public subnet ID&#34;</span>
+</span></span><span style=display:flex><span>  value       <span style=color:#f92672>=</span> <span style=color:#66d9ef>aws_subnet</span>.<span style=color:#66d9ef>public</span>.<span style=color:#66d9ef>id</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>output</span> <span style=color:#e6db74>&#34;private_subnet_id&#34;</span> {
+</span></span><span style=display:flex><span>  description <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;Private subnet ID&#34;</span>
+</span></span><span style=display:flex><span>  value       <span style=color:#f92672>=</span> <span style=color:#66d9ef>aws_subnet</span>.<span style=color:#66d9ef>private</span>.<span style=color:#66d9ef>id</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>output</span> <span style=color:#e6db74>&#34;ec2_instance_id&#34;</span> {
+</span></span><span style=display:flex><span>  description <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;EC2 instance ID&#34;</span>
+</span></span><span style=display:flex><span>  value       <span style=color:#f92672>=</span> <span style=color:#66d9ef>aws_instance</span>.<span style=color:#66d9ef>web</span>.<span style=color:#66d9ef>id</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>output</span> <span style=color:#e6db74>&#34;ec2_public_ip&#34;</span> {
+</span></span><span style=display:flex><span>  description <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;EC2 instance public IP&#34;</span>
+</span></span><span style=display:flex><span>  value       <span style=color:#f92672>=</span> <span style=color:#66d9ef>aws_instance</span>.<span style=color:#66d9ef>web</span>.<span style=color:#66d9ef>public_ip</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>output</span> <span style=color:#e6db74>&#34;ec2_private_ip&#34;</span> {
+</span></span><span style=display:flex><span>  description <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;EC2 instance private IP&#34;</span>
+</span></span><span style=display:flex><span>  value       <span style=color:#f92672>=</span> <span style=color:#66d9ef>aws_instance</span>.<span style=color:#66d9ef>web</span>.<span style=color:#66d9ef>private_ip</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>output</span> <span style=color:#e6db74>&#34;security_group_id&#34;</span> {
+</span></span><span style=display:flex><span>  description <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;EC2 security group ID&#34;</span>
+</span></span><span style=display:flex><span>  value       <span style=color:#f92672>=</span> <span style=color:#66d9ef>aws_security_group</span>.<span style=color:#66d9ef>ec2</span>.<span style=color:#66d9ef>id</span>
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h3 id=run-terraform>Run Terraform</h3><p>Run the following commands to build the architecture.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>terraform init <span style=color:#75715e># This will download the provider plugins</span>
+</span></span><span style=display:flex><span>terraform plan <span style=color:#75715e># This will show the changes that will be applied</span>
+</span></span><span style=display:flex><span>terraform apply <span style=color:#75715e># This will apply the changes</span>
+</span></span></code></pre></div><p>Run the following command to see the whole state of the infrastructure.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>terraform show
+</span></span></code></pre></div><p>Here is my state:</p><pre tabindex=0><code># aws_instance.web:
+resource &#34;aws_instance&#34; &#34;web&#34; {
+    ami                                  = &#34;ami-0c55b159cbfafe1f0&#34;
+    arn                                  = &#34;arn:aws:ec2:us-east-1::instance/i-628f2d8a778d0398f&#34;
+    associate_public_ip_address          = true
+    availability_zone                    = &#34;us-east-1a&#34;
+    disable_api_stop                     = false
+    disable_api_termination              = false
+    ebs_optimized                        = false
+    force_destroy                        = false
+    get_password_data                    = false
+    hibernation                          = false
+    host_id                              = null
+    iam_instance_profile                 = &#34;dev-ec2-profile&#34;
+    id                                   = &#34;i-628f2d8a778d0398f&#34;
+    instance_initiated_shutdown_behavior = &#34;stop&#34;
+    instance_lifecycle                   = null
+    instance_state                       = &#34;running&#34;
+    instance_type                        = &#34;t3.micro&#34;
+    ipv6_address_count                   = 0
+    ipv6_addresses                       = []
+    key_name                             = null
+    monitoring                           = false
+    outpost_arn                          = null
+    password_data                        = null
+    placement_group                      = null
+    placement_group_id                   = null
+    placement_partition_number           = 0
+    primary_network_interface_id         = &#34;eni-a320bc52a3f9cc681&#34;
+    private_dns                          = &#34;ip-10-0-1-4.ec2.internal&#34;
+    private_ip                           = &#34;10.0.1.4&#34;
+    public_dns                           = &#34;ec2-54-214-147-137.compute-1.amazonaws.com&#34;
+    public_ip                            = &#34;54.214.147.137&#34;
+    region                               = &#34;us-east-1&#34;
+    secondary_private_ips                = []
+    security_groups                      = []
+    source_dest_check                    = true
+    spot_instance_request_id             = null
+    subnet_id                            = &#34;subnet-296cb609d6cf6c00c&#34;
+    tags                                 = {
+        &#34;Name&#34; = &#34;dev-web-server&#34;
+    }
+    tags_all                             = {
+        &#34;Name&#34; = &#34;dev-web-server&#34;
+    }
+    tenancy                              = &#34;default&#34;
+    user_data_replace_on_change          = false
+    vpc_security_group_ids               = [
+        &#34;sg-6dac1e4483215e7cd&#34;,
+    ]
+
+    metadata_options {
+        http_endpoint               = &#34;enabled&#34;
+        http_protocol_ipv6          = &#34;disabled&#34;
+        http_put_response_hop_limit = 1
+        http_tokens                 = &#34;optional&#34;
+        instance_metadata_tags      = &#34;disabled&#34;
+    }
+
+    primary_network_interface {
+        delete_on_termination = true
+        network_interface_id  = &#34;eni-a320bc52a3f9cc681&#34;
+    }
+
+    root_block_device {
+        delete_on_termination = true
+        device_name           = &#34;/dev/sda1&#34;
+        encrypted             = false
+        iops                  = 0
+        kms_key_id            = null
+        tags                  = {}
+        tags_all              = {}
+        throughput            = 0
+        volume_id             = &#34;vol-863def1230da5eec3&#34;
+        volume_size           = 8
+        volume_type           = &#34;gp2&#34;
+    }
+}
+
+# aws_internet_gateway.main:
+resource &#34;aws_internet_gateway&#34; &#34;main&#34; {
+    arn      = &#34;arn:aws:ec2:us-east-1:000000000000:internet-gateway/igw-2b2b955804ed3852f&#34;
+    id       = &#34;igw-2b2b955804ed3852f&#34;
+    owner_id = &#34;000000000000&#34;
+    region   = &#34;us-east-1&#34;
+    tags     = {
+        &#34;Name&#34;      = &#34;dev-igw&#34;
+        &#34;Workspace&#34; = &#34;dev&#34;
+    }
+    tags_all = {
+        &#34;Name&#34;      = &#34;dev-igw&#34;
+        &#34;Workspace&#34; = &#34;dev&#34;
+    }
+    vpc_id   = &#34;vpc-1f5d8418e1e2ce4dc&#34;
+}
+
+# aws_route_table.private:
+resource &#34;aws_route_table&#34; &#34;private&#34; {
+    arn              = &#34;arn:aws:ec2:us-east-1:000000000000:route-table/rtb-f33ee41ac3ddc20d0&#34;
+    id               = &#34;rtb-f33ee41ac3ddc20d0&#34;
+    owner_id         = &#34;000000000000&#34;
+    propagating_vgws = []
+    region           = &#34;us-east-1&#34;
+    route            = []
+    tags             = {
+        &#34;Name&#34;      = &#34;dev-private-rt&#34;
+        &#34;Workspace&#34; = &#34;dev&#34;
+    }
+    tags_all         = {
+        &#34;Name&#34;      = &#34;dev-private-rt&#34;
+        &#34;Workspace&#34; = &#34;dev&#34;
+    }
+    vpc_id           = &#34;vpc-1f5d8418e1e2ce4dc&#34;
+}
+
+# aws_route_table.public:
+resource &#34;aws_route_table&#34; &#34;public&#34; {
+    arn              = &#34;arn:aws:ec2:us-east-1:000000000000:route-table/rtb-d5f6d58f5ad703b08&#34;
+    id               = &#34;rtb-d5f6d58f5ad703b08&#34;
+    owner_id         = &#34;000000000000&#34;
+    propagating_vgws = []
+    region           = &#34;us-east-1&#34;
+    route            = [
+        {
+            carrier_gateway_id         = null
+            cidr_block                 = &#34;0.0.0.0/0&#34;
+            core_network_arn           = null
+            destination_prefix_list_id = null
+            egress_only_gateway_id     = null
+            gateway_id                 = &#34;igw-2b2b955804ed3852f&#34;
+            ipv6_cidr_block            = null
+            local_gateway_id           = null
+            nat_gateway_id             = null
+            network_interface_id       = null
+            transit_gateway_id         = null
+            vpc_endpoint_id            = null
+            vpc_peering_connection_id  = null
+        },
+    ]
+    tags             = {
+        &#34;Name&#34;      = &#34;dev-public-rt&#34;
+        &#34;Workspace&#34; = &#34;dev&#34;
+    }
+    tags_all         = {
+        &#34;Name&#34;      = &#34;dev-public-rt&#34;
+        &#34;Workspace&#34; = &#34;dev&#34;
+    }
+    vpc_id           = &#34;vpc-1f5d8418e1e2ce4dc&#34;
+}
+
+# aws_route_table_association.private:
+resource &#34;aws_route_table_association&#34; &#34;private&#34; {
+    gateway_id     = null
+    id             = &#34;rtbassoc-084a1cbcbcbe6e0c5&#34;
+    region         = &#34;us-east-1&#34;
+    route_table_id = &#34;rtb-f33ee41ac3ddc20d0&#34;
+    subnet_id      = &#34;subnet-489196b43b007d2db&#34;
+}
+
+# aws_route_table_association.public:
+resource &#34;aws_route_table_association&#34; &#34;public&#34; {
+    gateway_id     = null
+    id             = &#34;rtbassoc-b0f38c2456e2fef35&#34;
+    region         = &#34;us-east-1&#34;
+    route_table_id = &#34;rtb-d5f6d58f5ad703b08&#34;
+    subnet_id      = &#34;subnet-296cb609d6cf6c00c&#34;
+}
+
+# aws_security_group.ec2:
+resource &#34;aws_security_group&#34; &#34;ec2&#34; {
+    arn                    = &#34;arn:aws:ec2:us-east-1:000000000000:security-group/sg-6dac1e4483215e7cd&#34;
+    description            = &#34;Security group for EC2 instance&#34;
+    egress                 = [
+        {
+            cidr_blocks      = [
+                &#34;0.0.0.0/0&#34;,
+            ]
+            description      = &#34;Allow all outbound traffic&#34;
+            from_port        = 0
+            ipv6_cidr_blocks = []
+            prefix_list_ids  = []
+            protocol         = &#34;-1&#34;
+            security_groups  = []
+            self             = false
+            to_port          = 0
+        },
+    ]
+    id                     = &#34;sg-6dac1e4483215e7cd&#34;
+    ingress                = [
+        {
+            cidr_blocks      = [
+                &#34;0.0.0.0/0&#34;,
+            ]
+            description      = &#34;Allow port 8000 from anywhere&#34;
+            from_port        = 8000
+            ipv6_cidr_blocks = []
+            prefix_list_ids  = []
+            protocol         = &#34;tcp&#34;
+            security_groups  = []
+            self             = false
+            to_port          = 8000
+        },
+    ]
+    name                   = &#34;dev-ec2-sg&#34;
+    name_prefix            = null
+    owner_id               = &#34;000000000000&#34;
+    region                 = &#34;us-east-1&#34;
+    revoke_rules_on_delete = false
+    tags                   = {
+        &#34;Name&#34;      = &#34;dev-ec2-sg&#34;
+        &#34;Workspace&#34; = &#34;dev&#34;
+    }
+    tags_all               = {
+        &#34;Name&#34;      = &#34;dev-ec2-sg&#34;
+        &#34;Workspace&#34; = &#34;dev&#34;
+    }
+    vpc_id                 = &#34;vpc-1f5d8418e1e2ce4dc&#34;
+}
+
+# aws_subnet.private:
+resource &#34;aws_subnet&#34; &#34;private&#34; {
+    arn                                            = &#34;arn:aws:ec2:us-east-1:000000000000:subnet/subnet-489196b43b007d2db&#34;
+    assign_ipv6_address_on_creation                = false
+    availability_zone                              = &#34;us-east-1a&#34;
+    availability_zone_id                           = &#34;use1-az6&#34;
+    cidr_block                                     = &#34;10.0.2.0/24&#34;
+    customer_owned_ipv4_pool                       = null
+    enable_dns64                                   = false
+    enable_lni_at_device_index                     = 0
+    enable_resource_name_dns_a_record_on_launch    = false
+    enable_resource_name_dns_aaaa_record_on_launch = false
+    id                                             = &#34;subnet-489196b43b007d2db&#34;
+    ipv6_cidr_block                                = null
+    ipv6_cidr_block_association_id                 = null
+    ipv6_native                                    = false
+    map_customer_owned_ip_on_launch                = false
+    map_public_ip_on_launch                        = false
+    outpost_arn                                    = null
+    owner_id                                       = &#34;000000000000&#34;
+    private_dns_hostname_type_on_launch            = &#34;ip-name&#34;
+    region                                         = &#34;us-east-1&#34;
+    tags                                           = {
+        &#34;Name&#34;      = &#34;dev-private-subnet&#34;
+        &#34;Workspace&#34; = &#34;dev&#34;
+    }
+    tags_all                                       = {
+        &#34;Name&#34;      = &#34;dev-private-subnet&#34;
+        &#34;Workspace&#34; = &#34;dev&#34;
+    }
+    vpc_id                                         = &#34;vpc-1f5d8418e1e2ce4dc&#34;
+}
+
+# aws_subnet.public:
+resource &#34;aws_subnet&#34; &#34;public&#34; {
+    arn                                            = &#34;arn:aws:ec2:us-east-1:000000000000:subnet/subnet-296cb609d6cf6c00c&#34;
+    assign_ipv6_address_on_creation                = false
+    availability_zone                              = &#34;us-east-1a&#34;
+    availability_zone_id                           = &#34;use1-az6&#34;
+    cidr_block                                     = &#34;10.0.1.0/24&#34;
+    customer_owned_ipv4_pool                       = null
+    enable_dns64                                   = false
+    enable_lni_at_device_index                     = 0
+    enable_resource_name_dns_a_record_on_launch    = false
+    enable_resource_name_dns_aaaa_record_on_launch = false
+    id                                             = &#34;subnet-296cb609d6cf6c00c&#34;
+    ipv6_cidr_block                                = null
+    ipv6_cidr_block_association_id                 = null
+    ipv6_native                                    = false
+    map_customer_owned_ip_on_launch                = false
+    map_public_ip_on_launch                        = true
+    outpost_arn                                    = null
+    owner_id                                       = &#34;000000000000&#34;
+    private_dns_hostname_type_on_launch            = &#34;ip-name&#34;
+    region                                         = &#34;us-east-1&#34;
+    tags                                           = {
+        &#34;Name&#34;      = &#34;dev-public-subnet&#34;
+        &#34;Workspace&#34; = &#34;dev&#34;
+    }
+    tags_all                                       = {
+        &#34;Name&#34;      = &#34;dev-public-subnet&#34;
+        &#34;Workspace&#34; = &#34;dev&#34;
+    }
+    vpc_id                                         = &#34;vpc-1f5d8418e1e2ce4dc&#34;
+}
+
+# aws_vpc.main:
+resource &#34;aws_vpc&#34; &#34;main&#34; {
+    arn                                  = &#34;arn:aws:ec2:us-east-1:000000000000:vpc/vpc-1f5d8418e1e2ce4dc&#34;
+    assign_generated_ipv6_cidr_block     = false
+    cidr_block                           = &#34;10.0.0.0/16&#34;
+    default_network_acl_id               = &#34;acl-89a71b82683d7254b&#34;
+    default_route_table_id               = &#34;rtb-0fcd2ecf27bae8732&#34;
+    default_security_group_id            = &#34;sg-f10b7fa4f906a9ef4&#34;
+    dhcp_options_id                      = &#34;default&#34;
+    enable_dns_hostnames                 = true
+    enable_dns_support                   = true
+    enable_network_address_usage_metrics = false
+    id                                   = &#34;vpc-1f5d8418e1e2ce4dc&#34;
+    instance_tenancy                     = &#34;default&#34;
+    ipv6_association_id                  = null
+    ipv6_cidr_block                      = null
+    ipv6_cidr_block_network_border_group = null
+    ipv6_ipam_pool_id                    = null
+    ipv6_netmask_length                  = 0
+    main_route_table_id                  = &#34;rtb-0fcd2ecf27bae8732&#34;
+    owner_id                             = &#34;000000000000&#34;
+    region                               = &#34;us-east-1&#34;
+    tags                                 = {
+        &#34;Name&#34;      = &#34;dev-vpc&#34;
+        &#34;Workspace&#34; = &#34;dev&#34;
+    }
+    tags_all                             = {
+        &#34;Name&#34;      = &#34;dev-vpc&#34;
+        &#34;Workspace&#34; = &#34;dev&#34;
+    }
+}
+
+
+Outputs:
+
+ec2_instance_id = &#34;i-628f2d8a778d0398f&#34;
+ec2_private_ip = &#34;10.0.1.4&#34;
+ec2_public_ip = &#34;54.214.147.137&#34;
+private_subnet_id = &#34;subnet-489196b43b007d2db&#34;
+public_subnet_id = &#34;subnet-296cb609d6cf6c00c&#34;
+security_group_id = &#34;sg-6dac1e4483215e7cd&#34;
+vpc_id = &#34;vpc-1f5d8418e1e2ce4dc&#34;
+</code></pre><h3 id=clean-up>Clean up</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>terraform destroy <span style=color:#75715e># This will destroy the infrastructure</span>
+</span></span></code></pre></div><div class=blog-footer><div class=social-share></div><div class=copyright><ul><li style=margin-bottom:.5em>Author: <a href=https://ddhigh.com/ target=_blank style=color:#000;text-decoration:none>xialeistudio</a></li><li style=margin-bottom:.5em>Link: <a href=https://www.ddhigh.com/en/2025/11/05/learn-terraform-aws-zero-cost-localstack-guide/ target=_blank style=color:#000;text-decoration:none>Learn Terraform and AWS at Zero Cost with LocalStack: A Complete Practical Guide</a></li><li>Copyright: <a href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank style=color:#000;text-decoration:none>「CC BY-NC 4.0 DEED」</a></li></ul></div></div></section><div class=paginator><a class=next href=https://www.ddhigh.com/en/2025/07/15/cpp-coroutine-future-to-awaitable/><span>C++ Coroutines Advanced: Converting std::future to asio::awaitable</span><svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.77086 21.1546C11.0491 22.698 21.4339 21.7773 21.4339 16.3608V4.63375c0-.69413-.075800000000001-1.3284-.2422-1.86588M3.77086 21.1546C1.9934 20.7777.973585 18.7264 1.08749 16.688c.17931-3.209.06972-7.25665-.08236-10.47293C.87809 3.52811 3.12891 1.16316 5.51029 1.25008c4.25565.15534 9.86671-.04779 13.28091-.24466 1.2952-.074686 2.0494.62843 2.4005 1.76245M3.77086 21.1546C4.56586 21.4723 5.49168 21.7879 6.5 22.0658M21.1917 2.76787c1.918 1.4143 1.9383 9.65123 1.7087 13.59293-2.0526 7.6586-10.5943 7.3054-16.4004 5.705M21.1917 2.76787C21.7612 4.51192 22.7203 9.67216 22 16.3608 21.2797 23.0494 11.3665 22.9511 6.5 22.0658M12.055 9C12.711 9.61644 14.3679 10.997 15.9519 11.7966 16.0174 11.8297 16.0154 11.9753 15.9494 12.0063 14.945 12.4779 13.0706 13.9264 12.055 15m3.5006-3.0333C13.1345 12.0608 8 12 6 11" stroke="currentcolor" stroke-linecap="round"/></svg></a></div><div class=comments><script>const getTheme=window.localStorage&&window.localStorage.getItem("theme");let theme=getTheme==="dark"?"dark":"light",s=document.createElement("script");s.src="https://giscus.app/client.js",s.setAttribute("data-repo","xialeistudio/discussion"),s.setAttribute("data-repo-id","R_kgDOKurTRA"),s.setAttribute("data-category","General"),s.setAttribute("data-category-id","DIC_kwDOKurTRM4CbCJt"),s.setAttribute("data-mapping","pathname"),s.setAttribute("data-strict","0"),s.setAttribute("data-reactions-enabled","1"),s.setAttribute("data-emit-metadata","0"),s.setAttribute("data-input-position","bottom"),s.setAttribute("data-theme",theme),s.setAttribute("data-lang","en"),s.setAttribute("data-loading","lazy"),s.setAttribute("crossorigin","anonymous"),s.setAttribute("async",""),document.querySelector("div.comments").innerHTML="",document.querySelector("div.comments").appendChild(s)</script></div></article></div><footer class=footer><p>&copy; 2014 - 2025 <a href=https://www.ddhigh.com>每天进步一点点</a>
+Powered by
+<a href=https://gohugo.io/ rel=noopener target=_blank>Hugo️️</a>
+<a href=https://github.com/guangzhengli/hugo-theme-ladder rel=noopener target=_blank>Ladder</a>
+️</p></footer><a href=#top aria-label="go to top" title="Go to Top (Alt + G)" class=top-link id=top-link accesskey=g><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.5376 22.7916C11.0152 22.7207 22.5795 21.1781 22.0978 10.4211 22.0536 9.43274 21.9303 8.53367 21.7387 7.71865M10.5376 22.7916C16.876 22.3728 20.0969 19.8899 21.5383 16.9142M10.5376 22.7916C9.7707 22.9055 8.97982 22.8964 8.19743 22.7725M21.7387 7.71865C21.4988 6.69828 21.1518 5.80967 20.7188 5.04257m1.0199 2.67608C22.6022 10.1105 23.0542 13.7848 21.5383 16.9142M20.7188 5.04257c-3.5504-6.28886-12.88753-4.410077-16.44303.0C2.88063 6.77451-.0433281 11.1668 1.38159 16.6571c.89322 3.4417 3.7911 5.6365 6.81584 6.1154M20.7188 5.04257c1.3509 1.89783 3.3111 6.34223 1.6353 10.37273M21.5383 16.9142C21.8737 16.4251 22.1428 15.9235 22.3541 15.4153M8.19743 22.7725C12.1971 23.4683 20.6281 22.971 22.3541 15.4153M14 10.945C13.3836 10.289 12.003 8.63215 11.2034 7.04814 11.1703 6.98257 11.0247 6.98456 10.9937 7.05061 10.5221 8.05496 9.07362 9.92941 8 10.945m3.0333-3.50056C10.9392 9.86549 11 15 12 17" stroke="currentcolor" stroke-linecap="round"/></svg></a><script>var mybutton=document.getElementById("top-link");window.onscroll=function(){document.body.scrollTop>800||document.documentElement.scrollTop>800?(mybutton.style.visibility="visible",mybutton.style.opacity="1"):(mybutton.style.visibility="hidden",mybutton.style.opacity="0")}</script><script>document.querySelectorAll("pre > code").forEach(e=>{const s=e.parentNode.parentNode,t=document.createElement("button");t.classList.add("copy-code"),t.innerHTML="Copy";function n(){t.innerHTML="Copied",setTimeout(()=>{t.innerHTML="Copy"},2e3)}t.addEventListener("click",t=>{if("clipboard"in navigator){navigator.clipboard.writeText(e.textContent),n();return}const s=document.createRange();s.selectNodeContents(e);const o=window.getSelection();o.removeAllRanges(),o.addRange(s);try{document.execCommand("copy"),n()}catch{}o.removeRange(s)}),e.parentNode.appendChild(t)})</script><script src=https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js integrity="sha512-9DNXrSjk17bU9MUbRp3IjwcWe46V8FaGA062PFbryPUAEQVRbz4jiZP6FW0AdbqEGtMYBDWnul3eiGBMJOQajA==" crossorigin=anonymous referrerpolicy=no-referrer></script></main></body><script src=https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js integrity="sha512-N9IJRoc3LaP3NDoiGkcPa4gG94kapGpaA5Zq9/Dr04uf5TbLFU5q0o8AbRhLKUUlp8QFS2u7S+Yti0U7QtuZvQ==" crossorigin=anonymous referrerpolicy=no-referrer></script><script>const images=Array.from(document.querySelectorAll(".blog-content img"));images.forEach(e=>{mediumZoom(e,{margin:10,scrollOffset:40,container:null,template:null,background:"rgba(0, 0, 0, 0.5)"})})</script><script src=/main.min.6bb26b69159420159c74dc9e097b06a578ed2b68c701466a91a44a9632d851bd0af167a1b30012387b4c512b48ad9ad4d3394e04d77ae38d57e1920fe4ed34fe.js integrity="sha512-a7JraRWUIBWcdNyeCXsGpXjtK2jHAUZqkaRKljLYUb0K8WehswASOHtMUStIrZrU0zlOBNd6441X4ZIP5O00/g==" crossorigin=anonymous defer></script></html>
