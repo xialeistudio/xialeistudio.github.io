@@ -109,6 +109,11 @@ params:
       link: http://www.tup.tsinghua.edu.cn/booksCenter/book_07638401.html
       pubdate: 2020.08
       isbn: 9787302555957
+
+    - title: ThinkPHP 8高效构建Web应用
+      link: https://www.tup.com.cn/booksCenter/book_10502701.html
+      pubdate: 2025.01
+      isbn: 9787302678236
 languages:
   en:
     contentDir: content/en
@@ -143,6 +148,11 @@ languages:
         link: http://www.tup.tsinghua.edu.cn/booksCenter/book_07638401.html
         pubdate: 2020.08
         isbn: 9787302555957
+
+      - title: ThinkPHP 8 in action
+        link: https://www.tup.com.cn/booksCenter/book_10502701.html
+        pubdate: 2025.01
+        isbn: 9787302678236
   zh:
     contentDir: content/zh
     languageName: 中
@@ -200,6 +210,11 @@ languages:
         link: http://www.tup.tsinghua.edu.cn/booksCenter/book_07638401.html
         pubdate: 2020.08
         isbn: 9787302555957
+
+      - title: ThinkPHP 8高效构建Web应用
+        link: https://www.tup.com.cn/booksCenter/book_10502701.html
+        pubdate: 2025.01
+        isbn: 9787302678236
       sponsors:
         buymeacoffee:
           enable: false
