@@ -3,6 +3,7 @@
 {{- $order := slice "ai" "architecture" "backend" "frontend" "devops" "mobile" "algorithm" }}
 
 <div class="archive">
+  <div class="archive-content">{{ partial "page-header.html" (dict "title" .Title "meta" (i18n "archive_total" (dict "Count" (len $pages)))) }}</div>
   <nav class="archive-switch archive-content" aria-label="archive views">
     <a href="#by-year">{{ i18n "archive_by_year" }}</a>
     <a href="#by-topic">{{ i18n "archive_by_topic" }}</a>

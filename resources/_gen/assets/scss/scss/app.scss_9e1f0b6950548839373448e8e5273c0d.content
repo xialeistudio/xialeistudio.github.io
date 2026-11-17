@@ -1345,4 +1345,184 @@ figure {
   .blog-content h2 {
     font-size: 2.1rem; } }
 
+.series-list {
+  display: grid;
+  gap: 1.2rem; }
+
+.series-card.is-ongoing {
+  border-left: 3px solid var(--c-accent);
+  background: var(--c-accent-soft); }
+
+.series-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.2rem; }
+
+.series-count {
+  flex: none;
+  font-size: 1.3rem;
+  color: var(--c-muted); }
+
+.series-index .home2-role a {
+  color: var(--c-accent) !important; }
+
+.series-toc {
+  list-style: none;
+  margin: 0;
+  padding: 0; }
+  .series-toc li {
+    display: flex;
+    align-items: baseline;
+    gap: 1.4rem;
+    padding: 1.1rem 0;
+    border-bottom: 1px solid var(--c-border);
+    font-size: 1.6rem; }
+  .series-toc .series-no {
+    flex: none;
+    width: 2.4rem;
+    font-size: 1.4rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    color: var(--c-accent); }
+  .series-toc a {
+    flex: 1;
+    line-height: 1.5; }
+  .series-toc a:hover {
+    color: var(--c-accent); }
+  .series-toc time {
+    flex: none;
+    font-size: 1.3rem;
+    color: var(--c-muted);
+    font-variant-numeric: tabular-nums; }
+  @media only screen and (max-width: 768px) {
+    .series-toc li {
+      flex-wrap: wrap; }
+    .series-toc time {
+      width: 100%;
+      padding-left: 3.8rem; } }
+.page-head {
+  margin: 0 0 3.2rem;
+  padding-bottom: 2.4rem;
+  border-bottom: 1px solid var(--c-border); }
+  .page-head h1 {
+    margin: 0;
+    font-size: 3.2rem;
+    line-height: 1.35;
+    letter-spacing: -0.01em; }
+
+.page-crumb {
+  margin: 0 0 0.6rem;
+  font-size: 1.4rem;
+  color: var(--c-muted); }
+  .page-crumb a {
+    color: var(--c-accent) !important; }
+
+.page-desc {
+  margin: 1rem 0 0;
+  font-size: 1.6rem;
+  line-height: 1.7; }
+
+.page-meta {
+  margin: 0.8rem 0 0;
+  font-size: 1.4rem;
+  color: var(--c-muted); }
+
+.archive .page-head {
+  margin-top: 4rem;
+  margin-bottom: 1.6rem; }
+
+.archive-switch {
+  margin-top: 0; }
+
+.tag-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  list-style: none;
+  margin: 0;
+  padding: 0; }
+  .tag-cloud a {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    padding: 0.4rem 1rem;
+    border: 1px solid var(--c-border);
+    border-radius: 4px;
+    font-size: 1.4rem;
+    color: var(--c-text) !important;
+    text-decoration: none; }
+  .tag-cloud a:hover {
+    border-color: var(--c-accent);
+    color: var(--c-accent) !important; }
+  .tag-cloud span {
+    font-size: 1.2rem;
+    color: var(--c-muted);
+    font-variant-numeric: tabular-nums; }
+
+.series-box {
+  margin: 4.8rem 0 2.4rem;
+  padding: 1.8rem 2rem;
+  border: 1px solid var(--c-border);
+  border-left: 3px solid var(--c-accent);
+  border-radius: 6px;
+  font-size: 1.5rem; }
+  .series-box .series-box-head {
+    margin: 0 0 1rem;
+    font-weight: 600; }
+  .series-box .series-box-head a {
+    color: var(--c-text);
+    text-decoration: none;
+    box-shadow: none; }
+  .series-box ol {
+    margin: 0;
+    padding-left: 2.2rem; }
+  .series-box li {
+    margin: 0.4rem 0;
+    line-height: 1.6;
+    color: var(--c-muted); }
+  .series-box li a {
+    color: var(--c-muted);
+    text-decoration: none;
+    box-shadow: none; }
+  .series-box li a:hover {
+    color: var(--c-accent); }
+  .series-box li.is-current {
+    color: var(--c-accent);
+    font-weight: 600; }
+
+.post-nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+  margin: 2.4rem 0 4rem; }
+  .post-nav a {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding: 1.4rem 1.6rem;
+    border: 1px solid var(--c-border);
+    border-radius: 6px;
+    text-decoration: none;
+    box-shadow: none;
+    color: var(--c-text); }
+  .post-nav a:hover {
+    border-color: var(--c-accent); }
+  .post-nav .post-nav-next {
+    text-align: right; }
+  .post-nav small {
+    font-size: 1.3rem;
+    color: var(--c-muted); }
+  .post-nav span {
+    font-size: 1.5rem;
+    line-height: 1.5; }
+  @media only screen and (max-width: 768px) {
+    .post-nav {
+      grid-template-columns: 1fr; }
+      .post-nav .post-nav-next {
+        text-align: left; } }
+@media only screen and (max-width: 768px) {
+  .page-head h1 {
+    font-size: 2.6rem; } }
+
 /*# sourceMappingURL=main.css.map */

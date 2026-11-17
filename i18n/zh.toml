@@ -35,3 +35,18 @@ other = "{{ .Count }} 个系列，按最近更新排序"
 
 [series_count]
 other = "共 {{ .Count }} 篇"
+
+[terms_count]
+other = "共 {{ .Count }} 个"
+
+[archive_total]
+other = "共 {{ .Count }} 篇文章"
+
+[series_nav]
+other = "本文属于「{{ .Name }}」系列，第 {{ .Index }} / {{ .Total }} 篇"
+
+[prev_post]
+other = "上一篇"
+
+[next_post]
+other = "下一篇"

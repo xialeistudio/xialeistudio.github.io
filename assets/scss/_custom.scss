@@ -346,3 +346,73 @@
     time { width: 100%; padding-left: 3.8rem; }
   }
 }
+
+// ---- Shared page header -----------------------------------------------------
+.page-head {
+  margin: 0 0 3.2rem;
+  padding-bottom: 2.4rem;
+  border-bottom: 1px solid var(--c-border);
+
+  h1 { margin: 0; font-size: 3.2rem; line-height: 1.35; letter-spacing: -0.01em; }
+}
+.page-crumb {
+  margin: 0 0 0.6rem;
+  font-size: 1.4rem;
+  color: var(--c-muted);
+  a { color: var(--c-accent) !important; }
+}
+.page-desc { margin: 1rem 0 0; font-size: 1.6rem; line-height: 1.7; }
+.page-meta { margin: 0.8rem 0 0; font-size: 1.4rem; color: var(--c-muted); }
+.archive .page-head { margin-top: 4rem; margin-bottom: 1.6rem; }
+.archive-switch { margin-top: 0; }
+
+// tag cloud
+.tag-cloud {
+  display: flex; flex-wrap: wrap; gap: 0.8rem; list-style: none; margin: 0; padding: 0;
+  a {
+    display: inline-flex; align-items: baseline; gap: 0.6rem;
+    padding: 0.4rem 1rem; border: 1px solid var(--c-border); border-radius: 4px;
+    font-size: 1.4rem; color: var(--c-text) !important; text-decoration: none;
+  }
+  a:hover { border-color: var(--c-accent); color: var(--c-accent) !important; }
+  span { font-size: 1.2rem; color: var(--c-muted); font-variant-numeric: tabular-nums; }
+}
+
+// ---- Post footer: series box + prev/next ------------------------------------
+.series-box {
+  margin: 4.8rem 0 2.4rem;
+  padding: 1.8rem 2rem;
+  border: 1px solid var(--c-border);
+  border-left: 3px solid var(--c-accent);
+  border-radius: 6px;
+  font-size: 1.5rem;
+
+  .series-box-head { margin: 0 0 1rem; font-weight: 600; }
+  .series-box-head a { color: var(--c-text); text-decoration: none; box-shadow: none; }
+  ol { margin: 0; padding-left: 2.2rem; }
+  li { margin: 0.4rem 0; line-height: 1.6; color: var(--c-muted); }
+  li a { color: var(--c-muted); text-decoration: none; box-shadow: none; }
+  li a:hover { color: var(--c-accent); }
+  li.is-current { color: var(--c-accent); font-weight: 600; }
+}
+.post-nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+  margin: 2.4rem 0 4rem;
+
+  a {
+    display: flex; flex-direction: column; gap: 0.4rem;
+    padding: 1.4rem 1.6rem; border: 1px solid var(--c-border); border-radius: 6px;
+    text-decoration: none; box-shadow: none; color: var(--c-text);
+  }
+  a:hover { border-color: var(--c-accent); }
+  .post-nav-next { text-align: right; }
+  small { font-size: 1.3rem; color: var(--c-muted); }
+  span { font-size: 1.5rem; line-height: 1.5; }
+  @media only screen and (max-width: 768px) { grid-template-columns: 1fr; .post-nav-next { text-align: left; } }
+}
+
+@media only screen and (max-width: 768px) {
+  .page-head h1 { font-size: 2.6rem; }
+}

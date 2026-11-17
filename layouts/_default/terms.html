@@ -1,0 +1,30 @@
+{{ define "content" }}
+<div class="home2">
+  {{- if eq .Data.Plural "categories" }}
+  {{- $order := slice "ai" "architecture" "backend" "frontend" "devops" "mobile" "algorithm" }}
+  {{ partial "page-header.html" (dict "title" .Title "meta" (i18n "terms_count" (dict "Count" (len .Data.Terms)))) }}
+  <section class="series-list">
+    {{- range $order }}
+    {{- with site.GetPage (printf "/categories/%s" .) }}
+    {{- if .Pages }}
+    <a class="home2-card" href="{{ .RelPermalink }}">
+      <span class="series-card-head">
+        <span class="home2-card-title">{{ .Title }}</span>
+        <span class="series-count">{{ i18n "series_count" (dict "Count" (len .Pages)) }}</span>
+      </span>
+      {{- with .Description }}<span class="home2-card-meta">{{ . }}</span>{{ end }}
+    </a>
+    {{- end }}
+    {{- end }}
+    {{- end }}
+  </section>
+  {{- else }}
+  {{ partial "page-header.html" (dict "title" .Title "meta" (i18n "terms_count" (dict "Count" (len .Data.Terms)))) }}
+  <ul class="tag-cloud">
+    {{- range .Data.Terms.ByCount }}
+    <li><a href="{{ .Page.RelPermalink }}">{{ .Page.Title }}<span>{{ .Count }}</span></a></li>
+    {{- end }}
+  </ul>
+  {{- end }}
+</div>
+{{ end }}

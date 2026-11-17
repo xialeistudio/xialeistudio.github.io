@@ -1,0 +1,8 @@
+{{- /* Shared header for list-type pages.
+     dict: crumb (text), crumbURL, title, meta (plain text), desc */ -}}
+<header class="page-head">
+  {{- with .crumb }}<p class="page-crumb"><a href="{{ $.crumbURL }}">← {{ . }}</a></p>{{ end }}
+  <h1>{{ .title }}</h1>
+  {{- with .desc }}<p class="page-desc">{{ . }}</p>{{ end }}
+  {{- with .meta }}<p class="page-meta">{{ . }}</p>{{ end }}
+</header>

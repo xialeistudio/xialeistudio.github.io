@@ -1,0 +1,14 @@
+{{ define "content" }}
+{{- $pages := .Pages.ByDate.Reverse }}
+<div class="home2">
+  {{ partial "page-header.html" (dict "crumb" .Parent.Title "crumbURL" .Parent.RelPermalink "title" .Title "desc" .Description "meta" (i18n "series_count" (dict "Count" (len $pages)))) }}
+  <ul class="home2-list">
+    {{- range $pages }}
+    <li>
+      <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
+      <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+    </li>
+    {{- end }}
+  </ul>
+</div>
+{{ end }}

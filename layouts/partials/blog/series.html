@@ -1,0 +1,21 @@
+{{- /* Series navigator at the end of a post: position + full ordered list */ -}}
+{{- with .GetTerms "series" }}
+{{- $term := index . 0 }}
+{{- $pages := $term.Pages.ByDate }}
+{{- if gt (len $pages) 1 }}
+{{- $idx := 0 }}
+{{- range $i, $p := $pages }}{{ if eq $p $ }}{{ $idx = add $i 1 }}{{ end }}{{ end }}
+<nav class="series-box" aria-label="series">
+  <p class="series-box-head">
+    <a href="{{ $term.RelPermalink }}">{{ i18n "series_nav" (dict "Name" $term.LinkTitle "Index" $idx "Total" (len $pages)) }}</a>
+  </p>
+  <ol>
+    {{- range $pages }}
+    <li{{ if eq . $ }} class="is-current"{{ end }}>
+      {{- if eq . $ }}<span>{{ .Title }}</span>{{ else }}<a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ end }}
+    </li>
+    {{- end }}
+  </ol>
+</nav>
+{{- end }}
+{{- end }}

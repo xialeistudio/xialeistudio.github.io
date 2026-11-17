@@ -35,3 +35,18 @@ other = "{{ .Count }} series, most recently updated first"
 
 [series_count]
 other = "{{ .Count }} posts"
+
+[terms_count]
+other = "{{ .Count }} in total"
+
+[archive_total]
+other = "{{ .Count }} posts"
+
+[series_nav]
+other = "Part {{ .Index }} of {{ .Total }} in the “{{ .Name }}” series"
+
+[prev_post]
+other = "Previous"
+
+[next_post]
+other = "Next"

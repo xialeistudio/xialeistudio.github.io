@@ -7,11 +7,8 @@
   {{- $rows = $rows | append (dict "key" $key "page" $wp.Page "pages" $pages "last" $last "date" $last.Date) }}
 {{- end }}
 <div class="home2 series-index">
-  <header class="home2-intro">
-    <h1>{{ .Title }}</h1>
-    <p class="home2-role">{{ i18n "series_intro" (dict "Count" (len $rows)) }}</p>
-  </header>
-  <section class="home2-section series-list">
+  {{ partial "page-header.html" (dict "title" .Title "meta" (i18n "series_intro" (dict "Count" (len $rows)))) }}
+  <section class="series-list">
     {{- range sort $rows "date" "desc" }}
     {{- $p := .page }}{{ $pages := .pages }}
     {{- $ongoing := and $current (eq .key $current.key) }}

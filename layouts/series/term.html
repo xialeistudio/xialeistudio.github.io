@@ -2,15 +2,10 @@
 {{- $pages := .Pages.ByDate }}
 {{- $current := site.Params.currentSeries }}
 <div class="home2 series-index">
-  <header class="home2-intro">
-    <p class="home2-role"><a href="{{ "series/" | relLangURL }}">{{ i18n "series" 2 }}</a></p>
-    <h1>{{ .Title }}</h1>
-    <p class="home2-role">
-      {{- if and $current (eq .Data.Term $current.key) }}{{ i18n "series_progress" (dict "Done" (len $pages) "Total" $current.total) }}
-      {{- else }}{{ i18n "series_count" (dict "Count" (len $pages)) }}{{ end }}
-    </p>
-  </header>
-  <section class="home2-section">
+  {{- $meta := i18n "series_count" (dict "Count" (len $pages)) }}
+  {{- if and $current (eq .Data.Term $current.key) }}{{ $meta = i18n "series_progress" (dict "Done" (len $pages) "Total" $current.total) }}{{ end }}
+  {{ partial "page-header.html" (dict "crumb" .Parent.Title "crumbURL" .Parent.RelPermalink "title" .Title "desc" .Description "meta" $meta) }}
+  <section>
     <ol class="series-toc">
       {{- range $i, $p := $pages }}
       <li>

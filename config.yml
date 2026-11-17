@@ -127,6 +127,9 @@ languages:
         - name: Archives
           url: /archives
           weight: 2
+        - name: Series
+          url: /series
+          weight: 3
         - name: About
           url: /about
           weight: 4
