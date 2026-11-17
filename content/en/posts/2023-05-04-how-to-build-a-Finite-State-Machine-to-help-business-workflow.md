@@ -5,7 +5,7 @@ categories:
 - architecture
 date: 2023-05-04 17:16:00
 tags:
-- 设计模式
+- Design Patterns
 featured: true
 evergreen: true
 ---

@@ -1,41 +1,41 @@
 ---
-title: 服务发现的设计与实现（二）
+title: Designing and Implementing Service Discovery (Part 2)
 date: 2025-02-23T11:53:08+08:00
 slug: implementation-of-service-discovery-part2
 categories:
 - architecture
 tags:
-- 微服务
+- Microservices
 series:
 - microservices
 ---
 
-在微服务架构中，服务发现是确保服务间高效通信和动态扩展的关键机制。随着分布式系统的复杂性日益增加，如何设计一个可靠、高性能的服务发现方案成为工程实践中的核心课题。
+In a microservices architecture, service discovery is the mechanism that keeps inter-service communication efficient and lets the system scale dynamically. As distributed systems grow more complex, designing a reliable, high-performance service discovery solution has become a core engineering concern.
 
-本文作为“服务发现的设计与实现”系列的第二部分，将深入探讨服务注册中心的具体实现与负载均衡策略。我们将聚焦于三种主流技术——etcd、Consul 和 ZooKeeper，分析它们的原理与应用场景，并通过实际代码展示如何构建服务发现功能。此外，我们还将介绍常见的负载均衡算法及其实现方法，帮助读者理解如何在微服务中优化请求分配。 
+This is the second part of the "Designing and Implementing Service Discovery" series, and it digs into concrete service registry implementations and load balancing strategies. We focus on three mainstream technologies, etcd, Consul, and ZooKeeper, look at how they work and where they fit, and build service discovery with real code. We also cover common load balancing algorithms and how to implement them, to show how request distribution can be optimized in microservices. 
 <!--more-->
 
-## Consul注册中心
+## Consul Registry
 
-Consul 是一个开源的服务网格解决方案，提供服务发现、配置和分段功能。它结合了分布式系统的几个关键组件，包括服务发现、健康检查、键值存储和多数据中心支持。Consul 的设计目标是提供一种简单、灵活且可靠的方法来构建和运行分布式系统。
+Consul is an open-source service mesh solution that provides service discovery, configuration, and segmentation. It combines several key building blocks of distributed systems: service discovery, health checking, a key-value store, and multi-datacenter support. Its design goal is to offer a simple, flexible, and reliable way to build and run distributed systems.
 
-Consul 的核心特性包括一个分布式服务目录，它允许服务实例注册自己并提供元数据，其他服务可以通过查询这个目录来发现它们。它还提供了健康检查功能，可以确保只有健康的服务实例被客户端发现。此外，Consul 提供了一个内置的 DNS 和 HTTP API 接口，用于服务发现，使得服务之间的通信变得简单。
+At Consul's core is a distributed service catalog: service instances register themselves along with their metadata, and other services discover them by querying the catalog. Health checks ensure that clients only discover healthy instances. Consul also ships with built-in DNS and HTTP API interfaces for service discovery, which keeps communication between services simple.
 
-Consul 还支持分布式一致性配置，允许团队存储和同步配置信息。它的分段特性允许服务在不同的网络环境中进行隔离，这对于微服务架构中的蓝绿部署和金丝雀发布非常有用。
+Consul also supports distributed, consistent configuration, so teams can store and synchronize configuration data. Its segmentation feature isolates services across different network environments, which is very useful for blue-green deployments and canary releases in a microservices architecture.
 
-Consul 的架构设计支持高可用性，它使用 Raft 算法来保证数据的一致性和容错性。Consul 通常部署为一个集群模式，集群中的每个节点都参与数据的复制和一致性保证。这种设计使得 Consul 成为构建现代云原生应用的有力工具，尤其是在需要跨多个数据中心或云环境进行服务发现和配置管理的场景中。
+Consul is built for high availability. It uses the Raft algorithm to guarantee data consistency and fault tolerance, and is usually deployed as a cluster in which every node takes part in replication and consistency. This design makes Consul a strong tool for building modern cloud-native applications, especially when service discovery and configuration management have to span multiple datacenters or cloud environments.
 
-### Consul 的安装和启动
+### Installing and Starting Consul
 
-要开始使用 Consul 作为服务注册中心，首先需要安装 Consul。您可以访问 HashiCorp 官方开发者网站 [https://developer.hashicorp.com/consul/install](https://developer.hashicorp.com/consul/install) 下载与您的操作系统相匹配的 Consul 二进制文件。
+To use Consul as a service registry, first install it. Download the Consul binary for your operating system from the official HashiCorp developer site: [https://developer.hashicorp.com/consul/install](https://developer.hashicorp.com/consul/install).
 
-安装完成后，打开终端并运行以下命令来启动 Consul 的开发服务器模式。这将启动一个单节点的 Consul 服务器，适用于开发和测试环境。
+Once installed, open a terminal and run the following command to start Consul in development server mode. This starts a single-node Consul server, suitable for development and testing.
 
 ```bash
 consul agent -dev -bind 127.0.0.1
 ```
 
-接下来，在新的终端会话中，您可以使用以下命令来设置一个键值对。此命令将存储一个简单的字符串值，并返回操作结果。如果操作成功，您应该看到 "true" 作为输出。
+Next, in a new terminal session, set a key-value pair with the command below. It stores a simple string value and returns the result of the operation. If it succeeds, you should see "true" as the output.
 
 ```bash
 curl \
@@ -44,13 +44,13 @@ curl \
   http://127.0.0.1:8500/v1/kv/foo
 ```
 
-最后，为了验证键值对是否已正确设置，您可以执行以下命令来检索该键的值。预期的输出将显示键 "foo" 及其关联的值，值将以 Base64 编码的形式展示。
+Finally, to verify that the key-value pair was set correctly, retrieve the key's value with the following command. The output shows the key "foo" and its value, encoded in Base64.
 
 ```
 curl http://127.0.0.1:8500/v1/kv/foo
 ```
 
-预期的输出结果如下，展示了键 "foo" 的详细信息，包括其值 "aGVsbG8gY29uc3Vs"（Base64 编码的 "hello consul"）：
+The expected output looks like this, showing the details of key "foo", including its value "aGVsbG8gY29uc3Vs" (the Base64 encoding of "hello consul"):
 
 ```json
 [
@@ -65,9 +65,9 @@ curl http://127.0.0.1:8500/v1/kv/foo
 ]
 ```
 
-### 包结构设计
+### Package Structure
 
-我们直接在上一节的基础上添加 consul 包即可。
+We simply add a consul package on top of the structure from the previous part.
 
 ```
 ├── client
@@ -85,9 +85,9 @@ curl http://127.0.0.1:8500/v1/kv/foo
     └── loadbalancer.go
 ```
 
-### 编写实现
+### Implementation
 
-Consul 服务发现客户端的逻辑和 etcd 类似，都是提供获取节点、注册服务实例、取消注册服务实例。不同的是 Consul 的 watch 机制和 etcd 不同，而且 Consul 支持健康检查。
+The Consul service discovery client follows the same logic as the etcd one: get nodes, register a service instance, and deregister a service instance. The differences are that Consul's watch mechanism works differently from etcd's, and Consul supports health checks.
 
 **discovery/consul/registry.go**
 
@@ -116,17 +116,17 @@ func (r *registry) GetNodes(ctx context.Context, serviceName string, tags map[st
     nodes, exists := r.nodeListMap.Load(serviceName)
     if !exists {
         var err error
-        // 本地缓存为空，从 consul 拉取
+        // Local cache is empty, pull from consul
         nodes, err = r.pullNodes(ctx, serviceName)
         if err != nil {
             return nil, err
         }
-        // 缓存到本地
+        // Cache locally
         r.nodeListMap.Store(serviceName, nodes)
-        // 启动 watch
+        // Start watching
         go r.watchNodes(serviceName)
     }
-    // 按标签过滤节点
+    // Filter nodes by tags
     var filteredNodes []*discovery.ServiceNode
     nodes.(*sync.Map).Range(func(key, value interface{}) bool {
         node := value.(*discovery.ServiceNode)
@@ -145,7 +145,7 @@ func (r *registry) Register(ctx context.Context, node *discovery.ServiceNode) er
         Address: node.IP.String(),
         Port:    node.Port,
         Meta:    node.Tags,
-        Check: &capi.AgentServiceCheck{ // 健康检查
+        Check: &capi.AgentServiceCheck{ // Health check
             TCP:                            fmt.Sprintf("%s:%d", node.IP.String(), node.Port),
             Timeout:                        "5s",
             Interval:                       "5s",
@@ -250,13 +250,13 @@ func makeNodeKey(node *discovery.ServiceNode) string {
 }
 ```
 
-watch 机制允许客户端实时监听服务状态的变化。在上述代码中，watchNodes 函数实现了对 Consul 服务状态的监听，当服务注册或注销时，通过 handler 更新本地缓存，确保服务消费者能够获取到最新的服务节点列表。这种机制使得服务消费者能够及时响应服务提供者的变化，提高了系统的动态性和可靠性。
+The watch mechanism lets clients listen for service state changes in real time. In the code above, watchNodes watches the service in Consul; whenever an instance registers or deregisters, the handler updates the local cache so that consumers always see the latest list of service nodes. This lets consumers react promptly to changes in providers, making the system more dynamic and reliable.
 
-而健康检查确保只有健康的服务实例对消费者可见，上述代码使用 TCP 连接来进行健康检查。一旦服务实例出现问题，Consul 会自动将其标记为不健康，并从服务发现中移除，避免流量被路由到该实例。
+Health checks ensure that only healthy instances are visible to consumers; the code above uses a TCP connection check. As soon as an instance has a problem, Consul automatically marks it unhealthy and removes it from service discovery, so no traffic is routed to it.
 
-### 单元测试编写
+### Unit Tests
 
-因为我们使用了面向接口的方式来设计注册中心，前面的 etcd 和当前的 Consul 都只是实现类，因此单元测试可以通用，唯一不同的是初始化 Registry 的代码。
+Because the registry is designed against an interface, etcd and Consul are just two implementations, and the unit tests can be shared. The only difference is the code that initializes the registry.
 
 **discovery/consul/registry_test.go**
 
@@ -277,7 +277,7 @@ import (
 
 func TestConsulRegistry(t *testing.T) {
     a := assert.New(t)
-    // 初始化注册中心
+    // Initialize the registry
     r, err := NewRegistry(&capi.Config{
         Address: "localhost:8500",
     })
@@ -292,22 +292,22 @@ func TestConsulRegistry(t *testing.T) {
                 "version": "1.0",
             },
         }
-        // 注册节点
+        // Register the node
         err = r.Register(context.Background(), node)
         a.Nil(err)
         time.Sleep(time.Millisecond * 100)
-        // 获取节点
+        // Get nodes
         nodes, err := r.GetNodes(context.Background(), "test", map[string]string{
             "version": "1.0",
         })
         a.Nil(err)
         a.Len(nodes, 1)
         a.Equal(node, nodes[0])
-        // 注销节点
+        // Deregister the node
         err = r.Unregister(context.Background(), node)
         a.Nil(err)
         time.Sleep(time.Millisecond * 100)
-        // 获取节点
+        // Get nodes
         nodes, err = r.GetNodes(context.Background(), "test", map[string]string{
             "version": "1.0",
         })
@@ -334,13 +334,13 @@ func TestConsulRegistry(t *testing.T) {
                 "region":  "us",
             },
         }
-        // 注册节点
+        // Register the nodes
         err = r.Register(context.Background(), node1)
         a.Nil(err)
         err = r.Register(context.Background(), node2)
         a.Nil(err)
         time.Sleep(time.Millisecond * 100)
-        // 获取节点
+        // Get nodes
         nodes, err := r.GetNodes(context.Background(), "test", map[string]string{
             "version": "1.0",
             "region":  "cn",
@@ -350,7 +350,7 @@ func TestConsulRegistry(t *testing.T) {
         str, _ := json.MarshalToString(nodes)
         t.Log(str)
         a.Equal(node1, nodes[0])
-        // 获取节点
+        // Get nodes
         nodes, err = r.GetNodes(context.Background(), "test", map[string]string{
             "version": "1.0",
             "region":  "us",
@@ -358,17 +358,17 @@ func TestConsulRegistry(t *testing.T) {
         a.Nil(err)
         a.Len(nodes, 1)
         a.Equal(node2, nodes[0])
-        // 获取节点
+        // Get nodes
         nodes, err = r.GetNodes(context.Background(), "test", nil)
         a.Nil(err)
         a.Len(nodes, 2)
-        // 注销节点
+        // Deregister the nodes
         err = r.Unregister(context.Background(), node1)
         a.Nil(err)
         err = r.Unregister(context.Background(), node2)
         a.Nil(err)
         time.Sleep(time.Millisecond * 100)
-        // 获取节点
+        // Get nodes
         nodes, err = r.GetNodes(context.Background(), "test", map[string]string{
             "version": "1.0",
         })
@@ -378,29 +378,29 @@ func TestConsulRegistry(t *testing.T) {
 }
 ```
 
-在确保 Consul 服务端运行的情况下执行单元测试即可。
+Make sure the Consul server is running, then run the tests.
 
-Consul 作为服务注册与发现的工具，在微服务架构中扮演着至关重要的角色。它通过提供一个中心化的服务注册表，使得服务实例能够相互发现并进行通信。服务注册过程中，每个服务实例将自己注册到 Consul，并关联健康检查以确保其可用性。Consul 的 watch 机制允许服务消费者实时监听服务状态的变化，从而动态更新本地服务节点列表。这种动态服务发现的能力，不仅提高了系统的灵活性和可扩展性，还增强了服务之间的解耦合。Consul 的这些特性共同确保了微服务架构的高效运行和稳定性，使其成为现代云原生应用的理想选择。
+As a service registration and discovery tool, Consul plays a vital role in a microservices architecture. It provides a centralized service registry through which service instances can find and talk to each other. During registration, each instance registers itself with Consul along with a health check that verifies its availability. Consul's watch mechanism lets consumers listen for service state changes in real time and update their local node lists accordingly. This dynamic service discovery makes the system more flexible and scalable and further decouples services. Together, these features keep a microservices architecture running efficiently and stably, making Consul an ideal choice for modern cloud-native applications.
 
-## Zookeeper注册中心
+## ZooKeeper Registry
 
-ZooKeeper 是一个分布式协调服务，它为分布式应用提供一致性协调功能。作为一个开源的协调服务，ZooKeeper 提供了一系列的原语，使得开发者能够构建可靠的分布式同步服务。
+ZooKeeper is a distributed coordination service that provides consistent coordination for distributed applications. As an open-source coordination service, it offers a set of primitives that developers can use to build reliable distributed synchronization.
 
-ZooKeeper 的核心是它的状态机模型，它维护了一个具有层次结构的命名空间，类似于文件系统的树形结构。每个节点在这个命名空间中被称为 znode，它可以存储数据和状态信息。客户端可以通过创建、读取、更新和删除这些 znode 来实现服务的注册与发现。
+At the heart of ZooKeeper is its state machine model: it maintains a hierarchical namespace, similar to a file system tree. Each node in this namespace is called a znode and can store data and state information. Clients implement service registration and discovery by creating, reading, updating, and deleting znodes.
 
-在微服务架构中，ZooKeeper 常被用作服务注册中心，服务实例在启动时会在 ZooKeeper 中注册自己的信息，如 IP 地址和端口号。其他服务实例可以通过查询这些 znode 来发现可用的服务提供者。此外，ZooKeeper 还提供了 watch 机制，允许服务实例监听 znode 的变化，从而实现服务的动态发现和负载均衡。
+In microservices, ZooKeeper is often used as a service registry. On startup, a service instance registers its information, such as its IP address and port, in ZooKeeper, and other services discover available providers by querying these znodes. ZooKeeper also provides a watch mechanism that lets instances listen for znode changes, enabling dynamic service discovery and load balancing.
 
-### ZooKeeper 的安装和启动
+### Installing and Starting ZooKeeper
 
-ZooKeeper 作为基于 Java 的分布式协调服务，其运行离不开 Java 环境的支持。因此，首先需要确保您的系统中安装了 JDK 或 JRE。您可以通过访问 [https://www.java.com/zh-CN/download/help/download_options_zh-cn.html](https://www.java.com/zh-CN/download/help/download_options_zh-cn.html) 下载与您的操作系统相匹配的 Java 版本，并进行安装。
+ZooKeeper is a Java-based distributed coordination service, so it needs a Java runtime. First make sure a JDK or JRE is installed on your system. You can download the Java version for your operating system from [https://www.java.com/zh-CN/download/help/download_options_zh-cn.html](https://www.java.com/zh-CN/download/help/download_options_zh-cn.html) and install it.
 
-安装完成后，您可以通过打开终端或命令提示符，输入以下命令来验证 Java 是否安装成功：
+Once installed, open a terminal or command prompt and run the following command to verify that Java is installed:
 
 ```bash
 java -version
 ```
 
-例如，笔者的系统中显示的输出如下：
+For example, here is the output on my system:
 
 ```
 openjdk version "17.0.9" 2023-10-17
@@ -408,21 +408,21 @@ OpenJDK Runtime Environment Homebrew (build 17.0.9+0)
 OpenJDK 64-Bit Server VM Homebrew (build 17.0.9+0, mixed mode, sharing)
 ```
 
-接下来，您可以访问 https://zookeeper.apache.org/releases.html 下载最新版本的 ZooKeeper，并按照提供的指南进行解压和配置。
+Next, download the latest ZooKeeper release from https://zookeeper.apache.org/releases.html, then extract and configure it following the provided guide.
 
-启动 ZooKeeper 服务时，您可以在终端执行以下命令，以在前台模式运行 ZooKeeper，这样有助于实时查看服务的输出信息：
+To start the ZooKeeper service, run the following command in a terminal. It runs ZooKeeper in the foreground, so you can watch its output in real time:
 
 ```bash
 zkServer start-foreground
 ```
 
-为了与 ZooKeeper 服务器建立连接，您可以在新的终端会话中执行以下命令：
+To connect to the ZooKeeper server, run the following command in a new terminal session:
 
 ```bash
 zkCli
 ```
 
-一旦连接成功，您可以通过执行 stat / 命令来查看根节点的状态。以下是笔者的示例输出：
+Once connected, run `stat /` to inspect the root node's status. Here is my sample output:
 
 ```
 [zk: localhost:2181(CONNECTED) 1] stat /
@@ -439,13 +439,13 @@ dataLength = 0
 numChildren = 1
 ```
 
-至此，我们已经成功安装并启动了 ZooKeeper 服务器，并且能够通过命令行界面与其交互。
+At this point ZooKeeper is installed and running, and we can interact with it from the command line.
 
-### 编写实现
+### Implementation
 
-ZooKeeper 需要先建立父路径之后才能添加服务实例节点，因此需要先创建根路径 /services，在注册服务节点之前确保服务名称节点已经创建，最后创建服务实例节点即可。
+In ZooKeeper, a parent path must exist before child nodes can be added under it. So we first create the root path /services, then make sure the service name node exists before registering, and finally create the service instance node.
 
-我们使用的 watch 机制是接收到节点事件后尝试获取节点详情数据，如果获取不到则证明节点被删除，需要跳过循环，不能直接 return，否则会导致本地缓存无法更新。
+Our watch implementation fetches the node details after each node event. If a node's data cannot be fetched, the node has been deleted, and we must skip it and continue the loop rather than return; otherwise the local cache would never be updated.
 
 **discovery/zookeeper/registry.go**
 
@@ -465,9 +465,9 @@ import (
 )
 
 var (
-    // DialTimeout 默认的连接超时时间
+    // DialTimeout is the default connection timeout
     DialTimeout = 5 * time.Second
-    // BasePath 服务注册的根路径
+    // BasePath is the root path for service registration
     BasePath = "/services"
 )
 
@@ -480,17 +480,17 @@ func (r *registry) GetNodes(ctx context.Context, serviceName string, tags map[st
     nodes, exists := r.nodeListMap.Load(serviceName)
     if !exists {
         var err error
-        // 本地缓存为空，从 zookeeper 拉取
+        // Local cache is empty, pull from zookeeper
         nodes, err = r.pullNodes(ctx, serviceName)
         if err != nil {
             return nil, err
         }
-        // 缓存到本地
+        // Cache locally
         r.nodeListMap.Store(serviceName, nodes)
-        // 启动 watch
+        // Start watching
         go r.watchNodes(serviceName)
     }
-    // 按标签过滤节点
+    // Filter nodes by tags
     var filteredNodes []*discovery.ServiceNode
     nodes.(*sync.Map).Range(func(key, value interface{}) bool {
         node := value.(*discovery.ServiceNode)
@@ -583,7 +583,7 @@ func (r *registry) watchNodes(name string) {
         var count int
         for _, child := range children {
             data, _, err := r.conn.Get(fmt.Sprintf("%s/%s", nodePath, child))
-            if err != nil { // 如果是节点解除注册触发的事件，此处无法获取到节点数据，直接跳过即可，不能报错，否则无法更新本地节点
+            if err != nil { // If the event was triggered by a node deregistering, its data can't be fetched here; just skip it instead of failing, otherwise the local nodes can't be updated
                 continue
             }
             var node discovery.ServiceNode
@@ -618,11 +618,11 @@ func NewRegistry(servers []string) (discovery.NodeRegistry, error) {
 }
 ```
 
-在 ZooKeeper 中，只有永久节点下面可以创建临时节点，因此服务名称节点是永久性的，而服务实例节点是临时的。当注册服务的节点与 ZooKeeper 服务器的连接断开时，临时节点会自动被删除。
+In ZooKeeper, ephemeral nodes can only be created under persistent nodes, so the service name node is persistent while service instance nodes are ephemeral. When the connection between a registered instance and the ZooKeeper server drops, its ephemeral node is deleted automatically.
 
-### 单元测试
+### Unit Tests
 
-单元测试代码与 etcd 和 consul 一致，唯一的区别是初始化 Registry 的代码：
+The unit tests are the same as for etcd and Consul; only the registry initialization differs:
 
 **discovery/zookeeper/registry_test.go**
 
@@ -631,19 +631,19 @@ r, err := NewRegistry([]string{"localhost:2181"})
 a.Nil(err)
 ```
 
-ZooKeeper 是一个高性能的分布式协调服务，它为构建大型分布式系统提供了关键的协调功能。作为一个服务注册中心，ZooKeeper 能够存储服务实例的信息，并允许服务消费者查询和订阅这些信息。它的树形结构使得服务的注册和发现变得直观和灵活。ZooKeeper 的临时节点和 watch 机制进一步增强了服务注册中心的能力，确保了服务实例的动态管理和自动更新。这些特性使得 ZooKeeper 成为微服务架构中服务发现和协调的理想选择，尤其是在需要强一致性和高可靠性的场景中。
+ZooKeeper is a high-performance distributed coordination service that provides key coordination capabilities for building large distributed systems. As a service registry, it stores service instance information and lets consumers query and subscribe to it. Its tree structure makes registration and discovery intuitive and flexible, and its ephemeral nodes and watch mechanism further strengthen the registry by enabling dynamic management and automatic updates of service instances. These features make ZooKeeper an ideal choice for service discovery and coordination in microservices, especially where strong consistency and high reliability are required.
 
-## 4.5 负载均衡
+## Load Balancing
 
-在微服务架构中，服务调用的负载均衡是一个至关重要的环节，它决定了如何将大量的服务请求有效地分配到多个服务实例上。良好的负载均衡策略可以显著提高系统的吞吐量、响应速度和整体的可靠性。本节将深入探讨负载均衡的原理和实现，介绍几种常见的负载均衡算法，包括轮询、随机、加权轮询等，以及它们在实际应用中的适用场景和实现方式。
+In a microservices architecture, load balancing of service calls is critical: it determines how a large volume of requests is distributed across multiple service instances. A good load balancing strategy can significantly improve throughput, response times, and overall reliability. This section explains how load balancing works and how to implement it, covering several common algorithms, including round robin, random, and weighted round robin, along with where each fits and how it is implemented.
 
-### 原理
+### How It Works
 
-负载均衡本质上是从一组服务节点中选择一个节点来处理客户端的请求。这个过程通过算法决定哪个节点应该接收特定的请求，目的是确保所有节点的负载尽可能均衡，从而提高系统的整体性能和可靠性。负载均衡器根据预设的策略，如轮询、随机选择或最少连接数，智能地分发请求，避免任何单一节点因过载而影响服务的稳定性。
+At its core, load balancing selects one node from a group of service nodes to handle a client request. An algorithm decides which node receives a given request, with the goal of keeping load across nodes as even as possible to improve overall performance and reliability. The load balancer distributes requests according to a predefined strategy, such as round robin, random selection, or least connections, so that no single node becomes overloaded and destabilizes the service.
 
-### 轮询实现
+### Round Robin
 
-轮询（Round Robin）负载均衡策略通过循环遍历服务节点列表，依次将新的请求分配给每个可用的服务实例。这种顺序分配方法简单而公平，确保了所有节点在长时间内接收到的请求数量大致相等，有效地平衡了系统负载，提高了资源利用率。轮询策略尤其适合所有服务节点性能相近的场景。
+The round robin strategy cycles through the list of service nodes, assigning each new request to the next available instance in turn. This sequential approach is simple and fair: over time every node receives roughly the same number of requests, which balances load effectively and improves resource utilization. Round robin is especially suitable when all service nodes have similar performance.
 
 `loadbalancer/round_robin.go`
 
@@ -672,7 +672,7 @@ func NewRoundRobin() LoadBalancer {
 }
 ```
 
-#### 单元测试
+#### Unit Tests
 
 **loadbalancer/round_robin_test.go**
 
@@ -719,13 +719,13 @@ func Test_roundRobin_Select(t *testing.T) {
 }
 ```
 
-### 加权轮询实现
+### Weighted Round Robin
 
-加权轮询根据服务节点的权重来决定请求的分配。每个服务节点被赋予一个权重值，权重高的节点将更频繁地接收到请求。这种方法考虑了节点的不同处理能力，使得处理能力强的节点可以承担更多的流量，从而优化资源利用率并提高系统的整体性能。加权轮询适用于服务节点性能不均或有特定性能要求的场景。
+Weighted round robin distributes requests according to node weights. Each service node is assigned a weight, and nodes with higher weights receive requests more often. This accounts for differences in processing capacity, letting more powerful nodes take more traffic, which improves resource utilization and overall performance. Weighted round robin suits scenarios where node performance is uneven or there are specific performance requirements.
 
 **loadbalancer/weighted_round_robin.go**
 
-```json
+```go
 package loadbalancer
 
 import (
@@ -751,7 +751,7 @@ func (w *weightedRoundRobin) Select(nodes []*discovery.ServiceNode) *discovery.S
         return nil
     }
 
-    // 节点变动时重新计算权重
+    // Recalculate weights when the node list changes
     if !equalNodes(w.nodes, nodes) {
         w.nodes = nodes
         w.totalWeight = 0
@@ -810,9 +810,9 @@ func NewWeightedRoundRobin() LoadBalancer {
 }
 ```
 
-#### 单元测试
+#### Unit Tests
 
-单元测试构造节点时需要添加 weight 到节点标签。
+When constructing nodes in the tests, add a weight to each node's tags.
 
 **loadbalancer/weighted_round_robin_test.go**
 
@@ -868,9 +868,9 @@ func Test_weightedRoundRobin_Select(t *testing.T) {
 }
 ```
 
-### 随机实现
+### Random
 
-随机通过随机选择服务节点来处理请求。这种方法不考虑节点的负载或性能差异，而是简单地从所有可用节点中随机挑选一个来响应请求。随机策略简单易实现，适用于服务节点性能相近且无明显差异的场景，可以提供良好的负载分散，但可能不如其他策略那样精确地平衡负载。
+The random strategy handles each request by picking a service node at random. It ignores differences in node load or performance and simply chooses one of the available nodes to serve the request. Random selection is simple to implement and suits scenarios where nodes have similar performance with no significant differences. It spreads load well, but may not balance it as precisely as other strategies.
 
 **loadbalancer/random.go**
 
@@ -903,9 +903,9 @@ func NewRandom() LoadBalancer {
 }
 ```
 
-r 是随机数发生器，通过 NewRandom 构造时填充了时间戳作为随机数种子，保证安全性。在单元测试时使用固定的随机数种子，保证结果的可控性。
+r is the random number generator. NewRandom seeds it with the current timestamp to ensure security. The unit test uses a fixed seed so that results are deterministic.
 
-#### 单元测试
+#### Unit Tests
 
 **loadbalancer/random_test.go**
 
@@ -957,12 +957,12 @@ func Test_random_Select(t *testing.T) {
 }
 ```
 
-## 小结
+## Summary
 
-在本文中，我们全面探讨了微服务架构中服务发现的设计与实现，特别关注了三种主流的服务注册中心：etcd、Consul和ZooKeeper。我们详细分析了每种技术的工作原理、特点以及它们在服务发现中的角色。
+In this article, we took a comprehensive look at the design and implementation of service discovery in a microservices architecture, focusing on three mainstream service registries: etcd, Consul, and ZooKeeper. We examined how each one works, its characteristics, and its role in service discovery.
 
-对于etcd，我们讨论了其基于Raft算法的强一致性特性，以及如何利用其丰富的客户端库来实现服务的注册与发现。Consul的章节则展示了其开箱即用的特性，包括健康检查和HTTP API接口。最后，ZooKeeper的实现部分强调了其树形结构和watch机制，这些都是构建高效服务注册中心的关键。
+For etcd, we discussed its strong consistency based on the Raft algorithm and how to use its rich client libraries to implement service registration and discovery. The Consul section showed its out-of-the-box features, including health checks and the HTTP API. Finally, the ZooKeeper implementation highlighted its tree structure and watch mechanism, both key to building an efficient service registry.
 
-此外，我们还设计了一个通用的NodeRegistry接口，它定义了服务发现客户端必须实现的方法，如获取服务节点列表、注册和注销服务节点。这个接口的实现为服务发现提供了一个统一的抽象，使得服务消费者可以无缝地与不同的服务注册中心交互。
+We also designed a generic NodeRegistry interface that defines the methods a service discovery client must implement, such as listing service nodes and registering and deregistering them. This interface provides a unified abstraction for service discovery, so consumers can work seamlessly with different service registries.
 
-总的来说，本文为读者提供了一个关于服务发现的全面视角，包括理论基础、关键技术的深入分析以及实际的代码实现。通过学习，读者应该能够理解服务发现的重要性，掌握不同服务注册中心的使用方法，并能够根据自己的需求选择合适的技术来构建服务发现机制。
+Overall, this article offers a complete view of service discovery, from theoretical foundations and in-depth analysis of key technologies to working code. After reading it, you should understand why service discovery matters, know how to use different service registries, and be able to choose the right technology to build service discovery for your own needs.

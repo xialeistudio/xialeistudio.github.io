@@ -6,9 +6,9 @@ categories:
 - architecture
 featured: true
 tags:
-- 微服务
+- Microservices
 - Redis
-- 分布式
+- Distributed Systems
 series:
 - microservices
 ---

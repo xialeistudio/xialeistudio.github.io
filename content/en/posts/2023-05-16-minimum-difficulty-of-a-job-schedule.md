@@ -5,7 +5,7 @@ date: 2023-05-16 22:19:15
 categories:
 - algorithm
 tags:
-- 算法
+- Algorithms
 ---
 
 Today I'll share an article about `Dynamic Programing` .

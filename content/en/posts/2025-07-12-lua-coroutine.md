@@ -7,8 +7,8 @@ categories:
 tags:
 - C/C++
 - Lua
-- 并发
-- 开源项目
+- Concurrency
+- Open Source
 featured: true
 ---
 

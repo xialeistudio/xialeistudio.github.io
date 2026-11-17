@@ -6,7 +6,7 @@ categories:
 - backend
 tags:
 - C/C++
-- 并发
+- Concurrency
 featured: true
 ---
 

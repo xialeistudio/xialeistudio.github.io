@@ -1,11 +1,11 @@
 ---
-title: Principles Of Microservice Architecture
+title: Principles of Microservice Architecture
 date: 2025-02-13T11:53:08+08:00
 slug: principles-of-microservice-architecture
 categories:
 - architecture
 tags:
-- 微服务
+- Microservices
 series:
 - microservices
 ---

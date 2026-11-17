@@ -299,24 +299,24 @@ func (r *registry) keepLeaseAlive(leaseId clientv3.LeaseID, node *discovery.Serv
 
 func (r *registry) removeNode(node *discovery.ServiceNode) {
   r.nodeListMap.Range(func(key, value interface{}) bool {
-​    nodes := value.(*sync.Map)
-​    nodes.Delete(makeNodeKey(node))
-​    return true
+    nodes := value.(*sync.Map)
+    nodes.Delete(makeNodeKey(node))
+    return true
   })
 }
 
 func (r *registry) pullNodes(ctx context.Context, serviceName string) (*sync.Map, error) {
   resp, err := r.kv.Get(ctx, serviceName+"/", clientv3.WithPrefix())
   if err != nil {
-​    return nil, fmt.Errorf("failed to get nodeListMap from etcd: %v", err)
+    return nil, fmt.Errorf("failed to get nodeListMap from etcd: %v", err)
   }
   var nodes sync.Map
   for _, kv := range resp.Kvs {
-​    node := &discovery.ServiceNode{}
-​    if err := json.Unmarshal(kv.Value, node); err != nil {
-​      return nil, fmt.Errorf("failed to unmarshal node data: %v", err)
-​    }
-​    nodes.Store(string(kv.Key), node)
+    node := &discovery.ServiceNode{}
+    if err := json.Unmarshal(kv.Value, node); err != nil {
+      return nil, fmt.Errorf("failed to unmarshal node data: %v", err)
+    }
+    nodes.Store(string(kv.Key), node)
   }
   return &nodes, nil
 }
@@ -326,24 +326,24 @@ func (r *registry) pullNodes(ctx context.Context, serviceName string) (*sync.Map
 func (r *registry) watchNodes(ctx context.Context, serviceName string) {
   watchChan := r.watcher.Watch(ctx, serviceName+"/", clientv3.WithPrefix())
   for wResp := range watchChan {
-​    for _, ev := range wResp.Events {
-​      switch ev.Type {
-​      case clientv3.EventTypePut:
-​       // 新增或更新服务节点
-​       node := &discovery.ServiceNode{}
-​       if err := json.Unmarshal(ev.Kv.Value, node); err != nil {
-​         log.Printf("failed to unmarshal node data: %v", err)
-​         continue
-​       }
-​       r.nodeListMap.LoadOrStore(serviceName, &sync.Map{})
-​       nodes, _ := r.nodeListMap.Load(serviceName)
-​       nodes.(*sync.Map).Store(string(ev.Kv.Key), node)
-​      case clientv3.EventTypeDelete:
-​       // 删除服务节点
-​       nodes, _ := r.nodeListMap.Load(serviceName)
-​       nodes.(*sync.Map).Delete(string(ev.Kv.Key))
-​      }
-​    }
+    for _, ev := range wResp.Events {
+      switch ev.Type {
+      case clientv3.EventTypePut:
+       // 新增或更新服务节点
+       node := &discovery.ServiceNode{}
+       if err := json.Unmarshal(ev.Kv.Value, node); err != nil {
+         log.Printf("failed to unmarshal node data: %v", err)
+         continue
+       }
+       r.nodeListMap.LoadOrStore(serviceName, &sync.Map{})
+       nodes, _ := r.nodeListMap.Load(serviceName)
+       nodes.(*sync.Map).Store(string(ev.Kv.Key), node)
+      case clientv3.EventTypeDelete:
+       // 删除服务节点
+       nodes, _ := r.nodeListMap.Load(serviceName)
+       nodes.(*sync.Map).Delete(string(ev.Kv.Key))
+      }
+    }
   }
 }
 ```
@@ -388,94 +388,94 @@ func TestEtcdRegistry(t *testing.T) {
   r, err := NewRegistry([]string{"localhost:2379"})
   a.Nil(err)
   t.Run("Register single node", func(t *testing.T) {
-​    node := &discovery.ServiceNode{
-​      ServiceName: "test",
-​      IP:     net.IPv4(127, 0, 0, 1),
-​      Port:    8484,
-​      Tags: map[string]string{
-​       "version": "1.0",
-​      },
-​    }
-​    // 注册节点
-​    err = r.Register(context.Background(), node)
-​    a.Nil(err)
-​    time.Sleep(time.Millisecond * 100)
-​    // 获取节点
-​    nodes, err := r.GetNodes(context.Background(), "test", map[string]string{
-​      "version": "1.0",
-​    })
-​    a.Nil(err)
-​    a.Len(nodes, 1)
-​    a.Equal(node, nodes[0])
-​    // 注销节点
-​    err = r.Unregister(context.Background(), node)
-​    a.Nil(err)
+    node := &discovery.ServiceNode{
+      ServiceName: "test",
+      IP:     net.IPv4(127, 0, 0, 1),
+      Port:    8484,
+      Tags: map[string]string{
+       "version": "1.0",
+      },
+    }
+    // 注册节点
+    err = r.Register(context.Background(), node)
+    a.Nil(err)
+    time.Sleep(time.Millisecond * 100)
+    // 获取节点
+    nodes, err := r.GetNodes(context.Background(), "test", map[string]string{
+      "version": "1.0",
+    })
+    a.Nil(err)
+    a.Len(nodes, 1)
+    a.Equal(node, nodes[0])
+    // 注销节点
+    err = r.Unregister(context.Background(), node)
+    a.Nil(err)
 
-​    time.Sleep(time.Millisecond * 100)
-​    // 获取节点
-​    nodes, err = r.GetNodes(context.Background(), "test", map[string]string{
-​      "version": "1.0",
-​    })
-​    a.Nil(err)
-​    a.Len(nodes, 0)
+    time.Sleep(time.Millisecond * 100)
+    // 获取节点
+    nodes, err = r.GetNodes(context.Background(), "test", map[string]string{
+      "version": "1.0",
+    })
+    a.Nil(err)
+    a.Len(nodes, 0)
   })
   t.Run("Register multi nodes with multi tags", func(t *testing.T) {
-​    node1 := &discovery.ServiceNode{
-​      ServiceName: "test",
-​      IP:     net.IPv4(127, 0, 0, 1),
-​      Port:    8484,
-​      Tags: map[string]string{
-​       "version": "1.0",
-​       "region": "cn",
-​      },
-​    }
-​    node2 := &discovery.ServiceNode{
-​      ServiceName: "test",
-​      IP:     net.IPv4(127, 0, 0, 2),
-​      Port:    8484,
-​      Tags: map[string]string{
-​       "version": "1.0",
-​       "region": "us",
-​      },
-​    }
-​    // 注册节点
-​    err = r.Register(context.Background(), node1)
-​    a.Nil(err)
-​    err = r.Register(context.Background(), node2)
-​    a.Nil(err)
-​    time.Sleep(time.Millisecond * 100)
-​    // 获取节点
-​    nodes, err := r.GetNodes(context.Background(), "test", map[string]string{
-​      "version": "1.0",
-​      "region": "cn",
-​    })
-​    a.Nil(err)
-​    a.Len(nodes, 1)
-​    a.Equal(node1, nodes[0])
-​    // 获取节点
-​    nodes, err = r.GetNodes(context.Background(), "test", map[string]string{
-​      "version": "1.0",
-​      "region": "us",
-​    })
-​    a.Nil(err)
-​    a.Len(nodes, 1)
-​    a.Equal(node2, nodes[0])
-​    // 获取节点
-​    nodes, err = r.GetNodes(context.Background(), "test", nil)
-​    a.Nil(err)
-​    a.Len(nodes, 2)
-​    // 注销节点
-​    err = r.Unregister(context.Background(), node1)
-​    a.Nil(err)
-​    err = r.Unregister(context.Background(), node2)
-​    a.Nil(err)
-​    time.Sleep(time.Millisecond * 100)
-​    // 获取节点
-​    nodes, err = r.GetNodes(context.Background(), "test", map[string]string{
-​      "version": "1.0",
-​    })
-​    a.Nil(err)
-​    a.Len(nodes, 0)
+    node1 := &discovery.ServiceNode{
+      ServiceName: "test",
+      IP:     net.IPv4(127, 0, 0, 1),
+      Port:    8484,
+      Tags: map[string]string{
+       "version": "1.0",
+       "region": "cn",
+      },
+    }
+    node2 := &discovery.ServiceNode{
+      ServiceName: "test",
+      IP:     net.IPv4(127, 0, 0, 2),
+      Port:    8484,
+      Tags: map[string]string{
+       "version": "1.0",
+       "region": "us",
+      },
+    }
+    // 注册节点
+    err = r.Register(context.Background(), node1)
+    a.Nil(err)
+    err = r.Register(context.Background(), node2)
+    a.Nil(err)
+    time.Sleep(time.Millisecond * 100)
+    // 获取节点
+    nodes, err := r.GetNodes(context.Background(), "test", map[string]string{
+      "version": "1.0",
+      "region": "cn",
+    })
+    a.Nil(err)
+    a.Len(nodes, 1)
+    a.Equal(node1, nodes[0])
+    // 获取节点
+    nodes, err = r.GetNodes(context.Background(), "test", map[string]string{
+      "version": "1.0",
+      "region": "us",
+    })
+    a.Nil(err)
+    a.Len(nodes, 1)
+    a.Equal(node2, nodes[0])
+    // 获取节点
+    nodes, err = r.GetNodes(context.Background(), "test", nil)
+    a.Nil(err)
+    a.Len(nodes, 2)
+    // 注销节点
+    err = r.Unregister(context.Background(), node1)
+    a.Nil(err)
+    err = r.Unregister(context.Background(), node2)
+    a.Nil(err)
+    time.Sleep(time.Millisecond * 100)
+    // 获取节点
+    nodes, err = r.GetNodes(context.Background(), "test", map[string]string{
+      "version": "1.0",
+    })
+    a.Nil(err)
+    a.Len(nodes, 0)
   })
 }
 ```
