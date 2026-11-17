@@ -20,14 +20,15 @@
     <meta name="google-site-verification" content="{{ site.Params.analytics.google.SiteVerificationTag }}">
     {{- end }}
 
-    <link rel="alternate" type="application/rss+xml" href="{{.Site.BaseURL }}/index.xml" title="{{ .Site.Title }}">
+    <link rel="alternate" type="application/rss+xml" href="{{ "atom.xml" | absLangURL }}" title="{{ .Site.Title }}">
 
     {{ partial "common/analytics.html" . }}
     {{ partial "common/extensions.html" . }}
     {{ partial "common/icon.html" . }}
     {{ if .Params.math }}{{ partial "math.html" . }}{{ end }}
 
-    <link href="/titilliumweb/titilliumweb.css" rel="stylesheet">
+    <link rel="preload" href="/titilliumweb/TitilliumWeb-Regular.ttf" as="font" type="font/ttf" crossorigin>
+    <link href="/titilliumweb/titilliumweb.css?v=2" rel="stylesheet">
 
     {{ if .Site.IsServer }}
     {{ $cssFile := (dict "targetPath" "css/main.css" "enableSourceMap" true ) }}
@@ -48,7 +49,7 @@
 
     {{ if .Site.Params.options.showDarkMode -}}
     {{ $darkModeInit := resources.Get "js/darkmode-init.js" | js.Build | minify -}}
-    <script>{ { $darkModeInit.Content | safeJS } }</script>
+    <script>{{ $darkModeInit.Content | safeJS }}</script>
     {{ end -}}
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2871082647721658" crossorigin="anonymous"></script>
 </head>

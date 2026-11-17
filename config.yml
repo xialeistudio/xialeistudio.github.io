@@ -5,6 +5,7 @@ license: MIT
 licenselink: 'https://github.com/guangzhengli/hugo-theme-ladder/blob/master/LICENSE'
 homepage: 'https://www.ddhigh.com'
 defaultContentLanguage: 'zh'
+hasCJKLanguage: true
 paginate: 10
 summaryLength: 5
 
@@ -47,7 +48,7 @@ params:
     - Go
     - Backend
   description: Engineering notes by Lei Xia, a backend architect focused on AI agent engineering, distributed systems and software architecture. Practical write-ups with real trade-offs and working code.
-  favicon: /img/favicon.ico
+  favicon: /favicon.ico
   sponsors:
     buymeacoffee:
       enable: true
@@ -69,7 +70,7 @@ params:
   darkModeTheme: data-dark-mode
   comments:
     giscus:
-      enable: true
+      enable: false
       repo: xialeistudio/discussion
       repo_id: R_kgDOKurTRA
       category: General
@@ -124,13 +125,18 @@ languages:
         - name: Archives
           url: /archives
           weight: 2
-        - name: Books
-          url: /books
+        - name: About
+          url: /about
           weight: 4
-        - name: Guestbook
-          url: /guestbook
-          weight: 5
     params:
+      tagline: Engineering notes from a backend architect, now focused on building reliable AI agents.
+      homeLinks:
+        - name: About
+          url: about/
+        - name: RSS
+          url: atom.xml
+        - name: GitHub
+          url: https://github.com/xialeistudio
       books:
       - title: ThinkPHP in action
         link: http://www.tup.tsinghua.edu.cn/booksCenter/book_06867701.html
@@ -164,13 +170,26 @@ languages:
         - name: 归档
           url: /archives
           weight: 2
-        - name: 出版物
-          url: /books
+        - name: 系列
+          url: /series
+          weight: 3
+        - name: 关于
+          url: /about
           weight: 4
-        - name: 留言板
-          url: /guestbook
-          weight: 5
     params:
+      tagline: 后端架构师的工程笔记。现在专注 AI Agent 工程：怎么把 Agent 做成可靠的生产系统。
+      currentSeries:
+        name: Agent 工程笔记
+        total: 9
+      homeLinks:
+        - name: 关于我
+          url: about/
+        - name: 公众号
+          url: about/#wechat
+        - name: RSS 订阅
+          url: atom.xml
+        - name: GitHub
+          url: https://github.com/xialeistudio
       brand: Lei Xia · 工程笔记
       authorDescription: 后端架构师 · AI 工程实践
       keywords:

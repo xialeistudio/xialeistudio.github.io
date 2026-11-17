@@ -4,17 +4,24 @@
     <h1>{{ .Title }}</h1>
   </header>
 
-  {{ partial "blog/meta.html" . }}
+  <p class="post-meta">
+    {{- with .GetTerms "categories" }}<a class="post-cat" href="{{ (index . 0).RelPermalink }}">{{ (index . 0).LinkTitle }}</a>{{ end }}
+    <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
+    <span>{{ i18n "reading_time" .ReadingTime }}</span>
+    {{- with .Params.series }}<span>{{ i18n "series" 1 }}：<a href="{{ printf "series/%s/" (index . 0 | lower | replaceRE `\s+` "-") | relLangURL }}">{{ index . 0 }}</a></span>{{ end }}
+  </p>
 
-  <div class="blog-toc">
-    {{ partial "blog/toc.html" . }}
-  </div>
+  {{- if and (gt .WordCount 400) (ne .TableOfContents "<nav id=\"TableOfContents\"></nav>") }}
+  <details class="post-toc">
+    <summary>{{ i18n "toc" }}</summary>
+    {{ .TableOfContents }}
+  </details>
+  {{- end }}
 
   {{ partial "blog/outdated.html" . }}
 
   <section class="blog-content">
     {{ .Content }}
-    {{partial "blog/copyright.html" .}}
   </section>
 
   {{ $pages := where site.RegularPages "Type" "in" site.Params.mainSections }}
@@ -42,8 +49,6 @@
   {{ end }}
 
   {{ partial "blog/series.html" . }}
-  {{ partial "common/utteranc.html" . }}
-  {{ partial "common/giscus.html" . }}
 </article>
 
 {{ end }}

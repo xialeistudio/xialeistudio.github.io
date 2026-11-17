@@ -1,4 +1,0 @@
----
-title: "Guestbook"
-layout: "guestbook"
----

@@ -8,3 +8,24 @@ other = "按时间"
 
 [archive_by_topic]
 other = "按主题"
+
+[home_series]
+other = "正在连载"
+
+[series_progress]
+other = "已更新 {{ .Done }} / {{ .Total }} 篇"
+
+[series_latest]
+other = "最新："
+
+[home_featured]
+other = "精选文章"
+
+[home_latest]
+other = "最新文章"
+
+[all_posts]
+other = "全部 {{ .Count }} 篇文章"
+
+[toc]
+other = "目录"

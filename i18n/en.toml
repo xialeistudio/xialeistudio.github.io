@@ -8,3 +8,24 @@ other = "By year"
 
 [archive_by_topic]
 other = "By topic"
+
+[home_series]
+other = "In progress"
+
+[series_progress]
+other = "{{ .Done }} of {{ .Total }} published"
+
+[series_latest]
+other = "Latest: "
+
+[home_featured]
+other = "Featured"
+
+[home_latest]
+other = "Latest"
+
+[all_posts]
+other = "All {{ .Count }} posts"
+
+[toc]
+other = "Contents"

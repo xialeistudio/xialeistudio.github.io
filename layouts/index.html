@@ -1,0 +1,70 @@
+{{ define "content" }}
+{{- $posts := where site.RegularPages "Type" "in" site.Params.mainSections }}
+{{- $featured := where $posts "Params.featured" true }}
+{{- $latest := first 8 $posts.ByDate.Reverse }}
+
+<div class="home2">
+  {{- /* Intro */}}
+  <header class="home2-intro">
+    <h1>{{ site.Params.author }}</h1>
+    <p class="home2-role">{{ site.Params.authorDescription }}</p>
+    <p class="home2-lead">{{ site.Params.tagline }}</p>
+    <ul class="home2-links">
+      {{- range site.Params.homeLinks }}
+      <li><a href="{{ .url | relLangURL }}">{{ .name }}</a></li>
+      {{- end }}
+    </ul>
+  </header>
+
+  {{- /* Series in progress */}}
+  {{- with site.Params.currentSeries }}
+  {{- $name := .name }}
+  {{- $total := .total }}
+  {{- $key := $name | lower | replaceRE `\s+` "-" }}
+  {{- with index site.Taxonomies.series $key }}
+  {{- $sp := .Pages.ByDate }}
+  {{- if $sp }}
+  <section class="home2-section">
+    <h2 class="home2-heading">{{ i18n "home_series" }}</h2>
+    <a class="home2-series" href="{{ printf "series/%s/" $key | relLangURL }}">
+      <span class="home2-series-name">{{ $name }}</span>
+      <span class="home2-series-meta">{{ i18n "series_progress" (dict "Done" (len $sp) "Total" $total) }}</span>
+      <span class="home2-series-latest">{{ i18n "series_latest" }}{{ (index $sp.Reverse 0).Title }}</span>
+    </a>
+  </section>
+  {{- end }}
+  {{- end }}
+  {{- end }}
+
+  {{- /* Featured */}}
+  {{- if $featured }}
+  <section class="home2-section">
+    <h2 class="home2-heading">{{ i18n "home_featured" }}</h2>
+    <div class="home2-grid">
+      {{- range $featured.ByDate.Reverse }}
+      <a class="home2-card" href="{{ .RelPermalink }}">
+        {{- with .GetTerms "categories" }}<span class="home2-label">{{ (index . 0).LinkTitle }}</span>{{ end }}
+        <span class="home2-card-title">{{ .Title }}</span>
+        <span class="home2-card-meta">{{ .Date.Format "2006-01" }} · {{ i18n "reading_time" .ReadingTime }}</span>
+      </a>
+      {{- end }}
+    </div>
+  </section>
+  {{- end }}
+
+  {{- /* Latest */}}
+  <section class="home2-section">
+    <h2 class="home2-heading">{{ i18n "home_latest" }}</h2>
+    <ul class="home2-list">
+      {{- range $latest }}
+      <li>
+        <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
+        <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+        {{- with .GetTerms "categories" }}<span class="home2-tag">{{ (index . 0).LinkTitle }}</span>{{ end }}
+      </li>
+      {{- end }}
+    </ul>
+    <p class="home2-more"><a href="{{ "archives/" | relLangURL }}">{{ i18n "all_posts" (dict "Count" (len $posts)) }} →</a></p>
+  </section>
+</div>
+{{ end }}
