@@ -80,11 +80,13 @@ params:
       lang: en # pick a language from https://github.com/giscus/giscus/tree/main/locales
   analytics:
     google:
+      id: G-EC3XLVSGKV
       # SiteVerificationTag: xxx
     umami:
-      enable: false
-      website_id: 52f8f0f9-d93d-466b-8ef5-508aae8c4ed4
-      url: https://analysis.ddhigh.com/script.js
+      enable: false  # turn on once the Umami Cloud website ID is filled in
+      website_id: ""
+      url: https://cloud.umami.is/script.js
+      domains: www.ddhigh.com
   guestbook:
     title: Guestbook
     description: Leave a comment below. It could be anything –- question, appreciation, information, or even humor.

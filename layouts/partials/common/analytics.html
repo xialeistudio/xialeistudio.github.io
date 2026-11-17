@@ -1,0 +1,15 @@
+{{- /* Analytics only on the production build, never in `hugo server`. */ -}}
+{{- if not hugo.IsServer }}
+{{- with site.Params.analytics.umami }}{{ if .enable }}
+<script defer src="{{ .url }}" data-website-id="{{ .website_id }}"{{ with .domains }} data-domains="{{ . }}"{{ end }}></script>
+{{- end }}{{ end }}
+{{- with site.Params.analytics.google.id }}
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ . }}"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', '{{ . }}');
+</script>
+{{- end }}
+{{- end }}
