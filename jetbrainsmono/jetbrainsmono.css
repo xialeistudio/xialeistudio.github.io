@@ -1,0 +1,15 @@
+/* JetBrains Mono v2.304 (SIL OFL 1.1, see OFL.txt) for code blocks and inline code. */
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/jetbrainsmono/JetBrainsMono-Regular.woff2) format("woff2");
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(/jetbrainsmono/JetBrainsMono-Bold.woff2) format("woff2");
+}

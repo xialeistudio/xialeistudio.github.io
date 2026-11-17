@@ -1,0 +1,135 @@
+<!doctype html><html lang=zh><head><meta name=viewport content="width=device-width,initial-scale=1"><title>后端开发</title>
+<meta charset=utf-8><meta name=google-adsense-account content="ca-pub-2871082647721658"><meta content="AI 工程 ,AI Agent ,Harness Engineering ,大模型应用 ,分布式系统 ,微服务 ,软件架构 ,Go ,后端开发" name=keywords><meta name=description content="Go、PHP、Node.js、Java、数据库与网络编程"><meta name=author content="Lei Xia"><link rel=canonical href=https://www.ddhigh.com/categories/backend/><link rel=alternate type=application/rss+xml href=https://www.ddhigh.com/atom.xml title="Lei Xia · 工程笔记"><script defer src=https://cloud.umami.is/script.js data-website-id=a020c1ea-926c-4695-aadf-d1eee2d31191 data-domains=www.ddhigh.com></script><script async src="https://www.googletagmanager.com/gtag/js?id=G-EC3XLVSGKV"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-EC3XLVSGKV")</script><meta property="og:title" content="后端开发"><meta property="og:description" content="Go、PHP、Node.js、Java、数据库与网络编程"><meta property="og:type" content="website"><meta property="og:url" content="https://www.ddhigh.com/categories/backend/"><meta name=twitter:card content="summary"><meta name=twitter:title content="后端开发"><meta name=twitter:description content="Go、PHP、Node.js、Java、数据库与网络编程"><link rel=icon href=https://www.ddhigh.com/favicon.ico sizes=32x32><link rel=icon href=https://www.ddhigh.com/favicon.svg type=image/svg+xml><link rel=apple-touch-icon href=https://www.ddhigh.com/apple-touch-icon.png><link rel=preload href=/titilliumweb/TitilliumWeb-Regular.ttf as=font type=font/ttf crossorigin><link href="/titilliumweb/titilliumweb.css?v=2" rel=stylesheet><link href="/jetbrainsmono/jetbrainsmono.css?v=1" rel=stylesheet><link rel=stylesheet href=/css/main.min.ae3ab4fe6238cd8cc62b95e2eebeee4be1e38e9cf27325c9fc1c216f55b0a35a.css integrity="sha256-rjq0/mI4zYzGK5Xi7r7uS+HjjpzycyXJ/Bwhb1Wwo1o=" crossorigin=anonymous media=screen><link rel=stylesheet href=/scss/highlight/github-dark.min.min.66034289ee9a113219a2c4aae0a8bd2095ab255c832a42efcf5863f10814e7a1.css><script src=/js/highlight.min.min.894ca9c68afab956438c4926a0dc7f5293e04e08595bd27abdb123e94801f684.js></script><script>hljs.highlightAll()</script><script>(()=>{var t=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,e=localStorage.getItem("theme");t&&e===null&&(localStorage.setItem("theme","dark"),document.documentElement.setAttribute("data-dark-mode","")),t&&e==="dark"&&document.documentElement.setAttribute("data-dark-mode",""),e==="dark"&&document.documentElement.setAttribute("data-dark-mode","")})()</script><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2871082647721658" crossorigin=anonymous></script></head><body><main class=wrapper><nav class=navigation><section class=container><a class=navigation-brand href=/>Lei Xia · 工程笔记
+</a><input type=checkbox id=menu-toggle>
+<label class="menu-button float-right" for=menu-toggle><span></span><span></span><span></span></label><ul class=navigation-list id=navigation-list><li class="navigation-item navigation-menu"><a class=navigation-link href=/>首页</a></li><li class="navigation-item navigation-menu"><a class=navigation-link href=/archives>归档</a></li><li class="navigation-item navigation-menu"><a class=navigation-link href=/series>系列</a></li><li class="navigation-item navigation-menu"><a class=navigation-link href=/about>关于</a></li><li class="navigation-item menu-separator"><span>|</span></li><li class="navigation-item navigation-social"><a class=navigation-link href=https://github.com/xialeistudio><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37.0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44.0 0020 4.77 5.07 5.07.0 0019.91 1S18.73.65 16 2.48a13.38 13.38.0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07.0 005 4.77 5.44 5.44.0 003.5 8.55c0 5.42 3.3 6.61 6.44 7A3.37 3.37.0 009 18.13V22"/></svg></a></li><li class="navigation-item navigation-dark"><button id=mode type=button aria-label="toggle user light or dark theme">
+<span class=toggle-dark><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></span><span class=toggle-light><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></span></button></li><li class="navigation-item navigation-language"><a href=https://www.ddhigh.com/en/categories/backend/>EN</a></li></ul></section></nav><div id=content><div class=home2><header class=page-head><p class=page-crumb><a href=/categories/>← 分类</a></p><h1>后端开发</h1><p class=page-desc>Go、PHP、Node.js、Java、数据库与网络编程</p><p class=page-meta>共 126 篇</p></header><ul class=home2-list><li><time datetime=2025-07-15>2025-07-15</time>
+<a href=/2025/07/15/cpp-coroutine-future-to-awaitable/>C++ 协程进阶：将 std::future 转换为 asio::awaitable</a></li><li><time datetime=2025-07-12>2025-07-12</time>
+<a href=/2025/07/12/lunet-high-performance-coroutine-network-library/>Lunet: 高性能协程网络库的设计与实现</a></li><li><time datetime=2023-05-03>2023-05-03</time>
+<a href=/2023/05/03/reading-note/>MySQL、Redis、Aurora读书笔记</a></li><li><time datetime=2023-04-20>2023-04-20</time>
+<a href=/2023/04/20/fix-gomonkey-permission-defined/>修复M1使用gomonkey提示permission defined错误</a></li><li><time datetime=2021-09-18>2021-09-18</time>
+<a href=/2021/09/18/gomonkey-private-method-stub/>gomonkey私有方法打桩</a></li><li><time datetime=2021-03-17>2021-03-17</time>
+<a href=/2021/03/17/golang-function/>Golang程序设计——函数</a></li><li><time datetime=2021-03-09>2021-03-09</time>
+<a href=/2021/03/09/golang-data-container/>Golang程序设计——数据容器</a></li><li><time datetime=2021-02-26>2021-02-26</time>
+<a href=/2021/02/26/golang-basic/>Golang程序设计——基本语法</a></li><li><time datetime=2021-02-25>2021-02-25</time>
+<a href=/2021/02/25/golang-get-started/>Go语言程序设计</a></li><li><time datetime=2021-02-06>2021-02-06</time>
+<a href=/2021/02/06/go-wire-tutorial/>golang依赖注入工具wire指南</a></li><li><time datetime=2021-01-12>2021-01-12</time>
+<a href=/2021/01/12/golang-halia-get-started/>Golang组件化网络服务器框架Halia指南</a></li><li><time datetime=2020-10-20>2020-10-20</time>
+<a href=/2020/10/20/laravel-crontab-log-permission/>Laravel定时任务写入日志用户变为root导致Web进程无法写入日志问题</a></li><li><time datetime=2020-08-20>2020-08-20</time>
+<a href=/2020/08/20/golang-http-captcha-example/>Golang Http 验证码示例</a></li><li><time datetime=2020-02-01>2020-02-01</time>
+<a href=/2020/02/01/java-resource-load/>Java中加载文件的几种方式</a></li><li><time datetime=2020-01-17>2020-01-17</time>
+<a href=/2020/01/17/php-binary-io/>kafka二进制协议简要分析</a></li><li><time datetime=2019-11-14>2019-11-14</time>
+<a href=/2019/11/14/mysql-char-varchar-max-length/>MySQL中的CHAR和VARCHAR到底支持多长?</a></li><li><time datetime=2019-10-30>2019-10-30</time>
+<a href=/2019/10/30/twblog/>我是如何发现我的文章被侵权以及如何得到侵权网站的联系方式的?</a></li><li><time datetime=2019-10-29>2019-10-29</time>
+<a href=/2019/10/29/redis-high-concurrent/>Redis优化高并发下的秒杀性能</a></li><li><time datetime=2019-10-11>2019-10-11</time>
+<a href=/2019/10/11/https-protocol/>HTTPS协议是如何保证安全的?</a></li><li><time datetime=2019-09-10>2019-09-10</time>
+<a href=/2019/09/10/nestjs-interceptor/>NestJs学习之旅(9)——拦截器</a></li><li><time datetime=2019-08-28>2019-08-28</time>
+<a href=/2019/08/28/nestjs-pipe/>NestJs学习之旅(8)——管道</a></li><li><time datetime=2019-08-27>2019-08-27</time>
+<a href=/2019/08/27/nestjs-guard/>NestJs学习之旅(7)——路由守卫</a></li><li><time datetime=2019-08-26>2019-08-26</time>
+<a href=/2019/08/26/nestjs-exception-filter/>NestJs学习之旅(6)——异常处理</a></li><li><time datetime=2019-08-24>2019-08-24</time>
+<a href=/2019/08/24/socks5-protocol/>socks5协议详解</a></li><li><time datetime=2019-08-23>2019-08-23</time>
+<a href=/2019/08/23/nestjs-middlware/>NestJs学习之旅(5)——中间件</a></li><li><time datetime=2019-08-22>2019-08-22</time>
+<a href=/2019/08/22/nestjs-module/>NestJs学习之旅(4)——模块系统</a></li><li><time datetime=2019-08-21>2019-08-21</time>
+<a href=/2019/08/21/nestjs-provider/>NestJs学习之旅(3)——服务提供者</a></li><li><time datetime=2019-08-20>2019-08-20</time>
+<a href=/2019/08/20/nestjs-controller/>NestJs学习之旅(2)——控制器</a></li><li><time datetime=2019-08-19>2019-08-19</time>
+<a href=/2019/08/19/nestjs-get-started/>NestJs学习之旅(1)——快速开始</a></li><li><time datetime=2019-07-25>2019-07-25</time>
+<a href=/2019/07/25/nodejs-guide-next-step/>NodeJs简明教程(11) - 完结篇</a></li><li><time datetime=2019-07-25>2019-07-25</time>
+<a href=/2019/07/25/nodejs-guide-dgram/>NodeJs简明教程(10)</a></li><li><time datetime=2019-07-24>2019-07-24</time>
+<a href=/2019/07/24/nodejs-guide-net/>NodeJs简明教程(9)</a></li><li><time datetime=2019-07-23>2019-07-23</time>
+<a href=/2019/07/23/nodejs-guide-child-process/>NodeJs简明教程(8)</a></li><li><time datetime=2019-07-22>2019-07-22</time>
+<a href=/2019/07/22/nodejs-guide-events/>NodeJs简明教程(7)</a></li><li><time datetime=2019-07-21>2019-07-21</time>
+<a href=/2019/07/21/nodejs-guide-crypto/>NodeJs简明教程(6)</a></li><li><time datetime=2019-07-20>2019-07-20</time>
+<a href=/2019/07/20/nodejs-guide-path/>NodeJs简明教程(5)</a></li><li><time datetime=2019-07-20>2019-07-20</time>
+<a href=/2019/07/20/nodejs-guide-filesystem/>NodeJs简明教程(4)</a></li><li><time datetime=2019-07-19>2019-07-19</time>
+<a href=/2019/07/19/nodejs-guide-http-server/>NodeJs简明教程(3)</a></li><li><time datetime=2019-07-19>2019-07-19</time>
+<a href=/2019/07/19/nodejs-guide-installation/>NodeJs简明教程(2)</a></li><li><time datetime=2019-07-18>2019-07-18</time>
+<a href=/2019/07/18/nodejs-guide-about/>NodeJs简明教程(1)</a></li><li><time datetime=2019-07-08>2019-07-08</time>
+<a href=/2019/07/08/druid-sql-monitor/>druid SQL监控不显示问题</a></li><li><time datetime=2019-06-18>2019-06-18</time>
+<a href=/2019/06/18/database-n-1-solution/>解决数据库N+1查询问题</a></li><li><time datetime=2019-05-19>2019-05-19</time>
+<a href=/2019/05/19/running-thrift-on-swoole-with-yii2/>在Swoole环境下运行注入Yii2框架的thrift应用</a></li><li><time datetime=2019-05-19>2019-05-19</time>
+<a href=/2019/05/19/running-yii2-on-swoole/>在swoole上运行Yii2应用</a></li><li><time datetime=2019-05-16>2019-05-16</time>
+<a href=/2019/05/16/running-thrift-on-swoole/>使用swoole来运行thrift应用</a></li><li><time datetime=2019-05-14>2019-05-14</time>
+<a href=/2019/05/14/use-closure-in-cache/>在缓存中使用闭包函数</a></li><li><time datetime=2019-05-14>2019-05-14</time>
+<a href=/2019/05/14/use-closure-in-transaction/>在事务中使用闭包函数简化开发</a></li><li><time datetime=2019-02-26>2019-02-26</time>
+<a href=/2019/02/26/c-php-simple-z-val-example/>c语言实现简单版的php z_val结构体</a></li><li><time datetime=2019-01-02>2019-01-02</time>
+<a href=/2019/01/02/golang-timeout-context/>一起学context（二）——超时控制</a></li><li><time datetime=2018-10-17>2018-10-17</time>
+<a href=/2018/10/17/golang-context-with-value/>一起学context（一）——上下文值传递</a></li><li><time datetime=2018-10-17>2018-10-17</time>
+<a href=/2018/10/17/go-io-reader-panic/>io.Reader游标引发的血案</a></li><li><time datetime=2018-08-08>2018-08-08</time>
+<a href=/2018/08/08/golang-general-goroutine-pool/>golang40行代码实现通用协程池</a></li><li><time datetime=2018-07-24>2018-07-24</time>
+<a href=/2018/07/24/golang-dependency-inject-container/>golang不到30行代码实现依赖注入</a></li><li><time datetime=2018-07-23>2018-07-23</time>
+<a href=/2018/07/23/golang-route-dispatcher/>不到20行代码实现golang路由调度</a></li><li><time datetime=2018-06-14>2018-06-14</time>
+<a href=/2018/06/14/redis-common-practice/>redis常用实践</a></li><li><time datetime=2018-04-24>2018-04-24</time>
+<a href=/2018/04/24/yii2-dependency-inject/>使用yii2依赖注入规范业务开发</a></li><li><time datetime=2018-04-05>2018-04-05</time>
+<a href=/2018/04/05/golang-for-over-channels/>golang for遍历channel时需要注意的问题</a></li><li><time datetime=2018-03-02>2018-03-02</time>
+<a href=/2018/03/02/golang-tcp-stick-package/>golang解决TCP粘包问题</a></li><li><time datetime=2018-03-01>2018-03-01</time>
+<a href=/2018/03/01/golang-upload/>golang multipart上传文件到远端（如上传微信临时素材）</a></li><li><time datetime=2018-03-01>2018-03-01</time>
+<a href=/2018/03/01/golang-json-no-escape-html/>golang JSON编码时保留HTML标签</a></li><li><time datetime=2018-02-28>2018-02-28</time>
+<a href=/2018/02/28/golang-export-csv/>golang使用CSV导出大量数据</a></li><li><time datetime=2018-02-08>2018-02-08</time>
+<a href=/2018/02/08/nodejs-thrift-multiple-client/>nodejs thrift多路复用客户端</a></li><li><time datetime=2018-02-01>2018-02-01</time>
+<a href=/2018/02/01/golang-generic-pool/>golang通用连接池的实现</a></li><li><time datetime=2018-01-31>2018-01-31</time>
+<a href=/2018/01/31/goroutine-limit-demo/>golang限制协程数量</a></li><li><time datetime=2018-01-30>2018-01-30</time>
+<a href=/2018/01/30/tnwz/>头脑王者辅助</a></li><li><time datetime=2018-01-20>2018-01-20</time>
+<a href=/2018/01/20/golang-memory-leak/>golang可能导致内存泄漏的地方</a></li><li><time datetime=2018-01-20>2018-01-20</time>
+<a href=/2018/01/20/php-async/>PHP实现“异步”</a></li><li><time datetime=2017-11-23>2017-11-23</time>
+<a href=/2017/11/23/go-rtmp-http-publisher/>从零开始打造自己的直播服务器-golang开发HTTP推流服务</a></li><li><time datetime=2017-11-21>2017-11-21</time>
+<a href=/2017/11/21/log4go-get-started/>log4go尝鲜</a></li><li><time datetime=2017-11-17>2017-11-17</time>
+<a href=/2017/11/17/go-tlv/>golang实现TLV编码</a></li><li><time datetime=2017-11-17>2017-11-17</time>
+<a href=/2017/11/17/node-tlv/>Tlv编码在NodeJs中的应用</a></li><li><time datetime=2017-10-17>2017-10-17</time>
+<a href=/2017/10/17/yii2-close-csrf-validation-cookie-validatetion/>yii2关闭csrf校验和cookie校验</a></li><li><time datetime=2017-10-17>2017-10-17</time>
+<a href=/2017/10/17/koa-cookie-use-maxage/>koa-cooke使用maxAge代替expires来设置过期时间</a></li><li><time datetime=2017-10-16>2017-10-16</time>
+<a href=/2017/10/16/servlet-print-writer-outputstream-encoding/>Servlet中print-writer和outputstream编码问题</a></li><li><time datetime=2017-10-15>2017-10-15</time>
+<a href=/2017/10/15/excel-stream-unknown-encoding/>excel-stream Unknown Encoding错误问题</a></li><li><time datetime=2017-07-31>2017-07-31</time>
+<a href=/2017/07/31/spring-boot-exclude-null/>Spring Boot JPA 返回json时排除Null字段</a></li><li><time datetime=2017-07-18>2017-07-18</time>
+<a href=/2017/07/18/spring-boot-druid-sql/>druid spring boot 统计SQL问题</a></li><li><time datetime=2017-06-24>2017-06-24</time>
+<a href=/2017/06/24/rsa-in-node-php/>使用RSA在PHP和NodeJs中进行加密数据通信</a></li><li><time datetime=2017-06-13>2017-06-13</time>
+<a href=/2017/06/13/node-unhandledrejection/>nodejs unhandledRejection问题解决</a></li><li><time datetime=2017-05-12>2017-05-12</time>
+<a href=/2017/05/12/yii2-memcached-qcloud-not-expires/>Yii2框架MemCache在腾讯云部署时不过期问题</a></li><li><time datetime=2017-04-27>2017-04-27</time>
+<a href=/2017/04/27/node-syslogd/>使用NodeJs提供syslogd服务端</a></li><li><time datetime=2017-04-27>2017-04-27</time>
+<a href=/2017/04/27/log4php-syslog/>log4php使用syslog记录日志</a></li><li><time datetime=2017-02-08>2017-02-08</time>
+<a href=/2017/02/08/socket.io-connect-params/>NodeJs socket.io连接参数中传入查询字符串</a></li><li><time datetime=2017-01-20>2017-01-20</time>
+<a href=/2017/01/20/yii2-migrate/>Yii2 migrate使用</a></li><li><time datetime=2016-12-28>2016-12-28</time>
+<a href=/2016/12/28/wechat-component-domain/>微信开放平台公众号第三方平台网页开发域名问题</a></li><li><time datetime=2016-12-21>2016-12-21</time>
+<a href=/2016/12/21/log4php-get-started/>apache log4php简单使用</a></li><li><time datetime=2016-12-17>2016-12-17</time>
+<a href=/2016/12/17/pomelo-global-channel/>pomelo-global-channel-plugin的使用</a></li><li><time datetime=2016-12-16>2016-12-16</time>
+<a href=/2016/12/16/pomelo-client-for-commonjs/>基于CommonJs的pomelo客户端</a></li><li><time datetime=2016-12-15>2016-12-15</time>
+<a href=/2016/12/15/pomelo-get-started/>pomelo Hello World</a></li><li><time datetime=2016-12-14>2016-12-14</time>
+<a href=/2016/12/14/node-fetch-ignore-certificate/>node-fetch请求https站点时不验证证书</a></li><li><time datetime=2016-11-13>2016-11-13</time>
+<a href=/2016/11/13/nodejs-export-large-excel/>Nodejs导出大数据到Excel</a></li><li><time datetime=2016-11-12>2016-11-12</time>
+<a href=/2016/11/12/nodejs-read-large-excel/>Nodejs读取大excel</a></li><li><time datetime=2016-10-31>2016-10-31</time>
+<a href=/2016/10/31/php-openssl-rsa-sign/>PHP利用openssl实现RSA非对称加密签名</a></li><li><time datetime=2016-09-18>2016-09-18</time>
+<a href=/2016/09/18/repeat-call-file-get-contents/>重复调用file_get_contents的问题</a></li><li><time datetime=2016-08-09>2016-08-09</time>
+<a href=/2016/08/09/wechat-media-platform-nodejs-sdk/>微信公众平台开发NodeJs SDK</a></li><li><time datetime=2016-06-26>2016-06-26</time>
+<a href=/2016/06/26/mybatis-generator-gui-tool/>mybatis-generator-gui工具</a></li><li><time datetime=2016-06-21>2016-06-21</time>
+<a href=/2016/06/21/cpp-rtti-demo/>C++ RTTI 示例</a></li><li><time datetime=2016-01-04>2016-01-04</time>
+<a href=/2016/01/04/mongodb-findandmodify/>mongodb更新指定条件的子文档</a></li><li><time datetime=2015-12-29>2015-12-29</time>
+<a href=/2015/12/29/baidu-push-nodejs-sdk/>百度云推送nodejs sdk</a></li><li><time datetime=2015-12-15>2015-12-15</time>
+<a href=/2015/12/15/mac-10-11-install-php-mongo/>mac 10.11安装php-mongo扩展踩过的坑</a></li><li><time datetime=2015-11-23>2015-11-23</time>
+<a href=/2015/11/23/exmail-501/>使用QQ企业邮箱发信时501错误解决方案</a></li><li><time datetime=2015-11-23>2015-11-23</time>
+<a href=/2015/11/23/nodejs-mongodb-cache/>nodejs mongodb 缓存模块</a></li><li><time datetime=2015-09-17>2015-09-17</time>
+<a href=/2015/09/17/php-qrcode-login/>php实现扫描二维码登录网站</a></li><li><time datetime=2015-04-13>2015-04-13</time>
+<a href=/2015/04/13/php-filecache/>php文件缓存类</a></li><li><time datetime=2015-03-07>2015-03-07</time>
+<a href=/2015/03/07/phpexcel-a-lot-of-column/>PHPExcel导出时列过大的解决方案</a></li><li><time datetime=2015-03-06>2015-03-06</time>
+<a href=/2015/03/06/wechat-reply-messy-code/>微信公众平台回复乱码问题</a></li><li><time datetime=2015-01-12>2015-01-12</time>
+<a href=/2015/01/12/php-location-by-ipgps-with-baidu-mapapi/>php利用百度地图API进行IP定位和GPS定位</a></li><li><time datetime=2014-12-12>2014-12-12</time>
+<a href=/2014/12/12/mysql-row-lock/>MySQL行锁的使用</a></li><li><time datetime=2014-11-10>2014-11-10</time>
+<a href=/2014/11/10/async-http-client-socket-timeout/>async http client socket超时问题</a></li><li><time datetime=2014-10-31>2014-10-31</time>
+<a href=/2014/10/31/ucenter-empty/>UCenter 后台应用通知列表空白</a></li><li><time datetime=2014-10-24>2014-10-24</time>
+<a href=/2014/10/24/phpexcel-export-empty/>PHPExcel导出时为空的解决方法</a></li><li><time datetime=2014-10-02>2014-10-02</time>
+<a href=/2014/10/02/php-save-image-to-database/>PHP二进制方法存储图片</a></li><li><time datetime=2014-09-28>2014-09-28</time>
+<a href=/2014/09/28/yii1-sso/>Yii1.x单点登录</a></li><li><time datetime=2014-09-27>2014-09-27</time>
+<a href=/2014/09/27/php-traverse-file/>PHP遍历文件</a></li><li><time datetime=2014-09-20>2014-09-20</time>
+<a href=/2014/09/20/php-website-auto-update/>PHP自动更新网站</a></li><li><time datetime=2014-09-20>2014-09-20</time>
+<a href=/2014/09/20/php-download-remote-file/>PHP下载远程文件</a></li><li><time datetime=2014-09-13>2014-09-13</time>
+<a href=/2014/09/13/mysql-combined-primary-key/>MySQL联合主键</a></li><li><time datetime=2014-09-13>2014-09-13</time>
+<a href=/2014/09/13/php-regex-chinese/>PHP正则表达式匹配中文</a></li><li><time datetime=2014-09-07>2014-09-07</time>
+<a href=/2014/09/07/php-oop-getter-setter/>php OOP中的__get和__set方法</a></li><li><time datetime=2014-09-06>2014-09-06</time>
+<a href=/2014/09/06/php-convert-date-to-constellation/>PHP将日期转换为星座</a></li><li><time datetime=2014-09-06>2014-09-06</time>
+<a href=/2014/09/06/php-heredoc/>PHP heredoc 字符串定界符使用</a></li><li><time datetime=2014-09-06>2014-09-06</time>
+<a href=/2014/09/06/php-cors-crossdomain/>php使用CORS实现跨域请求</a></li><li><time datetime=2014-09-06>2014-09-06</time>
+<a href=/2014/09/06/yii-multi-user/>Yii同一站点配置多个用户角色</a></li><li><time datetime=2014-09-06>2014-09-06</time>
+<a href=/2014/09/06/pdo-get-started/>PDO简明教程，是时候抛弃mysql_*函数了</a></li><li><time datetime=2014-09-06>2014-09-06</time>
+<a href=/2014/09/06/php-chinese-reverse/>php中文字符串反转</a></li><li><time datetime=2014-09-06>2014-09-06</time>
+<a href=/2014/09/06/redis-get-started/>Redis初探</a></li></ul></div></div><footer class=footer><p>&copy; 2014 - 2026 <a href=https://www.ddhigh.com>Lei Xia · 工程笔记</a>
+Powered by
+<a href=https://gohugo.io/ rel=noopener target=_blank>Hugo️️</a>
+<a href=https://github.com/guangzhengli/hugo-theme-ladder rel=noopener target=_blank>Ladder</a>
+️</p></footer><a href=#top aria-label="go to top" title="Go to Top (Alt + G)" class=top-link id=top-link accesskey=g><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.5376 22.7916C11.0152 22.7207 22.5795 21.1781 22.0978 10.4211 22.0536 9.43274 21.9303 8.53367 21.7387 7.71865M10.5376 22.7916C16.876 22.3728 20.0969 19.8899 21.5383 16.9142M10.5376 22.7916C9.7707 22.9055 8.97982 22.8964 8.19743 22.7725M21.7387 7.71865C21.4988 6.69828 21.1518 5.80967 20.7188 5.04257m1.0199 2.67608C22.6022 10.1105 23.0542 13.7848 21.5383 16.9142M20.7188 5.04257c-3.5504-6.28886-12.88753-4.410077-16.44303.0C2.88063 6.77451-.0433281 11.1668 1.38159 16.6571c.89322 3.4417 3.7911 5.6365 6.81584 6.1154M20.7188 5.04257c1.3509 1.89783 3.3111 6.34223 1.6353 10.37273M21.5383 16.9142C21.8737 16.4251 22.1428 15.9235 22.3541 15.4153M8.19743 22.7725C12.1971 23.4683 20.6281 22.971 22.3541 15.4153M14 10.945C13.3836 10.289 12.003 8.63215 11.2034 7.04814 11.1703 6.98257 11.0247 6.98456 10.9937 7.05061 10.5221 8.05496 9.07362 9.92941 8 10.945m3.0333-3.50056C10.9392 9.86549 11 15 12 17" stroke="currentcolor" stroke-linecap="round"/></svg></a><script>var mybutton=document.getElementById("top-link");window.onscroll=function(){document.body.scrollTop>800||document.documentElement.scrollTop>800?(mybutton.style.visibility="visible",mybutton.style.opacity="1"):(mybutton.style.visibility="hidden",mybutton.style.opacity="0")}</script><script>document.querySelectorAll("pre > code").forEach(e=>{const s=e.parentNode.parentNode,t=document.createElement("button");t.classList.add("copy-code"),t.innerHTML="Copy";function n(){t.innerHTML="Copied",setTimeout(()=>{t.innerHTML="Copy"},2e3)}t.addEventListener("click",t=>{if("clipboard"in navigator){navigator.clipboard.writeText(e.textContent),n();return}const s=document.createRange();s.selectNodeContents(e);const o=window.getSelection();o.removeAllRanges(),o.addRange(s);try{document.execCommand("copy"),n()}catch{}o.removeRange(s)}),e.parentNode.appendChild(t)})</script></main></body><script src=https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js integrity="sha512-N9IJRoc3LaP3NDoiGkcPa4gG94kapGpaA5Zq9/Dr04uf5TbLFU5q0o8AbRhLKUUlp8QFS2u7S+Yti0U7QtuZvQ==" crossorigin=anonymous referrerpolicy=no-referrer></script><script>const images=Array.from(document.querySelectorAll(".blog-content img"));images.forEach(e=>{mediumZoom(e,{margin:10,scrollOffset:40,container:null,template:null,background:"rgba(0, 0, 0, 0.5)"})})</script><script src=/main.min.6bb26b69159420159c74dc9e097b06a578ed2b68c701466a91a44a9632d851bd0af167a1b30012387b4c512b48ad9ad4d3394e04d77ae38d57e1920fe4ed34fe.js integrity="sha512-a7JraRWUIBWcdNyeCXsGpXjtK2jHAUZqkaRKljLYUb0K8WehswASOHtMUStIrZrU0zlOBNd6441X4ZIP5O00/g==" crossorigin=anonymous defer></script></html>
