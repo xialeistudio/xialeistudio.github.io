@@ -3,7 +3,7 @@ slug: laravel-crontab-log-permission
 title: Laravel定时任务写入日志用户变为root导致Web进程无法写入日志问题
 date: 2020-10-20 11:17:09
 tags:
-- laravel
+- PHP
 categories:
 - backend
 ---

@@ -5,7 +5,9 @@ date: 2019-08-21 10:27:42
 categories:
 - backend
 tags:
-- nestjs
+- NestJS
+series:
+- NestJS 学习之旅
 ---
 
 本文是NestJs学习之旅的第三篇，讲解服务提供者。

@@ -4,6 +4,8 @@ title: mac os x 使用eclipse调试android
 date: 2014-11-01 21:07:10.000000000 +08:00
 categories:
 - mobile
+tags:
+- Android
 ---
 这两天心血来潮装了个mac os x 10.10系统，折腾的过程就不说了。   
 Mac OS X 10.10的环境下，Eclipse+ADT，进行真机调试时，会出现一个问题。   

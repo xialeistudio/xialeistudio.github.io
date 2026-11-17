@@ -1,8 +1,8 @@
 ---
 title: 超越GPT-3.5!Llama3个人电脑本地部署教程
 date: 2024-04-20T08:30:57+08:00
-tags: 
-- llama3
+tags:
+- LLM
 categories:
 - ai
 ---

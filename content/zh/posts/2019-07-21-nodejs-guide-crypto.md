@@ -4,6 +4,10 @@ title: NodeJs简明教程(6)
 date: 2019-07-21 10:25:22
 categories:
 - backend
+series:
+- Node.js 简明教程
+tags:
+- Node.js
 ---
 本文是NodeJs简明教程的第六篇，将介绍NodeJs crypto模块相关的基本操作。
 

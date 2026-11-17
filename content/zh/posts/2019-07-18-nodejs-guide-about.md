@@ -4,6 +4,10 @@ title: NodeJs简明教程(1)
 date: 2019-07-18 10:02:46
 categories:
 - backend
+series:
+- Node.js 简明教程
+tags:
+- Node.js
 ---
 
 本文是NodeJs简明教程的第一篇，将介绍NodeJs整体架构以及重点概念。

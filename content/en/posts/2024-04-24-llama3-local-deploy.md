@@ -1,8 +1,8 @@
 ---
 title: Beyond GPT-3.5! Llama3 Personal Computer Local Deployment Tutorial.
 date: 2024-04-24T19:30:57+08:00
-tags: 
-- llama3
+tags:
+- LLM
 categories:
 - ai
 ---

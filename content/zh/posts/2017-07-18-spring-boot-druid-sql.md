@@ -5,7 +5,8 @@ title: druid spring boot 统计SQL问题
 categories:
 - backend
 tags:
-- spring-boot
+- Spring Boot
+- Java
 ---
 ## spring-boot配置
 

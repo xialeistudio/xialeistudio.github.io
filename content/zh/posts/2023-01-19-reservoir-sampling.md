@@ -3,7 +3,8 @@ slug: reservoir-sampling
 title: 水塘抽样算法
 date: 2023-01-19 23:34:44
 tags:
-- leetcode
+- LeetCode
+- 算法
 categories:
 - algorithm
 ---

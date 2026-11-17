@@ -5,7 +5,7 @@ date: 2019-09-12 19:32:13
 categories:
 - algorithm
 tags:
-- leetcode
+- LeetCode
 ---
 本文是力扣算法的第一篇，讲解两数之和问题。
 

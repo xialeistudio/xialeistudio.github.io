@@ -4,6 +4,9 @@ title: React Flux ES6记事本应用
 date: 2016-03-24 15:20:00.000000000 +08:00
 categories:
 - frontend
+tags:
+- ES6
+- React
 ---
 
 ## 项目地址

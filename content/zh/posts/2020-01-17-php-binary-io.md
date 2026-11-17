@@ -4,6 +4,10 @@ title: kafka二进制协议简要分析
 date: 2020-01-17 12:00:00
 categories:
 - backend
+tags:
+- PHP
+- Kafka
+- 网络协议
 ---
 
 

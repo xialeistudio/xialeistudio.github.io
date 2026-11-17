@@ -5,7 +5,8 @@ date: 2014-11-07 14:01:45.000000000 +08:00
 categories:
 - mobile
 tags:
-- regex
+- PHP
+- Android
 ---
 ## 问题
 最近写安卓的时候服务端返回的数据会带上“\n”，但是在android这边不能换行，初次想到的解决方法是利用

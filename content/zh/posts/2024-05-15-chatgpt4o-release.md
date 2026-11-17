@@ -4,6 +4,8 @@ slug: chatgpt4o-releaase
 date: 2024-05-15T06:30:57+08:00
 categories:
 - ai
+tags:
+- LLM
 ---
 上周，有传言表示OpenAI即将发布AI加持的搜索引擎来增强聊天机器人的功能并开拓新市场，不过Altman否认了该传言，并提到“不是GPT-5，也不是搜索引擎，但我们一直在努力开发我们认为人们会喜欢的东西！”
 

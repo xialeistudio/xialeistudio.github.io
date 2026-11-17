@@ -4,6 +4,8 @@ title: IllegalStateException： Can not perform this action after onSaveInstance
 date: 2014-11-13 11:11:36.000000000 +08:00
 categories:
 - mobile
+tags:
+- Android
 ---
 今天使用Fragment的时候，出现了这个错误 IllegalStateException: Can not perform this action after onSaveInstanceState。查看一下控制台，发现是FragmentManager的commit()方法报错的，看字面意思应该是
 

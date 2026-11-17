@@ -5,7 +5,7 @@ title: 免费SSL证书申请
 categories:
 - devops
 tags:
-- openssl
+- HTTPS
 ---
 收费SSL证书对于个人来说还是略贵，本文将交大家申请免费的SSL证书。
 ## 打开申请网站

@@ -8,8 +8,7 @@ keywords:
 - authorization
 - rbac
 tags:
-- authorization
-- rbac
+- 认证授权
 featured: true
 ---
 > [基于角色的访问控制（RBAC）](https://en.wikipedia.org/wiki/Role-based_access_control)是围绕**角色**和**权限**定义的策略中立的访问控制机制。RBAC 的组件（例如**角色权限**、**用户角色**和角色角色关系）使执行用户分配变得简单。

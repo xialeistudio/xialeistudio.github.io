@@ -3,7 +3,8 @@ slug: algo-binarysearch
 title: 算法篇——二分查找
 date: 2021-12-29 18:32:50
 tags:
-- binarysearch
+- LeetCode
+- 算法
 categories:
 - algorithm
 ---

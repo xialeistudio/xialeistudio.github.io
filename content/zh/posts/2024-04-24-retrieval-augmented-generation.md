@@ -2,8 +2,9 @@
 title: 如何用解决大模型时效性和准确性问题？RAG技术核心原理
 slug: retrieval-augmented-generation
 date: 2024-04-24T08:30:57+08:00
-tags: 
-- rag
+tags:
+- RAG
+- LLM
 categories:
 - ai
 ---

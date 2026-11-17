@@ -3,7 +3,7 @@ slug: counting-bit1-of-binary-number
 title: 计算数字二进制位中1的个数
 date: 2023-01-05 12:35:00
 tags:
-- leetcode
+- LeetCode
 categories:
 - algorithm
 ---

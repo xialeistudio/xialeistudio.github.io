@@ -5,7 +5,9 @@ date: 2019-08-26 15:32:29
 categories:
 - backend
 tags:
-- nestjs
+- NestJS
+series:
+- NestJS 学习之旅
 ---
 
 本文是NestJs的第六篇，讲解异常处理。

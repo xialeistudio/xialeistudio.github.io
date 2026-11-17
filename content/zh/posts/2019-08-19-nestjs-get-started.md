@@ -5,7 +5,9 @@ date: 2019-08-19 10:10:13
 categories:
 - backend
 tags:
-- nestjs
+- NestJS
+series:
+- NestJS 学习之旅
 ---
 
 本文是NestJs学习之旅的第一篇，简要介绍一下NestJs框架，搭建一个Hello World应用。

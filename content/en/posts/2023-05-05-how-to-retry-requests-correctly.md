@@ -8,7 +8,7 @@ keywords:
 categories:
 - backend
 tags:
-- java
+- Java
 ---
 
 Network is unstable, it can fail at any moment. In this article, I'll share how to retry requests correctly with Feign.

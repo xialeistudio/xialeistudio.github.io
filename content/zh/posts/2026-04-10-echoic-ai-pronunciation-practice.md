@@ -5,13 +5,10 @@ slug: echoic-ai-pronunciation-practice
 categories:
 - ai
 tags:
-- AI
 - 英语学习
 - 发音练习
 - FastAPI
 - React
-- WhisperX
-- 开源项目
 featured: true
 ---
 

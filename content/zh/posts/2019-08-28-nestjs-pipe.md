@@ -5,7 +5,9 @@ date: 2019-08-28 14:47:48
 categories:
 - backend
 tags:
-- nestjs
+- NestJS
+series:
+- NestJS 学习之旅
 ---
 本文是NestJs学习之旅的第八篇，讲解管道。
 

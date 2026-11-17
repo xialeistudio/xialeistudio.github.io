@@ -3,8 +3,9 @@ slug: convert-sorted-list-to-binary-search-tree
 title: LeetCode109——有序链表转换二叉搜索树
 date: 2022-02-08 20:24:19
 tags:
-- tree
-- leetcode
+- 二叉树
+- LeetCode
+- 链表
 categories:
 - algorithm
 ---

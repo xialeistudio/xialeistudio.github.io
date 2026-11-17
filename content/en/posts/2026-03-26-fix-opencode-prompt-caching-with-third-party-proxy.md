@@ -8,6 +8,7 @@ tags:
 - OpenCode
 - GPT
 - Prompt Caching
+- LLM
 ---
 
 While using OpenCode with GPT 5.3 Codex for daily development, I noticed abnormally high token consumption — around 69K input tokens per request with virtually zero cache hits. The same model and proxy worked fine with Codex CLI, where caching functioned as expected. This post documents the full debugging and resolution process.

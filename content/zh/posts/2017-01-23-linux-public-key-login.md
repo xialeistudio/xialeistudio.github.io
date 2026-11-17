@@ -4,6 +4,8 @@ date: 2017-01-23
 title: 使用公钥登录Linux
 categories:
 - devops
+tags:
+- Linux
 ---
 服务器密码往往是随机字符串，难以记忆，通过配置公钥登录的方式来进行登录。
 ## 准备

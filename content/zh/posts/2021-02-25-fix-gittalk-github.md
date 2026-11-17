@@ -5,7 +5,7 @@ date: 2021-02-25 12:00:23
 categories:
 - devops
 tags:
-- gittalk
+- Git
 ---
 
 ## GitTalk失效原因

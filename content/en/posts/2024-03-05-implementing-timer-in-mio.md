@@ -1,8 +1,8 @@
 ---
 title: Implementing timer in mio
 date: 2024-03-05T09:22:56+08:00
-tags: 
-  - rust
+tags:
+- Rust
 categories:
 - backend
 ---

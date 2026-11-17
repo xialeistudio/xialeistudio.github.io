@@ -5,7 +5,9 @@ date: 2019-08-22 11:27:38
 categories:
 - backend
 tags:
-- nestjs
+- NestJS
+series:
+- NestJS 学习之旅
 ---
 
 本文是NestJs学习之旅的第四篇，讲解模块系统。

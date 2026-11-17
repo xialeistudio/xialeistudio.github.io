@@ -4,6 +4,10 @@ date: 2017-03-20
 title: nginx反向代理websocket
 categories:
 - devops
+tags:
+- ES6
+- Nginx
+- 网络协议
 ---
 websocket协议基于http协议升级而来，所以nginx可以直接反向代理websocket，只需要加上必要的header即可。
 

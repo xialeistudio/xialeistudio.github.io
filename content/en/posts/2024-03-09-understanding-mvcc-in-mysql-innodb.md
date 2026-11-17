@@ -1,8 +1,8 @@
 ---
 title: Understanding MVCC In MySQL InnoDB
 date: 2024-03-09T18:26:50+08:00
-tags: 
-  - mysql
+tags:
+- MySQL
 categories:
 - backend
 series:

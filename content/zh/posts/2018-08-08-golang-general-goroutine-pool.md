@@ -4,6 +4,9 @@ title: golang40行代码实现通用协程池
 date: 2018-08-08 11:07:25
 categories:
 - backend
+tags:
+- Go
+- 并发
 ---
 
 ## 代码仓库

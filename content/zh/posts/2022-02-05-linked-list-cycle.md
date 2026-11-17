@@ -3,8 +3,8 @@ slug: linked-list-cycle
 title: LeetCode141——环形链表
 date: 2022-02-05 20:09:35
 tags:
-- linklist
-- leetcode
+- 链表
+- LeetCode
 categories:
 - algorithm
 ---

@@ -5,7 +5,8 @@ date: 2018-02-08 15:35:48
 categories:
 - backend
 tags:
-- thrift
+- Thrift
+- Node.js
 ---
 
 [官网nodejs示例](http://thrift.apache.org/tutorial/nodejs)中只实现了服务端是单一service的情形，而对于服务端属于`多个服务复用一个连接地址`的例子却未实现。

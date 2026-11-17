@@ -5,7 +5,9 @@ date: 2019-07-08 17:13:40
 categories:
 - backend
 tags:
-- spring-boot
+- Spring Boot
+- Java
+- 可观测性
 ---
 
 新版druid数据源驱动的SQL监控如果用以前的老版本配置是无法监控到SQL的：

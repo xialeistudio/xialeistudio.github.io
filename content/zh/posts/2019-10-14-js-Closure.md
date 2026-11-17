@@ -4,6 +4,8 @@ title: 搞懂JS闭包
 date: 2019-10-14 12:00:00
 categories:
 - frontend
+tags:
+- JavaScript
 ---
 
 闭包(Closure)是JS比较难懂的一个东西，或者说别人说的难以理解， 本文将以简洁的语言+面试题来深入浅出地介绍一下。

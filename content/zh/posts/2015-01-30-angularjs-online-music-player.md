@@ -4,6 +4,8 @@ title: 基于angularjs的在线音乐播放器
 date: 2015-01-30 19:43:01.000000000 +08:00
 categories:
 - frontend
+tags:
+- AngularJS
 ---
 
 ## 项目地址

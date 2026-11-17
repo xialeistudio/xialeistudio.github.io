@@ -4,6 +4,8 @@ title: angularjs icheck
 date: 2015-11-23 12:10:29.000000000 +08:00
 categories:
 - frontend
+tags:
+- AngularJS
 ---
 ## 项目地址
 

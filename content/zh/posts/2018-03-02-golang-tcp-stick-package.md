@@ -5,7 +5,8 @@ date: 2018-03-02 17:50:31
 categories:
 - backend
 tags:
-- protocol
+- 网络协议
+- Go
 ---
 
 什么是TCP粘包问题以及为什么会产生TCP粘包，本文不加讨论。本文使用golang的`bufio.Scanner`来实现自定义协议解包。

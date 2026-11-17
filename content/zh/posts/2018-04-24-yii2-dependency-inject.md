@@ -5,7 +5,8 @@ date: 2018-04-24 22:18:04
 categories:
 - backend
 tags:
-- yii
+- Yii
+- 设计模式
 ---
 
 ## 本文代码

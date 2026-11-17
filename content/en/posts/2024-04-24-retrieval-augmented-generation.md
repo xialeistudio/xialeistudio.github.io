@@ -2,8 +2,8 @@
 title: Retrieval-Augmented Generation
 slug: retrieval-augmented-generation
 date: 2024-04-24T20:30:57+08:00
-tags: 
-- rag
+tags:
+- RAG
 categories:
 - ai
 ---

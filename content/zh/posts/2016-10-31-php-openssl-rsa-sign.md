@@ -5,7 +5,8 @@ date: 2016-10-31 18:18:09.000000000 +08:00
 categories:
 - backend
 tags:
-- openssl
+- HTTPS
+- PHP
 ---
 **阅读本文前请确认启用了php_openssl扩展**
 ### 生成密钥

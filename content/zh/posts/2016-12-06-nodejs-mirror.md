@@ -4,6 +4,8 @@ title: NodeJs源代码镜像
 date: 2016-12-06 10:54:12.000000000 +08:00
 categories:
 - devops
+tags:
+- Node.js
 ---
 在使用*node-gyp*的时候，由于国内网络环境不太给力，导致下载NodeJs头文件时很慢。   
 利用NODEJS_ORG_MIRROR环境变量可以解决这个问题。   

@@ -5,7 +5,7 @@ date: 2019-11-14 11:00:00
 categories:
 - frontend
 tags:
-- es6
+- ES6
 ---
 
 迭代器是ES2015中新增的规范，与之相关的for...of也是ES2015新增的。

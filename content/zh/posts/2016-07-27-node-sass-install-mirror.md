@@ -4,6 +4,9 @@ title: node-sass安装镜像
 date: 2016-07-27 22:37:54.000000000 +08:00
 categories:
 - devops
+tags:
+- Node.js
+- 前端工程化
 ---
 ## 安装
 npm安装node-sass模块的时候，会卡在 node scripts/install.js这里，因为要去github.com上下载源码，众所周知的原因，国内的网络上github.com速度太不稳定了，所以安装很慢。

@@ -3,7 +3,7 @@ slug: nth-maximum-number
 title: 查找第N大的数
 date: 2023-01-03 12:22:08
 tags:
-- leetcode
+- LeetCode
 categories:
 - algorithm
 ---

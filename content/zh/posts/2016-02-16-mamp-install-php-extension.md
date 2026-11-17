@@ -5,7 +5,8 @@ date: 2016-02-16 15:45:25.000000000 +08:00
 categories:
 - devops
 tags:
-- mamp
+- 工具
+- PHP
 ---
 之前写过一篇在Mac下搭建PHP开发环境的文章，[Mac搭建PHP开发环境]({% post_url 2016-02-16-mac-php-env %})，但是此种方式搭建的PHP有弊端，由于默认不带PHP源码，所以在使用pecl安装扩展时会报错。
 

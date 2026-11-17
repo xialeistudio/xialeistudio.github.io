@@ -5,7 +5,10 @@ date: 2020-02-11 12:00:00
 categories:
 - devops
 tags:
-- shell
+- Shell
+- Linux
+series:
+- Shell 脚本快速入门
 ---
 
 今天我们来学习Shell的运算符和流程控制。

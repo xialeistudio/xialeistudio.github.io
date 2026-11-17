@@ -4,6 +4,10 @@ title: NodeJs简明教程(10)
 date: 2019-07-25 11:00:00
 categories:
 - backend
+series:
+- Node.js 简明教程
+tags:
+- Node.js
 ---
 
 本文是NodeJs简明教程的第十篇，将介绍NodeJs **dgram** 模块(`UDP服务端/客户端`)相关的基本操作。

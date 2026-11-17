@@ -4,6 +4,9 @@ title: lnmp一键安装memcached的shell脚本
 date: 2015-05-29 22:19:08.000000000 +08:00
 categories:
 - devops
+tags:
+- Linux
+- Shell
 ---
 通过LNMP安装脚本安装的PHP环境默认是不带Memcached支持的（是memcached不是memcache），百度一下memcached的安装方法，发现基本都是memcache的，其实这是两个不同的东西。
 

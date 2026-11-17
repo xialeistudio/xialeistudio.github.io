@@ -4,6 +4,8 @@ title: ReactRouter不在组件中进行导航
 date: 2016-05-17 12:41:35.000000000 +08:00
 categories:
 - frontend
+tags:
+- React
 ---
 项目使用了**Flux+React Router**架构，有一些需要操作路由的地方是放在Action层的，比如登录之类，但是Action层不是React组件，需要操作路由的话有点麻烦。   
 

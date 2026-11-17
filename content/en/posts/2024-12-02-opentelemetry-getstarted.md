@@ -6,7 +6,7 @@ categories:
 - architecture
 featured: true
 tags:
-- Observability
+- 可观测性
 ---
 
 ## Three Pillars of Observability

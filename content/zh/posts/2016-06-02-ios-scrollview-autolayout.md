@@ -4,6 +4,8 @@ title: ios ScrollView AutoLayout
 date: 2016-06-02 08:13:49.000000000 +08:00
 categories:
 - mobile
+tags:
+- iOS
 ---
 XCode的Interface Builder解决了开发者使用代码进行布局的问题，但是在使用 **ScrollView** 时，如果没有方法，IB中的layout是会乱掉的，在网上查找资料加上自己的实际操作之后，总结了以下步骤：
 1. 在根view中添加好子控件，排好版

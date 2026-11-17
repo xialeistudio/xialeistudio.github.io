@@ -4,6 +4,10 @@ title: 安装nodejs的shell脚本
 date: 2016-05-14 18:27:29.000000000 +08:00
 categories:
 - devops
+tags:
+- Node.js
+- Linux
+- Shell
 ---
 ## 脚本定义
 

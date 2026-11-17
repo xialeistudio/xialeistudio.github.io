@@ -3,8 +3,8 @@ slug: unique-binary-search-trees-ii
 title: LeetCode95——不同的二叉搜索树 II
 date: 2022-02-06 20:24:19
 tags:
-- tree
-- leetcode
+- 二叉树
+- LeetCode
 categories:
 - algorithm
 ---

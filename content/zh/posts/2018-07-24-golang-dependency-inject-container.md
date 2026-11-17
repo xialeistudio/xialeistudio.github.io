@@ -4,6 +4,9 @@ title: golang不到30行代码实现依赖注入
 date: 2018-07-24 18:32:51
 categories:
 - backend
+tags:
+- Go
+- 设计模式
 ---
 
 ## 项目地址

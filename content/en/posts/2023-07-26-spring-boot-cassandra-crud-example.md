@@ -5,7 +5,8 @@ date: 2023-07-26 12:00:18
 categories:
 - backend
 tags:
-- cassandra
+- Java
+- Spring Boot
 ---
 
 [Apache Cassandra](https://cassandra.apache.org/) is an **open source** NoSQL distributed database trusted by thousands of companies for **scalability** and **high availability** without compromising performance. **Linear scalability** and **proven fault-tolerance** on **commodity hardware** or **cloud infrastructure** make it the perfect platform for **mission-critical** data.

@@ -3,8 +3,8 @@ slug: reverse-linked-list-ii
 title: LeetCode92——反转链表 II
 date: 2022-02-05 19:00:00
 tags:
-- linklist
-- leetcode
+- 链表
+- LeetCode
 categories:
 - algorithm
 ---

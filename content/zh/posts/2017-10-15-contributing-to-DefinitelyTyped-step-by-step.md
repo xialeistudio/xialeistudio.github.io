@@ -4,6 +4,8 @@ date: 2017-10-15
 title: 从零开始向DefinitelyTyped贡献代码
 categories:
 - frontend
+tags:
+- TypeScript
 ---
 
 # 什么是DefinitelyTyped?

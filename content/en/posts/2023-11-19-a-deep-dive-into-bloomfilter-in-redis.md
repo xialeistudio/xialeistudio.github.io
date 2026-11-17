@@ -9,8 +9,8 @@ series:
   - Redis
 categories:
 - backend
-tags: 
-  - redis
+tags:
+- Redis
 ---
 In this article, I'll deep dive into an annother powerful data structure in Redis: Bloom Filter.
 Bloom Filter can help you check whether elements exist, reduce unnecessary quering costs, improve system response speed and throughput. By properly utilizing Bloom Filter, you can optimize application performance effectively, meet the requirement of high-performance and large-scale data processing.

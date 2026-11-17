@@ -4,6 +4,8 @@ title: 百度推送收到消息时带参数启动activity
 date: 2016-02-19 17:09:21.000000000 +08:00
 categories:
 - mobile
+tags:
+- Android
 ---
 一般来说，在BPushReceiver的onNotificationClicked或者onMessage方法收到推送消息后会去启动一个activity。此时整个应用有以下几种状态：
 + 应用进程不存在

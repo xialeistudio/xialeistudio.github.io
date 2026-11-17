@@ -4,6 +4,8 @@ title: 移动端滑动的实现
 date: 2015-01-08 17:38:08.000000000 +08:00
 categories:
 - frontend
+tags:
+- 移动端 Web
 ---
 
 

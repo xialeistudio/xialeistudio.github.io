@@ -4,6 +4,9 @@ title: 微信公众平台开发NodeJs SDK
 date: 2016-08-09 16:07:22.000000000 +08:00
 categories:
 - backend
+tags:
+- Node.js
+- 微信开发
 ---
 *本SDK要求NodeJs >= 4.x，欢迎大家在issues提问。*
 

@@ -4,6 +4,8 @@ title: Angularjs处理后端空数据
 date: 2014-11-15 18:04:02.000000000 +08:00
 categories:
 - frontend
+tags:
+- AngularJS
 ---
 Yii1.x DAO中的queryAll方法查询，如果有结果，会返回一个数组，如果没有结果，会返回null。现在分两种情况：
 ## 返回空数组

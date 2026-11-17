@@ -4,6 +4,8 @@ title: php中文字符串反转
 date: 2014-09-06 19:57:42.000000000 +08:00
 categories:
 - backend
+tags:
+- PHP
 ---
 
 php **strrev()** 函数能实现字符串反转，但是不支持中文，利用mb_系列函数可以进行中文字符串反转。

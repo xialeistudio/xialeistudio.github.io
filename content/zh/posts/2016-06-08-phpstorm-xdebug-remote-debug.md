@@ -5,7 +5,8 @@ date: 2016-06-08 12:25:21.000000000 +08:00
 categories:
 - devops
 tags:
-- xdebug
+- PHP
+- 工具
 ---
 phpstorm+xdebug如何调试本地代码应该都熟悉了。本文说的是如何调试线上服务器的代码。本文写作时服务器的PHP环境是lnmp1.2。
 

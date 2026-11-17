@@ -5,10 +5,8 @@ slug: cpp-coroutine-future-to-awaitable
 categories:
 - backend
 tags:
-- cpp
-- coroutine
-- asio
-- future
+- C/C++
+- 并发
 featured: true
 ---
 

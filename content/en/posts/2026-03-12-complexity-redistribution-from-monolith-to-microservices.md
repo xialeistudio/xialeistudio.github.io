@@ -6,7 +6,11 @@ categories:
 - architecture
 featured: true
 tags:
-- Microservices
+- 微服务
+- Redis
+- 分布式
+series:
+- Microservice Architecture
 ---
 Microservices are often introduced with a deceptively simple narrative: monoliths become too complex, microservices make systems easier to manage, therefore system evolution naturally moves from monolith to microservices. The problem with this narrative is not that it is entirely wrong. The problem is that it hides the more important truth: microservices usually do not remove complexity. They redistribute it.
 

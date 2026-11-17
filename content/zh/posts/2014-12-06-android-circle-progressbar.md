@@ -4,6 +4,8 @@ title: android实现圆形带进度条的ProgressBar
 date: 2014-12-06 12:03:45.000000000 +08:00
 categories:
 - mobile
+tags:
+- Android
 ---
 android加载图片免不了使用加载进度显示，而android自带的progressBar有局限.
 1. 圆型的progressBar不能显示进度条，只能无限制转圈圈

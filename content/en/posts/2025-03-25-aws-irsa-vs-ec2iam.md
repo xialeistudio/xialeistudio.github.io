@@ -6,6 +6,7 @@ categories:
 - devops
 tags:
 - AWS
+- HTTPS
 ---
 
 In AWS environments, assigning permissions to workloads is critical for security and functionality. For applications running on EC2 or EKS, two common approaches are **EC2 IAM Instance Roles** and **IRSA (IAM Roles for Service Accounts)**. This article explains what they are, their differences, usage scenarios with code examples, and common issues with solutions, helping the team choose the right authentication method and avoid permission confusion.

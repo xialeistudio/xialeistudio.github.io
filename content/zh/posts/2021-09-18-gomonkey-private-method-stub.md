@@ -5,7 +5,8 @@ date: 2021-09-18 15:38:23
 categories:
 - backend
 tags:
-- testing
+- 测试
+- Go
 ---
 
 > ApplyMethod基于反射实现，无法对私有方法打桩，本文将解决这一问题。

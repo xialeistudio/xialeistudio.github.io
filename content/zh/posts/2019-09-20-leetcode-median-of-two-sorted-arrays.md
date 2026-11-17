@@ -5,7 +5,7 @@ date: 2019-09-20 18:34:58
 categories:
 - algorithm
 tags:
-- leetcode
+- LeetCode
 ---
 
 本文是力扣算法的第四篇，讲解寻找两个有序数组的中位数。

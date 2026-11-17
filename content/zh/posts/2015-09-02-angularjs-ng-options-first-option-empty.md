@@ -4,6 +4,8 @@ title: angularjs ng-options第一个选项为空的解决方案
 date: 2015-09-02 17:07:54.000000000 +08:00
 categories:
 - frontend
+tags:
+- AngularJS
 ---
 angularjs的ng-options渲染到页面上的时候结构大致是这样的。
 

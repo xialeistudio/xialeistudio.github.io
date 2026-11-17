@@ -4,6 +4,10 @@ title: NodeJs简明教程(7)
 date: 2019-07-22 10:53:10
 categories:
 - backend
+series:
+- Node.js 简明教程
+tags:
+- Node.js
 ---
 
 本文是NodeJs简明教程的第七篇，将介绍NodeJs events模块相关的基本操作。

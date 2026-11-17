@@ -4,6 +4,8 @@ title: 使用gulp来构建你的前端自动化工作流
 date: 2015-03-16 17:43:07.000000000 +08:00
 categories:
 - frontend
+tags:
+- 前端工程化
 ---
 之前用的Grunt，不过有时候Grunt确实用起来不爽，进来找到一款叫gulp.js的前端构建工具，当然，也是基于node.js的。
 ## 安装

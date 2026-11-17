@@ -4,6 +4,9 @@ title: 解决 angularjs html5Mode 404的问题
 date: 2014-10-30 13:02:01.000000000 +08:00
 categories:
 - frontend
+tags:
+- AngularJS
+- CSS
 ---
 采用location的html5Mode之后，链接是正常的，但是刷新的时候会404，此时就需要后端服务器配置URL重写了。
 

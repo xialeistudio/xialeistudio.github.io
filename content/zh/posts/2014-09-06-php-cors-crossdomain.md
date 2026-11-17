@@ -4,6 +4,8 @@ title: php使用CORS实现跨域请求
 date: 2014-09-06 20:04:41.000000000 +08:00
 categories:
 - backend
+tags:
+- PHP
 ---
 js跨域的解决方法，一百度一大堆，不过都是jsonp为主，这种解决方法只适用于GET请求。POST跨域的话需要在HTTP协议上下功夫。
 ## 基础知识

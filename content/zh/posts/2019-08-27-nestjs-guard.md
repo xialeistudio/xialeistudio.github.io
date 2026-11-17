@@ -5,7 +5,9 @@ date: 2019-08-27 14:58:36
 categories:
 - backend
 tags:
-- nestjs
+- NestJS
+series:
+- NestJS 学习之旅
 ---
 本文是NestJs的第七篇，讲解路由守卫。
 

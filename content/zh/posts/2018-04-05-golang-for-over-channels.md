@@ -4,6 +4,9 @@ title: golang for遍历channel时需要注意的问题
 date: 2018-04-05 18:45:31
 categories:
 - backend
+tags:
+- Go
+- 并发
 ---
 
 最近在做一个基于RabbitMQ的应用，由于官方的qos没有golang的版本，所以出了一点问题。问题代码如下：

@@ -5,7 +5,7 @@ date: 2023-06-04 14:58:33
 categories:
 - architecture
 tags:
-- distributing
+- 分布式
 featured: true
 evergreen: true
 ---

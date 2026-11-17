@@ -1,8 +1,8 @@
 ---
 title: Understanding Replication In MySQL
 date: 2024-03-17T12:26:50+08:00
-tags: 
-  - mysql
+tags:
+- MySQL
 categories:
 - backend
 series:

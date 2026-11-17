@@ -4,6 +4,8 @@ title: chrome hosts插件
 date: 2015-11-23 12:01:18.000000000 +08:00
 categories:
 - devops
+tags:
+- 工具
 ---
 ## 项目地址
 [https://github.com/xialeistudio/hostManager](https://github.com/xialeistudio/hostManager)

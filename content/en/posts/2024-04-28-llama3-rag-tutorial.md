@@ -2,9 +2,9 @@
 title: Use RAG to build your private knowledge base based on llama3 and langchain!
 slug: llama3-rag-tutorial
 date: 2024-04-28T08:30:57+08:00
-tags: 
-- llama3
-- rag
+tags:
+- LLM
+- RAG
 categories:
 - ai
 ---

@@ -4,6 +4,8 @@ title: angularjs鼠标悬浮效果
 date: 2014-09-22 16:00:01.000000000 +08:00
 categories:
 - frontend
+tags:
+- AngularJS
 ---
 用JQ来做的话很简单的，(通过toggleClass函数就可以了),但是既然提到了angularjs，当然要用angularjs的解决方案来做啦!
 

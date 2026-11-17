@@ -3,8 +3,8 @@ slug: subsequence-checking-algorithm
 title: 字符串子序列检测算法
 date: 2023-01-05 12:36:10
 tags:
-- leetcode
-- string
+- LeetCode
+- 算法
 categories:
 - algorithm
 ---

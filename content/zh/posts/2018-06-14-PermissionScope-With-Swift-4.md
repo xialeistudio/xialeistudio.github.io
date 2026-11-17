@@ -5,7 +5,7 @@ date: 2018-06-14 21:41:15
 categories:
 - mobile
 tags:
-- swift
+- iOS
 ---
 
 [PermissionScope](https://github.com/nickoneill/PermissionScope)是iOS非常好用的权限处理库，界面效果也非常精美。不幸的是作者已经停止维护。

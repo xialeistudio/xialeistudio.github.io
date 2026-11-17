@@ -4,6 +4,9 @@ title: 摆脱jquery!angularjs利用指令简单实现滚动翻页
 date: 2014-09-06 20:14:13.000000000 +08:00
 categories:
 - frontend
+tags:
+- JavaScript
+- AngularJS
 ---
 移动开发一个很重要的问题是翻页操作，而现在的主流都是滚动翻页，以往都是用jquery的插件进行实现。用了angularjs之后，要逐步减轻对jquery的依赖。   
 

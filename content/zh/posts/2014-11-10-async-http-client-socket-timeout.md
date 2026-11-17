@@ -4,6 +4,8 @@ title: async http client socket超时问题
 date: 2014-11-10 13:47:50.000000000 +08:00
 categories:
 - backend
+tags:
+- Android
 ---
 最近做的一个项目的HTTP模块使用了loopj的asynchttpclient ([https://github.com/loopj/android-async-http](https://github.com/loopj/android-async-http)）。
 

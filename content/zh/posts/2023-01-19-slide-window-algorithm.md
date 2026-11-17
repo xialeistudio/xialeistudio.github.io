@@ -3,7 +3,8 @@ slug: slide-window-algorithm
 title: 滑动窗口算法
 date: 2023-01-19 23:16:29
 tags:
-- leetcode
+- LeetCode
+- 算法
 categories:
 - algorithm
 ---

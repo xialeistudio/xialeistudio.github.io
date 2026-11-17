@@ -4,6 +4,9 @@ title: ios仿微信右上角弹出菜单
 date: 2015-12-17 12:41:42.000000000 +08:00
 categories:
 - mobile
+tags:
+- iOS
+- 微信开发
 ---
 
 ## 项目地址

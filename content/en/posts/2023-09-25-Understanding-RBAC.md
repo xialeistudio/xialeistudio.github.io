@@ -8,8 +8,7 @@ keywords:
 - authorization
 - rbac
 tags:
-- authorization
-- rbac
+- 认证授权
 ---
 
 >  [Role-based access control(RBAC)](https://en.wikipedia.org/wiki/Role-based_access_control) is a policy-neutral access control mechanism defined around **roles** and **privileges**. The components of RBAC such as **role-permissions**, **user-role** and role-role relationships make it simple to perform user assignments. 

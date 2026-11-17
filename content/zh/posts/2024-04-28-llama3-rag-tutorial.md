@@ -2,9 +2,9 @@
 title: 基于llama3和langchain使用RAG搭建你的私有知识库！
 slug: llama3-rag-tutorial
 date: 2024-04-28T08:30:57+08:00
-tags: 
-- llama3
-- rag
+tags:
+- LLM
+- RAG
 categories:
 - ai
 ---

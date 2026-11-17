@@ -5,7 +5,8 @@ date: 2016-05-10 17:06:28.000000000 +08:00
 categories:
 - frontend
 tags:
-- regex
+- PHP
+- JavaScript
 ---
 最近在做导出excel的时候，发现导出成功，文件大小也正常，但是Office 2013打不开，检查数据库发现，导出数据中有非中文字符导致Excel异常。   
 

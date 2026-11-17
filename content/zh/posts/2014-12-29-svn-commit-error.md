@@ -5,7 +5,7 @@ date: 2014-12-29 17:35:47.000000000 +08:00
 categories:
 - devops
 tags:
-- svn
+- Git
 ---
 今天phpstorm突然抽风，导致svn不能用，无奈只好用svn命令来提交。
 

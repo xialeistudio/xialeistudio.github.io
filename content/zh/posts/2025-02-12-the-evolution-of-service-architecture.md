@@ -5,7 +5,9 @@ slug: the-evolution-of-service-architecture
 categories:
 - architecture
 tags:
-- Microservice
+- 微服务
+series:
+- 微服务架构
 ---
 业界有很多介绍微服务框架的文章，但是对于微服务架构本身以及基础设施组件介绍的文章不多，本系列文章将聚焦于微服务架构的底层原理，从基础概念到核心机制，帮助读者真正理解微服务架构的设计理念和运行机制，从而更好地将其应用于实际开发中。
 

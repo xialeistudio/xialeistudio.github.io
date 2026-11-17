@@ -5,6 +5,9 @@ title: 在缓存中使用闭包函数
 date: 2019-05-14 11:48:58
 categories:
 - backend
+tags:
+- JavaScript
+- 设计模式
 ---
 
 ## 闭包函数

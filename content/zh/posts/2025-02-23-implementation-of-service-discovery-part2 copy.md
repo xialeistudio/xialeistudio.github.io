@@ -5,7 +5,9 @@ slug: implementation-of-service-discovery-part2
 categories:
 - architecture
 tags:
-- Microservices
+- 微服务
+series:
+- 微服务架构
 ---
 
 在微服务架构中，服务发现是确保服务间高效通信和动态扩展的关键机制。随着分布式系统的复杂性日益增加，如何设计一个可靠、高性能的服务发现方案成为工程实践中的核心课题。

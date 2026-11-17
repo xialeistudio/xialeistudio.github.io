@@ -4,6 +4,8 @@ title: 带进度条的angularjs上传指令
 date: 2015-04-09 19:02:42.000000000 +08:00
 categories:
 - frontend
+tags:
+- AngularJS
 ---
 ## 项目地址
 [https://git.coding.net/xialei/xl-angular-upload.git](https://git.coding.net/xialei/xl-angular-upload.git)

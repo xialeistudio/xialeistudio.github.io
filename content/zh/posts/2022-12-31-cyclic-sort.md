@@ -3,7 +3,8 @@ slug: cyclic-sort
 title: 原地哈希算法
 date: 2022-12-31 14:16:32
 tags:
-- leetcode
+- LeetCode
+- 算法
 categories:
 - algorithm
 ---

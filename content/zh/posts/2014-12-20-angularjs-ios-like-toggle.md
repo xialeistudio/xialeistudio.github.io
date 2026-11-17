@@ -4,6 +4,9 @@ title: angularjs开发ios风格的toggle
 date: 2014-12-20 09:12:28.000000000 +08:00
 categories:
 - frontend
+tags:
+- AngularJS
+- iOS
 ---
 ## 效果图
 ![效果图](https://og5r5kasb.qnssl.com/wp-content/uploads/2014/12/53441419037830.png)

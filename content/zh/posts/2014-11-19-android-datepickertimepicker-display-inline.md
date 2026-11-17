@@ -4,6 +4,8 @@ title: android datepicker和timepicker显示在一行
 date: 2014-11-19 23:54:52.000000000 +08:00
 categories:
 - mobile
+tags:
+- Android
 ---
 android默认的datepicker和默认的timepicker可以放在一行（Linelayout），但是timepicker右边会“挤出”屏幕，尝试设置layout_weight和layout_height对于布局有效，但是控件显示就不完整了。到这一步发现xml不局文件已经处理不了，所以自然想到应该利用java来处理了。
 

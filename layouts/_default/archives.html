@@ -34,30 +34,20 @@
     {{- end }}
   </section>
 
-  {{- /* By year: the theme's original archive, default view */}}
+  {{- /* By year: compact list, default view */}}
   <section id="by-year" class="archive-view archive-content">
     {{- range $pages.GroupByPublishDate "2006" }}
     {{- if ne .Key "0001" }}
-    <div class="archive-year">
-      <h2 class="archive-year-header">
-        {{- .Key }}<sup class="archive-count">&nbsp;&nbsp;{{ len .Pages }}</sup>
-      </h2>
-      {{- range .Pages.GroupByDate "January" }}
-      <div class="archive-month">
-        <h3 class="archive-month-header">{{- .Key }}<sup class="archive-count">&nbsp;&nbsp;{{ len .Pages }}</sup></h3>
-        <div class="archive-posts">
-          {{- range .Pages }}
-          {{- if eq .Kind "page" }}
-          <div class="archive-entry">
-            <h3 class="archive-entry-title">{{- .Title | markdownify }}</h3>
-            <div class="archive-meta">{{ partial "blog/meta.html" . }}</div>
-            <a class="archive-link" aria-label="post link to {{ .Title | plainify }}" href="{{ .Permalink }}"></a>
-          </div>
-          {{- end }}
-          {{- end }}
-        </div>
-      </div>
-      {{- end }}
+    <div class="archive-topic">
+      <h2 class="archive-year-header">{{ .Key }}<sup class="archive-count">&nbsp;&nbsp;{{ len .Pages }}</sup></h2>
+      <ul class="archive-topic-list">
+        {{- range .Pages }}
+        <li>
+          <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "01-02" }}</time>
+          <a href="{{ .Permalink }}">{{ .Title | markdownify }}</a>
+        </li>
+        {{- end }}
+      </ul>
     </div>
     {{- end }}
     {{- end }}

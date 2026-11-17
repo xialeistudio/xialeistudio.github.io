@@ -3,7 +3,8 @@ slug: shuffle-algorithm
 title: 洗牌算法
 date: 2023-01-03 12:05:44
 tags:
-- leetcode
+- LeetCode
+- 算法
 categories:
 - algorithm
 ---

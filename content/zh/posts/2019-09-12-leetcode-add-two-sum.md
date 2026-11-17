@@ -5,7 +5,7 @@ date: 2019-09-12 23:16:28
 categories:
 - algorithm
 tags:
-- leetcode
+- LeetCode
 ---
 
 本文是力扣算法的第二篇，讲解两数相加问题。

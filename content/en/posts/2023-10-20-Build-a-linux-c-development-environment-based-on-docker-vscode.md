@@ -5,7 +5,9 @@ date: 2023-10-20 20:52:05
 categories:
 - devops
 tags:
-- C++
+- C/C++
+- Docker
+- Linux
 alias:
 - /2023/10/20/Build-a-linux-c-development-environment-based-on-docker-vscode.html
 ---

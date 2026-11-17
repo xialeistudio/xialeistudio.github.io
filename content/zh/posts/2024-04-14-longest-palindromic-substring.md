@@ -5,7 +5,9 @@ date: 2024-04-14T15:15:26+08:00
 categories:
 - algorithm
 tags:
-- leetcode
+- LeetCode
+series:
+- LeetCode 热题 100
 ---
 
 ### Question

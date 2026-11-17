@@ -5,7 +5,9 @@ slug: principles-of-microservice-architecture
 categories:
 - architecture
 tags:
-- Microservices
+- 微服务
+series:
+- Microservice Architecture
 ---
 The microservices architecture is a method of building complex applications as a collection of small services, where each service runs in its own independent process and is typically built around specific business capabilities. These services communicate through well-defined APIs, often HTTP RESTful APIs or lightweight messaging systems. When designing a microservices architecture, it is crucial to follow a series of core principles to ensure the maintainability, scalability, and flexibility of the system.
 

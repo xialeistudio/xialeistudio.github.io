@@ -4,6 +4,9 @@ title: 解决wordpress d8主题使用七牛镜像插件后无法评论的问题
 date: 2014-11-01 13:46:44.000000000 +08:00
 categories:
 - devops
+tags:
+- WordPress
+- 工具
 ---
 上午有热心的网友给我反映说评论功能出bug了，初步查看是七牛出了问题，利用chrome的开发者工具可以查看请求。
 ![示意图](https://og5r5kasb.qnssl.com/wp-content/uploads/2014/11/blob3.png)   

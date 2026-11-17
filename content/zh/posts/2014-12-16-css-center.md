@@ -4,6 +4,8 @@ title: css水平居中和垂直居中
 date: 2014-12-16 18:04:32.000000000 +08:00
 categories:
 - frontend
+tags:
+- CSS
 ---
 水平居中还是比较好弄的
 

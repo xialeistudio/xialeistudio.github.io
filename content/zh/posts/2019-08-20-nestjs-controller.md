@@ -5,7 +5,9 @@ date: 2019-08-20 10:10:21
 categories:
 - backend
 tags:
-- nestjs
+- NestJS
+series:
+- NestJS 学习之旅
 ---
 
 本文是NestJs学习之旅的第二篇，主要讲解控制器。

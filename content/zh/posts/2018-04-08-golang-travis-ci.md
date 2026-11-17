@@ -5,7 +5,8 @@ date: 2018-04-08 17:40:37
 categories:
 - devops
 tags:
-- ci
+- Go
+- Git
 ---
 
 虽然golang的工程工具已经非常完善了，比如测试、代码格式化等等。但是如果开发library开源到github的话，这些东西是可以使用自动化工具完成的，那就是 [travis](https://www.travis-ci.org/)

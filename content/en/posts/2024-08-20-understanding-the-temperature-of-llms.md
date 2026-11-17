@@ -4,6 +4,8 @@ date: 2024-08-20T15:57:11+08:00
 slug: understanding-the-temperature-of-llms
 categories:
 - ai
+tags:
+- LLM
 ---
 
 In the realm of artificial intelligence, large language models (LLMs) have become sophisticated tools for generating human-like text. A pivotal concept in steering these models is the "temperature," which dictates the randomness and creativity of the generated text. This blog post aims to demystify the temperature setting in LLMs and provide a professional overview.

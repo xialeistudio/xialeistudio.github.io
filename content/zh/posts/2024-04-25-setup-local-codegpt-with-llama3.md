@@ -2,8 +2,8 @@
 title: 拥有你自己的Copilot!基于Llama3和CodeGPT部署本地Copilot，断网也能使用！
 slug: setup-local-codegpt-with-llama3
 date: 2024-04-25T08:30:57+08:00
-tags: 
-- llama3
+tags:
+- LLM
 categories:
 - ai
 ---

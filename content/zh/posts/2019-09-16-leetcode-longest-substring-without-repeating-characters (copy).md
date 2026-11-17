@@ -5,7 +5,7 @@ date: 2019-09-16 18:34:58
 categories:
 - algorithm
 tags:
-- leetcode
+- LeetCode
 ---
 
 本文是力扣算法的第三篇，讲解无重复字符的最长子串问题。

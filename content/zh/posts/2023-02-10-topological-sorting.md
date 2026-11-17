@@ -3,7 +3,8 @@ slug: topological-sorting
 title: 拓补排序
 date: 2023-02-10 12:00:00
 tags:
-- leetcode
+- LeetCode
+- 排序
 categories:
 - algorithm
 ---

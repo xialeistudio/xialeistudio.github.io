@@ -6,8 +6,8 @@ series:
   - Redis
 categories:
 - backend
-tags: 
-  - redis
+tags:
+- Redis
 ---
 In this article, I'll deep dive into an interesting and powerful feature of Redis: HyperLog.
 By understanding the working principles and application scenarios of this feature, you'll be able to leverage Redis effectively to build high-performance and high-scalable applications.

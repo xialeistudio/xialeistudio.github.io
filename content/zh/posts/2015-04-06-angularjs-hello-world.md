@@ -4,6 +4,8 @@ title: angularjs Hello World
 date: 2015-04-06 18:04:48.000000000 +08:00
 categories:
 - frontend
+tags:
+- AngularJS
 ---
 几乎所有的编程入门都是以"Hello World"开始的，这里也不例外。
 ## HTML代码

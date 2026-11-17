@@ -3,8 +3,8 @@ slug: odd-even-linked-list
 title: LeetCode328——奇偶链表
 date: 2022-02-05 20:24:19
 tags:
-- linklist
-- leetcode
+- 链表
+- LeetCode
 categories:
 - algorithm
 ---

@@ -3,7 +3,8 @@ slug: boyer-moore-majority-vote-algorithm
 title: 博耶-摩尔多数投票算法
 date: 2022-12-31 14:13:06
 tags:
-- leetcode
+- LeetCode
+- 算法
 categories:
 - algorithm
 ---

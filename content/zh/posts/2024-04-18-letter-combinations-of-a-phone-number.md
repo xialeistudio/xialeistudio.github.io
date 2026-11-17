@@ -5,7 +5,7 @@ date: 2024-04-18T15:15:26+08:00
 categories:
 - algorithm
 tags:
-- leetcode
+- LeetCode
 ---
 
 ### Question

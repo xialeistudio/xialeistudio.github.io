@@ -4,6 +4,8 @@ title: PHP heredoc 字符串定界符使用
 date: 2014-09-06 20:09:57.000000000 +08:00
 categories:
 - backend
+tags:
+- PHP
 ---
 PHP定义字符串有三种形式
 + 双引号
