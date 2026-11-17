@@ -321,3 +321,28 @@
   .blog-content { font-size: 1.6rem; }
   .blog-content h2 { font-size: 2.1rem; }
 }
+
+// ---- Series -----------------------------------------------------------------
+.series-list { display: grid; gap: 1.2rem; }
+.series-card.is-ongoing { border-left: 3px solid var(--c-accent); background: var(--c-accent-soft); }
+.series-card-head { display: flex; align-items: center; justify-content: space-between; gap: 1.2rem; }
+.series-count { flex: none; font-size: 1.3rem; color: var(--c-muted); }
+.series-index .home2-role a { color: var(--c-accent) !important; }
+.series-toc {
+  list-style: none; margin: 0; padding: 0;
+  li {
+    display: flex; align-items: baseline; gap: 1.4rem;
+    padding: 1.1rem 0; border-bottom: 1px solid var(--c-border); font-size: 1.6rem;
+  }
+  .series-no {
+    flex: none; width: 2.4rem; font-size: 1.4rem; font-weight: 600;
+    font-variant-numeric: tabular-nums; color: var(--c-accent);
+  }
+  a { flex: 1; line-height: 1.5; }
+  a:hover { color: var(--c-accent); }
+  time { flex: none; font-size: 1.3rem; color: var(--c-muted); font-variant-numeric: tabular-nums; }
+  @media only screen and (max-width: 768px) {
+    li { flex-wrap: wrap; }
+    time { width: 100%; padding-left: 3.8rem; }
+  }
+}

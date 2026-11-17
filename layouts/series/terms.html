@@ -1,0 +1,35 @@
+{{ define "content" }}
+{{- $current := site.Params.currentSeries }}
+{{- $rows := slice }}
+{{- range .Data.Terms }}
+  {{- $pages := .Pages.ByDate }}
+  {{- $last := index $pages.Reverse 0 }}
+  {{- $rows = $rows | append (dict "page" .Page "pages" $pages "last" $last "date" $last.Date) }}
+{{- end }}
+<div class="home2 series-index">
+  <header class="home2-intro">
+    <h1>{{ .Title }}</h1>
+    <p class="home2-role">{{ i18n "series_intro" (dict "Count" (len $rows)) }}</p>
+  </header>
+  <section class="home2-section series-list">
+    {{- range sort $rows "date" "desc" }}
+    {{- $p := .page }}{{ $pages := .pages }}
+    {{- $ongoing := and $current (eq $p.Title $current.name) }}
+    <a class="home2-card series-card{{ if $ongoing }} is-ongoing{{ end }}" href="{{ $p.RelPermalink }}">
+      <span class="series-card-head">
+        <span class="home2-card-title">{{ $p.Title }}</span>
+        {{- if $ongoing }}
+        <span class="home2-label">{{ i18n "series_progress" (dict "Done" (len $pages) "Total" $current.total) }}</span>
+        {{- else }}
+        <span class="series-count">{{ i18n "series_count" (dict "Count" (len $pages)) }}</span>
+        {{- end }}
+      </span>
+      <span class="home2-card-meta">
+        {{- (index $pages 0).Date.Format "2006" }}{{ if ne ((index $pages 0).Date.Format "2006") (.last.Date.Format "2006") }} – {{ .last.Date.Format "2006" }}{{ end }}
+        · {{ i18n "series_latest" }}{{ .last.Title }}
+      </span>
+    </a>
+    {{- end }}
+  </section>
+</div>
+{{ end }}

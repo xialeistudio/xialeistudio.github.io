@@ -29,3 +29,9 @@ other = "全部 {{ .Count }} 篇文章"
 
 [toc]
 other = "目录"
+
+[series_intro]
+other = "{{ .Count }} 个系列，按最近更新排序"
+
+[series_count]
+other = "共 {{ .Count }} 篇"

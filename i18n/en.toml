@@ -29,3 +29,9 @@ other = "All {{ .Count }} posts"
 
 [toc]
 other = "Contents"
+
+[series_intro]
+other = "{{ .Count }} series, most recently updated first"
+
+[series_count]
+other = "{{ .Count }} posts"
