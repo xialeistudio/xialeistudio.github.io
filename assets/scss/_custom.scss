@@ -416,3 +416,10 @@
 @media only screen and (max-width: 768px) {
   .page-head h1 { font-size: 2.6rem; }
 }
+
+// ---- Code font ---------------------------------------------------------------
+// JetBrains Mono ships with ligatures (>= becomes ≥); readers copy code, so show raw characters.
+code, pre, kbd, samp {
+  font-variant-ligatures: none;
+  font-feature-settings: "liga" 0, "calt" 0;
+}
