@@ -1,0 +1,15 @@
+{{- /* Search index: one entry per post, small fields only (no full text) to keep it light. */ -}}
+{{- $out := slice }}
+{{- range where site.RegularPages "Type" "in" site.Params.mainSections }}
+  {{- $cats := slice }}{{ range .GetTerms "categories" }}{{ $cats = $cats | append .LinkTitle }}{{ end }}
+  {{- $series := slice }}{{ range .GetTerms "series" }}{{ $series = $series | append .LinkTitle }}{{ end }}
+  {{- $out = $out | append (dict
+      "t" .Title
+      "u" .RelPermalink
+      "d" (.Date.Format "2006-01-02")
+      "c" (delimit $cats " ")
+      "g" (delimit (.Params.tags | default slice) " ")
+      "s" (delimit $series " ")
+      "x" (.Summary | plainify | htmlUnescape | truncate 160)) }}
+{{- end }}
+{{- $out | jsonify }}

@@ -17,6 +17,8 @@ taxonomies:
 permalinks:
   page:
     posts: /:year/:month/:day/:slug
+outputs:
+  home: ["HTML", "RSS", "JSON"]
 outputFormats:
   RSS:
     mediatype: application/rss
@@ -133,6 +135,9 @@ languages:
         - name: About
           url: /about
           weight: 4
+        - name: Search
+          url: /search
+          weight: 5
     params:
       tagline: Engineering notes from a backend architect, now focused on building reliable AI agents.
       homeLinks:
@@ -181,6 +186,9 @@ languages:
         - name: 关于
           url: /about
           weight: 4
+        - name: 搜索
+          url: /search
+          weight: 5
     params:
       tagline: 后端架构师的工程笔记。现在专注 AI Agent 工程：怎么把 Agent 做成可靠的生产系统。
       currentSeries:

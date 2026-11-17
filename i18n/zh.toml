@@ -50,3 +50,12 @@ other = "上一篇"
 
 [next_post]
 other = "下一篇"
+
+[search_placeholder]
+other = "搜索标题、标签、分类……（按 / 聚焦）"
+
+[search_found]
+other = "找到 {n} 篇"
+
+[search_none]
+other = "没有找到相关文章"

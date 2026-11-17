@@ -423,3 +423,22 @@ code, pre, kbd, samp {
   font-variant-ligatures: none;
   font-feature-settings: "liga" 0, "calt" 0;
 }
+
+// ---- Search -------------------------------------------------------------------
+.search-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 1.2rem 1.4rem;
+  border: 1px solid var(--c-border);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--c-text);
+  font: inherit;
+  font-size: 1.7rem;
+  outline: none;
+  &:focus { border-color: var(--c-accent); box-shadow: 0 0 0 3px var(--c-accent-soft); }
+}
+.search-results {
+  margin-top: 1.2rem !important;
+  mark { background: var(--c-accent-soft); color: var(--c-accent); padding: 0; border-radius: 2px; }
+}

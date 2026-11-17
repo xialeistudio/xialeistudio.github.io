@@ -1,0 +1,10 @@
+{{ define "content" }}
+<div class="home2">
+  {{ partial "page-header.html" (dict "title" .Title) }}
+  <input id="search-input" class="search-input" type="search" autocomplete="off" placeholder="{{ i18n "search_placeholder" }}" aria-label="{{ .Title }}"
+    data-index="{{ "index.json" | relLangURL }}" data-found="{{ i18n "search_found" }}" data-none="{{ i18n "search_none" }}">
+  <p id="search-status" class="page-meta"></p>
+  <ul id="search-results" class="home2-list search-results"></ul>
+</div>
+<script src="/js/search.js?v=1" defer></script>
+{{ end }}

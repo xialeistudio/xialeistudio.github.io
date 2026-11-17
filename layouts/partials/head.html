@@ -53,4 +53,15 @@
     <script>{{ $darkModeInit.Content | safeJS }}</script>
     {{ end -}}
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2871082647721658" crossorigin="anonymous"></script>
+    <script>
+      // "/" opens search from anywhere (ignored while typing in a field)
+      document.addEventListener('keydown', e => {
+        if (e.key !== '/' || e.metaKey || e.ctrlKey || e.altKey) return;
+        const el = document.activeElement;
+        if (el && (el.isContentEditable || /^(input|textarea|select)$/i.test(el.tagName))) return;
+        e.preventDefault();
+        const box = document.getElementById('search-input');
+        if (box) box.focus(); else location.href = {{ "search/" | relLangURL }};
+      });
+    </script>
 </head>

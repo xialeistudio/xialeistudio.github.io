@@ -50,3 +50,12 @@ other = "Previous"
 
 [next_post]
 other = "Next"
+
+[search_placeholder]
+other = "Search titles, tags, categories… (press / to focus)"
+
+[search_found]
+other = "{n} results"
+
+[search_none]
+other = "No matching posts"
