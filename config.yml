@@ -83,8 +83,8 @@ params:
       id: G-EC3XLVSGKV
       # SiteVerificationTag: xxx
     umami:
-      enable: false  # turn on once the Umami Cloud website ID is filled in
-      website_id: ""
+      enable: true
+      website_id: a020c1ea-926c-4695-aadf-d1eee2d31191
       url: https://cloud.umami.is/script.js
       domains: www.ddhigh.com
   guestbook:
