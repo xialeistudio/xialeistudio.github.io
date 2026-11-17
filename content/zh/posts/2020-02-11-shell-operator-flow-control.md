@@ -8,7 +8,7 @@ tags:
 - Shell
 - Linux
 series:
-- Shell 脚本快速入门
+- shell-scripting
 ---
 
 今天我们来学习Shell的运算符和流程控制。

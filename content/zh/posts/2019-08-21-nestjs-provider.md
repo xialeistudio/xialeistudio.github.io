@@ -7,7 +7,7 @@ categories:
 tags:
 - NestJS
 series:
-- NestJS 学习之旅
+- nestjs-journey
 ---
 
 本文是NestJs学习之旅的第三篇，讲解服务提供者。

@@ -5,7 +5,7 @@ slug: agent-loop-stopping
 categories:
 - ai
 series:
-- Agent 工程笔记
+- agent-engineering
 tags:
 - AI Agent
 - Harness Engineering

@@ -7,7 +7,7 @@ url: /about/
 
 我是 Lei Xia，后端架构师。从 2014 年开始在这里写技术博客。
 
-早年写 PHP、Node.js、Go 和前端，后来做微服务和分布式系统，现在主要关注 **AI Agent 工程**：怎么把 Agent 做成可靠、可观测、可评估的生产系统。正在连载的系列是 [Agent 工程笔记](/series/agent-工程笔记/)。
+早年写 PHP、Node.js、Go 和前端，后来做微服务和分布式系统，现在主要关注 **AI Agent 工程**：怎么把 Agent 做成可靠、可观测、可评估的生产系统。正在连载的系列是 [Agent 工程笔记](/series/agent-engineering/)。
 
 这个博客只写真实遇到过的工程问题：讲清楚取舍，给出能跑的代码。
 

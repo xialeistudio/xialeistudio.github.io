@@ -8,7 +8,7 @@
     {{- with .GetTerms "categories" }}<a class="post-cat" href="{{ (index . 0).RelPermalink }}">{{ (index . 0).LinkTitle }}</a>{{ end }}
     <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
     <span>{{ i18n "reading_time" .ReadingTime }}</span>
-    {{- with .Params.series }}<span>{{ i18n "series" 1 }}：<a href="{{ printf "series/%s/" (index . 0 | lower | replaceRE `\s+` "-") | relLangURL }}">{{ index . 0 }}</a></span>{{ end }}
+    {{- with .GetTerms "series" }}<span>{{ i18n "series" 1 }}：<a href="{{ (index . 0).RelPermalink }}">{{ (index . 0).LinkTitle }}</a></span>{{ end }}
   </p>
 
   {{- if and (gt .WordCount 400) (ne .TableOfContents "<nav id=\"TableOfContents\"></nav>") }}

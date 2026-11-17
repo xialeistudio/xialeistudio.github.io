@@ -181,7 +181,7 @@ languages:
     params:
       tagline: 后端架构师的工程笔记。现在专注 AI Agent 工程：怎么把 Agent 做成可靠的生产系统。
       currentSeries:
-        name: Agent 工程笔记
+        key: agent-engineering
         total: 9
       homeLinks:
         - name: 关于我

@@ -7,7 +7,7 @@ categories:
 tags:
 - Node.js
 series:
-- Pomelo 入门
+- pomelo
 ---
 pomelo官方提供的js客户端是基于浏览器的，nodejs下无法使用，所以封装了一个基于CommonJs的pomelo客户端。
 ## 支持平台

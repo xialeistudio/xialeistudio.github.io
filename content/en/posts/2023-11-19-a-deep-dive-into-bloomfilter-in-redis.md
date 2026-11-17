@@ -6,7 +6,7 @@ keywords:
   - redis
   - bloomfilter
 series:
-  - Redis
+- redis
 categories:
 - backend
 tags:

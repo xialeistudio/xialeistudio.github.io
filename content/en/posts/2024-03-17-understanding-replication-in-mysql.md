@@ -6,7 +6,7 @@ tags:
 categories:
 - backend
 series:
-  - How it works
+- how-it-works
 ---
  MySQL Replication is a process where data from one MySQL database known as the master is copied over to one or more other databases called replicas or slaves. In this article, we'll learn what replication is, how to enable replication,  replication modes and replication forms.
 

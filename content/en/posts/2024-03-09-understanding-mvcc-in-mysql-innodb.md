@@ -6,7 +6,7 @@ tags:
 categories:
 - backend
 series:
-  - How it works
+- how-it-works
 ---
 In MySQL, MVCC (Multi-Version Concurrency Control) refers to the concurrency control mechanism used by the InnoDB storage engine. It provides concurrent access to data and ensures data consistency and isolation in a multi-user environment.
 

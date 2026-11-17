@@ -1,10 +1,10 @@
 {{ define "content" }}
 {{- $current := site.Params.currentSeries }}
 {{- $rows := slice }}
-{{- range .Data.Terms }}
-  {{- $pages := .Pages.ByDate }}
+{{- range $key, $wp := .Data.Terms }}
+  {{- $pages := $wp.Pages.ByDate }}
   {{- $last := index $pages.Reverse 0 }}
-  {{- $rows = $rows | append (dict "page" .Page "pages" $pages "last" $last "date" $last.Date) }}
+  {{- $rows = $rows | append (dict "key" $key "page" $wp.Page "pages" $pages "last" $last "date" $last.Date) }}
 {{- end }}
 <div class="home2 series-index">
   <header class="home2-intro">
@@ -14,7 +14,7 @@
   <section class="home2-section series-list">
     {{- range sort $rows "date" "desc" }}
     {{- $p := .page }}{{ $pages := .pages }}
-    {{- $ongoing := and $current (eq $p.Title $current.name) }}
+    {{- $ongoing := and $current (eq .key $current.key) }}
     <a class="home2-card series-card{{ if $ongoing }} is-ongoing{{ end }}" href="{{ $p.RelPermalink }}">
       <span class="series-card-head">
         <span class="home2-card-title">{{ $p.Title }}</span>

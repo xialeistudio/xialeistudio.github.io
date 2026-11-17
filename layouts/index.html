@@ -18,15 +18,15 @@
 
   {{- /* Series in progress */}}
   {{- with site.Params.currentSeries }}
-  {{- $name := .name }}
+  {{- $key := .key }}
   {{- $total := .total }}
-  {{- $key := $name | lower | replaceRE `\s+` "-" }}
-  {{- with index site.Taxonomies.series $key }}
+  {{- with site.GetPage (printf "/series/%s" $key) }}
+  {{- $name := .Title }}
   {{- $sp := .Pages.ByDate }}
   {{- if $sp }}
   <section class="home2-section">
     <h2 class="home2-heading">{{ i18n "home_series" }}</h2>
-    <a class="home2-series" href="{{ printf "series/%s/" $key | relLangURL }}">
+    <a class="home2-series" href="{{ .RelPermalink }}">
       <span class="home2-series-name">{{ $name }}</span>
       <span class="home2-series-meta">{{ i18n "series_progress" (dict "Done" (len $sp) "Total" $total) }}</span>
       <span class="home2-series-latest">{{ i18n "series_latest" }}{{ (index $sp.Reverse 0).Title }}</span>

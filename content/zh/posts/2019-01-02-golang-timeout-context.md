@@ -7,7 +7,7 @@ categories:
 tags:
 - Go
 series:
-- 一起学 context
+- go-context
 ---
 
 上一篇文章讲到如何使用context来传值，实际上context还有另外一个重要功能——goroutine的超时控制。

@@ -7,7 +7,7 @@ categories:
 tags:
 - Webpack
 series:
-- Webpack4 不求人
+- webpack4
 ---
 
 ![](https://static.ddhigh.com/blog/2020-03-18-032856.png)

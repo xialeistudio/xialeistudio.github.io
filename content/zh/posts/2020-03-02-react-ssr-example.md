@@ -9,7 +9,7 @@ tags:
 - TypeScript
 - React
 series:
-- Webpack4 不求人
+- webpack4
 ---
 ## 同构应用
 

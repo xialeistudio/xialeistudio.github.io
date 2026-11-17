@@ -7,7 +7,7 @@ categories:
 tags:
 - NestJS
 series:
-- NestJS 学习之旅
+- nestjs-journey
 ---
 
 本文是NestJs的第六篇，讲解异常处理。

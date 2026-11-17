@@ -7,7 +7,7 @@ categories:
 tags:
 - Webpack
 series:
-- Webpack4 不求人
+- webpack4
 ---
 
 > Webpack是一个现在Javascript应用程序的模块化打包器，在Webpack中JS/CSS/图片等资源都被视为JS模块，简化了编程。当Webpack构建时，会递归形成一个模块依赖关系图，然后将所有的模块打包为一个或多个bundle。

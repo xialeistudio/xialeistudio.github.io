@@ -5,7 +5,7 @@ date: 2021-03-17 10:22:36
 categories:
 - backend
 series:
-- Go 语言程序设计
+- go-programming
 tags:
 - Go
 ---

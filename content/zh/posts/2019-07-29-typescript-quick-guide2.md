@@ -5,7 +5,7 @@ date: 2019-07-29 10:11:30
 categories:
 - frontend
 series:
-- TypeScript 简明教程
+- typescript-tutorial
 tags:
 - TypeScript
 ---

@@ -8,7 +8,7 @@ tags:
 - Node.js
 - 并发
 series:
-- Pomelo 入门
+- pomelo
 ---
 pomelo应用中channel默认是**不可以跨进程**的，来看一下现在服务器的配置：
 

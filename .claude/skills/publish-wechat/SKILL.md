@@ -17,7 +17,7 @@ description: 把博客最新一篇中文文章发到微信公众号「全栈开�
 | 赞赏 | 赞赏作者，账户 `xialeistudio` |
 | 付费 | **不开启**（文章免费） |
 | 原文链接 | 博客文章 URL |
-| 合集 | Agent 工程笔记系列的文章 → 加入「Agent 工程笔记」合集（合集不存在就跳过并告诉用户） |
+| 合集 | front matter `series: agent-engineering` 的文章 → 加入「Agent 工程笔记」合集（合集不存在就跳过并告诉用户） |
 | 封面署名 | 正文末尾加一行 `封面图：<作者> / Unsplash`（由 render.py `--credit` 自动加） |
 
 ## 流程

@@ -7,7 +7,7 @@ categories:
 tags:
 - 微服务
 series:
-- Microservice Architecture
+- microservices
 ---
 In the long history of software engineering, service architecture has evolved from monolithic applications to Service-Oriented Architecture (SOA), and then to microservices architecture. This chapter will delve into this evolutionary process, helping readers understand the origins, strengths, and limitations of different architectures, as well as how they adapt to changing technological demands and business challenges.
 

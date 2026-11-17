@@ -7,7 +7,7 @@ categories:
 tags:
 - NestJS
 series:
-- NestJS 学习之旅
+- nestjs-journey
 ---
 本文是NestJs学习之旅的第八篇，讲解管道。
 
