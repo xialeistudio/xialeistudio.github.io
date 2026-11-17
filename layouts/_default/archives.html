@@ -1,0 +1,66 @@
+{{- define "content" }}
+{{- $pages := where site.RegularPages "Type" "in" site.Params.mainSections }}
+{{- $order := slice "ai" "architecture" "backend" "frontend" "devops" "mobile" "algorithm" }}
+
+<div class="archive">
+  <nav class="archive-switch archive-content" aria-label="archive views">
+    <a href="#by-year">{{ i18n "archive_by_year" }}</a>
+    <a href="#by-topic">{{ i18n "archive_by_topic" }}</a>
+  </nav>
+
+  {{- /* By topic: shown when the URL hash is #by-topic */}}
+  <section id="by-topic" class="archive-view archive-content">
+    {{- range $order }}
+    {{- $slug := . }}
+    {{- with site.GetPage (printf "/categories/%s" $slug) }}
+    {{- $posts := where .Pages "Type" "in" site.Params.mainSections }}
+    {{- if $posts }}
+    <div class="archive-topic">
+      <h2 class="archive-year-header" id="topic-{{ $slug }}">
+        <a href="{{ .Permalink }}">{{ .Title }}</a><sup class="archive-count">&nbsp;&nbsp;{{ len $posts }}</sup>
+      </h2>
+      {{- with .Params.description }}<p class="archive-topic-desc">{{ . }}</p>{{ end }}
+      <ul class="archive-topic-list">
+        {{- range $posts.ByDate.Reverse }}
+        <li>
+          <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01" }}</time>
+          <a href="{{ .Permalink }}">{{ .Title | markdownify }}</a>
+        </li>
+        {{- end }}
+      </ul>
+    </div>
+    {{- end }}
+    {{- end }}
+    {{- end }}
+  </section>
+
+  {{- /* By year: the theme's original archive, default view */}}
+  <section id="by-year" class="archive-view archive-content">
+    {{- range $pages.GroupByPublishDate "2006" }}
+    {{- if ne .Key "0001" }}
+    <div class="archive-year">
+      <h2 class="archive-year-header">
+        {{- .Key }}<sup class="archive-count">&nbsp;&nbsp;{{ len .Pages }}</sup>
+      </h2>
+      {{- range .Pages.GroupByDate "January" }}
+      <div class="archive-month">
+        <h3 class="archive-month-header">{{- .Key }}<sup class="archive-count">&nbsp;&nbsp;{{ len .Pages }}</sup></h3>
+        <div class="archive-posts">
+          {{- range .Pages }}
+          {{- if eq .Kind "page" }}
+          <div class="archive-entry">
+            <h3 class="archive-entry-title">{{- .Title | markdownify }}</h3>
+            <div class="archive-meta">{{ partial "blog/meta.html" . }}</div>
+            <a class="archive-link" aria-label="post link to {{ .Title | plainify }}" href="{{ .Permalink }}"></a>
+          </div>
+          {{- end }}
+          {{- end }}
+        </div>
+      </div>
+      {{- end }}
+    </div>
+    {{- end }}
+    {{- end }}
+  </section>
+</div>
+{{- end }}

@@ -7,6 +7,7 @@ categories:
 tags:
 - distributing
 featured: true
+evergreen: true
 ---
 
 A **distributed transaction** is a [database transaction](https://en.wikipedia.org/wiki/Database_transaction) in which two or more network hosts are involved.  

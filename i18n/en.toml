@@ -1,0 +1,10 @@
+# Project-level strings; keys here override or extend the theme's i18n/en.toml.
+
+[outdated_notice]
+other = "Written in {{ .Year }}. Some details may be out of date — check the current documentation."
+
+[archive_by_year]
+other = "By year"
+
+[archive_by_topic]
+other = "By topic"

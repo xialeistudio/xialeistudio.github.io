@@ -1,5 +1,5 @@
 baseURL: 'https://www.ddhigh.com'
-title: 每天进步一点点
+title: Lei Xia · Engineering Notes
 theme: hugo-theme-ladder
 license: MIT
 licenselink: 'https://github.com/guangzhengli/hugo-theme-ladder/blob/master/LICENSE'
@@ -27,28 +27,26 @@ sitemap:
   priority: 0.5
 
 params:
-  brand: DayDayUP
+  brand: Lei Xia · Engineering Notes
   avatarURL: /img/mp.png
   author: Lei Xia
-  authorDescription: Sr. Software Engineer | Solution Architect
+  authorDescription: Backend Architect · AI Engineering
   info: |
-    Writing code, Enjoying life, Building future
+    Engineering notes from a backend architect, now focused on building reliable AI agents.
     
     [RSS](/en/atom.xml) ·
     [Sponsor](/en/sponsors)
-  keywords: 
-    - Web
-    - Java
+  keywords:
+    - AI Engineering
+    - AI Agent
+    - Harness Engineering
+    - LLM
+    - Distributed Systems
+    - Microservices
+    - Software Architecture
     - Go
-    - Node.js
-    - PHP
-    - Koa
-    - MySQL
-    - Redis
-    - front-end
-    - back-end
-    - database
-  description: Welcome to my blog! Articles related to web development are provided here, covering technologies such as Java, Go, Node.js, PHP, Koa, MySQL, and Redis. From front-end to back-end, providing you with practical guidance and advice on web application development. Explore best practices and learn about RESTful API design, responsive web design, and performance and security.
+    - Backend
+  description: Engineering notes by Lei Xia, a backend architect focused on AI agent engineering, distributed systems and software architecture. Practical write-ups with real trade-offs and working code.
   favicon: /img/favicon.ico
   sponsors:
     buymeacoffee:
@@ -156,6 +154,7 @@ languages:
   zh:
     contentDir: content/zh
     languageName: 中
+    title: Lei Xia · 工程笔记
     author: Lei Xia
     menu:
       main:
@@ -172,23 +171,21 @@ languages:
           url: /guestbook
           weight: 5
     params:
-      brand: 每天进步一点点
-      authorDescription: Sr. Software Engineer | Solution Architect
-      keywords: 
-        - Web开发
-        - Java
+      brand: Lei Xia · 工程笔记
+      authorDescription: 后端架构师 · AI 工程实践
+      keywords:
+        - AI 工程
+        - AI Agent
+        - Harness Engineering
+        - 大模型应用
+        - 分布式系统
+        - 微服务
+        - 软件架构
         - Go
-        - Node.js
-        - PHP
-        - Koa
-        - MySQL
-        - Redis
-        - 前端
-        - 后端
-        - 数据库
-      description: 欢迎来到我的博客！这里提供与Web开发相关的文章，涵盖Java、Go、Node.js、PHP、Koa、MySQL和Redis等技术。从前端到后端，为您提供有关Web应用程序开发的实用指南和建议。探索最佳实践，了解RESTful API设计、响应式网页设计以及性能和安全性方面的知识。
+        - 后端开发
+      description: Lei Xia 的工程笔记。后端架构师，现在专注 AI Agent 工程实践，也写分布式系统与软件架构。只写真实的工程取舍和能跑的代码。
       info:  | 
-        抒写代码，尽享生活，筑就未来。
+        后端架构师的工程笔记，现在专注 AI Agent 工程。
         
         [订阅](/atom.xml) ·
         [赞赏](/sponsors)

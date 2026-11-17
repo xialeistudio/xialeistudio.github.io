@@ -1,0 +1,74 @@
+// Project-level styles layered on top of hugo-theme-ladder.
+// Keep all site customizations here instead of editing themes/.
+
+// ---- Outdated notice -------------------------------------------------------
+.outdated-notice {
+  margin: 0 0 2rem;
+  padding: 1rem 1.4rem;
+  border-left: 3px solid #d4a72c;
+  background: rgba(212, 167, 44, 0.08);
+  font-size: 1.5rem;
+  line-height: 1.6;
+  color: inherit;
+}
+
+// ---- Archive: by-year / by-topic switch ------------------------------------
+.archive-switch {
+  display: flex;
+  gap: 2rem;
+  margin: 2rem auto 1rem;
+  font-size: 1.6rem;
+
+  a {
+    text-decoration: none;
+    padding-bottom: 2px;
+    border-bottom: 2px solid transparent;
+    opacity: 0.6;
+  }
+}
+
+// default: by-year visible, by-topic hidden; #by-topic in the URL flips them
+#by-topic { display: none; }
+.archive:has(#by-topic:target) {
+  #by-topic { display: block; }
+  #by-year { display: none; }
+  .archive-switch a[href="#by-topic"] { opacity: 1; border-bottom-color: currentColor; }
+}
+.archive:not(:has(#by-topic:target)) .archive-switch a[href="#by-year"] {
+  opacity: 1;
+  border-bottom-color: currentColor;
+}
+.archive-view { scroll-margin-top: 6rem; }
+
+.archive-topic {
+  margin-bottom: 2.5rem;
+
+  h2 a { text-decoration: none; color: inherit; }
+}
+.archive-topic-desc {
+  margin: -0.5rem 0 1.2rem;
+  font-size: 1.4rem;
+  opacity: 0.65;
+}
+.archive-topic-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    display: flex;
+    gap: 1.6rem;
+    padding: 0.5rem 0;
+    line-height: 1.5;
+    font-size: 1.6rem;
+  }
+  time {
+    flex: none;
+    width: 7rem;
+    font-variant-numeric: tabular-nums;
+    font-size: 1.4rem;
+    opacity: 0.55;
+  }
+  a { text-decoration: none; color: inherit; }
+  a:hover { text-decoration: underline; }
+}

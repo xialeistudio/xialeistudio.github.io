@@ -1,0 +1,8 @@
+{{- /* Notice for posts older than 3 years. Uses lastmod when the post was updated later.
+     Set `evergreen: true` in front matter for conceptual posts that do not go stale. */ -}}
+{{- $written := .Lastmod | default .Date -}}
+{{- if and (not .Params.evergreen) (lt $written (now.AddDate -3 0 0)) -}}
+<aside class="outdated-notice" role="note">
+  {{ i18n "outdated_notice" (dict "Year" ($written.Format "2006")) }}
+</aside>
+{{- end -}}

@@ -6,6 +6,7 @@ categories:
 date: 2023-05-04 17:16:00
 tags:
 featured: true
+evergreen: true
 ---
 
 在本文中，我将分享如何构建有限状态机（FSM）来帮助业务流程过渡，例如审计。

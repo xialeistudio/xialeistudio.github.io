@@ -7,6 +7,7 @@ categories:
 tags:
 - distributing
 featured: true
+evergreen: true
 ---
 
 **分布式事务**是涉及两个或多个网络主机的[数据库事务](https://en.wikipedia.org/wiki/Database_transaction)。

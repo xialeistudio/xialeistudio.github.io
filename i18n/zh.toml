@@ -1,0 +1,10 @@
+# Project-level strings; keys here override or extend the theme's i18n/zh.toml.
+
+[outdated_notice]
+other = "本文写于 {{ .Year }} 年，部分内容可能已经过时，请结合当前版本的文档阅读。"
+
+[archive_by_year]
+other = "按时间"
+
+[archive_by_topic]
+other = "按主题"
