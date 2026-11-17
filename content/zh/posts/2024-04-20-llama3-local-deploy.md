@@ -5,7 +5,6 @@ tags:
 - llama3
 categories:
 - ai
-featured: true
 ---
 4月18日，Meta在官方博客官宣了Llama3，标志着人工智能领域迈向了一个重要的飞跃。经过笔者的个人体验，Llama3 8B效果已经超越GPT-3.5，最为重要的是，Llama3是开源的，我们可以自己部署！
 

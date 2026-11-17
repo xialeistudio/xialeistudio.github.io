@@ -2,8 +2,8 @@
 slug: node-unhandledrejection
 date: 2017-06-13
 title: nodejs unhandledRejection问题解决
-categories: 
-- Engineering
+categories:
+- backend
 ---
 今天在使用promise的时候没有catch掉错误，导致报错，类似于
 ```

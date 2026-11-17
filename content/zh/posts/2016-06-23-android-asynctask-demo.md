@@ -3,7 +3,7 @@ slug: android-asynctask-demo
 title: android AsyncTask示例
 date: 2016-06-23 23:12:24.000000000 +08:00
 categories:
-- Engineering
+- mobile
 ---
 
 android实现异步的方法有很多种，本文只介绍用的比较多的AsyncTask。从类名就可以看出来该类是专为异步而生，API也很简单。

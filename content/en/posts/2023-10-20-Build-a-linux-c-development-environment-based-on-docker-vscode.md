@@ -3,7 +3,7 @@ slug: build-a-linux-c-development-environment-based-on-docker-vscode
 title: Build a linux/c++ development environment based on docker/vscode step-by-step
 date: 2023-10-20 20:52:05
 categories:
-- Engineering
+- devops
 tags:
 - C++
 alias:

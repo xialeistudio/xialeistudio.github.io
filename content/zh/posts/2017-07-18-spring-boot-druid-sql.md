@@ -3,7 +3,7 @@ slug: spring-boot-druid-sql
 date: 2017-07-18
 title: druid spring boot 统计SQL问题
 categories:
-- Engineering
+- backend
 tags:
 - spring-boot
 ---

@@ -3,7 +3,7 @@ slug: spring-boot-pm2
 date: 2017-07-31
 title: 使用pm2来保证Spring Boot应用稳定运行
 categories:
-- Engineering
+- devops
 tags:
 - spring-boot
 ---

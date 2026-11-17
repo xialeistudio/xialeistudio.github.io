@@ -3,7 +3,7 @@ slug: nodejs-guide-path
 title: NodeJs简明教程(5)
 date: 2019-07-20 13:00:27
 categories:
-- Engineering
+- backend
 ---
 
 本文是NodeJs简明教程的第五篇，将介绍NodeJs path模块相关的基本操作。

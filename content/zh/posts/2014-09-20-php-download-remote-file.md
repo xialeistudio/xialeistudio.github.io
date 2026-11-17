@@ -3,7 +3,7 @@ slug: php-download-remote-file
 title: PHP下载远程文件
 date: 2014-09-20 16:55:57.000000000 +08:00
 categories:
-- Engineering
+- backend
 ---
 在开发爬虫的时候，文章的图片往往是有防盗链措施的，一个比较好的解决办法是通过PHP下载图片到本地并且替换URL实现。
 

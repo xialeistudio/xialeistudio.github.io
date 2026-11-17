@@ -3,7 +3,7 @@ title: "从单体到微服务：复杂度的重新分布"
 date: 2026-03-12T11:53:08+08:00
 slug: complexity-redistribution-from-monolith-to-microservices
 categories:
-- Engineering
+- architecture
 featured: true
 tags:
 - Microservices

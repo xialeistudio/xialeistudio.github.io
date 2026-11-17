@@ -3,7 +3,7 @@ slug: docker-publish-nodejs
 date: 2017-10-10
 title: 使用Docker来部署NodeJs应用
 categories:
-- Engineering
+- devops
 ---
 
 Docker的环境无关性以及自动化特性实在是令人称赞，最近遇到的一个问题是，NodeJs使用8.x版本开发，但是线上服务器是7.x的，这时候又不能动线上的应用。

@@ -4,8 +4,7 @@ date: 2024-03-05T09:22:56+08:00
 tags: 
   - rust
 categories:
-  - Engineering  
-featured: true
+- backend
 ---
 [Mio](https://github.com/tokio-rs/mio) is a high-performance, low-level I/O library for Rust that focuses on non-blocking APIs and event notification. While Mio provides powerful capabilities for building I/O applications, it does not include a built-in timer feature. In this article, we will explore how to implement a timer in Mio.
 

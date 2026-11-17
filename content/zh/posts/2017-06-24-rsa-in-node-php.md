@@ -3,7 +3,7 @@ slug: rsa-in-node-php
 date: 2017-06-24
 title: 使用RSA在PHP和NodeJs中进行加密数据通信
 categories:
-- Engineering
+- backend
 tags:
 - openssl
 ---

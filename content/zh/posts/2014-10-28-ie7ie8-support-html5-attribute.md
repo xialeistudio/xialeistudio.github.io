@@ -3,7 +3,7 @@ slug: ie7ie8-support-html5-attribute
 title: 让IE7,IE8支持html5属性
 date: 2014-10-28 23:09:52.000000000 +08:00
 categories:
-- Engineering
+- frontend
 ---
 HTML5确实很好用，但是国内IE7和IE8的用户还是挺多的（或许是XP的缘故）。这些浏览器不识别HTML5的新属性以及<!doctype html>，导致页面渲染进入“怪异”模式，简直就是“不堪入目”。   
 不过，还好，开源的力量是强大的，有热心的开发者写了一套JS库来兼容IE7,IE8。本文就简单教大家用下这款JS库。

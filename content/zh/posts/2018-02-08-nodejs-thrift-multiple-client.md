@@ -3,7 +3,7 @@ slug: nodejs-thrift-multiple-client
 title: nodejs thrift多路复用客户端
 date: 2018-02-08 15:35:48
 categories:
-- Engineering
+- backend
 tags:
 - thrift
 ---

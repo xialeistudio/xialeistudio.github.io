@@ -2,8 +2,8 @@
 title: "Lunet: Design and Implementation of a High-Performance Coroutine Network Library"
 date: 2025-07-12T11:53:08+08:00
 slug: lunet-high-performance-coroutine-network-library
-categories: 
-- Engineering
+categories:
+- backend
 tags:
 - libuv
 - lua

@@ -3,7 +3,7 @@ title: "Agent 循环里，真正难的是停下来"
 date: 2026-11-16T10:00:00+08:00
 slug: agent-loop-stopping
 categories:
-- AI
+- ai
 series:
 - Agent 工程笔记
 tags:

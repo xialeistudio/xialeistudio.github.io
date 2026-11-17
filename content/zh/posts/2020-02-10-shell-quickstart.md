@@ -3,7 +3,7 @@ slug: shell-quickstart
 title: Shell脚本快速入门(1)
 date: 2020-02-10 12:00:00
 categories:
-- Engineering
+- devops
 tags:
 - shell
 ---

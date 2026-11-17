@@ -3,7 +3,7 @@ slug: angularjs-concept to explain
 title: Angularjs概念解释
 date: 2015-04-06 17:48:32.000000000 +08:00
 categories:
-- Engineering
+- frontend
 ---
 + 本文所有内容仅代表个人观点
 

@@ -3,7 +3,7 @@ slug: shell-operator-flow-control
 title: Shell脚本快速入门(2)
 date: 2020-02-11 12:00:00
 categories:
-- Engineering
+- devops
 tags:
 - shell
 ---

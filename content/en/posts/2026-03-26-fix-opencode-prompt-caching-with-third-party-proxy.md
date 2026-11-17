@@ -3,7 +3,7 @@ title: "Fixing OpenCode Prompt Cache Misses When Using GPT via Third-Party Proxy
 date: 2026-03-26T21:30:00+08:00
 slug: fix-opencode-prompt-caching-with-third-party-proxy
 categories:
-- AI
+- ai
 tags:
 - OpenCode
 - GPT

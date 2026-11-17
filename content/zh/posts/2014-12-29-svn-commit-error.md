@@ -3,7 +3,7 @@ slug: svn-commit-error
 title: SVN命令行提交“--This line, and those below, will be ignored--”
 date: 2014-12-29 17:35:47.000000000 +08:00
 categories:
-- Engineering
+- devops
 tags:
 - svn
 ---

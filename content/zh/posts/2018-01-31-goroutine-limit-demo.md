@@ -3,7 +3,7 @@ slug: goroutine-limit-demo
 title: golang限制协程数量
 date: 2018-01-31 22:23:09
 categories:
-- Engineering
+- backend
 ---
 
 ## 为什么要限制协程数量

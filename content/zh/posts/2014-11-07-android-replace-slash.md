@@ -3,7 +3,7 @@ slug: android-replace-slash
 title: android 替换斜杠
 date: 2014-11-07 14:01:45.000000000 +08:00
 categories:
-- Engineering
+- mobile
 tags:
 - regex
 ---

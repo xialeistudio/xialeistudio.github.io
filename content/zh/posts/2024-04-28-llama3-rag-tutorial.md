@@ -7,7 +7,6 @@ tags:
 - rag
 categories:
 - ai
-featured: true
 ---
 
 LLM存在时效性和幻觉问题，在 [如何用解决大模型时效性和准确性问题？RAG技术核心原理](https://www.ddhigh.com/2024/04/24/retrieval-augmented-generation/) 一文中我介绍了RAG的核心原理，本文将分享如何基于llama3和langchain搭建本地私有知识库。

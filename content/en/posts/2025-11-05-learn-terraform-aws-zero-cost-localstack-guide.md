@@ -2,12 +2,11 @@
 title: "Learn Terraform and AWS at Zero Cost with LocalStack: A Complete Practical Guide"
 date: 2025-11-05T09:00:00+08:00
 slug: learn-terraform-aws-zero-cost-localstack-guide
-categories: 
-- Engineering
+categories:
+- devops
 tags:
 - terraform
 - aws
-featured: true
 ---
 
 When learning AWS and Terraform, the biggest pain points are often the high costs of cloud services and the financial risks of misconfigurations. This guide will show you how to use LocalStack to simulate AWS services locally, enabling you to learn and experiment with Terraform Infrastructure as Code (IaC) at zero cost and zero risk.

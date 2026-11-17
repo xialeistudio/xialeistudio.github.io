@@ -3,7 +3,7 @@ slug: php-oop-getter-setter
 title: php OOP中的__get和__set方法
 date: 2014-09-07 11:46:40.000000000 +08:00
 categories:
-- Engineering
+- backend
 ---
 __get,__set光看前面两个下划线就知道是魔术方法了，而且还是PHP OOP中比较重要的方法。
 

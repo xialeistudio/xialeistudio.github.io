@@ -3,7 +3,7 @@ slug: html5-data-api
 title: html5新属性data api
 date: 2014-10-08 10:58:44.000000000 +08:00
 categories:
-- Engineering
+- frontend
 ---
 以往在做列表程序的时候，需要做类似“删除”功能的时候，往往是组装一个URL，类似于这个
 

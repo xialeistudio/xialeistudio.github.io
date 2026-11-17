@@ -2,8 +2,8 @@
 slug: node-fetch-ignore-certificate
 date: 2016-12-14
 title: node-fetch请求https站点时不验证证书
-categories: 
-- Engineering
+categories:
+- backend
 ---
 有时候https的证书验证也是挺烦的，比如自签CA签发的证书，这时候是不受信任的，直接执行https请求会报错。
 

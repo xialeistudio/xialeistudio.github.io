@@ -3,7 +3,7 @@ slug: understanding-rbac
 title: Understanding RBAC
 date: 2023-09-25 11:22:17
 categories:
-- engineering
+- architecture
 keywords:
 - authorization
 - rbac

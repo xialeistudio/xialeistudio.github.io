@@ -3,7 +3,7 @@ slug: linux-delete-messy-code-file
 title: Linux删除乱码文件
 date: 2014-09-13 15:19:49.000000000 +08:00
 categories:
-- Engineering
+- devops
 ---
 shell终端中有时候中文文件名会出现乱码，导致很多操作都不能进行，一个最简单的就是删除了。
 

@@ -3,7 +3,7 @@ slug: nginx-alias-root
 date: 2017-09-14
 title: Nginx alias和root指令
 categories:
-- Engineering
+- devops
 ---
 Nginx的root指令相信大家用的都挺多，用来指定document_root，但是如果是针对特定path的请求才启用的话，root指令显得不好用
 ```

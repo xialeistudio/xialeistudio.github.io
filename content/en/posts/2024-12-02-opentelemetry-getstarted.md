@@ -2,8 +2,8 @@
 title: OpenTelemetry Getting Started Guide
 date: 2024-12-02T11:53:08+08:00
 slug: opentelemetry-getstarted
-categories: 
-- Engineering
+categories:
+- architecture
 featured: true
 tags:
 - Observability

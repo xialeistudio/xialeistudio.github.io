@@ -3,7 +3,7 @@ slug: aliyun-phpmailer
 title: 阿里云ECS服务器phpmailer发信失败解决方法
 date: 2014-09-06 20:03:24.000000000 +08:00
 categories:
-- Engineering
+- devops
 tags:
 - openssl
 ---

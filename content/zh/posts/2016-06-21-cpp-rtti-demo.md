@@ -3,7 +3,7 @@ slug: cpp-rtti-demo
 title: C++ RTTI 示例
 date: 2016-06-21 01:51:07.000000000 +08:00
 categories:
-- Engineering
+- backend
 ---
 
 ```cpp

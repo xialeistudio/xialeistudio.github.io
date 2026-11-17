@@ -5,7 +5,6 @@ tags:
 - llama3
 categories:
 - ai
-featured: true
 ---
 On April 18th, Meta announced Llama3 on their official blog, marking a significant leap in the field of artificial intelligence. Based on my personal experience, Llama3's 8B model has surpassed GPT-3.5, and most importantly, Llama3 is open source, allowing us to deploy it on our own!
 

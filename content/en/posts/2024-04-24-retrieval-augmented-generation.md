@@ -6,7 +6,6 @@ tags:
 - rag
 categories:
 - ai
-featured: true
 ---
 
 In the era of information explosion, we are faced with the challenge of vast amounts of data. Retrieving useful information from this data is becoming increasingly difficult for people. To address this issue, researchers have proposed a novel technology called RAG (Retrieval-Augmented Generation).

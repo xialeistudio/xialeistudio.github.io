@@ -3,7 +3,7 @@ slug: wordpress-prettify
 title: wordpress使用prettify插件实现代码高亮
 date: 2014-12-28 00:07:50.000000000 +08:00
 categories:
-- Engineering
+- devops
 tags:
 - wordpress
 ---

@@ -3,7 +3,7 @@ slug: mybatis-generator-gui-tool
 title: mybatis-generator-gui工具
 date: 2016-06-26 17:56:03.000000000 +08:00
 categories:
-- Engineering
+- backend
 tags:
 - mybatis
 ---

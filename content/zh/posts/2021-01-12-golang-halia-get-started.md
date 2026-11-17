@@ -3,7 +3,7 @@ slug: golang-halia-get-started
 title: Golang组件化网络服务器框架Halia指南
 date: 2021-01-12
 categories:
-- Engineering
+- backend
 tags:
 - halia
 ---

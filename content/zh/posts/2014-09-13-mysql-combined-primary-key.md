@@ -3,7 +3,7 @@ slug: mysql-combined-primary-key
 title: MySQL联合主键
 date: 2014-09-13 12:01:03.000000000 +08:00
 categories:
-- Engineering
+- backend
 ---
 ## 单字段主键
 MySQL单字段主键相信大家都熟悉了。就是以一个字段主要数据行的主键，比如下面这个表

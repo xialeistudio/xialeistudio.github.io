@@ -3,7 +3,7 @@ slug: js-function-this-scope
 title: JS函数不同执行环境下的this指向
 date: 2015-08-20 11:49:39.000000000 +08:00
 categories:
-- Engineering
+- frontend
 ---
 > JavaScript中this指向一直是一个难点，也是一个重点，本文研究Node.js与浏览器环境下this指向的不同之处。
 

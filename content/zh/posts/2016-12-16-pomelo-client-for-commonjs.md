@@ -3,7 +3,7 @@ slug: pomelo-client-for-commonjs
 date: 2016-12-16
 title: 基于CommonJs的pomelo客户端
 categories:
-- Engineering
+- backend
 tags:
 - pomelo
 ---

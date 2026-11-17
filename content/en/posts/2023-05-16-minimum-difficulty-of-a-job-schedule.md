@@ -3,7 +3,7 @@ slug: minimum-difficulty-of-a-job-schedule
 title: Minimum difficulty of a job schedule
 date: 2023-05-16 22:19:15
 categories:
-- Algorithm
+- algorithm
 tags:
 - Dynamic programming
 ---

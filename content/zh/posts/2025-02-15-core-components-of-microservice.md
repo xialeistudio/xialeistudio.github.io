@@ -2,9 +2,8 @@
 title: 微服务核心组件
 date: 2025-02-15T11:53:08+08:00
 slug: core-components-of-microservice
-categories: 
-- Engineering
-featured: true
+categories:
+- architecture
 tags:
 - Microservices
 ---

@@ -3,10 +3,9 @@ title: leetcode热题100(5) - 最长回文子串
 slug: longest-palindromic-substring
 date: 2024-04-14T15:15:26+08:00
 categories:
-- Algorithm
+- algorithm
 tags:
 - leetcode
-featured: true
 ---
 
 ### Question

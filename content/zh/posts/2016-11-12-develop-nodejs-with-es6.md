@@ -3,7 +3,7 @@ slug: develop-nodejs-with-es6
 title: 使用ES6开发Nodejs程序
 date: 2016-11-12 19:18:46.000000000 +08:00
 categories:
-- Engineering
+- frontend
 ---
 ES6发布有一段时间了。但是Nodejs对此支持度还有待加强，就像前端可以使用babel+webpack构建基于ES6的工作流，其实Nodejs也是可以的（不需要手动编译）。当然，最终部署到生产服务器时要记得部署编译后的版本，否则运行时编译对性能是一种损失。
 ## 实践

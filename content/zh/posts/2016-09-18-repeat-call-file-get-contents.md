@@ -3,7 +3,7 @@ slug: repeat-call-file-get-contents
 title: 重复调用file_get_contents的问题
 date: 2016-09-18 17:56:46.000000000 +08:00
 categories:
-- Engineering
+- backend
 ---
 笔者在写Restful API的时候需要取得原始请求体，读了若干次输入流（将读取操作封装成了函数），发现就第一个参数有值，以后的读取都没有值。
 

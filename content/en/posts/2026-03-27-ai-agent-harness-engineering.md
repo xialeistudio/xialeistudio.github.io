@@ -3,7 +3,7 @@ title: "Harness Engineering: The Core Engineering Discipline of the AI Agent Era
 date: 2026-03-27T16:00:00+08:00
 slug: ai-agent-harness-engineering
 categories:
-- AI
+- ai
 tags:
 - AI Agent
 - Harness Engineering

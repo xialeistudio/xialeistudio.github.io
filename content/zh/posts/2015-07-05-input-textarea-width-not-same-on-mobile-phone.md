@@ -3,7 +3,7 @@ slug: input-textarea-width-not-same-on-mobile-phone
 title: 移动端input和textarea宽度不一致的问题
 date: 2015-07-05 20:15:07.000000000 +08:00
 categories:
-- Engineering
+- frontend
 ---
 今天在做写一个IOS端的表单时，尽管input,textarea设置了宽度，结果发现真机浏览的时候发现宽度不一致，有图为证   
 ![图片](https://og5r5kasb.qnssl.com/wp-content/uploads/2015/07/IMG_0839.png)

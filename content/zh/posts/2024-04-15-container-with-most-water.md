@@ -3,11 +3,9 @@ title: leetcode热题100(11) - 盛最多水的容器
 slug: container-with-most-water
 date: 2024-04-15T13:15:26+08:00
 categories:
-- Algorithm
+- algorithm
 tags:
 - leetcode
-
-featured: true
 ---
 
 ### Question

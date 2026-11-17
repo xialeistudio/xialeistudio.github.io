@@ -3,7 +3,7 @@ slug: gomonkey-private-method-stub
 title: gomonkey私有方法打桩
 date: 2021-09-18 15:38:23
 categories:
-- Engineering
+- backend
 tags:
 - testing
 ---

@@ -3,7 +3,7 @@ slug: fix-wordpress-wpimageeditorimagick-bug
 title: wordpress WPImageEditorImagick 漏洞临时修复方案
 date: 2016-05-12 14:05:35.000000000 +08:00
 categories:
-- Engineering
+- devops
 tags:
 - wordpress
 ---

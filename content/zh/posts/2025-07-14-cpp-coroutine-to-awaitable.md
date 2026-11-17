@@ -2,8 +2,8 @@
 title: "C++ 协程进阶：将 std::future 转换为 asio::awaitable"
 date: 2025-07-15T09:00:00+08:00
 slug: cpp-coroutine-future-to-awaitable
-categories: 
-- Engineering
+categories:
+- backend
 tags:
 - cpp
 - coroutine

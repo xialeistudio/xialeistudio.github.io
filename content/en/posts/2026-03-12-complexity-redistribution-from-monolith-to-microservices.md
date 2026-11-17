@@ -3,7 +3,7 @@ title: "From Monolith to Microservices: The Redistribution of Complexity"
 date: 2026-03-12T11:53:08+08:00
 slug: complexity-redistribution-from-monolith-to-microservices
 categories:
-- Engineering
+- architecture
 featured: true
 tags:
 - Microservices

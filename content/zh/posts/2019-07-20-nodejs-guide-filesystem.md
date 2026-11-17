@@ -3,7 +3,7 @@ slug: nodejs-guide-filesystem
 title: NodeJs简明教程(4)
 date: 2019-07-20 11:38:51
 categories:
-- Engineering
+- backend
 ---
 
 本文是NodeJs简明教程的第四篇，将介绍NodeJs文件系统模块相关的基本操作。

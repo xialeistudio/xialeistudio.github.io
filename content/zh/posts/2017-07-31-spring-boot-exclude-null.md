@@ -3,7 +3,7 @@ slug: spring-boot-exclude-null
 date: 2017-07-31
 title: Spring Boot JPA 返回json时排除Null字段
 categories:
-- Engineering
+- backend
 tags:
 - spring-boot
 ---

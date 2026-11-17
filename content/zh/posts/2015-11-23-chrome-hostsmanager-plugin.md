@@ -3,7 +3,7 @@ slug: chrome-hostsmanager-plugin
 title: chrome hosts插件
 date: 2015-11-23 12:01:18.000000000 +08:00
 categories:
-- Engineering
+- devops
 ---
 ## 项目地址
 [https://github.com/xialeistudio/hostManager](https://github.com/xialeistudio/hostManager)

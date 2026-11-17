@@ -3,7 +3,7 @@ slug: pomelo-get-started
 date: 2016-12-15
 title: pomelo Hello World
 categories:
-- Engineering
+- backend
 tags:
 - pomelo
 ---

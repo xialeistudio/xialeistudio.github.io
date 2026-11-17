@@ -3,7 +3,7 @@ slug: nestjs-pipe
 title: NestJs学习之旅(8)——管道
 date: 2019-08-28 14:47:48
 categories:
-- Engineering
+- backend
 tags:
 - nestjs
 ---

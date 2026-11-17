@@ -3,7 +3,7 @@ slug: leetcode-add-two-sum
 title: leetcode(2) —— 两数相加
 date: 2019-09-12 23:16:28
 categories:
-- Algorithm
+- algorithm
 tags:
 - leetcode
 ---

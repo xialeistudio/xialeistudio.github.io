@@ -3,7 +3,7 @@ slug: nginx-virtual-host
 title: nginx虚拟主机配置
 date: 2014-09-06 20:02:20.000000000 +08:00
 categories:
-- Engineering
+- devops
 ---
 
 最近服务器上用的环境是lnmp，之前一直在用apache，配置虚拟主机也是很方便的。今天查资料发现Nginx的虚拟主机配置更加简单。

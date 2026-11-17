@@ -3,7 +3,7 @@ slug: phpstorm-xdebug-remote-debug
 title: phpstorm+xdebug远程调试服务器PHP代码
 date: 2016-06-08 12:25:21.000000000 +08:00
 categories:
-- Engineering
+- devops
 tags:
 - xdebug
 ---

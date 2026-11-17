@@ -3,7 +3,7 @@ slug: mac-10-11-install-php-mongo
 title: mac 10.11安装php-mongo扩展踩过的坑
 date: 2015-12-15 19:52:30.000000000 +08:00
 categories:
-- Engineering
+- backend
 ---
 ## pecl的安装
 本文采用的是 pecl 的方式安装。   

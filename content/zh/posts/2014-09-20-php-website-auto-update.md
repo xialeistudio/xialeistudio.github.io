@@ -3,7 +3,7 @@ slug: php-website-auto-update
 title: PHP自动更新网站
 date: 2014-09-20 17:26:27.000000000 +08:00
 categories:
-- Engineering
+- backend
 ---
 目前软件开发主流越来越倾向于B/S模式，不同于C/S模式的软件，B/S模式下的WEB程序自动更新是个麻烦问题。
 

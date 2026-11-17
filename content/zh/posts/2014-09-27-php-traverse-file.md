@@ -3,7 +3,7 @@ slug: php-traverse-file
 title: PHP遍历文件
 date: 2014-09-27 09:28:30.000000000 +08:00
 categories:
-- Engineering
+- backend
 ---
 遍历文件夹主要用到 opendir readdir closedir 三个函数，有两个要注意的地方
 

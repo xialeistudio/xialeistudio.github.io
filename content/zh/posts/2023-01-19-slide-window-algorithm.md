@@ -5,7 +5,7 @@ date: 2023-01-19 23:16:29
 tags:
 - leetcode
 categories:
-- Algorithm
+- algorithm
 ---
 
 滑动窗口算法是查找连续区间常用的算法之一。

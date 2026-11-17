@@ -3,7 +3,7 @@ slug: nginx-proxy-websocket-cors
 date: 2017-05-24
 title: nginx反向代理websocket支持跨域
 categories:
-- Engineering
+- devops
 ---
 今天在调试远程websocket的时候发现控制台提示跨域错误，看到浏览器`Network`中方向响应头没有跨域方面的数据。
 

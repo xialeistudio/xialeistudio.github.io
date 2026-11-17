@@ -3,7 +3,7 @@ slug: jquery-write-a-plugin
 title: jquery插件写法
 date: 2014-09-06 20:08:22.000000000 +08:00
 categories:
-- Engineering
+- frontend
 ---
 ## 项目地址
 [http://xialeistudio.github.io/search/](http://xialeistudio.github.io/search/)

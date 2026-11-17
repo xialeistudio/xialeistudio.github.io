@@ -3,7 +3,7 @@ slug: mamp-install-php-extension
 title: MAMP下使用pecl安装PHP扩展
 date: 2016-02-16 15:45:25.000000000 +08:00
 categories:
-- Engineering
+- devops
 tags:
 - mamp
 ---

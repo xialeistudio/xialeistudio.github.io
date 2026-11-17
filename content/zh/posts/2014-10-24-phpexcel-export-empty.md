@@ -3,7 +3,7 @@ slug: phpexcel-export-empty
 title: PHPExcel导出时为空的解决方法
 date: 2014-10-24 13:51:23.000000000 +08:00
 categories:
-- Engineering
+- backend
 ---
 今天在做数据导出的时候遇到个麻烦事情，SQL查询是有数据的，但是写入excel的时候为空的。
 

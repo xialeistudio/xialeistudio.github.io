@@ -3,7 +3,7 @@ slug: php-convert-date-to-constellation
 title: PHP将日期转换为星座
 date: 2014-09-06 20:11:56.000000000 +08:00
 categories:
-- Engineering
+- backend
 ---
 这几日在做的一个项目发现一个很有意思的东西，就是PHP将指定日期输出为星座
 

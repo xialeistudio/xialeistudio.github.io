@@ -3,7 +3,7 @@ slug: angularjs-load-remote-data-on-directive
 title: Angularjs指令数据远程请求的处理
 date: 2014-09-06 20:01:03.000000000 +08:00
 categories:
-- Engineering
+- frontend
 ---
 假设有一个指令用来根据IP地址进行地位，获取实际地址。
 

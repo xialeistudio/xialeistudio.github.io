@@ -3,7 +3,7 @@ slug: wechat-media-platform-nodejs-sdk
 title: 微信公众平台开发NodeJs SDK
 date: 2016-08-09 16:07:22.000000000 +08:00
 categories:
-- Engineering
+- backend
 ---
 *本SDK要求NodeJs >= 4.x，欢迎大家在issues提问。*
 

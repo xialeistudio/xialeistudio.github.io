@@ -3,7 +3,7 @@ slug: miniprogram-unit-test
 title: 手把手从零开始小程序单元测试(附避坑指南以及源码跟踪)
 date: 2019-07-27 18:35:49
 categories:
-- Engineering
+- mobile
 tags:
 - test
 ---

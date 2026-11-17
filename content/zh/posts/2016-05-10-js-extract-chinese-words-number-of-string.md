@@ -3,7 +3,7 @@ slug: js-extract-chinese-words-number-of-string
 title: JS提取字符串中文英文数字
 date: 2016-05-10 17:06:28.000000000 +08:00
 categories:
-- Engineering
+- frontend
 tags:
 - regex
 ---

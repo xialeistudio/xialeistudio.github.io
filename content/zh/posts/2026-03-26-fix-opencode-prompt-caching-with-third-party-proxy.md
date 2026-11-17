@@ -3,7 +3,7 @@ title: "解决 OpenCode 通过第三方代理使用 GPT 时无法命中 Prompt C
 date: 2026-03-26T21:30:00+08:00
 slug: fix-opencode-prompt-caching-with-third-party-proxy
 categories:
-- AI
+- ai
 tags:
 - OpenCode
 - GPT

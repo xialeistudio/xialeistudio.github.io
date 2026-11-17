@@ -2,9 +2,10 @@
 slug: how-to-build-a-finite-state-machine-to-help-business-workflow
 title: 构建有限状态机来优化业务流程
 categories:
-  - Engineering
+- architecture
 date: 2023-05-04 17:16:00
 tags:
+featured: true
 ---
 
 在本文中，我将分享如何构建有限状态机（FSM）来帮助业务流程过渡，例如审计。

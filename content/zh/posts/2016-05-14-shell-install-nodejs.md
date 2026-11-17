@@ -3,7 +3,7 @@ slug: shell-install-nodejs
 title: 安装nodejs的shell脚本
 date: 2016-05-14 18:27:29.000000000 +08:00
 categories:
-- Engineering
+- devops
 ---
 ## 脚本定义
 

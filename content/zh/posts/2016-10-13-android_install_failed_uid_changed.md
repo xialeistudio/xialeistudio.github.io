@@ -3,7 +3,7 @@ slug: android_install_failed_uid_changed
 title: 解决shareUserId导致的app无法升级的问题
 date: 2016-10-13 18:40:30.000000000 +08:00
 categories:
-- Engineering
+- mobile
 ---
 老版本app版本号是2.0.13，Build是20160719。新版本app版本号是2.0.14，Build是2016101301。   
 初略看来应该是可以覆盖升级的，但是安装新版本的时候提示“应用未安装”。   

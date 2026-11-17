@@ -3,7 +3,7 @@ slug: php-openssl-rsa-sign
 title: PHP利用openssl实现RSA非对称加密签名
 date: 2016-10-31 18:18:09.000000000 +08:00
 categories:
-- Engineering
+- backend
 tags:
 - openssl
 ---

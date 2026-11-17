@@ -3,7 +3,7 @@ slug: go-io-reader-panic
 title: io.Reader游标引发的血案
 date: 2018-10-17 21:32:03
 categories:
-- Engineering
+- backend
 ---
 
 #背景

@@ -3,7 +3,7 @@ slug: export-wechat-emotion
 title: 无需编程导出微信表情包
 date: 2019-01-11 10:53:02
 categories:
-- Engineering
+- devops
 ---
 
 微信前两天推送了年度报告，其中的表情统计很有意思，的确，表情包这两年是越来越火了。但是有个问题是微信不支持导出表情包，有的小伙伴又需要导出来保存到其他地方。

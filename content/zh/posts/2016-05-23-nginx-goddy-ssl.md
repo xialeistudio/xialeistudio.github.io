@@ -3,7 +3,7 @@ slug: nginx-goddy-ssl
 title: nginx使用goddy ssl证书
 date: 2016-05-23 20:03:16.000000000 +08:00
 categories:
-- Engineering
+- devops
 ---
 随着人们对网络安全要求的提高，越来越多的http站点已经转换为了https站点，保证网站在传输过程中不被监听、恶意篡改，本文将使用goddy提供的ssl证书来升级HTTPS网站。
 

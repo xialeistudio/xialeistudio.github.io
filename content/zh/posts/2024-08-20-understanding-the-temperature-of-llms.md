@@ -2,9 +2,8 @@
 title: 理解LLM中的Temperature参数
 date: 2024-08-20T16:53:08+08:00
 slug: understanding-the-temperature-of-llms
-categories: 
+categories:
 - ai
-featured: true
 ---
 在人工智能领域，大型语言模型（LLM）已成为生成类人文本的复杂工具。在引导这些模型的一个关键概念是“温度”，它决定了生成文本的随机性和创造性。本博客文章旨在揭开LLM中温度设置的神秘面纱，并提供专业的概述。
 

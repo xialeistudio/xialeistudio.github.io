@@ -3,7 +3,7 @@ slug: contributing-to-definitelytyped-step-by-step
 date: 2017-10-15
 title: 从零开始向DefinitelyTyped贡献代码
 categories:
-- Engineering
+- frontend
 ---
 
 # 什么是DefinitelyTyped?

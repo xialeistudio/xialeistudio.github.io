@@ -3,7 +3,7 @@ slug: yii2-memcached-qcloud-not-expires
 date: 2017-05-12
 title: Yii2框架MemCache在腾讯云部署时不过期问题
 categories:
-- Engineering
+- backend
 tags:
 - yii
 ---

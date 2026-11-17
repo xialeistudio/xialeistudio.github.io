@@ -3,7 +3,7 @@ slug: yii2-close-csrf-validation-cookie-validatetion
 title: yii2关闭csrf校验和cookie校验
 date: 2017-10-17 17:19:19
 categories:
-- Engineering
+- backend
 tags:
 - yii
 ---

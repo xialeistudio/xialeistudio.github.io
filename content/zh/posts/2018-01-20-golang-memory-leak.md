@@ -3,7 +3,7 @@ slug: golang-memory-leak
 title: golang可能导致内存泄漏的地方
 date: 2018-01-20 13:44:15
 categories:
-- Engineering
+- backend
 ---
 
 ## 核心

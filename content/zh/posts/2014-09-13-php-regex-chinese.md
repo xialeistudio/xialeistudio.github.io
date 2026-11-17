@@ -3,7 +3,7 @@ slug: php-regex-chinese
 title: PHP正则表达式匹配中文
 date: 2014-09-13 11:20:26.000000000 +08:00
 categories:
-- Engineering
+- backend
 tags:
 - regex
 ---

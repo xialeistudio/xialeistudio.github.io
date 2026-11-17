@@ -3,7 +3,7 @@ slug: ng-resource-get-started
 title: ngResource快速上手
 date: 2014-09-06 20:11:06.000000000 +08:00
 categories:
-- Engineering
+- frontend
 ---
 废话不多说，本文的目的就是看过之后就会使用ngResource了。
 1. 引入angular-resource.min.js

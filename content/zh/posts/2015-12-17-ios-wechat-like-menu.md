@@ -3,7 +3,7 @@ slug: ios-wechat-like-menu
 title: ios仿微信右上角弹出菜单
 date: 2015-12-17 12:41:42.000000000 +08:00
 categories:
-- Engineering
+- mobile
 ---
 
 ## 项目地址

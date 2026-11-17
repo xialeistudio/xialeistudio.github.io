@@ -3,7 +3,7 @@ slug: yii2-migrate
 date: 2017-01-20
 title: Yii2 migrate使用
 categories:
-- Engineering
+- backend
 tags:
 - yii
 ---

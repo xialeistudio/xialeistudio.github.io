@@ -3,7 +3,7 @@ slug: baidu-push-nodejs-sdk
 title: 百度云推送nodejs sdk
 date: 2015-12-29 18:14:24.000000000 +08:00
 categories:
-- Engineering
+- backend
 ---
 ## 项目地址
 [bpush-nodejs](https://github.com/xialeistudio/bpush-nodejs)

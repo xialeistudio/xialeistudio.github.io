@@ -3,7 +3,7 @@ slug: typescript-quick-guide
 title: TS简明教程(1)
 date: 2019-07-25 22:01:54
 categories:
-- Engineering
+- frontend
 ---
 
 本文是TS简明教程的第一篇，对TS做简要介绍、基础知识以及后续内容规划。

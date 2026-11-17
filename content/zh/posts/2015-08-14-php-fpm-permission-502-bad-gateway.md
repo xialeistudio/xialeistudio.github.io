@@ -3,7 +3,7 @@ slug: php-fpm-permission-502-bad-gateway
 title: php-fpm sock文件权限问题导致502
 date: 2015-08-14 10:26:20.000000000 +08:00
 categories:
-- Engineering
+- devops
 ---
 今天升级完PHP出现了502 Bad Gateway错误，根据经验是php-fpm的问题，但是看到网上那些什么访问量，子进程设置什么的，但是我这太服务器压根没啥流量。所以只能从配置文件下手看看。
 

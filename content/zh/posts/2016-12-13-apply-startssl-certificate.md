@@ -2,8 +2,8 @@
 slug: apply-startssl-certificate
 date: 2016-12-13
 title: 免费SSL证书申请
-categories: 
-- Engineering
+categories:
+- devops
 tags:
 - openssl
 ---

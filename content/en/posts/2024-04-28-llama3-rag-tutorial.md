@@ -7,7 +7,6 @@ tags:
 - rag
 categories:
 - ai
-featured: true
 ---
 
 LLM has timeliness and phantom problems, in [How to solve the problem of large model timeliness and accuracy with? the core principle of RAG technology](https://www.ddhigh.com/en/2024/04/24/retrieval-augmented-generation/) article I introduced the core principle of RAG, this article will share how to build a local private knowledge base based on llama3 and langchain.

@@ -3,7 +3,7 @@ slug: nestjs-provider
 title: NestJs学习之旅(3)——服务提供者
 date: 2019-08-21 10:27:42
 categories:
-- Engineering
+- backend
 tags:
 - nestjs
 ---

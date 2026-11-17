@@ -3,7 +3,7 @@ slug: reading-note
 title: MySQL、Redis、Aurora读书笔记
 date: 2023-05-03 15:07:05
 categories:
-- Engineering
+- backend
 ---
 本文分享一下五一期间的读书感悟，包括MySQL、Redis、Aurora。
 

@@ -2,9 +2,8 @@
 title: 微服务架构原则
 date: 2025-02-13T11:53:08+08:00
 slug: principles-of-microservice-architecture
-categories: 
-- Engineering
-featured: true
+categories:
+- architecture
 tags:
 - Microservices
 ---

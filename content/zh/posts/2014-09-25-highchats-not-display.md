@@ -3,7 +3,7 @@ slug: highchats-not-display
 title: highchats曲线不显示
 date: 2014-09-25 00:24:00.000000000 +08:00
 categories:
-- Engineering
+- frontend
 ---
 highchats是什么就不介绍了。一个JS绘图工具库，基于JQ，使用简单方便，但是不注意的话会坑人。
 

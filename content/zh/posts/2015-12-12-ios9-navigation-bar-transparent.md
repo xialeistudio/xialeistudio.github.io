@@ -3,7 +3,7 @@ slug: ios9-navigation-bar-transparent
 title: ios9 导航栏全透明
 date: 2015-12-12 16:59:32.000000000 +08:00
 categories:
-- Engineering
+- mobile
 ---
 
 ## 效果图

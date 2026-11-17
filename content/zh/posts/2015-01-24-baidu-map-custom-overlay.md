@@ -3,7 +3,7 @@ slug: baidu-map-custom-overlay
 title: 百度地图添加自定义标注
 date: 2015-01-24 14:09:36.000000000 +08:00
 categories:
-- Engineering
+- frontend
 ---
 百度地图的默认标注是一个 红色 的地标，如果要做互动性强的地图应用，几乎没提供什么额外信息，本文教大家怎么添加自定义标注，如添加头像。
 ## JS代码

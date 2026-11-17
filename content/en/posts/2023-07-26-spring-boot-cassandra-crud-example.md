@@ -3,7 +3,7 @@ slug: spring-boot-cassandra-crud-example
 title: Spring Boot Cassandra CRUD Example
 date: 2023-07-26 12:00:18
 categories:
-- engineering
+- backend
 tags:
 - cassandra
 ---

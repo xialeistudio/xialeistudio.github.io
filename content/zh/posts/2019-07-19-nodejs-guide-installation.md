@@ -3,7 +3,7 @@ slug: nodejs-guide-installation
 title: NodeJs简明教程(2)
 date: 2019-07-19 10:15:29
 categories:
-- Engineering
+- backend
 ---
 
 本文是NodeJs简明教程的第二篇，将介绍NodeJs在不同操作系统下的安装操作。

@@ -4,9 +4,8 @@ date: 2024-08-15T15:57:11+08:00
 slug: build-your-ai-search-bot-with-llm-and-search-engines
 tags:
 - rag
-categories: 
+categories:
 - ai
-featured: true
 ---
 In the tide of artificial intelligence, the combination of large language models (LLMs) and search engines has brought revolutionary changes to the field of information retrieval. This article will provide a detailed introduction on how to use these technologies to build an intelligent information retrieval assistant—an AI search bot. We will delve into various aspects such as project background, core principles, code implementation, usage examples, and open-source addresses.
 

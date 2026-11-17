@@ -3,7 +3,7 @@ slug: go-rtmp-http-publisher
 title: 从零开始打造自己的直播服务器-golang开发HTTP推流服务
 date: 2017-11-23 15:19:58
 categories:
-- Engineering
+- backend
 tags:
 - rtmp
 ---

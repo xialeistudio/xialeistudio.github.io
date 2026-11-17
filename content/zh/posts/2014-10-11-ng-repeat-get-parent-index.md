@@ -3,7 +3,7 @@ slug: ng-repeat-get-parent-index
 title: ng-repeat获取父级INDEX
 date: 2014-10-11 11:37:48.000000000 +08:00
 categories:
-- Engineering
+- frontend
 ---
 angularjs的循环嵌套我就不多说了，无非是ng-repeat的嵌套而已，如果需要获取索引请使用$index。
 

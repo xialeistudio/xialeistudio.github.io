@@ -3,7 +3,7 @@ slug: install-jekyll-on-windows
 date: 2017-01-20
 title: 在windows上安装jekyll
 categories:
-- Engineering
+- devops
 ---
 早些时候用的ubuntu，安装jekyll确实挺简单，可能是终端强大吧。最近工作环境切换到windows，无奈想写博文的时候却发现需要切换到ubuntu，不是那么方便。打算在windows上部署一下jekyll。
 

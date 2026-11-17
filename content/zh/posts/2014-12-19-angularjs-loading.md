@@ -3,7 +3,7 @@ slug: angularjs-loading
 title: angularjs注入拦截器实现Loading效果
 date: 2014-12-19 19:35:34.000000000 +08:00
 categories:
-- Engineering
+- frontend
 ---
 angularjs作为一个全ajax的框架，对于请求，如果页面上不做任何操作的话，在结果烦回来之前，页面是没有任何响应的，不像普通的HTTP请求，会有进度条之类。
 

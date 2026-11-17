@@ -3,7 +3,7 @@ slug: react-flux-es6-note-app
 title: React Flux ES6记事本应用
 date: 2016-03-24 15:20:00.000000000 +08:00
 categories:
-- Engineering
+- frontend
 ---
 
 ## 项目地址

@@ -3,7 +3,7 @@ slug: react-native-hidden-tabbar-with-navigatorios
 date: 2017-03-27
 title: ReactNative在NavigatorIOS中隐藏TabBar
 categories:
-- Engineering
+- mobile
 tag:
 - react-native
 ---

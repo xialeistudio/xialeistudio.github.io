@@ -2,8 +2,8 @@
 title: 服务发现的设计与实现（一）
 date: 2025-02-19T11:53:08+08:00
 slug: implementation-of-service-discovery-part1
-categories: 
-- Engineering
+categories:
+- architecture
 featured: true
 tags:
 - Microservices

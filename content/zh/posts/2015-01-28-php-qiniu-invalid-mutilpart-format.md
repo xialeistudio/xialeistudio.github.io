@@ -3,7 +3,7 @@ slug: php-qiniu-invalid-mutilpart-format
 title: 七牛上传出现 invalid mutilpart format的解决方案
 date: 2015-01-28 00:00:09.000000000 +08:00
 categories:
-- Engineering
+- devops
 ---
 今天用umeditor编辑文章上传图片的时候发现一直卡在"loading..."，打开控制台发现出现了500错误，进一步调试发现是七牛上传报错了。
 

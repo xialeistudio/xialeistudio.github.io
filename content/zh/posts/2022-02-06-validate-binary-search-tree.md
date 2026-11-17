@@ -6,7 +6,7 @@ tags:
 - tree
 - leetcode
 categories:
-- Algorithm
+- algorithm
 ---
 
 ## 题目

@@ -3,7 +3,7 @@ slug: running-thrift-on-swoole
 title: 使用swoole来运行thrift应用
 date: 2019-05-16 14:32:41
 categories:
-- Engineering
+- backend
 tags:
 - swoole
 - thrift

@@ -2,9 +2,10 @@
 slug: how-to-build-a-finite-state-machine-to-help-business-workflow
 title: How to build a Finite State Machine to help business workflow
 categories:
-  - Engineering
+- architecture
 date: 2023-05-04 17:16:00
 tags:
+featured: true
 ---
 
 

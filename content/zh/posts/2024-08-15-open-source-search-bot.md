@@ -4,9 +4,8 @@ date: 2024-08-15T15:57:11+08:00
 slug: build-your-ai-search-bot-with-llm-and-search-engines
 tags:
 - rag
-categories: 
+categories:
 - ai
-featured: true
 ---
 在人工智能的浪潮中，大型语言模型（LLM）和搜索引擎的结合为信息检索领域带来了革命性的变化。本文将详细介绍如何利用这些技术构建一个智能信息检索助手——AI搜索机器人。我们将从项目背景、核心原理、代码实现、使用示例以及开源地址等方面进行深入探讨。
 

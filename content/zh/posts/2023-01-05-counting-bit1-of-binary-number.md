@@ -5,7 +5,7 @@ date: 2023-01-05 12:35:00
 tags:
 - leetcode
 categories:
-- Algorithm
+- algorithm
 ---
 
 本文分享一种计算给定数字二进制表示中有多少个1的算法。

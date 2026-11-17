@@ -3,7 +3,7 @@ slug: wechat-mini-program-data-column-case
 title: 微信小程序数据字段大小写问题
 date: 2019-07-16 11:17:38
 categories:
-- Engineering
+- mobile
 ---
 
 这两天在开发微信小程序登录以及加解密的时候，因为数据大小写的问题被坑了一把。

@@ -3,9 +3,10 @@ slug: understanding-tcc-and-message-based-distributed-transactions
 title: Understanding TCC in distributed transactions
 date: 2023-06-04 14:58:33
 categories:
-- Engineering
+- architecture
 tags:
 - distributing
+featured: true
 ---
 
 A **distributed transaction** is a [database transaction](https://en.wikipedia.org/wiki/Database_transaction) in which two or more network hosts are involved.  

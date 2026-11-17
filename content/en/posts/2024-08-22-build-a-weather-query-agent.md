@@ -2,9 +2,8 @@
 title: Build a weather query agent
 date: 2024-08-22T11:53:08+08:00
 slug: build-a-weather-query-agent
-categories: 
+categories:
 - ai
-featured: true
 ---
 In the field of artificial intelligence, intelligent agents (Agent) are one of the cutting-edge applications of Large Language Models (LLM). They are not only capable of performing specific tasks but also able to provide services or execute tasks through interactions with users or other systems. The core advantages of intelligent agents lie in their autonomy and interactivity, enabling them to perform tasks without human intervention while understanding and responding to user commands and needs.
 

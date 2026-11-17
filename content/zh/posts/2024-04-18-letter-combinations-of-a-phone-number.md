@@ -3,10 +3,9 @@ title: 电话号码的字母组合
 slug: letter-combinations-of-a-phone-number
 date: 2024-04-18T15:15:26+08:00
 categories:
-- Algorithm
+- algorithm
 tags:
 - leetcode
-featured: true
 ---
 
 ### Question

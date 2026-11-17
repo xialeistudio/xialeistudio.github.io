@@ -3,7 +3,7 @@ slug: nginx-enable-ssl
 title: nginx服务器启用SSL访问
 date: 2014-10-11 17:18:59.000000000 +08:00
 categories:
-- Engineering
+- devops
 ---
 ## HTTP和HTTPS的区别
 1. https协议需要到ca申请证书，一般免费证书很少，需要交费。 　

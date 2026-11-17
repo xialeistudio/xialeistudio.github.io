@@ -2,9 +2,8 @@
 title: 服务架构的演进历史
 date: 2025-02-12T11:53:08+08:00
 slug: the-evolution-of-service-architecture
-categories: 
-- Engineering
-featured: true
+categories:
+- architecture
 tags:
 - Microservice
 ---

@@ -3,7 +3,7 @@ slug: fix-gittalk-github
 title: 修复GitTalk出现Forbidden问题
 date: 2021-02-25 12:00:23
 categories:
-- Engineering
+- devops
 tags:
 - gittalk
 ---

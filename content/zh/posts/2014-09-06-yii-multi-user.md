@@ -3,7 +3,7 @@ slug: yii-multi-user
 title: Yii同一站点配置多个用户角色
 date: 2014-09-06 20:01:42.000000000 +08:00
 categories:
-- Engineering
+- backend
 tags:
 - yii
 ---

@@ -3,7 +3,7 @@ slug: leetcode-longest-substring-without-repeating-characters (copy)
 title: leetcode(3)——无重复字符的最长子串
 date: 2019-09-16 18:34:58
 categories:
-- Algorithm
+- algorithm
 tags:
 - leetcode
 ---

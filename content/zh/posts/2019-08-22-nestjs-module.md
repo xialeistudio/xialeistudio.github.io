@@ -3,7 +3,7 @@ slug: nestjs-module
 title: NestJs学习之旅(4)——模块系统
 date: 2019-08-22 11:27:38
 categories:
-- Engineering
+- backend
 tags:
 - nestjs
 ---

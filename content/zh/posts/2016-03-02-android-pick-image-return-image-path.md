@@ -3,7 +3,7 @@ slug: android-pick-image-return-image-path
 title: android选择图片返回统一图片地址
 date: 2016-03-02 18:43:34.000000000 +08:00
 categories:
-- Engineering
+- mobile
 ---
 android从选择图片有两种方法，但是返回值确不同，本文将指导大家如何统一这两种方式的返回值。
 

@@ -3,7 +3,7 @@ slug: webpack-loader-development
 title: Webpack4不求人(4)——编写自定义Loader
 date: 2020-03-11 12:00:00
 categories:
-- Engineering
+- frontend
 tags:
 - webpack
 ---

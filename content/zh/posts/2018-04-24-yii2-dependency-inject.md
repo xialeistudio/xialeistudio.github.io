@@ -2,8 +2,8 @@
 slug: yii2-dependency-inject
 title: 使用yii2依赖注入规范业务开发
 date: 2018-04-24 22:18:04
-categories: 
-- Engineering
+categories:
+- backend
 tags:
 - yii
 ---

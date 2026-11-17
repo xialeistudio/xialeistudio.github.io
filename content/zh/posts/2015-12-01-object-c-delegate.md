@@ -3,7 +3,7 @@ slug: object-c-delegate
 title: object-c委托实例
 date: 2015-12-01 15:41:45.000000000 +08:00
 categories:
-- Engineering
+- mobile
 ---
 ## 定义
 

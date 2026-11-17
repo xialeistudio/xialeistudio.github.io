@@ -3,7 +3,7 @@ slug: shell-bad-interpreter
 title: linux运行dos格式脚本导致的bad interpreter
 date: 2015-05-21 12:01:15.000000000 +08:00
 categories:
-- Engineering
+- devops
 ---
 
 ## 问题

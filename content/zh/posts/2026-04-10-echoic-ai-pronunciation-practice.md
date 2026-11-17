@@ -3,7 +3,7 @@ title: "Echoic：用 AI 练英语发音，音素级实时评分"
 date: 2026-04-10T10:00:00+08:00
 slug: echoic-ai-pronunciation-practice
 categories:
-- 开源项目
+- ai
 tags:
 - AI
 - 英语学习
@@ -11,6 +11,7 @@ tags:
 - FastAPI
 - React
 - WhisperX
+- 开源项目
 featured: true
 ---
 

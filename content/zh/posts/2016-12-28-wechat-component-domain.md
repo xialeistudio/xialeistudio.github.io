@@ -3,7 +3,7 @@ slug: wechat-component-domain
 date: 2016-12-28
 title: 微信开放平台公众号第三方平台网页开发域名问题
 categories:
-- Engineering
+- backend
 ---
 先来看一下微信官方定义:
 

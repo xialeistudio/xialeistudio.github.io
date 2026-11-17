@@ -3,7 +3,7 @@ slug: qiniu-custom-data
 title: 七牛云存储定义自定义变量返回数据
 date: 2014-09-18 16:24:11.000000000 +08:00
 categories:
-- Engineering
+- devops
 ---
 ## 背景
 七牛云存储也使用了这么久了。一直一来都只用了它的图片上传和处理功能。用的是客户端直传API，七牛给我返回一个key（一串随机的hash值，对人类无可读性）。

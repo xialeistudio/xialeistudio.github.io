@@ -3,7 +3,7 @@ slug: angularjs-ueditor-directive
 title: angularjs ueditor指令
 date: 2015-02-05 19:20:43.000000000 +08:00
 categories:
-- Engineering
+- frontend
 ---
 一直以来，angularjs的富文本编辑器都比较难做，主要是第三方的编辑器很难集成进来，今天花时间研究了一下，发现ueditor主要加载两个js文件
 + ueditor.config.js

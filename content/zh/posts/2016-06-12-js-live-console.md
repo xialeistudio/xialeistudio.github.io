@@ -3,7 +3,7 @@ slug: js-live-console
 title: js在线调试工具
 date: 2016-06-12 09:34:14.000000000 +08:00
 categories:
-- Engineering
+- frontend
 ---
 在进行微信开发的时候，由于JS SDK提供的api需要在真机调试，而手机端的console方法虽然存在，但是调用结果却看不到。所以笔者使用socket.io重写了一个在线版本的调试工具。
 

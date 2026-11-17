@@ -3,7 +3,7 @@ slug: running-thrift-on-swoole-with-yii2
 title: 在Swoole环境下运行注入Yii2框架的thrift应用
 date: 2019-05-19 16:10:47
 categories:
-- Engineering
+- backend
 tags:
 - swoole
 - thrift

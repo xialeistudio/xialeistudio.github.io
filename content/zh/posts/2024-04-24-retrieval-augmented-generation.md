@@ -6,7 +6,6 @@ tags:
 - rag
 categories:
 - ai
-featured: true
 ---
 
 在当今信息爆炸的时代，我们面临着海量数据的挑战。对于人们来说，从这些数据中检索到有用的信息变得越来越困难。为了解决这一问题，研究人员提出了一种新颖的技术，即RAG（Retrieval-Augmented Generation，检索增强生成）。

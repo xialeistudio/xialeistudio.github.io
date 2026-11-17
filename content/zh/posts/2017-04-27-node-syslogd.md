@@ -2,8 +2,8 @@
 slug: node-syslogd
 date: 2017-04-27
 title: 使用NodeJs提供syslogd服务端
-categories: 
-- Engineering
+categories:
+- backend
 ---
 syslog作为Linux发行版一个重要组件，相信大家都不陌生，而如果每台服务器都独立使用一份的话，不能做到日志统一管理，对于以后的日志查询不太方便。
 syslog有标准的协议格式，这里不做讨论，有兴趣的可以基于协议的报文结构使用socket编程实现。

@@ -3,7 +3,7 @@ slug: pomelo-global-channel
 date: 2016-12-17
 title: pomelo-global-channel-plugin的使用
 categories:
-- Engineering
+- backend
 tags:
 - pomelo
 ---

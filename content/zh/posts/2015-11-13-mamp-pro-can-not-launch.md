@@ -3,7 +3,7 @@ slug: mamp-pro-can-not-launch
 title: MAMP PRO 3.0.5 在 OS X EI Capitan下无法启动的问题
 date: 2015-11-13 22:06:16.000000000 +08:00
 categories:
-- Engineering
+- devops
 tags:
 - mamp
 ---

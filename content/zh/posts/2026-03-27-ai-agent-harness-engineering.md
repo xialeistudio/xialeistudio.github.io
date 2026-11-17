@@ -3,7 +3,7 @@ title: "Harness Engineering：AI Agent 时代的核心工程能力"
 date: 2026-03-27T16:00:00+08:00
 slug: ai-agent-harness-engineering
 categories:
-- AI
+- ai
 tags:
 - AI Agent
 - Harness Engineering

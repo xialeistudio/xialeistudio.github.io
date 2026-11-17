@@ -3,7 +3,7 @@ slug: nodejs-export-large-excel
 title: Nodejs导出大数据到Excel
 date: 2016-11-13 13:16:59.000000000 +08:00
 categories:
-- Engineering
+- backend
 ---
 在实际开发中，数据导出使用频率比数据导入高得多，而数据导出时来源一般是数据库，会有上万的数据导出，如果不做特殊处理的话，会导致NodeJs进程直接被killed。   
 今天要提到的npm包是 **xlsx-writestream**，话不多说，进入正题。

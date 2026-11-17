@@ -3,7 +3,7 @@ slug: valueof-and-tostring
 title: 聊一聊valueOf和toString
 date: 2019-10-15 12:00:00
 categories:
-- Engineering
+- frontend
 ---
 valueOf和toString是Object.prototype的方法。一般很少直接调用，但是在使用对象参与运算的时候就会调用这两个方法了。我想大部分人都存在以下疑问：
 

@@ -6,7 +6,7 @@ tags:
 - leetcode
 - string
 categories:
-- Algorithm
+- algorithm
 ---
 
 本文分享一种检测一个字符串是否为另一个字符串子序列的算法。
